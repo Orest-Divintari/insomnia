@@ -1,5 +1,16 @@
 <x-layouts._forums>
-    <div class="container">
+    <div class="flex flex-col justify-start mt-6">
+        <h1 class="text-4xl font-bold tracking-wide">Log in</h1>
+        <div>
+            <div></div>
+            <div class="">
+                <input type="text"
+                    class="bg-blue-login-input w-3/4 px-3 rounded border border-gray-300 h-8 focus:outline-none">
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -74,5 +85,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </x-layouts._forums>

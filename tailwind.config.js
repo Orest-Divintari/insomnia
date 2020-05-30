@@ -14,7 +14,11 @@ module.exports = {
                 "blue-light": "#DDE6F1",
                 "blue-mid": "#426693",
                 "blue-mid-light": "#CFDEEB",
-                "gray-light": "#979DA5"
+                "gray-light": "#979DA5",
+                "blue-login-input": "#E7F1FE",
+                "blue-login-side": "#EDF4F9",
+                "blue-login-bottom": "#E1EAF3",
+                "blue-login-button": "#334866"
             }
         }
     },

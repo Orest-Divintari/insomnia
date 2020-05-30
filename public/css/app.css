@@ -1737,6 +1737,30 @@ video {
   border-color: rgba(151, 157, 165, var(--divide-opacity));
 }
 
+.divide-blue-login-input > :not(template) ~ :not(template){
+  --divide-opacity: 1;
+  border-color: #E7F1FE;
+  border-color: rgba(231, 241, 254, var(--divide-opacity));
+}
+
+.divide-blue-login-side > :not(template) ~ :not(template){
+  --divide-opacity: 1;
+  border-color: #EDF4F9;
+  border-color: rgba(237, 244, 249, var(--divide-opacity));
+}
+
+.divide-blue-login-bottom > :not(template) ~ :not(template){
+  --divide-opacity: 1;
+  border-color: #E1EAF3;
+  border-color: rgba(225, 234, 243, var(--divide-opacity));
+}
+
+.divide-blue-login-button > :not(template) ~ :not(template){
+  --divide-opacity: 1;
+  border-color: #334866;
+  border-color: rgba(51, 72, 102, var(--divide-opacity));
+}
+
 .divide-opacity-0 > :not(template) ~ :not(template){
   --divide-opacity: 0;
 }
@@ -2411,6 +2435,30 @@ video {
   background-color: rgba(151, 157, 165, var(--bg-opacity));
 }
 
+.bg-blue-login-input{
+  --bg-opacity: 1;
+  background-color: #E7F1FE;
+  background-color: rgba(231, 241, 254, var(--bg-opacity));
+}
+
+.bg-blue-login-side{
+  --bg-opacity: 1;
+  background-color: #EDF4F9;
+  background-color: rgba(237, 244, 249, var(--bg-opacity));
+}
+
+.bg-blue-login-bottom{
+  --bg-opacity: 1;
+  background-color: #E1EAF3;
+  background-color: rgba(225, 234, 243, var(--bg-opacity));
+}
+
+.bg-blue-login-button{
+  --bg-opacity: 1;
+  background-color: #334866;
+  background-color: rgba(51, 72, 102, var(--bg-opacity));
+}
+
 .hover\:bg-transparent:hover{
   background-color: transparent;
 }
@@ -3001,6 +3049,30 @@ video {
   background-color: rgba(151, 157, 165, var(--bg-opacity));
 }
 
+.hover\:bg-blue-login-input:hover{
+  --bg-opacity: 1;
+  background-color: #E7F1FE;
+  background-color: rgba(231, 241, 254, var(--bg-opacity));
+}
+
+.hover\:bg-blue-login-side:hover{
+  --bg-opacity: 1;
+  background-color: #EDF4F9;
+  background-color: rgba(237, 244, 249, var(--bg-opacity));
+}
+
+.hover\:bg-blue-login-bottom:hover{
+  --bg-opacity: 1;
+  background-color: #E1EAF3;
+  background-color: rgba(225, 234, 243, var(--bg-opacity));
+}
+
+.hover\:bg-blue-login-button:hover{
+  --bg-opacity: 1;
+  background-color: #334866;
+  background-color: rgba(51, 72, 102, var(--bg-opacity));
+}
+
 .focus\:bg-transparent:focus{
   background-color: transparent;
 }
@@ -3589,6 +3661,30 @@ video {
   --bg-opacity: 1;
   background-color: #979DA5;
   background-color: rgba(151, 157, 165, var(--bg-opacity));
+}
+
+.focus\:bg-blue-login-input:focus{
+  --bg-opacity: 1;
+  background-color: #E7F1FE;
+  background-color: rgba(231, 241, 254, var(--bg-opacity));
+}
+
+.focus\:bg-blue-login-side:focus{
+  --bg-opacity: 1;
+  background-color: #EDF4F9;
+  background-color: rgba(237, 244, 249, var(--bg-opacity));
+}
+
+.focus\:bg-blue-login-bottom:focus{
+  --bg-opacity: 1;
+  background-color: #E1EAF3;
+  background-color: rgba(225, 234, 243, var(--bg-opacity));
+}
+
+.focus\:bg-blue-login-button:focus{
+  --bg-opacity: 1;
+  background-color: #334866;
+  background-color: rgba(51, 72, 102, var(--bg-opacity));
 }
 
 .bg-opacity-0{
@@ -4321,6 +4417,30 @@ video {
   border-color: rgba(151, 157, 165, var(--border-opacity));
 }
 
+.border-blue-login-input{
+  --border-opacity: 1;
+  border-color: #E7F1FE;
+  border-color: rgba(231, 241, 254, var(--border-opacity));
+}
+
+.border-blue-login-side{
+  --border-opacity: 1;
+  border-color: #EDF4F9;
+  border-color: rgba(237, 244, 249, var(--border-opacity));
+}
+
+.border-blue-login-bottom{
+  --border-opacity: 1;
+  border-color: #E1EAF3;
+  border-color: rgba(225, 234, 243, var(--border-opacity));
+}
+
+.border-blue-login-button{
+  --border-opacity: 1;
+  border-color: #334866;
+  border-color: rgba(51, 72, 102, var(--border-opacity));
+}
+
 .hover\:border-transparent:hover{
   border-color: transparent;
 }
@@ -4911,6 +5031,30 @@ video {
   border-color: rgba(151, 157, 165, var(--border-opacity));
 }
 
+.hover\:border-blue-login-input:hover{
+  --border-opacity: 1;
+  border-color: #E7F1FE;
+  border-color: rgba(231, 241, 254, var(--border-opacity));
+}
+
+.hover\:border-blue-login-side:hover{
+  --border-opacity: 1;
+  border-color: #EDF4F9;
+  border-color: rgba(237, 244, 249, var(--border-opacity));
+}
+
+.hover\:border-blue-login-bottom:hover{
+  --border-opacity: 1;
+  border-color: #E1EAF3;
+  border-color: rgba(225, 234, 243, var(--border-opacity));
+}
+
+.hover\:border-blue-login-button:hover{
+  --border-opacity: 1;
+  border-color: #334866;
+  border-color: rgba(51, 72, 102, var(--border-opacity));
+}
+
 .focus\:border-transparent:focus{
   border-color: transparent;
 }
@@ -5499,6 +5643,30 @@ video {
   --border-opacity: 1;
   border-color: #979DA5;
   border-color: rgba(151, 157, 165, var(--border-opacity));
+}
+
+.focus\:border-blue-login-input:focus{
+  --border-opacity: 1;
+  border-color: #E7F1FE;
+  border-color: rgba(231, 241, 254, var(--border-opacity));
+}
+
+.focus\:border-blue-login-side:focus{
+  --border-opacity: 1;
+  border-color: #EDF4F9;
+  border-color: rgba(237, 244, 249, var(--border-opacity));
+}
+
+.focus\:border-blue-login-bottom:focus{
+  --border-opacity: 1;
+  border-color: #E1EAF3;
+  border-color: rgba(225, 234, 243, var(--border-opacity));
+}
+
+.focus\:border-blue-login-button:focus{
+  --border-opacity: 1;
+  border-color: #334866;
+  border-color: rgba(51, 72, 102, var(--border-opacity));
 }
 
 .border-opacity-0{
@@ -10951,6 +11119,102 @@ video {
   color: rgba(151, 157, 165, var(--placeholder-opacity));
 }
 
+.placeholder-blue-login-input::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-input:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-input::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-input::placeholder{
+  --placeholder-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-side::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-side:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-side::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-side::placeholder{
+  --placeholder-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-bottom::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-bottom:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-bottom::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-bottom::placeholder{
+  --placeholder-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-button::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-button:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-button::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--placeholder-opacity));
+}
+
+.placeholder-blue-login-button::placeholder{
+  --placeholder-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--placeholder-opacity));
+}
+
 .focus\:placeholder-transparent:focus::-moz-placeholder{
   color: transparent;
 }
@@ -13311,6 +13575,102 @@ video {
   color: rgba(151, 157, 165, var(--placeholder-opacity));
 }
 
+.focus\:placeholder-blue-login-input:focus::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-input:focus:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-input:focus::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-input:focus::placeholder{
+  --placeholder-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-side:focus::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-side:focus:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-side:focus::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-side:focus::placeholder{
+  --placeholder-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-bottom:focus::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-bottom:focus:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-bottom:focus::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-bottom:focus::placeholder{
+  --placeholder-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-button:focus::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-button:focus:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-button:focus::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-login-button:focus::placeholder{
+  --placeholder-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--placeholder-opacity));
+}
+
 .placeholder-opacity-0::-moz-placeholder{
   --placeholder-opacity: 0;
 }
@@ -14336,6 +14696,30 @@ video {
   color: rgba(151, 157, 165, var(--text-opacity));
 }
 
+.text-blue-login-input{
+  --text-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--text-opacity));
+}
+
+.text-blue-login-side{
+  --text-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--text-opacity));
+}
+
+.text-blue-login-bottom{
+  --text-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--text-opacity));
+}
+
+.text-blue-login-button{
+  --text-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--text-opacity));
+}
+
 .hover\:text-transparent:hover{
   color: transparent;
 }
@@ -14926,6 +15310,30 @@ video {
   color: rgba(151, 157, 165, var(--text-opacity));
 }
 
+.hover\:text-blue-login-input:hover{
+  --text-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--text-opacity));
+}
+
+.hover\:text-blue-login-side:hover{
+  --text-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--text-opacity));
+}
+
+.hover\:text-blue-login-bottom:hover{
+  --text-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--text-opacity));
+}
+
+.hover\:text-blue-login-button:hover{
+  --text-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--text-opacity));
+}
+
 .focus\:text-transparent:focus{
   color: transparent;
 }
@@ -15514,6 +15922,30 @@ video {
   --text-opacity: 1;
   color: #979DA5;
   color: rgba(151, 157, 165, var(--text-opacity));
+}
+
+.focus\:text-blue-login-input:focus{
+  --text-opacity: 1;
+  color: #E7F1FE;
+  color: rgba(231, 241, 254, var(--text-opacity));
+}
+
+.focus\:text-blue-login-side:focus{
+  --text-opacity: 1;
+  color: #EDF4F9;
+  color: rgba(237, 244, 249, var(--text-opacity));
+}
+
+.focus\:text-blue-login-bottom:focus{
+  --text-opacity: 1;
+  color: #E1EAF3;
+  color: rgba(225, 234, 243, var(--text-opacity));
+}
+
+.focus\:text-blue-login-button:focus{
+  --text-opacity: 1;
+  color: #334866;
+  color: rgba(51, 72, 102, var(--text-opacity));
 }
 
 .text-opacity-0{
@@ -25615,6 +26047,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--divide-opacity));
   }
 
+  .phone\:divide-blue-login-input > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--divide-opacity));
+  }
+
+  .phone\:divide-blue-login-side > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--divide-opacity));
+  }
+
+  .phone\:divide-blue-login-bottom > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--divide-opacity));
+  }
+
+  .phone\:divide-blue-login-button > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--divide-opacity));
+  }
+
   .phone\:divide-opacity-0 > :not(template) ~ :not(template){
     --divide-opacity: 0;
   }
@@ -26289,6 +26745,30 @@ readers do not read off random characters that represent icons */
     background-color: rgba(151, 157, 165, var(--bg-opacity));
   }
 
+  .phone\:bg-blue-login-input{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .phone\:bg-blue-login-side{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .phone\:bg-blue-login-bottom{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .phone\:bg-blue-login-button{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
+  }
+
   .phone\:hover\:bg-transparent:hover{
     background-color: transparent;
   }
@@ -26879,6 +27359,30 @@ readers do not read off random characters that represent icons */
     background-color: rgba(151, 157, 165, var(--bg-opacity));
   }
 
+  .phone\:hover\:bg-blue-login-input:hover{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .phone\:hover\:bg-blue-login-side:hover{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .phone\:hover\:bg-blue-login-bottom:hover{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .phone\:hover\:bg-blue-login-button:hover{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
+  }
+
   .phone\:focus\:bg-transparent:focus{
     background-color: transparent;
   }
@@ -27467,6 +27971,30 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #979DA5;
     background-color: rgba(151, 157, 165, var(--bg-opacity));
+  }
+
+  .phone\:focus\:bg-blue-login-input:focus{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .phone\:focus\:bg-blue-login-side:focus{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .phone\:focus\:bg-blue-login-bottom:focus{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .phone\:focus\:bg-blue-login-button:focus{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
   }
 
   .phone\:bg-opacity-0{
@@ -28199,6 +28727,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--border-opacity));
   }
 
+  .phone\:border-blue-login-input{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .phone\:border-blue-login-side{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .phone\:border-blue-login-bottom{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .phone\:border-blue-login-button{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
+  }
+
   .phone\:hover\:border-transparent:hover{
     border-color: transparent;
   }
@@ -28789,6 +29341,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--border-opacity));
   }
 
+  .phone\:hover\:border-blue-login-input:hover{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .phone\:hover\:border-blue-login-side:hover{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .phone\:hover\:border-blue-login-bottom:hover{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .phone\:hover\:border-blue-login-button:hover{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
+  }
+
   .phone\:focus\:border-transparent:focus{
     border-color: transparent;
   }
@@ -29377,6 +29953,30 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #979DA5;
     border-color: rgba(151, 157, 165, var(--border-opacity));
+  }
+
+  .phone\:focus\:border-blue-login-input:focus{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .phone\:focus\:border-blue-login-side:focus{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .phone\:focus\:border-blue-login-bottom:focus{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .phone\:focus\:border-blue-login-button:focus{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
   }
 
   .phone\:border-opacity-0{
@@ -34829,6 +35429,102 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--placeholder-opacity));
   }
 
+  .phone\:placeholder-blue-login-input::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-input:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-input::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-input::placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-side::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-side:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-side::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-side::placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-bottom::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-bottom:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-bottom::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-bottom::placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-button::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-button:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-button::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .phone\:placeholder-blue-login-button::placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
   .phone\:focus\:placeholder-transparent:focus::-moz-placeholder{
     color: transparent;
   }
@@ -37189,6 +37885,102 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--placeholder-opacity));
   }
 
+  .phone\:focus\:placeholder-blue-login-input:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-input:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-input:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-input:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-side:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-side:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-side:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-side:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-bottom:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-bottom:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-bottom:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-bottom:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-button:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-button:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-button:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .phone\:focus\:placeholder-blue-login-button:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
   .phone\:placeholder-opacity-0::-moz-placeholder{
     --placeholder-opacity: 0;
   }
@@ -38214,6 +39006,30 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--text-opacity));
   }
 
+  .phone\:text-blue-login-input{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .phone\:text-blue-login-side{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .phone\:text-blue-login-bottom{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .phone\:text-blue-login-button{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
+  }
+
   .phone\:hover\:text-transparent:hover{
     color: transparent;
   }
@@ -38804,6 +39620,30 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--text-opacity));
   }
 
+  .phone\:hover\:text-blue-login-input:hover{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .phone\:hover\:text-blue-login-side:hover{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .phone\:hover\:text-blue-login-bottom:hover{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .phone\:hover\:text-blue-login-button:hover{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
+  }
+
   .phone\:focus\:text-transparent:focus{
     color: transparent;
   }
@@ -39392,6 +40232,30 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #979DA5;
     color: rgba(151, 157, 165, var(--text-opacity));
+  }
+
+  .phone\:focus\:text-blue-login-input:focus{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .phone\:focus\:text-blue-login-side:focus{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .phone\:focus\:text-blue-login-bottom:focus{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .phone\:focus\:text-blue-login-button:focus{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
   }
 
   .phone\:text-opacity-0{
@@ -43420,6 +44284,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--divide-opacity));
   }
 
+  .sm\:divide-blue-login-input > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--divide-opacity));
+  }
+
+  .sm\:divide-blue-login-side > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--divide-opacity));
+  }
+
+  .sm\:divide-blue-login-bottom > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--divide-opacity));
+  }
+
+  .sm\:divide-blue-login-button > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--divide-opacity));
+  }
+
   .sm\:divide-opacity-0 > :not(template) ~ :not(template){
     --divide-opacity: 0;
   }
@@ -44094,6 +44982,30 @@ readers do not read off random characters that represent icons */
     background-color: rgba(151, 157, 165, var(--bg-opacity));
   }
 
+  .sm\:bg-blue-login-input{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .sm\:bg-blue-login-side{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .sm\:bg-blue-login-bottom{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .sm\:bg-blue-login-button{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
+  }
+
   .sm\:hover\:bg-transparent:hover{
     background-color: transparent;
   }
@@ -44684,6 +45596,30 @@ readers do not read off random characters that represent icons */
     background-color: rgba(151, 157, 165, var(--bg-opacity));
   }
 
+  .sm\:hover\:bg-blue-login-input:hover{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .sm\:hover\:bg-blue-login-side:hover{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .sm\:hover\:bg-blue-login-bottom:hover{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .sm\:hover\:bg-blue-login-button:hover{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
+  }
+
   .sm\:focus\:bg-transparent:focus{
     background-color: transparent;
   }
@@ -45272,6 +46208,30 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #979DA5;
     background-color: rgba(151, 157, 165, var(--bg-opacity));
+  }
+
+  .sm\:focus\:bg-blue-login-input:focus{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .sm\:focus\:bg-blue-login-side:focus{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .sm\:focus\:bg-blue-login-bottom:focus{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .sm\:focus\:bg-blue-login-button:focus{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
   }
 
   .sm\:bg-opacity-0{
@@ -46004,6 +46964,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--border-opacity));
   }
 
+  .sm\:border-blue-login-input{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .sm\:border-blue-login-side{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .sm\:border-blue-login-bottom{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .sm\:border-blue-login-button{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
+  }
+
   .sm\:hover\:border-transparent:hover{
     border-color: transparent;
   }
@@ -46594,6 +47578,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--border-opacity));
   }
 
+  .sm\:hover\:border-blue-login-input:hover{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .sm\:hover\:border-blue-login-side:hover{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .sm\:hover\:border-blue-login-bottom:hover{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .sm\:hover\:border-blue-login-button:hover{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
+  }
+
   .sm\:focus\:border-transparent:focus{
     border-color: transparent;
   }
@@ -47182,6 +48190,30 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #979DA5;
     border-color: rgba(151, 157, 165, var(--border-opacity));
+  }
+
+  .sm\:focus\:border-blue-login-input:focus{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .sm\:focus\:border-blue-login-side:focus{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .sm\:focus\:border-blue-login-bottom:focus{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .sm\:focus\:border-blue-login-button:focus{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
   }
 
   .sm\:border-opacity-0{
@@ -52634,6 +53666,102 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--placeholder-opacity));
   }
 
+  .sm\:placeholder-blue-login-input::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-input:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-input::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-input::placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-side::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-side:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-side::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-side::placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-bottom::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-bottom:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-bottom::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-bottom::placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-button::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-button:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-button::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-login-button::placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
   .sm\:focus\:placeholder-transparent:focus::-moz-placeholder{
     color: transparent;
   }
@@ -54994,6 +56122,102 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--placeholder-opacity));
   }
 
+  .sm\:focus\:placeholder-blue-login-input:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-input:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-input:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-input:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-side:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-side:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-side:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-side:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-bottom:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-bottom:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-bottom:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-bottom:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-button:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-button:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-button:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-login-button:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
   .sm\:placeholder-opacity-0::-moz-placeholder{
     --placeholder-opacity: 0;
   }
@@ -56019,6 +57243,30 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--text-opacity));
   }
 
+  .sm\:text-blue-login-input{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .sm\:text-blue-login-side{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .sm\:text-blue-login-bottom{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .sm\:text-blue-login-button{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
+  }
+
   .sm\:hover\:text-transparent:hover{
     color: transparent;
   }
@@ -56609,6 +57857,30 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--text-opacity));
   }
 
+  .sm\:hover\:text-blue-login-input:hover{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .sm\:hover\:text-blue-login-side:hover{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .sm\:hover\:text-blue-login-bottom:hover{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .sm\:hover\:text-blue-login-button:hover{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
+  }
+
   .sm\:focus\:text-transparent:focus{
     color: transparent;
   }
@@ -57197,6 +58469,30 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #979DA5;
     color: rgba(151, 157, 165, var(--text-opacity));
+  }
+
+  .sm\:focus\:text-blue-login-input:focus{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .sm\:focus\:text-blue-login-side:focus{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .sm\:focus\:text-blue-login-bottom:focus{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .sm\:focus\:text-blue-login-button:focus{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
   }
 
   .sm\:text-opacity-0{
@@ -61225,6 +62521,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--divide-opacity));
   }
 
+  .md\:divide-blue-login-input > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--divide-opacity));
+  }
+
+  .md\:divide-blue-login-side > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--divide-opacity));
+  }
+
+  .md\:divide-blue-login-bottom > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--divide-opacity));
+  }
+
+  .md\:divide-blue-login-button > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--divide-opacity));
+  }
+
   .md\:divide-opacity-0 > :not(template) ~ :not(template){
     --divide-opacity: 0;
   }
@@ -61899,6 +63219,30 @@ readers do not read off random characters that represent icons */
     background-color: rgba(151, 157, 165, var(--bg-opacity));
   }
 
+  .md\:bg-blue-login-input{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .md\:bg-blue-login-side{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .md\:bg-blue-login-bottom{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .md\:bg-blue-login-button{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
+  }
+
   .md\:hover\:bg-transparent:hover{
     background-color: transparent;
   }
@@ -62489,6 +63833,30 @@ readers do not read off random characters that represent icons */
     background-color: rgba(151, 157, 165, var(--bg-opacity));
   }
 
+  .md\:hover\:bg-blue-login-input:hover{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .md\:hover\:bg-blue-login-side:hover{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .md\:hover\:bg-blue-login-bottom:hover{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .md\:hover\:bg-blue-login-button:hover{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
+  }
+
   .md\:focus\:bg-transparent:focus{
     background-color: transparent;
   }
@@ -63077,6 +64445,30 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #979DA5;
     background-color: rgba(151, 157, 165, var(--bg-opacity));
+  }
+
+  .md\:focus\:bg-blue-login-input:focus{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .md\:focus\:bg-blue-login-side:focus{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .md\:focus\:bg-blue-login-bottom:focus{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .md\:focus\:bg-blue-login-button:focus{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
   }
 
   .md\:bg-opacity-0{
@@ -63809,6 +65201,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--border-opacity));
   }
 
+  .md\:border-blue-login-input{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .md\:border-blue-login-side{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .md\:border-blue-login-bottom{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .md\:border-blue-login-button{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
+  }
+
   .md\:hover\:border-transparent:hover{
     border-color: transparent;
   }
@@ -64399,6 +65815,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--border-opacity));
   }
 
+  .md\:hover\:border-blue-login-input:hover{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .md\:hover\:border-blue-login-side:hover{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .md\:hover\:border-blue-login-bottom:hover{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .md\:hover\:border-blue-login-button:hover{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
+  }
+
   .md\:focus\:border-transparent:focus{
     border-color: transparent;
   }
@@ -64987,6 +66427,30 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #979DA5;
     border-color: rgba(151, 157, 165, var(--border-opacity));
+  }
+
+  .md\:focus\:border-blue-login-input:focus{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .md\:focus\:border-blue-login-side:focus{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .md\:focus\:border-blue-login-bottom:focus{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .md\:focus\:border-blue-login-button:focus{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
   }
 
   .md\:border-opacity-0{
@@ -70439,6 +71903,102 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--placeholder-opacity));
   }
 
+  .md\:placeholder-blue-login-input::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-input:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-input::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-input::placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-side::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-side:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-side::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-side::placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-bottom::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-bottom:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-bottom::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-bottom::placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-button::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-button:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-button::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-login-button::placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
   .md\:focus\:placeholder-transparent:focus::-moz-placeholder{
     color: transparent;
   }
@@ -72799,6 +74359,102 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--placeholder-opacity));
   }
 
+  .md\:focus\:placeholder-blue-login-input:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-input:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-input:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-input:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-side:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-side:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-side:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-side:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-bottom:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-bottom:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-bottom:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-bottom:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-button:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-button:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-button:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-login-button:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
   .md\:placeholder-opacity-0::-moz-placeholder{
     --placeholder-opacity: 0;
   }
@@ -73824,6 +75480,30 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--text-opacity));
   }
 
+  .md\:text-blue-login-input{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .md\:text-blue-login-side{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .md\:text-blue-login-bottom{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .md\:text-blue-login-button{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
+  }
+
   .md\:hover\:text-transparent:hover{
     color: transparent;
   }
@@ -74414,6 +76094,30 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--text-opacity));
   }
 
+  .md\:hover\:text-blue-login-input:hover{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .md\:hover\:text-blue-login-side:hover{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .md\:hover\:text-blue-login-bottom:hover{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .md\:hover\:text-blue-login-button:hover{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
+  }
+
   .md\:focus\:text-transparent:focus{
     color: transparent;
   }
@@ -75002,6 +76706,30 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #979DA5;
     color: rgba(151, 157, 165, var(--text-opacity));
+  }
+
+  .md\:focus\:text-blue-login-input:focus{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .md\:focus\:text-blue-login-side:focus{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .md\:focus\:text-blue-login-bottom:focus{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .md\:focus\:text-blue-login-button:focus{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
   }
 
   .md\:text-opacity-0{
@@ -79030,6 +80758,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--divide-opacity));
   }
 
+  .lg\:divide-blue-login-input > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--divide-opacity));
+  }
+
+  .lg\:divide-blue-login-side > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--divide-opacity));
+  }
+
+  .lg\:divide-blue-login-bottom > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--divide-opacity));
+  }
+
+  .lg\:divide-blue-login-button > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--divide-opacity));
+  }
+
   .lg\:divide-opacity-0 > :not(template) ~ :not(template){
     --divide-opacity: 0;
   }
@@ -79704,6 +81456,30 @@ readers do not read off random characters that represent icons */
     background-color: rgba(151, 157, 165, var(--bg-opacity));
   }
 
+  .lg\:bg-blue-login-input{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .lg\:bg-blue-login-side{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .lg\:bg-blue-login-bottom{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .lg\:bg-blue-login-button{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
+  }
+
   .lg\:hover\:bg-transparent:hover{
     background-color: transparent;
   }
@@ -80294,6 +82070,30 @@ readers do not read off random characters that represent icons */
     background-color: rgba(151, 157, 165, var(--bg-opacity));
   }
 
+  .lg\:hover\:bg-blue-login-input:hover{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .lg\:hover\:bg-blue-login-side:hover{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .lg\:hover\:bg-blue-login-bottom:hover{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .lg\:hover\:bg-blue-login-button:hover{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
+  }
+
   .lg\:focus\:bg-transparent:focus{
     background-color: transparent;
   }
@@ -80882,6 +82682,30 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #979DA5;
     background-color: rgba(151, 157, 165, var(--bg-opacity));
+  }
+
+  .lg\:focus\:bg-blue-login-input:focus{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .lg\:focus\:bg-blue-login-side:focus{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .lg\:focus\:bg-blue-login-bottom:focus{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .lg\:focus\:bg-blue-login-button:focus{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
   }
 
   .lg\:bg-opacity-0{
@@ -81614,6 +83438,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--border-opacity));
   }
 
+  .lg\:border-blue-login-input{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .lg\:border-blue-login-side{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .lg\:border-blue-login-bottom{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .lg\:border-blue-login-button{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
+  }
+
   .lg\:hover\:border-transparent:hover{
     border-color: transparent;
   }
@@ -82204,6 +84052,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--border-opacity));
   }
 
+  .lg\:hover\:border-blue-login-input:hover{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .lg\:hover\:border-blue-login-side:hover{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .lg\:hover\:border-blue-login-bottom:hover{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .lg\:hover\:border-blue-login-button:hover{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
+  }
+
   .lg\:focus\:border-transparent:focus{
     border-color: transparent;
   }
@@ -82792,6 +84664,30 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #979DA5;
     border-color: rgba(151, 157, 165, var(--border-opacity));
+  }
+
+  .lg\:focus\:border-blue-login-input:focus{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .lg\:focus\:border-blue-login-side:focus{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .lg\:focus\:border-blue-login-bottom:focus{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .lg\:focus\:border-blue-login-button:focus{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
   }
 
   .lg\:border-opacity-0{
@@ -88244,6 +90140,102 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--placeholder-opacity));
   }
 
+  .lg\:placeholder-blue-login-input::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-input:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-input::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-input::placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-side::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-side:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-side::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-side::placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-bottom::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-bottom:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-bottom::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-bottom::placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-button::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-button:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-button::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-login-button::placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
   .lg\:focus\:placeholder-transparent:focus::-moz-placeholder{
     color: transparent;
   }
@@ -90604,6 +92596,102 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--placeholder-opacity));
   }
 
+  .lg\:focus\:placeholder-blue-login-input:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-input:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-input:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-input:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-side:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-side:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-side:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-side:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-bottom:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-bottom:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-bottom:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-bottom:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-button:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-button:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-button:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-login-button:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
   .lg\:placeholder-opacity-0::-moz-placeholder{
     --placeholder-opacity: 0;
   }
@@ -91629,6 +93717,30 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--text-opacity));
   }
 
+  .lg\:text-blue-login-input{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .lg\:text-blue-login-side{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .lg\:text-blue-login-bottom{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .lg\:text-blue-login-button{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
+  }
+
   .lg\:hover\:text-transparent:hover{
     color: transparent;
   }
@@ -92219,6 +94331,30 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--text-opacity));
   }
 
+  .lg\:hover\:text-blue-login-input:hover{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .lg\:hover\:text-blue-login-side:hover{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .lg\:hover\:text-blue-login-bottom:hover{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .lg\:hover\:text-blue-login-button:hover{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
+  }
+
   .lg\:focus\:text-transparent:focus{
     color: transparent;
   }
@@ -92807,6 +94943,30 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #979DA5;
     color: rgba(151, 157, 165, var(--text-opacity));
+  }
+
+  .lg\:focus\:text-blue-login-input:focus{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .lg\:focus\:text-blue-login-side:focus{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .lg\:focus\:text-blue-login-bottom:focus{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .lg\:focus\:text-blue-login-button:focus{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
   }
 
   .lg\:text-opacity-0{
@@ -96835,6 +98995,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--divide-opacity));
   }
 
+  .xl\:divide-blue-login-input > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--divide-opacity));
+  }
+
+  .xl\:divide-blue-login-side > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--divide-opacity));
+  }
+
+  .xl\:divide-blue-login-bottom > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--divide-opacity));
+  }
+
+  .xl\:divide-blue-login-button > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--divide-opacity));
+  }
+
   .xl\:divide-opacity-0 > :not(template) ~ :not(template){
     --divide-opacity: 0;
   }
@@ -97509,6 +99693,30 @@ readers do not read off random characters that represent icons */
     background-color: rgba(151, 157, 165, var(--bg-opacity));
   }
 
+  .xl\:bg-blue-login-input{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .xl\:bg-blue-login-side{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .xl\:bg-blue-login-bottom{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .xl\:bg-blue-login-button{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
+  }
+
   .xl\:hover\:bg-transparent:hover{
     background-color: transparent;
   }
@@ -98099,6 +100307,30 @@ readers do not read off random characters that represent icons */
     background-color: rgba(151, 157, 165, var(--bg-opacity));
   }
 
+  .xl\:hover\:bg-blue-login-input:hover{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .xl\:hover\:bg-blue-login-side:hover{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .xl\:hover\:bg-blue-login-bottom:hover{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .xl\:hover\:bg-blue-login-button:hover{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
+  }
+
   .xl\:focus\:bg-transparent:focus{
     background-color: transparent;
   }
@@ -98687,6 +100919,30 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #979DA5;
     background-color: rgba(151, 157, 165, var(--bg-opacity));
+  }
+
+  .xl\:focus\:bg-blue-login-input:focus{
+    --bg-opacity: 1;
+    background-color: #E7F1FE;
+    background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .xl\:focus\:bg-blue-login-side:focus{
+    --bg-opacity: 1;
+    background-color: #EDF4F9;
+    background-color: rgba(237, 244, 249, var(--bg-opacity));
+  }
+
+  .xl\:focus\:bg-blue-login-bottom:focus{
+    --bg-opacity: 1;
+    background-color: #E1EAF3;
+    background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .xl\:focus\:bg-blue-login-button:focus{
+    --bg-opacity: 1;
+    background-color: #334866;
+    background-color: rgba(51, 72, 102, var(--bg-opacity));
   }
 
   .xl\:bg-opacity-0{
@@ -99419,6 +101675,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--border-opacity));
   }
 
+  .xl\:border-blue-login-input{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .xl\:border-blue-login-side{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .xl\:border-blue-login-bottom{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .xl\:border-blue-login-button{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
+  }
+
   .xl\:hover\:border-transparent:hover{
     border-color: transparent;
   }
@@ -100009,6 +102289,30 @@ readers do not read off random characters that represent icons */
     border-color: rgba(151, 157, 165, var(--border-opacity));
   }
 
+  .xl\:hover\:border-blue-login-input:hover{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .xl\:hover\:border-blue-login-side:hover{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .xl\:hover\:border-blue-login-bottom:hover{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .xl\:hover\:border-blue-login-button:hover{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
+  }
+
   .xl\:focus\:border-transparent:focus{
     border-color: transparent;
   }
@@ -100597,6 +102901,30 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #979DA5;
     border-color: rgba(151, 157, 165, var(--border-opacity));
+  }
+
+  .xl\:focus\:border-blue-login-input:focus{
+    --border-opacity: 1;
+    border-color: #E7F1FE;
+    border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .xl\:focus\:border-blue-login-side:focus{
+    --border-opacity: 1;
+    border-color: #EDF4F9;
+    border-color: rgba(237, 244, 249, var(--border-opacity));
+  }
+
+  .xl\:focus\:border-blue-login-bottom:focus{
+    --border-opacity: 1;
+    border-color: #E1EAF3;
+    border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .xl\:focus\:border-blue-login-button:focus{
+    --border-opacity: 1;
+    border-color: #334866;
+    border-color: rgba(51, 72, 102, var(--border-opacity));
   }
 
   .xl\:border-opacity-0{
@@ -106049,6 +108377,102 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--placeholder-opacity));
   }
 
+  .xl\:placeholder-blue-login-input::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-input:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-input::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-input::placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-side::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-side:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-side::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-side::placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-bottom::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-bottom:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-bottom::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-bottom::placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-button::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-button:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-button::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-login-button::placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
   .xl\:focus\:placeholder-transparent:focus::-moz-placeholder{
     color: transparent;
   }
@@ -108409,6 +110833,102 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--placeholder-opacity));
   }
 
+  .xl\:focus\:placeholder-blue-login-input:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-input:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-input:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-input:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-side:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-side:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-side:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-side:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-bottom:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-bottom:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-bottom:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-bottom:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-button:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-button:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-button:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-login-button:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--placeholder-opacity));
+  }
+
   .xl\:placeholder-opacity-0::-moz-placeholder{
     --placeholder-opacity: 0;
   }
@@ -109434,6 +111954,30 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--text-opacity));
   }
 
+  .xl\:text-blue-login-input{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .xl\:text-blue-login-side{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .xl\:text-blue-login-bottom{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .xl\:text-blue-login-button{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
+  }
+
   .xl\:hover\:text-transparent:hover{
     color: transparent;
   }
@@ -110024,6 +112568,30 @@ readers do not read off random characters that represent icons */
     color: rgba(151, 157, 165, var(--text-opacity));
   }
 
+  .xl\:hover\:text-blue-login-input:hover{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .xl\:hover\:text-blue-login-side:hover{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .xl\:hover\:text-blue-login-bottom:hover{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .xl\:hover\:text-blue-login-button:hover{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
+  }
+
   .xl\:focus\:text-transparent:focus{
     color: transparent;
   }
@@ -110612,6 +113180,30 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #979DA5;
     color: rgba(151, 157, 165, var(--text-opacity));
+  }
+
+  .xl\:focus\:text-blue-login-input:focus{
+    --text-opacity: 1;
+    color: #E7F1FE;
+    color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .xl\:focus\:text-blue-login-side:focus{
+    --text-opacity: 1;
+    color: #EDF4F9;
+    color: rgba(237, 244, 249, var(--text-opacity));
+  }
+
+  .xl\:focus\:text-blue-login-bottom:focus{
+    --text-opacity: 1;
+    color: #E1EAF3;
+    color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .xl\:focus\:text-blue-login-button:focus{
+    --text-opacity: 1;
+    color: #334866;
+    color: rgba(51, 72, 102, var(--text-opacity));
   }
 
   .xl\:text-opacity-0{
