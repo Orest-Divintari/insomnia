@@ -1,0 +1,1 @@
+<a class=" px-5 py-4 hover:bg-blue-mid" href="{{route($destination)}}">{{$name}}</a>

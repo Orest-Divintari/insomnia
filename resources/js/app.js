@@ -4,9 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-window.Vue = require('vue');
+window.Vue = require("vue");
 
 /**
  * The following block of code may be used to automatically register your
@@ -18,8 +18,28 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.directive("click-outside", {
+    bind: function(el, binding, vnode) {
+        el.clickOutsideEvent = function(event) {
+            // here I check that click was outside the el and his childrens
+            if (el !== event.target && !el.contains(event.target)) {
+                // and if it did, call method provided in attribute value
+                vnode.context[binding.expression](event);
+                event.stopPropagation();
+            }
+        };
+        document.addEventListener("click", el.clickOutsideEvent);
+    },
+    unbind: function(el) {
+        document.removeEventListener("click", el.clickOutsideEvent);
+    }
+});
+Vue.component(
+    "example-component",
+    require("./components/ExampleComponent.vue").default
+);
+Vue.component("hamburger", require("./components/Hamburger.vue").default);
+Vue.component("search", require("./components/Search.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -28,5 +48,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app',
+    el: "#app"
 });
