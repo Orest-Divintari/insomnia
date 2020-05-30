@@ -33,12 +33,12 @@
                     <a class="font-bold text-4xl text-white" href="{{route('home')}}">iNsomnia</a>
                 </div>
                 <div class="hidden lg:flex items-center">
-                    <x-tab-item name="Front Page" destination="home"></x-tab-item>
-                    <x-tab-item name="Guides" destination="home"></x-tab-item>
-                    <x-tab-item name="How Tos" destination="home"></x-tab-item>
-                    <x-tab-item name="Reviews" destination="home"></x-tab-item>
-                    <x-tab-item name="Ads" destination="home"></x-tab-item>
-                    <x-tab-item name="Forums" destination="forum"></x-tab-item>
+                    <x-head-tab-item name="Front Page" destination="home"></x-head-tab-item>
+                    <x-head-tab-item name="Guides" destination="home"></x-head-tab-item>
+                    <x-head-tab-item name="How Tos" destination="home"></x-head-tab-item>
+                    <x-head-tab-item name="Reviews" destination="home"></x-head-tab-item>
+                    <x-head-tab-item name="Ads" destination="home"></x-head-tab-item>
+                    <x-head-tab-item name="Forums" destination="forum"></x-head-tab-item>
                 </div>
                 <div>
                     {{ $navRight }}
@@ -46,6 +46,7 @@
             </div>
 
 
+            <div>{{$subHeader}}</div>
         </header>
 
         <main class="px-5">{{$main}}</main>
