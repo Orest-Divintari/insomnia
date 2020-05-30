@@ -1,4 +1,4 @@
-<x-master>
+<x-layouts._forums>
 
     <div class="container">
         <div class="row justify-content-center">
@@ -83,4 +83,4 @@
             </div>
         </div>
     </div>
-</x-master>
+</x-layouts._forums>
