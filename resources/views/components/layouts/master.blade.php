@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" class="">
         <header class="">
             <div class="hidden lg:block bg-blue-light">
                 <a href="{{route('home')}}" class="pt-3 px-5 text-5xl font-bold text-blue-dark">iNsomnia</a>
@@ -48,8 +48,14 @@
 
         </header>
 
-        <main>{{$main}}</main>
-
+        <main class="px-5">{{$main}}</main>
+        <footer class="px-5 bg-blue-light">
+            <div class="flex justify-between">
+                <div>Editors</div>
+                <div>Links</div>
+                <div>Videos</div>
+            </div>
+        </footer>
     </div>
 </body>
 
