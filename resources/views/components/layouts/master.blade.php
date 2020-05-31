@@ -28,7 +28,7 @@
                 <a href="{{route('home')}}" class="pt-3 px-5 text-5xl font-bold text-blue-dark">iNsomnia</a>
             </div>
             <div class="bg-blue-dark text-white px-5 flex justify-between items-center">
-                <div class="phone:flex phone:justify-between phone:items-center lg:hidden">
+                <div class="xs:flex xs:justify-between xs:items-center lg:hidden">
                     <hamburger class="mr-3"></hamburger>
                     <a class="font-bold text-4xl text-white" href="{{route('home')}}">iNsomnia</a>
                 </div>
@@ -49,7 +49,7 @@
             <div>{{$subHeader}}</div>
         </header>
 
-        <main class="px-5">{{$main}}</main>
+        <main class="px-5 h-screen">{{$main}}</main>
         <footer class="px-5 bg-blue-light">
             <div class="flex justify-between">
                 <div>Editors</div>
