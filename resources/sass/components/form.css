@@ -1,0 +1,70 @@
+.form-label {
+    @apply .text-black-form-text .tracking-wide;
+}
+
+.form-label-phone {
+    @apply .form-label .pb-1;
+}
+
+.form-sub-label {
+    @apply .text-gray-form-label .text-xs;
+}
+
+.form-left-col {
+    @apply hidden .w-2/6 .bg-blue-form-side .text-right .pt-6 .pb-4 .px-4 .border-r;
+}
+
+.form-right-col {
+    @apply .flex-1 .p-4;
+}
+
+.form-input {
+    @apply .w-full .bg-blue-form-input .rounded .border .border-blue-form-border .p-input;
+}
+
+.form-input:focus {
+    @apply .outline-none .bg-white;
+}
+
+.form-row {
+    @apply .flex .items-baseline;
+}
+
+.form-container {
+    @apply .border .border-blue-form-border .rounded;
+}
+
+.form-input-description {
+    @apply form-sub-label .pt-2;
+}
+
+.form-button-container {
+    @apply .flex .justify-center .bg-blue-form-bottom .py-3;
+}
+
+.form-button-left-col {
+    @apply .hidden .h-full .w-2/6 mr-4;
+}
+
+.form-button-right-col {
+    @apply .py-2 .px-10 .font-bold .bg-blue-form-button .text-white .rounded;
+}
+
+.form-button-right-col:hover {
+    @apply .bg-blue-form-hover-button;
+}
+
+@screen smaller {
+    .form-left-col {
+        @apply .block;
+    }
+    .form-label-phone {
+        @apply hidden;
+    }
+    .form-button-container {
+        @apply .justify-start;
+    }
+    .form-button-left-col {
+        @apply block;
+    }
+}

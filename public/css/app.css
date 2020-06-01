@@ -1,3 +1,140 @@
+.form-label {
+  --text-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--text-opacity));
+  letter-spacing: 0.025em;
+}
+
+.form-label-phone {
+  --text-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--text-opacity));
+  letter-spacing: 0.025em;
+  padding-bottom: 0.25rem;
+}
+
+.form-sub-label {
+  --text-opacity: 1;
+  color: #9FA8B2;
+  color: rgba(159, 168, 178, var(--text-opacity));
+  font-size: 0.75rem;
+}
+
+.form-left-col {
+  display: none;
+  width: 33.333333%;
+  --bg-opacity: 1;
+  background-color: #EDF4F9;
+  background-color: rgba(237, 244, 249, var(--bg-opacity));
+  text-align: right;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-right-width: 1px;
+}
+
+.form-right-col {
+  flex: 1 1 0%;
+  padding: 1rem;
+}
+
+.form-input {
+  width: 100%;
+  --bg-opacity: 1;
+  background-color: #E7F1FE;
+  background-color: rgba(231, 241, 254, var(--bg-opacity));
+  border-radius: 0.25rem;
+  border-width: 1px;
+  --border-opacity: 1;
+  border-color: #E1EAF3;
+  border-color: rgba(225, 234, 243, var(--border-opacity));
+  padding: 0.375rem;
+}
+
+.form-input:focus {
+  outline: 0;
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+}
+
+.form-row {
+  display: flex;
+  align-items: baseline;
+}
+
+.form-container {
+  border-width: 1px;
+  --border-opacity: 1;
+  border-color: #E1EAF3;
+  border-color: rgba(225, 234, 243, var(--border-opacity));
+  border-radius: 0.25rem;
+}
+
+.form-input-description {
+  --text-opacity: 1;
+  color: #9FA8B2;
+  color: rgba(159, 168, 178, var(--text-opacity));
+  font-size: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.form-button-container {
+  display: flex;
+  justify-content: center;
+  --bg-opacity: 1;
+  background-color: #E1EAF3;
+  background-color: rgba(225, 234, 243, var(--bg-opacity));
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.form-button-left-col {
+  display: none;
+  height: 100%;
+  width: 33.333333%;
+  margin-right: 1rem;
+}
+
+.form-button-right-col {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  font-weight: 700;
+  --bg-opacity: 1;
+  background-color: #4F6C98;
+  background-color: rgba(79, 108, 152, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  border-radius: 0.25rem;
+}
+
+.form-button-right-col:hover {
+  --bg-opacity: 1;
+  background-color: #334866;
+  background-color: rgba(51, 72, 102, var(--bg-opacity));
+}
+
+@media (min-width: 541px) {
+  .form-left-col {
+    display: block;
+  }
+
+  .form-label-phone {
+    display: none;
+  }
+
+  .form-button-container {
+    justify-content: flex-start;
+  }
+
+  .form-button-left-col {
+    display: block;
+  }
+}
 @charset "UTF-8";
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -1791,6 +1928,12 @@ video {
   border-color: rgba(159, 168, 178, var(--divide-opacity));
 }
 
+.divide-black-form-text > :not(template) ~ :not(template){
+  --divide-opacity: 1;
+  border-color: #2C2C2C;
+  border-color: rgba(44, 44, 44, var(--divide-opacity));
+}
+
 .divide-red-alert > :not(template) ~ :not(template){
   --divide-opacity: 1;
   border-color: #FEE9E8;
@@ -2525,6 +2668,12 @@ video {
   background-color: rgba(159, 168, 178, var(--bg-opacity));
 }
 
+.bg-black-form-text{
+  --bg-opacity: 1;
+  background-color: #2C2C2C;
+  background-color: rgba(44, 44, 44, var(--bg-opacity));
+}
+
 .bg-red-alert{
   --bg-opacity: 1;
   background-color: #FEE9E8;
@@ -3175,6 +3324,12 @@ video {
   background-color: rgba(159, 168, 178, var(--bg-opacity));
 }
 
+.hover\:bg-black-form-text:hover{
+  --bg-opacity: 1;
+  background-color: #2C2C2C;
+  background-color: rgba(44, 44, 44, var(--bg-opacity));
+}
+
 .hover\:bg-red-alert:hover{
   --bg-opacity: 1;
   background-color: #FEE9E8;
@@ -3823,6 +3978,12 @@ video {
   --bg-opacity: 1;
   background-color: #9FA8B2;
   background-color: rgba(159, 168, 178, var(--bg-opacity));
+}
+
+.focus\:bg-black-form-text:focus{
+  --bg-opacity: 1;
+  background-color: #2C2C2C;
+  background-color: rgba(44, 44, 44, var(--bg-opacity));
 }
 
 .focus\:bg-red-alert:focus{
@@ -4615,6 +4776,12 @@ video {
   border-color: rgba(159, 168, 178, var(--border-opacity));
 }
 
+.border-black-form-text{
+  --border-opacity: 1;
+  border-color: #2C2C2C;
+  border-color: rgba(44, 44, 44, var(--border-opacity));
+}
+
 .border-red-alert{
   --border-opacity: 1;
   border-color: #FEE9E8;
@@ -5265,6 +5432,12 @@ video {
   border-color: rgba(159, 168, 178, var(--border-opacity));
 }
 
+.hover\:border-black-form-text:hover{
+  --border-opacity: 1;
+  border-color: #2C2C2C;
+  border-color: rgba(44, 44, 44, var(--border-opacity));
+}
+
 .hover\:border-red-alert:hover{
   --border-opacity: 1;
   border-color: #FEE9E8;
@@ -5913,6 +6086,12 @@ video {
   --border-opacity: 1;
   border-color: #9FA8B2;
   border-color: rgba(159, 168, 178, var(--border-opacity));
+}
+
+.focus\:border-black-form-text:focus{
+  --border-opacity: 1;
+  border-color: #2C2C2C;
+  border-color: rgba(44, 44, 44, var(--border-opacity));
 }
 
 .focus\:border-red-alert:focus{
@@ -8531,6 +8710,10 @@ video {
   padding: 1px;
 }
 
+.p-input{
+  padding: 0.375rem;
+}
+
 .py-0{
   padding-top: 0;
   padding-bottom: 0;
@@ -8719,6 +8902,16 @@ video {
 .px-px{
   padding-left: 1px;
   padding-right: 1px;
+}
+
+.py-input{
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+
+.px-input{
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
 }
 
 .pt-0{
@@ -9023,6 +9216,22 @@ video {
 
 .pl-px{
   padding-left: 1px;
+}
+
+.pt-input{
+  padding-top: 0.375rem;
+}
+
+.pr-input{
+  padding-right: 0.375rem;
+}
+
+.pb-input{
+  padding-bottom: 0.375rem;
+}
+
+.pl-input{
+  padding-left: 0.375rem;
 }
 
 .placeholder-transparent::-moz-placeholder{
@@ -11575,6 +11784,30 @@ video {
   --placeholder-opacity: 1;
   color: #9FA8B2;
   color: rgba(159, 168, 178, var(--placeholder-opacity));
+}
+
+.placeholder-black-form-text::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--placeholder-opacity));
+}
+
+.placeholder-black-form-text:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--placeholder-opacity));
+}
+
+.placeholder-black-form-text::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--placeholder-opacity));
+}
+
+.placeholder-black-form-text::placeholder{
+  --placeholder-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--placeholder-opacity));
 }
 
 .placeholder-red-alert::-moz-placeholder{
@@ -14177,6 +14410,30 @@ video {
   color: rgba(159, 168, 178, var(--placeholder-opacity));
 }
 
+.focus\:placeholder-black-form-text:focus::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-black-form-text:focus:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-black-form-text:focus::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-black-form-text:focus::placeholder{
+  --placeholder-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--placeholder-opacity));
+}
+
 .focus\:placeholder-red-alert:focus::-moz-placeholder{
   --placeholder-opacity: 1;
   color: #FEE9E8;
@@ -15298,6 +15555,12 @@ video {
   color: rgba(159, 168, 178, var(--text-opacity));
 }
 
+.text-black-form-text{
+  --text-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--text-opacity));
+}
+
 .text-red-alert{
   --text-opacity: 1;
   color: #FEE9E8;
@@ -15948,6 +16211,12 @@ video {
   color: rgba(159, 168, 178, var(--text-opacity));
 }
 
+.hover\:text-black-form-text:hover{
+  --text-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--text-opacity));
+}
+
 .hover\:text-red-alert:hover{
   --text-opacity: 1;
   color: #FEE9E8;
@@ -16596,6 +16865,12 @@ video {
   --text-opacity: 1;
   color: #9FA8B2;
   color: rgba(159, 168, 178, var(--text-opacity));
+}
+
+.focus\:text-black-form-text:focus{
+  --text-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--text-opacity));
 }
 
 .focus\:text-red-alert:focus{
@@ -26757,6 +27032,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--divide-opacity));
   }
 
+  .xs\:divide-black-form-text > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--divide-opacity));
+  }
+
   .xs\:divide-red-alert > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #FEE9E8;
@@ -27491,6 +27772,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .xs\:bg-black-form-text{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .xs\:bg-red-alert{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -28141,6 +28428,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .xs\:hover\:bg-black-form-text:hover{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .xs\:hover\:bg-red-alert:hover{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -28789,6 +29082,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #9FA8B2;
     background-color: rgba(159, 168, 178, var(--bg-opacity));
+  }
+
+  .xs\:focus\:bg-black-form-text:focus{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
   }
 
   .xs\:focus\:bg-red-alert:focus{
@@ -29581,6 +29880,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .xs\:border-black-form-text{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .xs\:border-red-alert{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -30231,6 +30536,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .xs\:hover\:border-black-form-text:hover{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .xs\:hover\:border-red-alert:hover{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -30879,6 +31190,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #9FA8B2;
     border-color: rgba(159, 168, 178, var(--border-opacity));
+  }
+
+  .xs\:focus\:border-black-form-text:focus{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
   }
 
   .xs\:focus\:border-red-alert:focus{
@@ -33497,6 +33814,10 @@ readers do not read off random characters that represent icons */
     padding: 1px;
   }
 
+  .xs\:p-input{
+    padding: 0.375rem;
+  }
+
   .xs\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -33685,6 +34006,16 @@ readers do not read off random characters that represent icons */
   .xs\:px-px{
     padding-left: 1px;
     padding-right: 1px;
+  }
+
+  .xs\:py-input{
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .xs\:px-input{
+    padding-left: 0.375rem;
+    padding-right: 0.375rem;
   }
 
   .xs\:pt-0{
@@ -33989,6 +34320,22 @@ readers do not read off random characters that represent icons */
 
   .xs\:pl-px{
     padding-left: 1px;
+  }
+
+  .xs\:pt-input{
+    padding-top: 0.375rem;
+  }
+
+  .xs\:pr-input{
+    padding-right: 0.375rem;
+  }
+
+  .xs\:pb-input{
+    padding-bottom: 0.375rem;
+  }
+
+  .xs\:pl-input{
+    padding-left: 0.375rem;
   }
 
   .xs\:placeholder-transparent::-moz-placeholder{
@@ -36541,6 +36888,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-black-form-text::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-black-form-text:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-black-form-text::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-black-form-text::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
   }
 
   .xs\:placeholder-red-alert::-moz-placeholder{
@@ -39143,6 +39514,30 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--placeholder-opacity));
   }
 
+  .xs\:focus\:placeholder-black-form-text:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-black-form-text:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-black-form-text:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-black-form-text:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
   .xs\:focus\:placeholder-red-alert:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #FEE9E8;
@@ -40264,6 +40659,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .xs\:text-black-form-text{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .xs\:text-red-alert{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -40914,6 +41315,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .xs\:hover\:text-black-form-text:hover{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .xs\:hover\:text-red-alert:hover{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -41562,6 +41969,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--text-opacity));
+  }
+
+  .xs\:focus\:text-black-form-text:focus{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
   }
 
   .xs\:focus\:text-red-alert:focus{
@@ -45650,6 +46063,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--divide-opacity));
   }
 
+  .smaller\:divide-black-form-text > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--divide-opacity));
+  }
+
   .smaller\:divide-red-alert > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #FEE9E8;
@@ -46384,6 +46803,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .smaller\:bg-black-form-text{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .smaller\:bg-red-alert{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -47034,6 +47459,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .smaller\:hover\:bg-black-form-text:hover{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .smaller\:hover\:bg-red-alert:hover{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -47682,6 +48113,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #9FA8B2;
     background-color: rgba(159, 168, 178, var(--bg-opacity));
+  }
+
+  .smaller\:focus\:bg-black-form-text:focus{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
   }
 
   .smaller\:focus\:bg-red-alert:focus{
@@ -48474,6 +48911,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .smaller\:border-black-form-text{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .smaller\:border-red-alert{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -49124,6 +49567,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .smaller\:hover\:border-black-form-text:hover{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .smaller\:hover\:border-red-alert:hover{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -49772,6 +50221,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #9FA8B2;
     border-color: rgba(159, 168, 178, var(--border-opacity));
+  }
+
+  .smaller\:focus\:border-black-form-text:focus{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
   }
 
   .smaller\:focus\:border-red-alert:focus{
@@ -52390,6 +52845,10 @@ readers do not read off random characters that represent icons */
     padding: 1px;
   }
 
+  .smaller\:p-input{
+    padding: 0.375rem;
+  }
+
   .smaller\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -52578,6 +53037,16 @@ readers do not read off random characters that represent icons */
   .smaller\:px-px{
     padding-left: 1px;
     padding-right: 1px;
+  }
+
+  .smaller\:py-input{
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .smaller\:px-input{
+    padding-left: 0.375rem;
+    padding-right: 0.375rem;
   }
 
   .smaller\:pt-0{
@@ -52882,6 +53351,22 @@ readers do not read off random characters that represent icons */
 
   .smaller\:pl-px{
     padding-left: 1px;
+  }
+
+  .smaller\:pt-input{
+    padding-top: 0.375rem;
+  }
+
+  .smaller\:pr-input{
+    padding-right: 0.375rem;
+  }
+
+  .smaller\:pb-input{
+    padding-bottom: 0.375rem;
+  }
+
+  .smaller\:pl-input{
+    padding-left: 0.375rem;
   }
 
   .smaller\:placeholder-transparent::-moz-placeholder{
@@ -55434,6 +55919,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-black-form-text::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-black-form-text:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-black-form-text::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-black-form-text::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
   }
 
   .smaller\:placeholder-red-alert::-moz-placeholder{
@@ -58036,6 +58545,30 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--placeholder-opacity));
   }
 
+  .smaller\:focus\:placeholder-black-form-text:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-black-form-text:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-black-form-text:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-black-form-text:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
   .smaller\:focus\:placeholder-red-alert:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #FEE9E8;
@@ -59157,6 +59690,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .smaller\:text-black-form-text{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .smaller\:text-red-alert{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -59807,6 +60346,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .smaller\:hover\:text-black-form-text:hover{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .smaller\:hover\:text-red-alert:hover{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -60455,6 +61000,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--text-opacity));
+  }
+
+  .smaller\:focus\:text-black-form-text:focus{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
   }
 
   .smaller\:focus\:text-red-alert:focus{
@@ -64543,6 +65094,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--divide-opacity));
   }
 
+  .sm\:divide-black-form-text > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--divide-opacity));
+  }
+
   .sm\:divide-red-alert > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #FEE9E8;
@@ -65277,6 +65834,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .sm\:bg-black-form-text{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .sm\:bg-red-alert{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -65927,6 +66490,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .sm\:hover\:bg-black-form-text:hover{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .sm\:hover\:bg-red-alert:hover{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -66575,6 +67144,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #9FA8B2;
     background-color: rgba(159, 168, 178, var(--bg-opacity));
+  }
+
+  .sm\:focus\:bg-black-form-text:focus{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
   }
 
   .sm\:focus\:bg-red-alert:focus{
@@ -67367,6 +67942,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .sm\:border-black-form-text{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .sm\:border-red-alert{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -68017,6 +68598,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .sm\:hover\:border-black-form-text:hover{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .sm\:hover\:border-red-alert:hover{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -68665,6 +69252,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #9FA8B2;
     border-color: rgba(159, 168, 178, var(--border-opacity));
+  }
+
+  .sm\:focus\:border-black-form-text:focus{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
   }
 
   .sm\:focus\:border-red-alert:focus{
@@ -71283,6 +71876,10 @@ readers do not read off random characters that represent icons */
     padding: 1px;
   }
 
+  .sm\:p-input{
+    padding: 0.375rem;
+  }
+
   .sm\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -71471,6 +72068,16 @@ readers do not read off random characters that represent icons */
   .sm\:px-px{
     padding-left: 1px;
     padding-right: 1px;
+  }
+
+  .sm\:py-input{
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .sm\:px-input{
+    padding-left: 0.375rem;
+    padding-right: 0.375rem;
   }
 
   .sm\:pt-0{
@@ -71775,6 +72382,22 @@ readers do not read off random characters that represent icons */
 
   .sm\:pl-px{
     padding-left: 1px;
+  }
+
+  .sm\:pt-input{
+    padding-top: 0.375rem;
+  }
+
+  .sm\:pr-input{
+    padding-right: 0.375rem;
+  }
+
+  .sm\:pb-input{
+    padding-bottom: 0.375rem;
+  }
+
+  .sm\:pl-input{
+    padding-left: 0.375rem;
   }
 
   .sm\:placeholder-transparent::-moz-placeholder{
@@ -74327,6 +74950,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-black-form-text::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-black-form-text:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-black-form-text::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-black-form-text::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
   }
 
   .sm\:placeholder-red-alert::-moz-placeholder{
@@ -76929,6 +77576,30 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--placeholder-opacity));
   }
 
+  .sm\:focus\:placeholder-black-form-text:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-black-form-text:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-black-form-text:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-black-form-text:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
   .sm\:focus\:placeholder-red-alert:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #FEE9E8;
@@ -78050,6 +78721,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .sm\:text-black-form-text{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .sm\:text-red-alert{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -78700,6 +79377,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .sm\:hover\:text-black-form-text:hover{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .sm\:hover\:text-red-alert:hover{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -79348,6 +80031,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--text-opacity));
+  }
+
+  .sm\:focus\:text-black-form-text:focus{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
   }
 
   .sm\:focus\:text-red-alert:focus{
@@ -83436,6 +84125,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--divide-opacity));
   }
 
+  .md\:divide-black-form-text > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--divide-opacity));
+  }
+
   .md\:divide-red-alert > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #FEE9E8;
@@ -84170,6 +84865,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .md\:bg-black-form-text{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .md\:bg-red-alert{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -84820,6 +85521,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .md\:hover\:bg-black-form-text:hover{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .md\:hover\:bg-red-alert:hover{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -85468,6 +86175,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #9FA8B2;
     background-color: rgba(159, 168, 178, var(--bg-opacity));
+  }
+
+  .md\:focus\:bg-black-form-text:focus{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
   }
 
   .md\:focus\:bg-red-alert:focus{
@@ -86260,6 +86973,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .md\:border-black-form-text{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .md\:border-red-alert{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -86910,6 +87629,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .md\:hover\:border-black-form-text:hover{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .md\:hover\:border-red-alert:hover{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -87558,6 +88283,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #9FA8B2;
     border-color: rgba(159, 168, 178, var(--border-opacity));
+  }
+
+  .md\:focus\:border-black-form-text:focus{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
   }
 
   .md\:focus\:border-red-alert:focus{
@@ -90176,6 +90907,10 @@ readers do not read off random characters that represent icons */
     padding: 1px;
   }
 
+  .md\:p-input{
+    padding: 0.375rem;
+  }
+
   .md\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -90364,6 +91099,16 @@ readers do not read off random characters that represent icons */
   .md\:px-px{
     padding-left: 1px;
     padding-right: 1px;
+  }
+
+  .md\:py-input{
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .md\:px-input{
+    padding-left: 0.375rem;
+    padding-right: 0.375rem;
   }
 
   .md\:pt-0{
@@ -90668,6 +91413,22 @@ readers do not read off random characters that represent icons */
 
   .md\:pl-px{
     padding-left: 1px;
+  }
+
+  .md\:pt-input{
+    padding-top: 0.375rem;
+  }
+
+  .md\:pr-input{
+    padding-right: 0.375rem;
+  }
+
+  .md\:pb-input{
+    padding-bottom: 0.375rem;
+  }
+
+  .md\:pl-input{
+    padding-left: 0.375rem;
   }
 
   .md\:placeholder-transparent::-moz-placeholder{
@@ -93220,6 +93981,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-black-form-text::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-black-form-text:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-black-form-text::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-black-form-text::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
   }
 
   .md\:placeholder-red-alert::-moz-placeholder{
@@ -95822,6 +96607,30 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--placeholder-opacity));
   }
 
+  .md\:focus\:placeholder-black-form-text:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-black-form-text:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-black-form-text:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-black-form-text:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
   .md\:focus\:placeholder-red-alert:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #FEE9E8;
@@ -96943,6 +97752,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .md\:text-black-form-text{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .md\:text-red-alert{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -97593,6 +98408,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .md\:hover\:text-black-form-text:hover{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .md\:hover\:text-red-alert:hover{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -98241,6 +99062,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--text-opacity));
+  }
+
+  .md\:focus\:text-black-form-text:focus{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
   }
 
   .md\:focus\:text-red-alert:focus{
@@ -102329,6 +103156,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--divide-opacity));
   }
 
+  .lg\:divide-black-form-text > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--divide-opacity));
+  }
+
   .lg\:divide-red-alert > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #FEE9E8;
@@ -103063,6 +103896,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .lg\:bg-black-form-text{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .lg\:bg-red-alert{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -103713,6 +104552,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .lg\:hover\:bg-black-form-text:hover{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .lg\:hover\:bg-red-alert:hover{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -104361,6 +105206,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #9FA8B2;
     background-color: rgba(159, 168, 178, var(--bg-opacity));
+  }
+
+  .lg\:focus\:bg-black-form-text:focus{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
   }
 
   .lg\:focus\:bg-red-alert:focus{
@@ -105153,6 +106004,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .lg\:border-black-form-text{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .lg\:border-red-alert{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -105803,6 +106660,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .lg\:hover\:border-black-form-text:hover{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .lg\:hover\:border-red-alert:hover{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -106451,6 +107314,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #9FA8B2;
     border-color: rgba(159, 168, 178, var(--border-opacity));
+  }
+
+  .lg\:focus\:border-black-form-text:focus{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
   }
 
   .lg\:focus\:border-red-alert:focus{
@@ -109069,6 +109938,10 @@ readers do not read off random characters that represent icons */
     padding: 1px;
   }
 
+  .lg\:p-input{
+    padding: 0.375rem;
+  }
+
   .lg\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -109257,6 +110130,16 @@ readers do not read off random characters that represent icons */
   .lg\:px-px{
     padding-left: 1px;
     padding-right: 1px;
+  }
+
+  .lg\:py-input{
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .lg\:px-input{
+    padding-left: 0.375rem;
+    padding-right: 0.375rem;
   }
 
   .lg\:pt-0{
@@ -109561,6 +110444,22 @@ readers do not read off random characters that represent icons */
 
   .lg\:pl-px{
     padding-left: 1px;
+  }
+
+  .lg\:pt-input{
+    padding-top: 0.375rem;
+  }
+
+  .lg\:pr-input{
+    padding-right: 0.375rem;
+  }
+
+  .lg\:pb-input{
+    padding-bottom: 0.375rem;
+  }
+
+  .lg\:pl-input{
+    padding-left: 0.375rem;
   }
 
   .lg\:placeholder-transparent::-moz-placeholder{
@@ -112113,6 +113012,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-black-form-text::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-black-form-text:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-black-form-text::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-black-form-text::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
   }
 
   .lg\:placeholder-red-alert::-moz-placeholder{
@@ -114715,6 +115638,30 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--placeholder-opacity));
   }
 
+  .lg\:focus\:placeholder-black-form-text:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-black-form-text:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-black-form-text:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-black-form-text:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
   .lg\:focus\:placeholder-red-alert:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #FEE9E8;
@@ -115836,6 +116783,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .lg\:text-black-form-text{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .lg\:text-red-alert{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -116486,6 +117439,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .lg\:hover\:text-black-form-text:hover{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .lg\:hover\:text-red-alert:hover{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -117134,6 +118093,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--text-opacity));
+  }
+
+  .lg\:focus\:text-black-form-text:focus{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
   }
 
   .lg\:focus\:text-red-alert:focus{
@@ -121222,6 +122187,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--divide-opacity));
   }
 
+  .xl\:divide-black-form-text > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--divide-opacity));
+  }
+
   .xl\:divide-red-alert > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #FEE9E8;
@@ -121956,6 +122927,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .xl\:bg-black-form-text{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .xl\:bg-red-alert{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -122606,6 +123583,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(159, 168, 178, var(--bg-opacity));
   }
 
+  .xl\:hover\:bg-black-form-text:hover{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
+  }
+
   .xl\:hover\:bg-red-alert:hover{
     --bg-opacity: 1;
     background-color: #FEE9E8;
@@ -123254,6 +124237,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #9FA8B2;
     background-color: rgba(159, 168, 178, var(--bg-opacity));
+  }
+
+  .xl\:focus\:bg-black-form-text:focus{
+    --bg-opacity: 1;
+    background-color: #2C2C2C;
+    background-color: rgba(44, 44, 44, var(--bg-opacity));
   }
 
   .xl\:focus\:bg-red-alert:focus{
@@ -124046,6 +125035,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .xl\:border-black-form-text{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .xl\:border-red-alert{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -124696,6 +125691,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(159, 168, 178, var(--border-opacity));
   }
 
+  .xl\:hover\:border-black-form-text:hover{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
+  }
+
   .xl\:hover\:border-red-alert:hover{
     --border-opacity: 1;
     border-color: #FEE9E8;
@@ -125344,6 +126345,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #9FA8B2;
     border-color: rgba(159, 168, 178, var(--border-opacity));
+  }
+
+  .xl\:focus\:border-black-form-text:focus{
+    --border-opacity: 1;
+    border-color: #2C2C2C;
+    border-color: rgba(44, 44, 44, var(--border-opacity));
   }
 
   .xl\:focus\:border-red-alert:focus{
@@ -127962,6 +128969,10 @@ readers do not read off random characters that represent icons */
     padding: 1px;
   }
 
+  .xl\:p-input{
+    padding: 0.375rem;
+  }
+
   .xl\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -128150,6 +129161,16 @@ readers do not read off random characters that represent icons */
   .xl\:px-px{
     padding-left: 1px;
     padding-right: 1px;
+  }
+
+  .xl\:py-input{
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .xl\:px-input{
+    padding-left: 0.375rem;
+    padding-right: 0.375rem;
   }
 
   .xl\:pt-0{
@@ -128454,6 +129475,22 @@ readers do not read off random characters that represent icons */
 
   .xl\:pl-px{
     padding-left: 1px;
+  }
+
+  .xl\:pt-input{
+    padding-top: 0.375rem;
+  }
+
+  .xl\:pr-input{
+    padding-right: 0.375rem;
+  }
+
+  .xl\:pb-input{
+    padding-bottom: 0.375rem;
+  }
+
+  .xl\:pl-input{
+    padding-left: 0.375rem;
   }
 
   .xl\:placeholder-transparent::-moz-placeholder{
@@ -131006,6 +132043,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-black-form-text::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-black-form-text:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-black-form-text::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-black-form-text::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
   }
 
   .xl\:placeholder-red-alert::-moz-placeholder{
@@ -133608,6 +134669,30 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--placeholder-opacity));
   }
 
+  .xl\:focus\:placeholder-black-form-text:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-black-form-text:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-black-form-text:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-black-form-text:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--placeholder-opacity));
+  }
+
   .xl\:focus\:placeholder-red-alert:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #FEE9E8;
@@ -134729,6 +135814,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .xl\:text-black-form-text{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .xl\:text-red-alert{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -135379,6 +136470,12 @@ readers do not read off random characters that represent icons */
     color: rgba(159, 168, 178, var(--text-opacity));
   }
 
+  .xl\:hover\:text-black-form-text:hover{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
+  }
+
   .xl\:hover\:text-red-alert:hover{
     --text-opacity: 1;
     color: #FEE9E8;
@@ -136027,6 +137124,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #9FA8B2;
     color: rgba(159, 168, 178, var(--text-opacity));
+  }
+
+  .xl\:focus\:text-black-form-text:focus{
+    --text-opacity: 1;
+    color: #2C2C2C;
+    color: rgba(44, 44, 44, var(--text-opacity));
   }
 
   .xl\:focus\:text-red-alert:focus{

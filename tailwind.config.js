@@ -27,8 +27,12 @@ module.exports = {
                 "blue-form-border": "#E1EAF3",
                 "blue-form-link": "#859DC1",
                 "gray-form-label": "#9FA8B2",
+                "black-form-text": "#2C2C2C",
                 "red-alert": "#FEE9E8",
                 "red-alert-text": "#C84347"
+            },
+            padding: {
+                input: "0.375rem"
             }
         }
     },
