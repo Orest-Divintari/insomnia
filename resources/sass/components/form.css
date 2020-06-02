@@ -14,6 +14,10 @@
     @apply hidden .w-2/6 .bg-blue-form-side .text-right .pt-6 .pb-4 .px-4 .border-r;
 }
 
+div.form-left-col {
+    @apply .self-stretch;
+}
+
 .form-right-col {
     @apply .flex-1 .p-4;
 }
@@ -53,11 +57,14 @@
 .form-button-right-col:hover {
     @apply .bg-blue-form-hover-button;
 }
-
+.error {
+    @apply .w-full .py-4 .bg-red-alert .rounded .mb-3 .shadow-md .border-l-2 .border-red-alert-text .font-light .text-red-alert-text .pl-5 .flex .items-center;
+}
 @screen smaller {
     .form-left-col {
         @apply .block;
     }
+
     .form-label-phone {
         @apply hidden;
     }

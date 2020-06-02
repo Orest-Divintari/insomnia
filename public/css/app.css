@@ -34,6 +34,10 @@
   border-right-width: 1px;
 }
 
+div.form-left-col {
+  align-self: stretch;
+}
+
 .form-right-col {
   flex: 1 1 0%;
   padding: 1rem;
@@ -116,6 +120,29 @@
   --bg-opacity: 1;
   background-color: #334866;
   background-color: rgba(51, 72, 102, var(--bg-opacity));
+}
+
+.error {
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  --bg-opacity: 1;
+  background-color: #FEE9E8;
+  background-color: rgba(254, 233, 232, var(--bg-opacity));
+  border-radius: 0.25rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-left-width: 2px;
+  --border-opacity: 1;
+  border-color: #C84347;
+  border-color: rgba(200, 67, 71, var(--border-opacity));
+  font-weight: 300;
+  --text-opacity: 1;
+  color: #C84347;
+  color: rgba(200, 67, 71, var(--text-opacity));
+  padding-left: 1.25rem;
+  display: flex;
+  align-items: center;
 }
 
 @media (min-width: 541px) {
@@ -25871,6 +25898,16 @@ readers do not read off random characters that represent icons */
 .fab {
   font-family: "Font Awesome 5 Brands";
   font-weight: 400;
+}
+
+.section {
+  padding-top: 1.25rem;
+}
+
+.section-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
 }
 
 @media (min-width: 320px){

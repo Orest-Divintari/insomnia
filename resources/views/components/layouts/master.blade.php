@@ -19,6 +19,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @stack('scripts')
 </head>
 
 <body>
@@ -49,7 +51,7 @@
             <div>{{$subHeader}}</div>
         </header>
 
-        <main class="px-5 h-screen">{{$main}}</main>
+        <main class="p-5 h-screen">{{$main}}</main>
         <footer class="px-5 bg-blue-light">
             <div class="flex justify-between">
                 <div>Editors</div>
