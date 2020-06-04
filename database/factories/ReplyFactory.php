@@ -11,6 +11,6 @@ $factory->define(Reply::class, function (Faker $faker) {
         'body' => $faker->paragraph(),
         'repliable_id' => null,
         'repliable_type' => null,
-        'user_id' => factory(User::class)->create(),
+        'user_id' => factory(User::class),
     ];
 });
