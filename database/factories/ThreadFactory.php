@@ -13,7 +13,7 @@ $factory->define(Thread::class, function (Faker $faker) {
     return [
         'title' => $title,
         'slug' => Str::slug($title),
-        'body' => $faker->sentence(),
+        'body' => $faker->paragraph(),
         'user_id' => factory(User::class),
         'category_id' => factory(Category::class),
         'pinned' => false,

@@ -29,9 +29,12 @@ Route::group([
     'name' => 'api',
 ], function () {
 
+    Route::group(['middleware' => 'auth'], function () {
+        Route::post('/threads', 'ThreadController@store')->name('threads.store');
+    });
     //threads
-    Route::get('/threads/{thread}', 'ThreadController@show')->name('thread.show');
-    Route::post('/threads', 'ThreadController@store');
+    Route::get('/threads/{thread}', 'ThreadController@show')->name('threads.show');
+
     //replies
     Route::get('/threads/{thread}/replies', 'ReplyController@index')->name('replies.index');
 

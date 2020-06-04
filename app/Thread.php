@@ -4,9 +4,18 @@ namespace App;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Thread extends Model
 {
+
+    /**
+     * The attributes that are mass assignable
+     *
+     * @var array
+     */
+    protected $fillable = ['title', 'slug', 'body', 'user_id', 'category_id'];
+
     /**
      * Get the route key name
      *
@@ -55,5 +64,39 @@ class Thread extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Assert the slug is unique
+     *
+     * @param string $slug
+     * @return void
+     */
+    public function setSlugAttribute($slug)
+    {
+        if (Thread::where('slug', $slug)->exists()) {
+            $slug = $this->createUnique($slug);
+        }
+        $this->attributes['slug'] = $slug;
+
+    }
+
+    /**
+     * Create a unique slug
+     *
+     * @param string $slug
+     * @return string $slug
+     */
+    protected function createUnique($slug)
+    {
+        $counter = 2;
+        $originalSlug = $slug;
+        while (Thread::whereSlug($slug)->exists()) {
+
+            $slug = "{$originalSlug}.{$counter}";
+            $counter++;
+        }
+
+        return $slug;
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Thread;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class CreateThreadRequest extends FormRequest
 {
@@ -24,10 +26,27 @@ class CreateThreadRequest extends FormRequest
     public function rules()
     {
         return [
-            'body' => 'required',
-            'title' => 'required',
-            'category_id' => 'required'
-            ''
+            'body' => ['required', 'string'],
+            'title' => ['required', 'string', 'min:3', 'max:255'],
+            'category_id' => ['required', 'integer'],
         ];
     }
+
+    /**
+     * Create a new row with the validated data
+     *
+     * @return void
+     */
+    public function persist()
+    {
+
+        Thread::create(array_merge(
+            $this->validated(),
+            [
+                'user_id' => $this->user()->id,
+                'slug' => Str::slug($this->input('title')),
+            ]
+        ));
+    }
+
 }

@@ -15,7 +15,7 @@ class ViewCategoriesTest extends TestCase
     {
         $categories = createMany(Category::class, 3)->pluck('title');
 
-        $this->get('/forum/categories')
+        $this->get(route('forum'))
             ->assertSee($categories[0])
             ->assertSee($categories[1])
             ->assertSee($categories[2]);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateThreadRequest;
 use App\Http\Resources\Thread as ThreadResource;
 use App\Thread;
 
@@ -26,9 +27,9 @@ class ThreadController extends Controller
      *
      * @return void
      */
-    public function store()
+    public function store(CreateThreadRequest $request)
     {
-
+        $request->persist();
     }
 
 }
