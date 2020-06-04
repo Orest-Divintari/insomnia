@@ -14,7 +14,7 @@ class CategoryController extends Controller
         $this->group = $group;
     }
     /**
-     * Display all categories
+     * Display all groups together with parent categories
      *
      * @return \Illuminate\View\View
      */
@@ -25,7 +25,12 @@ class CategoryController extends Controller
         return view('categories.index', compact('groups'));
     }
 
-    /** Display subcategory if it exsits  */
+    /**
+     * Display subcategory if it exsits or redirect to respective threads
+     *
+     * @param Category $category
+     * @return mixed
+     */
     public function show(Category $category)
     {
         if ($category->children()->exists()) {
