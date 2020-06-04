@@ -17,10 +17,24 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/forums', function () {
-    return view('forums');
-})->name('forum');
+// categories
+Route::get('/forum/', 'CategoryController@index')->name('forum');
+Route::get('/forum/categories/{category}', 'CategoryController@show')->name('forum.categories.show');
+
+//threads
+Route::get('/categories/{category}/threads', 'ThreadController@index')->name('threads.index');
+Route::group([
+    'prefix' => 'api',
+    'namespace' => 'Api',
+    'name' => 'api',
+], function () {
+
+    //threads
+    Route::get('/threads/{thread}', 'ThreadController@show')->name('thread.show');
+    Route::post('/threads', 'ThreadController@store');
+    //replies
+    Route::get('/threads/{thread}/replies', 'ReplyController@index')->name('replies.index');
+
+});
 
 Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');

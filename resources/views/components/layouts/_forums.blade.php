@@ -10,7 +10,7 @@
     <x-slot name="subHeader">
         <div class="flex justify-between items-center px-5 bg-blue-light text-gray-900 ">
             <div class="flex ">
-                <x-sub-head-tab-item name="Home" destination='home'></x-sub-head-tab-item>
+                <x-sub-head-tab-item name="Home" destination='forum'></x-sub-head-tab-item>
                 <x-sub-head-tab-item name="New Posts" destination='home'></x-sub-head-tab-item>
                 <x-sub-head-tab-item name="Support" destination='home'></x-sub-head-tab-item>
             </div>
