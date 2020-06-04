@@ -13,7 +13,9 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_belongs_to_a_thread()
     {
-        $reply = create('App\Reply');
-        $this->assertInstanceOf(Thread::class, $reply->thread);
+        $thread = create('App\Thread');
+        $reply = create('App\Reply', ['repliable_id' => $thread->id, 'repliable_type' => Thread::class]);
+
+        $this->assertInstanceOf(Thread::class, $reply->repliable);
     }
 }

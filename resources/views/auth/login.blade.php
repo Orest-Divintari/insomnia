@@ -5,7 +5,8 @@
     <main class="section">
         @include('components.form._errors')
         <div class="form-container">
-            <form action="">
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
                 <!-- ROW -->
                 <div class="form-row">
                     <!-- LEFT -->
@@ -16,8 +17,8 @@
                     <div class="form-right-col">
                         <p class="form-label-phone">Your name or email address:</p>
                         <div>
-                            <input class="form-input" type="text" id="username-or-password" name="username-or-password"
-                                required>
+                            <input class="form-input" type="email" id="username-or-password" name="email" required
+                                autocomplete="email">
                         </div>
                     </div>
                 </div>
@@ -31,7 +32,8 @@
                     <div class="form-right-col">
                         <p class="form-label-phone">Password:</p>
                         <div>
-                            <input class="form-input" type="password" id="password" name="password" required>
+                            <input class="form-input" type="password" id="password" name="password" required
+                                autocomplete="current-password">
                             <a class="block text-sm text-blue-form-link hover:underline" href="">Forgot your
                                 password?</a>
                         </div>
@@ -42,7 +44,7 @@
                     <div class="form-right-col">
                         <div class="flex flex-row-reverse items-center">
                             <label class="form-label flex-1 ml-2" for="stay-logged-in">Stay logged in</label>
-                            <input type="checkbox" name="stay-logged-in">
+                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
                         </div>
                     </div>
                 </div>

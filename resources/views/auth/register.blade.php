@@ -74,6 +74,19 @@
                         </div>
                     </div>
                 </div>
+                <!-- ROW -->
+                <div class="form-row">
+                    <!-- LEFT -->
+                    <div class="form-left-col">
+                        <label class="form-label" for="verification">Verification:</label>
+                        <div class="form-sub-label">Required</div>
+                    </div>
+                    <!-- RIGHT -->
+                    <div class="form-right-col">
+                        <div class="g-recaptcha" data-sitekey="{{config('insomnia.recaptcha.site_key')}}"></div>
+                    </div>
+                </div>
+
                 <x-form._button name="Register"></x-form._button>
             </form>
         </div>

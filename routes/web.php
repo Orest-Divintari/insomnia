@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
-
+Auth::routes(['verify' => true]);
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -30,8 +30,12 @@ Route::group([
 ], function () {
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::post('/threads', 'ThreadController@store')->name('threads.store');
+
+        Route::post('/threads', 'ThreadController@store')
+            ->middleware('verified')
+            ->name('threads.store');
     });
+
     //threads
     Route::get('/threads/{thread}', 'ThreadController@show')->name('threads.show');
 
@@ -39,5 +43,3 @@ Route::group([
     Route::get('/threads/{thread}/replies', 'ReplyController@index')->name('replies.index');
 
 });
-
-Auth::routes();
