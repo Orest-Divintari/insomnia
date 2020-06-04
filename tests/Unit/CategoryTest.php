@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Category;
+use App\GroupCategory;
 use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -56,5 +57,13 @@ class CategoryTest extends TestCase
             'category_id' => $this->category->id,
         ]);
         $this->assertCount(1, $this->category->threads);
+    }
+
+    /** @test */
+    public function a_category_belongs_to_a_group()
+    {
+        $category = create(Category::class);
+
+        $this->assertInstanceOf(GroupCategory::class, $category->group);
     }
 }

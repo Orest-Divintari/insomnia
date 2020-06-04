@@ -34,6 +34,16 @@ class Category extends Model
     }
 
     /**
+     * A category belongs to a group
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function group()
+    {
+        return $this->belongsTo(GroupCategory::class, 'group_category_id');
+    }
+
+    /**
      * A category has sub-categories
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

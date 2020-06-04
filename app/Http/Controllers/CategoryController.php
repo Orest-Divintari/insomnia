@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\GroupCategory;
 
 class CategoryController extends Controller
 {
 
+    protected $group;
+    public function __construct(GroupCategory $group)
+    {
+        $this->group = $group;
+    }
     /**
      * Display all categories
      *
@@ -14,8 +20,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('parent_id', null)->get();
-        return view('categories.index', compact('categories'));
+
+        $groups = $this->group->withCategories();
+        return view('categories.index', compact('groups'));
     }
 
     /** Display subcategory if it exsits  */

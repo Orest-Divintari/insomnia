@@ -20,6 +20,10 @@ class ForumSeeder extends Seeder
             'Discussion' => [],
 
         ];
+        $groups = [
+            'software',
+            'hardware',
+        ];
         foreach ($categories as $category => $subcategories) {
 
             $cat = factory('App\Category')->create(['title' => $category]);
