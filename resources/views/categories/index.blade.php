@@ -2,7 +2,7 @@
 
     @foreach($groups as $group)
     <p>{{ $group->title }}</p>
-    @foreach($group->categories as $category)
+    @foreach($group->parentCategories as $category)
 
     <a href="/forum/categories/{{$category->slug}}">{{ $category->title }}</a>
     @endforeach

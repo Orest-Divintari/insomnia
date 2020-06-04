@@ -8,11 +8,6 @@ use App\GroupCategory;
 class CategoryController extends Controller
 {
 
-    protected $group;
-    public function __construct(GroupCategory $group)
-    {
-        $this->group = $group;
-    }
     /**
      * Display all groups together with parent categories
      *
@@ -20,8 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-
-        $groups = $this->group->withCategories();
+        $groups = GroupCategory::with('parentCategories')->get();
         return view('categories.index', compact('groups'));
     }
 
@@ -34,8 +28,9 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         if ($category->children()->exists()) {
-
-            return view('categories.sub_categories.index', ['subCategories' => $category->children]);
+            return view('categories.sub_categories.index', [
+                'subCategories' => $category->children,
+            ]);
         }
         return redirect(route('threads.index', $category->slug));
 
