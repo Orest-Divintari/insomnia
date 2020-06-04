@@ -8,7 +8,7 @@
     <main class="section">
         @include('components.form._errors')
         <div class="form-container">
-            <form action="{{ route('register') }}" action="POST">
+            <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <!-- ROW -->
                 <div class="form-row">
@@ -22,7 +22,7 @@
                         <p class="form-label-phone">User name: <span class="form-sub-label">Required</span></p>
                         <div>
                             <input class="form-input" type="text" id="username" name="name" value="{{ old('name') }}"
-                                required>
+                                required autocomplete="name">
                         </div>
                     </div>
                 </div>
@@ -74,8 +74,7 @@
                         </div>
                     </div>
                 </div>
-
-
+                <x-form._button name="Register"></x-form._button>
             </form>
         </div>
     </main>
