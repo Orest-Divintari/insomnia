@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class GroupCategory extends Model
 {
-
     /**
-     * Returns the categories that belong to the group
+     * Fetch the categories that belong to the group
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -18,15 +17,13 @@ class GroupCategory extends Model
     }
 
     /**
-     * Fetch the parent categories of the group
+     * Fetch the parent categories that belong to the group
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function withCategories()
+    public function parentCategories()
     {
-        return static::with(['categories' => function ($query) {
-            $query->whereNull('parent_id');
-        }])->get();
+        return $this->hasMany(Category::class, 'group_category_id')->whereNull('parent_id');
     }
 
 }
