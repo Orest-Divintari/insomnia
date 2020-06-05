@@ -1,5 +1,4 @@
 <x-layouts._forums>
-
     @foreach($groups as $group)
     <p>{{ $group->title }}</p>
     @foreach($group->parentCategories as $category)

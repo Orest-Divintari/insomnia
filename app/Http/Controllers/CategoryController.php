@@ -9,18 +9,28 @@ class CategoryController extends Controller
 {
 
     /**
-     * Display all groups together with parent categories
+     *
+     *
+     * @param GroupCategory $group
+     */
+    public function __construct(GroupCategory $group)
+    {
+        $this->group = $group;
+    }
+
+    /**
+     * Display all groups together with the associated parent categories
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $groups = GroupCategory::with('parentCategories')->get();
+        $groups = $this->group->withParentCategories();
         return view('categories.index', compact('groups'));
     }
 
     /**
-     * Display subcategory if it exsits or redirect to respective threads
+     * Display subcategory if exsits or redirect to associated threads
      *
      * @param Category $category
      * @return mixed

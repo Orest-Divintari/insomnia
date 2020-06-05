@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class GroupCategory extends Model
 {
@@ -23,7 +24,20 @@ class GroupCategory extends Model
      */
     public function parentCategories()
     {
-        return $this->hasMany(Category::class, 'group_category_id')->whereNull('parent_id');
+        return $this->hasMany(Category::class, 'group_category_id')
+            ->whereNull('parent_id');
+    }
+
+    /**
+     * Cache the groups and associated parent categories
+     *
+     * @return void
+     */
+    public function withParentCategories()
+    {
+        return Cache::rememberForever('groups', function () {
+            return static::with('parentCategories')->get();
+        });
     }
 
 }
