@@ -23,7 +23,7 @@ div.form-left-col {
 }
 
 .form-input {
-    @apply .w-full .bg-blue-form-input .rounded .border .border-blue-form-border .p-input;
+    @apply .w-full .bg-blue-form-input .rounded .border .border-blue-border .p-input;
 }
 
 .form-input:focus {
@@ -35,7 +35,7 @@ div.form-left-col {
 }
 
 .form-container {
-    @apply .border .border-blue-form-border .rounded;
+    @apply .border .border-blue-border .rounded;
 }
 
 .form-input-description {

@@ -8,6 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
 
+    /**
+     * The relationships to always eager-load.
+     *
+     * @var array
+     */
+    protected $with = ['children'];
+    /**
+     * The relationships count to always eager-load.
+     *
+     * @var array
+     */
+    protected $withCount = ['threads'];
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -61,5 +74,16 @@ class Category extends Model
     public function threads()
     {
         return $this->hasMany(Thread::class);
+    }
+
+    /**
+     * Determines the path to category's avatar
+     *
+     * @param string $avatar
+     * @return string
+     */
+    public function getAvatarPathAttribute($avatar)
+    {
+        return asset($avatar ?: '/avatars/categories/apple_logo.png');
     }
 }

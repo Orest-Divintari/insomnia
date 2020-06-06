@@ -66,4 +66,12 @@ class CategoryTest extends TestCase
 
         $this->assertInstanceOf(GroupCategory::class, $category->group);
     }
+
+    /** @test */
+    public function a_category_can_determine_the_path_to_its_avatar()
+    {
+        $avatar = '/avatars/categories/apple_logo.png';
+        $category = create(Category::class, ['avatar_path' => '/avatars/categories/apple_logo.png']);
+        $this->assertEquals(asset($avatar), $category->avatar_path);
+    }
 }

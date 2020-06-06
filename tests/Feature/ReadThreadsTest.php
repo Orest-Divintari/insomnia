@@ -44,7 +44,6 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_view_the_threads_associated_with_a_category()
     {
-        $this->withExceptionHandling();
         $category = create(Category::class);
         $thread = create(Thread::class, ['category_id' => $category->id]);
         $this->get('/categories/' . $category->slug . '/threads')

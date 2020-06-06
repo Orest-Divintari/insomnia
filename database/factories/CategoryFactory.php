@@ -15,6 +15,7 @@ $factory->define(Category::class, function (Faker $faker) {
         'excerpt' => $faker->sentence(),
         'parent_id' => null,
         'group_category_id' => factory(GroupCategory::class),
+        'avatar_path' => null,
         //
     ];
 });

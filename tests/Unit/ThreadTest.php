@@ -43,7 +43,7 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_is_owned_by_a_user()
+    public function a_thread_is_posted_by_a_user()
     {
         $user = create('App\User');
         $thread = create('App\Thread', ['user_id' => $user->id]);
@@ -57,4 +57,5 @@ class ThreadTest extends TestCase
         $thread = create(Thread::class, ['category_id' => $category->id]);
         $this->assertInstanceOf(Category::class, $thread->category);
     }
+
 }
