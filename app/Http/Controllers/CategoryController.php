@@ -19,20 +19,18 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display all groups together with the associated parent categories
+     * Display all groups together with the associated categories
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-
-        $groups = GroupCategory::with(['categories.RecentlyActiveThread', 'categories.children'])->get();
-
-        return view('categories.parent.index', compact('groups'));
+        $groups = GroupCategory::withCategories()->withStatistics()->get();
+        return view('categories.index', compact('groups'));
     }
 
     /**
-     * Display sub category if exsits or redirect to associated threads
+     * Display sub category if exists or redirect to associated threads
      *
      * @param Category $category
      * @return mixed
@@ -42,7 +40,7 @@ class CategoryController extends Controller
         if ($category->subCategories->isNotEmpty()) {
 
             $subCategories = $category->subCategories;
-            return view('categories.children.index', compact('subCategories'));
+            return view('sub_categories.index', compact('subCategories'));
         }
         return redirect(route('threads.index', $category->slug));
 

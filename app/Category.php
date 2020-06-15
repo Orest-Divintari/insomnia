@@ -20,7 +20,7 @@ class Category extends Model
      * @var array
      */
     protected $with = [
-        'subCategories',
+        'recentlyActiveThread',
         'parentCategoryRecentlyActiveThread',
     ];
 

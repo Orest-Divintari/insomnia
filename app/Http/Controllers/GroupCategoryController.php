@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\GroupCategory;
-
 class GroupCategoryController extends Controller
 {
 
@@ -14,7 +12,6 @@ class GroupCategoryController extends Controller
      */
     public function index()
     {
-        $groups = GroupCategory::withCategories()->withStatistics()->get();
-        return view('categories.group.index', compact('groups'));
+
     }
 }

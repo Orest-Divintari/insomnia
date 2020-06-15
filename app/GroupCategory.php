@@ -28,7 +28,7 @@ class GroupCategory extends Model
     public function scopeWithCategories($query)
     {
         return $query->with([
-            'categories',
+            'categories.subCategories',
         ]);
     }
 

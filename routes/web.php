@@ -18,7 +18,7 @@ Route::get('/', function () {
 })->name('home');
 
 // categories
-Route::get('/forum', 'GroupCategoryController@index')->name('forum');
+Route::get('/forum', 'CategoryController@index')->name('forum');
 Route::get('/forum/categories/{category}', 'CategoryController@show')->name('forum.categories.show');
 
 //threads
