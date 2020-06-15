@@ -89,4 +89,20 @@ class ThreadTest extends TestCase
         );
     }
 
+    /** @test */
+    public function a_thread_is_updated_when_a_new_reply_is_published()
+    {
+        $this->thread->update(['updated_at' => Carbon::now()->subMonth()]);
+
+        $reply = create(Reply::class, [
+            'repliable_id' => $this->thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+        $this->assertEquals(
+            $this->thread->fresh()->updated_at,
+            $reply->updated_at
+        );
+    }
+
 }

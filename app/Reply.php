@@ -7,7 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
 
+    /**
+     * Relationships to always eager-load
+     *
+     * @var array
+     */
     protected $with = ['poster'];
+
+    /**
+     * All of the relationships to be touched.
+     *
+     * @var array
+     */
+    protected $touches = ['thread'];
+
+    /**
+     * Touch the Thread relationship
+     *
+     * @return Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function thread()
+    {
+        return $this->morphTo(Thread::class);
+    }
+
     /**
      * A reply belongs to a repliable model
      *

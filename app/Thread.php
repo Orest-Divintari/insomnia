@@ -115,7 +115,7 @@ class Thread extends Model
      */
     public function getShortTitleAttribute()
     {
-
         return Str::limit($this->title, config('constants.thread.title_limit'), '');
     }
+
 }
