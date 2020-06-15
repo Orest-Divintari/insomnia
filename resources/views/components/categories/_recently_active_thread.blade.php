@@ -1,6 +1,6 @@
-<div class="flex flex-col items-start pr-2">
+<div class="w-64 flex flex-col items-start pr-2">
     <a href="{{route('threads.show', $recentlyActiveThread->slug) }}"
-        class="w-56 text-smaller font-extrabold tracking-wide">
+        class=" text-smaller font-extrabold tracking-wide">
         {{ $recentlyActiveThread->shortTitle }}
         <span class="text-xs text-gray-lightest font-hairline">...</span>
     </a>
