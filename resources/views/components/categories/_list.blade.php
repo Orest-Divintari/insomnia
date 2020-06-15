@@ -19,34 +19,24 @@
             </p>
             @endif
         </div>
-        <div class="flex mr-3 items-center ">
-            <div class="flex flex-col items-center border-r border-gray-400 pr-3">
-                @if($category->hasSubCategories())
-                <p class="text-sm tracking-wide">{{ $category->parent_category_threads_count }}</p>
-                @else
-                <p class="text-sm tracking-wide">{{ $category->threads_count }}</p>
-                @endif
-                <p class="text-gray-lightest text-xs font-hairline"> Threads </p>
-            </div>
-            <div class="flex flex-col items-center px-5">
-                @if($category->hasSubCategories())
-                <p class="text-sm tracking-wide">{{ $category->parent_category_replies_count }}</p>
-                @else
-                <p class="text-sm tracking-wide">{{ $category->replies_count }}</p>
-                @endif
-                <p class="text-gray-lightest text-xs font-hairline"> Messages </p>
-            </div>
-
+        <div class="flex items-center ">
+            @if($category->hasSubCategories())
+            <x-categories._statistics :threadsCount="$category->parent_category_threads_count"
+                :replies_count="$category->parent_category_replies_count"></x-categories._statistics>
+            @else
+            <x-categories._statistics :threadsCount="$category->threads_count"
+                :replies_count="$category->replies_count"></x-categories._statistics>
+            @endif
         </div>
-
-        @if($category->hasSubCategories())
-        <x-categories._recently_active_thread :recentlyActiveThread="$category->parentCategoryRecentlyActiveThread">
-        </x-categories._recently_active_thread>
-        @else
-        <x-categories._recently_active_thread :recentlyActiveThread="$category->recentlyActiveThread">
-        </x-categories._recently_active_thread>
-        @endif
-
+        <div class="w-1/5 flex items-center justify-start mx-2">
+            @if($category->hasSubCategories())
+            <x-categories._recently_active_thread :recentlyActiveThread="$category->parentCategoryRecentlyActiveThread">
+            </x-categories._recently_active_thread>
+            @else
+            <x-categories._recently_active_thread :recentlyActiveThread="$category->recentlyActiveThread">
+            </x-categories._recently_active_thread>
+            @endif
+        </div>
 
 
     </div>

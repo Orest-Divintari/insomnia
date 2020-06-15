@@ -1,0 +1,1 @@
+<img src="{{$avatarPath}}" alt="poster" class="w-9 h-9 rounded-full">

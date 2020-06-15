@@ -17794,6 +17794,10 @@ video {
   width: 2rem;
 }
 
+.w-9{
+  width: 2.25rem;
+}
+
 .w-10{
   width: 2.5rem;
 }
@@ -43392,6 +43396,10 @@ readers do not read off random characters that represent icons */
     width: 2rem;
   }
 
+  .xs\:w-9{
+    width: 2.25rem;
+  }
+
   .xs\:w-10{
     width: 2.5rem;
   }
@@ -62901,6 +62909,10 @@ readers do not read off random characters that represent icons */
 
   .smaller\:w-8{
     width: 2rem;
+  }
+
+  .smaller\:w-9{
+    width: 2.25rem;
   }
 
   .smaller\:w-10{
@@ -82414,6 +82426,10 @@ readers do not read off random characters that represent icons */
     width: 2rem;
   }
 
+  .sm\:w-9{
+    width: 2.25rem;
+  }
+
   .sm\:w-10{
     width: 2.5rem;
   }
@@ -101923,6 +101939,10 @@ readers do not read off random characters that represent icons */
 
   .md\:w-8{
     width: 2rem;
+  }
+
+  .md\:w-9{
+    width: 2.25rem;
   }
 
   .md\:w-10{
@@ -121436,6 +121456,10 @@ readers do not read off random characters that represent icons */
     width: 2rem;
   }
 
+  .lg\:w-9{
+    width: 2.25rem;
+  }
+
   .lg\:w-10{
     width: 2.5rem;
   }
@@ -140945,6 +140969,10 @@ readers do not read off random characters that represent icons */
 
   .xl\:w-8{
     width: 2rem;
+  }
+
+  .xl\:w-9{
+    width: 2.25rem;
   }
 
   .xl\:w-10{
