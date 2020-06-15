@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
 
+    protected $with = ['poster'];
     /**
      * A reply belongs to a repliable model
      *
@@ -15,6 +16,16 @@ class Reply extends Model
     public function repliable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * A reply belongs to a user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function poster()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }

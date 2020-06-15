@@ -7,20 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-
     /**
-     * The relationships to always eager-load.
+     * Don't auto-apply mass assignment protection.
      *
      * @var array
      */
-    protected $with = ['children'];
+    protected $guarded = [];
+
     /**
-     * The relationships count to always eager-load.
+     * Relationships to always eager-load
      *
      * @var array
      */
-    protected $withCount = ['threads'];
+    protected $with = [
+        'subCategories',
+        'parentCategoryRecentlyActiveThread',
+    ];
 
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';
@@ -29,7 +37,7 @@ class Category extends Model
     /**
      * Get the string path of a category
      *
-     * @return void
+     * @return string
      */
     public function path()
     {
@@ -37,13 +45,13 @@ class Category extends Model
     }
 
     /**
-     * A category has a parent category
+     * A subCategory belongs to a category
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function parent()
+    public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 
     /**
@@ -57,23 +65,88 @@ class Category extends Model
     }
 
     /**
-     * A category has sub-categories
+     * A parent category has sub categories
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function children()
+    public function subCategories()
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
 
     /**
-     * A category has threads
+     * Determine if a category has sub-categories
+     *
+     * @return boolean
+     */
+    public function hasSubCategories()
+    {
+        return $this->subCategories->isNotEmpty();
+    }
+
+    /**
+     * A non-parent category has threads
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function threads()
     {
         return $this->hasMany(Thread::class);
+    }
+
+    /**
+     * A parent category has threads
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function parentThreads()
+    {
+        return $this->hasManyThrough(
+            Thread::class,
+            Category::class,
+            'parent_id',
+            'category_id'
+        );
+    }
+
+    /**
+     * A parent category is associated with sub-category's threads
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function parentCategoryThreads()
+    {
+        return $this->hasManyThrough(
+            Thread::class,
+            Category::class,
+            'parent_id',
+            'category_id'
+        );
+    }
+
+    /**
+     * A parent category is associated with the most recently active thread
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough
+     */
+    public function parentCategoryRecentlyActiveThread()
+    {
+        return $this->hasOneThrough(
+            Thread::class,
+            Category::class,
+            'parent_id',
+            'category_id'
+        )->latest('updated_at');
+    }
+
+    /**
+     * A non-parent category is associated with the most recently active thread
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function recentlyActiveThread()
+    {
+        return $this->hasOne(Thread::class)->latest('updated_at');
     }
 
     /**
@@ -86,4 +159,5 @@ class Category extends Model
     {
         return asset($avatar ?: '/avatars/categories/apple_logo.png');
     }
+
 }

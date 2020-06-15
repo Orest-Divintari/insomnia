@@ -3,8 +3,10 @@
 namespace Tests\Unit;
 
 use App\Category;
+use App\Reply;
 use App\Thread;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -22,7 +24,10 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_an_api_path()
     {
-        $this->assertEquals("/api/threads/{$this->thread->slug}", $this->thread->api_path());
+        $this->assertEquals(
+            "/api/threads/{$this->thread->slug}",
+            $this->thread->api_path()
+        );
     }
 
     /** @test */
@@ -56,6 +61,22 @@ class ThreadTest extends TestCase
         $category = create(Category::class);
         $thread = create(Thread::class, ['category_id' => $category->id]);
         $this->assertInstanceOf(Category::class, $thread->category);
+    }
+
+    /** @test */
+    public function a_thread_has_a_most_recent_reply()
+    {
+        $newReply = create(Reply::class, [
+            'repliable_type' => Thread::class,
+            'repliable_id' => $this->thread->id,
+        ]);
+        $oldReply = create(Reply::class, [
+            'repliable_type' => Thread::class,
+            'repliable_id' => $this->thread->id,
+            'updated_at' => Carbon::now()->subDay(),
+        ]);
+        $this->assertEquals($this->thread->recentReply->id, $newReply->id);
+
     }
 
 }

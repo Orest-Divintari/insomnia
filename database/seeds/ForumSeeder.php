@@ -24,14 +24,14 @@ class ForumSeeder extends Seeder
             'software',
             'hardware',
         ];
-        foreach ($categories as $category => $subcategories) {
+        foreach ($categories as $category => $childrenCategories) {
 
             $cat = factory('App\Category')->create(['title' => $category]);
 
-            if ($subcategories) {
-                foreach ($subcategories as $subcategory) {
-                    $subCat = factory('App\Category')->create(['parent_id' => $cat->id, 'title' => $subcategory]);
-                    factory('App\Thread', 2)->create(['category_id' => $subCat->id])
+            if ($childrenCategories) {
+                foreach ($childrenCategories as $childrenCategory) {
+                    $childrenCategory = factory('App\Category')->create(['parent_id' => $cat->id, 'title' => $childrenCategory]);
+                    factory('App\Thread', 2)->create(['category_id' => $childrenCategory->id])
                         ->each(function ($thread) {factory('App\Reply', 3)
                                 ->create(['repliable_id' => $thread->id, 'repliable_type' => 'App\Thread']);});
                 }

@@ -48,7 +48,6 @@ class ReadThreadsTest extends TestCase
         $thread = create(Thread::class, ['category_id' => $category->id]);
         $this->get('/categories/' . $category->slug . '/threads')
             ->assertSee($thread->title);
-
     }
 
 }

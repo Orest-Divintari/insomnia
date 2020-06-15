@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 class Thread extends Model
 {
 
+    protected $with = ['recentReply'];
+    // protected $with = ['recentReply', 'poster'];
     /**
      * The attributes that are mass assignable
      *
@@ -44,6 +46,11 @@ class Thread extends Model
     public function replies()
     {
         return $this->morphMany(Reply::class, 'repliable');
+    }
+
+    public function recentReply()
+    {
+        return $this->morphOne(Reply::class, 'repliable')->latest('updated_at');
     }
 
     /**

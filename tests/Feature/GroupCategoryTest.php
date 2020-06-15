@@ -11,22 +11,30 @@ class GroupCategoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function a_group_has_categories()
+    /**
+     * Set up group categories test
+     *
+     * Create a group category for every test instance
+     *
+     * @return void
+     */
+    public function setUp(): void
     {
-        $group = create(GroupCategory::class);
-        $category = create(Category::class, ['group_category_id' => $group->id]);
-        $this->assertCount(1, $group->categories);
+        parent::setUp();
+        $this->group = create(GroupCategory::class);
     }
 
     /** @test */
-    public function fetch_the_group_together_with_the_parent_categories()
+    public function a_group_has_categories()
     {
-        $group = create(GroupCategory::class);
-        $parentCategory = create(Category::class, ['group_category_id' => $group->id]);
+        $category = create(Category::class, [
+            'group_category_id' => $this->group->id,
+        ]);
 
-        create(Category::class, ['parent_id' => $parentCategory->id, 'group_category_id' => $group->id]);
+        $subCategory = create(Category::class, [
+            'parent_id' => $category->id,
+        ]);
 
-        $this->assertCount(1, $group->withCategories());
+        $this->assertCount(1, $this->group->categories);
     }
 }
