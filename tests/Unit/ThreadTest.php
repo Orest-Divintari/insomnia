@@ -8,6 +8,7 @@ use App\Thread;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
@@ -77,6 +78,15 @@ class ThreadTest extends TestCase
         ]);
         $this->assertEquals($this->thread->recentReply->id, $newReply->id);
 
+    }
+
+    /** @test */
+    public function thread_has_a_shorter_version_of_its_title()
+    {
+        $this->assertEquals(
+            Str::limit($this->thread, config('constants.thread.title_limit'), ''),
+            $this->thread->shortTitle
+        );
     }
 
 }

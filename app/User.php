@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -46,5 +47,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvatarPathAttribute($avatar)
     {
         return asset($avatar ?: '/avatars/users/user_logo.png');
+    }
+
+    /**
+     * Shorten the length of the name
+     *
+     * @return string
+     */
+    public function getShortNameAttribute()
+    {
+        return Str::limit($this->name, config('constants.user.name_limit'), '');
     }
 }

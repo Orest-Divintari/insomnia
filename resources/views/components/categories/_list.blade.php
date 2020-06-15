@@ -5,7 +5,7 @@
         <div class="flex-1">
             <a class="text-sm text-blue-mid-dark font-semibold tracking-wide"
                 href="{{ route('forum.categories.show',$category->slug) }}">{{ $category->title }}</a>
-            @if($category->subCategories->isNotEmpty())
+            @if($category->hasSubCategories())
             <div class=" flex">
                 @foreach($category->subCategories as $subCategory)
                 <a href="{{ route('forum.categories.show',$subCategory->slug) }}" class="mr-4"> <i

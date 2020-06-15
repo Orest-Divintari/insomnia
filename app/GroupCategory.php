@@ -33,6 +33,20 @@ class GroupCategory extends Model
     }
 
     /**
+     * Fetch the most recent active thread per category
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithActivity($query)
+    {
+        $query->with([
+            'categories.recentlyActiveThread',
+            'categories.parentCategoryRecentlyActiveThread',
+        ]);
+    }
+
+    /**
      * Load the total number of threads associated with a category
      *
      * @param Builder $query

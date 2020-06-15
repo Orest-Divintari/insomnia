@@ -3,7 +3,9 @@
 namespace App;
 
 use App\Thread;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
@@ -13,17 +15,6 @@ class Category extends Model
      * @var array
      */
     protected $guarded = [];
-
-    /**
-     * Relationships to always eager-load
-     *
-     * @var array
-     */
-    protected $with = [
-        'recentlyActiveThread',
-        'parentCategoryRecentlyActiveThread',
-    ];
-
     /**
      * Get the route key for the model.
      *
@@ -158,6 +149,32 @@ class Category extends Model
     public function getAvatarPathAttribute($avatar)
     {
         return asset($avatar ?: '/avatars/categories/apple_logo.png');
+    }
+
+    /**
+     * Fetch the most recently active thread for the category
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithActivity(Builder $query)
+    {
+        return $query->with(['recentlyActiveThread']);
+    }
+
+    /**
+     * Fetch the total replies and threads count for the category
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithStatistics(Builder $query)
+    {
+        return $query->withCount([
+            'threads',
+            'threads as replies_count' => function ($query) {
+                $query->select(DB::raw('sum(replies_count)'));
+            }]);
     }
 
 }

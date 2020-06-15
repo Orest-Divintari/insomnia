@@ -9,7 +9,6 @@ use App\Thread;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use \Illuminate\Support\Str;
 
 class ViewCategoriesTest extends TestCase
 {
@@ -44,9 +43,9 @@ class ViewCategoriesTest extends TestCase
     /** @test */
     public function a_non_parent_category_is_redirected_to_the_threads_associated_with_it()
     {
-        $parentCategory = create(Category::class);
-        $this->get($parentCategory->path())
-            ->assertRedirect(route('threads.index', $parentCategory->slug));
+        $category = create(Category::class);
+        $this->get(route('forum.categories.show', $category))
+            ->assertRedirect(route('threads.index', $category->slug));
     }
 
     /** @test */
@@ -80,7 +79,7 @@ class ViewCategoriesTest extends TestCase
             'updated_at' => Carbon::now()->subMonth(),
         ]);
 
-        $this->get(route('forum'))->assertSee(Str::limit($category->parentCategoryRecentlyActiveThread->title, 20, ''));
+        $this->get(route('forum'))->assertSee($category->parentCategoryRecentlyActiveThread->shortTitle);
     }
 
     /** @test */
@@ -98,7 +97,7 @@ class ViewCategoriesTest extends TestCase
         ]);
 
         $this->get(route('forum'))
-            ->assertSee(Str::limit($category->recentlyActiveThread->title, 20, ''));
+            ->assertSee($category->recentlyActiveThread->shortTitle);
     }
 
     /** @test */

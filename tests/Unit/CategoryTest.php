@@ -50,7 +50,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function a_category_may_have_a_sub_category()
     {
-        $subCategory = create(
+        create(
             Category::class, [
                 'parent_id' => $this->category->id,
             ]);
@@ -69,7 +69,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function a_non_parent_category_has_threads()
     {
-        $threads = createMany(Thread::class, 2, ['category_id' => $this->category->id]);
+        createMany(Thread::class, 2, ['category_id' => $this->category->id]);
         $this->assertCount(2, $this->category->threads);
     }
 
@@ -107,7 +107,7 @@ class CategoryTest extends TestCase
             'category_id' => $this->category->id,
         ]);
 
-        $oldThread = create(Thread::class, [
+        create(Thread::class, [
             'category_id' => $this->category->id,
             'updated_at' => Carbon::now()->subMinute(),
         ]);
@@ -129,12 +129,14 @@ class CategoryTest extends TestCase
             'category_id' => $subCategory->id,
         ]);
 
-        $oldThread = create(Thread::class, [
+        create(Thread::class, [
             'category_id' => $subCategory->id,
             'updated_at' => Carbon::now()->subMinute(),
         ]);
 
-        $this->assertEquals($recentThread->id, $this->category
+        $this->assertEquals(
+            $recentThread->id,
+            $this->category
                 ->parentCategoryRecentlyActiveThread
                 ->id
         );
@@ -148,7 +150,6 @@ class CategoryTest extends TestCase
             'replies_count' => 5,
         ]);
 
-        dd($this->category->fresh()->toArray());
     }
 
     /** @test */
@@ -156,7 +157,7 @@ class CategoryTest extends TestCase
     {
         $this->assertFalse($this->category->hasSubCategories());
 
-        $subCategory = create(Category::class, [
+        create(Category::class, [
             'parent_id' => $this->category->id,
         ]);
 

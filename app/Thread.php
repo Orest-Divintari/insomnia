@@ -9,7 +9,8 @@ use Illuminate\Support\Str;
 class Thread extends Model
 {
 
-    protected $with = ['recentReply'];
+    const RECENTLY_ACTIVE_THREAD_LIMIT = 24;
+    protected $with = ['recentReply', 'poster'];
     // protected $with = ['recentReply', 'poster'];
     /**
      * The attributes that are mass assignable
@@ -105,5 +106,16 @@ class Thread extends Model
         }
 
         return $slug;
+    }
+
+    /**
+     * Shorten the length of the title
+     *
+     * @return string
+     */
+    public function getShortTitleAttribute()
+    {
+
+        return Str::limit($this->title, config('constants.thread.title_limit'), '');
     }
 }

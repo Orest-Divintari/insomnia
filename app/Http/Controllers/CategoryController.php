@@ -7,17 +7,6 @@ use App\GroupCategory;
 
 class CategoryController extends Controller
 {
-
-    /**
-     *
-     *
-     * @param GroupCategory $group
-     */
-    public function __construct(GroupCategory $group)
-    {
-        $this->group = $group;
-    }
-
     /**
      * Display all groups together with the associated categories
      *
@@ -25,7 +14,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $groups = GroupCategory::withCategories()->withStatistics()->get();
+        $groups = GroupCategory::withCategories()
+            ->withActivity()
+            ->withStatistics()
+            ->get();
         return view('categories.index', compact('groups'));
     }
 
@@ -37,9 +29,11 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        if ($category->subCategories->isNotEmpty()) {
-
-            $subCategories = $category->subCategories;
+        if ($category->hasSubCategories()) {
+            $subCategories = $category->subCategories()
+                ->withActivity()
+                ->withStatistics()
+                ->get();
             return view('sub_categories.index', compact('subCategories'));
         }
         return redirect(route('threads.index', $category->slug));
