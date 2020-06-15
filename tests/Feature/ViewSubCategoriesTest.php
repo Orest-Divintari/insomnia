@@ -20,7 +20,6 @@ class ViewSubCategoriesTest extends TestCase
         $this->subCategory = create(Category::class, [
             'parent_id' => $this->category->id,
         ]);
-
     }
 
     /** @test */

@@ -171,4 +171,10 @@ class ViewCategoriesTest extends TestCase
         ]);
         $this->get(route('forum'))->assertSee($category->replies_count);
     }
+
+    /** @test */
+    public function a_user_can_view_the_name_of_the_user_who_is_responsible_for_the_most_recently_active_thread()
+    {
+
+    }
 }

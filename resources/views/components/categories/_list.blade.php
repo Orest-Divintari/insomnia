@@ -21,11 +21,19 @@
         </div>
         <div class="flex mr-3 items-center ">
             <div class="flex flex-col items-center border-r border-gray-400 pr-3">
+                @if($category->hasSubCategories())
+                <p class="text-sm tracking-wide">{{ $category->parent_category_threads_count }}</p>
+                @else
                 <p class="text-sm tracking-wide">{{ $category->threads_count }}</p>
+                @endif
                 <p class="text-gray-lightest text-xs font-hairline"> Threads </p>
             </div>
             <div class="flex flex-col items-center px-5">
+                @if($category->hasSubCategories())
+                <p class="text-sm tracking-wide">{{ $category->parent_category_replies_count }}</p>
+                @else
                 <p class="text-sm tracking-wide">{{ $category->replies_count }}</p>
+                @endif
                 <p class="text-gray-lightest text-xs font-hairline"> Messages </p>
             </div>
 

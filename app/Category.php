@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
+
     /**
      * Don't auto-apply mass assignment protection.
      *
      * @var array
      */
     protected $guarded = [];
+
     /**
      * Get the route key for the model.
      *
@@ -83,21 +85,6 @@ class Category extends Model
     public function threads()
     {
         return $this->hasMany(Thread::class);
-    }
-
-    /**
-     * A parent category has threads
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function parentThreads()
-    {
-        return $this->hasManyThrough(
-            Thread::class,
-            Category::class,
-            'parent_id',
-            'category_id'
-        );
     }
 
     /**

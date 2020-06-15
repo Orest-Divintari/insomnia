@@ -2,7 +2,7 @@
     <div class="flex section">
         <div class="w-4/5">
             @foreach($groups as $group)
-            <div cla ss="mb-5">
+            <div class="mb-5">
                 <header class="mb-3 pb-4 border-b-6 border-blue-mid-dark">
                     <a class="text-blue-mid-dark text-xl tracking-wide font-insomnia" id="{{ $group->title }}"
                         href="#{{ $group->title }}">News Article and Discussion

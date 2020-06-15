@@ -40,6 +40,7 @@ class ThreadTest extends TestCase
             'repliable_type' => Thread::class,
         ]);
         $this->assertCount(1, $this->thread->replies);
+
         create('App\Reply', [
             'repliable_id' => $this->thread->id,
             'repliable_type' => Thread::class,
