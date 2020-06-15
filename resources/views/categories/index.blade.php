@@ -16,7 +16,6 @@
                 @endforeach
             </div>
             @endforeach
-
         </div>
         <div class="flex-1">
             latest posts

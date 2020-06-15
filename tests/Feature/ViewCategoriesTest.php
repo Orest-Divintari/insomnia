@@ -79,7 +79,8 @@ class ViewCategoriesTest extends TestCase
             'updated_at' => Carbon::now()->subMonth(),
         ]);
 
-        $this->get(route('forum'))->assertSee($category->parentCategoryRecentlyActiveThread->shortTitle);
+        $this->get(route('forum'))
+            ->assertSee($category->parentCategoryRecentlyActiveThread->shortTitle);
     }
 
     /** @test */
@@ -173,8 +174,59 @@ class ViewCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_the_name_of_the_user_who_is_responsible_for_the_most_recently_active_thread()
+    public function a_user_can_view_the_user_name_who_posted_the_most_recent_reply()
     {
+        $category = create(Category::class);
 
+        $subCategoryOne = create(Category::class, [
+            'parent_id' => $category->id,
+        ]);
+
+        $subCategoryTwo = create(Category::class, [
+            'parent_id' => $category->id,
+        ]);
+
+        $threadOne = create(Thread::class, ['category_id' => $subCategoryOne->id]);
+        $threadTwo = create(Thread::class, ['category_id' => $subCategoryTwo->id]);
+
+        $recentReply = create(Reply::class, [
+            'repliable_id' => $threadOne->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+        $oldReply = create(Reply::class, [
+            'repliable_id' => $threadTwo->id,
+            'repliable_type' => Thread::class,
+            'updated_at' => Carbon::now()->subMonth(),
+        ]);
+
+        $this->get(route('forum'))
+            ->assertSee($recentReply->poster->shortName)
+            ->assertDontSee($oldReply->poster->shortName);
+    }
+
+    /** @test */
+    public function a_user_can_view_the_user_name_who_published_the_most_recent_thread()
+    {
+        $category = create(Category::class);
+
+        $subCategoryOne = create(Category::class, [
+            'parent_id' => $category->id,
+        ]);
+
+        $subCategoryTwo = create(Category::class, [
+            'parent_id' => $category->id,
+        ]);
+
+        $recentThread = create(Thread::class, ['category_id' => $subCategoryOne->id]);
+
+        $oldThread = create(Thread::class, [
+            'category_id' => $subCategoryTwo->id,
+            'updated_at' => Carbon::now()->subMinute(),
+        ]);
+
+        $this->get(route('forum'))
+            ->assertSee($recentThread->poster->shortName)
+            ->assertDontSee($oldThread->poster->shortName);
     }
 }
