@@ -49,7 +49,8 @@ module.exports = {
                 "9": "2.25rem"
             },
             width: {
-                "9": "2.25rem"
+                "9": "2.25rem",
+                "72": "18rem"
             },
             fontSize: {
                 smaller: "0.8125rem"
