@@ -28,7 +28,7 @@
                 :replies_count="$category->replies_count"></x-categories._statistics>
             @endif
         </div>
-        <div style="width:18rem" class="flex items-center justify-start ml-2">
+        <div class="w-72 flex items-center justify-start ml-2">
             @if($category->hasSubCategories())
             <x-categories._recently_active_thread :recentlyActiveThread="$category->parentCategoryRecentlyActiveThread">
             </x-categories._recently_active_thread>
