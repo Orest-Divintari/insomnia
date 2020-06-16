@@ -13,7 +13,7 @@
     <div class="flex items-center justify-start text-smaller text-gray-lightest font-hairline">
         <p class="">{{ $recentlyActiveThread->updated_at->diffForHumans() }}
         </p>
-        <p class="bg-gray-600  w-1 h-1 rounded-full mx-2"> </p>
+        <x-categories._dot></x-categories._dot>
         @if(isset($recentlyActiveThread->recentReply))
         <p>{{ $recentlyActiveThread->recentReply->poster->shortName}}</p>
         @else

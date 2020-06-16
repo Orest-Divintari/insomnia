@@ -25,7 +25,7 @@ class ViewSubCategoriesTest extends TestCase
     /** @test */
     public function a_user_can_view_sub_categories_of_a_category()
     {
-        $this->get(route('forum.categories.show', $this->category))
+        $this->get(route('categories.show', $this->category))
             ->assertSee($this->subCategory->title);
     }
 
@@ -41,7 +41,7 @@ class ViewSubCategoriesTest extends TestCase
             'updated_at' => Carbon::now()->subMonth(),
         ]);
 
-        $this->get(route('forum.categories.show', $this->category))
+        $this->get(route('categories.show', $this->category))
             ->assertSee($recentThread->short_title)
             ->assertDontSee($oldThread->short_title);
     }
@@ -53,7 +53,7 @@ class ViewSubCategoriesTest extends TestCase
         createMany(Thread::class, $threadsCount, [
             'category_id' => $this->subCategory->id,
         ]);
-        $this->get(route('forum.categories.show', $this->category))
+        $this->get(route('categories.show', $this->category))
             ->assertSee($threadsCount);
     }
 
@@ -68,7 +68,7 @@ class ViewSubCategoriesTest extends TestCase
             'category_id' => $this->subCategory->id,
             'replies_count' => $repliesCount,
         ]);
-        $this->get(route('forum.categories.show', $this->category))
+        $this->get(route('categories.show', $this->category))
             ->assertSee($repliesTotalCount);
     }
 
@@ -86,7 +86,7 @@ class ViewSubCategoriesTest extends TestCase
             'repliable_type' => Thread::class,
 
         ]);
-        $this->get(route('forum.categories.show', $this->category))
+        $this->get(route('categories.show', $this->category))
             ->assertSee($reply->poster->shortName)
             ->assertDontSee($thread->poster->shortName);
 
@@ -104,7 +104,7 @@ class ViewSubCategoriesTest extends TestCase
             'updated_at' => Carbon::now()->subMonth(),
         ]);
 
-        $this->get(route('forum.categories.show', $this->category))
+        $this->get(route('categories.show', $this->category))
             ->assertSee($recentThread->poster->shortName)
             ->assertDontSee($oldThread->poster->shortName);
     }

@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 // categories
 Route::get('/forum', 'CategoryController@index')->name('forum');
-Route::get('/forum/categories/{category}', 'CategoryController@show')->name('forum.categories.show');
+Route::get('/forum/categories/{category}', 'CategoryController@show')->name('categories.show');
 
 //threads
 Route::get('/categories/{category}/threads', 'ThreadController@index')->name('threads.index');

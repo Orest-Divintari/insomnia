@@ -4,11 +4,11 @@
         <img src="{{ $category->avatar_path }}" alt="category_avatar" class="w-12 h-12 mr-3 rounded-full object-cover">
         <div class="flex-1">
             <a class="text-sm text-blue-mid-dark font-semibold tracking-wide"
-                href="{{ route('forum.categories.show',$category->slug) }}">{{ $category->title }}</a>
+                href="{{ route('categories.show',$category->slug) }}">{{ $category->title }}</a>
             @if($category->hasSubCategories())
             <div class=" flex">
                 @foreach($category->subCategories as $subCategory)
-                <a href="{{ route('forum.categories.show',$subCategory->slug) }}" class="mr-4"> <i
+                <a href="{{ route('categories.show',$subCategory->slug) }}" class="mr-4"> <i
                         class="text-sm far fa-comment-dots"></i>
                     <span class="text-smaller font-black font-hairline">{{ $subCategory->title }}</span></a>
                 @endforeach

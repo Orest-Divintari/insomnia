@@ -5,6 +5,6 @@ return [
         "title_limit" => "25",
     ],
     "user" => [
-        "name_limit" => "20",
+        "name_limit" => "10",
     ],
 ];

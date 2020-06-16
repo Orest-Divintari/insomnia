@@ -51,3 +51,11 @@
 .muted-xs-text {
     @apply .text-xs .text-gray-lightest .font-hairline;
 }
+
+.sidebar-block {
+    @apply .p-5/2 .ml-5 .border .border-t-8  .border-gray-lighter;
+}
+
+.sidebar-header {
+    @apply .pb-5/2 .tracking-wide .text-gray-mid;
+}

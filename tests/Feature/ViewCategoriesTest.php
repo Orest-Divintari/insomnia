@@ -44,7 +44,7 @@ class ViewCategoriesTest extends TestCase
     public function a_non_parent_category_is_redirected_to_the_threads_associated_with_it()
     {
         $category = create(Category::class);
-        $this->get(route('forum.categories.show', $category))
+        $this->get(route('categories.show', $category))
             ->assertRedirect(route('threads.index', $category->slug));
     }
 

@@ -18,11 +18,8 @@
             @endforeach
         </div>
         <div class=" flex-1">
-            <div class="ml-5 border-t-8 border border-gray-lighter">
-                <header class="p-5/2 tracking-wide font-hairline text-gray-mid">
-                    LATEST POSTS
-                </header>
-            </div>
+            @include('categories.latest_posts')
+            @include('categories.forum_statistics')
         </div>
     </div>
 </x-layouts._forums>

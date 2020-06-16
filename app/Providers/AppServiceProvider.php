@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Reply;
+use App\Thread;
+use App\User;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +27,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer('categories.index', function ($view) {
+            $latestPosts = Thread::with(['recentReply', 'category'])
+                ->has('replies')
+                ->latest('updated_at')
+                ->take(10)
+                ->get();
+
+            $totalThreads = Thread::count();
+            $totalMessages = Reply::count();
+            $totalMembers = User::count();
+
+            $view->with(compact('latestPosts', 'totalThreads', 'totalMessages', 'totalMembers'));
+        });
+
     }
 }

@@ -279,6 +279,24 @@ div.form-left-col {
   color: rgba(148, 157, 167, var(--text-opacity));
   font-weight: 100;
 }
+
+.sidebar-block {
+  padding: 0.625rem;
+  margin-left: 1.25rem;
+  border-width: 1px;
+  border-top-width: 8px;
+  --border-opacity: 1;
+  border-color: #D7E2EF;
+  border-color: rgba(215, 226, 239, var(--border-opacity));
+}
+
+.sidebar-header {
+  padding-bottom: 0.625rem;
+  letter-spacing: 0.025em;
+  --text-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--text-opacity));
+}
 @charset "UTF-8";
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
