@@ -19,9 +19,11 @@ module.exports = {
                 "blue-mid": "#426693",
                 "blue-mid-light": "#CFDEEB",
                 "blue-mid-dark": "#4F6C98",
+                "blue-link-menu": "#2C435F",
                 "gray-light": "#979DA5",
                 "gray-lighter": "#D7E2EF",
                 "gray-lightest": "#949DA7",
+                "gray-mid": "#6C7680",
                 "blue-form-input": "#E7F1FE",
                 "blue-form-side": "#EDF4F9",
                 "blue-form-bottom": "#E1EAF3",
@@ -36,7 +38,8 @@ module.exports = {
                 "semi-white": "#FCFCFC"
             },
             padding: {
-                input: "0.375rem"
+                input: "0.375rem",
+                "5/2": "0.625rem"
             },
             fontFamily: {
                 insomnia: "Verdana, Arial, sans-serif"

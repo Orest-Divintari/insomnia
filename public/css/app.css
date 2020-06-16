@@ -2036,6 +2036,12 @@ video {
   border-color: rgba(79, 108, 152, var(--divide-opacity));
 }
 
+.divide-blue-link-menu > :not(template) ~ :not(template){
+  --divide-opacity: 1;
+  border-color: #2C435F;
+  border-color: rgba(44, 67, 95, var(--divide-opacity));
+}
+
 .divide-gray-light > :not(template) ~ :not(template){
   --divide-opacity: 1;
   border-color: #979DA5;
@@ -2052,6 +2058,12 @@ video {
   --divide-opacity: 1;
   border-color: #949DA7;
   border-color: rgba(148, 157, 167, var(--divide-opacity));
+}
+
+.divide-gray-mid > :not(template) ~ :not(template){
+  --divide-opacity: 1;
+  border-color: #6C7680;
+  border-color: rgba(108, 118, 128, var(--divide-opacity));
 }
 
 .divide-blue-form-input > :not(template) ~ :not(template){
@@ -2800,6 +2812,12 @@ video {
   background-color: rgba(79, 108, 152, var(--bg-opacity));
 }
 
+.bg-blue-link-menu{
+  --bg-opacity: 1;
+  background-color: #2C435F;
+  background-color: rgba(44, 67, 95, var(--bg-opacity));
+}
+
 .bg-gray-light{
   --bg-opacity: 1;
   background-color: #979DA5;
@@ -2816,6 +2834,12 @@ video {
   --bg-opacity: 1;
   background-color: #949DA7;
   background-color: rgba(148, 157, 167, var(--bg-opacity));
+}
+
+.bg-gray-mid{
+  --bg-opacity: 1;
+  background-color: #6C7680;
+  background-color: rgba(108, 118, 128, var(--bg-opacity));
 }
 
 .bg-blue-form-input{
@@ -3480,6 +3504,12 @@ video {
   background-color: rgba(79, 108, 152, var(--bg-opacity));
 }
 
+.hover\:bg-blue-link-menu:hover{
+  --bg-opacity: 1;
+  background-color: #2C435F;
+  background-color: rgba(44, 67, 95, var(--bg-opacity));
+}
+
 .hover\:bg-gray-light:hover{
   --bg-opacity: 1;
   background-color: #979DA5;
@@ -3496,6 +3526,12 @@ video {
   --bg-opacity: 1;
   background-color: #949DA7;
   background-color: rgba(148, 157, 167, var(--bg-opacity));
+}
+
+.hover\:bg-gray-mid:hover{
+  --bg-opacity: 1;
+  background-color: #6C7680;
+  background-color: rgba(108, 118, 128, var(--bg-opacity));
 }
 
 .hover\:bg-blue-form-input:hover{
@@ -4160,6 +4196,12 @@ video {
   background-color: rgba(79, 108, 152, var(--bg-opacity));
 }
 
+.focus\:bg-blue-link-menu:focus{
+  --bg-opacity: 1;
+  background-color: #2C435F;
+  background-color: rgba(44, 67, 95, var(--bg-opacity));
+}
+
 .focus\:bg-gray-light:focus{
   --bg-opacity: 1;
   background-color: #979DA5;
@@ -4176,6 +4218,12 @@ video {
   --bg-opacity: 1;
   background-color: #949DA7;
   background-color: rgba(148, 157, 167, var(--bg-opacity));
+}
+
+.focus\:bg-gray-mid:focus{
+  --bg-opacity: 1;
+  background-color: #6C7680;
+  background-color: rgba(108, 118, 128, var(--bg-opacity));
 }
 
 .focus\:bg-blue-form-input:focus{
@@ -4980,6 +5028,12 @@ video {
   border-color: rgba(79, 108, 152, var(--border-opacity));
 }
 
+.border-blue-link-menu{
+  --border-opacity: 1;
+  border-color: #2C435F;
+  border-color: rgba(44, 67, 95, var(--border-opacity));
+}
+
 .border-gray-light{
   --border-opacity: 1;
   border-color: #979DA5;
@@ -4996,6 +5050,12 @@ video {
   --border-opacity: 1;
   border-color: #949DA7;
   border-color: rgba(148, 157, 167, var(--border-opacity));
+}
+
+.border-gray-mid{
+  --border-opacity: 1;
+  border-color: #6C7680;
+  border-color: rgba(108, 118, 128, var(--border-opacity));
 }
 
 .border-blue-form-input{
@@ -5660,6 +5720,12 @@ video {
   border-color: rgba(79, 108, 152, var(--border-opacity));
 }
 
+.hover\:border-blue-link-menu:hover{
+  --border-opacity: 1;
+  border-color: #2C435F;
+  border-color: rgba(44, 67, 95, var(--border-opacity));
+}
+
 .hover\:border-gray-light:hover{
   --border-opacity: 1;
   border-color: #979DA5;
@@ -5676,6 +5742,12 @@ video {
   --border-opacity: 1;
   border-color: #949DA7;
   border-color: rgba(148, 157, 167, var(--border-opacity));
+}
+
+.hover\:border-gray-mid:hover{
+  --border-opacity: 1;
+  border-color: #6C7680;
+  border-color: rgba(108, 118, 128, var(--border-opacity));
 }
 
 .hover\:border-blue-form-input:hover{
@@ -6340,6 +6412,12 @@ video {
   border-color: rgba(79, 108, 152, var(--border-opacity));
 }
 
+.focus\:border-blue-link-menu:focus{
+  --border-opacity: 1;
+  border-color: #2C435F;
+  border-color: rgba(44, 67, 95, var(--border-opacity));
+}
+
 .focus\:border-gray-light:focus{
   --border-opacity: 1;
   border-color: #979DA5;
@@ -6356,6 +6434,12 @@ video {
   --border-opacity: 1;
   border-color: #949DA7;
   border-color: rgba(148, 157, 167, var(--border-opacity));
+}
+
+.focus\:border-gray-mid:focus{
+  --border-opacity: 1;
+  border-color: #6C7680;
+  border-color: rgba(108, 118, 128, var(--border-opacity));
 }
 
 .focus\:border-blue-form-input:focus{
@@ -9074,6 +9158,10 @@ video {
   padding: 0.375rem;
 }
 
+.p-5\/2{
+  padding: 0.625rem;
+}
+
 .py-0{
   padding-top: 0;
   padding-bottom: 0;
@@ -9272,6 +9360,16 @@ video {
 .px-input{
   padding-left: 0.375rem;
   padding-right: 0.375rem;
+}
+
+.py-5\/2{
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.px-5\/2{
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
 }
 
 .pt-0{
@@ -9592,6 +9690,22 @@ video {
 
 .pl-input{
   padding-left: 0.375rem;
+}
+
+.pt-5\/2{
+  padding-top: 0.625rem;
+}
+
+.pr-5\/2{
+  padding-right: 0.625rem;
+}
+
+.pb-5\/2{
+  padding-bottom: 0.625rem;
+}
+
+.pl-5\/2{
+  padding-left: 0.625rem;
 }
 
 .placeholder-transparent::-moz-placeholder{
@@ -11954,6 +12068,30 @@ video {
   color: rgba(79, 108, 152, var(--placeholder-opacity));
 }
 
+.placeholder-blue-link-menu::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--placeholder-opacity));
+}
+
+.placeholder-blue-link-menu:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--placeholder-opacity));
+}
+
+.placeholder-blue-link-menu::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--placeholder-opacity));
+}
+
+.placeholder-blue-link-menu::placeholder{
+  --placeholder-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--placeholder-opacity));
+}
+
 .placeholder-gray-light::-moz-placeholder{
   --placeholder-opacity: 1;
   color: #979DA5;
@@ -12024,6 +12162,30 @@ video {
   --placeholder-opacity: 1;
   color: #949DA7;
   color: rgba(148, 157, 167, var(--placeholder-opacity));
+}
+
+.placeholder-gray-mid::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--placeholder-opacity));
+}
+
+.placeholder-gray-mid:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--placeholder-opacity));
+}
+
+.placeholder-gray-mid::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--placeholder-opacity));
+}
+
+.placeholder-gray-mid::placeholder{
+  --placeholder-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--placeholder-opacity));
 }
 
 .placeholder-blue-form-input::-moz-placeholder{
@@ -14674,6 +14836,30 @@ video {
   color: rgba(79, 108, 152, var(--placeholder-opacity));
 }
 
+.focus\:placeholder-blue-link-menu:focus::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-link-menu:focus:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-link-menu:focus::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-link-menu:focus::placeholder{
+  --placeholder-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--placeholder-opacity));
+}
+
 .focus\:placeholder-gray-light:focus::-moz-placeholder{
   --placeholder-opacity: 1;
   color: #979DA5;
@@ -14744,6 +14930,30 @@ video {
   --placeholder-opacity: 1;
   color: #949DA7;
   color: rgba(148, 157, 167, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-gray-mid:focus::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-gray-mid:focus:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-gray-mid:focus::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-gray-mid:focus::placeholder{
+  --placeholder-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--placeholder-opacity));
 }
 
 .focus\:placeholder-blue-form-input:focus::-moz-placeholder{
@@ -16059,6 +16269,12 @@ video {
   color: rgba(79, 108, 152, var(--text-opacity));
 }
 
+.text-blue-link-menu{
+  --text-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--text-opacity));
+}
+
 .text-gray-light{
   --text-opacity: 1;
   color: #979DA5;
@@ -16075,6 +16291,12 @@ video {
   --text-opacity: 1;
   color: #949DA7;
   color: rgba(148, 157, 167, var(--text-opacity));
+}
+
+.text-gray-mid{
+  --text-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--text-opacity));
 }
 
 .text-blue-form-input{
@@ -16739,6 +16961,12 @@ video {
   color: rgba(79, 108, 152, var(--text-opacity));
 }
 
+.hover\:text-blue-link-menu:hover{
+  --text-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--text-opacity));
+}
+
 .hover\:text-gray-light:hover{
   --text-opacity: 1;
   color: #979DA5;
@@ -16755,6 +16983,12 @@ video {
   --text-opacity: 1;
   color: #949DA7;
   color: rgba(148, 157, 167, var(--text-opacity));
+}
+
+.hover\:text-gray-mid:hover{
+  --text-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--text-opacity));
 }
 
 .hover\:text-blue-form-input:hover{
@@ -17419,6 +17653,12 @@ video {
   color: rgba(79, 108, 152, var(--text-opacity));
 }
 
+.focus\:text-blue-link-menu:focus{
+  --text-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--text-opacity));
+}
+
 .focus\:text-gray-light:focus{
   --text-opacity: 1;
   color: #979DA5;
@@ -17435,6 +17675,12 @@ video {
   --text-opacity: 1;
   color: #949DA7;
   color: rgba(148, 157, 167, var(--text-opacity));
+}
+
+.focus\:text-gray-mid:focus{
+  --text-opacity: 1;
+  color: #6C7680;
+  color: rgba(108, 118, 128, var(--text-opacity));
 }
 
 .focus\:text-blue-form-input:focus{
@@ -27642,6 +27888,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--divide-opacity));
   }
 
+  .xs\:divide-blue-link-menu > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--divide-opacity));
+  }
+
   .xs\:divide-gray-light > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #979DA5;
@@ -27658,6 +27910,12 @@ readers do not read off random characters that represent icons */
     --divide-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--divide-opacity));
+  }
+
+  .xs\:divide-gray-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--divide-opacity));
   }
 
   .xs\:divide-blue-form-input > :not(template) ~ :not(template){
@@ -28406,6 +28664,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .xs\:bg-blue-link-menu{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .xs\:bg-gray-light{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -28422,6 +28686,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .xs\:bg-gray-mid{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .xs\:bg-blue-form-input{
@@ -29086,6 +29356,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .xs\:hover\:bg-blue-link-menu:hover{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .xs\:hover\:bg-gray-light:hover{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -29102,6 +29378,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .xs\:hover\:bg-gray-mid:hover{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .xs\:hover\:bg-blue-form-input:hover{
@@ -29766,6 +30048,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .xs\:focus\:bg-blue-link-menu:focus{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .xs\:focus\:bg-gray-light:focus{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -29782,6 +30070,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .xs\:focus\:bg-gray-mid:focus{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .xs\:focus\:bg-blue-form-input:focus{
@@ -30586,6 +30880,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .xs\:border-blue-link-menu{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .xs\:border-gray-light{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -30602,6 +30902,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .xs\:border-gray-mid{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .xs\:border-blue-form-input{
@@ -31266,6 +31572,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .xs\:hover\:border-blue-link-menu:hover{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .xs\:hover\:border-gray-light:hover{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -31282,6 +31594,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .xs\:hover\:border-gray-mid:hover{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .xs\:hover\:border-blue-form-input:hover{
@@ -31946,6 +32264,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .xs\:focus\:border-blue-link-menu:focus{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .xs\:focus\:border-gray-light:focus{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -31962,6 +32286,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .xs\:focus\:border-gray-mid:focus{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .xs\:focus\:border-blue-form-input:focus{
@@ -34680,6 +35010,10 @@ readers do not read off random characters that represent icons */
     padding: 0.375rem;
   }
 
+  .xs\:p-5\/2{
+    padding: 0.625rem;
+  }
+
   .xs\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -34878,6 +35212,16 @@ readers do not read off random characters that represent icons */
   .xs\:px-input{
     padding-left: 0.375rem;
     padding-right: 0.375rem;
+  }
+
+  .xs\:py-5\/2{
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
+
+  .xs\:px-5\/2{
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
   }
 
   .xs\:pt-0{
@@ -35198,6 +35542,22 @@ readers do not read off random characters that represent icons */
 
   .xs\:pl-input{
     padding-left: 0.375rem;
+  }
+
+  .xs\:pt-5\/2{
+    padding-top: 0.625rem;
+  }
+
+  .xs\:pr-5\/2{
+    padding-right: 0.625rem;
+  }
+
+  .xs\:pb-5\/2{
+    padding-bottom: 0.625rem;
+  }
+
+  .xs\:pl-5\/2{
+    padding-left: 0.625rem;
   }
 
   .xs\:placeholder-transparent::-moz-placeholder{
@@ -37560,6 +37920,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .xs\:placeholder-blue-link-menu::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-blue-link-menu:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-blue-link-menu::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-blue-link-menu::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .xs\:placeholder-gray-light::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -37630,6 +38014,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-gray-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-gray-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-gray-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-gray-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .xs\:placeholder-blue-form-input::-moz-placeholder{
@@ -40280,6 +40688,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .xs\:focus\:placeholder-blue-link-menu:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-blue-link-menu:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-blue-link-menu:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-blue-link-menu:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .xs\:focus\:placeholder-gray-light:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -40350,6 +40782,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-gray-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-gray-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-gray-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-gray-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .xs\:focus\:placeholder-blue-form-input:focus::-moz-placeholder{
@@ -41665,6 +42121,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .xs\:text-blue-link-menu{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .xs\:text-gray-light{
     --text-opacity: 1;
     color: #979DA5;
@@ -41681,6 +42143,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .xs\:text-gray-mid{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .xs\:text-blue-form-input{
@@ -42345,6 +42813,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .xs\:hover\:text-blue-link-menu:hover{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .xs\:hover\:text-gray-light:hover{
     --text-opacity: 1;
     color: #979DA5;
@@ -42361,6 +42835,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .xs\:hover\:text-gray-mid:hover{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .xs\:hover\:text-blue-form-input:hover{
@@ -43025,6 +43505,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .xs\:focus\:text-blue-link-menu:focus{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .xs\:focus\:text-gray-light:focus{
     --text-opacity: 1;
     color: #979DA5;
@@ -43041,6 +43527,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .xs\:focus\:text-gray-mid:focus{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .xs\:focus\:text-blue-form-input:focus{
@@ -47161,6 +47653,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--divide-opacity));
   }
 
+  .smaller\:divide-blue-link-menu > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--divide-opacity));
+  }
+
   .smaller\:divide-gray-light > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #979DA5;
@@ -47177,6 +47675,12 @@ readers do not read off random characters that represent icons */
     --divide-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--divide-opacity));
+  }
+
+  .smaller\:divide-gray-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--divide-opacity));
   }
 
   .smaller\:divide-blue-form-input > :not(template) ~ :not(template){
@@ -47925,6 +48429,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .smaller\:bg-blue-link-menu{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .smaller\:bg-gray-light{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -47941,6 +48451,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .smaller\:bg-gray-mid{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .smaller\:bg-blue-form-input{
@@ -48605,6 +49121,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .smaller\:hover\:bg-blue-link-menu:hover{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .smaller\:hover\:bg-gray-light:hover{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -48621,6 +49143,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .smaller\:hover\:bg-gray-mid:hover{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .smaller\:hover\:bg-blue-form-input:hover{
@@ -49285,6 +49813,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .smaller\:focus\:bg-blue-link-menu:focus{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .smaller\:focus\:bg-gray-light:focus{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -49301,6 +49835,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .smaller\:focus\:bg-gray-mid:focus{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .smaller\:focus\:bg-blue-form-input:focus{
@@ -50105,6 +50645,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .smaller\:border-blue-link-menu{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .smaller\:border-gray-light{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -50121,6 +50667,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .smaller\:border-gray-mid{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .smaller\:border-blue-form-input{
@@ -50785,6 +51337,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .smaller\:hover\:border-blue-link-menu:hover{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .smaller\:hover\:border-gray-light:hover{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -50801,6 +51359,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .smaller\:hover\:border-gray-mid:hover{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .smaller\:hover\:border-blue-form-input:hover{
@@ -51465,6 +52029,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .smaller\:focus\:border-blue-link-menu:focus{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .smaller\:focus\:border-gray-light:focus{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -51481,6 +52051,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .smaller\:focus\:border-gray-mid:focus{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .smaller\:focus\:border-blue-form-input:focus{
@@ -54199,6 +54775,10 @@ readers do not read off random characters that represent icons */
     padding: 0.375rem;
   }
 
+  .smaller\:p-5\/2{
+    padding: 0.625rem;
+  }
+
   .smaller\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -54397,6 +54977,16 @@ readers do not read off random characters that represent icons */
   .smaller\:px-input{
     padding-left: 0.375rem;
     padding-right: 0.375rem;
+  }
+
+  .smaller\:py-5\/2{
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
+
+  .smaller\:px-5\/2{
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
   }
 
   .smaller\:pt-0{
@@ -54717,6 +55307,22 @@ readers do not read off random characters that represent icons */
 
   .smaller\:pl-input{
     padding-left: 0.375rem;
+  }
+
+  .smaller\:pt-5\/2{
+    padding-top: 0.625rem;
+  }
+
+  .smaller\:pr-5\/2{
+    padding-right: 0.625rem;
+  }
+
+  .smaller\:pb-5\/2{
+    padding-bottom: 0.625rem;
+  }
+
+  .smaller\:pl-5\/2{
+    padding-left: 0.625rem;
   }
 
   .smaller\:placeholder-transparent::-moz-placeholder{
@@ -57079,6 +57685,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .smaller\:placeholder-blue-link-menu::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-blue-link-menu:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-blue-link-menu::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-blue-link-menu::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .smaller\:placeholder-gray-light::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -57149,6 +57779,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-gray-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-gray-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-gray-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-gray-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .smaller\:placeholder-blue-form-input::-moz-placeholder{
@@ -59799,6 +60453,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .smaller\:focus\:placeholder-blue-link-menu:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-blue-link-menu:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-blue-link-menu:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-blue-link-menu:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .smaller\:focus\:placeholder-gray-light:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -59869,6 +60547,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-gray-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-gray-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-gray-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-gray-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .smaller\:focus\:placeholder-blue-form-input:focus::-moz-placeholder{
@@ -61184,6 +61886,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .smaller\:text-blue-link-menu{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .smaller\:text-gray-light{
     --text-opacity: 1;
     color: #979DA5;
@@ -61200,6 +61908,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .smaller\:text-gray-mid{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .smaller\:text-blue-form-input{
@@ -61864,6 +62578,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .smaller\:hover\:text-blue-link-menu:hover{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .smaller\:hover\:text-gray-light:hover{
     --text-opacity: 1;
     color: #979DA5;
@@ -61880,6 +62600,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .smaller\:hover\:text-gray-mid:hover{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .smaller\:hover\:text-blue-form-input:hover{
@@ -62544,6 +63270,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .smaller\:focus\:text-blue-link-menu:focus{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .smaller\:focus\:text-gray-light:focus{
     --text-opacity: 1;
     color: #979DA5;
@@ -62560,6 +63292,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .smaller\:focus\:text-gray-mid:focus{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .smaller\:focus\:text-blue-form-input:focus{
@@ -66680,6 +67418,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--divide-opacity));
   }
 
+  .sm\:divide-blue-link-menu > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--divide-opacity));
+  }
+
   .sm\:divide-gray-light > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #979DA5;
@@ -66696,6 +67440,12 @@ readers do not read off random characters that represent icons */
     --divide-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--divide-opacity));
+  }
+
+  .sm\:divide-gray-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--divide-opacity));
   }
 
   .sm\:divide-blue-form-input > :not(template) ~ :not(template){
@@ -67444,6 +68194,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .sm\:bg-blue-link-menu{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .sm\:bg-gray-light{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -67460,6 +68216,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .sm\:bg-gray-mid{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .sm\:bg-blue-form-input{
@@ -68124,6 +68886,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .sm\:hover\:bg-blue-link-menu:hover{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .sm\:hover\:bg-gray-light:hover{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -68140,6 +68908,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .sm\:hover\:bg-gray-mid:hover{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .sm\:hover\:bg-blue-form-input:hover{
@@ -68804,6 +69578,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .sm\:focus\:bg-blue-link-menu:focus{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .sm\:focus\:bg-gray-light:focus{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -68820,6 +69600,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .sm\:focus\:bg-gray-mid:focus{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .sm\:focus\:bg-blue-form-input:focus{
@@ -69624,6 +70410,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .sm\:border-blue-link-menu{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .sm\:border-gray-light{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -69640,6 +70432,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .sm\:border-gray-mid{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .sm\:border-blue-form-input{
@@ -70304,6 +71102,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .sm\:hover\:border-blue-link-menu:hover{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .sm\:hover\:border-gray-light:hover{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -70320,6 +71124,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .sm\:hover\:border-gray-mid:hover{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .sm\:hover\:border-blue-form-input:hover{
@@ -70984,6 +71794,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .sm\:focus\:border-blue-link-menu:focus{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .sm\:focus\:border-gray-light:focus{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -71000,6 +71816,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .sm\:focus\:border-gray-mid:focus{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .sm\:focus\:border-blue-form-input:focus{
@@ -73718,6 +74540,10 @@ readers do not read off random characters that represent icons */
     padding: 0.375rem;
   }
 
+  .sm\:p-5\/2{
+    padding: 0.625rem;
+  }
+
   .sm\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -73916,6 +74742,16 @@ readers do not read off random characters that represent icons */
   .sm\:px-input{
     padding-left: 0.375rem;
     padding-right: 0.375rem;
+  }
+
+  .sm\:py-5\/2{
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
+
+  .sm\:px-5\/2{
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
   }
 
   .sm\:pt-0{
@@ -74236,6 +75072,22 @@ readers do not read off random characters that represent icons */
 
   .sm\:pl-input{
     padding-left: 0.375rem;
+  }
+
+  .sm\:pt-5\/2{
+    padding-top: 0.625rem;
+  }
+
+  .sm\:pr-5\/2{
+    padding-right: 0.625rem;
+  }
+
+  .sm\:pb-5\/2{
+    padding-bottom: 0.625rem;
+  }
+
+  .sm\:pl-5\/2{
+    padding-left: 0.625rem;
   }
 
   .sm\:placeholder-transparent::-moz-placeholder{
@@ -76598,6 +77450,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .sm\:placeholder-blue-link-menu::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-link-menu:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-link-menu::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-link-menu::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .sm\:placeholder-gray-light::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -76668,6 +77544,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-gray-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-gray-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-gray-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-gray-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .sm\:placeholder-blue-form-input::-moz-placeholder{
@@ -79318,6 +80218,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .sm\:focus\:placeholder-blue-link-menu:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-link-menu:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-link-menu:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-link-menu:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .sm\:focus\:placeholder-gray-light:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -79388,6 +80312,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-gray-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-gray-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-gray-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-gray-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .sm\:focus\:placeholder-blue-form-input:focus::-moz-placeholder{
@@ -80703,6 +81651,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .sm\:text-blue-link-menu{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .sm\:text-gray-light{
     --text-opacity: 1;
     color: #979DA5;
@@ -80719,6 +81673,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .sm\:text-gray-mid{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .sm\:text-blue-form-input{
@@ -81383,6 +82343,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .sm\:hover\:text-blue-link-menu:hover{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .sm\:hover\:text-gray-light:hover{
     --text-opacity: 1;
     color: #979DA5;
@@ -81399,6 +82365,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .sm\:hover\:text-gray-mid:hover{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .sm\:hover\:text-blue-form-input:hover{
@@ -82063,6 +83035,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .sm\:focus\:text-blue-link-menu:focus{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .sm\:focus\:text-gray-light:focus{
     --text-opacity: 1;
     color: #979DA5;
@@ -82079,6 +83057,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .sm\:focus\:text-gray-mid:focus{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .sm\:focus\:text-blue-form-input:focus{
@@ -86199,6 +87183,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--divide-opacity));
   }
 
+  .md\:divide-blue-link-menu > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--divide-opacity));
+  }
+
   .md\:divide-gray-light > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #979DA5;
@@ -86215,6 +87205,12 @@ readers do not read off random characters that represent icons */
     --divide-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--divide-opacity));
+  }
+
+  .md\:divide-gray-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--divide-opacity));
   }
 
   .md\:divide-blue-form-input > :not(template) ~ :not(template){
@@ -86963,6 +87959,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .md\:bg-blue-link-menu{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .md\:bg-gray-light{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -86979,6 +87981,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .md\:bg-gray-mid{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .md\:bg-blue-form-input{
@@ -87643,6 +88651,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .md\:hover\:bg-blue-link-menu:hover{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .md\:hover\:bg-gray-light:hover{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -87659,6 +88673,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .md\:hover\:bg-gray-mid:hover{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .md\:hover\:bg-blue-form-input:hover{
@@ -88323,6 +89343,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .md\:focus\:bg-blue-link-menu:focus{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .md\:focus\:bg-gray-light:focus{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -88339,6 +89365,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .md\:focus\:bg-gray-mid:focus{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .md\:focus\:bg-blue-form-input:focus{
@@ -89143,6 +90175,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .md\:border-blue-link-menu{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .md\:border-gray-light{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -89159,6 +90197,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .md\:border-gray-mid{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .md\:border-blue-form-input{
@@ -89823,6 +90867,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .md\:hover\:border-blue-link-menu:hover{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .md\:hover\:border-gray-light:hover{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -89839,6 +90889,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .md\:hover\:border-gray-mid:hover{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .md\:hover\:border-blue-form-input:hover{
@@ -90503,6 +91559,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .md\:focus\:border-blue-link-menu:focus{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .md\:focus\:border-gray-light:focus{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -90519,6 +91581,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .md\:focus\:border-gray-mid:focus{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .md\:focus\:border-blue-form-input:focus{
@@ -93237,6 +94305,10 @@ readers do not read off random characters that represent icons */
     padding: 0.375rem;
   }
 
+  .md\:p-5\/2{
+    padding: 0.625rem;
+  }
+
   .md\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -93435,6 +94507,16 @@ readers do not read off random characters that represent icons */
   .md\:px-input{
     padding-left: 0.375rem;
     padding-right: 0.375rem;
+  }
+
+  .md\:py-5\/2{
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
+
+  .md\:px-5\/2{
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
   }
 
   .md\:pt-0{
@@ -93755,6 +94837,22 @@ readers do not read off random characters that represent icons */
 
   .md\:pl-input{
     padding-left: 0.375rem;
+  }
+
+  .md\:pt-5\/2{
+    padding-top: 0.625rem;
+  }
+
+  .md\:pr-5\/2{
+    padding-right: 0.625rem;
+  }
+
+  .md\:pb-5\/2{
+    padding-bottom: 0.625rem;
+  }
+
+  .md\:pl-5\/2{
+    padding-left: 0.625rem;
   }
 
   .md\:placeholder-transparent::-moz-placeholder{
@@ -96117,6 +97215,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .md\:placeholder-blue-link-menu::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-link-menu:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-link-menu::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-link-menu::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .md\:placeholder-gray-light::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -96187,6 +97309,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-gray-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-gray-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-gray-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-gray-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .md\:placeholder-blue-form-input::-moz-placeholder{
@@ -98837,6 +99983,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .md\:focus\:placeholder-blue-link-menu:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-link-menu:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-link-menu:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-link-menu:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .md\:focus\:placeholder-gray-light:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -98907,6 +100077,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-gray-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-gray-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-gray-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-gray-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .md\:focus\:placeholder-blue-form-input:focus::-moz-placeholder{
@@ -100222,6 +101416,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .md\:text-blue-link-menu{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .md\:text-gray-light{
     --text-opacity: 1;
     color: #979DA5;
@@ -100238,6 +101438,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .md\:text-gray-mid{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .md\:text-blue-form-input{
@@ -100902,6 +102108,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .md\:hover\:text-blue-link-menu:hover{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .md\:hover\:text-gray-light:hover{
     --text-opacity: 1;
     color: #979DA5;
@@ -100918,6 +102130,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .md\:hover\:text-gray-mid:hover{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .md\:hover\:text-blue-form-input:hover{
@@ -101582,6 +102800,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .md\:focus\:text-blue-link-menu:focus{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .md\:focus\:text-gray-light:focus{
     --text-opacity: 1;
     color: #979DA5;
@@ -101598,6 +102822,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .md\:focus\:text-gray-mid:focus{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .md\:focus\:text-blue-form-input:focus{
@@ -105718,6 +106948,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--divide-opacity));
   }
 
+  .lg\:divide-blue-link-menu > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--divide-opacity));
+  }
+
   .lg\:divide-gray-light > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #979DA5;
@@ -105734,6 +106970,12 @@ readers do not read off random characters that represent icons */
     --divide-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--divide-opacity));
+  }
+
+  .lg\:divide-gray-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--divide-opacity));
   }
 
   .lg\:divide-blue-form-input > :not(template) ~ :not(template){
@@ -106482,6 +107724,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .lg\:bg-blue-link-menu{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .lg\:bg-gray-light{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -106498,6 +107746,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .lg\:bg-gray-mid{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .lg\:bg-blue-form-input{
@@ -107162,6 +108416,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .lg\:hover\:bg-blue-link-menu:hover{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .lg\:hover\:bg-gray-light:hover{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -107178,6 +108438,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .lg\:hover\:bg-gray-mid:hover{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .lg\:hover\:bg-blue-form-input:hover{
@@ -107842,6 +109108,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .lg\:focus\:bg-blue-link-menu:focus{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .lg\:focus\:bg-gray-light:focus{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -107858,6 +109130,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .lg\:focus\:bg-gray-mid:focus{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .lg\:focus\:bg-blue-form-input:focus{
@@ -108662,6 +109940,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .lg\:border-blue-link-menu{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .lg\:border-gray-light{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -108678,6 +109962,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .lg\:border-gray-mid{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .lg\:border-blue-form-input{
@@ -109342,6 +110632,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .lg\:hover\:border-blue-link-menu:hover{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .lg\:hover\:border-gray-light:hover{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -109358,6 +110654,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .lg\:hover\:border-gray-mid:hover{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .lg\:hover\:border-blue-form-input:hover{
@@ -110022,6 +111324,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .lg\:focus\:border-blue-link-menu:focus{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .lg\:focus\:border-gray-light:focus{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -110038,6 +111346,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .lg\:focus\:border-gray-mid:focus{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .lg\:focus\:border-blue-form-input:focus{
@@ -112756,6 +114070,10 @@ readers do not read off random characters that represent icons */
     padding: 0.375rem;
   }
 
+  .lg\:p-5\/2{
+    padding: 0.625rem;
+  }
+
   .lg\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -112954,6 +114272,16 @@ readers do not read off random characters that represent icons */
   .lg\:px-input{
     padding-left: 0.375rem;
     padding-right: 0.375rem;
+  }
+
+  .lg\:py-5\/2{
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
+
+  .lg\:px-5\/2{
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
   }
 
   .lg\:pt-0{
@@ -113274,6 +114602,22 @@ readers do not read off random characters that represent icons */
 
   .lg\:pl-input{
     padding-left: 0.375rem;
+  }
+
+  .lg\:pt-5\/2{
+    padding-top: 0.625rem;
+  }
+
+  .lg\:pr-5\/2{
+    padding-right: 0.625rem;
+  }
+
+  .lg\:pb-5\/2{
+    padding-bottom: 0.625rem;
+  }
+
+  .lg\:pl-5\/2{
+    padding-left: 0.625rem;
   }
 
   .lg\:placeholder-transparent::-moz-placeholder{
@@ -115636,6 +116980,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .lg\:placeholder-blue-link-menu::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-link-menu:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-link-menu::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-link-menu::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .lg\:placeholder-gray-light::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -115706,6 +117074,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-gray-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-gray-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-gray-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-gray-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .lg\:placeholder-blue-form-input::-moz-placeholder{
@@ -118356,6 +119748,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .lg\:focus\:placeholder-blue-link-menu:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-link-menu:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-link-menu:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-link-menu:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .lg\:focus\:placeholder-gray-light:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -118426,6 +119842,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-gray-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-gray-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-gray-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-gray-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .lg\:focus\:placeholder-blue-form-input:focus::-moz-placeholder{
@@ -119741,6 +121181,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .lg\:text-blue-link-menu{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .lg\:text-gray-light{
     --text-opacity: 1;
     color: #979DA5;
@@ -119757,6 +121203,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .lg\:text-gray-mid{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .lg\:text-blue-form-input{
@@ -120421,6 +121873,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .lg\:hover\:text-blue-link-menu:hover{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .lg\:hover\:text-gray-light:hover{
     --text-opacity: 1;
     color: #979DA5;
@@ -120437,6 +121895,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .lg\:hover\:text-gray-mid:hover{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .lg\:hover\:text-blue-form-input:hover{
@@ -121101,6 +122565,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .lg\:focus\:text-blue-link-menu:focus{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .lg\:focus\:text-gray-light:focus{
     --text-opacity: 1;
     color: #979DA5;
@@ -121117,6 +122587,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .lg\:focus\:text-gray-mid:focus{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .lg\:focus\:text-blue-form-input:focus{
@@ -125237,6 +126713,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--divide-opacity));
   }
 
+  .xl\:divide-blue-link-menu > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--divide-opacity));
+  }
+
   .xl\:divide-gray-light > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #979DA5;
@@ -125253,6 +126735,12 @@ readers do not read off random characters that represent icons */
     --divide-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--divide-opacity));
+  }
+
+  .xl\:divide-gray-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--divide-opacity));
   }
 
   .xl\:divide-blue-form-input > :not(template) ~ :not(template){
@@ -126001,6 +127489,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .xl\:bg-blue-link-menu{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .xl\:bg-gray-light{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -126017,6 +127511,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .xl\:bg-gray-mid{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .xl\:bg-blue-form-input{
@@ -126681,6 +128181,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .xl\:hover\:bg-blue-link-menu:hover{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .xl\:hover\:bg-gray-light:hover{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -126697,6 +128203,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .xl\:hover\:bg-gray-mid:hover{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .xl\:hover\:bg-blue-form-input:hover{
@@ -127361,6 +128873,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(79, 108, 152, var(--bg-opacity));
   }
 
+  .xl\:focus\:bg-blue-link-menu:focus{
+    --bg-opacity: 1;
+    background-color: #2C435F;
+    background-color: rgba(44, 67, 95, var(--bg-opacity));
+  }
+
   .xl\:focus\:bg-gray-light:focus{
     --bg-opacity: 1;
     background-color: #979DA5;
@@ -127377,6 +128895,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #949DA7;
     background-color: rgba(148, 157, 167, var(--bg-opacity));
+  }
+
+  .xl\:focus\:bg-gray-mid:focus{
+    --bg-opacity: 1;
+    background-color: #6C7680;
+    background-color: rgba(108, 118, 128, var(--bg-opacity));
   }
 
   .xl\:focus\:bg-blue-form-input:focus{
@@ -128181,6 +129705,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .xl\:border-blue-link-menu{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .xl\:border-gray-light{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -128197,6 +129727,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .xl\:border-gray-mid{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .xl\:border-blue-form-input{
@@ -128861,6 +130397,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .xl\:hover\:border-blue-link-menu:hover{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .xl\:hover\:border-gray-light:hover{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -128877,6 +130419,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .xl\:hover\:border-gray-mid:hover{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .xl\:hover\:border-blue-form-input:hover{
@@ -129541,6 +131089,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(79, 108, 152, var(--border-opacity));
   }
 
+  .xl\:focus\:border-blue-link-menu:focus{
+    --border-opacity: 1;
+    border-color: #2C435F;
+    border-color: rgba(44, 67, 95, var(--border-opacity));
+  }
+
   .xl\:focus\:border-gray-light:focus{
     --border-opacity: 1;
     border-color: #979DA5;
@@ -129557,6 +131111,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #949DA7;
     border-color: rgba(148, 157, 167, var(--border-opacity));
+  }
+
+  .xl\:focus\:border-gray-mid:focus{
+    --border-opacity: 1;
+    border-color: #6C7680;
+    border-color: rgba(108, 118, 128, var(--border-opacity));
   }
 
   .xl\:focus\:border-blue-form-input:focus{
@@ -132275,6 +133835,10 @@ readers do not read off random characters that represent icons */
     padding: 0.375rem;
   }
 
+  .xl\:p-5\/2{
+    padding: 0.625rem;
+  }
+
   .xl\:py-0{
     padding-top: 0;
     padding-bottom: 0;
@@ -132473,6 +134037,16 @@ readers do not read off random characters that represent icons */
   .xl\:px-input{
     padding-left: 0.375rem;
     padding-right: 0.375rem;
+  }
+
+  .xl\:py-5\/2{
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
+
+  .xl\:px-5\/2{
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
   }
 
   .xl\:pt-0{
@@ -132793,6 +134367,22 @@ readers do not read off random characters that represent icons */
 
   .xl\:pl-input{
     padding-left: 0.375rem;
+  }
+
+  .xl\:pt-5\/2{
+    padding-top: 0.625rem;
+  }
+
+  .xl\:pr-5\/2{
+    padding-right: 0.625rem;
+  }
+
+  .xl\:pb-5\/2{
+    padding-bottom: 0.625rem;
+  }
+
+  .xl\:pl-5\/2{
+    padding-left: 0.625rem;
   }
 
   .xl\:placeholder-transparent::-moz-placeholder{
@@ -135155,6 +136745,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .xl\:placeholder-blue-link-menu::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-link-menu:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-link-menu::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-link-menu::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .xl\:placeholder-gray-light::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -135225,6 +136839,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-gray-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-gray-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-gray-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-gray-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .xl\:placeholder-blue-form-input::-moz-placeholder{
@@ -137875,6 +139513,30 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--placeholder-opacity));
   }
 
+  .xl\:focus\:placeholder-blue-link-menu:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-link-menu:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-link-menu:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-link-menu:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--placeholder-opacity));
+  }
+
   .xl\:focus\:placeholder-gray-light:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #979DA5;
@@ -137945,6 +139607,30 @@ readers do not read off random characters that represent icons */
     --placeholder-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-gray-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-gray-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-gray-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-gray-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--placeholder-opacity));
   }
 
   .xl\:focus\:placeholder-blue-form-input:focus::-moz-placeholder{
@@ -139260,6 +140946,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .xl\:text-blue-link-menu{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .xl\:text-gray-light{
     --text-opacity: 1;
     color: #979DA5;
@@ -139276,6 +140968,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .xl\:text-gray-mid{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .xl\:text-blue-form-input{
@@ -139940,6 +141638,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .xl\:hover\:text-blue-link-menu:hover{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .xl\:hover\:text-gray-light:hover{
     --text-opacity: 1;
     color: #979DA5;
@@ -139956,6 +141660,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .xl\:hover\:text-gray-mid:hover{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .xl\:hover\:text-blue-form-input:hover{
@@ -140620,6 +142330,12 @@ readers do not read off random characters that represent icons */
     color: rgba(79, 108, 152, var(--text-opacity));
   }
 
+  .xl\:focus\:text-blue-link-menu:focus{
+    --text-opacity: 1;
+    color: #2C435F;
+    color: rgba(44, 67, 95, var(--text-opacity));
+  }
+
   .xl\:focus\:text-gray-light:focus{
     --text-opacity: 1;
     color: #979DA5;
@@ -140636,6 +142352,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #949DA7;
     color: rgba(148, 157, 167, var(--text-opacity));
+  }
+
+  .xl\:focus\:text-gray-mid:focus{
+    --text-opacity: 1;
+    color: #6C7680;
+    color: rgba(108, 118, 128, var(--text-opacity));
   }
 
   .xl\:focus\:text-blue-form-input:focus{

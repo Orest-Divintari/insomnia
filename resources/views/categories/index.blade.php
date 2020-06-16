@@ -17,8 +17,12 @@
             </div>
             @endforeach
         </div>
-        <div class="flex-1">
-            latest posts
+        <div class=" flex-1">
+            <div class="ml-5 border-t-8 border border-gray-lighter">
+                <header class="p-5/2 tracking-wide font-hairline text-gray-mid">
+                    LATEST POSTS
+                </header>
+            </div>
         </div>
     </div>
 </x-layouts._forums>
