@@ -51,4 +51,14 @@ class Reply extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * Transform the date that it was updated to readable format
+     *
+     * @return string
+     */
+    public function getDateUpdatedAttribute()
+    {
+        return $this->updated_at->diffForHumans();
+    }
+
 }

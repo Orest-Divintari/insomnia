@@ -15,7 +15,8 @@ module.exports = {
             },
             colors: {
                 "blue-dark": "#162A44",
-                "blue-light": "#DDE6F1",
+                "blue-light": "#EDF4F9",
+                "blue-lighter": "#DDE6F1",
                 "blue-mid": "#426693",
                 "blue-mid-light": "#CFDEEB",
                 "blue-mid-dark": "#4F6C98",
@@ -25,21 +26,23 @@ module.exports = {
                 "gray-lightest": "#949DA7",
                 "gray-mid": "#6C7680",
                 "blue-form-input": "#E7F1FE",
-                "blue-form-side": "#EDF4F9",
+
                 "blue-form-bottom": "#E1EAF3",
                 "blue-form-hover-button": "#334866",
-                "blue-form-button": "#4F6C98",
                 "blue-border": "#E1EAF3",
                 "blue-form-link": "#859DC1",
                 "gray-form-label": "#9FA8B2",
                 "black-form-text": "#2C2C2C",
                 "red-alert": "#FEE9E8",
                 "red-alert-text": "#C84347",
-                "semi-white": "#FCFCFC"
+                "semi-white": "#FCFCFC",
+                "purple-muted": "#75587A"
+            },
+            spacing: {
+                "5/2": "0.625rem"
             },
             padding: {
-                input: "0.375rem",
-                "5/2": "0.625rem"
+                input: "0.375rem"
             },
             fontFamily: {
                 insomnia: "Verdana, Arial, sans-serif"
@@ -56,8 +59,8 @@ module.exports = {
                 "9": "2.25rem"
             },
             fontSize: {
-                smaller: "0.8125rem",
-                
+                "2xs": "0.5rem",
+                smaller: "0.8125rem"
             }
         }
     },

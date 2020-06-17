@@ -9,9 +9,13 @@ use Illuminate\Support\Str;
 class Thread extends Model
 {
 
-    const RECENTLY_ACTIVE_THREAD_LIMIT = 24;
+    /**
+     * Relationships to always eager-load
+     *
+     * @var array
+     */
     protected $with = ['recentReply', 'poster'];
-    // protected $with = ['recentReply', 'poster'];
+
     /**
      * The attributes that are mass assignable
      *
@@ -116,6 +120,26 @@ class Thread extends Model
     public function getShortTitleAttribute()
     {
         return Str::limit($this->title, config('constants.thread.title_limit'), '');
+    }
+
+    /**
+     * Transform the date it was updated to human readable datetime
+     *
+     * @return string
+     */
+    public function getDateUpdatedAttribute()
+    {
+        return $this->updated_at->diffForHumans();
+    }
+
+    /**
+     * Transform the date it was created to human readable datetime
+     *
+     * @return string
+     */
+    public function getDateCreatedAttribute()
+    {
+        return $this->updated_at->diffForHumans();
     }
 
 }

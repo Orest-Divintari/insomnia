@@ -11,7 +11,7 @@
 }
 
 .form-left-col {
-    @apply hidden .w-2/6 .bg-blue-form-side .text-right .pt-6 .pb-4 .px-4 .border-r;
+    @apply hidden .w-2/6 .bg-blue-light .text-right .pt-6 .pb-4 .px-4 .border-r;
 }
 
 div.form-left-col {
@@ -50,11 +50,11 @@ div.form-left-col {
     @apply .hidden .h-full .w-2/6 mr-4;
 }
 
-.form-button-right-col {
-    @apply .py-2 .px-10 .font-bold .bg-blue-form-button .text-white .rounded;
+.form-button {
+    @apply .py-2 .px-10 .font-bold .bg-blue-mid-dark .text-white .rounded;
 }
 
-.form-button-right-col:hover {
+.form-button:hover {
     @apply .bg-blue-form-hover-button;
 }
 .error {

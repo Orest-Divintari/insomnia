@@ -14,8 +14,8 @@
                 <div class="flex text-smaller text-gray-lightest items-center">
                     <p class="mr-1">Latest:</p>
                     <p>{{ $latestPost->recentReply->poster->shortName }}</p>
-                    <x-categories._dot></x-categories._dot>
-                    <p> {{ $latestPost->updated_at->diffForHumans() }} </p>
+                    <p class="dot"></p>
+                    <p> {{ $latestPost->date_updated }} </p>
                 </div>
                 <a class="text-smaller text-gray-lightest underline"
                     href="{{ route('categories.show', $latestPost->category->slug) }}">

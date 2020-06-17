@@ -1,4 +1,4 @@
-<x-layouts._forums>
+<x-layouts._forum>
     <header>
         <h1 class="section-title">Log in</h1>
     </header>
@@ -53,4 +53,4 @@
         </div>
     </main>
 
-</x-layouts._forums>
+</x-layouts._forum>

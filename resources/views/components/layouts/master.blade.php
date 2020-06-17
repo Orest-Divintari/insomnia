@@ -26,7 +26,7 @@
 <body>
     <div id="app" class="">
         <header class="">
-            <div class="hidden lg:block bg-blue-light">
+            <div class="hidden lg:block bg-blue-lighter">
                 <a href="{{route('home')}}" class="pt-3 px-5 text-5xl font-bold text-blue-dark">iNsomnia</a>
             </div>
             <div class="bg-blue-dark text-white px-5 flex justify-between items-center">
@@ -52,7 +52,7 @@
         </header>
 
         <main class="p-5 h-screen bg-semi-white">{{$main}}</main>
-        <footer class="px-5 bg-blue-light">
+        <footer class="px-5 bg-blue-lighter">
             <div class="flex justify-between">
                 <div>Editors</div>
                 <div>Links</div>

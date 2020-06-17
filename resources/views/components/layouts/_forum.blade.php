@@ -8,7 +8,7 @@
         </div>
     </x-slot>
     <x-slot name="subHeader">
-        <div class="flex justify-between items-center px-5 bg-blue-light text-gray-900 ">
+        <div class="flex justify-between items-center px-5 bg-blue-lighter text-gray-900 ">
             <div class="flex ">
                 <x-sub_head_tab_item name="Home" destination='forum'></x-sub_head_tab_item>
                 <x-sub_head_tab_item name="New Posts" destination='home'></x-sub_head_tab_item>

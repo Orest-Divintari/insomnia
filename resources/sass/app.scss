@@ -13,6 +13,7 @@
 @import "~@fortawesome/fontawesome-free/scss/brands";
 @import "./components/form.css";
 @import "./components/categories.css";
+@import "./components/threads.css";
 
 .section {
     @apply pt-5;
@@ -24,4 +25,12 @@
 
 * {
     @apply .font-insomnia;
+}
+
+.avatar {
+    @apply .rounded-full .object-cover;
+}
+
+.dot {
+    @apply .bg-gray-600  .w-1 .h-1 .rounded-full .mx-2;
 }

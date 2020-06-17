@@ -1,4 +1,4 @@
-<x-layouts._forums>
+<x-layouts._forum>
     @push('scripts')
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @endpush
@@ -91,4 +91,4 @@
             </form>
         </div>
     </main>
-</x-layouts._forums>
+</x-layouts._forum>
