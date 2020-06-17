@@ -176,6 +176,7 @@ class ViewCategoriesTest extends TestCase
     /** @test */
     public function a_user_can_view_the_user_name_who_posted_the_most_recent_reply()
     {
+
         $category = create(Category::class);
 
         $subCategoryOne = create(Category::class, [
@@ -186,23 +187,24 @@ class ViewCategoriesTest extends TestCase
             'parent_id' => $category->id,
         ]);
 
-        $threadOne = create(Thread::class, ['category_id' => $subCategoryOne->id]);
-        $threadTwo = create(Thread::class, ['category_id' => $subCategoryTwo->id]);
+        $threadOne = create(Thread::class, [
+            'category_id' => $subCategoryOne->id,
+            'updated_at' => Carbon::now()->subDay(),
+        ]);
+
+        $threadTwo = create(Thread::class, [
+            'category_id' => $subCategoryTwo->id,
+            'updated_at' => Carbon::now()->subDay(),
+        ]);
 
         $recentReply = create(Reply::class, [
             'repliable_id' => $threadOne->id,
             'repliable_type' => Thread::class,
         ]);
 
-        $oldReply = create(Reply::class, [
-            'repliable_id' => $threadTwo->id,
-            'repliable_type' => Thread::class,
-            'updated_at' => Carbon::now()->subMonth(),
-        ]);
-
         $this->get(route('forum'))
             ->assertSee($recentReply->poster->shortName)
-            ->assertDontSee($oldReply->poster->shortName);
+            ->assertDontSee($threadTwo->poster->shortName);
     }
 
     /** @test */

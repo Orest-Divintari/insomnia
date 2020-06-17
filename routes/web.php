@@ -23,6 +23,17 @@ Route::get('/forum/categories/{category}', 'CategoryController@show')->name('cat
 
 //threads
 Route::get('/categories/{category}/threads', 'ThreadController@index')->name('threads.index');
+
+// ------- WEB AUTH -------
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/threads/create', 'ThreadController@create')->name('threads.create');
+    Route::post('/threads', 'ThreadController@store')
+        ->middleware('verified')
+        ->name('threads.store');
+});
+
+// ------ API -------
 Route::group([
     'prefix' => 'api',
     'namespace' => 'Api',
@@ -30,9 +41,7 @@ Route::group([
 ], function () {
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::post('/threads', 'ThreadController@store')
-            ->middleware('verified')
-            ->name('threads.store');
+
     });
 
     //threads

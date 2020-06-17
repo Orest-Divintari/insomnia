@@ -143,16 +143,6 @@ class CategoryTest extends TestCase
     }
 
     /** @test */
-    public function a_category_has_the_total_number_of_replies_associated_with_it()
-    {
-        createMany(Thread::class, 2, [
-            'category_id' => $this->category->id,
-            'replies_count' => 5,
-        ]);
-
-    }
-
-    /** @test */
     public function check_whether_a_category_has_subcategories()
     {
         $this->assertFalse($this->category->hasSubCategories());

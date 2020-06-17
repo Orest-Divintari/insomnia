@@ -9,6 +9,4 @@ class ManageThreadsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-
 }

@@ -19,15 +19,15 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_a_single_thread()
+    public function a_user_can_read_a_single_thread()
     {
+        $this->get(route('threads.show', $this->thread))
+            ->assertSee($this->thread->title);
 
-        $response = $this->get($this->thread->api_path())->json();
-        $this->assertEquals($this->thread->title, $response['data']['title']);
     }
 
     /** @test */
-    public function a_user_can_view_the_replies_associated_with_a_thread()
+    public function a_user_can_read_the_replies_associated_with_a_thread()
     {
         $firstReply = create(Reply::class, [
             'repliable_id' => $this->thread->id,
@@ -42,11 +42,11 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_the_threads_associated_with_a_category()
+    public function a_user_can_read_the_threads_associated_with_a_category()
     {
         $category = create(Category::class);
         $thread = create(Thread::class, ['category_id' => $category->id]);
-        $this->get('/categories/' . $category->slug . '/threads')
+        $this->get(route('threads.index', $category))
             ->assertSee($thread->title);
     }
 

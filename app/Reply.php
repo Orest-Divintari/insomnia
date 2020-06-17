@@ -28,7 +28,7 @@ class Reply extends Model
      */
     public function thread()
     {
-        return $this->morphTo(Thread::class);
+        return $this->belongsTo(Thread::class, 'repliable_id');
     }
 
     /**

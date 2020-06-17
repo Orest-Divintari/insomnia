@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Thread;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -13,50 +14,70 @@ class CreateThreadsTest extends TestCase
     use WithFaker;
 
     /** @test */
-    public function guests_may_not_create_threads()
+    public function guests_may_not_see_the_post_new_thread_form()
+    {
+        $this->get(route('threads.create'))
+            ->assertRedirect('login');
+    }
+
+    /** @test */
+    public function guests_may_not_post_new_threads()
     {
         $this->post(route('threads.store'), [])
             ->assertRedirect('login');
     }
 
     /** @test */
-    public function authenticated_users_may_create_threads()
+    public function an_authenticated_user_has_to_verify_the_email_before_posting_a_new_thread()
     {
+        $user = create(User::class, [
+            'email_verified_at' => null,
+        ]);
 
+        $this->signIn($user);
+        $this->post(route('threads.store'), [])
+            ->assertRedirect(route('verification.notice'));
+    }
+
+    /** @test */
+    public function authenticated_users_that_have_confirmed_their_email_may_post_threads()
+    {
         $user = $this->signIn();
         $thread = raw(Thread::class, ['user_id' => $user->id]);
-
-        $this->assertDatabaseMissing('threads', $title = ['title' => $thread['title']]);
-        $this->post(route('threads.store'), $thread);
+        $title = ['title' => $thread['title']];
+        $response = $this->post(route('threads.store'), $thread);
         $this->assertDatabaseHas('threads', $title);
+        $this->get($response->headers->get('location'))
+            ->assertSee($title['title']);
 
     }
 
     /** @test */
     public function a_thread_requires_a_body()
     {
-        $this->threadRequires('body');
+        $this->post_thread(['body' => ''])
+            ->assertSessionHasErrors('body');
     }
 
     /** @test */
     public function a_thread_requires_a_title()
     {
-        $this->threadRequires('title');
+        $this->post_thread(['title' => ''])
+            ->assertSessionHasErrors('title');
     }
 
     /** @test */
     public function a_thread_requires_a_category()
     {
-        $this->threadRequires('category_id');
+        $this->post_thread(['category_id' => ''])
+            ->assertSessionHasErrors('category_id');
     }
 
-    protected function threadRequires($attribute)
+    protected function post_thread($overrides)
     {
         $user = $this->signIn();
-        $thread = raw(Thread::class, ['user_id' => $user->id]);
-        unset($thread[$attribute]);
-        $this->post(route('threads.store'), $thread)
-            ->assertSessionHasErrors($attribute);
+        $thread = raw(Thread::class, $overrides + ['user_id' => $user->id]);
+        return $this->post(route('threads.store'), $thread);
     }
 
     /** @test */
