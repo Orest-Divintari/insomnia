@@ -1032,6 +1032,18 @@ video {
   margin-left: calc(1.5rem * calc(1 - var(--space-x-reverse)));
 }
 
+.space-y-7 > :not(template) ~ :not(template){
+  --space-y-reverse: 0;
+  margin-top: calc(1.75rem * calc(1 - var(--space-y-reverse)));
+  margin-bottom: calc(1.75rem * var(--space-y-reverse));
+}
+
+.space-x-7 > :not(template) ~ :not(template){
+  --space-x-reverse: 0;
+  margin-right: calc(1.75rem * var(--space-x-reverse));
+  margin-left: calc(1.75rem * calc(1 - var(--space-x-reverse)));
+}
+
 .space-y-8 > :not(template) ~ :not(template){
   --space-y-reverse: 0;
   margin-top: calc(2rem * calc(1 - var(--space-y-reverse)));
@@ -1258,6 +1270,18 @@ video {
   --space-x-reverse: 0;
   margin-right: calc(-1.5rem * var(--space-x-reverse));
   margin-left: calc(-1.5rem * calc(1 - var(--space-x-reverse)));
+}
+
+.-space-y-7 > :not(template) ~ :not(template){
+  --space-y-reverse: 0;
+  margin-top: calc(-1.75rem * calc(1 - var(--space-y-reverse)));
+  margin-bottom: calc(-1.75rem * var(--space-y-reverse));
+}
+
+.-space-x-7 > :not(template) ~ :not(template){
+  --space-x-reverse: 0;
+  margin-right: calc(-1.75rem * var(--space-x-reverse));
+  margin-left: calc(-1.75rem * calc(1 - var(--space-x-reverse)));
 }
 
 .-space-y-8 > :not(template) ~ :not(template){
@@ -7514,6 +7538,10 @@ video {
   height: 1.5rem;
 }
 
+.h-7{
+  height: 1.75rem;
+}
+
 .h-8{
   height: 2rem;
 }
@@ -7738,6 +7766,10 @@ video {
   margin: 1.5rem;
 }
 
+.m-7{
+  margin: 1.75rem;
+}
+
 .m-8{
   margin: 2rem;
 }
@@ -7816,6 +7848,10 @@ video {
 
 .-m-6{
   margin: -1.5rem;
+}
+
+.-m-7{
+  margin: -1.75rem;
 }
 
 .-m-8{
@@ -7938,6 +7974,16 @@ video {
 .mx-6{
   margin-left: 1.5rem;
   margin-right: 1.5rem;
+}
+
+.my-7{
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.mx-7{
+  margin-left: 1.75rem;
+  margin-right: 1.75rem;
 }
 
 .my-8{
@@ -8138,6 +8184,16 @@ video {
 .-mx-6{
   margin-left: -1.5rem;
   margin-right: -1.5rem;
+}
+
+.-my-7{
+  margin-top: -1.75rem;
+  margin-bottom: -1.75rem;
+}
+
+.-mx-7{
+  margin-left: -1.75rem;
+  margin-right: -1.75rem;
 }
 
 .-my-8{
@@ -8380,6 +8436,22 @@ video {
 
 .ml-6{
   margin-left: 1.5rem;
+}
+
+.mt-7{
+  margin-top: 1.75rem;
+}
+
+.mr-7{
+  margin-right: 1.75rem;
+}
+
+.mb-7{
+  margin-bottom: 1.75rem;
+}
+
+.ml-7{
+  margin-left: 1.75rem;
 }
 
 .mt-8{
@@ -8700,6 +8772,22 @@ video {
 
 .-ml-6{
   margin-left: -1.5rem;
+}
+
+.-mt-7{
+  margin-top: -1.75rem;
+}
+
+.-mr-7{
+  margin-right: -1.75rem;
+}
+
+.-mb-7{
+  margin-bottom: -1.75rem;
+}
+
+.-ml-7{
+  margin-left: -1.75rem;
 }
 
 .-mt-8{
@@ -9232,6 +9320,10 @@ video {
   padding: 1.5rem;
 }
 
+.p-7{
+  padding: 1.75rem;
+}
+
 .p-8{
   padding: 2rem;
 }
@@ -9356,6 +9448,16 @@ video {
 .px-6{
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.py-7{
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+}
+
+.px-7{
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
 }
 
 .py-8{
@@ -9608,6 +9710,22 @@ video {
 
 .pl-6{
   padding-left: 1.5rem;
+}
+
+.pt-7{
+  padding-top: 1.75rem;
+}
+
+.pr-7{
+  padding-right: 1.75rem;
+}
+
+.pb-7{
+  padding-bottom: 1.75rem;
+}
+
+.pl-7{
+  padding-left: 1.75rem;
 }
 
 .pt-8{
@@ -18162,6 +18280,10 @@ video {
   width: 1.5rem;
 }
 
+.w-7{
+  width: 1.75rem;
+}
+
 .w-8{
   width: 2rem;
 }
@@ -18401,6 +18523,11 @@ video {
   gap: 1.5rem;
 }
 
+.gap-7{
+  grid-gap: 1.75rem;
+  gap: 1.75rem;
+}
+
 .gap-8{
   grid-gap: 2rem;
   gap: 2rem;
@@ -18506,6 +18633,12 @@ video {
   grid-column-gap: 1.5rem;
   -moz-column-gap: 1.5rem;
        column-gap: 1.5rem;
+}
+
+.col-gap-7{
+  grid-column-gap: 1.75rem;
+  -moz-column-gap: 1.75rem;
+       column-gap: 1.75rem;
 }
 
 .col-gap-8{
@@ -18619,6 +18752,11 @@ video {
 .row-gap-6{
   grid-row-gap: 1.5rem;
   row-gap: 1.5rem;
+}
+
+.row-gap-7{
+  grid-row-gap: 1.75rem;
+  row-gap: 1.75rem;
 }
 
 .row-gap-8{
@@ -19591,6 +19729,10 @@ video {
   --transform-translate-x: 1.5rem;
 }
 
+.translate-x-7{
+  --transform-translate-x: 1.75rem;
+}
+
 .translate-x-8{
   --transform-translate-x: 2rem;
 }
@@ -19665,6 +19807,10 @@ video {
 
 .-translate-x-6{
   --transform-translate-x: -1.5rem;
+}
+
+.-translate-x-7{
+  --transform-translate-x: -1.75rem;
 }
 
 .-translate-x-8{
@@ -19763,6 +19909,10 @@ video {
   --transform-translate-y: 1.5rem;
 }
 
+.translate-y-7{
+  --transform-translate-y: 1.75rem;
+}
+
 .translate-y-8{
   --transform-translate-y: 2rem;
 }
@@ -19837,6 +19987,10 @@ video {
 
 .-translate-y-6{
   --transform-translate-y: -1.5rem;
+}
+
+.-translate-y-7{
+  --transform-translate-y: -1.75rem;
 }
 
 .-translate-y-8{
@@ -19935,6 +20089,10 @@ video {
   --transform-translate-x: 1.5rem;
 }
 
+.hover\:translate-x-7:hover{
+  --transform-translate-x: 1.75rem;
+}
+
 .hover\:translate-x-8:hover{
   --transform-translate-x: 2rem;
 }
@@ -20009,6 +20167,10 @@ video {
 
 .hover\:-translate-x-6:hover{
   --transform-translate-x: -1.5rem;
+}
+
+.hover\:-translate-x-7:hover{
+  --transform-translate-x: -1.75rem;
 }
 
 .hover\:-translate-x-8:hover{
@@ -20107,6 +20269,10 @@ video {
   --transform-translate-y: 1.5rem;
 }
 
+.hover\:translate-y-7:hover{
+  --transform-translate-y: 1.75rem;
+}
+
 .hover\:translate-y-8:hover{
   --transform-translate-y: 2rem;
 }
@@ -20181,6 +20347,10 @@ video {
 
 .hover\:-translate-y-6:hover{
   --transform-translate-y: -1.5rem;
+}
+
+.hover\:-translate-y-7:hover{
+  --transform-translate-y: -1.75rem;
 }
 
 .hover\:-translate-y-8:hover{
@@ -20279,6 +20449,10 @@ video {
   --transform-translate-x: 1.5rem;
 }
 
+.focus\:translate-x-7:focus{
+  --transform-translate-x: 1.75rem;
+}
+
 .focus\:translate-x-8:focus{
   --transform-translate-x: 2rem;
 }
@@ -20353,6 +20527,10 @@ video {
 
 .focus\:-translate-x-6:focus{
   --transform-translate-x: -1.5rem;
+}
+
+.focus\:-translate-x-7:focus{
+  --transform-translate-x: -1.75rem;
 }
 
 .focus\:-translate-x-8:focus{
@@ -20451,6 +20629,10 @@ video {
   --transform-translate-y: 1.5rem;
 }
 
+.focus\:translate-y-7:focus{
+  --transform-translate-y: 1.75rem;
+}
+
 .focus\:translate-y-8:focus{
   --transform-translate-y: 2rem;
 }
@@ -20525,6 +20707,10 @@ video {
 
 .focus\:-translate-y-6:focus{
   --transform-translate-y: -1.5rem;
+}
+
+.focus\:-translate-y-7:focus{
+  --transform-translate-y: -1.75rem;
 }
 
 .focus\:-translate-y-8:focus{
@@ -27061,6 +27247,18 @@ readers do not read off random characters that represent icons */
     margin-left: calc(1.5rem * calc(1 - var(--space-x-reverse)));
   }
 
+  .xs\:space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(1.75rem * var(--space-y-reverse));
+  }
+
+  .xs\:space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(1.75rem * var(--space-x-reverse));
+    margin-left: calc(1.75rem * calc(1 - var(--space-x-reverse)));
+  }
+
   .xs\:space-y-8 > :not(template) ~ :not(template){
     --space-y-reverse: 0;
     margin-top: calc(2rem * calc(1 - var(--space-y-reverse)));
@@ -27287,6 +27485,18 @@ readers do not read off random characters that represent icons */
     --space-x-reverse: 0;
     margin-right: calc(-1.5rem * var(--space-x-reverse));
     margin-left: calc(-1.5rem * calc(1 - var(--space-x-reverse)));
+  }
+
+  .xs\:-space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(-1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(-1.75rem * var(--space-y-reverse));
+  }
+
+  .xs\:-space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(-1.75rem * var(--space-x-reverse));
+    margin-left: calc(-1.75rem * calc(1 - var(--space-x-reverse)));
   }
 
   .xs\:-space-y-8 > :not(template) ~ :not(template){
@@ -33543,6 +33753,10 @@ readers do not read off random characters that represent icons */
     height: 1.5rem;
   }
 
+  .xs\:h-7{
+    height: 1.75rem;
+  }
+
   .xs\:h-8{
     height: 2rem;
   }
@@ -33767,6 +33981,10 @@ readers do not read off random characters that represent icons */
     margin: 1.5rem;
   }
 
+  .xs\:m-7{
+    margin: 1.75rem;
+  }
+
   .xs\:m-8{
     margin: 2rem;
   }
@@ -33845,6 +34063,10 @@ readers do not read off random characters that represent icons */
 
   .xs\:-m-6{
     margin: -1.5rem;
+  }
+
+  .xs\:-m-7{
+    margin: -1.75rem;
   }
 
   .xs\:-m-8{
@@ -33967,6 +34189,16 @@ readers do not read off random characters that represent icons */
   .xs\:mx-6{
     margin-left: 1.5rem;
     margin-right: 1.5rem;
+  }
+
+  .xs\:my-7{
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .xs\:mx-7{
+    margin-left: 1.75rem;
+    margin-right: 1.75rem;
   }
 
   .xs\:my-8{
@@ -34167,6 +34399,16 @@ readers do not read off random characters that represent icons */
   .xs\:-mx-6{
     margin-left: -1.5rem;
     margin-right: -1.5rem;
+  }
+
+  .xs\:-my-7{
+    margin-top: -1.75rem;
+    margin-bottom: -1.75rem;
+  }
+
+  .xs\:-mx-7{
+    margin-left: -1.75rem;
+    margin-right: -1.75rem;
   }
 
   .xs\:-my-8{
@@ -34409,6 +34651,22 @@ readers do not read off random characters that represent icons */
 
   .xs\:ml-6{
     margin-left: 1.5rem;
+  }
+
+  .xs\:mt-7{
+    margin-top: 1.75rem;
+  }
+
+  .xs\:mr-7{
+    margin-right: 1.75rem;
+  }
+
+  .xs\:mb-7{
+    margin-bottom: 1.75rem;
+  }
+
+  .xs\:ml-7{
+    margin-left: 1.75rem;
   }
 
   .xs\:mt-8{
@@ -34729,6 +34987,22 @@ readers do not read off random characters that represent icons */
 
   .xs\:-ml-6{
     margin-left: -1.5rem;
+  }
+
+  .xs\:-mt-7{
+    margin-top: -1.75rem;
+  }
+
+  .xs\:-mr-7{
+    margin-right: -1.75rem;
+  }
+
+  .xs\:-mb-7{
+    margin-bottom: -1.75rem;
+  }
+
+  .xs\:-ml-7{
+    margin-left: -1.75rem;
   }
 
   .xs\:-mt-8{
@@ -35261,6 +35535,10 @@ readers do not read off random characters that represent icons */
     padding: 1.5rem;
   }
 
+  .xs\:p-7{
+    padding: 1.75rem;
+  }
+
   .xs\:p-8{
     padding: 2rem;
   }
@@ -35385,6 +35663,16 @@ readers do not read off random characters that represent icons */
   .xs\:px-6{
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .xs\:py-7{
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .xs\:px-7{
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
   }
 
   .xs\:py-8{
@@ -35637,6 +35925,22 @@ readers do not read off random characters that represent icons */
 
   .xs\:pl-6{
     padding-left: 1.5rem;
+  }
+
+  .xs\:pt-7{
+    padding-top: 1.75rem;
+  }
+
+  .xs\:pr-7{
+    padding-right: 1.75rem;
+  }
+
+  .xs\:pb-7{
+    padding-bottom: 1.75rem;
+  }
+
+  .xs\:pl-7{
+    padding-left: 1.75rem;
   }
 
   .xs\:pt-8{
@@ -44191,6 +44495,10 @@ readers do not read off random characters that represent icons */
     width: 1.5rem;
   }
 
+  .xs\:w-7{
+    width: 1.75rem;
+  }
+
   .xs\:w-8{
     width: 2rem;
   }
@@ -44430,6 +44738,11 @@ readers do not read off random characters that represent icons */
     gap: 1.5rem;
   }
 
+  .xs\:gap-7{
+    grid-gap: 1.75rem;
+    gap: 1.75rem;
+  }
+
   .xs\:gap-8{
     grid-gap: 2rem;
     gap: 2rem;
@@ -44535,6 +44848,12 @@ readers do not read off random characters that represent icons */
     grid-column-gap: 1.5rem;
     -moz-column-gap: 1.5rem;
          column-gap: 1.5rem;
+  }
+
+  .xs\:col-gap-7{
+    grid-column-gap: 1.75rem;
+    -moz-column-gap: 1.75rem;
+         column-gap: 1.75rem;
   }
 
   .xs\:col-gap-8{
@@ -44648,6 +44967,11 @@ readers do not read off random characters that represent icons */
   .xs\:row-gap-6{
     grid-row-gap: 1.5rem;
     row-gap: 1.5rem;
+  }
+
+  .xs\:row-gap-7{
+    grid-row-gap: 1.75rem;
+    row-gap: 1.75rem;
   }
 
   .xs\:row-gap-8{
@@ -45620,6 +45944,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .xs\:translate-x-7{
+    --transform-translate-x: 1.75rem;
+  }
+
   .xs\:translate-x-8{
     --transform-translate-x: 2rem;
   }
@@ -45694,6 +46022,10 @@ readers do not read off random characters that represent icons */
 
   .xs\:-translate-x-6{
     --transform-translate-x: -1.5rem;
+  }
+
+  .xs\:-translate-x-7{
+    --transform-translate-x: -1.75rem;
   }
 
   .xs\:-translate-x-8{
@@ -45792,6 +46124,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .xs\:translate-y-7{
+    --transform-translate-y: 1.75rem;
+  }
+
   .xs\:translate-y-8{
     --transform-translate-y: 2rem;
   }
@@ -45866,6 +46202,10 @@ readers do not read off random characters that represent icons */
 
   .xs\:-translate-y-6{
     --transform-translate-y: -1.5rem;
+  }
+
+  .xs\:-translate-y-7{
+    --transform-translate-y: -1.75rem;
   }
 
   .xs\:-translate-y-8{
@@ -45964,6 +46304,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .xs\:hover\:translate-x-7:hover{
+    --transform-translate-x: 1.75rem;
+  }
+
   .xs\:hover\:translate-x-8:hover{
     --transform-translate-x: 2rem;
   }
@@ -46038,6 +46382,10 @@ readers do not read off random characters that represent icons */
 
   .xs\:hover\:-translate-x-6:hover{
     --transform-translate-x: -1.5rem;
+  }
+
+  .xs\:hover\:-translate-x-7:hover{
+    --transform-translate-x: -1.75rem;
   }
 
   .xs\:hover\:-translate-x-8:hover{
@@ -46136,6 +46484,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .xs\:hover\:translate-y-7:hover{
+    --transform-translate-y: 1.75rem;
+  }
+
   .xs\:hover\:translate-y-8:hover{
     --transform-translate-y: 2rem;
   }
@@ -46210,6 +46562,10 @@ readers do not read off random characters that represent icons */
 
   .xs\:hover\:-translate-y-6:hover{
     --transform-translate-y: -1.5rem;
+  }
+
+  .xs\:hover\:-translate-y-7:hover{
+    --transform-translate-y: -1.75rem;
   }
 
   .xs\:hover\:-translate-y-8:hover{
@@ -46308,6 +46664,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .xs\:focus\:translate-x-7:focus{
+    --transform-translate-x: 1.75rem;
+  }
+
   .xs\:focus\:translate-x-8:focus{
     --transform-translate-x: 2rem;
   }
@@ -46382,6 +46742,10 @@ readers do not read off random characters that represent icons */
 
   .xs\:focus\:-translate-x-6:focus{
     --transform-translate-x: -1.5rem;
+  }
+
+  .xs\:focus\:-translate-x-7:focus{
+    --transform-translate-x: -1.75rem;
   }
 
   .xs\:focus\:-translate-x-8:focus{
@@ -46480,6 +46844,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .xs\:focus\:translate-y-7:focus{
+    --transform-translate-y: 1.75rem;
+  }
+
   .xs\:focus\:translate-y-8:focus{
     --transform-translate-y: 2rem;
   }
@@ -46554,6 +46922,10 @@ readers do not read off random characters that represent icons */
 
   .xs\:focus\:-translate-y-6:focus{
     --transform-translate-y: -1.5rem;
+  }
+
+  .xs\:focus\:-translate-y-7:focus{
+    --transform-translate-y: -1.75rem;
   }
 
   .xs\:focus\:-translate-y-8:focus{
@@ -46986,6 +47358,18 @@ readers do not read off random characters that represent icons */
     margin-left: calc(1.5rem * calc(1 - var(--space-x-reverse)));
   }
 
+  .smaller\:space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(1.75rem * var(--space-y-reverse));
+  }
+
+  .smaller\:space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(1.75rem * var(--space-x-reverse));
+    margin-left: calc(1.75rem * calc(1 - var(--space-x-reverse)));
+  }
+
   .smaller\:space-y-8 > :not(template) ~ :not(template){
     --space-y-reverse: 0;
     margin-top: calc(2rem * calc(1 - var(--space-y-reverse)));
@@ -47212,6 +47596,18 @@ readers do not read off random characters that represent icons */
     --space-x-reverse: 0;
     margin-right: calc(-1.5rem * var(--space-x-reverse));
     margin-left: calc(-1.5rem * calc(1 - var(--space-x-reverse)));
+  }
+
+  .smaller\:-space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(-1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(-1.75rem * var(--space-y-reverse));
+  }
+
+  .smaller\:-space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(-1.75rem * var(--space-x-reverse));
+    margin-left: calc(-1.75rem * calc(1 - var(--space-x-reverse)));
   }
 
   .smaller\:-space-y-8 > :not(template) ~ :not(template){
@@ -53468,6 +53864,10 @@ readers do not read off random characters that represent icons */
     height: 1.5rem;
   }
 
+  .smaller\:h-7{
+    height: 1.75rem;
+  }
+
   .smaller\:h-8{
     height: 2rem;
   }
@@ -53692,6 +54092,10 @@ readers do not read off random characters that represent icons */
     margin: 1.5rem;
   }
 
+  .smaller\:m-7{
+    margin: 1.75rem;
+  }
+
   .smaller\:m-8{
     margin: 2rem;
   }
@@ -53770,6 +54174,10 @@ readers do not read off random characters that represent icons */
 
   .smaller\:-m-6{
     margin: -1.5rem;
+  }
+
+  .smaller\:-m-7{
+    margin: -1.75rem;
   }
 
   .smaller\:-m-8{
@@ -53892,6 +54300,16 @@ readers do not read off random characters that represent icons */
   .smaller\:mx-6{
     margin-left: 1.5rem;
     margin-right: 1.5rem;
+  }
+
+  .smaller\:my-7{
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .smaller\:mx-7{
+    margin-left: 1.75rem;
+    margin-right: 1.75rem;
   }
 
   .smaller\:my-8{
@@ -54092,6 +54510,16 @@ readers do not read off random characters that represent icons */
   .smaller\:-mx-6{
     margin-left: -1.5rem;
     margin-right: -1.5rem;
+  }
+
+  .smaller\:-my-7{
+    margin-top: -1.75rem;
+    margin-bottom: -1.75rem;
+  }
+
+  .smaller\:-mx-7{
+    margin-left: -1.75rem;
+    margin-right: -1.75rem;
   }
 
   .smaller\:-my-8{
@@ -54334,6 +54762,22 @@ readers do not read off random characters that represent icons */
 
   .smaller\:ml-6{
     margin-left: 1.5rem;
+  }
+
+  .smaller\:mt-7{
+    margin-top: 1.75rem;
+  }
+
+  .smaller\:mr-7{
+    margin-right: 1.75rem;
+  }
+
+  .smaller\:mb-7{
+    margin-bottom: 1.75rem;
+  }
+
+  .smaller\:ml-7{
+    margin-left: 1.75rem;
   }
 
   .smaller\:mt-8{
@@ -54654,6 +55098,22 @@ readers do not read off random characters that represent icons */
 
   .smaller\:-ml-6{
     margin-left: -1.5rem;
+  }
+
+  .smaller\:-mt-7{
+    margin-top: -1.75rem;
+  }
+
+  .smaller\:-mr-7{
+    margin-right: -1.75rem;
+  }
+
+  .smaller\:-mb-7{
+    margin-bottom: -1.75rem;
+  }
+
+  .smaller\:-ml-7{
+    margin-left: -1.75rem;
   }
 
   .smaller\:-mt-8{
@@ -55186,6 +55646,10 @@ readers do not read off random characters that represent icons */
     padding: 1.5rem;
   }
 
+  .smaller\:p-7{
+    padding: 1.75rem;
+  }
+
   .smaller\:p-8{
     padding: 2rem;
   }
@@ -55310,6 +55774,16 @@ readers do not read off random characters that represent icons */
   .smaller\:px-6{
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .smaller\:py-7{
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .smaller\:px-7{
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
   }
 
   .smaller\:py-8{
@@ -55562,6 +56036,22 @@ readers do not read off random characters that represent icons */
 
   .smaller\:pl-6{
     padding-left: 1.5rem;
+  }
+
+  .smaller\:pt-7{
+    padding-top: 1.75rem;
+  }
+
+  .smaller\:pr-7{
+    padding-right: 1.75rem;
+  }
+
+  .smaller\:pb-7{
+    padding-bottom: 1.75rem;
+  }
+
+  .smaller\:pl-7{
+    padding-left: 1.75rem;
   }
 
   .smaller\:pt-8{
@@ -64116,6 +64606,10 @@ readers do not read off random characters that represent icons */
     width: 1.5rem;
   }
 
+  .smaller\:w-7{
+    width: 1.75rem;
+  }
+
   .smaller\:w-8{
     width: 2rem;
   }
@@ -64355,6 +64849,11 @@ readers do not read off random characters that represent icons */
     gap: 1.5rem;
   }
 
+  .smaller\:gap-7{
+    grid-gap: 1.75rem;
+    gap: 1.75rem;
+  }
+
   .smaller\:gap-8{
     grid-gap: 2rem;
     gap: 2rem;
@@ -64460,6 +64959,12 @@ readers do not read off random characters that represent icons */
     grid-column-gap: 1.5rem;
     -moz-column-gap: 1.5rem;
          column-gap: 1.5rem;
+  }
+
+  .smaller\:col-gap-7{
+    grid-column-gap: 1.75rem;
+    -moz-column-gap: 1.75rem;
+         column-gap: 1.75rem;
   }
 
   .smaller\:col-gap-8{
@@ -64573,6 +65078,11 @@ readers do not read off random characters that represent icons */
   .smaller\:row-gap-6{
     grid-row-gap: 1.5rem;
     row-gap: 1.5rem;
+  }
+
+  .smaller\:row-gap-7{
+    grid-row-gap: 1.75rem;
+    row-gap: 1.75rem;
   }
 
   .smaller\:row-gap-8{
@@ -65545,6 +66055,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .smaller\:translate-x-7{
+    --transform-translate-x: 1.75rem;
+  }
+
   .smaller\:translate-x-8{
     --transform-translate-x: 2rem;
   }
@@ -65619,6 +66133,10 @@ readers do not read off random characters that represent icons */
 
   .smaller\:-translate-x-6{
     --transform-translate-x: -1.5rem;
+  }
+
+  .smaller\:-translate-x-7{
+    --transform-translate-x: -1.75rem;
   }
 
   .smaller\:-translate-x-8{
@@ -65717,6 +66235,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .smaller\:translate-y-7{
+    --transform-translate-y: 1.75rem;
+  }
+
   .smaller\:translate-y-8{
     --transform-translate-y: 2rem;
   }
@@ -65791,6 +66313,10 @@ readers do not read off random characters that represent icons */
 
   .smaller\:-translate-y-6{
     --transform-translate-y: -1.5rem;
+  }
+
+  .smaller\:-translate-y-7{
+    --transform-translate-y: -1.75rem;
   }
 
   .smaller\:-translate-y-8{
@@ -65889,6 +66415,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .smaller\:hover\:translate-x-7:hover{
+    --transform-translate-x: 1.75rem;
+  }
+
   .smaller\:hover\:translate-x-8:hover{
     --transform-translate-x: 2rem;
   }
@@ -65963,6 +66493,10 @@ readers do not read off random characters that represent icons */
 
   .smaller\:hover\:-translate-x-6:hover{
     --transform-translate-x: -1.5rem;
+  }
+
+  .smaller\:hover\:-translate-x-7:hover{
+    --transform-translate-x: -1.75rem;
   }
 
   .smaller\:hover\:-translate-x-8:hover{
@@ -66061,6 +66595,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .smaller\:hover\:translate-y-7:hover{
+    --transform-translate-y: 1.75rem;
+  }
+
   .smaller\:hover\:translate-y-8:hover{
     --transform-translate-y: 2rem;
   }
@@ -66135,6 +66673,10 @@ readers do not read off random characters that represent icons */
 
   .smaller\:hover\:-translate-y-6:hover{
     --transform-translate-y: -1.5rem;
+  }
+
+  .smaller\:hover\:-translate-y-7:hover{
+    --transform-translate-y: -1.75rem;
   }
 
   .smaller\:hover\:-translate-y-8:hover{
@@ -66233,6 +66775,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .smaller\:focus\:translate-x-7:focus{
+    --transform-translate-x: 1.75rem;
+  }
+
   .smaller\:focus\:translate-x-8:focus{
     --transform-translate-x: 2rem;
   }
@@ -66307,6 +66853,10 @@ readers do not read off random characters that represent icons */
 
   .smaller\:focus\:-translate-x-6:focus{
     --transform-translate-x: -1.5rem;
+  }
+
+  .smaller\:focus\:-translate-x-7:focus{
+    --transform-translate-x: -1.75rem;
   }
 
   .smaller\:focus\:-translate-x-8:focus{
@@ -66405,6 +66955,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .smaller\:focus\:translate-y-7:focus{
+    --transform-translate-y: 1.75rem;
+  }
+
   .smaller\:focus\:translate-y-8:focus{
     --transform-translate-y: 2rem;
   }
@@ -66479,6 +67033,10 @@ readers do not read off random characters that represent icons */
 
   .smaller\:focus\:-translate-y-6:focus{
     --transform-translate-y: -1.5rem;
+  }
+
+  .smaller\:focus\:-translate-y-7:focus{
+    --transform-translate-y: -1.75rem;
   }
 
   .smaller\:focus\:-translate-y-8:focus{
@@ -66911,6 +67469,18 @@ readers do not read off random characters that represent icons */
     margin-left: calc(1.5rem * calc(1 - var(--space-x-reverse)));
   }
 
+  .sm\:space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(1.75rem * var(--space-y-reverse));
+  }
+
+  .sm\:space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(1.75rem * var(--space-x-reverse));
+    margin-left: calc(1.75rem * calc(1 - var(--space-x-reverse)));
+  }
+
   .sm\:space-y-8 > :not(template) ~ :not(template){
     --space-y-reverse: 0;
     margin-top: calc(2rem * calc(1 - var(--space-y-reverse)));
@@ -67137,6 +67707,18 @@ readers do not read off random characters that represent icons */
     --space-x-reverse: 0;
     margin-right: calc(-1.5rem * var(--space-x-reverse));
     margin-left: calc(-1.5rem * calc(1 - var(--space-x-reverse)));
+  }
+
+  .sm\:-space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(-1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(-1.75rem * var(--space-y-reverse));
+  }
+
+  .sm\:-space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(-1.75rem * var(--space-x-reverse));
+    margin-left: calc(-1.75rem * calc(1 - var(--space-x-reverse)));
   }
 
   .sm\:-space-y-8 > :not(template) ~ :not(template){
@@ -73393,6 +73975,10 @@ readers do not read off random characters that represent icons */
     height: 1.5rem;
   }
 
+  .sm\:h-7{
+    height: 1.75rem;
+  }
+
   .sm\:h-8{
     height: 2rem;
   }
@@ -73617,6 +74203,10 @@ readers do not read off random characters that represent icons */
     margin: 1.5rem;
   }
 
+  .sm\:m-7{
+    margin: 1.75rem;
+  }
+
   .sm\:m-8{
     margin: 2rem;
   }
@@ -73695,6 +74285,10 @@ readers do not read off random characters that represent icons */
 
   .sm\:-m-6{
     margin: -1.5rem;
+  }
+
+  .sm\:-m-7{
+    margin: -1.75rem;
   }
 
   .sm\:-m-8{
@@ -73817,6 +74411,16 @@ readers do not read off random characters that represent icons */
   .sm\:mx-6{
     margin-left: 1.5rem;
     margin-right: 1.5rem;
+  }
+
+  .sm\:my-7{
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .sm\:mx-7{
+    margin-left: 1.75rem;
+    margin-right: 1.75rem;
   }
 
   .sm\:my-8{
@@ -74017,6 +74621,16 @@ readers do not read off random characters that represent icons */
   .sm\:-mx-6{
     margin-left: -1.5rem;
     margin-right: -1.5rem;
+  }
+
+  .sm\:-my-7{
+    margin-top: -1.75rem;
+    margin-bottom: -1.75rem;
+  }
+
+  .sm\:-mx-7{
+    margin-left: -1.75rem;
+    margin-right: -1.75rem;
   }
 
   .sm\:-my-8{
@@ -74259,6 +74873,22 @@ readers do not read off random characters that represent icons */
 
   .sm\:ml-6{
     margin-left: 1.5rem;
+  }
+
+  .sm\:mt-7{
+    margin-top: 1.75rem;
+  }
+
+  .sm\:mr-7{
+    margin-right: 1.75rem;
+  }
+
+  .sm\:mb-7{
+    margin-bottom: 1.75rem;
+  }
+
+  .sm\:ml-7{
+    margin-left: 1.75rem;
   }
 
   .sm\:mt-8{
@@ -74579,6 +75209,22 @@ readers do not read off random characters that represent icons */
 
   .sm\:-ml-6{
     margin-left: -1.5rem;
+  }
+
+  .sm\:-mt-7{
+    margin-top: -1.75rem;
+  }
+
+  .sm\:-mr-7{
+    margin-right: -1.75rem;
+  }
+
+  .sm\:-mb-7{
+    margin-bottom: -1.75rem;
+  }
+
+  .sm\:-ml-7{
+    margin-left: -1.75rem;
   }
 
   .sm\:-mt-8{
@@ -75111,6 +75757,10 @@ readers do not read off random characters that represent icons */
     padding: 1.5rem;
   }
 
+  .sm\:p-7{
+    padding: 1.75rem;
+  }
+
   .sm\:p-8{
     padding: 2rem;
   }
@@ -75235,6 +75885,16 @@ readers do not read off random characters that represent icons */
   .sm\:px-6{
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .sm\:py-7{
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .sm\:px-7{
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
   }
 
   .sm\:py-8{
@@ -75487,6 +76147,22 @@ readers do not read off random characters that represent icons */
 
   .sm\:pl-6{
     padding-left: 1.5rem;
+  }
+
+  .sm\:pt-7{
+    padding-top: 1.75rem;
+  }
+
+  .sm\:pr-7{
+    padding-right: 1.75rem;
+  }
+
+  .sm\:pb-7{
+    padding-bottom: 1.75rem;
+  }
+
+  .sm\:pl-7{
+    padding-left: 1.75rem;
   }
 
   .sm\:pt-8{
@@ -84041,6 +84717,10 @@ readers do not read off random characters that represent icons */
     width: 1.5rem;
   }
 
+  .sm\:w-7{
+    width: 1.75rem;
+  }
+
   .sm\:w-8{
     width: 2rem;
   }
@@ -84280,6 +84960,11 @@ readers do not read off random characters that represent icons */
     gap: 1.5rem;
   }
 
+  .sm\:gap-7{
+    grid-gap: 1.75rem;
+    gap: 1.75rem;
+  }
+
   .sm\:gap-8{
     grid-gap: 2rem;
     gap: 2rem;
@@ -84385,6 +85070,12 @@ readers do not read off random characters that represent icons */
     grid-column-gap: 1.5rem;
     -moz-column-gap: 1.5rem;
          column-gap: 1.5rem;
+  }
+
+  .sm\:col-gap-7{
+    grid-column-gap: 1.75rem;
+    -moz-column-gap: 1.75rem;
+         column-gap: 1.75rem;
   }
 
   .sm\:col-gap-8{
@@ -84498,6 +85189,11 @@ readers do not read off random characters that represent icons */
   .sm\:row-gap-6{
     grid-row-gap: 1.5rem;
     row-gap: 1.5rem;
+  }
+
+  .sm\:row-gap-7{
+    grid-row-gap: 1.75rem;
+    row-gap: 1.75rem;
   }
 
   .sm\:row-gap-8{
@@ -85470,6 +86166,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .sm\:translate-x-7{
+    --transform-translate-x: 1.75rem;
+  }
+
   .sm\:translate-x-8{
     --transform-translate-x: 2rem;
   }
@@ -85544,6 +86244,10 @@ readers do not read off random characters that represent icons */
 
   .sm\:-translate-x-6{
     --transform-translate-x: -1.5rem;
+  }
+
+  .sm\:-translate-x-7{
+    --transform-translate-x: -1.75rem;
   }
 
   .sm\:-translate-x-8{
@@ -85642,6 +86346,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .sm\:translate-y-7{
+    --transform-translate-y: 1.75rem;
+  }
+
   .sm\:translate-y-8{
     --transform-translate-y: 2rem;
   }
@@ -85716,6 +86424,10 @@ readers do not read off random characters that represent icons */
 
   .sm\:-translate-y-6{
     --transform-translate-y: -1.5rem;
+  }
+
+  .sm\:-translate-y-7{
+    --transform-translate-y: -1.75rem;
   }
 
   .sm\:-translate-y-8{
@@ -85814,6 +86526,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .sm\:hover\:translate-x-7:hover{
+    --transform-translate-x: 1.75rem;
+  }
+
   .sm\:hover\:translate-x-8:hover{
     --transform-translate-x: 2rem;
   }
@@ -85888,6 +86604,10 @@ readers do not read off random characters that represent icons */
 
   .sm\:hover\:-translate-x-6:hover{
     --transform-translate-x: -1.5rem;
+  }
+
+  .sm\:hover\:-translate-x-7:hover{
+    --transform-translate-x: -1.75rem;
   }
 
   .sm\:hover\:-translate-x-8:hover{
@@ -85986,6 +86706,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .sm\:hover\:translate-y-7:hover{
+    --transform-translate-y: 1.75rem;
+  }
+
   .sm\:hover\:translate-y-8:hover{
     --transform-translate-y: 2rem;
   }
@@ -86060,6 +86784,10 @@ readers do not read off random characters that represent icons */
 
   .sm\:hover\:-translate-y-6:hover{
     --transform-translate-y: -1.5rem;
+  }
+
+  .sm\:hover\:-translate-y-7:hover{
+    --transform-translate-y: -1.75rem;
   }
 
   .sm\:hover\:-translate-y-8:hover{
@@ -86158,6 +86886,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .sm\:focus\:translate-x-7:focus{
+    --transform-translate-x: 1.75rem;
+  }
+
   .sm\:focus\:translate-x-8:focus{
     --transform-translate-x: 2rem;
   }
@@ -86232,6 +86964,10 @@ readers do not read off random characters that represent icons */
 
   .sm\:focus\:-translate-x-6:focus{
     --transform-translate-x: -1.5rem;
+  }
+
+  .sm\:focus\:-translate-x-7:focus{
+    --transform-translate-x: -1.75rem;
   }
 
   .sm\:focus\:-translate-x-8:focus{
@@ -86330,6 +87066,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .sm\:focus\:translate-y-7:focus{
+    --transform-translate-y: 1.75rem;
+  }
+
   .sm\:focus\:translate-y-8:focus{
     --transform-translate-y: 2rem;
   }
@@ -86404,6 +87144,10 @@ readers do not read off random characters that represent icons */
 
   .sm\:focus\:-translate-y-6:focus{
     --transform-translate-y: -1.5rem;
+  }
+
+  .sm\:focus\:-translate-y-7:focus{
+    --transform-translate-y: -1.75rem;
   }
 
   .sm\:focus\:-translate-y-8:focus{
@@ -86836,6 +87580,18 @@ readers do not read off random characters that represent icons */
     margin-left: calc(1.5rem * calc(1 - var(--space-x-reverse)));
   }
 
+  .md\:space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(1.75rem * var(--space-y-reverse));
+  }
+
+  .md\:space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(1.75rem * var(--space-x-reverse));
+    margin-left: calc(1.75rem * calc(1 - var(--space-x-reverse)));
+  }
+
   .md\:space-y-8 > :not(template) ~ :not(template){
     --space-y-reverse: 0;
     margin-top: calc(2rem * calc(1 - var(--space-y-reverse)));
@@ -87062,6 +87818,18 @@ readers do not read off random characters that represent icons */
     --space-x-reverse: 0;
     margin-right: calc(-1.5rem * var(--space-x-reverse));
     margin-left: calc(-1.5rem * calc(1 - var(--space-x-reverse)));
+  }
+
+  .md\:-space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(-1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(-1.75rem * var(--space-y-reverse));
+  }
+
+  .md\:-space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(-1.75rem * var(--space-x-reverse));
+    margin-left: calc(-1.75rem * calc(1 - var(--space-x-reverse)));
   }
 
   .md\:-space-y-8 > :not(template) ~ :not(template){
@@ -93318,6 +94086,10 @@ readers do not read off random characters that represent icons */
     height: 1.5rem;
   }
 
+  .md\:h-7{
+    height: 1.75rem;
+  }
+
   .md\:h-8{
     height: 2rem;
   }
@@ -93542,6 +94314,10 @@ readers do not read off random characters that represent icons */
     margin: 1.5rem;
   }
 
+  .md\:m-7{
+    margin: 1.75rem;
+  }
+
   .md\:m-8{
     margin: 2rem;
   }
@@ -93620,6 +94396,10 @@ readers do not read off random characters that represent icons */
 
   .md\:-m-6{
     margin: -1.5rem;
+  }
+
+  .md\:-m-7{
+    margin: -1.75rem;
   }
 
   .md\:-m-8{
@@ -93742,6 +94522,16 @@ readers do not read off random characters that represent icons */
   .md\:mx-6{
     margin-left: 1.5rem;
     margin-right: 1.5rem;
+  }
+
+  .md\:my-7{
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .md\:mx-7{
+    margin-left: 1.75rem;
+    margin-right: 1.75rem;
   }
 
   .md\:my-8{
@@ -93942,6 +94732,16 @@ readers do not read off random characters that represent icons */
   .md\:-mx-6{
     margin-left: -1.5rem;
     margin-right: -1.5rem;
+  }
+
+  .md\:-my-7{
+    margin-top: -1.75rem;
+    margin-bottom: -1.75rem;
+  }
+
+  .md\:-mx-7{
+    margin-left: -1.75rem;
+    margin-right: -1.75rem;
   }
 
   .md\:-my-8{
@@ -94184,6 +94984,22 @@ readers do not read off random characters that represent icons */
 
   .md\:ml-6{
     margin-left: 1.5rem;
+  }
+
+  .md\:mt-7{
+    margin-top: 1.75rem;
+  }
+
+  .md\:mr-7{
+    margin-right: 1.75rem;
+  }
+
+  .md\:mb-7{
+    margin-bottom: 1.75rem;
+  }
+
+  .md\:ml-7{
+    margin-left: 1.75rem;
   }
 
   .md\:mt-8{
@@ -94504,6 +95320,22 @@ readers do not read off random characters that represent icons */
 
   .md\:-ml-6{
     margin-left: -1.5rem;
+  }
+
+  .md\:-mt-7{
+    margin-top: -1.75rem;
+  }
+
+  .md\:-mr-7{
+    margin-right: -1.75rem;
+  }
+
+  .md\:-mb-7{
+    margin-bottom: -1.75rem;
+  }
+
+  .md\:-ml-7{
+    margin-left: -1.75rem;
   }
 
   .md\:-mt-8{
@@ -95036,6 +95868,10 @@ readers do not read off random characters that represent icons */
     padding: 1.5rem;
   }
 
+  .md\:p-7{
+    padding: 1.75rem;
+  }
+
   .md\:p-8{
     padding: 2rem;
   }
@@ -95160,6 +95996,16 @@ readers do not read off random characters that represent icons */
   .md\:px-6{
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .md\:py-7{
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .md\:px-7{
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
   }
 
   .md\:py-8{
@@ -95412,6 +96258,22 @@ readers do not read off random characters that represent icons */
 
   .md\:pl-6{
     padding-left: 1.5rem;
+  }
+
+  .md\:pt-7{
+    padding-top: 1.75rem;
+  }
+
+  .md\:pr-7{
+    padding-right: 1.75rem;
+  }
+
+  .md\:pb-7{
+    padding-bottom: 1.75rem;
+  }
+
+  .md\:pl-7{
+    padding-left: 1.75rem;
   }
 
   .md\:pt-8{
@@ -103966,6 +104828,10 @@ readers do not read off random characters that represent icons */
     width: 1.5rem;
   }
 
+  .md\:w-7{
+    width: 1.75rem;
+  }
+
   .md\:w-8{
     width: 2rem;
   }
@@ -104205,6 +105071,11 @@ readers do not read off random characters that represent icons */
     gap: 1.5rem;
   }
 
+  .md\:gap-7{
+    grid-gap: 1.75rem;
+    gap: 1.75rem;
+  }
+
   .md\:gap-8{
     grid-gap: 2rem;
     gap: 2rem;
@@ -104310,6 +105181,12 @@ readers do not read off random characters that represent icons */
     grid-column-gap: 1.5rem;
     -moz-column-gap: 1.5rem;
          column-gap: 1.5rem;
+  }
+
+  .md\:col-gap-7{
+    grid-column-gap: 1.75rem;
+    -moz-column-gap: 1.75rem;
+         column-gap: 1.75rem;
   }
 
   .md\:col-gap-8{
@@ -104423,6 +105300,11 @@ readers do not read off random characters that represent icons */
   .md\:row-gap-6{
     grid-row-gap: 1.5rem;
     row-gap: 1.5rem;
+  }
+
+  .md\:row-gap-7{
+    grid-row-gap: 1.75rem;
+    row-gap: 1.75rem;
   }
 
   .md\:row-gap-8{
@@ -105395,6 +106277,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .md\:translate-x-7{
+    --transform-translate-x: 1.75rem;
+  }
+
   .md\:translate-x-8{
     --transform-translate-x: 2rem;
   }
@@ -105469,6 +106355,10 @@ readers do not read off random characters that represent icons */
 
   .md\:-translate-x-6{
     --transform-translate-x: -1.5rem;
+  }
+
+  .md\:-translate-x-7{
+    --transform-translate-x: -1.75rem;
   }
 
   .md\:-translate-x-8{
@@ -105567,6 +106457,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .md\:translate-y-7{
+    --transform-translate-y: 1.75rem;
+  }
+
   .md\:translate-y-8{
     --transform-translate-y: 2rem;
   }
@@ -105641,6 +106535,10 @@ readers do not read off random characters that represent icons */
 
   .md\:-translate-y-6{
     --transform-translate-y: -1.5rem;
+  }
+
+  .md\:-translate-y-7{
+    --transform-translate-y: -1.75rem;
   }
 
   .md\:-translate-y-8{
@@ -105739,6 +106637,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .md\:hover\:translate-x-7:hover{
+    --transform-translate-x: 1.75rem;
+  }
+
   .md\:hover\:translate-x-8:hover{
     --transform-translate-x: 2rem;
   }
@@ -105813,6 +106715,10 @@ readers do not read off random characters that represent icons */
 
   .md\:hover\:-translate-x-6:hover{
     --transform-translate-x: -1.5rem;
+  }
+
+  .md\:hover\:-translate-x-7:hover{
+    --transform-translate-x: -1.75rem;
   }
 
   .md\:hover\:-translate-x-8:hover{
@@ -105911,6 +106817,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .md\:hover\:translate-y-7:hover{
+    --transform-translate-y: 1.75rem;
+  }
+
   .md\:hover\:translate-y-8:hover{
     --transform-translate-y: 2rem;
   }
@@ -105985,6 +106895,10 @@ readers do not read off random characters that represent icons */
 
   .md\:hover\:-translate-y-6:hover{
     --transform-translate-y: -1.5rem;
+  }
+
+  .md\:hover\:-translate-y-7:hover{
+    --transform-translate-y: -1.75rem;
   }
 
   .md\:hover\:-translate-y-8:hover{
@@ -106083,6 +106997,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .md\:focus\:translate-x-7:focus{
+    --transform-translate-x: 1.75rem;
+  }
+
   .md\:focus\:translate-x-8:focus{
     --transform-translate-x: 2rem;
   }
@@ -106157,6 +107075,10 @@ readers do not read off random characters that represent icons */
 
   .md\:focus\:-translate-x-6:focus{
     --transform-translate-x: -1.5rem;
+  }
+
+  .md\:focus\:-translate-x-7:focus{
+    --transform-translate-x: -1.75rem;
   }
 
   .md\:focus\:-translate-x-8:focus{
@@ -106255,6 +107177,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .md\:focus\:translate-y-7:focus{
+    --transform-translate-y: 1.75rem;
+  }
+
   .md\:focus\:translate-y-8:focus{
     --transform-translate-y: 2rem;
   }
@@ -106329,6 +107255,10 @@ readers do not read off random characters that represent icons */
 
   .md\:focus\:-translate-y-6:focus{
     --transform-translate-y: -1.5rem;
+  }
+
+  .md\:focus\:-translate-y-7:focus{
+    --transform-translate-y: -1.75rem;
   }
 
   .md\:focus\:-translate-y-8:focus{
@@ -106761,6 +107691,18 @@ readers do not read off random characters that represent icons */
     margin-left: calc(1.5rem * calc(1 - var(--space-x-reverse)));
   }
 
+  .lg\:space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(1.75rem * var(--space-y-reverse));
+  }
+
+  .lg\:space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(1.75rem * var(--space-x-reverse));
+    margin-left: calc(1.75rem * calc(1 - var(--space-x-reverse)));
+  }
+
   .lg\:space-y-8 > :not(template) ~ :not(template){
     --space-y-reverse: 0;
     margin-top: calc(2rem * calc(1 - var(--space-y-reverse)));
@@ -106987,6 +107929,18 @@ readers do not read off random characters that represent icons */
     --space-x-reverse: 0;
     margin-right: calc(-1.5rem * var(--space-x-reverse));
     margin-left: calc(-1.5rem * calc(1 - var(--space-x-reverse)));
+  }
+
+  .lg\:-space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(-1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(-1.75rem * var(--space-y-reverse));
+  }
+
+  .lg\:-space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(-1.75rem * var(--space-x-reverse));
+    margin-left: calc(-1.75rem * calc(1 - var(--space-x-reverse)));
   }
 
   .lg\:-space-y-8 > :not(template) ~ :not(template){
@@ -113243,6 +114197,10 @@ readers do not read off random characters that represent icons */
     height: 1.5rem;
   }
 
+  .lg\:h-7{
+    height: 1.75rem;
+  }
+
   .lg\:h-8{
     height: 2rem;
   }
@@ -113467,6 +114425,10 @@ readers do not read off random characters that represent icons */
     margin: 1.5rem;
   }
 
+  .lg\:m-7{
+    margin: 1.75rem;
+  }
+
   .lg\:m-8{
     margin: 2rem;
   }
@@ -113545,6 +114507,10 @@ readers do not read off random characters that represent icons */
 
   .lg\:-m-6{
     margin: -1.5rem;
+  }
+
+  .lg\:-m-7{
+    margin: -1.75rem;
   }
 
   .lg\:-m-8{
@@ -113667,6 +114633,16 @@ readers do not read off random characters that represent icons */
   .lg\:mx-6{
     margin-left: 1.5rem;
     margin-right: 1.5rem;
+  }
+
+  .lg\:my-7{
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .lg\:mx-7{
+    margin-left: 1.75rem;
+    margin-right: 1.75rem;
   }
 
   .lg\:my-8{
@@ -113867,6 +114843,16 @@ readers do not read off random characters that represent icons */
   .lg\:-mx-6{
     margin-left: -1.5rem;
     margin-right: -1.5rem;
+  }
+
+  .lg\:-my-7{
+    margin-top: -1.75rem;
+    margin-bottom: -1.75rem;
+  }
+
+  .lg\:-mx-7{
+    margin-left: -1.75rem;
+    margin-right: -1.75rem;
   }
 
   .lg\:-my-8{
@@ -114109,6 +115095,22 @@ readers do not read off random characters that represent icons */
 
   .lg\:ml-6{
     margin-left: 1.5rem;
+  }
+
+  .lg\:mt-7{
+    margin-top: 1.75rem;
+  }
+
+  .lg\:mr-7{
+    margin-right: 1.75rem;
+  }
+
+  .lg\:mb-7{
+    margin-bottom: 1.75rem;
+  }
+
+  .lg\:ml-7{
+    margin-left: 1.75rem;
   }
 
   .lg\:mt-8{
@@ -114429,6 +115431,22 @@ readers do not read off random characters that represent icons */
 
   .lg\:-ml-6{
     margin-left: -1.5rem;
+  }
+
+  .lg\:-mt-7{
+    margin-top: -1.75rem;
+  }
+
+  .lg\:-mr-7{
+    margin-right: -1.75rem;
+  }
+
+  .lg\:-mb-7{
+    margin-bottom: -1.75rem;
+  }
+
+  .lg\:-ml-7{
+    margin-left: -1.75rem;
   }
 
   .lg\:-mt-8{
@@ -114961,6 +115979,10 @@ readers do not read off random characters that represent icons */
     padding: 1.5rem;
   }
 
+  .lg\:p-7{
+    padding: 1.75rem;
+  }
+
   .lg\:p-8{
     padding: 2rem;
   }
@@ -115085,6 +116107,16 @@ readers do not read off random characters that represent icons */
   .lg\:px-6{
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .lg\:py-7{
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .lg\:px-7{
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
   }
 
   .lg\:py-8{
@@ -115337,6 +116369,22 @@ readers do not read off random characters that represent icons */
 
   .lg\:pl-6{
     padding-left: 1.5rem;
+  }
+
+  .lg\:pt-7{
+    padding-top: 1.75rem;
+  }
+
+  .lg\:pr-7{
+    padding-right: 1.75rem;
+  }
+
+  .lg\:pb-7{
+    padding-bottom: 1.75rem;
+  }
+
+  .lg\:pl-7{
+    padding-left: 1.75rem;
   }
 
   .lg\:pt-8{
@@ -123891,6 +124939,10 @@ readers do not read off random characters that represent icons */
     width: 1.5rem;
   }
 
+  .lg\:w-7{
+    width: 1.75rem;
+  }
+
   .lg\:w-8{
     width: 2rem;
   }
@@ -124130,6 +125182,11 @@ readers do not read off random characters that represent icons */
     gap: 1.5rem;
   }
 
+  .lg\:gap-7{
+    grid-gap: 1.75rem;
+    gap: 1.75rem;
+  }
+
   .lg\:gap-8{
     grid-gap: 2rem;
     gap: 2rem;
@@ -124235,6 +125292,12 @@ readers do not read off random characters that represent icons */
     grid-column-gap: 1.5rem;
     -moz-column-gap: 1.5rem;
          column-gap: 1.5rem;
+  }
+
+  .lg\:col-gap-7{
+    grid-column-gap: 1.75rem;
+    -moz-column-gap: 1.75rem;
+         column-gap: 1.75rem;
   }
 
   .lg\:col-gap-8{
@@ -124348,6 +125411,11 @@ readers do not read off random characters that represent icons */
   .lg\:row-gap-6{
     grid-row-gap: 1.5rem;
     row-gap: 1.5rem;
+  }
+
+  .lg\:row-gap-7{
+    grid-row-gap: 1.75rem;
+    row-gap: 1.75rem;
   }
 
   .lg\:row-gap-8{
@@ -125320,6 +126388,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .lg\:translate-x-7{
+    --transform-translate-x: 1.75rem;
+  }
+
   .lg\:translate-x-8{
     --transform-translate-x: 2rem;
   }
@@ -125394,6 +126466,10 @@ readers do not read off random characters that represent icons */
 
   .lg\:-translate-x-6{
     --transform-translate-x: -1.5rem;
+  }
+
+  .lg\:-translate-x-7{
+    --transform-translate-x: -1.75rem;
   }
 
   .lg\:-translate-x-8{
@@ -125492,6 +126568,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .lg\:translate-y-7{
+    --transform-translate-y: 1.75rem;
+  }
+
   .lg\:translate-y-8{
     --transform-translate-y: 2rem;
   }
@@ -125566,6 +126646,10 @@ readers do not read off random characters that represent icons */
 
   .lg\:-translate-y-6{
     --transform-translate-y: -1.5rem;
+  }
+
+  .lg\:-translate-y-7{
+    --transform-translate-y: -1.75rem;
   }
 
   .lg\:-translate-y-8{
@@ -125664,6 +126748,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .lg\:hover\:translate-x-7:hover{
+    --transform-translate-x: 1.75rem;
+  }
+
   .lg\:hover\:translate-x-8:hover{
     --transform-translate-x: 2rem;
   }
@@ -125738,6 +126826,10 @@ readers do not read off random characters that represent icons */
 
   .lg\:hover\:-translate-x-6:hover{
     --transform-translate-x: -1.5rem;
+  }
+
+  .lg\:hover\:-translate-x-7:hover{
+    --transform-translate-x: -1.75rem;
   }
 
   .lg\:hover\:-translate-x-8:hover{
@@ -125836,6 +126928,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .lg\:hover\:translate-y-7:hover{
+    --transform-translate-y: 1.75rem;
+  }
+
   .lg\:hover\:translate-y-8:hover{
     --transform-translate-y: 2rem;
   }
@@ -125910,6 +127006,10 @@ readers do not read off random characters that represent icons */
 
   .lg\:hover\:-translate-y-6:hover{
     --transform-translate-y: -1.5rem;
+  }
+
+  .lg\:hover\:-translate-y-7:hover{
+    --transform-translate-y: -1.75rem;
   }
 
   .lg\:hover\:-translate-y-8:hover{
@@ -126008,6 +127108,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .lg\:focus\:translate-x-7:focus{
+    --transform-translate-x: 1.75rem;
+  }
+
   .lg\:focus\:translate-x-8:focus{
     --transform-translate-x: 2rem;
   }
@@ -126082,6 +127186,10 @@ readers do not read off random characters that represent icons */
 
   .lg\:focus\:-translate-x-6:focus{
     --transform-translate-x: -1.5rem;
+  }
+
+  .lg\:focus\:-translate-x-7:focus{
+    --transform-translate-x: -1.75rem;
   }
 
   .lg\:focus\:-translate-x-8:focus{
@@ -126180,6 +127288,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .lg\:focus\:translate-y-7:focus{
+    --transform-translate-y: 1.75rem;
+  }
+
   .lg\:focus\:translate-y-8:focus{
     --transform-translate-y: 2rem;
   }
@@ -126254,6 +127366,10 @@ readers do not read off random characters that represent icons */
 
   .lg\:focus\:-translate-y-6:focus{
     --transform-translate-y: -1.5rem;
+  }
+
+  .lg\:focus\:-translate-y-7:focus{
+    --transform-translate-y: -1.75rem;
   }
 
   .lg\:focus\:-translate-y-8:focus{
@@ -126686,6 +127802,18 @@ readers do not read off random characters that represent icons */
     margin-left: calc(1.5rem * calc(1 - var(--space-x-reverse)));
   }
 
+  .xl\:space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(1.75rem * var(--space-y-reverse));
+  }
+
+  .xl\:space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(1.75rem * var(--space-x-reverse));
+    margin-left: calc(1.75rem * calc(1 - var(--space-x-reverse)));
+  }
+
   .xl\:space-y-8 > :not(template) ~ :not(template){
     --space-y-reverse: 0;
     margin-top: calc(2rem * calc(1 - var(--space-y-reverse)));
@@ -126912,6 +128040,18 @@ readers do not read off random characters that represent icons */
     --space-x-reverse: 0;
     margin-right: calc(-1.5rem * var(--space-x-reverse));
     margin-left: calc(-1.5rem * calc(1 - var(--space-x-reverse)));
+  }
+
+  .xl\:-space-y-7 > :not(template) ~ :not(template){
+    --space-y-reverse: 0;
+    margin-top: calc(-1.75rem * calc(1 - var(--space-y-reverse)));
+    margin-bottom: calc(-1.75rem * var(--space-y-reverse));
+  }
+
+  .xl\:-space-x-7 > :not(template) ~ :not(template){
+    --space-x-reverse: 0;
+    margin-right: calc(-1.75rem * var(--space-x-reverse));
+    margin-left: calc(-1.75rem * calc(1 - var(--space-x-reverse)));
   }
 
   .xl\:-space-y-8 > :not(template) ~ :not(template){
@@ -133168,6 +134308,10 @@ readers do not read off random characters that represent icons */
     height: 1.5rem;
   }
 
+  .xl\:h-7{
+    height: 1.75rem;
+  }
+
   .xl\:h-8{
     height: 2rem;
   }
@@ -133392,6 +134536,10 @@ readers do not read off random characters that represent icons */
     margin: 1.5rem;
   }
 
+  .xl\:m-7{
+    margin: 1.75rem;
+  }
+
   .xl\:m-8{
     margin: 2rem;
   }
@@ -133470,6 +134618,10 @@ readers do not read off random characters that represent icons */
 
   .xl\:-m-6{
     margin: -1.5rem;
+  }
+
+  .xl\:-m-7{
+    margin: -1.75rem;
   }
 
   .xl\:-m-8{
@@ -133592,6 +134744,16 @@ readers do not read off random characters that represent icons */
   .xl\:mx-6{
     margin-left: 1.5rem;
     margin-right: 1.5rem;
+  }
+
+  .xl\:my-7{
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .xl\:mx-7{
+    margin-left: 1.75rem;
+    margin-right: 1.75rem;
   }
 
   .xl\:my-8{
@@ -133792,6 +134954,16 @@ readers do not read off random characters that represent icons */
   .xl\:-mx-6{
     margin-left: -1.5rem;
     margin-right: -1.5rem;
+  }
+
+  .xl\:-my-7{
+    margin-top: -1.75rem;
+    margin-bottom: -1.75rem;
+  }
+
+  .xl\:-mx-7{
+    margin-left: -1.75rem;
+    margin-right: -1.75rem;
   }
 
   .xl\:-my-8{
@@ -134034,6 +135206,22 @@ readers do not read off random characters that represent icons */
 
   .xl\:ml-6{
     margin-left: 1.5rem;
+  }
+
+  .xl\:mt-7{
+    margin-top: 1.75rem;
+  }
+
+  .xl\:mr-7{
+    margin-right: 1.75rem;
+  }
+
+  .xl\:mb-7{
+    margin-bottom: 1.75rem;
+  }
+
+  .xl\:ml-7{
+    margin-left: 1.75rem;
   }
 
   .xl\:mt-8{
@@ -134354,6 +135542,22 @@ readers do not read off random characters that represent icons */
 
   .xl\:-ml-6{
     margin-left: -1.5rem;
+  }
+
+  .xl\:-mt-7{
+    margin-top: -1.75rem;
+  }
+
+  .xl\:-mr-7{
+    margin-right: -1.75rem;
+  }
+
+  .xl\:-mb-7{
+    margin-bottom: -1.75rem;
+  }
+
+  .xl\:-ml-7{
+    margin-left: -1.75rem;
   }
 
   .xl\:-mt-8{
@@ -134886,6 +136090,10 @@ readers do not read off random characters that represent icons */
     padding: 1.5rem;
   }
 
+  .xl\:p-7{
+    padding: 1.75rem;
+  }
+
   .xl\:p-8{
     padding: 2rem;
   }
@@ -135010,6 +136218,16 @@ readers do not read off random characters that represent icons */
   .xl\:px-6{
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .xl\:py-7{
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .xl\:px-7{
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
   }
 
   .xl\:py-8{
@@ -135262,6 +136480,22 @@ readers do not read off random characters that represent icons */
 
   .xl\:pl-6{
     padding-left: 1.5rem;
+  }
+
+  .xl\:pt-7{
+    padding-top: 1.75rem;
+  }
+
+  .xl\:pr-7{
+    padding-right: 1.75rem;
+  }
+
+  .xl\:pb-7{
+    padding-bottom: 1.75rem;
+  }
+
+  .xl\:pl-7{
+    padding-left: 1.75rem;
   }
 
   .xl\:pt-8{
@@ -143816,6 +145050,10 @@ readers do not read off random characters that represent icons */
     width: 1.5rem;
   }
 
+  .xl\:w-7{
+    width: 1.75rem;
+  }
+
   .xl\:w-8{
     width: 2rem;
   }
@@ -144055,6 +145293,11 @@ readers do not read off random characters that represent icons */
     gap: 1.5rem;
   }
 
+  .xl\:gap-7{
+    grid-gap: 1.75rem;
+    gap: 1.75rem;
+  }
+
   .xl\:gap-8{
     grid-gap: 2rem;
     gap: 2rem;
@@ -144160,6 +145403,12 @@ readers do not read off random characters that represent icons */
     grid-column-gap: 1.5rem;
     -moz-column-gap: 1.5rem;
          column-gap: 1.5rem;
+  }
+
+  .xl\:col-gap-7{
+    grid-column-gap: 1.75rem;
+    -moz-column-gap: 1.75rem;
+         column-gap: 1.75rem;
   }
 
   .xl\:col-gap-8{
@@ -144273,6 +145522,11 @@ readers do not read off random characters that represent icons */
   .xl\:row-gap-6{
     grid-row-gap: 1.5rem;
     row-gap: 1.5rem;
+  }
+
+  .xl\:row-gap-7{
+    grid-row-gap: 1.75rem;
+    row-gap: 1.75rem;
   }
 
   .xl\:row-gap-8{
@@ -145245,6 +146499,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .xl\:translate-x-7{
+    --transform-translate-x: 1.75rem;
+  }
+
   .xl\:translate-x-8{
     --transform-translate-x: 2rem;
   }
@@ -145319,6 +146577,10 @@ readers do not read off random characters that represent icons */
 
   .xl\:-translate-x-6{
     --transform-translate-x: -1.5rem;
+  }
+
+  .xl\:-translate-x-7{
+    --transform-translate-x: -1.75rem;
   }
 
   .xl\:-translate-x-8{
@@ -145417,6 +146679,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .xl\:translate-y-7{
+    --transform-translate-y: 1.75rem;
+  }
+
   .xl\:translate-y-8{
     --transform-translate-y: 2rem;
   }
@@ -145491,6 +146757,10 @@ readers do not read off random characters that represent icons */
 
   .xl\:-translate-y-6{
     --transform-translate-y: -1.5rem;
+  }
+
+  .xl\:-translate-y-7{
+    --transform-translate-y: -1.75rem;
   }
 
   .xl\:-translate-y-8{
@@ -145589,6 +146859,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .xl\:hover\:translate-x-7:hover{
+    --transform-translate-x: 1.75rem;
+  }
+
   .xl\:hover\:translate-x-8:hover{
     --transform-translate-x: 2rem;
   }
@@ -145663,6 +146937,10 @@ readers do not read off random characters that represent icons */
 
   .xl\:hover\:-translate-x-6:hover{
     --transform-translate-x: -1.5rem;
+  }
+
+  .xl\:hover\:-translate-x-7:hover{
+    --transform-translate-x: -1.75rem;
   }
 
   .xl\:hover\:-translate-x-8:hover{
@@ -145761,6 +147039,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .xl\:hover\:translate-y-7:hover{
+    --transform-translate-y: 1.75rem;
+  }
+
   .xl\:hover\:translate-y-8:hover{
     --transform-translate-y: 2rem;
   }
@@ -145835,6 +147117,10 @@ readers do not read off random characters that represent icons */
 
   .xl\:hover\:-translate-y-6:hover{
     --transform-translate-y: -1.5rem;
+  }
+
+  .xl\:hover\:-translate-y-7:hover{
+    --transform-translate-y: -1.75rem;
   }
 
   .xl\:hover\:-translate-y-8:hover{
@@ -145933,6 +147219,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-x: 1.5rem;
   }
 
+  .xl\:focus\:translate-x-7:focus{
+    --transform-translate-x: 1.75rem;
+  }
+
   .xl\:focus\:translate-x-8:focus{
     --transform-translate-x: 2rem;
   }
@@ -146007,6 +147297,10 @@ readers do not read off random characters that represent icons */
 
   .xl\:focus\:-translate-x-6:focus{
     --transform-translate-x: -1.5rem;
+  }
+
+  .xl\:focus\:-translate-x-7:focus{
+    --transform-translate-x: -1.75rem;
   }
 
   .xl\:focus\:-translate-x-8:focus{
@@ -146105,6 +147399,10 @@ readers do not read off random characters that represent icons */
     --transform-translate-y: 1.5rem;
   }
 
+  .xl\:focus\:translate-y-7:focus{
+    --transform-translate-y: 1.75rem;
+  }
+
   .xl\:focus\:translate-y-8:focus{
     --transform-translate-y: 2rem;
   }
@@ -146179,6 +147477,10 @@ readers do not read off random characters that represent icons */
 
   .xl\:focus\:-translate-y-6:focus{
     --transform-translate-y: -1.5rem;
+  }
+
+  .xl\:focus\:-translate-y-7:focus{
+    --transform-translate-y: -1.75rem;
   }
 
   .xl\:focus\:-translate-y-8:focus{

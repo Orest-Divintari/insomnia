@@ -39,7 +39,8 @@ module.exports = {
                 "purple-muted": "#75587A"
             },
             spacing: {
-                "5/2": "0.625rem"
+                "5/2": "0.625rem",
+                "7": "1.75rem"
             },
             padding: {
                 input: "0.375rem"

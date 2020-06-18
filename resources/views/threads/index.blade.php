@@ -2,7 +2,7 @@
     <header class="flex justify-between">
         <div>
             <h1 class="section-title">
-                {{$category->title}}
+                {{ $category->title }}
             </h1>
 
             <p class="text-smaller text-gray-lightest">{{ $category->excerpt }}</p>
@@ -25,7 +25,7 @@
             </x-breadcrumb.leaf>
         </x-breadcrumb.container>
 
-        <x-threads._list :category="$category"></x-threads._list>
+        <threads :threads="{{ $category->threads->toJson() }}"></threads>
     </main>
 
 

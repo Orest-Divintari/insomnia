@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Category;
 use App\Thread;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,7 +17,8 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function guests_may_not_see_the_post_new_thread_form()
     {
-        $this->get(route('threads.create'))
+        $category = create(Category::class);
+        $this->get(route('threads.create', $category->id))
             ->assertRedirect('login');
     }
 
@@ -49,6 +51,23 @@ class CreateThreadsTest extends TestCase
         $this->assertDatabaseHas('threads', $title);
         $this->get($response->headers->get('location'))
             ->assertSee($title['title']);
+
+    }
+
+    /** @test */
+    public function a_reply_is_created_when_a_new_thread_is_created_as_the_body_of_the_thread()
+    {
+        $user = $this->signIn();
+        $thread = raw(Thread::class, [
+            'user_id' => $user->id,
+        ]);
+
+        $this->post(route('threads.store', $thread));
+
+        $this->assertDatabaseHas('replies', [
+            'body' => $thread['body'],
+            'user_id' => $thread['user_id'],
+        ]);
 
     }
 

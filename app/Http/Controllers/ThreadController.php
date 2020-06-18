@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests\CreateThreadRequest;
+use App\Http\Resources\Thread;
 
 class ThreadController extends Controller
 {
@@ -32,12 +33,23 @@ class ThreadController extends Controller
     /**
      * Store a newly created thread in storage
      *
-     * @return \Illuminate\Http\Response`
+     * @return \Illuminate\Http\Response
      */
     public function store(CreateThreadRequest $request)
     {
         $thread = $request->persist();
         return redirect(route('threads.show', $thread));
+    }
+
+    /**
+     * Display the specified resource
+     *
+     * @param Thread $thread
+     * @return Illuminate\View\View
+     */
+    public function show(Thread $thread)
+    {
+        return view('threads.show', compact('thread'));
     }
 
 }

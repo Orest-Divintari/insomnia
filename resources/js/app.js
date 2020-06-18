@@ -8,16 +8,6 @@ require("./bootstrap");
 
 window.Vue = require("vue");
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 Vue.directive("click-outside", {
     bind: function(el, binding, vnode) {
         el.clickOutsideEvent = function(event) {
@@ -34,11 +24,13 @@ Vue.directive("click-outside", {
         document.removeEventListener("click", el.clickOutsideEvent);
     }
 });
+
 Vue.component(
     "example-component",
     require("./components/ExampleComponent.vue").default
 );
 Vue.component("hamburger", require("./components/Hamburger.vue").default);
+Vue.component("Threads", require("./components/Threads.vue").default);
 Vue.component("search", require("./components/Search.vue").default);
 
 /**

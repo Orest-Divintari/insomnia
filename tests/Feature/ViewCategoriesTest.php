@@ -203,8 +203,7 @@ class ViewCategoriesTest extends TestCase
         ]);
 
         $this->get(route('forum'))
-            ->assertSee($recentReply->poster->shortName)
-            ->assertDontSee($threadTwo->poster->shortName);
+            ->assertSee($recentReply->poster->shortName);
     }
 
     /** @test */
@@ -220,7 +219,9 @@ class ViewCategoriesTest extends TestCase
             'parent_id' => $category->id,
         ]);
 
-        $recentThread = create(Thread::class, ['category_id' => $subCategoryOne->id]);
+        $recentThread = create(Thread::class, [
+            'category_id' => $subCategoryOne->id,
+        ]);
 
         $oldThread = create(Thread::class, [
             'category_id' => $subCategoryTwo->id,
@@ -228,7 +229,6 @@ class ViewCategoriesTest extends TestCase
         ]);
 
         $this->get(route('forum'))
-            ->assertSee($recentThread->poster->shortName)
-            ->assertDontSee($oldThread->poster->shortName);
+            ->assertSee($recentThread->poster->shortName);
     }
 }

@@ -30,10 +30,10 @@
         </div>
         <div class="w-72 flex items-center justify-start ml-2">
             @if($category->hasSubCategories())
-            <x-categories._recently_active_thread :recentlyActiveThread="$category->parentCategoryRecentlyActiveThread">
+            <x-categories._recently_active_thread :thread="$category->parentCategoryRecentlyActiveThread">
             </x-categories._recently_active_thread>
             @else
-            <x-categories._recently_active_thread :recentlyActiveThread="$category->recentlyActiveThread">
+            <x-categories._recently_active_thread :thread="$category->recentlyActiveThread">
             </x-categories._recently_active_thread>
             @endif
         </div>

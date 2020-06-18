@@ -34,17 +34,13 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_replies()
     {
-
-        create('App\Reply', [
-            'repliable_id' => $this->thread->id,
-            'repliable_type' => Thread::class,
-        ]);
         $this->assertCount(1, $this->thread->replies);
 
         create('App\Reply', [
             'repliable_id' => $this->thread->id,
             'repliable_type' => Thread::class,
         ]);
+
         $this->assertCount(2, $this->thread->fresh()->replies);
 
     }
@@ -72,12 +68,14 @@ class ThreadTest extends TestCase
             'repliable_type' => Thread::class,
             'repliable_id' => $this->thread->id,
         ]);
+
         $oldReply = create(Reply::class, [
             'repliable_type' => Thread::class,
             'repliable_id' => $this->thread->id,
             'updated_at' => Carbon::now()->subDay(),
         ]);
-        $this->assertEquals($this->thread->recentReply->id, $newReply->id);
+
+        $this->assertEquals($this->thread->fresh()->recentReply->id, $newReply->id);
 
     }
 

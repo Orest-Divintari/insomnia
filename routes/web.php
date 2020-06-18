@@ -23,6 +23,7 @@ Route::get('/forum/categories/{category}', 'CategoryController@show')->name('cat
 
 //threads
 Route::get('/categories/{category}/threads', 'ThreadController@index')->name('threads.index');
+Route::get('/threads/{thread}', 'ThreadController@show')->name('threads.show');
 
 // ------- WEB AUTH -------
 
@@ -43,9 +44,6 @@ Route::group([
     Route::group(['middleware' => 'auth'], function () {
 
     });
-
-    //threads
-    Route::get('/threads/{thread}', 'ThreadController@show')->name('threads.show');
 
     //replies
     Route::get('/threads/{thread}/replies', 'ReplyController@index')->name('replies.index');

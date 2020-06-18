@@ -10,6 +10,13 @@ class Thread extends Model
 {
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['shortTitle', 'date_created', 'date_updated'];
+
+    /**
      * Relationships to always eager-load
      *
      * @var array
@@ -55,7 +62,9 @@ class Thread extends Model
 
     public function recentReply()
     {
-        return $this->morphOne(Reply::class, 'repliable')->latest('updated_at');
+        return $this->morphOne(Reply::class, 'repliable')
+            ->orderBy('updated_at', 'desc')
+            ->orderBy('id', 'desc');
     }
 
     /**
@@ -129,7 +138,7 @@ class Thread extends Model
      */
     public function getDateUpdatedAttribute()
     {
-        return $this->updated_at->diffForHumans();
+        return $this->updated_at->calendar();
     }
 
     /**
@@ -139,7 +148,7 @@ class Thread extends Model
      */
     public function getDateCreatedAttribute()
     {
-        return $this->updated_at->diffForHumans();
+        return $this->updated_at->calendar();
     }
 
 }

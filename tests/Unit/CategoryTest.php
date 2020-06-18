@@ -129,7 +129,7 @@ class CategoryTest extends TestCase
             'category_id' => $subCategory->id,
         ]);
 
-        create(Thread::class, [
+        $oldThread = create(Thread::class, [
             'category_id' => $subCategory->id,
             'updated_at' => Carbon::now()->subMinute(),
         ]);
@@ -137,6 +137,7 @@ class CategoryTest extends TestCase
         $this->assertEquals(
             $recentThread->id,
             $this->category
+                ->fresh()
                 ->parentCategoryRecentlyActiveThread
                 ->id
         );

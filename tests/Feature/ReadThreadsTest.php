@@ -33,11 +33,8 @@ class ReadThreadsTest extends TestCase
             'repliable_id' => $this->thread->id,
             'repliable_type' => Thread::class,
         ]);
-        $secondReply = create(Reply::class, [
-            'repliable_id' => $this->thread->id,
-            'repliable_type' => Thread::class,
-        ]);
-        $response = $this->get(route('replies.index', ['thread' => $this->thread->slug]))->json();
+
+        $response = $this->get(route('replies.index', $this->thread))->json();
         $this->assertCount(2, $response['data']);
     }
 

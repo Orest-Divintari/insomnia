@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+
+    protected $appends = ['avatar_path', 'shortName'];
     use Notifiable;
 
     /**

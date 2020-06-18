@@ -8,6 +8,21 @@ class Reply extends Model
 {
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['date_updated'];
+
+    /**
+     * Don't auto-apply mass assignment protection.
+     *
+     * @var array
+     */
+
+    protected $guarded = [];
+
+    /**
      * Relationships to always eager-load
      *
      * @var array
@@ -58,7 +73,7 @@ class Reply extends Model
      */
     public function getDateUpdatedAttribute()
     {
-        return $this->updated_at->diffForHumans();
+        return $this->updated_at->calendar();
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Observers\ThreadObserver;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -27,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        Thread::observe(ThreadObserver::class);
+
         View::composer('categories.index', function ($view) {
             $latestPosts = Thread::with(['recentReply', 'category'])
                 ->has('replies')
