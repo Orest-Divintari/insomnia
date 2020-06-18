@@ -24,9 +24,9 @@ class ThreadController extends Controller
      *
      * @return Illuminate\View\View
      */
-    public function create()
+    public function create($categoryId)
     {
-        return view('threads.create');
+        return view('threads.create', compact('categoryId'));
     }
 
     /**

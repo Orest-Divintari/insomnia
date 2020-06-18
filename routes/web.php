@@ -27,7 +27,7 @@ Route::get('/categories/{category}/threads', 'ThreadController@index')->name('th
 // ------- WEB AUTH -------
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/threads/create', 'ThreadController@create')->name('threads.create');
+    Route::get('/threads/{categoryId}/create', 'ThreadController@create')->name('threads.create');
     Route::post('/threads', 'ThreadController@store')
         ->middleware('verified')
         ->name('threads.store');
