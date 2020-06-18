@@ -2094,6 +2094,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["threads"],
   methods: {
@@ -2105,7 +2110,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     showReply: function showReply(thread) {
       location.href = "/threads/" + thread.slug + "#" + thread.recent_reply.id;
-    }
+    },
+    markAsRead: function markAsRead(thread) {}
   }
 });
 
@@ -38557,7 +38563,8 @@ var render = function() {
             _c("div", { staticClass: "p-2 flex-1" }, [
               _c("a", {
                 staticClass:
-                  "text-sm hover:underline hover:text-blue-mid font-bold cursor-pointer",
+                  "text-sm hover:underline hover:text-blue-mid cursor-pointer",
+                class: { "font-bold": !thread.has_been_updated },
                 domProps: { textContent: _vm._s(thread.title) },
                 on: {
                   click: function($event) {
@@ -38570,7 +38577,7 @@ var render = function() {
                 _c("a", {
                   staticClass:
                     "text-xs text-gray-lightest leading-none hover:unerline",
-                  domProps: { textContent: _vm._s(thread.poster.shortName) }
+                  domProps: { textContent: _vm._s(thread.poster.short_name) }
                 }),
                 _vm._v(" "),
                 _c("p", { staticClass: "dot" }),
@@ -38584,7 +38591,21 @@ var render = function() {
                       return _vm.showThread(thread.slug)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  {
+                    staticClass:
+                      "text-xs text-gray-lightest ml-1 hover:underline cursor-pointer",
+                    on: {
+                      click: function($event) {
+                        return _vm.markAsRead(thread)
+                      }
+                    }
+                  },
+                  [_vm._v("- Mark Read")]
+                )
               ])
             ]),
             _vm._v(" "),
@@ -38616,9 +38637,10 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("p", {
-                staticClass: "text-gray-lightest text-xs hover:underline",
+                staticClass:
+                  "text-gray-lightest text-xs hover:underline cursor-pointer",
                 domProps: {
-                  textContent: _vm._s(thread.recent_reply.poster.shortName)
+                  textContent: _vm._s(thread.recent_reply.poster.short_name)
                 }
               })
             ]),

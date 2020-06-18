@@ -14,7 +14,13 @@ class Thread extends Model
      *
      * @var array
      */
-    protected $appends = ['shortTitle', 'date_created', 'date_updated'];
+    protected $appends = [
+        'short_title',
+        'date_created',
+        'date_updated',
+        'has_been_updated',
+
+    ];
 
     /**
      * Relationships to always eager-load
@@ -149,6 +155,21 @@ class Thread extends Model
     public function getDateCreatedAttribute()
     {
         return $this->updated_at->calendar();
+    }
+
+    /**
+     * Determine whether the thread has been updated since last read
+     *
+     * @return boolean
+     */
+    public function getHasBeenUpdatedAttribute()
+    {
+        if (!auth()->check()) {
+            return false;
+        }
+
+        $key = auth()->user()->visitedThreadCacheKey($this);
+        return $this->updated_at > cache($key);
     }
 
 }

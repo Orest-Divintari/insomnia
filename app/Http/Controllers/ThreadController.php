@@ -49,6 +49,7 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread)
     {
+        auth()->user()->read($thread);
         return view('threads.show', compact('thread'));
     }
 

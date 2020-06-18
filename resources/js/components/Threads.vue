@@ -13,13 +13,14 @@
         <div class="p-2 flex-1">
           <a
             @click="showThread(thread.slug)"
-            class="text-sm hover:underline hover:text-blue-mid font-bold cursor-pointer"
+            class="text-sm hover:underline hover:text-blue-mid cursor-pointer"
+            :class="{ 'font-bold': !thread.has_been_updated }"
             v-text="thread.title"
           ></a>
           <div class="flex items-center">
             <a
               class="text-xs text-gray-lightest leading-none hover:unerline"
-              v-text="thread.poster.shortName"
+              v-text="thread.poster.short_name"
             ></a>
             <p class="dot"></p>
             <a
@@ -27,6 +28,10 @@
               class="hover:underline text-xs text-gray-lightest cursor-pointer"
               v-text="thread.date_created"
             ></a>
+            <p
+              @click="markAsRead(thread)"
+              class="text-xs text-gray-lightest ml-1 hover:underline cursor-pointer"
+            >- Mark Read</p>
           </div>
         </div>
         <div class="p-2 text-gray-lightest w-32 mr-4">
@@ -46,8 +51,8 @@
             v-text="thread.date_updated"
           ></p>
           <p
-            class="text-gray-lightest text-xs hover:underline"
-            v-text="thread.recent_reply.poster.shortName"
+            class="text-gray-lightest text-xs hover:underline cursor-pointer"
+            v-text="thread.recent_reply.poster.short_name"
           ></p>
         </div>
         <div class="pl-1 py-5/2 pr-7">
@@ -75,7 +80,8 @@ export default {
     },
     showReply(thread) {
       location.href = "/threads/" + thread.slug + "#" + thread.recent_reply.id;
-    }
+    },
+    markAsRead(thread) {}
   }
 };
 </script>
