@@ -11,7 +11,7 @@
         <span class="text-xs text-gray-lightest font-hairline">...</span>
     </a>
     <div class="flex items-center justify-start text-smaller text-gray-lightest font-hairline">
-        <p class="">{{ $recentlyActiveThread->date }}
+        <p class="">{{ $recentlyActiveThread->date_updated }}
         </p>
         <p class="dot"></p>
         @if ( isset($recentlyActiveThread->recentReply) )

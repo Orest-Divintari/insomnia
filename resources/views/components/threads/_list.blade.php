@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="p-5/2 mr-5">
-            @if (isset($thread->recentReply))
+            @if(isset($thread->recentReply))
             <x-threads._latest_activity :item="$thread->recentReply">
             </x-threads._latest_activity>
             @else
