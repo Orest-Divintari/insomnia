@@ -28,7 +28,7 @@ class CreateThreadRequest extends FormRequest
         return [
             'body' => ['required', 'string'],
             'title' => ['required', 'string', 'min:3', 'max:255'],
-            'category_id' => ['required', 'integer'],
+            'category_id' => ['required', 'exists:categories,id', 'integer'],
         ];
     }
 

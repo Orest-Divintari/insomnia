@@ -73,6 +73,13 @@ class CreateThreadsTest extends TestCase
             ->assertSessionHasErrors('category_id');
     }
 
+    /** @test */
+    public function a_thread_requires_a_category_that_already_exists_in_the_database()
+    {
+        $this->post_thread(['category_id' => 12345])
+            ->assertSessionHasErrors(('category_id'));
+    }
+
     protected function post_thread($overrides)
     {
         $user = $this->signIn();
