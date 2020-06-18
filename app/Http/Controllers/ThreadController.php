@@ -39,4 +39,5 @@ class ThreadController extends Controller
         $thread = $request->persist();
         return redirect(route('threads.show', $thread));
     }
+
 }
