@@ -1,10 +1,10 @@
 <template>
   <div>
     <div
-      v-for="(thread, index) in threads"
+      v-for="(thread, index) in data"
       :key="thread.id"
       class="border border-blue-border"
-      :class="classes(index)"
+      :class="containerClasses(index)"
     >
       <div class="flex items-center">
         <div class="py-5/2 px-5">
@@ -12,9 +12,9 @@
         </div>
         <div class="p-2 flex-1">
           <a
-            @click="showThread(thread.slug)"
+            @click="showThread(thread)"
             class="text-sm hover:underline hover:text-blue-mid cursor-pointer"
-            :class="{ 'font-bold': !thread.has_been_updated }"
+            :class="{ 'font-bold' : thread.has_been_updated }"
             v-text="thread.title"
           ></a>
           <div class="flex items-center">
@@ -24,12 +24,12 @@
             ></a>
             <p class="dot"></p>
             <a
-              @click="showThread(thread.slug)"
+              @click="showThread(thread)"
               class="hover:underline text-xs text-gray-lightest cursor-pointer"
               v-text="thread.date_created"
             ></a>
             <p
-              @click="markAsRead(thread)"
+              @click="visit(thread)"
               class="text-xs text-gray-lightest ml-1 hover:underline cursor-pointer"
             >- Mark Read</p>
           </div>
@@ -62,27 +62,69 @@
         </div>
       </div>
     </div>
+    <paginator @changePage="fetchData" :dataset="dataset"></paginator>
   </div>
 </template>
 
 <script>
+import paginator from "./Paginator";
 export default {
-  props: ["threads"],
+  components: {
+    paginator
+  },
+  props: {
+    threads: Object
+  },
+
+  data() {
+    return {
+      data: this.threads.data,
+      dataset: this.threads
+    };
+  },
   methods: {
-    classes(index) {
+    containerClasses(index) {
       return [
-        index % 2 == 1 ? "bg-blue-light" : "bg-white",
+        index % 2 == 1 ? "bg-blue-lighter" : "bg-white",
         index == 0 ? "" : "border-t-0"
       ];
     },
-    showThread(slug) {
-      location.href = "/threads/" + slug;
+    endpoint(slug) {
+      return "/threads/" + slug;
+    },
+    markAsRead(thread) {
+      thread.has_been_updated = false;
+    },
+    showThread(thread) {
+      location.href = this.endpoint(thread.slug);
     },
     showReply(thread) {
-      location.href = "/threads/" + thread.slug + "#" + thread.recent_reply.id;
+      location.href = this.endpoint(thread.slug) + "#" + thread.recent_reply.id;
     },
-    markAsRead(thread) {}
-  }
+    visit(thread) {
+      this.markAsRead(thread);
+      console.log(this.endpoint(thread.slug));
+      axios
+        .get(this.endpoint(thread.slug))
+        .catch(error => console.log(error.response));
+    },
+    fetchData(pageNumber) {
+      let path = "/api" + window.location.pathname + "?page=" + pageNumber;
+      axios
+        .get(path)
+        .then(response => this.refresh(response))
+        .catch(error => console.log(error));
+    },
+    updateData({ data }) {
+      this.dataset = data;
+      this.data = data.data;
+    },
+    refresh(response) {
+      this.updateData(response);
+      window.scrollTo(0, 0);
+    }
+  },
+  mounted() {}
 };
 </script>
 

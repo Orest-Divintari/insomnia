@@ -1,5 +1,5 @@
 <div
-    class="{{ $loop->even ? 'bg-blue-light' : 'bg-white' }} border border-blue-border {{ ($loop->first) ? '' : 'border-t-0' }} py-2 pl-2">
+    class="{{ $loop->even ? 'bg-blue-lighter' : 'bg-white' }} border border-blue-border {{ ($loop->first) ? '' : 'border-t-0' }} py-2 pl-2">
     <div class="flex items-center">
         <img src="{{ $category->avatar_path }}" alt="category_avatar" class="w-12 h-12 mr-3 avatar">
         <div class="flex-1">

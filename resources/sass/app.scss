@@ -5,8 +5,6 @@
 
 @tailwind components;
 
-@tailwind utilities;
-
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
@@ -34,3 +32,14 @@
 .dot {
     @apply .bg-gray-600  .w-1 .h-1 .rounded-full .mx-2;
 }
+
+.btn-paginator {
+    @apply .px-2 .py-1 .rounded .text-gray-lightest .text-sm .bg-blue-light;
+    &:focus {
+        @apply .bg-blue-mid .text-white .outline-none;
+    }
+    &:hover {
+        @apply .bg-blue-dark .text-white;
+    }
+}
+@tailwind utilities;

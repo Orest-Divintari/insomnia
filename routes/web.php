@@ -22,7 +22,7 @@ Route::get('/forum', 'CategoryController@index')->name('forum');
 Route::get('/forum/categories/{category}', 'CategoryController@show')->name('categories.show');
 
 //threads
-Route::get('/categories/{category}/threads', 'ThreadController@index')->name('threads.index');
+Route::get('/categories/{category}/threads/', 'ThreadController@index')->name('threads.index');
 Route::get('/threads/{thread}', 'ThreadController@show')->name('threads.show');
 
 // ------- WEB AUTH -------
@@ -46,6 +46,6 @@ Route::group([
     });
 
     //replies
-    Route::get('/threads/{thread}/replies', 'ReplyController@index')->name('replies.index');
-
+    Route::get('/threads/{thread}/replies', 'ReplyController@index')->name('api.replies.index');
+    Route::get('/categories/{category}/threads', 'ThreadController@index')->name('api.threads.index');
 });

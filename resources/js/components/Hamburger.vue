@@ -12,12 +12,12 @@
             <span @click="display = false" class="text-sm fas fa-times"></span>
           </div>
         </div>
-        <a class="p-4 hover:bg-blue-light" href>Front Page</a>
-        <a class="p-4 hover:bg-blue-light" href>Guides</a>
-        <a class="p-4 hover:bg-blue-light" href>How Tos</a>
-        <a class="p-4 hover:bg-blue-light" href>Reviews</a>
-        <a class="p-4 hover:bg-blue-light" href>Ads</a>
-        <a class="p-4 hover:bg-blue-light" href>Forums</a>
+        <a class="p-4 hover:bg-blue-lighter" href>Guides</a>
+        <a class="p-4 hover:bg-blue-lighter" href>How Tos</a>
+        <a class="p-4 hover:bg-blue-lighter" href>Front Page</a>
+        <a class="p-4 hover:bg-blue-lighter" href>Reviews</a>
+        <a class="p-4 hover:bg-blue-lighter" href>Ads</a>
+        <a class="p-4 hover:bg-blue-lighter" href>Forums</a>
       </div>
     </div>
   </div>

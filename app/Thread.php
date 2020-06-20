@@ -165,9 +165,8 @@ class Thread extends Model
     public function getHasBeenUpdatedAttribute()
     {
         if (!auth()->check()) {
-            return false;
+            return true;
         }
-
         $key = auth()->user()->visitedThreadCacheKey($this);
         return $this->updated_at > cache($key);
     }

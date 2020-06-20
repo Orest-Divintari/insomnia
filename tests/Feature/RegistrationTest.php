@@ -19,7 +19,7 @@ class RegistrationTest extends TestCase
         parent::setUp();
 
         $this->mock(Recaptcha::class, function ($mock) {
-            $mock->shouldReceive(['passes' => true]);
+            $mock->shouldReceive('passes')->andReturn(true);
         });
     }
 

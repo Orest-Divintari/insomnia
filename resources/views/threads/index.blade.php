@@ -1,4 +1,5 @@
 <x-layouts._forum>
+    @if(!empty($category))
     <header class="flex justify-between">
         <div>
             <h1 class="section-title">
@@ -15,8 +16,10 @@
         </div>
         @endauth
     </header>
+    @endif
     <main class="section">
 
+        @if(!empty($category))
         <x-breadcrumb.container>
             <x-breadcrumb.item :title="'Forum'" :route="route('forum')"></x-breadcrumb.item>
             <x-breadcrumb.item :title="$category->group->title" :route="route('forum')"></x-breadcrumb.item>
@@ -24,8 +27,9 @@
                 :route="route('categories.show', $category->category->slug)">
             </x-breadcrumb.leaf>
         </x-breadcrumb.container>
+        @endif
 
-        <threads :threads="{{ $category->threads->toJson() }}"></threads>
+        <threads :threads="{{ $threads->toJson()}}"></threads>
     </main>
 
 

@@ -47,4 +47,21 @@ class ReadThreadsTest extends TestCase
             ->assertSee($thread->title);
     }
 
+    /** @test */
+    public function a_user_can_read_the_paginated_threads_associated_with_a_category_from_api()
+    {
+        $this->withoutExceptionHandling();
+        $category = create(Category::class);
+        createMany(Thread::class, 100, [
+            'category_id' => $category->id,
+        ]);
+
+        $response = $this->getJson(route('api.threads.index', $category))->json();
+        $this->assertCount(1, $response['data']);
+
+        $response = $this->getJson('/api/threads/' . $category->slug . '?page=2')->json();
+        $this->assertCount(1, $response['data']);
+
+    }
+
 }

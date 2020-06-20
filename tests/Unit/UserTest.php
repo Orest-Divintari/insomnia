@@ -2,9 +2,12 @@
 
 namespace Tests\Unit;
 
+use App\Thread;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -32,4 +35,22 @@ class UserTest extends TestCase
         );
 
     }
+
+    /** @test */
+    public function an_authenticated_user_can_mark_a_thread_as_read()
+    {
+        $user = $this->signIn();
+        $thread = create(Thread::class);
+
+        $this->assertTrue($thread->hasBeenUpdated);
+
+        $user->read($thread);
+        $this->assertFalse($thread->hasBeenUpdated);
+
+        Cache::forever($user->visitedThreadCacheKey($thread), Carbon::now()->subDay());
+
+        $this->assertTrue($thread->hasBeenUpdated);
+
+    }
+
 }

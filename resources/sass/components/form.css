@@ -11,7 +11,7 @@
 }
 
 .form-left-col {
-    @apply hidden .w-2/6 .bg-blue-light .text-right .pt-6 .pb-4 .px-4 .border-r;
+    @apply hidden .w-2/6 .bg-blue-lighter .text-right .pt-6 .pb-4 .px-4 .border-r;
 }
 
 div.form-left-col {
@@ -51,7 +51,7 @@ div.form-left-col {
 }
 
 .form-button {
-    @apply .py-2 .px-10 .font-bold .bg-blue-mid-dark .text-white .rounded;
+    @apply .py-2 .px-10 .font-bold .bg-blue-light .text-white .rounded;
 }
 
 .form-button:hover {

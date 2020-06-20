@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests\CreateThreadRequest;
-use App\Http\Resources\Thread;
+use App\Thread;
 
 class ThreadController extends Controller
 {
@@ -17,7 +17,8 @@ class ThreadController extends Controller
      */
     public function index(Category $category)
     {
-        return view('threads.index', compact('category'));
+        $threads = $category->threads()->paginate(config('constants.thread.per_page'));
+        return view('threads.index', compact('category', 'threads'));
     }
 
     /**
@@ -49,7 +50,9 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread)
     {
-        auth()->user()->read($thread);
+        if (auth()->check()) {
+            auth()->user()->read($thread);
+        }
         return view('threads.show', compact('thread'));
     }
 
