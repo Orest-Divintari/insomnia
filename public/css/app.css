@@ -108,8 +108,8 @@ div.form-left-col {
   padding-right: 2.5rem;
   font-weight: 700;
   --bg-opacity: 1;
-  background-color: #DDE6F1;
-  background-color: rgba(221, 230, 241, var(--bg-opacity));
+  background-color: #426693;
+  background-color: rgba(66, 102, 147, var(--bg-opacity));
   --text-opacity: 1;
   color: #fff;
   color: rgba(255, 255, 255, var(--text-opacity));

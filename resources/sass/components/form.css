@@ -51,7 +51,7 @@ div.form-left-col {
 }
 
 .form-button {
-    @apply .py-2 .px-10 .font-bold .bg-blue-light .text-white .rounded;
+    @apply .py-2 .px-10 .font-bold .bg-blue-mid .text-white .rounded;
 }
 
 .form-button:hover {
