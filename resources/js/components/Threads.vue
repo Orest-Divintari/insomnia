@@ -52,7 +52,7 @@
           ></p>
           <p
             class="text-gray-lightest text-xs hover:underline cursor-pointer"
-            v-text="thread.recent_reply.poster.short_name"
+            v-text="thread.recent_reply.poster.short_name "
           ></p>
         </div>
         <div class="pl-1 py-5/2 pr-7">
@@ -108,8 +108,11 @@ export default {
         .get(this.endpoint(thread.slug))
         .catch(error => console.log(error.response));
     },
+    apiEndpoint(pageNumber) {
+      return "/api" + window.location.pathname + "?page=" + pageNumber;
+    },
     fetchData(pageNumber) {
-      let path = "/api" + window.location.pathname + "?page=" + pageNumber;
+      var path = this.apiEndpoint(pageNumber);
       axios
         .get(path)
         .then(response => this.refresh(response))
@@ -123,8 +126,7 @@ export default {
       this.updateData(response);
       window.scrollTo(0, 0);
     }
-  },
-  mounted() {}
+  }
 };
 </script>
 

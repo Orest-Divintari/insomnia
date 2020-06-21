@@ -1,21 +1,54 @@
 <template>
   <div class="mt-5">
     <div>
-      <button class="btn-paginator" v-show="true">
-        <span class="fas fa-caret-left text-xs"></span>
-        Prev
-      </button>
+      <div v-show="shouldPaginate">
+        <div class="flex">
+          <button
+            @click="changePage(--currentPage)"
+            class="btn-paginator"
+            v-show="this.previousPageUrl"
+          >
+            <span class="fas fa-caret-left text-xs"></span>
+            Prev
+          </button>
 
-      <button
-        @click.prevent="changePage(pageNumber)"
-        v-for="(pageNumber, key) in pages"
-        class="btn-paginator mx-1"
-      >{{ pageNumber }}</button>
+          <div v-for="(page, key) in pages">
+            <div v-if="page == '...'">
+              <v-popover offset="16">
+                <button class="btn-paginator mx-1 cursor-pointer">...</button>
+                <template slot="popover">
+                  <div class="absolute bg-blue-lighter shadow-2xl border border-blue-light rounded">
+                    <p class="p-2 bg-white border-b border-blue-light rounded">Go to page</p>
+                    <div class="flex items-center p-2">
+                      <input
+                        type="text"
+                        class="p-1 m-1 rounded border border-bluelight focus:outline-none"
+                        placeholder="Page"
+                        v-model="goToPage"
+                      />
+                      <button
+                        @click="changePage(goToPage)"
+                        class="text-blue-mid p-1 focus:outline-none"
+                      >Go</button>
+                    </div>
+                  </div>
+                </template>
+              </v-popover>
+            </div>
+            <div
+              v-else
+              @click.prevent="changePage(page)"
+              class="btn-paginator mx-1 cursor-pointer"
+              :class="{'bg-blue-mid text-white': page == currentPage}"
+            >{{ page }}</div>
+          </div>
 
-      <button class="btn-paginator" v-show="nextPage">
-        Next
-        <span class="fas fa-caret-right text-xs"></span>
-      </button>
+          <button @click="changePage(++currentPage)" class="btn-paginator" v-show="nextPageUrl">
+            Next
+            <span class="fas fa-caret-right text-xs"></span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -27,35 +60,112 @@ export default {
   },
   data() {
     return {
-      nextPage: false,
-      previousPage: false,
-      lastPage: false,
+      goToPage: "",
+      firstPageUrl: false,
+      nextPageUrl: false,
+      previousPageUrl: false,
+      lastPageUrl: false,
+      firstPage: 1,
+      lastPage: 0,
       currentPage: false,
       pages: []
     };
   },
   methods: {
     initialize() {
-      (this.nextPage = this.dataset.next_page_url),
-        (this.previousPage = this.dataset.prev_page_url),
-        (this.lastPage = this.dataset.last_page_url),
-        (this.currentPage = this.dataset.current_page);
+      this.currentPage = this.dataset.current_page;
+      this.firstPageUrl = this.dataset.first_page_url;
+      this.lastPageUrl = this.dataset.last_page_url;
+      this.nextPageUrl = this.dataset.next_page_url;
+      this.previousPageUrl = this.dataset.prev_page_url;
+      this.lastPage = this.dataset.last_page;
     },
-    changePage(pageNumber) {
-      this.$emit("changePage", pageNumber);
-      this.updateUrl(pageNumber);
+    validatePageNumber(page) {
+      let pageNumber = parseInt(page);
+      if (Number.isInteger(pageNumber)) {
+        if (pageNumber < this.firstPage) {
+          pageNumber = this.firstPage;
+        } else if (pageNumber > this.lastPage) {
+          pageNumber = this.lastPage;
+        }
+        return parseInt(pageNumber);
+      }
+      return null;
     },
-    updateUrl(pageNumber) {
-      history.pushState(null, null, "?page=" + pageNumber);
+    brodcast(page) {
+      this.$emit("changePage", page);
+    },
+    clearInput() {
+      this.goToPage = "";
+    },
+    changePage(page) {
+      this.clearInput();
+      var pageNumber = this.validatePageNumber(page);
+      if (pageNumber) {
+        this.brodcast(pageNumber);
+        this.updateUrl(pageNumber);
+      }
+    },
+    updateUrl(page) {
+      history.pushState(null, null, "?page=" + page);
+    },
+    startFromPage() {
+      var from = 0;
+
+      if (this.lastPage >= 6 && this.currentPage < 6) {
+        from = 2;
+      } else if (this.currentPage >= 6) {
+        from = this.currentPage - 2;
+      } else {
+        from = this.currentPage + 1;
+      }
+      return from;
+    },
+    upToPage() {
+      var range = 0;
+
+      if (this.lastPage - this.currentPage > 2) {
+        range = this.currentPage + 2;
+      } else {
+        range = this.lastPage - 1;
+      }
+      return range;
     },
     computePageRange() {
-      for (
-        let pageCount = 1;
-        pageCount <= this.dataset.last_page;
-        pageCount++
-      ) {
+      this.pages = [];
+      var fromPage = this.startFromPage();
+      var toPage = this.upToPage();
+
+      this.pages.push(this.firstPage);
+
+      // set starting dots
+      if (this.currentPage - this.firstPage > 4) {
+        console.log("gsada");
+        this.pages.push("...");
+      }
+
+      for (let pageCount = fromPage; pageCount <= toPage; pageCount++) {
         this.pages.push(pageCount);
       }
+
+      // set ending dots
+      if (this.lastPage - this.currentPage > 3) {
+        this.pages.push("...");
+      }
+
+      this.pages.push(this.lastPage);
+    }
+  },
+
+  computed: {
+    shouldPaginate() {
+      return this.nextPageUrl || this.previousPageUrl;
+    }
+  },
+  watch: {
+    dataset() {
+      this.initialize();
+      this.computePageRange();
     }
   },
   created() {

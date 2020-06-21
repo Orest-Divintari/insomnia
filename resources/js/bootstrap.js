@@ -43,3 +43,12 @@ window.Vue.prototype.signedIn = window.App.signedIn;
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+// Modal
+import VModal from "vue-js-modal";
+
+Vue.use(VModal);
+
+import VTooltip from "v-tooltip";
+
+Vue.use(VTooltip);
