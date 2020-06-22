@@ -28,6 +28,9 @@ class ThreadController extends Controller
      */
     public function create($categoryId)
     {
+        request()->validate([
+            'category_id' => 'required',
+        ]);
         return view('threads.create', compact('categoryId'));
     }
 
