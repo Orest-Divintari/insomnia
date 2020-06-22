@@ -2045,6 +2045,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     dataset: Object
@@ -43981,14 +43983,14 @@ var render = function() {
               ),
               _vm._v(" "),
               _vm._l(_vm.pages, function(page, key) {
-                return _c("div", [
+                return [
                   page == "..."
                     ? _c(
                         "div",
                         [
                           _c(
                             "v-popover",
-                            { attrs: { offset: "16" } },
+                            { attrs: { offset: "10" } },
                             [
                               _c(
                                 "button",
@@ -44004,7 +44006,7 @@ var render = function() {
                                   "div",
                                   {
                                     staticClass:
-                                      "absolute bg-blue-lighter shadow-2xl border border-blue-light rounded"
+                                      "absolute -ml-4 bg-blue-lighter shadow-2xl border border-blue-light rounded"
                                   },
                                   [
                                     _c(
@@ -44088,7 +44090,7 @@ var render = function() {
                         },
                         [_vm._v(_vm._s(page))]
                       )
-                ])
+                ]
               }),
               _vm._v(" "),
               _c(

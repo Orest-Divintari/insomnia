@@ -12,12 +12,14 @@
             Prev
           </button>
 
-          <div v-for="(page, key) in pages">
+          <template v-for="(page, key) in pages">
             <div v-if="page == '...'">
-              <v-popover offset="16">
+              <v-popover offset="10">
                 <button class="btn-paginator mx-1 cursor-pointer">...</button>
                 <template slot="popover">
-                  <div class="absolute bg-blue-lighter shadow-2xl border border-blue-light rounded">
+                  <div
+                    class="absolute -ml-4 bg-blue-lighter shadow-2xl border border-blue-light rounded"
+                  >
                     <p class="p-2 bg-white border-b border-blue-light rounded">Go to page</p>
                     <div class="flex items-center p-2">
                       <input
@@ -41,7 +43,7 @@
               class="btn-paginator mx-1 cursor-pointer"
               :class="{'bg-blue-mid text-white': page == currentPage}"
             >{{ page }}</div>
-          </div>
+          </template>
 
           <button @click="changePage(++currentPage)" class="btn-paginator" v-show="nextPageUrl">
             Next
