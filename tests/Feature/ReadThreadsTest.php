@@ -29,13 +29,14 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_read_the_replies_associated_with_a_thread()
     {
-        $firstReply = create(Reply::class, [
+        // first reply is the body of the thread
+        createMany(Reply::class, 2, [
             'repliable_id' => $this->thread->id,
             'repliable_type' => Thread::class,
         ]);
 
-        $response = $this->get(route('replies.index', $this->thread))->json();
-        $this->assertCount(2, $response['data']);
+        $response = $this->get(route('api.replies.index', $this->thread))->json();
+        $this->assertCount(3, $response['data']);
     }
 
     /** @test */
@@ -48,7 +49,7 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_read_the_paginated_threads_associated_with_a_category_from_api()
+    public function a_user_can_read_the_paginated_threads_associated_with_a_category()
     {
         $this->withoutExceptionHandling();
         $category = create(Category::class);

@@ -34,7 +34,7 @@
 }
 
 .btn-paginator {
-    @apply .px-2 .py-1 .rounded .text-gray-lightest .text-sm .bg-blue-light;
+    @apply .px-2 .py-1/2 .mr-5/2 .rounded .text-gray-lightest .text-sm .bg-blue-light;
     &:active {
         @apply .bg-blue-mid .text-white;
     }

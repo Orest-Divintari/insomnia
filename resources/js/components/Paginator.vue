@@ -15,7 +15,7 @@
           <template v-for="(page, key) in pages">
             <div v-if="page == '...'">
               <v-popover offset="10">
-                <button class="btn-paginator mx-1 cursor-pointer">...</button>
+                <button class="btn-paginator cursor-pointer">...</button>
                 <template slot="popover">
                   <div
                     class="absolute -ml-4 bg-blue-lighter shadow-2xl border border-blue-light rounded"
@@ -40,7 +40,7 @@
             <div
               v-else
               @click.prevent="changePage(page)"
-              class="btn-paginator mx-1 cursor-pointer"
+              class="btn-paginator cursor-pointer"
               :class="{'bg-blue-mid text-white': page == currentPage}"
             >{{ page }}</div>
           </template>
@@ -114,7 +114,7 @@ export default {
     startFromPage() {
       var from = 0;
 
-      if (this.lastPage >= 6 && this.currentPage < 6) {
+      if ((this.lastPage >= 6 && this.currentPage < 6) || this.lastPage < 6) {
         from = 2;
       } else if (this.currentPage >= 6) {
         from = this.currentPage - 2;

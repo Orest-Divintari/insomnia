@@ -51,8 +51,9 @@ class ThreadController extends Controller
      * @param Thread $thread
      * @return Illuminate\View\View
      */
-    public function show(Thread $thread)
+    public function show($threadSlug)
     {
+        $thread = Thread::without('recentReply')->whereSlug($threadSlug)->first();
         if (auth()->check()) {
             auth()->user()->read($thread);
         }

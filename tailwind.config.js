@@ -14,12 +14,14 @@ module.exports = {
                 "2": 2
             },
             colors: {
+                "green-mid": "#048004",
                 "blue-dark": "#162A44",
                 "blue-lighter": "#EDF4F9",
                 "blue-light": "#DDE6F1",
                 "blue-mid": "#426693",
                 "blue-mid-light": "#CFDEEB",
                 "blue-mid-dark": "#4F6C98",
+                "blue-reply-border": "#A2BBDF",
                 "blue-link-menu": "#2C435F",
                 "gray-light": "#979DA5",
                 "gray-lighter": "#D7E2EF",
@@ -36,11 +38,14 @@ module.exports = {
                 "red-alert": "#FEE9E8",
                 "red-alert-text": "#C84347",
                 "semi-white": "#FCFCFC",
-                "purple-muted": "#75587A"
+                "purple-muted": "#75587A",
+                "black-semi": "#2C2C2C"
             },
             spacing: {
+                "1/2": "0.125rem",
                 "5/2": "0.625rem",
-                "7": "1.75rem"
+                "7": "1.75rem",
+                "28": "7rem"
             },
             padding: {
                 input: "0.375rem"

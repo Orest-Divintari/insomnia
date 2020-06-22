@@ -31,6 +31,8 @@ Vue.component(
 );
 Vue.component("hamburger", require("./components/Hamburger.vue").default);
 Vue.component("Threads", require("./components/Threads.vue").default);
+Vue.component("Thread", require("./components/Thread.vue").default);
+Vue.component("Replies", require("./components/Replies.vue").default);
 Vue.component("search", require("./components/Search.vue").default);
 
 /**

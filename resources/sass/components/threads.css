@@ -1,3 +1,22 @@
 .btn-post {
     @apply .block .bg-purple-muted .text-white .rounded .px-4 .py-3 .text-sm .leading-5;
 }
+.btn-control {
+    @apply .bg-white .rounded  .py-1 .text-xs .font-bold .border .border-blue-light tracking-wide;
+}
+
+.btn-thread-control {
+    @apply .btn-control .text-blue-mid .px-2;
+}
+
+.btn-thread-control:hover {
+    @apply .bg-blue-lighter;
+}
+
+.btn-reply-control {
+    @apply .btn-control .text-gray-mid px-3;
+}
+
+.btn-reply-control:hover {
+    @apply .text-orange-700;
+}
