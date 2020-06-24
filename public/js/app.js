@@ -2481,6 +2481,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -44685,19 +44686,21 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c(
-                    "p",
-                    {
-                      staticClass:
-                        "text-xs text-gray-lightest ml-1 hover:underline cursor-pointer",
-                      on: {
-                        click: function($event) {
-                          return _vm.visit(thread)
-                        }
-                      }
-                    },
-                    [_vm._v("- Mark Read")]
-                  )
+                  _vm.signedIn
+                    ? _c(
+                        "p",
+                        {
+                          staticClass:
+                            "text-xs text-gray-lightest ml-1 hover:underline cursor-pointer",
+                          on: {
+                            click: function($event) {
+                              return _vm.visit(thread)
+                            }
+                          }
+                        },
+                        [_vm._v("- Mark Read")]
+                      )
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),

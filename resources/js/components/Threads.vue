@@ -29,6 +29,7 @@
               v-text="thread.date_created"
             ></a>
             <p
+              v-if="signedIn"
               @click="visit(thread)"
               class="text-xs text-gray-lightest ml-1 hover:underline cursor-pointer"
             >- Mark Read</p>
