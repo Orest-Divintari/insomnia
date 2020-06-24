@@ -38,6 +38,7 @@ module.exports = {
                 "red-alert": "#FEE9E8",
                 "red-alert-text": "#C84347",
                 "semi-white": "#FCFCFC",
+                "semi-white-mid": "#FAFAFA",
                 "purple-muted": "#75587A",
                 "black-semi": "#2C2C2C"
             },

@@ -25,7 +25,7 @@
                 <!-- ROW -->
                 <div class="form-row">
                     <!-- LEFT -->
-                    <div class="form-left-col =">
+                    <div class="form-left-col">
                         <label class="form-label" for="password">Password:</label>
                     </div>
                     <!-- RIGHT -->

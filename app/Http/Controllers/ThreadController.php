@@ -24,16 +24,14 @@ class ThreadController extends Controller
     /**
      * Show the form for posting a new thread
      *
+     * @param string $category
      * @return Illuminate\View\View
      */
-    public function create($categoryId)
+    public function create($category)
     {
-        request()->validate([
-            'category_id' => 'required',
-        ]);
 
-        dd('gamw');
-        return view('threads.create', compact('categoryId'));
+        $category = Category::whereSlug($category)->firstOrFail();
+        return view('threads.create', compact('category'));
     }
 
     /**

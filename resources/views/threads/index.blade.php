@@ -10,7 +10,7 @@
         </div>
         @auth
         <div class="py-4">
-            <a href="{{ route('threads.create', $category->id) }}" class="btn-post"><span
+            <a href="{{ route('threads.create', $category)  }}" class="btn-post"><span
                     class="fas fa-pen text-white text-xs mr-1"></span>Post
                 Thread</a>
         </div>
@@ -22,7 +22,7 @@
         @if(!empty($category))
         <x-breadcrumb.container>
             <x-breadcrumb.item :title="'Forum'" :route="route('forum')"></x-breadcrumb.item>
-            <x-breadcrumb.item :title="$category->group->title" :route="route('forum')"></x-breadcrumb.item>
+            <x-breadcrumb.item :title="$category->category->group->title" :route="route('forum')"></x-breadcrumb.item>
             <x-breadcrumb.leaf :title="$category->category->title"
                 :route="route('categories.show', $category->category->slug)">
             </x-breadcrumb.leaf>

@@ -34,6 +34,7 @@ Vue.component("Threads", require("./components/Threads.vue").default);
 Vue.component("Thread", require("./components/Thread.vue").default);
 Vue.component("Replies", require("./components/Replies.vue").default);
 Vue.component("search", require("./components/Search.vue").default);
+Vue.component("Wysiwyg", require("./components/Wysiwyg.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

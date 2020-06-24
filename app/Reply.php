@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
 {
 
-    const PER_PAGE = 1;
+    const PER_PAGE = 3;
 
     /**
      * The accessors to append to the model's array form.
@@ -86,6 +87,17 @@ class Reply extends Model
     public function getDateCreatedAttribute()
     {
         return $this->created_at->calendar();
+    }
+
+    /**
+     * Clean the body from malicious context
+     *
+     * @param string $body
+     * @return string
+     */
+    public function getBodyAttriute($body)
+    {
+        return Purify::clean($body);
     }
 
 }

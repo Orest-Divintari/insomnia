@@ -1,3 +1,3 @@
-<ul class="flex mb-10">
+<ul class="flex mb-4 font-thin">
     {{$slot}}
 </ul>

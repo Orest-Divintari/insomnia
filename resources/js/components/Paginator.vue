@@ -161,7 +161,11 @@ export default {
 
   computed: {
     shouldPaginate() {
-      return this.nextPageUrl || this.previousPageUrl;
+      if (this.nextPageUrl || this.previousPageUrl) {
+        this.$emit("isPaginated");
+        return true;
+      }
+      return false;
     }
   },
   watch: {

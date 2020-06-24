@@ -1,6 +1,11 @@
 <template>
-  <div class="-mt-12">
-    <paginator class="pb-4" @changePage="fetchData" :dataset="dataset"></paginator>
+  <div :class="{'-mt-12' : isPaginated}">
+    <paginator
+      :class="{'pb-5': isPaginated}"
+      @isPaginated="isPaginated=true"
+      @changePage="fetchData"
+      :dataset="dataset"
+    ></paginator>
     <reply
       v-for="(reply, index) in items"
       :key="reply.id"
@@ -27,6 +32,7 @@ export default {
   },
   data() {
     return {
+      isPaginated: false,
       items: [],
       dataset: {}
     };

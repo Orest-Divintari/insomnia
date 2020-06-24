@@ -3,6 +3,7 @@
   color: #2C2C2C;
   color: rgba(44, 44, 44, var(--text-opacity));
   letter-spacing: 0.025em;
+  font-size: 0.875rem;
 }
 
 .form-label-phone {
@@ -10,6 +11,7 @@
   color: #2C2C2C;
   color: rgba(44, 44, 44, var(--text-opacity));
   letter-spacing: 0.025em;
+  font-size: 0.875rem;
   padding-bottom: 0.25rem;
 }
 
@@ -104,8 +106,8 @@ div.form-left-col {
 .form-button {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   font-weight: 700;
   --bg-opacity: 1;
   background-color: #426693;
@@ -113,6 +115,7 @@ div.form-left-col {
   --text-opacity: 1;
   color: #fff;
   color: rgba(255, 255, 255, var(--text-opacity));
+  font-size: 0.875rem;
   border-radius: 0.25rem;
 }
 
@@ -7100,6 +7103,8 @@ readers do not read off random characters that represent icons */
   font-size: 1.875rem;
   font-weight: 700;
   letter-spacing: 0.025em;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
 }
 
 * {
@@ -8487,6 +8492,12 @@ readers do not read off random characters that represent icons */
   border-color: rgba(252, 252, 252, var(--divide-opacity));
 }
 
+.divide-semi-white-mid > :not(template) ~ :not(template){
+  --divide-opacity: 1;
+  border-color: #FAFAFA;
+  border-color: rgba(250, 250, 250, var(--divide-opacity));
+}
+
 .divide-purple-muted > :not(template) ~ :not(template){
   --divide-opacity: 1;
   border-color: #75587A;
@@ -9281,6 +9292,12 @@ readers do not read off random characters that represent icons */
   background-color: rgba(252, 252, 252, var(--bg-opacity));
 }
 
+.bg-semi-white-mid{
+  --bg-opacity: 1;
+  background-color: #FAFAFA;
+  background-color: rgba(250, 250, 250, var(--bg-opacity));
+}
+
 .bg-purple-muted{
   --bg-opacity: 1;
   background-color: #75587A;
@@ -9991,6 +10008,12 @@ readers do not read off random characters that represent icons */
   background-color: rgba(252, 252, 252, var(--bg-opacity));
 }
 
+.hover\:bg-semi-white-mid:hover{
+  --bg-opacity: 1;
+  background-color: #FAFAFA;
+  background-color: rgba(250, 250, 250, var(--bg-opacity));
+}
+
 .hover\:bg-purple-muted:hover{
   --bg-opacity: 1;
   background-color: #75587A;
@@ -10699,6 +10722,12 @@ readers do not read off random characters that represent icons */
   --bg-opacity: 1;
   background-color: #FCFCFC;
   background-color: rgba(252, 252, 252, var(--bg-opacity));
+}
+
+.focus\:bg-semi-white-mid:focus{
+  --bg-opacity: 1;
+  background-color: #FAFAFA;
+  background-color: rgba(250, 250, 250, var(--bg-opacity));
 }
 
 .focus\:bg-purple-muted:focus{
@@ -11551,6 +11580,12 @@ readers do not read off random characters that represent icons */
   border-color: rgba(252, 252, 252, var(--border-opacity));
 }
 
+.border-semi-white-mid{
+  --border-opacity: 1;
+  border-color: #FAFAFA;
+  border-color: rgba(250, 250, 250, var(--border-opacity));
+}
+
 .border-purple-muted{
   --border-opacity: 1;
   border-color: #75587A;
@@ -12261,6 +12296,12 @@ readers do not read off random characters that represent icons */
   border-color: rgba(252, 252, 252, var(--border-opacity));
 }
 
+.hover\:border-semi-white-mid:hover{
+  --border-opacity: 1;
+  border-color: #FAFAFA;
+  border-color: rgba(250, 250, 250, var(--border-opacity));
+}
+
 .hover\:border-purple-muted:hover{
   --border-opacity: 1;
   border-color: #75587A;
@@ -12969,6 +13010,12 @@ readers do not read off random characters that represent icons */
   --border-opacity: 1;
   border-color: #FCFCFC;
   border-color: rgba(252, 252, 252, var(--border-opacity));
+}
+
+.focus\:border-semi-white-mid:focus{
+  --border-opacity: 1;
+  border-color: #FAFAFA;
+  border-color: rgba(250, 250, 250, var(--border-opacity));
 }
 
 .focus\:border-purple-muted:focus{
@@ -19319,6 +19366,30 @@ readers do not read off random characters that represent icons */
   color: rgba(252, 252, 252, var(--placeholder-opacity));
 }
 
+.placeholder-semi-white-mid::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--placeholder-opacity));
+}
+
+.placeholder-semi-white-mid:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--placeholder-opacity));
+}
+
+.placeholder-semi-white-mid::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--placeholder-opacity));
+}
+
+.placeholder-semi-white-mid::placeholder{
+  --placeholder-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--placeholder-opacity));
+}
+
 .placeholder-purple-muted::-moz-placeholder{
   --placeholder-opacity: 1;
   color: #75587A;
@@ -22159,6 +22230,30 @@ readers do not read off random characters that represent icons */
   color: rgba(252, 252, 252, var(--placeholder-opacity));
 }
 
+.focus\:placeholder-semi-white-mid:focus::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-semi-white-mid:focus:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-semi-white-mid:focus::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-semi-white-mid:focus::placeholder{
+  --placeholder-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--placeholder-opacity));
+}
+
 .focus\:placeholder-purple-muted:focus::-moz-placeholder{
   --placeholder-opacity: 1;
   color: #75587A;
@@ -23340,6 +23435,12 @@ readers do not read off random characters that represent icons */
   color: rgba(252, 252, 252, var(--text-opacity));
 }
 
+.text-semi-white-mid{
+  --text-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--text-opacity));
+}
+
 .text-purple-muted{
   --text-opacity: 1;
   color: #75587A;
@@ -24048,6 +24149,12 @@ readers do not read off random characters that represent icons */
   --text-opacity: 1;
   color: #FCFCFC;
   color: rgba(252, 252, 252, var(--text-opacity));
+}
+
+.hover\:text-semi-white-mid:hover{
+  --text-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--text-opacity));
 }
 
 .hover\:text-purple-muted:hover{
@@ -24760,6 +24867,12 @@ readers do not read off random characters that represent icons */
   color: rgba(252, 252, 252, var(--text-opacity));
 }
 
+.focus\:text-semi-white-mid:focus{
+  --text-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--text-opacity));
+}
+
 .focus\:text-purple-muted:focus{
   --text-opacity: 1;
   color: #75587A;
@@ -25470,6 +25583,12 @@ readers do not read off random characters that represent icons */
   color: rgba(252, 252, 252, var(--text-opacity));
 }
 
+.active\:text-semi-white-mid:active{
+  --text-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--text-opacity));
+}
+
 .active\:text-purple-muted:active{
   --text-opacity: 1;
   color: #75587A;
@@ -26178,6 +26297,12 @@ readers do not read off random characters that represent icons */
   --text-opacity: 1;
   color: #FCFCFC;
   color: rgba(252, 252, 252, var(--text-opacity));
+}
+
+.group:hover .group-hover\:text-semi-white-mid{
+  --text-opacity: 1;
+  color: #FAFAFA;
+  color: rgba(250, 250, 250, var(--text-opacity));
 }
 
 .group:hover .group-hover\:text-purple-muted{
@@ -30661,6 +30786,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--divide-opacity));
   }
 
+  .xs\:divide-semi-white-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--divide-opacity));
+  }
+
   .xs\:divide-purple-muted > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #75587A;
@@ -31455,6 +31586,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .xs\:bg-semi-white-mid{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .xs\:bg-purple-muted{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -32165,6 +32302,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .xs\:hover\:bg-semi-white-mid:hover{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .xs\:hover\:bg-purple-muted:hover{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -32873,6 +33016,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #FCFCFC;
     background-color: rgba(252, 252, 252, var(--bg-opacity));
+  }
+
+  .xs\:focus\:bg-semi-white-mid:focus{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
   }
 
   .xs\:focus\:bg-purple-muted:focus{
@@ -33725,6 +33874,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .xs\:border-semi-white-mid{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .xs\:border-purple-muted{
     --border-opacity: 1;
     border-color: #75587A;
@@ -34435,6 +34590,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .xs\:hover\:border-semi-white-mid:hover{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .xs\:hover\:border-purple-muted:hover{
     --border-opacity: 1;
     border-color: #75587A;
@@ -35143,6 +35304,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #FCFCFC;
     border-color: rgba(252, 252, 252, var(--border-opacity));
+  }
+
+  .xs\:focus\:border-semi-white-mid:focus{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
   }
 
   .xs\:focus\:border-purple-muted:focus{
@@ -41493,6 +41660,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .xs\:placeholder-semi-white-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-semi-white-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-semi-white-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-semi-white-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .xs\:placeholder-purple-muted::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -44333,6 +44524,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .xs\:focus\:placeholder-semi-white-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-semi-white-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-semi-white-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-semi-white-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .xs\:focus\:placeholder-purple-muted:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -45514,6 +45729,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .xs\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .xs\:text-purple-muted{
     --text-opacity: 1;
     color: #75587A;
@@ -46222,6 +46443,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .xs\:hover\:text-semi-white-mid:hover{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .xs\:hover\:text-purple-muted:hover{
@@ -46934,6 +47161,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .xs\:focus\:text-semi-white-mid:focus{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .xs\:focus\:text-purple-muted:focus{
     --text-opacity: 1;
     color: #75587A;
@@ -47644,6 +47877,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .xs\:active\:text-semi-white-mid:active{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .xs\:active\:text-purple-muted:active{
     --text-opacity: 1;
     color: #75587A;
@@ -48352,6 +48591,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .group:hover .xs\:group-hover\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .group:hover .xs\:group-hover\:text-purple-muted{
@@ -52836,6 +53081,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--divide-opacity));
   }
 
+  .smaller\:divide-semi-white-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--divide-opacity));
+  }
+
   .smaller\:divide-purple-muted > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #75587A;
@@ -53630,6 +53881,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .smaller\:bg-semi-white-mid{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .smaller\:bg-purple-muted{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -54340,6 +54597,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .smaller\:hover\:bg-semi-white-mid:hover{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .smaller\:hover\:bg-purple-muted:hover{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -55048,6 +55311,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #FCFCFC;
     background-color: rgba(252, 252, 252, var(--bg-opacity));
+  }
+
+  .smaller\:focus\:bg-semi-white-mid:focus{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
   }
 
   .smaller\:focus\:bg-purple-muted:focus{
@@ -55900,6 +56169,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .smaller\:border-semi-white-mid{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .smaller\:border-purple-muted{
     --border-opacity: 1;
     border-color: #75587A;
@@ -56610,6 +56885,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .smaller\:hover\:border-semi-white-mid:hover{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .smaller\:hover\:border-purple-muted:hover{
     --border-opacity: 1;
     border-color: #75587A;
@@ -57318,6 +57599,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #FCFCFC;
     border-color: rgba(252, 252, 252, var(--border-opacity));
+  }
+
+  .smaller\:focus\:border-semi-white-mid:focus{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
   }
 
   .smaller\:focus\:border-purple-muted:focus{
@@ -63668,6 +63955,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .smaller\:placeholder-semi-white-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-semi-white-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-semi-white-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-semi-white-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .smaller\:placeholder-purple-muted::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -66508,6 +66819,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .smaller\:focus\:placeholder-semi-white-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-semi-white-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-semi-white-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-semi-white-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .smaller\:focus\:placeholder-purple-muted:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -67689,6 +68024,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .smaller\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .smaller\:text-purple-muted{
     --text-opacity: 1;
     color: #75587A;
@@ -68397,6 +68738,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .smaller\:hover\:text-semi-white-mid:hover{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .smaller\:hover\:text-purple-muted:hover{
@@ -69109,6 +69456,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .smaller\:focus\:text-semi-white-mid:focus{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .smaller\:focus\:text-purple-muted:focus{
     --text-opacity: 1;
     color: #75587A;
@@ -69819,6 +70172,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .smaller\:active\:text-semi-white-mid:active{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .smaller\:active\:text-purple-muted:active{
     --text-opacity: 1;
     color: #75587A;
@@ -70527,6 +70886,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .group:hover .smaller\:group-hover\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .group:hover .smaller\:group-hover\:text-purple-muted{
@@ -75011,6 +75376,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--divide-opacity));
   }
 
+  .sm\:divide-semi-white-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--divide-opacity));
+  }
+
   .sm\:divide-purple-muted > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #75587A;
@@ -75805,6 +76176,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .sm\:bg-semi-white-mid{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .sm\:bg-purple-muted{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -76515,6 +76892,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .sm\:hover\:bg-semi-white-mid:hover{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .sm\:hover\:bg-purple-muted:hover{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -77223,6 +77606,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #FCFCFC;
     background-color: rgba(252, 252, 252, var(--bg-opacity));
+  }
+
+  .sm\:focus\:bg-semi-white-mid:focus{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
   }
 
   .sm\:focus\:bg-purple-muted:focus{
@@ -78075,6 +78464,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .sm\:border-semi-white-mid{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .sm\:border-purple-muted{
     --border-opacity: 1;
     border-color: #75587A;
@@ -78785,6 +79180,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .sm\:hover\:border-semi-white-mid:hover{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .sm\:hover\:border-purple-muted:hover{
     --border-opacity: 1;
     border-color: #75587A;
@@ -79493,6 +79894,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #FCFCFC;
     border-color: rgba(252, 252, 252, var(--border-opacity));
+  }
+
+  .sm\:focus\:border-semi-white-mid:focus{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
   }
 
   .sm\:focus\:border-purple-muted:focus{
@@ -85843,6 +86250,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .sm\:placeholder-semi-white-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-semi-white-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-semi-white-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-semi-white-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .sm\:placeholder-purple-muted::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -88683,6 +89114,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .sm\:focus\:placeholder-semi-white-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-semi-white-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-semi-white-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-semi-white-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .sm\:focus\:placeholder-purple-muted:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -89864,6 +90319,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .sm\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .sm\:text-purple-muted{
     --text-opacity: 1;
     color: #75587A;
@@ -90572,6 +91033,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .sm\:hover\:text-semi-white-mid:hover{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .sm\:hover\:text-purple-muted:hover{
@@ -91284,6 +91751,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .sm\:focus\:text-semi-white-mid:focus{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .sm\:focus\:text-purple-muted:focus{
     --text-opacity: 1;
     color: #75587A;
@@ -91994,6 +92467,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .sm\:active\:text-semi-white-mid:active{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .sm\:active\:text-purple-muted:active{
     --text-opacity: 1;
     color: #75587A;
@@ -92702,6 +93181,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .group:hover .sm\:group-hover\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .group:hover .sm\:group-hover\:text-purple-muted{
@@ -97186,6 +97671,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--divide-opacity));
   }
 
+  .md\:divide-semi-white-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--divide-opacity));
+  }
+
   .md\:divide-purple-muted > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #75587A;
@@ -97980,6 +98471,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .md\:bg-semi-white-mid{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .md\:bg-purple-muted{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -98690,6 +99187,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .md\:hover\:bg-semi-white-mid:hover{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .md\:hover\:bg-purple-muted:hover{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -99398,6 +99901,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #FCFCFC;
     background-color: rgba(252, 252, 252, var(--bg-opacity));
+  }
+
+  .md\:focus\:bg-semi-white-mid:focus{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
   }
 
   .md\:focus\:bg-purple-muted:focus{
@@ -100250,6 +100759,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .md\:border-semi-white-mid{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .md\:border-purple-muted{
     --border-opacity: 1;
     border-color: #75587A;
@@ -100960,6 +101475,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .md\:hover\:border-semi-white-mid:hover{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .md\:hover\:border-purple-muted:hover{
     --border-opacity: 1;
     border-color: #75587A;
@@ -101668,6 +102189,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #FCFCFC;
     border-color: rgba(252, 252, 252, var(--border-opacity));
+  }
+
+  .md\:focus\:border-semi-white-mid:focus{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
   }
 
   .md\:focus\:border-purple-muted:focus{
@@ -108018,6 +108545,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .md\:placeholder-semi-white-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-semi-white-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-semi-white-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-semi-white-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .md\:placeholder-purple-muted::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -110858,6 +111409,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .md\:focus\:placeholder-semi-white-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-semi-white-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-semi-white-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-semi-white-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .md\:focus\:placeholder-purple-muted:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -112039,6 +112614,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .md\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .md\:text-purple-muted{
     --text-opacity: 1;
     color: #75587A;
@@ -112747,6 +113328,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .md\:hover\:text-semi-white-mid:hover{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .md\:hover\:text-purple-muted:hover{
@@ -113459,6 +114046,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .md\:focus\:text-semi-white-mid:focus{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .md\:focus\:text-purple-muted:focus{
     --text-opacity: 1;
     color: #75587A;
@@ -114169,6 +114762,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .md\:active\:text-semi-white-mid:active{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .md\:active\:text-purple-muted:active{
     --text-opacity: 1;
     color: #75587A;
@@ -114877,6 +115476,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .group:hover .md\:group-hover\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .group:hover .md\:group-hover\:text-purple-muted{
@@ -119361,6 +119966,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--divide-opacity));
   }
 
+  .lg\:divide-semi-white-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--divide-opacity));
+  }
+
   .lg\:divide-purple-muted > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #75587A;
@@ -120155,6 +120766,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .lg\:bg-semi-white-mid{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .lg\:bg-purple-muted{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -120865,6 +121482,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .lg\:hover\:bg-semi-white-mid:hover{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .lg\:hover\:bg-purple-muted:hover{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -121573,6 +122196,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #FCFCFC;
     background-color: rgba(252, 252, 252, var(--bg-opacity));
+  }
+
+  .lg\:focus\:bg-semi-white-mid:focus{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
   }
 
   .lg\:focus\:bg-purple-muted:focus{
@@ -122425,6 +123054,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .lg\:border-semi-white-mid{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .lg\:border-purple-muted{
     --border-opacity: 1;
     border-color: #75587A;
@@ -123135,6 +123770,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .lg\:hover\:border-semi-white-mid:hover{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .lg\:hover\:border-purple-muted:hover{
     --border-opacity: 1;
     border-color: #75587A;
@@ -123843,6 +124484,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #FCFCFC;
     border-color: rgba(252, 252, 252, var(--border-opacity));
+  }
+
+  .lg\:focus\:border-semi-white-mid:focus{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
   }
 
   .lg\:focus\:border-purple-muted:focus{
@@ -130193,6 +130840,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .lg\:placeholder-semi-white-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-semi-white-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-semi-white-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-semi-white-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .lg\:placeholder-purple-muted::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -133033,6 +133704,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .lg\:focus\:placeholder-semi-white-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-semi-white-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-semi-white-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-semi-white-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .lg\:focus\:placeholder-purple-muted:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -134214,6 +134909,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .lg\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .lg\:text-purple-muted{
     --text-opacity: 1;
     color: #75587A;
@@ -134922,6 +135623,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .lg\:hover\:text-semi-white-mid:hover{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .lg\:hover\:text-purple-muted:hover{
@@ -135634,6 +136341,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .lg\:focus\:text-semi-white-mid:focus{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .lg\:focus\:text-purple-muted:focus{
     --text-opacity: 1;
     color: #75587A;
@@ -136344,6 +137057,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .lg\:active\:text-semi-white-mid:active{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .lg\:active\:text-purple-muted:active{
     --text-opacity: 1;
     color: #75587A;
@@ -137052,6 +137771,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .group:hover .lg\:group-hover\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .group:hover .lg\:group-hover\:text-purple-muted{
@@ -141536,6 +142261,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--divide-opacity));
   }
 
+  .xl\:divide-semi-white-mid > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--divide-opacity));
+  }
+
   .xl\:divide-purple-muted > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #75587A;
@@ -142330,6 +143061,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .xl\:bg-semi-white-mid{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .xl\:bg-purple-muted{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -143040,6 +143777,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(252, 252, 252, var(--bg-opacity));
   }
 
+  .xl\:hover\:bg-semi-white-mid:hover{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
+  }
+
   .xl\:hover\:bg-purple-muted:hover{
     --bg-opacity: 1;
     background-color: #75587A;
@@ -143748,6 +144491,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #FCFCFC;
     background-color: rgba(252, 252, 252, var(--bg-opacity));
+  }
+
+  .xl\:focus\:bg-semi-white-mid:focus{
+    --bg-opacity: 1;
+    background-color: #FAFAFA;
+    background-color: rgba(250, 250, 250, var(--bg-opacity));
   }
 
   .xl\:focus\:bg-purple-muted:focus{
@@ -144600,6 +145349,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .xl\:border-semi-white-mid{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .xl\:border-purple-muted{
     --border-opacity: 1;
     border-color: #75587A;
@@ -145310,6 +146065,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(252, 252, 252, var(--border-opacity));
   }
 
+  .xl\:hover\:border-semi-white-mid:hover{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
+  }
+
   .xl\:hover\:border-purple-muted:hover{
     --border-opacity: 1;
     border-color: #75587A;
@@ -146018,6 +146779,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #FCFCFC;
     border-color: rgba(252, 252, 252, var(--border-opacity));
+  }
+
+  .xl\:focus\:border-semi-white-mid:focus{
+    --border-opacity: 1;
+    border-color: #FAFAFA;
+    border-color: rgba(250, 250, 250, var(--border-opacity));
   }
 
   .xl\:focus\:border-purple-muted:focus{
@@ -152368,6 +153135,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .xl\:placeholder-semi-white-mid::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-semi-white-mid:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-semi-white-mid::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-semi-white-mid::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .xl\:placeholder-purple-muted::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -155208,6 +155999,30 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--placeholder-opacity));
   }
 
+  .xl\:focus\:placeholder-semi-white-mid:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-semi-white-mid:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-semi-white-mid:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-semi-white-mid:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--placeholder-opacity));
+  }
+
   .xl\:focus\:placeholder-purple-muted:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #75587A;
@@ -156389,6 +157204,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .xl\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .xl\:text-purple-muted{
     --text-opacity: 1;
     color: #75587A;
@@ -157097,6 +157918,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .xl\:hover\:text-semi-white-mid:hover{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .xl\:hover\:text-purple-muted:hover{
@@ -157809,6 +158636,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .xl\:focus\:text-semi-white-mid:focus{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .xl\:focus\:text-purple-muted:focus{
     --text-opacity: 1;
     color: #75587A;
@@ -158519,6 +159352,12 @@ readers do not read off random characters that represent icons */
     color: rgba(252, 252, 252, var(--text-opacity));
   }
 
+  .xl\:active\:text-semi-white-mid:active{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
+  }
+
   .xl\:active\:text-purple-muted:active{
     --text-opacity: 1;
     color: #75587A;
@@ -159227,6 +160066,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #FCFCFC;
     color: rgba(252, 252, 252, var(--text-opacity));
+  }
+
+  .group:hover .xl\:group-hover\:text-semi-white-mid{
+    --text-opacity: 1;
+    color: #FAFAFA;
+    color: rgba(250, 250, 250, var(--text-opacity));
   }
 
   .group:hover .xl\:group-hover\:text-purple-muted{
