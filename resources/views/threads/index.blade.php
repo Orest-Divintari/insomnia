@@ -10,7 +10,7 @@
         </div>
         @auth
         <div class="py-4">
-            <a href="{{route('threads.create', $category->id)}}" class="btn-post"><span
+            <a href="{{ route('threads.create', $category->id) }}" class="btn-post"><span
                     class="fas fa-pen text-white text-xs mr-1"></span>Post
                 Thread</a>
         </div>

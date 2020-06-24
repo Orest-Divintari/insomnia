@@ -7126,8 +7126,8 @@ readers do not read off random characters that represent icons */
 .btn-paginator {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
   margin-right: 0.625rem;
   border-radius: 0.25rem;
   --text-opacity: 1;

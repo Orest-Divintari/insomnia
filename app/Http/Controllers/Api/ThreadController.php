@@ -17,7 +17,7 @@ class ThreadController extends Controller
      */
     public function index(Category $category)
     {
-        $threads = $category->threads()->paginate(config('constants.thread.per_page'));
+        $threads = $category->threads()->paginate(Thread::PER_PAGE);
         return $threads;
     }
 

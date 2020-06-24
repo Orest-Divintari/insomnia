@@ -83,7 +83,7 @@ class ThreadTest extends TestCase
     public function thread_has_a_shorter_version_of_its_title()
     {
         $this->assertEquals(
-            Str::limit($this->thread->title, config('constants.thread.title_limit'), ''),
+            Str::limit($this->thread->title, Thread::TITLE_LENGTH, ''),
             $this->thread->shortTitle
         );
     }

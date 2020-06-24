@@ -9,6 +9,9 @@ use Illuminate\Support\Str;
 class Thread extends Model
 {
 
+    const PER_PAGE = 1;
+    const TITLE_LENGTH = 25;
+
     /**
      * The accessors to append to the model's array form.
      *
@@ -134,7 +137,7 @@ class Thread extends Model
      */
     public function getShortTitleAttribute()
     {
-        return Str::limit($this->title, config('constants.thread.title_limit'), '');
+        return Str::limit($this->title, static::TITLE_LENGTH, '');
     }
 
     /**

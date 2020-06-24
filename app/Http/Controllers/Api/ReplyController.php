@@ -8,9 +8,11 @@ use App\Thread;
 class ReplyController extends Controller
 {
 
+    const PER_PAGE = 1;
+
     public function index(Thread $thread)
     {
-        return $thread->replies()->paginate(config('constants.reply.per_page'));
+        return $thread->replies()->paginate(static::PER_PAGE);
 
     }
 

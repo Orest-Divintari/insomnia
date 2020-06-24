@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
 
+    const PER_PAGE = 1;
+
     /**
      * The accessors to append to the model's array form.
      *

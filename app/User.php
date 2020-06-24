@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 class User extends Authenticatable implements MustVerifyEmail
 {
 
+    const NAME_LENGTH = 10;
     protected $appends = ['avatar_path', 'short_name'];
     use Notifiable;
 
@@ -59,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getShortNameAttribute()
     {
-        return Str::limit($this->name, config('constants.user.name_limit'), '');
+        return Str::limit($this->name, static::NAME_LENGTH, '');
     }
 
     /**

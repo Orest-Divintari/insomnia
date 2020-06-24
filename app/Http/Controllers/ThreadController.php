@@ -17,7 +17,7 @@ class ThreadController extends Controller
      */
     public function index(Category $category)
     {
-        $threads = $category->threads()->paginate(config('constants.thread.per_page'));
+        $threads = $category->threads()->paginate(Thread::PER_PAGE);
         return view('threads.index', compact('category', 'threads'));
     }
 
@@ -31,6 +31,8 @@ class ThreadController extends Controller
         request()->validate([
             'category_id' => 'required',
         ]);
+
+        dd('gamw');
         return view('threads.create', compact('categoryId'));
     }
 

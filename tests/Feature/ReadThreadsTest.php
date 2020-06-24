@@ -27,7 +27,7 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_read_the_replies_associated_with_a_thread()
+    public function a_user_can_read_the_paginated_replies_associated_with_a_thread()
     {
         // first reply is the body of the thread
         createMany(Reply::class, 2, [
@@ -36,7 +36,11 @@ class ReadThreadsTest extends TestCase
         ]);
 
         $response = $this->get(route('api.replies.index', $this->thread))->json();
-        $this->assertCount(3, $response['data']);
+        $this->assertCount(Reply::PER_PAGE, $response['data']);
+
+        $response = $this->get(route('api.replies.index', $this->thread) . '?page=2')->json();
+        $this->assertCount(Reply::PER_PAGE, $response['data']);
+
     }
 
     /** @test */
@@ -58,11 +62,10 @@ class ReadThreadsTest extends TestCase
         ]);
 
         $response = $this->getJson(route('api.threads.index', $category))->json();
-        $this->assertCount(1, $response['data']);
+        $this->assertCount(Thread::PER_PAGE, $response['data']);
 
-        $response = $this->getJson('/api/threads/' . $category->slug . '?page=2')->json();
-        $this->assertCount(1, $response['data']);
-
+        $response = $this->getJson(route('api.threads.index', $category) . '?page=2')->json();
+        $this->assertCount(Thread::PER_PAGE, $response['data']);
     }
 
 }
