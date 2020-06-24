@@ -18,7 +18,7 @@ class CreateThreadsTest extends TestCase
     public function guests_may_not_see_the_post_new_thread_form()
     {
         $category = create(Category::class);
-        $this->get(route('threads.create', $category->id))
+        $this->get(route('threads.create', $category))
             ->assertRedirect('login');
     }
 

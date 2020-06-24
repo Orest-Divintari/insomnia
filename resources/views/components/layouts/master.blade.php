@@ -21,7 +21,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     @stack('scripts')
-
+    @stack('styles')
     <script>
     window.App = @json([
         'user' => Auth::user(),
@@ -60,13 +60,13 @@
         </header>
 
         <main class="p-5 h-screen bg-semi-white">{{$main}}</main>
-        <footer class="px-5 bg-blue-light">
+        <!-- <footer class="px-5 bg-blue-light">
             <div class="flex justify-between">
                 <div>Editors</div>
                 <div>Links</div>
                 <div>Videos</div>
             </div>
-        </footer>
+        </footer> -->
     </div>
 </body>
 

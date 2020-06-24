@@ -1,5 +1,5 @@
 .form-label {
-    @apply .text-black-form-text .tracking-wide;
+    @apply .text-black-form-text .tracking-wide text-sm;
 }
 
 .form-label-phone {
@@ -51,7 +51,7 @@ div.form-left-col {
 }
 
 .form-button {
-    @apply .py-2 .px-10 .font-bold .bg-blue-mid .text-white .rounded;
+    @apply .py-2 .px-8 .font-bold .bg-blue-mid .text-white text-sm .rounded;
 }
 
 .form-button:hover {
