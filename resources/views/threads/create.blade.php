@@ -2,10 +2,13 @@
     @push('styles')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.css">
     @endpush
+
     <header class="section-title">
         Post Thread
     </header>
+
     <main class="section">
+
         <x-breadcrumb.container>
             <x-breadcrumb.item :title="'Forum'" :route="route('forum')"></x-breadcrumb.item>
             <x-breadcrumb.item :title="$category->category->group->title" :route="route('forum')"></x-breadcrumb.item>
@@ -24,7 +27,7 @@
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
                 <div class="p-4">
                     <input type="text" name="title"
-                        class="w-full bg-semi-white-mid border border-light p-1 px-2 text-xl rounded focus:outline-none "
+                        class="w-full bg-semi-white-mid border border-light p-1 text-xl rounded focus:outline-none "
                         placeholder="Thread title" value="{{ old('title') }} " required>
                 </div>
                 <wysiwyg value="{{ old('body') }}" name="body" class="p-4" classes="h-64" required>
