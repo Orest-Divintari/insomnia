@@ -1,4 +1,6 @@
 import Vue from "vue";
+import authorization from "./policy/authorize";
+
 window.Vue = Vue;
 window._ = require("lodash");
 
@@ -8,12 +10,12 @@ window._ = require("lodash");
  * code may be modified to fit the specific needs of your application.
  */
 
-try {
-    window.Popper = require("popper.js").default;
-    window.$ = window.jQuery = require("jquery");
+// try {
+//     window.Popper = require("popper.js").default;
+//     window.$ = window.jQuery = require("jquery");
 
-    require("bootstrap");
-} catch (e) {}
+//     require("bootstrap");
+// } catch (e) {}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -27,6 +29,17 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 // -------  authentication ---------
 window.Vue.prototype.signedIn = window.App.signedIn;
+
+// ----------- authorization ----------
+Vue.prototype.authorize = function(policy, model) {
+    let user = window.App.user;
+
+    if (!window.App.signedIn) return false;
+
+    if (typeof policy == "string") {
+        return authorization[policy](user, model);
+    }
+};
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -43,11 +56,6 @@ window.Vue.prototype.signedIn = window.App.signedIn;
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-
-// Modal
-import VModal from "vue-js-modal";
-
-Vue.use(VModal);
 
 import VTooltip from "v-tooltip";
 
