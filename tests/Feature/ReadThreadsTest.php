@@ -30,7 +30,8 @@ class ReadThreadsTest extends TestCase
     public function a_user_can_read_the_paginated_replies_associated_with_a_thread()
     {
         // first reply is the body of the thread
-        createMany(Reply::class, 2, [
+        $repliesCount = Reply::PER_PAGE * 2;
+        createMany(Reply::class, $repliesCount, [
             'repliable_id' => $this->thread->id,
             'repliable_type' => Thread::class,
         ]);
