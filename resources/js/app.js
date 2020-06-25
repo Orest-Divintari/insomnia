@@ -7,10 +7,7 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
-Vue.component(
-    "example-component",
-    require("./components/ExampleComponent.vue").default
-);
+
 Vue.component("hamburger", require("./components/Hamburger.vue").default);
 Vue.component("Threads", require("./components/Threads.vue").default);
 Vue.component("Thread", require("./components/Thread.vue").default);

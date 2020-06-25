@@ -17,7 +17,7 @@
         <a class="p-4 hover:bg-blue-lighter" href>Front Page</a>
         <a class="p-4 hover:bg-blue-lighter" href>Reviews</a>
         <a class="p-4 hover:bg-blue-lighter" href>Ads</a>
-        <a class="p-4 hover:bg-blue-lighter" href>Forums</a>
+        <a href="/forum" class="p-4 hover:bg-blue-lighter">Forums</a>
       </div>
     </div>
   </div>
