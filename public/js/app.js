@@ -1976,6 +1976,25 @@ __webpack_require__.r(__webpack_exports__);
     hide: function hide() {
       this.display = false;
     }
+  },
+  directives: {
+    "click-outside": {
+      bind: function bind(el, binding, vnode) {
+        el.clickOutsideEvent = function (event) {
+          // here I check that click was outside the el and his childrens
+          if (el !== event.target && !el.contains(event.target)) {
+            // and if it did, call method provided in attribute value
+            vnode.context[binding.expression](el);
+            event.stopPropagation();
+          }
+        };
+
+        document.addEventListener("click", el.clickOutsideEvent);
+      },
+      unbind: function unbind(el) {
+        document.removeEventListener("click", el.clickOutsideEvent);
+      }
+    }
   }
 });
 
@@ -87405,23 +87424,6 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-Vue.directive("click-outside", {
-  bind: function bind(el, binding, vnode) {
-    el.clickOutsideEvent = function (event) {
-      // here I check that click was outside the el and his childrens
-      if (el !== event.target && !el.contains(event.target)) {
-        // and if it did, call method provided in attribute value
-        vnode.context[binding.expression](el);
-        event.stopPropagation();
-      }
-    };
-
-    document.addEventListener("click", el.clickOutsideEvent);
-  },
-  unbind: function unbind(el) {
-    document.removeEventListener("click", el.clickOutsideEvent);
-  }
-});
 Vue.component("example-component", __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component("hamburger", __webpack_require__(/*! ./components/Hamburger.vue */ "./resources/js/components/Hamburger.vue")["default"]);
 Vue.component("Threads", __webpack_require__(/*! ./components/Threads.vue */ "./resources/js/components/Threads.vue")["default"]);
