@@ -77,7 +77,7 @@ class ParticipateInForumTest extends TestCase
 
         $reply = create(Reply::class);
         $newBody = ['body' => 'changed body'];
-        $this->put(route('api.replies.update', $reply), $newBody)
+        $this->patch(route('api.replies.update', $reply), $newBody)
             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
@@ -95,7 +95,7 @@ class ParticipateInForumTest extends TestCase
 
         $newBody = ['body' => 'changed body'];
 
-        $this->put(route('api.replies.update', $reply), $newBody);
+        $this->patch(route('api.replies.update', $reply), $newBody);
 
         $this->assertDatabaseMissing('replies', [
             'body' => 'old body',

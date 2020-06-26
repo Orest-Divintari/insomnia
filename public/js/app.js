@@ -2242,6 +2242,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2265,6 +2270,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    add: function add(item) {
+      this.items.push(item);
+    },
     endpoint: function endpoint(pageNumber) {
       var path = "/api/threads/" + this.thread.slug + "/replies";
 
@@ -2366,6 +2374,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2383,6 +2412,36 @@ __webpack_require__.r(__webpack_exports__);
     reply: {
       type: Object,
       "default": {}
+    }
+  },
+  data: function data() {
+    return {
+      editing: false,
+      body: this.reply.body
+    };
+  },
+  computed: {
+    path: function path() {
+      return "/api/replies/" + this.reply.id;
+    },
+    data: function data() {
+      return {
+        body: this.body
+      };
+    }
+  },
+  methods: {
+    update: function update() {
+      var _this = this;
+
+      axios.patch(this.path, this.data).then(function () {
+        return _this.updated();
+      })["catch"](function (error) {
+        return console.log(error.response);
+      });
+    },
+    updated: function updated() {
+      this.editing = false;
     }
   }
 });
@@ -2417,13 +2476,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      form: {
-        body: ""
-      }
+      body: "",
+      posted: false
     };
+  },
+  computed: {
+    path: function path() {
+      return "/api" + window.location.pathname + "/replies";
+    }
+  },
+  methods: {
+    post: function post() {
+      var _this = this;
+
+      axios.post(this.path, {
+        body: this.body
+      }).then(function (_ref) {
+        var data = _ref.data;
+        return _this.addReply(data);
+      })["catch"](function (error) {
+        return console.log(error.response);
+      });
+    },
+    addReply: function addReply(data) {
+      console.log(data);
+      this.$emit("newReply", data);
+      this.body = "";
+      this.posted = true;
+    }
   }
 });
 
@@ -59351,7 +59438,29 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _vm.signedIn ? _c("reply-form") : _vm._e()
+      _vm.signedIn
+        ? _c("reply-form")
+        : _c("p", { staticClass: "text-xs mt-4 text-center" }, [
+            _vm._v("\n    You must\n    "),
+            _c(
+              "a",
+              {
+                staticClass: "text-blue-mid underline",
+                attrs: { href: "/login" }
+              },
+              [_vm._v("sign in")]
+            ),
+            _vm._v(" or\n    "),
+            _c(
+              "a",
+              {
+                staticClass: "text-blue-mid underline",
+                attrs: { href: "/register" }
+              },
+              [_vm._v("register")]
+            ),
+            _vm._v(" to reply here.\n  ")
+          ])
     ],
     2
   )
@@ -59424,7 +59533,9 @@ var render = function() {
               [
                 _c("a", { staticClass: "mr-3 fas fa-share-alt" }),
                 _vm._v(" "),
-                _c("a", { staticClass: "mx-3 far fa-bookmark" }),
+                _vm.signedIn
+                  ? _c("a", { staticClass: "mx-3 far fa-bookmark" })
+                  : _vm._e(),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -59438,16 +59549,92 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "p-5/2 h-full" }, [
-            _c("div", { staticClass: "flex flex-col h-full pb-8" }, [
-              _c(
-                "div",
-                { staticClass: "flex-1 text-black-semi text-sm pr-48" },
-                [_c("highlight", { attrs: { content: _vm.reply.body } })],
-                1
-              ),
-              _vm._v(" "),
-              _vm._m(0)
-            ])
+            _vm.editing
+              ? _c("div", [
+                  _c(
+                    "form",
+                    {
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.update($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("wysiwyg", {
+                        model: {
+                          value: _vm.body,
+                          callback: function($$v) {
+                            _vm.body = $$v
+                          },
+                          expression: "body"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "form-button-container justify-center" },
+                        [
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "form-button",
+                              attrs: { type: "submit" },
+                              on: {
+                                click: function($event) {
+                                  _vm.editing = false
+                                }
+                              }
+                            },
+                            [_vm._v("Cancel")]
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _c("div", { staticClass: "flex flex-col h-full pb-8" }, [
+                  _c(
+                    "div",
+                    { staticClass: "flex-1 text-black-semi text-sm pr-48" },
+                    [_c("highlight", { attrs: { content: _vm.body } })],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.signedIn
+                    ? _c("div", { staticClass: "flex justify-between" }, [
+                        _c("div", { staticClass: "flex" }, [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _vm.authorize("owns", _vm.reply)
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "ml-2 btn-reply-control",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.editing = true
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("span", { staticClass: "fas fa-pen" }),
+                                  _vm._v(
+                                    "\n                Edit\n              "
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(2)
+                      ])
+                    : _vm._e()
+                ])
           ])
         ])
       ]
@@ -59459,22 +59646,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justify-between" }, [
-      _c("button", { staticClass: "btn-reply-control" }, [
-        _c("i", { staticClass: "fas fa-exclamation-circle" }),
-        _vm._v("\n              Report\n            ")
+    return _c(
+      "button",
+      { staticClass: "form-button mr-3", attrs: { type: "submit" } },
+      [
+        _c("span", { staticClass: "fas fa-save mr-1" }),
+        _vm._v(" Save\n              ")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn-reply-control" }, [
+      _c("i", { staticClass: "fas fa-exclamation-circle" }),
+      _vm._v("\n                Report\n              ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex" }, [
+      _c("button", { staticClass: "btn-reply-control mr-2" }, [
+        _c("span", { staticClass: "fas fa-thumbs-up" }),
+        _vm._v(" Like\n              ")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "flex" }, [
-        _c("button", { staticClass: "btn-reply-control mr-2" }, [
-          _c("span", { staticClass: "fas fa-thumbs-up" }),
-          _vm._v(" Like\n              ")
-        ]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn-reply-control" }, [
-          _c("span", { staticClass: "fas fa-reply" }),
-          _vm._v("\n                Reply\n              ")
-        ])
+      _c("button", { staticClass: "btn-reply-control" }, [
+        _c("span", { staticClass: "fas fa-reply" }),
+        _vm._v("\n                Reply\n              ")
       ])
     ])
   }
@@ -59509,31 +59711,43 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "w-full p-3" },
-        [
-          _c("wysiwyg", {
-            attrs: {
-              name: "body",
-              classes: "h-32 text-sm",
-              placeholder: "Write your reply..."
-            },
-            model: {
-              value: _vm.form.body,
-              callback: function($$v) {
-                _vm.$set(_vm.form, "body", $$v)
-              },
-              expression: "form.body"
+      _c("div", { staticClass: "w-full p-3" }, [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.post($event)
+              }
             }
-          }),
-          _vm._v(" "),
-          _c("button", { staticClass: "mt-4 form-button" }, [
-            _vm._v("Post Reply")
-          ])
-        ],
-        1
-      )
+          },
+          [
+            _c("wysiwyg", {
+              attrs: {
+                clearInput: _vm.posted,
+                name: "body",
+                classes: "h-32 text-sm",
+                placeholder: "Write your reply..."
+              },
+              model: {
+                value: _vm.body,
+                callback: function($$v) {
+                  _vm.body = $$v
+                },
+                expression: "body"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "mt-4 form-button", attrs: { type: "submit" } },
+              [_vm._v("Post Reply")]
+            )
+          ],
+          1
+        )
+      ])
     ])
   ])
 }
@@ -72586,14 +72800,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/js/components/ReplyForm.vue ***!
   \***********************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ReplyForm_vue_vue_type_template_id_56babc1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReplyForm.vue?vue&type=template&id=56babc1a&scoped=true& */ "./resources/js/components/ReplyForm.vue?vue&type=template&id=56babc1a&scoped=true&");
 /* harmony import */ var _ReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReplyForm.vue?vue&type=script&lang=js& */ "./resources/js/components/ReplyForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -72623,7 +72838,7 @@ component.options.__file = "resources/js/components/ReplyForm.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/ReplyForm.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -5,14 +5,17 @@
         <img :src="user.avatar_path" class="avatar-large" alt />
       </div>
       <div class="w-full p-3">
-        <wysiwyg
-          v-model="form.body"
-          
-          name="body"
-          classes="h-32 text-sm"
-          placeholder="Write your reply..."
-        ></wysiwyg>
-        <button @click="post" class="mt-4 form-button">Post Reply</button>
+        <form @submit.prevent="post">
+          <wysiwyg
+            :clearInput="posted"
+            v-model="body"
+            name="body"
+            classes="h-32 text-sm"
+            placeholder="Write your reply..."
+          ></wysiwyg>
+
+          <button type="submit" class="mt-4 form-button">Post Reply</button>
+        </form>
       </div>
     </div>
   </div>
@@ -22,20 +25,29 @@
 export default {
   data() {
     return {
-      form: {
-        body: ""
-      }
+      body: "",
+      posted: false
     };
   },
-  methods: {
-      path(){
-          return window.location + '/replies';
-      },
-      post() {
-          axios.post(this.path())
-            .then(response => )
-      }
+  computed: {
+    path() {
+      return "/api" + window.location.pathname + "/replies";
+    }
   },
+  methods: {
+    post() {
+      axios
+        .post(this.path, { body: this.body })
+        .then(({ data }) => this.addReply(data))
+        .catch(error => console.log(error.response));
+    },
+    addReply(data) {
+      console.log(data);
+      this.$emit("newReply", data);
+      this.body = "";
+      this.posted = true;
+    }
+  }
 };
 </script>
 

@@ -56,7 +56,7 @@ Route::group([
         Route::post('/threads/{thread}/replies', 'ReplyController@store')
             ->name('api.replies.store');
 
-        Route::put('/replies/{reply}', 'ReplyController@update')
+        Route::patch('/replies/{reply}', 'ReplyController@update')
             ->name('api.replies.update');
 
         Route::delete('/replies/{reply}', 'ReplyController@destroy')
@@ -64,7 +64,8 @@ Route::group([
 
         Route::put('/threads/{thread}', 'ThreadController@update')
             ->name('api.threads.update');
-        Route::put('/threads/{thread}', 'ThreadController@update')
+
+        Route::delete('/threads/{thread}', 'ThreadController@delete')
             ->name('api.threads.update');
     });
 

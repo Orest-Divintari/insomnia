@@ -38,7 +38,7 @@ class PostReplyRequest extends FormRequest
      */
     public function persist(Thread $thread)
     {
-        $thread->replies()->create(
+        return $thread->replies()->create(
             $this->validated() + ['user_id' => $this->user()->id]
         );
 

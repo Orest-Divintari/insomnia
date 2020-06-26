@@ -23,20 +23,41 @@
           ></a>
           <div class="flex items-center text-xs text-gray-lightest">
             <a class="mr-3 fas fa-share-alt"></a>
-            <a class="mx-3 far fa-bookmark"></a>
+            <a v-if="signedIn" class="mx-3 far fa-bookmark"></a>
             <div class="bg-blue-reply-border text-white px-5/2 py-2">#{{ index + 1 }}</div>
           </div>
         </div>
         <div class="p-5/2 h-full">
-          <div class="flex flex-col h-full pb-8">
+          <div v-if="editing">
+            <form @submit.prevent="update">
+              <wysiwyg v-model="body"></wysiwyg>
+              <div class="form-button-container justify-center">
+                <button class="form-button mr-3" type="submit">
+                  <span class="fas fa-save mr-1"></span> Save
+                </button>
+                <button class="form-button" @click="editing = false" type="submit">Cancel</button>
+              </div>
+            </form>
+          </div>
+          <div v-else class="flex flex-col h-full pb-8">
             <div class="flex-1 text-black-semi text-sm pr-48">
-              <highlight :content="reply.body"></highlight>
+              <highlight :content="body"></highlight>
             </div>
-            <div class="flex justify-between">
-              <button class="btn-reply-control">
-                <i class="fas fa-exclamation-circle"></i>
-                Report
-              </button>
+            <div v-if="signedIn" class="flex justify-between">
+              <div class="flex">
+                <button class="btn-reply-control">
+                  <i class="fas fa-exclamation-circle"></i>
+                  Report
+                </button>
+                <button
+                  v-if="authorize('owns', reply)"
+                  @click="editing=true"
+                  class="ml-2 btn-reply-control"
+                >
+                  <span class="fas fa-pen"></span>
+                  Edit
+                </button>
+              </div>
               <div class="flex">
                 <button class="btn-reply-control mr-2">
                   <span class="fas fa-thumbs-up"></span> Like
@@ -72,6 +93,32 @@ export default {
     reply: {
       type: Object,
       default: {}
+    }
+  },
+  data() {
+    return {
+      editing: false,
+      body: this.reply.body
+    };
+  },
+  computed: {
+    path() {
+      return "/api/replies/" + this.reply.id;
+    },
+    data() {
+      return { body: this.body };
+    }
+  },
+
+  methods: {
+    update() {
+      axios
+        .patch(this.path, this.data)
+        .then(() => this.updated())
+        .catch(error => console.log(error.response));
+    },
+    updated() {
+      this.editing = false;
     }
   }
 };

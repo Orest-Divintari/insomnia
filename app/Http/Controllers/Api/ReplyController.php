@@ -32,8 +32,7 @@ class ReplyController extends Controller
      */
     public function store(Thread $thread, PostReplyRequest $request)
     {
-        $request->persist($thread);
-        return response('Reply has been posted', 200);
+        return response($request->persist($thread), 201);
     }
 
     /**

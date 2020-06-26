@@ -14,7 +14,12 @@
       :threadPoster="thread.poster.name"
     ></reply>
     <paginator @isPaginated="isPaginated=true" @changePage="fetchData" :dataset="dataset"></paginator>
-    <reply-form v-if="signedIn"></reply-form>
+    <reply-form v-if="signedIn"></reply-form @newReply="add">
+    <p v-else class="text-xs mt-4 text-center">
+      You must
+      <a href="/login" class="text-blue-mid underline">sign in</a> or
+      <a href="/register" class="text-blue-mid underline">register</a> to reply here.
+    </p>
   </div>
 </template>
 
@@ -43,6 +48,9 @@ export default {
     };
   },
   methods: {
+    add(item){
+      this.items.push(item);
+    },
     endpoint(pageNumber) {
       var path = "/api/threads/" + this.thread.slug + "/replies";
       if (!pageNumber) {

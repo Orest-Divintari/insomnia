@@ -34,7 +34,6 @@ Vue.prototype.signedIn = window.App.signedIn;
 // ----------- authorization ----------
 Vue.prototype.authorize = function(policy, model) {
     let user = window.App.user;
-
     if (!window.App.signedIn) return false;
 
     if (typeof policy == "string") {
