@@ -2221,6 +2221,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Reply__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Reply */ "./resources/js/components/Reply.vue");
 /* harmony import */ var _Paginator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Paginator */ "./resources/js/components/Paginator.vue");
+/* harmony import */ var _ReplyForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ReplyForm */ "./resources/js/components/ReplyForm.vue");
 //
 //
 //
@@ -2239,12 +2240,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Reply: _Reply__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Paginator: _Paginator__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Paginator: _Paginator__WEBPACK_IMPORTED_MODULE_1__["default"],
+    ReplyForm: _ReplyForm__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: {
     thread: {
@@ -2359,6 +2364,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2377,6 +2384,46 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       "default": {}
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReplyForm.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ReplyForm.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      form: {
+        body: ""
+      }
+    };
   }
 });
 
@@ -59292,7 +59339,19 @@ var render = function() {
             threadPoster: _vm.thread.poster.name
           }
         })
-      })
+      }),
+      _vm._v(" "),
+      _c("paginator", {
+        attrs: { dataset: _vm.dataset },
+        on: {
+          isPaginated: function($event) {
+            _vm.isPaginated = true
+          },
+          changePage: _vm.fetchData
+        }
+      }),
+      _vm._v(" "),
+      _vm.signedIn ? _c("reply-form") : _vm._e()
     ],
     2
   )
@@ -59319,22 +59378,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "flex border-t-6 border-blue-reply-border mb-4",
-      attrs: { id: "post-" + _vm.reply.id }
-    },
-    [
-      _c(
-        "div",
-        {
-          staticClass:
-            "w-48 p-5/2 flex flex-col items-center bg-blue-lighter border-r-2 border-blue-light"
-        },
-        [
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "reply-container", attrs: { id: "post-" + _vm.reply.id } },
+      [
+        _c("div", { staticClass: "reply-left-col" }, [
           _c("img", {
-            staticClass: "w-24 h-24 object-cover",
+            staticClass: "avatar-large",
             attrs: { src: _vm.reply.poster.avatar_path, alt: "" }
           }),
           _vm._v(" "),
@@ -59356,50 +59407,52 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _c("i", { staticClass: "mt-2 fas fa-chevron-down" })
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "w-full" }, [
-        _c("div", { staticClass: "flex justify-between items-center" }, [
-          _c("a", {
-            staticClass:
-              "text-xs text-gray-lightest hover:underline font-hairline pl-3",
-            attrs: { href: "#post-" + _vm.reply.id },
-            domProps: { textContent: _vm._s(_vm.reply.date_created) }
-          }),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "flex items-center text-xs text-gray-lightest" },
-            [
-              _c("a", { staticClass: "mr-3 fas fa-share-alt" }),
-              _vm._v(" "),
-              _c("a", { staticClass: "mx-3 far fa-bookmark" }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "bg-blue-reply-border text-white px-5/2 py-2" },
-                [_vm._v("#" + _vm._s(_vm.index + 1))]
-              )
-            ]
-          )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-5/2 h-full" }, [
-          _c("div", { staticClass: "flex flex-col h-full pb-8" }, [
+        _c("div", { staticClass: "w-full" }, [
+          _c("div", { staticClass: "flex justify-between items-center" }, [
+            _c("a", {
+              staticClass:
+                "text-xs text-gray-lightest hover:underline font-hairline pl-3",
+              attrs: { href: "#post-" + _vm.reply.id },
+              domProps: { textContent: _vm._s(_vm.reply.date_created) }
+            }),
+            _vm._v(" "),
             _c(
               "div",
-              { staticClass: "flex-1 text-black-semi text-sm pr-48" },
-              [_c("highlight", { attrs: { content: _vm.reply.body } })],
-              1
-            ),
-            _vm._v(" "),
-            _vm._m(0)
+              { staticClass: "flex items-center text-xs text-gray-lightest" },
+              [
+                _c("a", { staticClass: "mr-3 fas fa-share-alt" }),
+                _vm._v(" "),
+                _c("a", { staticClass: "mx-3 far fa-bookmark" }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "bg-blue-reply-border text-white px-5/2 py-2"
+                  },
+                  [_vm._v("#" + _vm._s(_vm.index + 1))]
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-5/2 h-full" }, [
+            _c("div", { staticClass: "flex flex-col h-full pb-8" }, [
+              _c(
+                "div",
+                { staticClass: "flex-1 text-black-semi text-sm pr-48" },
+                [_c("highlight", { attrs: { content: _vm.reply.body } })],
+                1
+              ),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
           ])
         ])
-      ])
-    ]
-  )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -59409,23 +59462,82 @@ var staticRenderFns = [
     return _c("div", { staticClass: "flex justify-between" }, [
       _c("button", { staticClass: "btn-reply-control" }, [
         _c("i", { staticClass: "fas fa-exclamation-circle" }),
-        _vm._v("\n            Report\n          ")
+        _vm._v("\n              Report\n            ")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "flex" }, [
         _c("button", { staticClass: "btn-reply-control mr-2" }, [
           _c("span", { staticClass: "fas fa-thumbs-up" }),
-          _vm._v(" Like\n            ")
+          _vm._v(" Like\n              ")
         ]),
         _vm._v(" "),
         _c("button", { staticClass: "btn-reply-control" }, [
           _c("span", { staticClass: "fas fa-reply" }),
-          _vm._v("\n              Reply\n            ")
+          _vm._v("\n                Reply\n              ")
         ])
       ])
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReplyForm.vue?vue&type=template&id=56babc1a&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ReplyForm.vue?vue&type=template&id=56babc1a&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "mt-6" }, [
+    _c("div", { staticClass: "reply-container" }, [
+      _c("div", { staticClass: "reply-left-col" }, [
+        _c("img", {
+          staticClass: "avatar-large",
+          attrs: { src: _vm.user.avatar_path, alt: "" }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "w-full p-3" },
+        [
+          _c("wysiwyg", {
+            attrs: {
+              name: "body",
+              classes: "h-32 text-sm",
+              placeholder: "Write your reply..."
+            },
+            model: {
+              value: _vm.form.body,
+              callback: function($$v) {
+                _vm.$set(_vm.form, "body", $$v)
+              },
+              expression: "form.body"
+            }
+          }),
+          _vm._v(" "),
+          _c("button", { staticClass: "mt-4 form-button" }, [
+            _vm._v("Post Reply")
+          ])
+        ],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -72074,9 +72186,10 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest"; // -------  authentication ---------
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.user = window.App.user; // -------  authentication ---------
 
-window.Vue.prototype.signedIn = window.App.signedIn; // ----------- authorization ----------
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.signedIn = window.App.signedIn; // ----------- authorization ----------
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.authorize = function (policy, model) {
   var user = window.App.user;
@@ -72464,6 +72577,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Reply_vue_vue_type_template_id_8f05f2e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Reply_vue_vue_type_template_id_8f05f2e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ReplyForm.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/ReplyForm.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ReplyForm_vue_vue_type_template_id_56babc1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReplyForm.vue?vue&type=template&id=56babc1a&scoped=true& */ "./resources/js/components/ReplyForm.vue?vue&type=template&id=56babc1a&scoped=true&");
+/* harmony import */ var _ReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReplyForm.vue?vue&type=script&lang=js& */ "./resources/js/components/ReplyForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ReplyForm_vue_vue_type_template_id_56babc1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ReplyForm_vue_vue_type_template_id_56babc1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "56babc1a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ReplyForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ReplyForm.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/ReplyForm.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ReplyForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReplyForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ReplyForm.vue?vue&type=template&id=56babc1a&scoped=true&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/ReplyForm.vue?vue&type=template&id=56babc1a&scoped=true& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReplyForm_vue_vue_type_template_id_56babc1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ReplyForm.vue?vue&type=template&id=56babc1a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReplyForm.vue?vue&type=template&id=56babc1a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReplyForm_vue_vue_type_template_id_56babc1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReplyForm_vue_vue_type_template_id_56babc1a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

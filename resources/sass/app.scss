@@ -29,6 +29,10 @@
     @apply .rounded-full .object-cover;
 }
 
+.avatar-large {
+    @apply .w-24 .h-24 .object-cover rounded-full;
+}
+
 .dot {
     @apply .bg-gray-600  .w-1 .h-1 .rounded-full .mx-2;
 }

@@ -20,3 +20,11 @@
 .btn-reply-control:hover {
     @apply .text-orange-700;
 }
+
+.reply-left-col {
+    @apply .w-48 .p-5/2 .flex .flex-col .items-center .bg-blue-lighter .border-r-2 .border-blue-light;
+}
+
+.reply-container {
+    @apply .flex .border-t-6 .border-blue-reply-border .mb-4;
+}

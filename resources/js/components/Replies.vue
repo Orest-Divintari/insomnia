@@ -13,16 +13,21 @@
       :reply="reply"
       :threadPoster="thread.poster.name"
     ></reply>
+    <paginator @isPaginated="isPaginated=true" @changePage="fetchData" :dataset="dataset"></paginator>
+    <reply-form v-if="signedIn"></reply-form>
   </div>
 </template>
 
 <script>
 import Reply from "./Reply";
 import Paginator from "./Paginator";
+import ReplyForm from "./ReplyForm";
+
 export default {
   components: {
     Reply,
-    Paginator
+    Paginator,
+    ReplyForm
   },
   props: {
     thread: {

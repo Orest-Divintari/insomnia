@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostReplyRequest;
+use App\Http\Requests\UpdateReplyRequest;
 use App\Reply;
 use App\Thread;
+use Illuminate\Support\Facades\Http;
 
 class ReplyController extends Controller
 {
@@ -18,7 +21,45 @@ class ReplyController extends Controller
     public function index(Thread $thread)
     {
         return $thread->replies()->paginate(Reply::PER_PAGE);
+    }
 
+    /**
+     * Store a newly created reply in storage
+     *
+     * @param Thread $thread
+     * @param PostReplyRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Thread $thread, PostReplyRequest $request)
+    {
+        $request->persist($thread);
+        return response('Reply has been posted', 200);
+    }
+
+    /**
+     * Update an existing reply
+     *
+     * @param Reply $reply
+     * @param UpdateReplyRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Reply $reply, UpdateReplyRequest $request)
+    {
+        $request->update($reply);
+        return response('Reply has been updated', 200);
+    }
+
+    /**
+     * Delete an existing reply
+     *
+     * @param Reply $reply
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('manage', $reply);
+        $reply->delete();
+        return response('Reply has been deleted', 200);
     }
 
 }

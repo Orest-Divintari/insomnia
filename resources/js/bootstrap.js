@@ -27,8 +27,9 @@ window.axios = require("axios");
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
+Vue.prototype.user = window.App.user;
 // -------  authentication ---------
-window.Vue.prototype.signedIn = window.App.signedIn;
+Vue.prototype.signedIn = window.App.signedIn;
 
 // ----------- authorization ----------
 Vue.prototype.authorize = function(policy, model) {
