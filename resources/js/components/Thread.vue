@@ -5,6 +5,37 @@ export default {
       type: Object,
       default: {}
     }
+  },
+  data() {
+    return {
+      title: this.thread.title,
+      editing: false
+    };
+  },
+  computed: {
+    path() {
+      return "/api/threads/" + this.thread.slug;
+    },
+    data() {
+      return { title: this.title };
+    }
+  },
+  methods: {
+    hide() {
+      this.editing = false;
+      this.$modal.hide("edit-thread");
+    },
+
+    edit() {
+      this.$modal.show("edit-thread");
+    },
+
+    update() {
+      axios
+        .patch(this.path, this.data)
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+    }
   }
 };
 </script>

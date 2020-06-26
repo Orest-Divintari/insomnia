@@ -62,7 +62,7 @@ Route::group([
         Route::delete('/replies/{reply}', 'ReplyController@destroy')
             ->name('api.replies.destroy');
 
-        Route::put('/threads/{thread}', 'ThreadController@update')
+        Route::patch('/threads/{thread}', 'ThreadController@update')
             ->name('api.threads.update');
 
         Route::delete('/threads/{thread}', 'ThreadController@delete')

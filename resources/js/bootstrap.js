@@ -40,6 +40,25 @@ Vue.prototype.authorize = function(policy, model) {
         return authorization[policy](user, model);
     }
 };
+
+// ----------- custom directives ----------
+Vue.directive("click-outside", {
+    bind: function(el, binding, vnode) {
+        el.clickOutsideEvent = function(event) {
+            // here I check that click was outside the el and his childrens
+            if (el !== event.target && !el.contains(event.target)) {
+                // and if it did, call method provided in attribute value
+                vnode.context[binding.expression](el);
+                event.stopPropagation();
+            }
+        };
+        document.addEventListener("click", el.clickOutsideEvent);
+    },
+    unbind: function(el) {
+        document.removeEventListener("click", el.clickOutsideEvent);
+    }
+});
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -60,3 +79,7 @@ Vue.prototype.authorize = function(policy, model) {
 import VTooltip from "v-tooltip";
 
 Vue.use(VTooltip);
+
+import VModal from "vue-js-modal";
+
+Vue.use(VModal);

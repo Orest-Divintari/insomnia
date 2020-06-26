@@ -8,7 +8,7 @@ use Stevebauman\Purify\Facades\Purify;
 class Reply extends Model
 {
 
-    const PER_PAGE = 1;
+    const PER_PAGE = 3;
 
     /**
      * The accessors to append to the model's array form.

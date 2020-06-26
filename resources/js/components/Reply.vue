@@ -30,7 +30,8 @@
         <div class="p-5/2 h-full">
           <div v-if="editing">
             <form @submit.prevent="update">
-              <wysiwyg v-model="body"></wysiwyg>
+              <input type="text" />
+              <wysiwyg v-model="body" name="body"></wysiwyg>
               <div class="form-button-container justify-center">
                 <button class="form-button mr-3" type="submit">
                   <span class="fas fa-save mr-1"></span> Save

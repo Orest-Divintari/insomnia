@@ -41,9 +41,10 @@ class ManageThreadsTest extends TestCase
             'title' => 'old title',
         ]);
 
-        $this->put(route('api.threads.update', $thread), $newTitle);
+        $this->patch(route('api.threads.update', $thread), $newTitle);
 
         $this->assertDatabaseHas('threads', $newTitle);
+        dd(Thread::first()->title);
 
     }
 
