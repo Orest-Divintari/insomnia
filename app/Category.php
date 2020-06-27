@@ -78,6 +78,16 @@ class Category extends Model
     }
 
     /**
+     * Determine if it is a root category
+     *
+     * @return boolean
+     */
+    public function isRoot()
+    {
+        return $this->parent_id == null;
+    }
+
+    /**
      * A non-parent category has threads
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

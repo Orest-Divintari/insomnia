@@ -154,4 +154,11 @@ class CategoryTest extends TestCase
 
         $this->assertTrue($this->category->fresh()->hasSubCategories());
     }
+
+    /** @test */
+    public function check_whether_it_is_a_root_category()
+    {
+        $category = create(Category::class);
+        $this->assertTrue($category->isRoot());
+    }
 }
