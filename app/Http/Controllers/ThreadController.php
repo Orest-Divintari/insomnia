@@ -54,9 +54,11 @@ class ThreadController extends Controller
     public function show($threadSlug)
     {
         $thread = Thread::without('recentReply')->whereSlug($threadSlug)->first();
+
         if (auth()->check()) {
             auth()->user()->read($thread);
         }
+        $thread->increment('views');
         return view('threads.show', compact('thread'));
     }
 

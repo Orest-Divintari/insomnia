@@ -4,8 +4,8 @@ use Illuminate\Database\Seeder;
 
 class ForumSeeder extends Seeder
 {
-    const NUM_OF_REPLIES = 10;
-    const NUM_OF_THREADS = 10;
+    const NUM_OF_REPLIES = 5;
+    const NUM_OF_THREADS = 2;
     /**
      * Run the database seeds.
      *

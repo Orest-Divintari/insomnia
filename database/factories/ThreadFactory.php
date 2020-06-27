@@ -19,5 +19,6 @@ $factory->define(Thread::class, function (Faker $faker) {
         'pinned' => false,
         'locked' => false,
         'replies_count' => 0,
+        'views' => 0,
     ];
 });

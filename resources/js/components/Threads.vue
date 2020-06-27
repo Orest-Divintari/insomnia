@@ -42,7 +42,7 @@
           </div>
           <div class="flex justify-between items-end">
             <p class="text-sm">Views:</p>
-            <p class="text-xs">2</p>
+            <p class="text-xs" v-text="thread.views"></p>
           </div>
         </div>
         <div class="w-48 p-5/2 text-right">

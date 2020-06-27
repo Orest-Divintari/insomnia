@@ -21,6 +21,7 @@ class CreateThreadsTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('category_id')->constrained();
             $table->unsignedBigInteger('replies_count')->default(0);
+            $table->unsignedBigInteger('views')->default(0);
             $table->boolean('pinned')->default(false);
             $table->boolean('locked')->default(false);
             $table->timestamps();
