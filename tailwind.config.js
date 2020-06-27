@@ -44,6 +44,7 @@ module.exports = {
             },
             spacing: {
                 "1/2": "0.125rem",
+                tiny: "0.15rem",
                 "3/2": "0.35rem",
                 "5/2": "0.625rem",
                 "7": "1.75rem",
@@ -67,6 +68,8 @@ module.exports = {
                 "9": "2.25rem"
             },
             fontSize: {
+                "4xs": "0.1rem",
+                "3xs": "0.25rem",
                 "2xs": "0.5rem",
                 medium: "0.9375rem",
                 smaller: "0.8125rem"
