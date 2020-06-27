@@ -23,11 +23,13 @@
             <main class="section">
                 <x-breadcrumb.container>
                     <x-breadcrumb.item :title="'Forum'" :route="route('forum')"></x-breadcrumb.item>
+                    @if(!$thread->category->isRoot() && !$thread->category->hasSubCategories())
                     <x-breadcrumb.item :title="$thread->category->group->title" :route="route('forum')">
                     </x-breadcrumb.item>
                     <x-breadcrumb.item :title="$thread->category->category->title"
                         :route="route('categories.show', $thread->category->category->slug)">
                     </x-breadcrumb.item>
+                    @endif
                     <x-breadcrumb.leaf :title="$thread->category->title"
                         :route="route('categories.show', $thread->category->slug)">
                     </x-breadcrumb.leaf>
