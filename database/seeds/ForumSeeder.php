@@ -78,13 +78,16 @@ class ForumSeeder extends Seeder
 
     public function createThreadWithReplies($category)
     {
-        factory('App\Thread', static::NUM_OF_THREADS)->create([
+        $thread = factory('App\Thread', static::NUM_OF_THREADS)->create([
             'category_id' => $category->id,
-        ])->each(function ($thread) {
+            'replies_count' => static::NUM_OF_REPLIES,
+        ])->each(function ($currentThread) {
             factory('App\Reply', static::NUM_OF_REPLIES)->create([
-                'repliable_id' => $thread->id,
+                'repliable_id' => $currentThread->id,
                 'repliable_type' => 'App\Thread',
             ]);
+
         });
+
     }
 }
