@@ -32,7 +32,11 @@ class ReplyController extends Controller
      */
     public function store(Thread $thread, PostReplyRequest $request)
     {
-        return response($request->persist($thread), 201);
+        $reply = $thread->addReply([
+            'body' => request('body'),
+            'user_id' => auth()->id(),
+        ]);
+        return response($reply, 201);
     }
 
     /**

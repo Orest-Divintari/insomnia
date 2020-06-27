@@ -106,4 +106,19 @@ class ThreadTest extends TestCase
         );
     }
 
+    /** @test */
+    public function a_thread_can_add_a_reply()
+    {
+        $thread = create(Thread::class);
+        $reply = raw(Reply::class, [
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+        $thread->addReply($reply);
+
+        $this->assertEquals($thread->fresh()->replies_count, 1);
+
+    }
+
 }

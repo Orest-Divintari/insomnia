@@ -174,4 +174,11 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
+    public function addReply($reply)
+    {
+        $reply = $this->replies()->create($reply);
+        $this->increment('replies_count');
+        return $reply;
+    }
+
 }

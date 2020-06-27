@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Thread;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PostReplyRequest extends FormRequest
@@ -30,17 +29,4 @@ class PostReplyRequest extends FormRequest
         ];
     }
 
-    /**
-     * Persist the newly posted reply in the database
-     *
-     * @param Thread $thread
-     * @return void
-     */
-    public function persist(Thread $thread)
-    {
-        return $thread->replies()->create(
-            $this->validated() + ['user_id' => $this->user()->id]
-        );
-
-    }
 }
