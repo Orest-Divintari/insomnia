@@ -4,6 +4,8 @@ use Illuminate\Database\Seeder;
 
 class ForumSeeder extends Seeder
 {
+    const NUM_OF_REPLIES = 10;
+    const NUM_OF_THREADS = 10;
     /**
      * Run the database seeds.
      *
@@ -12,36 +14,77 @@ class ForumSeeder extends Seeder
     public function run()
     {
 
-        $categories = [
-            'macOS' => ['macOS catalina', 'macOS lion'],
-            'iOS' => ['iOS13', 'iOS14'],
-            'macBook' => ['macBook pro', 'macBook air'],
-            'General' => [],
-            'Discussion' => [],
-
-        ];
         $groups = [
-            'software',
-            'hardware',
+            'Macs' => [
+                'macOS' => ['macOS catalina', 'macOS lion', 'macOS big Sur'],
+                'notebooks' => ['macBook pro', 'macBook air', 'macbook'],
+                'Mac Accessories' => [],
+            ],
+
+            'iPhone, iPad, and iPod Touch' => [
+                'iOS' => ['iOS12', 'iOS13', 'iOS14'],
+                'iPhone' => ['iPhone', 'iPhone Accessories', 'iPhone tips'],
+                'iPad' => ['iPad', 'iPad Accessories'],
+                'iPod Touch' => [],
+            ],
+
+            'News and Article Discussion' => [
+                'News Discussion' => [],
+            ],
+
+            'Apple Wearables' => [
+                'AirPods' => [],
+                'Apple Watch' => [],
+                'Apple Watch Accessories' => [],
+                'Apple Glasses' => [],
+            ],
+            'Software' => [
+                'Mac Apps' => [],
+                'Developers' => ['iOS', 'Mac', 'tvOS', 'watchOS'],
+                'Console Games' => [],
+                'Mac and PC Games' => [],
+            ],
         ];
-        foreach ($categories as $category => $childrenCategories) {
 
-            $cat = factory('App\Category')->create(['title' => $category]);
+        foreach ($groups as $group => $categories) {
 
-            if ($childrenCategories) {
-                foreach ($childrenCategories as $childrenCategory) {
-                    $childrenCategory = factory('App\Category')->create(['parent_id' => $cat->id, 'title' => $childrenCategory]);
-                    factory('App\Thread', 2)->create(['category_id' => $childrenCategory->id])
-                        ->each(function ($thread) {factory('App\Reply', 3)
-                                ->create(['repliable_id' => $thread->id, 'repliable_type' => 'App\Thread']);});
+            $groupCategory = factory('App\GroupCategory')->create([
+                'title' => $group,
+            ]);
+
+            foreach ($categories as $category => $subCategories) {
+
+                $parentCategory = factory('App\Category')->create([
+                    'title' => $category,
+                    'group_category_id' => $groupCategory->id,
+                ]);
+
+                if (empty($subCategories)) {
+                    $this->createThreadWithReplies($parentCategory);
                 }
-            } else {
-                factory('App\Thread', 2)->create(['category_id' => $cat->id])
-                    ->each(function ($thread) {factory('App\Reply', 3)
-                            ->create(['repliable_id' => $thread->id, 'repliable_type' => 'App\Thread']);});
-            }
+                foreach ($subCategories as $subCategory) {
 
+                    $childrenCategory = factory('App\Category')->create([
+                        'parent_id' => $parentCategory->id,
+                        'group_category_id' => $groupCategory->id,
+                        'title' => $subCategory,
+                    ]);
+                    $this->createThreadWithReplies($childrenCategory);
+                }
+            }
         }
 
+    }
+
+    public function createThreadWithReplies($category)
+    {
+        factory('App\Thread', static::NUM_OF_THREADS)->create([
+            'category_id' => $category->id,
+        ])->each(function ($thread) {
+            factory('App\Reply', static::NUM_OF_REPLIES)->create([
+                'repliable_id' => $thread->id,
+                'repliable_type' => 'App\Thread',
+            ]);
+        });
     }
 }
