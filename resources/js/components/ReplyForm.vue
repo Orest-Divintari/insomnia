@@ -7,7 +7,6 @@
       <div class="w-full p-3">
         <form @submit.prevent="post">
           <wysiwyg
-            :clearInput="posted"
             v-model="body"
             name="body"
             classes="h-32 text-sm"
@@ -22,11 +21,11 @@
 </template>
 
 <script>
+import EventBus from "../eventBus";
 export default {
   data() {
     return {
-      body: "",
-      posted: false
+      body: ""
     };
   },
   computed: {
@@ -42,10 +41,8 @@ export default {
         .catch(error => console.log(error.response));
     },
     addReply(data) {
-      console.log(data);
-      this.$emit("newReply", data);
+      EventBus.$emit("newReply", data);
       this.body = "";
-      this.posted = true;
     }
   }
 };

@@ -35,7 +35,7 @@ class ReplyController extends Controller
         $reply = $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id(),
-        ]);
+        ])->load('poster');
         return response($reply, 201);
     }
 

@@ -14,7 +14,7 @@
       :threadPoster="thread.poster.name"
     ></reply>
     <paginator @isPaginated="isPaginated=true" @changePage="fetchData" :dataset="dataset"></paginator>
-    <reply-form v-if="signedIn"></reply-form @newReply="add">
+    <reply-form v-if="signedIn"></reply-form>
     <p v-else class="text-xs mt-4 text-center">
       You must
       <a href="/login" class="text-blue-mid underline">sign in</a> or
@@ -27,7 +27,7 @@
 import Reply from "./Reply";
 import Paginator from "./Paginator";
 import ReplyForm from "./ReplyForm";
-
+import EventBus from "../eventBus";
 export default {
   components: {
     Reply,
@@ -48,7 +48,7 @@ export default {
     };
   },
   methods: {
-    add(item){
+    add(item) {
       this.items.push(item);
     },
     endpoint(pageNumber) {
@@ -75,6 +75,9 @@ export default {
   },
   created() {
     this.fetchData();
+  },
+  mounted() {
+    EventBus.$on("newReply", this.add);
   }
 };
 </script>

@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import EventBus from "../eventBus";
 export default {
   props: {
     dataset: Object

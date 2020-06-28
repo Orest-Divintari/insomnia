@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import EventBus from "../eventBus";
 import Trix from "trix";
 export default {
   props: {
@@ -27,24 +28,22 @@ export default {
       type: String,
       default: " "
     },
-    clearInput: {
-      type: Boolean,
-      default: false
-    },
     classes: {
       type: String,
       default: ""
+    }
+  },
+  methods: {
+    clearInput() {
+      this.$refs.trix.value = "";
     }
   },
   mounted() {
     this.$refs.trix.addEventListener("trix-change", e => {
       this.$emit("input", e.target.innerHTML);
     });
-  },
-  watch: {
-    clearInput() {
-      this.$refs.trix.value = "";
-    }
+
+    EventBus.$on("newReply", this.clearInput);
   }
 };
 </script>
