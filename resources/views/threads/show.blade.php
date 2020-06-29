@@ -46,13 +46,13 @@
                     <button class="btn-thread-control mr-1">Lock</button>
                     <button class="btn-thread-control mr-1">Pin</button>
                     @if(Gate::allows('manage', $thread))
-                    <div class="relative" v-click-outside="hide">
-                        <div @click="editing=true" class="btn-thread-control flex items-center "> <span
+                    <div class="relative" v-click-outside="hideDropdown">
+                        <div @click="editing=!editing" class="btn-thread-control flex items-center "> <span
                                 class="text-xl fas fa-ellipsis-h leading-none mr-3/2"></span>
                             <span class="fas fa-sort-down text-2xs leading-none pb-1"></span>
                         </div>
                         <div v-if="editing" class="absolute right-0 w-48 mt-2 shadow-lg">
-                            <div class="px-4 py-2 border border-blue-light bg-white text-black-semi text-medium">More
+                            <div class="px-4 py-2 border border-blue-light bg-white text-black-semi text-md">More
                                 Options
                             </div>
                             <div @click="edit"
@@ -61,37 +61,38 @@
                                 Thread
                             </div>
                         </div>
-
-                        <modal name="edit-thread" height='auto'>
-                            <div class="form-container">
-                                <div class="bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 pl-3">
-                                    Edit Thread
-                                </div>
-                                <form @submit.prevent="update">
-
-                                    <!-- ROW -->
-                                    <div class="form-row">
-                                        <!-- LEFT -->
-                                        <div class="form-left-col ">
-                                            <label class="form-label" for="title">Title:</label>
-                                        </div>
-                                        <!-- RIGHT -->
-                                        <div class="form-right-col">
-                                            <p class="form-label-phone">Title:</p>
-                                            <div>
-                                                <input v-model="title" class="form-input" type="text" id="title"
-                                                    name="title" required autocomplete="title">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-button-container justify-center">
-                                        <button @click="hide" type="submit" class="form-button ">Save</button>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </modal>
                     </div>
+                    <modal name="edit-thread" height='auto'>
+                        <div class="form-container">
+                            <div
+                                class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
+                                <p> Edit Thread </p>
+                                <button @click="hideModal" class="fas fa-times"></button>
+                            </div>
+                            <form @submit.prevent="update">
+
+                                <!-- ROW -->
+                                <div class="form-row">
+                                    <!-- LEFT -->
+                                    <div class="form-left-col ">
+                                        <label class="form-label" for="title">Title:</label>
+                                    </div>
+                                    <!-- RIGHT -->
+                                    <div class="form-right-col">
+                                        <p class="form-label-phone">Title:</p>
+                                        <div>
+                                            <input v-model="title" class="form-input" type="text" id="title"
+                                                name="title" required autocomplete="title">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-button-container justify-center">
+                                    <button @click="hideDropdown" type="submit" class="form-button ">Save</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </modal>
                     @endif
                 </div>
 

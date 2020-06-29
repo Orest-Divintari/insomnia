@@ -26,8 +26,10 @@ export default {
     }
   },
   methods: {
-    hide() {
+    hideDropdown() {
       this.editing = false;
+    },
+    hideModal() {
       this.$modal.hide("edit-thread");
     },
 
