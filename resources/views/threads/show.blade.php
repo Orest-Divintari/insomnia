@@ -46,22 +46,24 @@
                     <button class="btn-thread-control mr-1">Lock</button>
                     <button class="btn-thread-control mr-1">Pin</button>
                     @if(Gate::allows('manage', $thread))
-                    <div class="relative" v-click-outside="hideDropdown">
-                        <div @click="editing=!editing" class="btn-thread-control flex items-center "> <span
-                                class="text-xl fas fa-ellipsis-h leading-none mr-3/2"></span>
-                            <span class="fas fa-sort-down text-2xs leading-none pb-1"></span>
-                        </div>
-                        <div v-if="editing" class="absolute right-0 w-48 mt-2 shadow-lg">
-                            <div class="px-4 py-2 border border-blue-light bg-white text-black-semi text-md">More
+                    <dropdown>
+                        <template v-slot:dropdown-trigger>
+                            <div class="btn-thread-control flex items-center "> <span
+                                    class="text-xl fas fa-ellipsis-h leading-none mr-3/2"></span>
+                                <span class="fas fa-sort-down text-2xs leading-none pb-1"></span>
+                            </div>
+                        </template>
+                        <template v-slot:dropdown-items>
+                            <div class="dropdown-title">More
                                 Options
                             </div>
-                            <div @click="edit"
-                                class="px-4 py-2 cursor-pointer hover:bg-blue-light border border-t-0 border-blue-light bg-blue-lighter text-black-semi text-smaller">
+                            <div @click="edit" class="dropdown-item">
                                 Edit
                                 Thread
                             </div>
-                        </div>
-                    </div>
+                        </template>
+                    </dropdown>
+
                     <modal name="edit-thread" height='auto'>
                         <div class="form-container">
                             <div

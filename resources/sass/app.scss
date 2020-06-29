@@ -12,7 +12,7 @@
 @import "./components/form.css";
 @import "./components/categories.css";
 @import "./components/threads.css";
-
+@import "./components/dropdown.css";
 .section {
     @apply pt-5;
 }
@@ -25,12 +25,29 @@
     @apply .font-insomnia;
 }
 
+html {
+    @apply box-border;
+}
+
+*,
+*:before,
+*:after {
+    @apply box-border;
+}
 .avatar {
     @apply .rounded-full .object-cover;
 }
-
-.avatar-large {
-    @apply .w-24 .h-24 .object-cover rounded-full;
+.avatar-sm {
+    @apply .avatar .w-6 .h-6;
+}
+.avatar-md {
+    @apply .avatar .w-9 .h-9;
+}
+.avatar-lg {
+    @apply .avatar .w-12 .h-12;
+}
+.avatar-xl {
+    @apply .avatar .w-24 .h-24;
 }
 
 .dot {
@@ -49,4 +66,19 @@
         @apply .bg-blue-dark .text-white;
     }
 }
+
+.head-tab-item {
+    @apply .px-5 .py-4 .text-md;
+    &:hover {
+        @apply .bg-blue-mid;
+    }
+}
+
+.sub-head-tab-item {
+    @apply .py-2 .text-blue-link-menu .leading-6 .text-smaller;
+    &:hover {
+        @apply .bg-blue-mid-light;
+    }
+}
+
 @tailwind utilities;

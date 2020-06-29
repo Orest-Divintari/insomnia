@@ -1,0 +1,14 @@
+.dropdown-menu {
+    @apply .absolute .right-0 .w-48 .mt-2 .shadow-lg;
+}
+
+.dropdown-item {
+    @apply .px-4 .py-2 .cursor-pointer  .border .border-t-0 .border-blue-light .bg-blue-lighter .text-black-semi .text-smaller;
+    &:hover {
+        @apply .bg-blue-light;
+    }
+}
+
+.dropdown-title {
+    @apply .px-4 .py-2 .border .border-blue-light .bg-white .text-black-semi .text-md;
+}

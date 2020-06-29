@@ -414,6 +414,56 @@ div.form-left-col {
   border-color: rgba(162, 187, 223, var(--border-opacity));
   margin-bottom: 1rem;
 }
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  width: 12rem;
+  margin-top: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-item {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  border-width: 1px;
+  border-top-width: 0;
+  --border-opacity: 1;
+  border-color: #DDE6F1;
+  border-color: rgba(221, 230, 241, var(--border-opacity));
+  --bg-opacity: 1;
+  background-color: #EDF4F9;
+  background-color: rgba(237, 244, 249, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--text-opacity));
+  font-size: 0.8125rem;
+  &:hover {
+    --bg-opacity: 1;
+    background-color: #DDE6F1;
+    background-color: rgba(221, 230, 241, var(--bg-opacity));
+  }
+}
+
+.dropdown-title {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-width: 1px;
+  --border-opacity: 1;
+  border-color: #DDE6F1;
+  border-color: rgba(221, 230, 241, var(--border-opacity));
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--text-opacity));
+  font-size: 0.9375rem;
+}
 @charset "UTF-8";
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -7139,18 +7189,52 @@ readers do not read off random characters that represent icons */
   font-family: Verdana, Arial, sans-serif;
 }
 
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 .avatar {
   border-radius: 9999px;
   -o-object-fit: cover;
      object-fit: cover;
 }
 
-.avatar-large {
-  width: 6rem;
-  height: 6rem;
+.avatar-sm {
+  border-radius: 9999px;
   -o-object-fit: cover;
      object-fit: cover;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.avatar-md {
   border-radius: 9999px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.avatar-lg {
+  border-radius: 9999px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 3rem;
+  height: 3rem;
+}
+
+.avatar-xl {
+  border-radius: 9999px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 6rem;
+  height: 6rem;
 }
 
 .dot {
@@ -7200,6 +7284,36 @@ readers do not read off random characters that represent icons */
   --text-opacity: 1;
   color: #fff;
   color: rgba(255, 255, 255, var(--text-opacity));
+}
+
+.head-tab-item {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+
+.head-tab-item:hover {
+  --bg-opacity: 1;
+  background-color: #426693;
+  background-color: rgba(66, 102, 147, var(--bg-opacity));
+}
+
+.sub-head-tab-item {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  --text-opacity: 1;
+  color: #2C435F;
+  color: rgba(44, 67, 95, var(--text-opacity));
+  line-height: 1.5rem;
+  font-size: 0.8125rem;
+}
+
+.sub-head-tab-item:hover {
+  --bg-opacity: 1;
+  background-color: #CFDEEB;
+  background-color: rgba(207, 222, 235, var(--bg-opacity));
 }
 
 .space-y-0 > :not(template) ~ :not(template){
@@ -14242,7 +14356,7 @@ readers do not read off random characters that represent icons */
   font-size: 0.5rem;
 }
 
-.text-medium{
+.text-md{
   font-size: 0.9375rem;
 }
 
@@ -37040,7 +37154,7 @@ readers do not read off random characters that represent icons */
     font-size: 0.5rem;
   }
 
-  .xs\:text-medium{
+  .xs\:text-md{
     font-size: 0.9375rem;
   }
 
@@ -59839,7 +59953,7 @@ readers do not read off random characters that represent icons */
     font-size: 0.5rem;
   }
 
-  .smaller\:text-medium{
+  .smaller\:text-md{
     font-size: 0.9375rem;
   }
 
@@ -82638,7 +82752,7 @@ readers do not read off random characters that represent icons */
     font-size: 0.5rem;
   }
 
-  .sm\:text-medium{
+  .sm\:text-md{
     font-size: 0.9375rem;
   }
 
@@ -105437,7 +105551,7 @@ readers do not read off random characters that represent icons */
     font-size: 0.5rem;
   }
 
-  .md\:text-medium{
+  .md\:text-md{
     font-size: 0.9375rem;
   }
 
@@ -128236,7 +128350,7 @@ readers do not read off random characters that represent icons */
     font-size: 0.5rem;
   }
 
-  .lg\:text-medium{
+  .lg\:text-md{
     font-size: 0.9375rem;
   }
 
@@ -151035,7 +151149,7 @@ readers do not read off random characters that represent icons */
     font-size: 0.5rem;
   }
 
-  .xl\:text-medium{
+  .xl\:text-md{
     font-size: 0.9375rem;
   }
 
