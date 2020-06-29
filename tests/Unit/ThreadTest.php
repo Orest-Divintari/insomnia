@@ -121,4 +121,66 @@ class ThreadTest extends TestCase
 
     }
 
+    /** @test */
+    public function a_thread_may_have_subscribrers()
+    {
+        $user = create(User::class);
+        $thread = create(Thread::class);
+
+        $this->assertCount(0, $thread->subscribers);
+
+        $thread->subscribe($user->id);
+
+        $this->assertCount(1, $thread->subscribers);
+    }
+
+    /** @test */
+    public function a_thread_can_be_subscribed_by_a_user()
+    {
+        $user = create(User::class);
+        $thread = create(Thread::class);
+
+        $this->assertCount(0, $thread->subscribers);
+
+        $thread->subscribe($user->id);
+
+        $this->assertCount(1, $thread->subscribers);
+    }
+
+    /** @test */
+    public function a_thread_can_be_unsubscribed_by_a_user()
+    {
+        $user = create(User::class);
+
+        $thread = create(Thread::class);
+
+        $this->assertCount(0, $thread->subscribers);
+
+        $thread->subscribe($user->id);
+
+        $this->assertCount(1, $thread->fresh()->subscribers);
+
+        $thread->unsubscribe($user->id);
+
+        $this->assertCount(0, $thread->fresh()->subscribers);
+    }
+
+    /** @test */
+    public function a_thread_can_determine_whether_a_the_autneticated_user_has_subscribed_to_it()
+    {
+        $user = $this->signIn();
+
+        $thread = create(Thread::class);
+
+        $this->assertCount(0, $thread->subscribers);
+
+        $thread->subscribe($user->id);
+
+        $this->assertTrue($thread->fresh()->subscribedByAuthUser);
+
+        $thread->unsubscribe($user->id);
+
+        $this->assertFalse($thread->fresh()->subscribedByAuthUser);
+    }
+
 }

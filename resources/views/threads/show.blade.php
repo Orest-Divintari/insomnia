@@ -5,7 +5,7 @@
     <thread :thread="{{ $thread }}" inline-template>
         <div>
             <header>
-                <h1 class="font-bold text-3xl mb-1"> @{{title}} </h1>
+                <h1 class="font-bold text-3xl mb-1" v-text="title"></h1>
                 <div class="flex items-center text-smaller text-gray-lightest">
                     <span class="fas fa-user mr-1"></span>
                     <a href="" class="hover:underline">
@@ -37,7 +37,12 @@
 
                 <div class="mt-7 flex justify-end">
                     <button class="btn-thread-control mr-1">Ignore</button>
-                    <button class="btn-thread-control mr-1">Watch</button>
+
+                    <subscribe-button thread_slug="{{ $thread->slug }}"
+                        subscription_status="{{ json_encode($thread->subscribed_by_auth_user)}}" class="mr-1">
+                    </subscribe-button>
+
+
                     <button class="btn-thread-control mr-1">Lock</button>
                     <button class="btn-thread-control mr-1">Pin</button>
                     @if(Gate::allows('manage', $thread))

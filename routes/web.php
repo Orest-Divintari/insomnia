@@ -74,6 +74,11 @@ Route::group([
         Route::delete('/replies/{reply}/likes', 'LikeController@destroy')
             ->name('api.likes.destroy');
 
+        Route::post('/threads/{thread}/subscriptions', 'ThreadSubscriptionController@store')
+            ->name('api.thread-subscriptions.store');
+
+        Route::delete('/threads/{thread}/subscriptions', 'ThreadSubscriptionController@destroy')
+            ->name('api.thread-subscriptions.destroy');
     });
 
     //replies

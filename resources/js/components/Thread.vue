@@ -1,5 +1,9 @@
 <script>
+import SubscribeButton from "./SubscribeButton";
 export default {
+  components: {
+    SubscribeButton
+  },
   props: {
     thread: {
       type: Object,
@@ -9,6 +13,7 @@ export default {
   data() {
     return {
       title: this.thread.title,
+      isSubscribed: this.thread.subscribed_by_auth_user,
       editing: false
     };
   },

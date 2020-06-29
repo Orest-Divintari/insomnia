@@ -22,7 +22,6 @@ class Thread extends Model
         'date_created',
         'date_updated',
         'has_been_updated',
-
     ];
 
     /**
@@ -174,11 +173,65 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
+    /**
+     * Add a reply to a thread
+     *
+     * @param array $reply
+     * @return Reply $reply;
+     */
     public function addReply($reply)
     {
         $reply = $this->replies()->create($reply);
         $this->increment('replies_count');
         return $reply;
+    }
+
+    /**
+     * A thread has subscribers
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function subscribers()
+    {
+        return $this->belongsToMany(User::class, 'thread_subscriptions');
+    }
+
+    /**
+     * Subscribe a user to the current thread
+     *
+     * @param int|null $userId
+     * @return void
+     */
+    public function subscribe($userId = null)
+    {
+        $this->subscribers()->attach([
+            'user_id' => $userId ?? auth()->id(),
+        ]);
+    }
+
+    /**
+     * Unsubscribe a user from the current thread
+     *
+     * @param int|null $userId
+     * @return void
+     */
+    public function unsubscribe($userId = null)
+    {
+        $this->subscribers()->detach([
+            'user_id' => $userId ?? auth()->id(),
+        ]);
+    }
+
+    /**
+     * Determine whether the authenicated user has subscribed to current thread
+     *
+     * @return boolean
+     */
+    public function getSubscribedByAuthUserAttribute()
+    {
+        return $this->subscribers()->where([
+            'user_id' => auth()->id(),
+        ])->exists();
     }
 
 }

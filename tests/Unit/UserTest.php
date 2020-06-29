@@ -74,4 +74,17 @@ class UserTest extends TestCase
 
     }
 
+    /** @test */
+    public function a_user_has_subscriptions()
+    {
+        $user = create(User::class);
+
+        $thread = create(Thread::class);
+
+        $thread->subscribe($user->id);
+
+        $this->assertCount(1, $user->subscriptions);
+
+    }
+
 }

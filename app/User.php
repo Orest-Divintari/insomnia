@@ -98,4 +98,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Like::class);
     }
 
+    /**
+     * Get the threads the user has subscribed to
+     *
+     * @return void
+     */
+    public function subscriptions()
+    {
+        return $this->belongsToMany(Thread::class, 'thread_subscriptions');
+    }
+
 }
