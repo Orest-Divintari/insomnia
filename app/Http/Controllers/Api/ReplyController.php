@@ -20,7 +20,9 @@ class ReplyController extends Controller
      */
     public function index(Thread $thread)
     {
-        return $thread->replies()->paginate(Reply::PER_PAGE);
+        return Reply::withCount('likes')
+            ->where('repliable_id', $thread->id)
+            ->paginate(Reply::PER_PAGE);
     }
 
     /**
@@ -35,7 +37,8 @@ class ReplyController extends Controller
         $reply = $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id(),
-        ])->load('poster');
+        ])->load('poster')
+            ->loadCount('likes');
         return response($reply, 201);
     }
 

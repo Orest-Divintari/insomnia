@@ -88,4 +88,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return sprintf("users.%s.visits.%s", $this->id, $thread->id);
     }
 
+    /**
+     * Fetch the posts that were liked by the user
+     *
+     * @return void
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
 }

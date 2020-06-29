@@ -44,6 +44,13 @@
             <div class="flex-1 text-black-semi text-sm pr-48">
               <highlight :content="body"></highlight>
             </div>
+            <div v-if="isLiked" class="flex pl-1 mb-2">
+              <i v-if class="text-blue-like text-sm fas fa-thumbs-up"></i>
+              <a
+                href
+                class="text-gray-lightest text-xs underline ml-1"
+              >{{ this.reply.likes_count }} likes</a>
+            </div>
             <div v-if="signedIn" class="flex justify-between">
               <div class="flex">
                 <button class="btn-reply-control">
@@ -60,9 +67,7 @@
                 </button>
               </div>
               <div class="flex">
-                <button class="btn-reply-control mr-2">
-                  <span class="fas fa-thumbs-up"></span> Like
-                </button>
+                <like-button @like="updateLikeStatus" :reply="reply"></like-button>
                 <button class="btn-reply-control">
                   <span class="fas fa-reply"></span>
                   Reply
@@ -78,9 +83,11 @@
 
 <script>
 import Highlight from "./Highlight";
+import LikeButton from "./LikeButton";
 export default {
   components: {
-    Highlight
+    Highlight,
+    LikeButton
   },
   props: {
     threadPoster: {
@@ -99,7 +106,8 @@ export default {
   data() {
     return {
       editing: false,
-      body: this.reply.body
+      body: this.reply.body,
+      isLiked: this.reply.is_liked
     };
   },
   computed: {
@@ -110,8 +118,11 @@ export default {
       return { body: this.body };
     }
   },
-
   methods: {
+    updateLikeStatus(status) {
+      this.isLiked = status;
+      status ? this.reply.likes_count++ : this.reply.likes_count--;
+    },
     update() {
       axios
         .patch(this.path, this.data)

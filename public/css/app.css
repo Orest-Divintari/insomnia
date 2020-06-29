@@ -387,6 +387,10 @@ div.form-left-col {
   color: rgba(192, 86, 33, var(--text-opacity));
 }
 
+.btn-reply-control:focus {
+  outline: 0;
+}
+
 .reply-left-col {
   width: 12rem;
   padding: 0.625rem;
@@ -8518,6 +8522,12 @@ readers do not read off random characters that represent icons */
   border-color: rgba(231, 241, 254, var(--divide-opacity));
 }
 
+.divide-blue-like > :not(template) ~ :not(template){
+  --divide-opacity: 1;
+  border-color: #0070D6;
+  border-color: rgba(0, 112, 214, var(--divide-opacity));
+}
+
 .divide-blue-form-bottom > :not(template) ~ :not(template){
   --divide-opacity: 1;
   border-color: #E1EAF3;
@@ -9318,6 +9328,12 @@ readers do not read off random characters that represent icons */
   background-color: rgba(231, 241, 254, var(--bg-opacity));
 }
 
+.bg-blue-like{
+  --bg-opacity: 1;
+  background-color: #0070D6;
+  background-color: rgba(0, 112, 214, var(--bg-opacity));
+}
+
 .bg-blue-form-bottom{
   --bg-opacity: 1;
   background-color: #E1EAF3;
@@ -10034,6 +10050,12 @@ readers do not read off random characters that represent icons */
   background-color: rgba(231, 241, 254, var(--bg-opacity));
 }
 
+.hover\:bg-blue-like:hover{
+  --bg-opacity: 1;
+  background-color: #0070D6;
+  background-color: rgba(0, 112, 214, var(--bg-opacity));
+}
+
 .hover\:bg-blue-form-bottom:hover{
   --bg-opacity: 1;
   background-color: #E1EAF3;
@@ -10748,6 +10770,12 @@ readers do not read off random characters that represent icons */
   --bg-opacity: 1;
   background-color: #E7F1FE;
   background-color: rgba(231, 241, 254, var(--bg-opacity));
+}
+
+.focus\:bg-blue-like:focus{
+  --bg-opacity: 1;
+  background-color: #0070D6;
+  background-color: rgba(0, 112, 214, var(--bg-opacity));
 }
 
 .focus\:bg-blue-form-bottom:focus{
@@ -11606,6 +11634,12 @@ readers do not read off random characters that represent icons */
   border-color: rgba(231, 241, 254, var(--border-opacity));
 }
 
+.border-blue-like{
+  --border-opacity: 1;
+  border-color: #0070D6;
+  border-color: rgba(0, 112, 214, var(--border-opacity));
+}
+
 .border-blue-form-bottom{
   --border-opacity: 1;
   border-color: #E1EAF3;
@@ -12322,6 +12356,12 @@ readers do not read off random characters that represent icons */
   border-color: rgba(231, 241, 254, var(--border-opacity));
 }
 
+.hover\:border-blue-like:hover{
+  --border-opacity: 1;
+  border-color: #0070D6;
+  border-color: rgba(0, 112, 214, var(--border-opacity));
+}
+
 .hover\:border-blue-form-bottom:hover{
   --border-opacity: 1;
   border-color: #E1EAF3;
@@ -13036,6 +13076,12 @@ readers do not read off random characters that represent icons */
   --border-opacity: 1;
   border-color: #E7F1FE;
   border-color: rgba(231, 241, 254, var(--border-opacity));
+}
+
+.focus\:border-blue-like:focus{
+  --border-opacity: 1;
+  border-color: #0070D6;
+  border-color: rgba(0, 112, 214, var(--border-opacity));
 }
 
 .focus\:border-blue-form-bottom:focus{
@@ -19430,6 +19476,30 @@ readers do not read off random characters that represent icons */
   color: rgba(231, 241, 254, var(--placeholder-opacity));
 }
 
+.placeholder-blue-like::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--placeholder-opacity));
+}
+
+.placeholder-blue-like:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--placeholder-opacity));
+}
+
+.placeholder-blue-like::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--placeholder-opacity));
+}
+
+.placeholder-blue-like::placeholder{
+  --placeholder-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--placeholder-opacity));
+}
+
 .placeholder-blue-form-bottom::-moz-placeholder{
   --placeholder-opacity: 1;
   color: #E1EAF3;
@@ -22294,6 +22364,30 @@ readers do not read off random characters that represent icons */
   color: rgba(231, 241, 254, var(--placeholder-opacity));
 }
 
+.focus\:placeholder-blue-like:focus::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-like:focus:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-like:focus::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-blue-like:focus::placeholder{
+  --placeholder-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--placeholder-opacity));
+}
+
 .focus\:placeholder-blue-form-bottom:focus::-moz-placeholder{
   --placeholder-opacity: 1;
   color: #E1EAF3;
@@ -23661,6 +23755,12 @@ readers do not read off random characters that represent icons */
   color: rgba(231, 241, 254, var(--text-opacity));
 }
 
+.text-blue-like{
+  --text-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--text-opacity));
+}
+
 .text-blue-form-bottom{
   --text-opacity: 1;
   color: #E1EAF3;
@@ -24375,6 +24475,12 @@ readers do not read off random characters that represent icons */
   --text-opacity: 1;
   color: #E7F1FE;
   color: rgba(231, 241, 254, var(--text-opacity));
+}
+
+.hover\:text-blue-like:hover{
+  --text-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--text-opacity));
 }
 
 .hover\:text-blue-form-bottom:hover{
@@ -25093,6 +25199,12 @@ readers do not read off random characters that represent icons */
   color: rgba(231, 241, 254, var(--text-opacity));
 }
 
+.focus\:text-blue-like:focus{
+  --text-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--text-opacity));
+}
+
 .focus\:text-blue-form-bottom:focus{
   --text-opacity: 1;
   color: #E1EAF3;
@@ -25809,6 +25921,12 @@ readers do not read off random characters that represent icons */
   color: rgba(231, 241, 254, var(--text-opacity));
 }
 
+.active\:text-blue-like:active{
+  --text-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--text-opacity));
+}
+
 .active\:text-blue-form-bottom:active{
   --text-opacity: 1;
   color: #E1EAF3;
@@ -26523,6 +26641,12 @@ readers do not read off random characters that represent icons */
   --text-opacity: 1;
   color: #E7F1FE;
   color: rgba(231, 241, 254, var(--text-opacity));
+}
+
+.group:hover .group-hover\:text-blue-like{
+  --text-opacity: 1;
+  color: #0070D6;
+  color: rgba(0, 112, 214, var(--text-opacity));
 }
 
 .group:hover .group-hover\:text-blue-form-bottom{
@@ -31196,6 +31320,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--divide-opacity));
   }
 
+  .xs\:divide-blue-like > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--divide-opacity));
+  }
+
   .xs\:divide-blue-form-bottom > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #E1EAF3;
@@ -31996,6 +32126,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .xs\:bg-blue-like{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .xs\:bg-blue-form-bottom{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -32712,6 +32848,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .xs\:hover\:bg-blue-like:hover{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .xs\:hover\:bg-blue-form-bottom:hover{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -33426,6 +33568,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #E7F1FE;
     background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .xs\:focus\:bg-blue-like:focus{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
   }
 
   .xs\:focus\:bg-blue-form-bottom:focus{
@@ -34284,6 +34432,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .xs\:border-blue-like{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .xs\:border-blue-form-bottom{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -35000,6 +35154,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .xs\:hover\:border-blue-like:hover{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .xs\:hover\:border-blue-form-bottom:hover{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -35714,6 +35874,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #E7F1FE;
     border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .xs\:focus\:border-blue-like:focus{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
   }
 
   .xs\:focus\:border-blue-form-bottom:focus{
@@ -42108,6 +42274,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .xs\:placeholder-blue-like::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-blue-like:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-blue-like::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-blue-like::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .xs\:placeholder-blue-form-bottom::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -44972,6 +45162,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .xs\:focus\:placeholder-blue-like:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-blue-like:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-blue-like:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-blue-like:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .xs\:focus\:placeholder-blue-form-bottom:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -46339,6 +46553,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .xs\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .xs\:text-blue-form-bottom{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -47053,6 +47273,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .xs\:hover\:text-blue-like:hover{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .xs\:hover\:text-blue-form-bottom:hover{
@@ -47771,6 +47997,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .xs\:focus\:text-blue-like:focus{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .xs\:focus\:text-blue-form-bottom:focus{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -48487,6 +48719,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .xs\:active\:text-blue-like:active{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .xs\:active\:text-blue-form-bottom:active{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -49201,6 +49439,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .group:hover .xs\:group-hover\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .group:hover .xs\:group-hover\:text-blue-form-bottom{
@@ -53875,6 +54119,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--divide-opacity));
   }
 
+  .smaller\:divide-blue-like > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--divide-opacity));
+  }
+
   .smaller\:divide-blue-form-bottom > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #E1EAF3;
@@ -54675,6 +54925,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .smaller\:bg-blue-like{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .smaller\:bg-blue-form-bottom{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -55391,6 +55647,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .smaller\:hover\:bg-blue-like:hover{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .smaller\:hover\:bg-blue-form-bottom:hover{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -56105,6 +56367,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #E7F1FE;
     background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .smaller\:focus\:bg-blue-like:focus{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
   }
 
   .smaller\:focus\:bg-blue-form-bottom:focus{
@@ -56963,6 +57231,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .smaller\:border-blue-like{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .smaller\:border-blue-form-bottom{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -57679,6 +57953,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .smaller\:hover\:border-blue-like:hover{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .smaller\:hover\:border-blue-form-bottom:hover{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -58393,6 +58673,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #E7F1FE;
     border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .smaller\:focus\:border-blue-like:focus{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
   }
 
   .smaller\:focus\:border-blue-form-bottom:focus{
@@ -64787,6 +65073,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .smaller\:placeholder-blue-like::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-blue-like:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-blue-like::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-blue-like::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .smaller\:placeholder-blue-form-bottom::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -67651,6 +67961,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .smaller\:focus\:placeholder-blue-like:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-blue-like:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-blue-like:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-blue-like:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .smaller\:focus\:placeholder-blue-form-bottom:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -69018,6 +69352,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .smaller\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .smaller\:text-blue-form-bottom{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -69732,6 +70072,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .smaller\:hover\:text-blue-like:hover{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .smaller\:hover\:text-blue-form-bottom:hover{
@@ -70450,6 +70796,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .smaller\:focus\:text-blue-like:focus{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .smaller\:focus\:text-blue-form-bottom:focus{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -71166,6 +71518,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .smaller\:active\:text-blue-like:active{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .smaller\:active\:text-blue-form-bottom:active{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -71880,6 +72238,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .group:hover .smaller\:group-hover\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .group:hover .smaller\:group-hover\:text-blue-form-bottom{
@@ -76554,6 +76918,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--divide-opacity));
   }
 
+  .sm\:divide-blue-like > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--divide-opacity));
+  }
+
   .sm\:divide-blue-form-bottom > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #E1EAF3;
@@ -77354,6 +77724,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .sm\:bg-blue-like{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .sm\:bg-blue-form-bottom{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -78070,6 +78446,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .sm\:hover\:bg-blue-like:hover{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .sm\:hover\:bg-blue-form-bottom:hover{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -78784,6 +79166,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #E7F1FE;
     background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .sm\:focus\:bg-blue-like:focus{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
   }
 
   .sm\:focus\:bg-blue-form-bottom:focus{
@@ -79642,6 +80030,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .sm\:border-blue-like{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .sm\:border-blue-form-bottom{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -80358,6 +80752,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .sm\:hover\:border-blue-like:hover{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .sm\:hover\:border-blue-form-bottom:hover{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -81072,6 +81472,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #E7F1FE;
     border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .sm\:focus\:border-blue-like:focus{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
   }
 
   .sm\:focus\:border-blue-form-bottom:focus{
@@ -87466,6 +87872,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .sm\:placeholder-blue-like::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-like:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-like::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-blue-like::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .sm\:placeholder-blue-form-bottom::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -90330,6 +90760,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .sm\:focus\:placeholder-blue-like:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-like:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-like:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-blue-like:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .sm\:focus\:placeholder-blue-form-bottom:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -91697,6 +92151,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .sm\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .sm\:text-blue-form-bottom{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -92411,6 +92871,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .sm\:hover\:text-blue-like:hover{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .sm\:hover\:text-blue-form-bottom:hover{
@@ -93129,6 +93595,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .sm\:focus\:text-blue-like:focus{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .sm\:focus\:text-blue-form-bottom:focus{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -93845,6 +94317,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .sm\:active\:text-blue-like:active{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .sm\:active\:text-blue-form-bottom:active{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -94559,6 +95037,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .group:hover .sm\:group-hover\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .group:hover .sm\:group-hover\:text-blue-form-bottom{
@@ -99233,6 +99717,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--divide-opacity));
   }
 
+  .md\:divide-blue-like > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--divide-opacity));
+  }
+
   .md\:divide-blue-form-bottom > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #E1EAF3;
@@ -100033,6 +100523,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .md\:bg-blue-like{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .md\:bg-blue-form-bottom{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -100749,6 +101245,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .md\:hover\:bg-blue-like:hover{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .md\:hover\:bg-blue-form-bottom:hover{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -101463,6 +101965,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #E7F1FE;
     background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .md\:focus\:bg-blue-like:focus{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
   }
 
   .md\:focus\:bg-blue-form-bottom:focus{
@@ -102321,6 +102829,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .md\:border-blue-like{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .md\:border-blue-form-bottom{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -103037,6 +103551,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .md\:hover\:border-blue-like:hover{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .md\:hover\:border-blue-form-bottom:hover{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -103751,6 +104271,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #E7F1FE;
     border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .md\:focus\:border-blue-like:focus{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
   }
 
   .md\:focus\:border-blue-form-bottom:focus{
@@ -110145,6 +110671,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .md\:placeholder-blue-like::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-like:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-like::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-blue-like::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .md\:placeholder-blue-form-bottom::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -113009,6 +113559,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .md\:focus\:placeholder-blue-like:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-like:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-like:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-blue-like:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .md\:focus\:placeholder-blue-form-bottom:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -114376,6 +114950,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .md\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .md\:text-blue-form-bottom{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -115090,6 +115670,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .md\:hover\:text-blue-like:hover{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .md\:hover\:text-blue-form-bottom:hover{
@@ -115808,6 +116394,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .md\:focus\:text-blue-like:focus{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .md\:focus\:text-blue-form-bottom:focus{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -116524,6 +117116,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .md\:active\:text-blue-like:active{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .md\:active\:text-blue-form-bottom:active{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -117238,6 +117836,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .group:hover .md\:group-hover\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .group:hover .md\:group-hover\:text-blue-form-bottom{
@@ -121912,6 +122516,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--divide-opacity));
   }
 
+  .lg\:divide-blue-like > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--divide-opacity));
+  }
+
   .lg\:divide-blue-form-bottom > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #E1EAF3;
@@ -122712,6 +123322,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .lg\:bg-blue-like{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .lg\:bg-blue-form-bottom{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -123428,6 +124044,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .lg\:hover\:bg-blue-like:hover{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .lg\:hover\:bg-blue-form-bottom:hover{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -124142,6 +124764,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #E7F1FE;
     background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .lg\:focus\:bg-blue-like:focus{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
   }
 
   .lg\:focus\:bg-blue-form-bottom:focus{
@@ -125000,6 +125628,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .lg\:border-blue-like{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .lg\:border-blue-form-bottom{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -125716,6 +126350,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .lg\:hover\:border-blue-like:hover{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .lg\:hover\:border-blue-form-bottom:hover{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -126430,6 +127070,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #E7F1FE;
     border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .lg\:focus\:border-blue-like:focus{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
   }
 
   .lg\:focus\:border-blue-form-bottom:focus{
@@ -132824,6 +133470,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .lg\:placeholder-blue-like::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-like:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-like::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-blue-like::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .lg\:placeholder-blue-form-bottom::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -135688,6 +136358,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .lg\:focus\:placeholder-blue-like:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-like:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-like:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-blue-like:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .lg\:focus\:placeholder-blue-form-bottom:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -137055,6 +137749,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .lg\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .lg\:text-blue-form-bottom{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -137769,6 +138469,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .lg\:hover\:text-blue-like:hover{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .lg\:hover\:text-blue-form-bottom:hover{
@@ -138487,6 +139193,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .lg\:focus\:text-blue-like:focus{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .lg\:focus\:text-blue-form-bottom:focus{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -139203,6 +139915,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .lg\:active\:text-blue-like:active{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .lg\:active\:text-blue-form-bottom:active{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -139917,6 +140635,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .group:hover .lg\:group-hover\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .group:hover .lg\:group-hover\:text-blue-form-bottom{
@@ -144591,6 +145315,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--divide-opacity));
   }
 
+  .xl\:divide-blue-like > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--divide-opacity));
+  }
+
   .xl\:divide-blue-form-bottom > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #E1EAF3;
@@ -145391,6 +146121,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .xl\:bg-blue-like{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .xl\:bg-blue-form-bottom{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -146107,6 +146843,12 @@ readers do not read off random characters that represent icons */
     background-color: rgba(231, 241, 254, var(--bg-opacity));
   }
 
+  .xl\:hover\:bg-blue-like:hover{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
+  }
+
   .xl\:hover\:bg-blue-form-bottom:hover{
     --bg-opacity: 1;
     background-color: #E1EAF3;
@@ -146821,6 +147563,12 @@ readers do not read off random characters that represent icons */
     --bg-opacity: 1;
     background-color: #E7F1FE;
     background-color: rgba(231, 241, 254, var(--bg-opacity));
+  }
+
+  .xl\:focus\:bg-blue-like:focus{
+    --bg-opacity: 1;
+    background-color: #0070D6;
+    background-color: rgba(0, 112, 214, var(--bg-opacity));
   }
 
   .xl\:focus\:bg-blue-form-bottom:focus{
@@ -147679,6 +148427,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .xl\:border-blue-like{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .xl\:border-blue-form-bottom{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -148395,6 +149149,12 @@ readers do not read off random characters that represent icons */
     border-color: rgba(231, 241, 254, var(--border-opacity));
   }
 
+  .xl\:hover\:border-blue-like:hover{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
+  }
+
   .xl\:hover\:border-blue-form-bottom:hover{
     --border-opacity: 1;
     border-color: #E1EAF3;
@@ -149109,6 +149869,12 @@ readers do not read off random characters that represent icons */
     --border-opacity: 1;
     border-color: #E7F1FE;
     border-color: rgba(231, 241, 254, var(--border-opacity));
+  }
+
+  .xl\:focus\:border-blue-like:focus{
+    --border-opacity: 1;
+    border-color: #0070D6;
+    border-color: rgba(0, 112, 214, var(--border-opacity));
   }
 
   .xl\:focus\:border-blue-form-bottom:focus{
@@ -155503,6 +156269,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .xl\:placeholder-blue-like::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-like:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-like::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-blue-like::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .xl\:placeholder-blue-form-bottom::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -158367,6 +159157,30 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--placeholder-opacity));
   }
 
+  .xl\:focus\:placeholder-blue-like:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-like:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-like:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-blue-like:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--placeholder-opacity));
+  }
+
   .xl\:focus\:placeholder-blue-form-bottom:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #E1EAF3;
@@ -159734,6 +160548,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .xl\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .xl\:text-blue-form-bottom{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -160448,6 +161268,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .xl\:hover\:text-blue-like:hover{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .xl\:hover\:text-blue-form-bottom:hover{
@@ -161166,6 +161992,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .xl\:focus\:text-blue-like:focus{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .xl\:focus\:text-blue-form-bottom:focus{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -161882,6 +162714,12 @@ readers do not read off random characters that represent icons */
     color: rgba(231, 241, 254, var(--text-opacity));
   }
 
+  .xl\:active\:text-blue-like:active{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
+  }
+
   .xl\:active\:text-blue-form-bottom:active{
     --text-opacity: 1;
     color: #E1EAF3;
@@ -162596,6 +163434,12 @@ readers do not read off random characters that represent icons */
     --text-opacity: 1;
     color: #E7F1FE;
     color: rgba(231, 241, 254, var(--text-opacity));
+  }
+
+  .group:hover .xl\:group-hover\:text-blue-like{
+    --text-opacity: 1;
+    color: #0070D6;
+    color: rgba(0, 112, 214, var(--text-opacity));
   }
 
   .group:hover .xl\:group-hover\:text-blue-form-bottom{

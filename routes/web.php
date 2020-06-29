@@ -67,6 +67,13 @@ Route::group([
 
         Route::delete('/threads/{thread}', 'ThreadController@delete')
             ->name('api.threads.update');
+
+        Route::post('/replies/{reply}/likes', 'LikeController@store')
+            ->name('api.likes.store');
+
+        Route::delete('/replies/{reply}/likes', 'LikeController@destroy')
+            ->name('api.likes.destroy');
+
     });
 
     //replies

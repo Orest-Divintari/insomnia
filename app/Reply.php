@@ -15,7 +15,11 @@ class Reply extends Model
      *
      * @var array
      */
-    protected $appends = ['date_updated', 'date_created'];
+    protected $appends = [
+        'date_updated',
+        'date_created',
+        'is_liked',
+    ];
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -98,6 +102,59 @@ class Reply extends Model
     public function getBodyAttriute($body)
     {
         return Purify::clean($body);
+    }
+
+    /**
+     * A reply has likes
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    /**
+     * Determine whether the reply has been liked
+     *
+     * @return boolean
+     */
+    public function getIsLikedAttribute()
+    {
+        return $this->likes()->exists();
+    }
+
+    /**
+     * Like the current reply
+     *
+     * @param integer $userId
+     * @return void
+     */
+    public function likedBy($userId = null)
+    {
+        $currentUserId = $userId ?: auth()->id();
+
+        if (!$this->likes()->where('user_id', $currentUserId)->exists()) {
+            $this->likes()->create([
+                'user_id' => $currentUserId,
+            ]);
+        }
+    }
+
+    /**
+     * Unlike the current reply
+     *
+     * @param integer $userId
+     * @return void
+     */
+    public function unlikedBy($userId = null)
+    {
+        $currentUserId = $userId ?: auth()->id();
+        $this->likes()
+            ->where('user_id', $currentUserId)
+            ->get()
+            ->each
+            ->delete();
     }
 
 }

@@ -21,6 +21,10 @@
     @apply .text-orange-700;
 }
 
+.btn-reply-control:focus {
+    @apply .outline-none;
+}
+
 .reply-left-col {
     @apply .w-48 .p-5/2 .flex .flex-col .items-center .bg-blue-lighter .border-r-2 .border-blue-light;
 }

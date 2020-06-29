@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Like;
+use App\Reply;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
@@ -50,6 +52,25 @@ class UserTest extends TestCase
         Cache::forever($user->visitedThreadCacheKey($thread), Carbon::now()->subDay());
 
         $this->assertTrue($thread->hasBeenUpdated);
+
+    }
+
+    /** @test */
+    public function a_user_may_like_a_post()
+    {
+        $user = create(User::class);
+        $thread = create(Thread::class);
+        $reply = create(Reply::class, [
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+        Like::create([
+            'reply_id' => $reply->id,
+            'user_id' => $user->id,
+        ]);
+
+        $this->assertCount(1, $user->likes);
 
     }
 

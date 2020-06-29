@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Like;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -33,6 +34,78 @@ class ReplyTest extends TestCase
         ]);
         $this->assertInstanceOf(User::class, $reply->fresh()->poster);
         $this->assertEquals($user->id, $reply->poster->id);
+
+    }
+
+    /** @test */
+    public function a_reply_may_have_likes()
+    {
+        $thread = create(Thread::class);
+        $reply = create(Reply::class, [
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+        Like::create([
+            'reply_id' => $reply->id,
+            'user_id' => 1,
+        ]);
+
+        $this->assertCount(1, $reply->likes);
+    }
+
+    /** @test */
+    public function determine_whether_a_reply_has_been_liked()
+    {
+        $thread = create(Thread::class);
+        $reply = create(Reply::class, [
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+        $like = Like::create([
+            'reply_id' => $reply->id,
+            'user_id' => 1,
+        ]);
+        $this->assertTrue($reply->isLiked);
+
+    }
+
+    /** @test */
+    public function a_reply_can_be_liked_by_a_user()
+    {
+        $user = $this->signIn();
+
+        $thread = create(Thread::class);
+        $reply = create(Reply::class, [
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+        $reply->likedBy($user->id);
+
+        $this->assertCount(1, $reply->fresh()->likes);
+
+    }
+
+    /** @test */
+    public function a_reply_can_be_unliked_by_a_user()
+    {
+        $user = $this->signIn();
+
+        $thread = create(Thread::class);
+        $reply = create(Reply::class, [
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+        $reply->likedBy($user->id);
+
+        $this->assertCount(1, $reply->fresh()->likes);
+
+        $reply->unlikedBy($user->id);
+
+        $this->assertCount(0, $reply->fresh()->likes);
 
     }
 }

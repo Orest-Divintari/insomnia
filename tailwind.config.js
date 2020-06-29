@@ -28,6 +28,7 @@ module.exports = {
                 "gray-lightest": "#949DA7",
                 "gray-mid": "#6C7680",
                 "blue-form-input": "#E7F1FE",
+                "blue-like": "#0070D6",
 
                 "blue-form-bottom": "#E1EAF3",
                 "blue-form-hover-button": "#334866",
