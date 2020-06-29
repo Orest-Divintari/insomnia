@@ -38,8 +38,8 @@
                 <div class="mt-7 flex justify-end">
                     <button class="btn-thread-control mr-1">Ignore</button>
 
-                    <subscribe-button thread_slug="{{ $thread->slug }}"
-                        subscription_status="{{ json_encode($thread->subscribed_by_auth_user)}}" class="mr-1">
+                    <subscribe-button thread-slug="{{ $thread->slug }}"
+                        subscpription-status="{{ json_encode($thread->subscribed_by_auth_user)}}" class="mr-1">
                     </subscribe-button>
 
 

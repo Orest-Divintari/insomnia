@@ -2644,18 +2644,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    subscription_status: {
+    subscriptionStatus: {
       "default": false
     },
-    thread_slug: {
+    threadSlug: {
       type: String,
       "default": ""
     }
   },
   data: function data() {
     return {
-      isSubscribed: this.subscription_status == "true" ? true : false,
-      thread: this.thread_slug
+      isSubscribed: this.subscriptionStatus == "true" ? true : false,
+      thread: this.threadSlug
     };
   },
   computed: {
