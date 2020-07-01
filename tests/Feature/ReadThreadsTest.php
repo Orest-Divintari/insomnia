@@ -85,7 +85,7 @@ class ReadThreadsTest extends TestCase
 
         $pageNumber = (int) ceil($numberOfRepliesBefore / Reply::PER_PAGE);
 
-        $this->get(route('api.replies.show', [$thread, $reply]))
+        $this->get(route('api.replies.show', $reply))
             ->assertSee($reply->title);
 
     }

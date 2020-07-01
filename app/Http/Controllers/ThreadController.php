@@ -46,7 +46,7 @@ class ThreadController extends Controller
     }
 
     /**
-     * Display the specified resource
+     * Display a specific thread
      *
      * @param Thread $thread
      * @return Illuminate\View\View

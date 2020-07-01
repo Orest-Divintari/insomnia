@@ -50,6 +50,7 @@ module.exports = {
                 "5/2": "0.625rem",
                 "7": "1.75rem",
                 "9": "2.25rem",
+                "14": "3.5rem",
                 "17": "4.25rem",
                 "28": "7rem",
                 "72": "18rem",
@@ -68,7 +69,7 @@ module.exports = {
             fontSize: {
                 "4xs": "0.1rem",
                 "3xs": "0.25rem",
-                "2xs": "0.5rem",
+                "2xs": "0.6rem",
                 md: "0.9375rem",
                 smaller: "0.8125rem"
             }

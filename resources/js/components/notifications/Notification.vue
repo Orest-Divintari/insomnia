@@ -2,13 +2,20 @@
   <div>
     <dropdown styleClasses="w-80">
       <template v-slot:dropdown-trigger>
-        <i class="fas fa-bell"></i>
+        <div class="relative hover:bg-blue-mid h-14 text-center pt-4 px-2">
+          <i class="fas fa-bell"></i>
+          <i
+            v-if="notificationsExist"
+            class="bg-red-700 rounded-full absolute left-1/2 -mt-1 text-2xs font-black shadow-lg text-white"
+            v-text="notifications.length"
+          ></i>
+        </div>
       </template>
       <template v-slot:dropdown-items>
         <div class="dropdown-title">Alerts</div>
-        <div v-if="notifications.length > 0">
+        <div v-if="notificationsExist">
           <div
-            @click="markAsRead(notification.id)"
+            @click="markAsRead(notification.id);showReply(notification.data.reply)"
             v-for="(notification, index) in notifications"
             :key="notification.id"
             class="dropdown-item"
@@ -28,11 +35,13 @@
 <script>
 import ReplyNotification from "./ReplyNotification";
 import LikeNotification from "./LikeNotification";
+import replies from "../../mixins/replies";
 export default {
   components: {
     ReplyNotification,
     LikeNotification
   },
+  mixins: [replies],
   data() {
     return {
       notifications: []
@@ -42,11 +51,14 @@ export default {
     indexPath() {
       return "/api/notifications";
     },
-    readPath(notificationId) {
-      return "/api/notifications/" + notificationId;
+    notificationsExist() {
+      return this.notifications.length > 0;
     }
   },
   methods: {
+    readPath(notificationId) {
+      return "/api/notifications/" + notificationId;
+    },
     isReply(notification) {
       return notification.data.type == "reply";
     },
@@ -60,6 +72,7 @@ export default {
         .catch(error => console.log(error));
     },
     markAsRead(notificationId) {
+      console.log("ge");
       axios
         .delete(this.readPath(notificationId))
         .then(response => console.log(response))

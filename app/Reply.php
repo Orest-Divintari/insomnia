@@ -160,4 +160,17 @@ class Reply extends Model
             ->delete();
     }
 
+    /**
+     * Get the number of the page a specific reply belongs to
+     *
+     * @param Thread $thread
+     * @return void
+     */
+    public function getPageNumberAttribute()
+    {
+        $numberOfRepliesBefore = $this->thread->replies()->where('id', '<=', $this->id)->count();
+
+        return (int) ceil($numberOfRepliesBefore / Reply::PER_PAGE);
+    }
+
 }

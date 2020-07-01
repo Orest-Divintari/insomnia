@@ -47,7 +47,7 @@
         </div>
         <div class="w-48 p-5/2 text-right">
           <p
-            @click="showReply(thread)"
+            @click="showReply(thread.recent_reply)"
             class="text-gray-lightest text-xs hover:underline cursor-pointer"
             v-text="thread.date_updated"
           ></p>
@@ -69,6 +69,7 @@
 
 <script>
 import paginator from "./Paginator";
+import replies from "../mixins/replies";
 export default {
   components: {
     paginator
@@ -76,7 +77,7 @@ export default {
   props: {
     threads: Object
   },
-
+  mixins: [replies],
   data() {
     return {
       data: this.threads.data,
@@ -98,10 +99,6 @@ export default {
     },
     showThread(thread) {
       location.href = this.endpoint(thread.slug);
-    },
-    showReply(thread) {
-      location.href =
-        this.endpoint(thread.slug) + "#post-" + thread.recent_reply.id;
     },
     visit(thread) {
       this.markAsRead(thread);

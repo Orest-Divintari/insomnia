@@ -108,4 +108,19 @@ class ReplyTest extends TestCase
         $this->assertCount(0, $reply->fresh()->likes);
 
     }
+
+    /** @test */
+    public function a_reply_knows_in_which_page_it_belongs_to()
+    {
+        $thread = create(Thread::class);
+
+        createMany(Reply::class, 30, [
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+        $reply = Reply::find(15);
+        $correctPageNumber = ceil(15 / Reply::PER_PAGE);
+        $this->assertEquals($correctPageNumber, $reply->pageNumber);
+    }
 }

@@ -2775,6 +2775,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Paginator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Paginator */ "./resources/js/components/Paginator.vue");
+/* harmony import */ var _mixins_replies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/replies */ "./resources/js/mixins/replies.js");
 //
 //
 //
@@ -2845,6 +2846,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     paginator: _Paginator__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -2852,6 +2854,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     threads: Object
   },
+  mixins: [_mixins_replies__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       data: this.threads.data,
@@ -2870,9 +2873,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     showThread: function showThread(thread) {
       location.href = this.endpoint(thread.slug);
-    },
-    showReply: function showReply(thread) {
-      location.href = this.endpoint(thread.slug) + "#post-" + thread.recent_reply.id;
     },
     visit: function visit(thread) {
       this.markAsRead(thread);
@@ -2958,6 +2958,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_replies__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/replies */ "./resources/js/mixins/replies.js");
 //
 //
 //
@@ -2967,13 +2968,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     data: {
       type: Object,
       "default": {}
     }
-  }
+  },
+  mixins: [_mixins_replies__WEBPACK_IMPORTED_MODULE_0__["default"]]
 });
 
 /***/ }),
@@ -2989,6 +2992,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ReplyNotification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReplyNotification */ "./resources/js/components/notifications/ReplyNotification.vue");
 /* harmony import */ var _LikeNotification__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LikeNotification */ "./resources/js/components/notifications/LikeNotification.vue");
+/* harmony import */ var _mixins_replies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/replies */ "./resources/js/mixins/replies.js");
 //
 //
 //
@@ -3016,6 +3020,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3023,6 +3035,7 @@ __webpack_require__.r(__webpack_exports__);
     ReplyNotification: _ReplyNotification__WEBPACK_IMPORTED_MODULE_0__["default"],
     LikeNotification: _LikeNotification__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  mixins: [_mixins_replies__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       notifications: []
@@ -3032,11 +3045,14 @@ __webpack_require__.r(__webpack_exports__);
     indexPath: function indexPath() {
       return "/api/notifications";
     },
-    readPath: function readPath(notificationId) {
-      return "/api/notifications/" + notificationId;
+    notificationsExist: function notificationsExist() {
+      return this.notifications.length > 0;
     }
   },
   methods: {
+    readPath: function readPath(notificationId) {
+      return "/api/notifications/" + notificationId;
+    },
     isReply: function isReply(notification) {
       return notification.data.type == "reply";
     },
@@ -3054,6 +3070,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     markAsRead: function markAsRead(notificationId) {
+      console.log("ge");
       axios["delete"](this.readPath(notificationId)).then(function (response) {
         return console.log(response);
       })["catch"](function (error) {
@@ -3077,6 +3094,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_replies__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/replies */ "./resources/js/mixins/replies.js");
 //
 //
 //
@@ -3088,13 +3106,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     data: {
       type: Object,
       "default": {}
     }
-  }
+  },
+  mixins: [_mixins_replies__WEBPACK_IMPORTED_MODULE_0__["default"]]
 });
 
 /***/ }),
@@ -60422,7 +60442,7 @@ var render = function() {
                   domProps: { textContent: _vm._s(thread.date_updated) },
                   on: {
                     click: function($event) {
-                      return _vm.showReply(thread)
+                      return _vm.showReply(thread.recent_reply)
                     }
                   }
                 }),
@@ -60525,7 +60545,14 @@ var render = function() {
     _vm._v(" liked\n  "),
     _c(
       "a",
-      { staticClass: "text-blue-mid hover:underline", attrs: { href: "" } },
+      {
+        staticClass: "text-blue-mid hover:underline",
+        on: {
+          click: function($event) {
+            return _vm.showReply(_vm.data.reply)
+          }
+        }
+      },
       [_vm._v("your post")]
     ),
     _vm._v("\n  in the thread " + _vm._s(_vm.data.reply.thread.title) + "\n  "),
@@ -60565,7 +60592,28 @@ var render = function() {
           {
             key: "dropdown-trigger",
             fn: function() {
-              return [_c("i", { staticClass: "fas fa-bell" })]
+              return [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "relative hover:bg-blue-mid h-14 text-center pt-4 px-2"
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-bell" }),
+                    _vm._v(" "),
+                    _vm.notificationsExist
+                      ? _c("i", {
+                          staticClass:
+                            "bg-red-700 rounded-full absolute left-1/2 -mt-1 text-2xs font-black shadow-lg text-white",
+                          domProps: {
+                            textContent: _vm._s(_vm.notifications.length)
+                          }
+                        })
+                      : _vm._e()
+                  ]
+                )
+              ]
             },
             proxy: true
           },
@@ -60577,7 +60625,7 @@ var render = function() {
                   _vm._v("Alerts")
                 ]),
                 _vm._v(" "),
-                _vm.notifications.length > 0
+                _vm.notificationsExist
                   ? _c(
                       "div",
                       _vm._l(_vm.notifications, function(notification, index) {
@@ -60588,7 +60636,8 @@ var render = function() {
                             staticClass: "dropdown-item",
                             on: {
                               click: function($event) {
-                                return _vm.markAsRead(notification.id)
+                                _vm.markAsRead(notification.id)
+                                _vm.showReply(notification.data.reply)
                               }
                             }
                           },
@@ -60646,13 +60695,23 @@ var render = function() {
   return _c("div", [
     _c(
       "a",
-      { staticClass: "text-blue-mid hover:underline", attrs: { href: "" } },
+      {
+        staticClass: "text-blue-mid hover:underline",
+        attrs: { href: "google.com" }
+      },
       [_vm._v(_vm._s(_vm.data.reply.poster.name))]
     ),
     _vm._v(" replied to the thtread -\n  "),
     _c(
       "a",
-      { staticClass: "text-blue-mid hover:underline", attrs: { href: "" } },
+      {
+        staticClass: "text-blue-mid hover:underline",
+        on: {
+          click: function($event) {
+            return _vm.showReply(_vm.data.reply)
+          }
+        }
+      },
       [_vm._v(_vm._s(_vm.data.reply.thread.title))]
     ),
     _vm._v(".\n  "),
@@ -74203,6 +74262,25 @@ __webpack_require__.r(__webpack_exports__);
 
 var EventBus = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 /* harmony default export */ __webpack_exports__["default"] = (EventBus);
+
+/***/ }),
+
+/***/ "./resources/js/mixins/replies.js":
+/*!****************************************!*\
+  !*** ./resources/js/mixins/replies.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    showReply: function showReply(reply) {
+      window.location.href = "/api/replies/" + reply.id;
+    }
+  }
+});
 
 /***/ }),
 
