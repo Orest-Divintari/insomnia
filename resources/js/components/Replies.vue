@@ -1,11 +1,6 @@
 <template>
   <div :class="{'-mt-12' : isPaginated}">
-    <paginator
-      :class="{'pb-5': isPaginated}"
-      @isPaginated="isPaginated=true"
-      @changePage="fetchData"
-      :dataset="dataset"
-    ></paginator>
+    <paginator :class="{'pb-5': isPaginated}" @isPaginated="isPaginated=true" :dataset="dataset"></paginator>
     <reply
       v-for="(reply, index) in items"
       :key="reply.id"
@@ -13,7 +8,7 @@
       :reply="reply"
       :threadPoster="thread.poster.name"
     ></reply>
-    <paginator @isPaginated="isPaginated=true" @changePage="fetchData" :dataset="dataset"></paginator>
+    <paginator @isPaginated="isPaginated=true" :dataset="dataset"></paginator>
     <reply-form v-if="signedIn"></reply-form>
     <p v-else class="text-xs mt-4 text-center">
       You must
@@ -38,43 +33,23 @@ export default {
     thread: {
       type: Object,
       default: {}
+    },
+    replies: {
+      type: Object,
+      default: {}
     }
   },
   data() {
     return {
       isPaginated: false,
-      items: [],
-      dataset: {}
+      items: this.replies.data,
+      dataset: this.replies
     };
   },
   methods: {
     add(item) {
       this.items.push(item);
-    },
-    endpoint(pageNumber) {
-      var path = "/api/threads/" + this.thread.slug + "/replies";
-      if (!pageNumber) {
-        return path;
-      }
-      return path + "?page=" + pageNumber;
-    },
-    updateData(data) {
-      this.items = data.data;
-      this.dataset = data;
-    },
-    refresh({ data }) {
-      this.updateData(data);
-      window.scrollTo(0, 0);
-    },
-    fetchData(pageNumber) {
-      axios
-        .get(this.endpoint(pageNumber))
-        .then(response => this.refresh(response))
-        .catch(error => console.log(error.response));
     }
-  },
-  created() {
-    this.fetchData();
   },
   mounted() {
     EventBus.$on("newReply", this.add);

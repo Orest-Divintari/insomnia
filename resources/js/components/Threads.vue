@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-    <paginator @changePage="fetchData" :dataset="dataset"></paginator>
+    <paginator :dataset="dataset"></paginator>
   </div>
 </template>
 
@@ -100,7 +100,8 @@ export default {
       location.href = this.endpoint(thread.slug);
     },
     showReply(thread) {
-      location.href = this.endpoint(thread.slug) + "#" + thread.recent_reply.id;
+      location.href =
+        this.endpoint(thread.slug) + "#post-" + thread.recent_reply.id;
     },
     visit(thread) {
       this.markAsRead(thread);
@@ -108,24 +109,6 @@ export default {
       axios
         .get(this.endpoint(thread.slug))
         .catch(error => console.log(error.response));
-    },
-    apiEndpoint(pageNumber) {
-      return "/api" + window.location.pathname + "?page=" + pageNumber;
-    },
-    fetchData(pageNumber) {
-      var path = this.apiEndpoint(pageNumber);
-      axios
-        .get(path)
-        .then(response => this.refresh(response))
-        .catch(error => console.log(error));
-    },
-    updateData({ data }) {
-      this.dataset = data;
-      this.data = data.data;
-    },
-    refresh(response) {
-      this.updateData(response);
-      window.scrollTo(0, 0);
     }
   }
 };

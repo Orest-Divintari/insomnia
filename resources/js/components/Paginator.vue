@@ -105,12 +105,9 @@ export default {
       this.clearInput();
       var pageNumber = this.validatePageNumber(page);
       if (pageNumber) {
-        this.brodcast(pageNumber);
-        this.updateUrl(pageNumber);
+        var path = window.location.pathname + "?page=" + page;
+        window.location.href = path;
       }
-    },
-    updateUrl(page) {
-      history.pushState(null, null, "?page=" + page);
     },
     startFromPage() {
       var from = 0;

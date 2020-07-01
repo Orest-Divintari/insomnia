@@ -2230,12 +2230,9 @@ __webpack_require__.r(__webpack_exports__);
       var pageNumber = this.validatePageNumber(page);
 
       if (pageNumber) {
-        this.brodcast(pageNumber);
-        this.updateUrl(pageNumber);
+        var path = window.location.pathname + "?page=" + page;
+        window.location.href = path;
       }
-    },
-    updateUrl: function updateUrl(page) {
-      history.pushState(null, null, "?page=" + page);
     },
     startFromPage: function startFromPage() {
       var from = 0;
@@ -2341,11 +2338,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -2360,49 +2352,23 @@ __webpack_require__.r(__webpack_exports__);
     thread: {
       type: Object,
       "default": {}
+    },
+    replies: {
+      type: Object,
+      "default": {}
     }
   },
   data: function data() {
     return {
       isPaginated: false,
-      items: [],
-      dataset: {}
+      items: this.replies.data,
+      dataset: this.replies
     };
   },
   methods: {
     add: function add(item) {
       this.items.push(item);
-    },
-    endpoint: function endpoint(pageNumber) {
-      var path = "/api/threads/" + this.thread.slug + "/replies";
-
-      if (!pageNumber) {
-        return path;
-      }
-
-      return path + "?page=" + pageNumber;
-    },
-    updateData: function updateData(data) {
-      this.items = data.data;
-      this.dataset = data;
-    },
-    refresh: function refresh(_ref) {
-      var data = _ref.data;
-      this.updateData(data);
-      window.scrollTo(0, 0);
-    },
-    fetchData: function fetchData(pageNumber) {
-      var _this = this;
-
-      axios.get(this.endpoint(pageNumber)).then(function (response) {
-        return _this.refresh(response);
-      })["catch"](function (error) {
-        return console.log(error.response);
-      });
     }
-  },
-  created: function created() {
-    this.fetchData();
   },
   mounted: function mounted() {
     _eventBus__WEBPACK_IMPORTED_MODULE_3__["default"].$on("newReply", this.add);
@@ -2906,7 +2872,7 @@ __webpack_require__.r(__webpack_exports__);
       location.href = this.endpoint(thread.slug);
     },
     showReply: function showReply(thread) {
-      location.href = this.endpoint(thread.slug) + "#" + thread.recent_reply.id;
+      location.href = this.endpoint(thread.slug) + "#post-" + thread.recent_reply.id;
     },
     visit: function visit(thread) {
       this.markAsRead(thread);
@@ -2914,28 +2880,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(this.endpoint(thread.slug))["catch"](function (error) {
         return console.log(error.response);
       });
-    },
-    apiEndpoint: function apiEndpoint(pageNumber) {
-      return "/api" + window.location.pathname + "?page=" + pageNumber;
-    },
-    fetchData: function fetchData(pageNumber) {
-      var _this = this;
-
-      var path = this.apiEndpoint(pageNumber);
-      axios.get(path).then(function (response) {
-        return _this.refresh(response);
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-    },
-    updateData: function updateData(_ref) {
-      var data = _ref.data;
-      this.dataset = data;
-      this.data = data.data;
-    },
-    refresh: function refresh(response) {
-      this.updateData(response);
-      window.scrollTo(0, 0);
     }
   }
 });
@@ -59884,8 +59828,7 @@ var render = function() {
         on: {
           isPaginated: function($event) {
             _vm.isPaginated = true
-          },
-          changePage: _vm.fetchData
+          }
         }
       }),
       _vm._v(" "),
@@ -59905,8 +59848,7 @@ var render = function() {
         on: {
           isPaginated: function($event) {
             _vm.isPaginated = true
-          },
-          changePage: _vm.fetchData
+          }
         }
       }),
       _vm._v(" "),
@@ -60507,10 +60449,7 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _c("paginator", {
-        attrs: { dataset: _vm.dataset },
-        on: { changePage: _vm.fetchData }
-      })
+      _c("paginator", { attrs: { dataset: _vm.dataset } })
     ],
     2
   )

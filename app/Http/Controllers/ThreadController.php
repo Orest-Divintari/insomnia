@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests\CreateThreadRequest;
+use App\Reply;
 use App\Thread;
 
 class ThreadController extends Controller
@@ -53,12 +54,13 @@ class ThreadController extends Controller
     public function show($threadSlug)
     {
         $thread = Thread::without('recentReply')->whereSlug($threadSlug)->first();
+        $replies = $thread->replies()->paginate(Reply::PER_PAGE);
 
         if (auth()->check()) {
             auth()->user()->read($thread);
         }
         $thread->increment('views');
-        return view('threads.show', compact('thread'));
+        return view('threads.show', compact('thread', 'replies'));
     }
 
 }
