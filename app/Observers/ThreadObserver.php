@@ -21,7 +21,9 @@ class ThreadObserver
             'created_at' => $thread->created_at,
         ]);
 
-        $thread->subscribe(auth()->id());
+        if (auth()->check()) {
+            $thread->subscribe(auth()->id());
+        }
     }
 
     /**

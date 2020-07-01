@@ -68,4 +68,13 @@ class ReplyController extends Controller
         return response('Reply has been deleted', 200);
     }
 
+    public function show(Thread $thread, Reply $reply)
+    {
+        $numberOfRepliesBefore = $thread->replies()->where('id', '<=', $reply->id)->count();
+
+        $pageNumber = (int) ceil($numberOfRepliesBefore / Reply::PER_PAGE);
+
+        return redirect(route('threads.show') . "?page=" . $pageNumber . '#post-' . $reply->id);
+    }
+
 }

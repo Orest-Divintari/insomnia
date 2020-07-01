@@ -53,6 +53,8 @@ Route::group([
 
     Route::group(['middleware' => 'auth'], function () {
 
+        Route::get('/threads/{thread}/replies/{reply}', 'ReplyController@show')
+            ->name('api.replies.show');
         Route::post('/threads/{thread}/replies', 'ReplyController@store')
             ->name('api.replies.store');
 

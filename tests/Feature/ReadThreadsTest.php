@@ -69,4 +69,25 @@ class ReadThreadsTest extends TestCase
         $this->assertCount(Thread::PER_PAGE, $response['data']);
     }
 
+    /** @test */
+    public function a_user_can_go_to_a_specific_reply_on_a_paginated_thread()
+    {
+
+        $thread = create(Thread::class, ['replies_count' => 30]);
+
+        createMany(Reply::class, 30, [
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+        $reply = Reply::find(15);
+
+        $numberOfRepliesBefore = $thread->replies()->where('id', '<=', $reply->id)->count();
+
+        $pageNumber = (int) ceil($numberOfRepliesBefore / Reply::PER_PAGE);
+
+        $this->get(route('api.replies.show', [$thread, $reply]))
+            ->assertSee($reply->title);
+
+    }
+
 }
