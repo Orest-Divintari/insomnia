@@ -14,7 +14,10 @@ Vue.component("Thread", require("./components/Thread.vue").default);
 Vue.component("Replies", require("./components/Replies.vue").default);
 Vue.component("search", require("./components/Search.vue").default);
 Vue.component("Wysiwyg", require("./components/Wysiwyg.vue").default);
-Vue.component("Notification", require("./components/Notification.vue").default);
+Vue.component(
+    "Notification",
+    require("./components/notifications/Notification.vue").default
+);
 Vue.component("Dropdown", require("./components/Dropdown.vue").default);
 
 /**

@@ -29,7 +29,6 @@ class ThreadController extends Controller
      */
     public function create($category)
     {
-
         $category = Category::whereSlug($category)->firstOrFail();
         return view('threads.create', compact('category'));
     }

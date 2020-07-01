@@ -49,7 +49,11 @@ module.exports = {
                 "3/2": "0.35rem",
                 "5/2": "0.625rem",
                 "7": "1.75rem",
-                "28": "7rem"
+                "9": "2.25rem",
+                "17": "4.25rem",
+                "28": "7rem",
+                "72": "18rem",
+                "80": "20rem"
             },
             padding: {
                 input: "0.375rem"
@@ -60,14 +64,7 @@ module.exports = {
             borderWidth: {
                 "6": "0.375rem"
             },
-            height: {
-                "17": "4.25rem",
-                "9": "2.25rem"
-            },
-            width: {
-                "72": "18rem",
-                "9": "2.25rem"
-            },
+
             fontSize: {
                 "4xs": "0.1rem",
                 "3xs": "0.25rem",

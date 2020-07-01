@@ -20,6 +20,8 @@ class ThreadObserver
             'updated_at' => $thread->updated_at,
             'created_at' => $thread->created_at,
         ]);
+
+        $thread->subscribe(auth()->id());
     }
 
     /**

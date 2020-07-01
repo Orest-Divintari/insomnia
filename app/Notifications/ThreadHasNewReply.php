@@ -64,6 +64,12 @@ class ThreadHasNewReply extends Notification implements ShouldQueue
         return [
             'thread' => $this->thread,
             'reply' => $this->reply,
+            'type' => 'reply',
         ];
+    }
+
+    public function createMessage()
+    {
+        return '<a class="text-blue-mid">' . $this->reply->poster->name . '</a>' . 'replied to the thread -' . '<a class="text-blue-mid" href="' . route('threads.show', $this->thread) . '>' . $this->thread->title . '</a>';
     }
 }

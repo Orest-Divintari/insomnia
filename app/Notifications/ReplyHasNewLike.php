@@ -56,7 +56,7 @@ class ReplyHasNewLike extends Notification
     {
         return [
             'reply' => $this->reply,
-            'view_type' => 'notify_reply_poster',
+            'type' => 'like',
         ];
     }
 }
