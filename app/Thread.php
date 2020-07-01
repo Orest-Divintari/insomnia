@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\Subscription\NewReplyWasPostedToThread;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -183,6 +184,7 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
         $this->increment('replies_count');
+        event(new NewReplyWasPostedToThread($this, $reply));
         return $reply;
     }
 
@@ -231,6 +233,20 @@ class Thread extends Model
     {
         return $this->subscribers()->where([
             'user_id' => auth()->id(),
+        ])->exists();
+
+    }
+
+    /**
+     * Determine whether a user is subscribed to current thread
+     *
+     * @param int $userId
+     * @return boolean
+     */
+    public function isSubscribedBy($userId)
+    {
+        return $this->subscribers()->where([
+            'user_id' => $userId,
         ])->exists();
     }
 

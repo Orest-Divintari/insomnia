@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\Subscription\ReplyWasLiked;
 use Illuminate\Database\Eloquent\Model;
 use Stevebauman\Purify\Facades\Purify;
 
@@ -138,6 +139,8 @@ class Reply extends Model
             $this->likes()->create([
                 'user_id' => $currentUserId,
             ]);
+
+            event(new ReplyWasLiked($this, $this->thread));
         }
     }
 

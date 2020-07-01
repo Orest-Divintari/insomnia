@@ -72,7 +72,7 @@ module.exports = {
                 "4xs": "0.1rem",
                 "3xs": "0.25rem",
                 "2xs": "0.5rem",
-                medium: "0.9375rem",
+                md: "0.9375rem",
                 smaller: "0.8125rem"
             }
         }

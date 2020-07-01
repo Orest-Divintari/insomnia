@@ -2,7 +2,7 @@
   <div class="mt-6">
     <div class="reply-container">
       <div class="reply-left-col">
-        <img :src="user.avatar_path" class="avatar-large" alt />
+        <img :src="user.avatar_path" class="avatar-xl" alt />
       </div>
       <div class="w-full p-3">
         <form @submit.prevent="post">

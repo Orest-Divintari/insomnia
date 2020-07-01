@@ -79,6 +79,12 @@ Route::group([
 
         Route::delete('/threads/{thread}/subscriptions', 'ThreadSubscriptionController@destroy')
             ->name('api.thread-subscriptions.destroy');
+
+        Route::get('/notifications', 'UserNotificationController@index')
+            ->name('api.user-notifications.index');
+
+        Route::delete('/notifications/{notificationId}', 'UserNotificationController@destroy')
+            ->name('api.user-notifications.destroy');
     });
 
     //replies

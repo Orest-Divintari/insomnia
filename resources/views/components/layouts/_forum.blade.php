@@ -1,10 +1,20 @@
 <x-layouts.master>
     <x-slot name="navRight">
-        <div class="flex ">
+        <div class="flex">
             @guest
             <x-head_tab_item name="Login" destination="login"></x-head_tab_item>
             <x-head_tab_item name="Register" destination="register"></x-head_tab_item>
             @endguest
+            @auth
+            <div class="flex items-center">
+                <div class="flex items-center head-tab-item">
+                    <img src="{{ auth()->user()->avatar_path }}" class="avatar-sm mr-1" alt="">
+                    <p> {{ auth()->user()->name  }} </p>
+                </div>
+                <notification class="head-tab-item"></notification>
+            </div>
+            @endauth
+
         </div>
     </x-slot>
     <x-slot name="subHeader">

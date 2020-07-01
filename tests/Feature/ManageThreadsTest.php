@@ -19,7 +19,7 @@ class ManageThreadsTest extends TestCase
             'title' => 'old title',
         ]);
 
-        $this->put(route('api.threads.update', $thread), [])
+        $this->patch(route('api.threads.update', $thread), ['title' => 'new title'])
             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
@@ -44,7 +44,6 @@ class ManageThreadsTest extends TestCase
         $this->patch(route('api.threads.update', $thread), $newTitle);
 
         $this->assertDatabaseHas('threads', $newTitle);
-        dd(Thread::first()->title);
 
     }
 

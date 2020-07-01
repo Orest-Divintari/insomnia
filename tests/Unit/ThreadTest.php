@@ -125,26 +125,14 @@ class ThreadTest extends TestCase
     public function a_thread_may_have_subscribrers()
     {
         $user = create(User::class);
+
         $thread = create(Thread::class);
 
         $this->assertCount(0, $thread->subscribers);
 
         $thread->subscribe($user->id);
 
-        $this->assertCount(1, $thread->subscribers);
-    }
-
-    /** @test */
-    public function a_thread_can_be_subscribed_by_a_user()
-    {
-        $user = create(User::class);
-        $thread = create(Thread::class);
-
-        $this->assertCount(0, $thread->subscribers);
-
-        $thread->subscribe($user->id);
-
-        $this->assertCount(1, $thread->subscribers);
+        $this->assertCount(1, $thread->fresh()->subscribers);
     }
 
     /** @test */
@@ -181,6 +169,20 @@ class ThreadTest extends TestCase
         $thread->unsubscribe($user->id);
 
         $this->assertFalse($thread->fresh()->subscribedByAuthUser);
+    }
+
+    /** @test */
+    public function determine_whether_a_given_user_is_subscribed_to_a_thread()
+    {
+        $user = create(User::class);
+
+        $thread = create(Thread::class);
+
+        $this->assertFalse($thread->isSubscribedBy($user->id));
+
+        $thread->subscribe($user->id);
+
+        $this->assertTrue($thread->isSubscribedBy($user->id));
     }
 
 }

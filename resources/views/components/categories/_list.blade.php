@@ -1,7 +1,7 @@
 <div
     class="{{ $loop->even ? 'bg-blue-lighter' : 'bg-white' }} border border-blue-border {{ ($loop->first) ? '' : 'border-t-0' }} py-2 pl-2">
     <div class="flex items-center">
-        <img src="{{ $category->avatar_path }}" alt="category_avatar" class="w-12 h-12 mr-3 avatar">
+        <img src="{{ $category->avatar_path }}" alt="category_avatar" class="avatar-lg mr-3">
         <div class="flex-1">
             <a class="text-sm text-blue-mid-dark font-semibold tracking-wide"
                 href="{{ route('categories.show',$category->slug) }}">{{ $category->title }}</a>

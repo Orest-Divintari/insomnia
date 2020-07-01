@@ -6,8 +6,7 @@
         @forelse($latestPosts as $latestPost)
 
         <div class="flex p-5/2 items-start">
-            <img class="h-6 w-6 rounded-full object-cover mt-1"
-                src="{{ $latestPost->recentReply->poster->avatar_path }}" alt="">
+            <img class="avatar-sm mt-1" src="{{ $latestPost->recentReply->poster->avatar_path }}" alt="">
             <div class="pl-5/2">
                 <a class="text-sm tacking-wide leading-normal font-bold text-blue-mid-dark hover:underline"
                     href="{{ route('threads.show', $latestPost) }}">{{ $latestPost->title }}</a>

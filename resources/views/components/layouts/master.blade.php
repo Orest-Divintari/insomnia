@@ -29,20 +29,27 @@
     ]);
     </script>
 
+    <style>
+    [v-cloak] {
+        display: none
+    }
+    </style>
+
+
 </head>
 
 <body>
-    <div id="app" class="">
-        <header class="">
+    <div id="app">
+        <header>
             <div class="hidden lg:block bg-blue-light">
                 <a href="{{route('home')}}" class="pt-3 px-5 text-5xl font-bold text-blue-dark">iNsomnia</a>
             </div>
-            <div class="bg-blue-dark text-white px-5 flex justify-between items-center">
+            <div class="bg-blue-dark text-white px-5 flex justify-between items-stretch">
                 <div class="xs:flex xs:justify-between xs:items-center lg:hidden">
                     <hamburger class="mr-3"></hamburger>
                     <a class="font-bold text-4xl text-white" href="{{route('home')}}">iNsomnia</a>
                 </div>
-                <div class="hidden lg:flex items-center">
+                <div class="hidden lg:flex items-stretch">
                     <x-head_tab_item name="Front Page" destination="home"></x-head_tab_item>
                     <x-head_tab_item name="Guides" destination="home"></x-head_tab_item>
                     <x-head_tab_item name="How Tos" destination="home"></x-head_tab_item>

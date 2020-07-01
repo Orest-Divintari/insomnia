@@ -2125,7 +2125,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      items: []
+    };
+  },
+  computed: {
+    path: function path() {
+      return "/api/notifications";
+    }
+  },
+  methods: {
+    refresh: function refresh(_ref) {
+      var data = _ref.data;
+      this.items = data;
+    },
+    fetchData: function fetchData() {
+      axios.get(this.path).then(function (response) {
+        return console.log(response);
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -2719,7 +2751,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      isSubscribed: this.subscriptionStatus == "true" ? true : false,
+      isSubscribed: this.subscriptionStatus,
       thread: this.threadSlug
     };
   },
@@ -59539,16 +59571,49 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _c("dropdown", {
+        scopedSlots: _vm._u([
+          {
+            key: "dropdown-trigger",
+            fn: function() {
+              return [
+                _c("i", {
+                  staticClass: "fas fa-bell",
+                  on: { click: _vm.fetchData }
+                })
+              ]
+            },
+            proxy: true
+          },
+          {
+            key: "dropdown-items",
+            fn: function() {
+              return [
+                _c("div", { staticClass: "dropdown-title" }, [
+                  _vm._v("Alerts")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.items, function(item, index) {
+                  return _c(
+                    "div",
+                    { key: item.id, staticClass: "dropdown-item" },
+                    [_vm._v(_vm._s(item.id))]
+                  )
+                })
+              ]
+            },
+            proxy: true
+          }
+        ])
+      })
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("i", { staticClass: "fas fa-bell" })])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

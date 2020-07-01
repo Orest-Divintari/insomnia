@@ -2,7 +2,7 @@
     @push('styles')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.css">
     @endpush
-    <thread :thread="{{ $thread }}" inline-template>
+    <thread :thread="{{ $thread }}" inline-template v-cloak>
         <div>
             <header>
                 <h1 class="font-bold text-3xl mb-1" v-text="title"></h1>
@@ -89,7 +89,7 @@
                                     </div>
                                 </div>
                                 <div class="form-button-container justify-center">
-                                    <button @click="hideDropdown" type="submit" class="form-button ">Save</button>
+                                    <button @click="hideModal" type="submit" class="form-button ">Save</button>
                                 </div>
 
                             </form>

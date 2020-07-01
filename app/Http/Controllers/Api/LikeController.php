@@ -17,6 +17,7 @@ class LikeController extends Controller
     public function store(Reply $reply)
     {
         $reply->likedBy(auth()->id());
+
         return response('The post has been liked', 201);
     }
 

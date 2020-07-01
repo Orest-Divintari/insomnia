@@ -2,7 +2,7 @@
   <div>
     <div :id="'post-'+ reply.id" class="reply-container">
       <div class="reply-left-col">
-        <img :src="reply.poster.avatar_path" class="avatar-large" alt />
+        <img :src="reply.poster.avatar_path" class="avatar-xl" alt />
         <a
           href
           class="mt-1 text-blue-mid text-sm hover:underline font-bold"
