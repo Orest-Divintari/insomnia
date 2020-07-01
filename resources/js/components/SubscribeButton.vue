@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      isSubscribed: this.subscriptionStatus == "true" ? true : false,
+      isSubscribed: this.subscriptionStatus,
       thread: this.threadSlug
     };
   },
