@@ -19,7 +19,6 @@ class Reply extends Model
     protected $appends = [
         'date_updated',
         'date_created',
-        'is_liked',
     ];
 
     /**
@@ -122,7 +121,7 @@ class Reply extends Model
      */
     public function getIsLikedAttribute()
     {
-        return $this->likes()->exists();
+        return $this->likes->isNotEmpty();
     }
 
     /**

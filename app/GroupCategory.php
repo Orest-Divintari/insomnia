@@ -20,7 +20,7 @@ class GroupCategory extends Model
     }
 
     /**
-     * Load the the categories and subcategories relationship
+     * Eager-Load the categories and subcategories relationship
      *
      * @param Builder $query
      * @return Builder
@@ -35,6 +35,9 @@ class GroupCategory extends Model
     /**
      * Fetch the most recent active thread per category
      *
+     * If it is a parent category, then fetch
+     * the most recently active thread among all its children
+     *
      * @param Builder $query
      * @return Builder
      */
@@ -47,7 +50,7 @@ class GroupCategory extends Model
     }
 
     /**
-     * Load the total number of threads and replies associated with a category
+     * Eager-Load the total number of threads and replies associated with a category
      *
      * @param Builder $query
      * @return Builder

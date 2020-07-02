@@ -124,7 +124,8 @@ class Category extends Model
             Category::class,
             'parent_id',
             'category_id'
-        )->latest('updated_at');
+        )->latest('updated_at')
+            ->without('poster');
     }
 
     /**
@@ -134,7 +135,9 @@ class Category extends Model
      */
     public function recentlyActiveThread()
     {
-        return $this->hasOne(Thread::class)->latest('updated_at');
+        return $this->hasOne(Thread::class)
+            ->latest('updated_at')
+            ->without('poster');
     }
 
     /**

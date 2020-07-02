@@ -13,19 +13,6 @@ class ReplyController extends Controller
 {
 
     /**
-     * Display paginated list of replies
-     *
-     * @param Thread $thread
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Thread $thread)
-    {
-        return Reply::withCount('likes')
-            ->where('repliable_id', $thread->id)
-            ->paginate(Reply::PER_PAGE);
-    }
-
-    /**
      * Store a newly created reply in storage
      *
      * @param Thread $thread

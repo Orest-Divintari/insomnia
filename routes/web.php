@@ -90,10 +90,6 @@ Route::group([
             ->name('api.user-notifications.destroy');
     });
 
-    //replies
-    Route::get('/threads/{thread}/replies', 'ReplyController@index')
-        ->name('api.replies.index');
-
     Route::get('/categories/{category}/threads', 'ThreadController@index')
         ->name('api.threads.index');
 });

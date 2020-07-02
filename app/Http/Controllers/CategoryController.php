@@ -18,6 +18,7 @@ class CategoryController extends Controller
             ->withActivity()
             ->withStatistics()
             ->get();
+
         return view('categories.index', compact('groups'));
     }
 

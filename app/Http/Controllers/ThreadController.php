@@ -54,7 +54,10 @@ class ThreadController extends Controller
     public function show($threadSlug)
     {
         $thread = Thread::without('recentReply')->whereSlug($threadSlug)->first();
-        $replies = $thread->replies()->paginate(Reply::PER_PAGE);
+        $replies = $thread->replies()->with('likes')->withCount('likes')->paginate(Reply::PER_PAGE);
+        $replies->each(function ($reply) {
+            $reply->append('is_liked');
+        });
 
         if (auth()->check()) {
             auth()->user()->read($thread);
