@@ -208,7 +208,7 @@ class Thread extends Model
     {
         $this->subscribers()->attach([
             'user_id' => $userId ?? auth()->id(),
-        ])->withTimestamps();
+        ]);
     }
 
     /**

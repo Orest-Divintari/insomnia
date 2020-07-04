@@ -3,13 +3,15 @@
 namespace App;
 
 use App\Events\Subscription\ReplyWasLiked;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
 {
 
-    const PER_PAGE = 3;
+    const PER_PAGE = 5;
 
     /**
      * The accessors to append to the model's array form.
@@ -115,16 +117,6 @@ class Reply extends Model
     }
 
     /**
-     * Determine whether the reply has been liked
-     *
-     * @return boolean
-     */
-    public function getIsLikedAttribute()
-    {
-        return $this->likes->isNotEmpty();
-    }
-
-    /**
      * Like the current reply
      *
      * @param integer $userId
@@ -170,6 +162,23 @@ class Reply extends Model
         $numberOfRepliesBefore = $this->thread->replies()->where('id', '<=', $this->id)->count();
 
         return (int) ceil($numberOfRepliesBefore / Reply::PER_PAGE);
+    }
+
+    /**
+     * Get all the like information for a reply
+     *
+     * @param Builder $builder
+     * @return void
+     */
+    public function scopeWithLikes(Builder $builder)
+    {
+        return $builder->with('likes')
+            ->withCount('likes')
+            ->addSelect(['is_liked' => Like::select(
+                DB::raw('CASE WHEN count(likes.id) > 0 THEN TRUE ELSE FALSE END')
+            )->whereColumn('replies.id', '=', 'likes.reply_id')
+                    ->groupBy('likes.reply_id'),
+            ]);
     }
 
 }

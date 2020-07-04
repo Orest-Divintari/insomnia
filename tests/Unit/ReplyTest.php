@@ -55,28 +55,12 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
-    public function determine_whether_a_reply_has_been_liked()
-    {
-        $thread = create(Thread::class);
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
-
-        $like = Like::create([
-            'reply_id' => $reply->id,
-            'user_id' => 1,
-        ]);
-        $this->assertTrue($reply->isLiked);
-
-    }
-
-    /** @test */
     public function a_reply_can_be_liked_by_a_user()
     {
         $user = $this->signIn();
 
         $thread = create(Thread::class);
+
         $reply = create(Reply::class, [
             'repliable_id' => $thread->id,
             'repliable_type' => Thread::class,
@@ -123,4 +107,22 @@ class ReplyTest extends TestCase
         $correctPageNumber = ceil(15 / Reply::PER_PAGE);
         $this->assertEquals($correctPageNumber, $reply->pageNumber);
     }
+
+    /** @test */
+    public function a_reply_knows_about_its_likes()
+    {
+        $user = create(User::class);
+        $thread = create(Thread::class);
+        $reply = $thread->addReply(raw(Reply::class));
+        $reply->likedBy($user->id);
+
+        $this->assertCount(1, $reply->likes);
+        $this->assertNull($reply->is_liked);
+
+        $reply = Reply::withLikes()->whereId($reply->id)->first();
+
+        $this->assertCount(1, $reply->likes);
+        $this->assertTrue((bool) $reply->is_liked);
+    }
+
 }
