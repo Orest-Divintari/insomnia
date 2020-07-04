@@ -60,6 +60,10 @@ class ThreadController extends Controller
             ->withLikes()
             ->paginate(Reply::PER_PAGE);
 
+        $replies->each(function ($reply) {
+            $reply->append('is_liked');
+        });
+
         if (auth()->check()) {
             auth()->user()->read($thread);
         }

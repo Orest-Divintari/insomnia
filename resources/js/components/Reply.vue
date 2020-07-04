@@ -44,7 +44,7 @@
             <div class="flex-1 text-black-semi text-sm pr-48">
               <highlight :content="body"></highlight>
             </div>
-            <div v-if="isLiked" class="flex pl-1 mb-2">
+            <div v-if="hasLikes" class="flex pl-1 mb-2">
               <i v-if class="text-blue-like text-sm fas fa-thumbs-up"></i>
               <a
                 href
@@ -116,6 +116,9 @@ export default {
     },
     data() {
       return { body: this.body };
+    },
+    hasLikes() {
+      return this.reply.likes_count > 0;
     }
   },
   methods: {

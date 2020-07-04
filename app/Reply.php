@@ -5,7 +5,6 @@ namespace App;
 use App\Events\Subscription\ReplyWasLiked;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
@@ -173,12 +172,17 @@ class Reply extends Model
     public function scopeWithLikes(Builder $builder)
     {
         return $builder->with('likes')
-            ->withCount('likes')
-            ->addSelect(['is_liked' => Like::select(
-                DB::raw('CASE WHEN count(likes.id) > 0 THEN TRUE ELSE FALSE END')
-            )->whereColumn('replies.id', '=', 'likes.reply_id')
-                    ->groupBy('likes.reply_id'),
-            ]);
+            ->withCount('likes');
+    }
+
+    /**
+     * Determine whether the reply is liked by the authenticated user
+     *
+     * @return boolean
+     */
+    public function getIsLikedAttribute()
+    {
+        return $this->likes->contains('user_id', auth()->id());
     }
 
 }

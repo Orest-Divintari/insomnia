@@ -109,20 +109,17 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
-    public function a_reply_knows_about_its_likes()
+    public function a_like_knows_if_it_is_liked_by_the_authenticated_user()
     {
-        $user = create(User::class);
+        $user = $this->signIn();
         $thread = create(Thread::class);
         $reply = $thread->addReply(raw(Reply::class));
+
+        $this->assertFalse($reply->fresh()->is_liked);
+
         $reply->likedBy($user->id);
 
-        $this->assertCount(1, $reply->likes);
-        $this->assertNull($reply->is_liked);
-
-        $reply = Reply::withLikes()->whereId($reply->id)->first();
-
-        $this->assertCount(1, $reply->likes);
-        $this->assertTrue((bool) $reply->is_liked);
+        $this->assertTrue($reply->fresh()->is_liked);
     }
 
 }

@@ -2507,6 +2507,9 @@ __webpack_require__.r(__webpack_exports__);
       return {
         body: this.body
       };
+    },
+    hasLikes: function hasLikes() {
+      return this.reply.likes_count > 0;
     }
   },
   methods: {
@@ -60042,7 +60045,7 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _vm.isLiked
+                  _vm.hasLikes
                     ? _c("div", { staticClass: "flex pl-1 mb-2" }, [
                         _c("i", {
                           staticClass: "text-blue-like text-sm fas fa-thumbs-up"
