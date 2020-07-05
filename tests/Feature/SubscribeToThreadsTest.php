@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class SubscribeToThreadsTest extends TestCase
@@ -20,34 +21,77 @@ class SubscribeToThreadsTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_can_subscribe_to_a_thread()
+    public function when_a_user_creates_a_thread_automatically_is_subscribed_to_newly_created_thread()
     {
         $user = $this->signIn();
-        $thread = create(Thread::class);
+        $thread = raw(Thread::class);
 
-        $this->assertCount(0, $user->subscriptions);
-        $this->assertCount(0, $thread->subscribers);
+        $title = ['title' => $thread['title']];
 
-        $this->post(route('api.thread-subscriptions.store', $thread));
+        $response = $this->post(route('threads.store'), $thread);
 
         $this->assertCount(1, $user->fresh()->subscriptions);
-        $this->assertCount(1, $thread->fresh()->subscribers);
     }
 
     /** @test */
-    public function authenticated_users_can_unsubscribe_to_a_thread()
+    public function authenticated_users_can_subscribe_to_existing_thread()
     {
-        $user = $this->signIn();
         $thread = create(Thread::class);
 
-        $this->post(route('api.thread-subscriptions.store', $thread));
+        $user = $this->signIn();
+
+        $this->assertCount(0, $user->subscriptions);
+
+        $this->assertCount(0, $thread->subscriptions);
+
+        $prefersEmail = [
+            'email_notifications' => true,
+        ];
+
+        $this->post(route('api.thread-subscriptions.store', $thread), $prefersEmail);
+
+        $this->assertCount(1, $user->fresh()->subscriptions);
+
+        $this->assertCount(1, $thread->fresh()->subscriptions);
+
+    }
+
+    /** @test */
+    public function thread_subscription_requiress_email_notification_preference()
+    {
+        $thread = create(Thread::class);
+
+        $user = $this->signIn();
+
+        $this->assertCount(0, $user->subscriptions);
+
+        $this->assertCount(0, $thread->subscriptions);
+
+        $this->post(route('api.thread-subscriptions.store', $thread), [])
+            ->assertSessionHasErrors('email_notifications');
+    }
+
+    /** @test */
+    public function authenticated_users_can_unsubscribe_from_a_thread()
+    {
+        Notification::fake();
+
+        $thread = create(Thread::class);
+
+        $user = $this->signIn();
+
+        $prefersEmail = [
+            'email_notifications' => true,
+        ];
+        $this->post(route('api.thread-subscriptions.store', $thread), $prefersEmail);
 
         $this->assertCount(1, $user->subscriptions);
-        $this->assertCount(1, $thread->subscribers);
+        $this->assertCount(1, $thread->subscriptions);
 
         $this->delete(route('api.thread-subscriptions.destroy', $thread));
 
         $this->assertCount(0, $user->fresh()->subscriptions);
-        $this->assertCount(0, $thread->fresh()->subscribers);
+        $this->assertCount(0, $thread->fresh()->subscriptions);
     }
+
 }

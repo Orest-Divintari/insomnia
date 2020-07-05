@@ -1,5 +1,5 @@
 <script>
-import SubscribeButton from "./SubscribeButton";
+import SubscribeButton from "./subscription/SubscribeButton";
 export default {
   components: {
     SubscribeButton

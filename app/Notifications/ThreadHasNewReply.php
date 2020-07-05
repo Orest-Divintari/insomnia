@@ -34,7 +34,9 @@ class ThreadHasNewReply extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return $notifiable
+            ->subscription($this->thread->id)
+            ->prefers_email ? ['mail', 'database'] : ['database'];
     }
 
     /**
@@ -66,10 +68,5 @@ class ThreadHasNewReply extends Notification implements ShouldQueue
             'reply' => $this->reply,
             'type' => 'reply',
         ];
-    }
-
-    public function createMessage()
-    {
-        return '<a class="text-blue-mid">' . $this->reply->poster->name . '</a>' . 'replied to the thread -' . '<a class="text-blue-mid" href="' . route('threads.show', $this->thread) . '>' . $this->thread->title . '</a>';
     }
 }

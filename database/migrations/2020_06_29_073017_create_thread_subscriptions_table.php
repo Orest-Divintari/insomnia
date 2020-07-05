@@ -17,6 +17,7 @@ class CreateThreadSubscriptionsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('thread_id')->constrained();
+            $table->boolean('prefers_email')->default(true);
             $table->unique(['user_id', 'thread_id']);
             $table->timestamps();
         });

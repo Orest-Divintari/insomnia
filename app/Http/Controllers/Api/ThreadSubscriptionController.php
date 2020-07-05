@@ -11,21 +11,30 @@ class ThreadSubscriptionController extends Controller
      * Store a new thread subscription
      *
      * @param Thread $thread
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function store(Thread $thread)
     {
-        $thread->subscribe();
+        request()->validate([
+            'email_notifications' => 'required|boolean',
+        ]);
+
+        $thread->subscribe(auth()->id(), request('email_notifications'));
+
+        return response()->noContent();
+
     }
 
     /**
      * Delete an existing thread subscription
      *
      * @param Thread $thread
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Thread $thread)
     {
         $thread->unsubscribe();
+
+        return response()->noContent();
     }
 }

@@ -16,13 +16,14 @@ class LikeController extends Controller
      */
     public function store(Reply $reply)
     {
+
         $reply->likedBy(auth()->id());
 
-        return response('The post has been liked', 201);
+        return response('The post has been liked', 204);
     }
 
     /**
-     * Unlike a reply
+     * Unlike a the given reply
      *
      * @param Reply $reply
      * @return void
@@ -30,6 +31,6 @@ class LikeController extends Controller
     public function destroy(Reply $reply)
     {
         $reply->unlikedBy(auth()->id());
-        return response('The post has been unliked', 200);
+        return response('The post has been unliked', 204);
     }
 }

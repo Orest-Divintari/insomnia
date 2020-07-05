@@ -140,7 +140,6 @@ export default {
 
       // set starting dots
       if (this.currentPage - this.firstPage > 4) {
-        console.log("gsada");
         this.pages.push("...");
       }
 

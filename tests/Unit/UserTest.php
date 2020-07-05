@@ -87,4 +87,23 @@ class UserTest extends TestCase
 
     }
 
+    /** @test */
+    public function a_user_can_fetch_the_subscription_for_a_specific_thread()
+    {
+        $user = create(User::class);
+        $thread = create(Thread::class);
+        $thread->subscribe($user->id);
+
+        $this->assertEquals(
+            $user->id,
+            $user->subscription($thread->id)->user_id
+        );
+
+        $this->assertEquals(
+            $thread->id,
+            $user->subscription($thread->id)->thread_id
+        );
+
+    }
+
 }

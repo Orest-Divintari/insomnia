@@ -11,7 +11,7 @@
                     <img src="{{ auth()->user()->avatar_path }}" class="avatar-sm mr-1" alt="">
                     <p> {{ auth()->user()->name  }} </p>
                 </div>
-                <!-- <notification></notification> -->
+                <notification></notification>
             </div>
             @endauth
 

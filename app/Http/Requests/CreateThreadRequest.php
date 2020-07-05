@@ -39,6 +39,7 @@ class CreateThreadRequest extends FormRequest
      */
     public function persist()
     {
+
         return Thread::create(array_merge(
             $this->validated(),
             [

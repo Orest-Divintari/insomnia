@@ -42,6 +42,7 @@ class ThreadController extends Controller
     public function store(CreateThreadRequest $request)
     {
         $thread = $request->persist();
+
         return redirect(route('threads.show', $thread));
     }
 
@@ -71,6 +72,7 @@ class ThreadController extends Controller
         $thread->increment('views');
 
         return view('threads.show', compact('thread', 'replies'));
+
     }
 
 }

@@ -10,16 +10,16 @@ class ReplyWasLiked
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $reply;
     public $thread;
+    public $reply;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($reply, $thread)
+    public function __construct($thread, $reply)
     {
-        $this->reply = $reply;
         $this->thread = $thread;
+        $this->reply = $reply;
     }
 }

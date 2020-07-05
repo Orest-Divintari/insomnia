@@ -11,14 +11,16 @@ class ReplyHasNewLike extends Notification
     use Queueable;
 
     protected $reply;
+    protected $thread;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($reply)
+    public function __construct($thread, $reply)
     {
         $this->reply = $reply;
+        $this->thread = $thread;
     }
 
     /**
@@ -29,7 +31,9 @@ class ReplyHasNewLike extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return $notifiable
+            ->subscription($this->thread->id)
+            ->prefers_email ? ['mail', 'database'] : ['database'];
     }
 
     /**
@@ -40,6 +44,7 @@ class ReplyHasNewLike extends Notification
      */
     public function toMail($notifiable)
     {
+
         return (new MailMessage)
             ->view('emails.subscription.notify_reply_poster', [
                 'reply' => $this->reply,
@@ -54,6 +59,7 @@ class ReplyHasNewLike extends Notification
      */
     public function toArray($notifiable)
     {
+
         return [
             'reply' => $this->reply,
             'type' => 'like',

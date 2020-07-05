@@ -189,26 +189,29 @@ class Thread extends Model
     }
 
     /**
-     * A thread has subscribers
+     * A thread can have many subscriptions
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function subscribers()
+    public function subscriptions()
     {
-        return $this->belongsToMany(User::class, 'thread_subscriptions');
+        return $this->hasMany(ThreadSubscription::class);
     }
 
     /**
      * Subscribe a user to the current thread
      *
      * @param int|null $userId
+     * @param boolean $prefersEmail
      * @return void
      */
-    public function subscribe($userId = null)
+    public function subscribe($userId = null, $prefersEmail = true)
     {
-        $this->subscribers()->attach([
+        $this->subscriptions()->create([
             'user_id' => $userId ?? auth()->id(),
+            'prefers_email' => $prefersEmail,
         ]);
+
     }
 
     /**
@@ -219,9 +222,9 @@ class Thread extends Model
      */
     public function unsubscribe($userId = null)
     {
-        $this->subscribers()->detach([
+        $this->subscriptions()->where([
             'user_id' => $userId ?? auth()->id(),
-        ]);
+        ])->delete();
     }
 
     /**
@@ -231,7 +234,7 @@ class Thread extends Model
      */
     public function getSubscribedByAuthUserAttribute()
     {
-        return $this->subscribers()->where([
+        return $this->subscriptions()->where([
             'user_id' => auth()->id(),
         ])->exists();
 
@@ -245,7 +248,7 @@ class Thread extends Model
      */
     public function isSubscribedBy($userId)
     {
-        return $this->subscribers()->where([
+        return $this->subscriptions()->where([
             'user_id' => $userId,
         ])->exists();
     }

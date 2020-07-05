@@ -44,8 +44,8 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function authenticated_users_that_have_confirmed_their_email_may_post_threads()
     {
-        $user = $this->signIn();
-        $thread = raw(Thread::class, ['user_id' => $user->id]);
+        $this->signIn();
+        $thread = raw(Thread::class);
         $title = ['title' => $thread['title']];
         $response = $this->post(route('threads.store'), $thread);
         $this->assertDatabaseHas('threads', $title);

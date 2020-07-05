@@ -22,7 +22,7 @@ class ThreadObserver
         ]);
 
         if (auth()->check()) {
-            $thread->subscribe(auth()->id());
+            $thread->subscribe();
         }
     }
 

@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-
     const NAME_LENGTH = 10;
     protected $appends = ['avatar_path', 'short_name'];
     use Notifiable;
@@ -91,7 +90,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Fetch the posts that were liked by the user
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function likes()
     {
@@ -99,13 +98,24 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get the threads the user has subscribed to
+     * Get the subscriptions associated with the user
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function subscriptions()
     {
-        return $this->belongsToMany(Thread::class, 'thread_subscriptions');
+        return $this->hasMany(ThreadSubscription::class);
+    }
+
+    /**
+     * Fetch the subscription for a specific thread
+     *
+     * @param  integer $threadId
+     * @return
+     */
+    public function subscription($threadId)
+    {
+        return ThreadSubscription::Of($threadId, $this->id);
     }
 
 }

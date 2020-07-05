@@ -130,7 +130,7 @@ class Reply extends Model
                 'user_id' => $currentUserId,
             ]);
 
-            event(new ReplyWasLiked($this, $this->thread));
+            event(new ReplyWasLiked($this->thread, $this));
         }
     }
 

@@ -39,7 +39,7 @@
                     <button class="btn-thread-control mr-1">Ignore</button>
 
                     <subscribe-button thread-slug="{{ $thread->slug }}"
-                        subscription-status="{{ json_encode($thread->subscribed_by_auth_user)}}" class="mr-1">
+                        subscription-status="{{ json_encode($thread->subscribedByAuthUser)}}" class="mr-1">
                     </subscribe-button>
 
 

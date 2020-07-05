@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Notifications\ThreadHasNewReply;
 use App\Observers\ThreadObserver;
 use App\Reply;
 use App\Thread;
@@ -18,7 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(ThreadHasNewReply::class, function ($app, $params) {
+            return new ThreadHasNewReply($params['thread'], $params['reply']);
+        });
     }
 
     /**

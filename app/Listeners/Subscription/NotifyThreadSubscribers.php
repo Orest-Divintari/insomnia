@@ -25,10 +25,14 @@ class NotifyThreadSubscribers
      */
     public function handle(NewReplyWasPostedToThread $event)
     {
-        $event->thread->subscribers()
+        $event->thread->subscriptions()
             ->where('user_id', '!=', $event->reply->poster->id)
             ->get()
-            ->each
-            ->notify(new ThreadHasNewReply($event->thread, $event->reply));
+            ->each(function ($subscription) use ($event) {
+                $subscription->user->notify(
+                    new ThreadHasNewReply($event->thread, $event->reply)
+                );
+            });
+
     }
 }

@@ -5,9 +5,11 @@ namespace App\Listeners\Subscription;
 use App\Events\Subscription\ReplyWasLiked;
 use App\Notifications\ReplyHasNewLike;
 use App\Reply;
+use App\User;
 
 class NotifyReplyPoster
 {
+    protected $event;
     /**
      * Create the event listener.
      *
@@ -15,7 +17,7 @@ class NotifyReplyPoster
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -26,13 +28,28 @@ class NotifyReplyPoster
      */
     public function handle(ReplyWasLiked $event)
     {
-        $poster = $event->reply->poster;
+        $this->event = $event;
 
-        if (auth()->id() == $poster->id || !$event->thread->isSubscribedBy($poster->id)) {
+        $poster = $this->event->reply->poster;
+
+        if ($this->isOwnerOfReply($poster)) {
             return;
         }
 
-        $poster->notify(new ReplyHasNewLike($event->reply));
+        $poster->notify(new ReplyHasNewLike($event->thread, $event->reply));
+
+    }
+
+    /**
+     * Determine whether the user who liked the reply is the same user who posted the reply
+     *
+     * @param  ReplyWasLiked $event
+     * @param  \App\User $poster
+     * @return boolean
+     */
+    public function isOwnerOfReply($poster)
+    {
+        return auth()->id() == $poster->id || !$this->event->thread->isSubscribedBy($poster->id);
 
     }
 }
