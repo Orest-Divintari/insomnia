@@ -30,7 +30,7 @@
                         class="w-full bg-semi-white-mid border border-light p-1 text-xl rounded focus:outline-none "
                         placeholder="Thread title" value="{{ old('title') }} " required>
                 </div>
-                <wysiwyg value="{{ old('body') }}" name="body" class="p-4" classes="h-64" required>
+                <wysiwyg value="{{ old('body') }}" name="body" class="p-4" :style-attributes="'min-h-64'" required>
                 </wysiwyg>
 
                 <div class="border-t border-blue-border">

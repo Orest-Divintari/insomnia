@@ -8,11 +8,9 @@
         <form @submit.prevent="post">
           <wysiwyg
             v-model="body"
-            name="body"
-            classes="h-32 text-sm"
+            :style-attributes="'reply-form'"
             placeholder="Write your reply..."
           ></wysiwyg>
-
           <button type="submit" class="mt-4 form-button">Post Reply</button>
         </form>
       </div>
@@ -23,6 +21,7 @@
 <script>
 import EventBus from "../eventBus";
 export default {
+  components: {},
   data() {
     return {
       body: ""
@@ -44,6 +43,23 @@ export default {
       EventBus.$emit("newReply", data);
       this.body = "";
     }
+  },
+  mounted() {
+    EventBus.$on("quotedReply", function(data) {
+      // var element = document.querySelector("trix-editor");
+      // // '<blockquote class="blockquote"> <div class="container"> <div class="title">ola anthira</div> <div>ola kala</div> </div></blockquote>';
+      // element.editor.insertHTML("<blockquote> 5");
+      // element.editor.insertLineBreak();
+      // element.editor.insertHTML("<a href='google.com> 3 </a>");
+      // element.editor.insertLineBreak();
+      // var newDiv = document.createElement("div");
+      // var newText = document.createTextNode("hello modasafka");
+      // newDiv.appendChild(newText);
+      // newDiv.classList.add("bg-red-500");
+      // element.appendChild(newDiv);
+      // // element.innertHTML =
+      // //   "<p> this is some <strong> strong </strong> text</p>";
+    });
   }
 };
 </script>

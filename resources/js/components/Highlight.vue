@@ -6,7 +6,7 @@
 
 <script>
 import Highlighter from "highlight.js";
-import "highlight.js/styles/github.css";
+import "highlight.js/styles/default.css";
 export default {
   props: ["content"],
   mounted() {
@@ -29,3 +29,5 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+</style>

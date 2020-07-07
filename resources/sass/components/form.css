@@ -75,3 +75,7 @@ div.form-left-col {
         @apply block;
     }
 }
+
+.reply-form {
+    @apply .min-h-32;
+}

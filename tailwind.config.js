@@ -10,6 +10,10 @@ module.exports = {
             xl: "1280px"
         },
         extend: {
+            minHeight: {
+                "64": "16rem",
+                "32": "8rem"
+            },
             flexGrow: {
                 "2": 2
             },
@@ -23,6 +27,7 @@ module.exports = {
                 "blue-mid-dark": "#4F6C98",
                 "blue-reply-border": "#A2BBDF",
                 "blue-link-menu": "#2C435F",
+                "gray-50": "#F0F0F0",
                 "gray-light": "#979DA5",
                 "gray-lighter": "#D7E2EF",
                 "gray-lightest": "#949DA7",

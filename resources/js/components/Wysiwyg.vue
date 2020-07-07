@@ -1,52 +1,96 @@
 <template>
   <div>
-    <input :value="value" :name="name" id="trix" type="hidden" />
-    <trix-editor
-      class="border border-blue-light"
-      :class="classes"
-      input="trix"
-      ref="trix"
-      :placeholder="placeholder"
-    ></trix-editor>
+    <quill-editor
+      ref="myTextEditor"
+      :disabled="readOnly"
+      v-model="content"
+      :options="editorOptions"
+      required
+    ></quill-editor>
   </div>
 </template>
 
 <script>
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
+import { Quill, quillEditor } from "vue-quill-editor";
 import EventBus from "../eventBus";
-import Trix from "trix";
+
 export default {
   props: {
-    name: {
-      type: String,
-      default: ""
-    },
-    value: {
+    styleAttributes: {
       type: String,
       default: ""
     },
     placeholder: {
       type: String,
-      default: " "
+      default: ""
     },
-    classes: {
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
+    value: {
       type: String,
       default: ""
     }
   },
+  components: {
+    quillEditor
+  },
+  data() {
+    return {
+      content: this.value,
+      editorOptions: {
+        placeholder: this.placeholder
+      }
+    };
+  },
   methods: {
     clearInput() {
-      this.$refs.trix.value = "";
+      this.content = "";
+    },
+    focus() {
+      var editor = this.$el.querySelector(".ql-editor");
+      editor.focus({
+        preventScroll: true
+      });
+    },
+    styleEditor() {
+      if (this.styleAttributes) {
+        var editor = this.$el.querySelector(".ql-editor");
+        editor.classList.add(this.styleAttributes);
+      }
+    },
+    initializeSettings() {
+      this.styleEditor();
+      this.focus();
+    }
+  },
+
+  // mounted() {
+  //   // var htmlToInsert =
+  //   //   "<p class='bg-red-500 text-blue-500'>here is some <strong>awesome</strong> text</p>";
+  //   // editor[0].innerHTML = htmlToInsert;
+  // },
+  watch: {
+    content(newValue, oldValue) {
+      this.$emit("input", newValue);
     }
   },
   mounted() {
-    this.$refs.trix.addEventListener("trix-change", e => {
-      this.$emit("input", e.target.innerHTML);
-    });
-
+    this.$emit("input", this.content);
     EventBus.$on("newReply", this.clearInput);
+    this.initializeSettings();
+  },
+  created() {
+    if (this.readOnly) {
+      this.editorOptions["theme"] = "bubble";
+    }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 </style>

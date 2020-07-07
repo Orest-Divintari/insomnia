@@ -31,18 +31,18 @@
           <div v-if="editing">
             <form @submit.prevent="update">
               <input type="text" />
-              <wysiwyg v-model="body" name="body"></wysiwyg>
+              <wysiwyg v-model="body" :style-attributes="'reply-form'" name="body"></wysiwyg>
               <div class="form-button-container justify-center">
                 <button class="form-button mr-3" type="submit">
                   <span class="fas fa-save mr-1"></span> Save
                 </button>
-                <button class="form-button" @click="editing = false" type="submit">Cancel</button>
+                <button class="form-button" @click="cancel" type="submit">Cancel</button>
               </div>
             </form>
           </div>
           <div v-else class="flex flex-col h-full pb-8">
             <div class="flex-1 text-black-semi text-sm pr-48">
-              <highlight :content="body"></highlight>
+              <wysiwyg v-model="body" :read-only="true"></wysiwyg>
             </div>
             <div v-if="hasLikes" class="flex pl-1 mb-2">
               <i v-if class="text-blue-like text-sm fas fa-thumbs-up"></i>
@@ -68,10 +68,7 @@
               </div>
               <div class="flex">
                 <like-button @like="updateLikeStatus" :reply="reply"></like-button>
-                <button class="btn-reply-control">
-                  <span class="fas fa-reply"></span>
-                  Reply
-                </button>
+                <quote-reply :reply="reply"></quote-reply>
               </div>
             </div>
           </div>
@@ -84,10 +81,13 @@
 <script>
 import Highlight from "./Highlight";
 import LikeButton from "./LikeButton";
+import QuoteReply from "./QuoteReply";
+
 export default {
   components: {
     Highlight,
-    LikeButton
+    LikeButton,
+    QuoteReply
   },
   props: {
     threadPoster: {
@@ -134,6 +134,10 @@ export default {
     },
     updated() {
       this.editing = false;
+    },
+    cancel() {
+      this.editing = false;
+      this.body = this.reply.body;
     }
   }
 };
