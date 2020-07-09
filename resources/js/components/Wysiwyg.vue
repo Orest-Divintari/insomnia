@@ -16,9 +16,17 @@ import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import { Quill, quillEditor } from "vue-quill-editor";
 import EventBus from "../eventBus";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 export default {
   props: {
+    shouldClear: {
+      type: Boolean,
+      default: false
+    },
+    quotedData: {
+      default: ""
+    },
     styleAttributes: {
       type: String,
       default: ""
@@ -77,7 +85,15 @@ export default {
   watch: {
     content(newValue, oldValue) {
       this.$emit("input", newValue);
+    },
+    quotedData(newValue, oldValue) {
+      var editor = this.$el.querySelector(".ql-editor");
+      editor.innerHTML = newValue;
+    },
+    shouldClear() {
+      this.content = "";
     }
+    //  <p class='text-blue-500'> <a href='google.com'> this is a link </a> here is some <strong>awesome</strong> text</p>
   },
   mounted() {
     this.$emit("input", this.content);
@@ -93,4 +109,7 @@ export default {
 </script>
 
 <style lang="scss">
+blockquote {
+  @apply .bg-blue-500;
+}
 </style>

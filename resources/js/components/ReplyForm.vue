@@ -10,6 +10,8 @@
             v-model="body"
             :style-attributes="'reply-form'"
             placeholder="Write your reply..."
+            :quoted-data="quotedData"
+            :shouldClear="posted"
           ></wysiwyg>
           <button type="submit" class="mt-4 form-button">Post Reply</button>
         </form>
@@ -24,7 +26,9 @@ export default {
   components: {},
   data() {
     return {
-      body: ""
+      body: "",
+      quotedData: "",
+      posted: false
     };
   },
   computed: {
@@ -40,12 +44,21 @@ export default {
         .catch(error => console.log(error.response));
     },
     addReply(data) {
-      EventBus.$emit("newReply", data);
+      this.posted = true;
+      // EventBus.$emit("newReply", data);
       this.body = "";
     }
   },
   mounted() {
-    EventBus.$on("quotedReply", function(data) {
+    EventBus.$on("quotedReply", quotedData => {
+      this.quotedData = quotedData;
+      // var editor = this.$children.querySelector(".ql-editor");
+      // console.log(this.$refs);
+      // editor.innerHTML = quotedData;
+      //   // var htmlToInsert =
+      //   //   "<p class='bg-red-500 text-blue-500'>here is some <strong>awesome</strong> text</p>";
+      //   // editor[0].innerHTML = htmlToInsert;
+      // },
       // var element = document.querySelector("trix-editor");
       // // '<blockquote class="blockquote"> <div class="container"> <div class="title">ola anthira</div> <div>ola kala</div> </div></blockquote>';
       // element.editor.insertHTML("<blockquote> 5");

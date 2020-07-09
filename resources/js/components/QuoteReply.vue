@@ -18,7 +18,9 @@ export default {
   },
   methods: {
     data() {
-      return '<blockquote class="blockquote"> <div class="container"> <div class="title">ola anthira</div> <div>ola kala</div> </div></blockquote>';
+      return "<p class='bg-gray-50'> <a> mans </a> </p> <blockquote>  mans </blockquote>";
+
+      // return '<blockquote class="blockquote"> <div class="bg-red-500"> <div class="title">ola anthira</div> <div>ola kala</div> </div></blockquote>';
     },
     quoteReply() {
       EventBus.$emit("quotedReply", this.data());
