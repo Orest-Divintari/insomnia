@@ -7,6 +7,8 @@
       :index="index"
       :reply="reply"
       :threadPoster="thread.poster.name"
+      :currentPage="dataset.current_page"
+      :numberOfRepliesPerPage="dataset.per_page"
     ></reply>
     <paginator @isPaginated="isPaginated=true" :dataset="dataset"></paginator>
     <reply-form v-if="signedIn"></reply-form>

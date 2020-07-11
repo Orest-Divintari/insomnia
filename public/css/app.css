@@ -468,18 +468,658 @@ div.form-left-col {
   color: rgba(44, 44, 44, var(--text-opacity));
   font-size: 0.9375rem;
 }
-trix-editor blockquote {
-  --text-opacity: 1;
-  color: #f56565;
-  color: rgba(245, 101, 101, var(--text-opacity));
-  --bg-opacity: 1;
-  background-color: #e2e8f0;
-  background-color: rgba(226, 232, 240, var(--bg-opacity));
+.reply-body h1 {
+  display: block;
+  font-size: 2em;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
 }
 
-h1 {
-  font-size: 30px;
+.reply-body h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  margin-left: 0;
+  margin-right: 0;
   font-weight: bold;
+}
+
+.reply-body h3 {
+  display: block;
+  font-size: 1.17em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.reply-body h4 {
+  display: block;
+  margin-top: 1.33em;
+  margin-bottom: 1.33em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.reply-body h5 {
+  display: block;
+  font-size: 0.83em;
+  margin-top: 1.67em;
+  margin-bottom: 1.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.reply-body h6 {
+  display: block;
+  font-size: 0.67em;
+  margin-top: 2.33em;
+  margin-bottom: 2.33em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.reply-body sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.reply-body sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+.reply-body ul {
+  display: block;
+  list-style-type: disc;
+  margin-top: 1em;
+  margin-bottom: 1 em;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 40px;
+}
+
+.reply-body ol {
+  display: block;
+  list-style-type: decimal;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 40px;
+}
+
+.reply-body ol li {
+  display: list-item;
+}
+
+.reply-body ul li {
+  display: list-item;
+}
+
+/*!
+ * Quill Editor v1.3.7
+ * https://quilljs.com/
+ * Copyright (c) 2014, Jason Chen
+ * Copyright (c) 2013, salesforce.com
+ */
+
+.ql-container {
+  box-sizing: border-box;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  height: 100%;
+  margin: 0px;
+  position: relative;
+}
+
+.ql-container.ql-disabled .ql-tooltip {
+  visibility: hidden;
+}
+
+.ql-container.ql-disabled .ql-editor ul[data-checked] > li::before {
+  pointer-events: none;
+}
+
+.ql-clipboard {
+  left: -100000px;
+  height: 1px;
+  overflow-y: hidden;
+  position: absolute;
+  top: 50%;
+}
+
+.ql-clipboard p {
+  margin: 0;
+  padding: 0;
+}
+
+.ql-editor {
+  box-sizing: border-box;
+  line-height: 1.42;
+  height: 100%;
+  outline: none;
+  overflow-y: auto;
+  padding: 12px 15px;
+  -o-tab-size: 4;
+     tab-size: 4;
+  -moz-tab-size: 4;
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.reply-body > * {
+  cursor: text;
+}
+
+.reply-body p,
+.reply-body ol,
+.reply-body ul,
+.reply-body pre,
+.reply-body blockquote,
+.reply-body h1,
+.reply-body h2,
+.reply-body h3,
+.reply-body h4,
+.reply-body h5,
+.reply-body h6 {
+  margin: 0;
+  padding: 0;
+  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8
+        list-9;
+}
+
+.reply-body ol,
+.reply-body ul {
+  padding-left: 1.5em;
+}
+
+.reply-body ol > li,
+.reply-body ul > li {
+  list-style-type: none;
+}
+
+.reply-body ul > li::before {
+  content: "\2022";
+}
+
+.reply-body ul[data-checked="true"],
+.reply-body ul[data-checked="false"] {
+  pointer-events: none;
+}
+
+.reply-body ul[data-checked="true"] > li *,
+.reply-body ul[data-checked="false"] > li * {
+  pointer-events: all;
+}
+
+.reply-body ul[data-checked="true"] > li::before,
+.reply-body ul[data-checked="false"] > li::before {
+  color: #777;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.reply-body ul[data-checked="true"] > li::before {
+  content: "\2611";
+}
+
+.reply-body ul[data-checked="false"] > li::before {
+  content: "\2610";
+}
+
+.reply-body li::before {
+  display: inline-block;
+  white-space: nowrap;
+  width: 1.2em;
+}
+
+.reply-body li:not(.ql-direction-rtl)::before {
+  margin-left: -1.5em;
+  margin-right: 0.3em;
+  text-align: right;
+}
+
+.reply-body li.ql-direction-rtl::before {
+  margin-left: 0.3em;
+  margin-right: -1.5em;
+}
+
+.reply-body ol li:not(.ql-direction-rtl),
+.reply-body ul li:not(.ql-direction-rtl) {
+  padding-left: 1.5em;
+}
+
+.reply-body ol li.ql-direction-rtl,
+.reply-body ul li.ql-direction-rtl {
+  padding-right: 1.5em;
+}
+
+.reply-body ol li {
+  counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8
+        list-9;
+  counter-increment: list-0;
+}
+
+.reply-body ol li:before {
+  content: counter(list-0, decimal) ". ";
+}
+
+.reply-body ol li.ql-indent-1 {
+  counter-increment: list-1;
+}
+
+.reply-body ol li.ql-indent-1:before {
+  content: counter(list-1, lower-alpha) ". ";
+}
+
+.reply-body ol li.ql-indent-1 {
+  counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
+
+.reply-body ol li.ql-indent-2 {
+  counter-increment: list-2;
+}
+
+.reply-body ol li.ql-indent-2:before {
+  content: counter(list-2, lower-roman) ". ";
+}
+
+.reply-body ol li.ql-indent-2 {
+  counter-reset: list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+}
+
+.reply-body ol li.ql-indent-3 {
+  counter-increment: list-3;
+}
+
+.reply-body ol li.ql-indent-3:before {
+  content: counter(list-3, decimal) ". ";
+}
+
+.reply-body ol li.ql-indent-3 {
+  counter-reset: list-4 list-5 list-6 list-7 list-8 list-9;
+}
+
+.reply-body ol li.ql-indent-4 {
+  counter-increment: list-4;
+}
+
+.reply-body ol li.ql-indent-4:before {
+  content: counter(list-4, lower-alpha) ". ";
+}
+
+.reply-body ol li.ql-indent-4 {
+  counter-reset: list-5 list-6 list-7 list-8 list-9;
+}
+
+.reply-body ol li.ql-indent-5 {
+  counter-increment: list-5;
+}
+
+.reply-body ol li.ql-indent-5:before {
+  content: counter(list-5, lower-roman) ". ";
+}
+
+.reply-body ol li.ql-indent-5 {
+  counter-reset: list-6 list-7 list-8 list-9;
+}
+
+.reply-body ol li.ql-indent-6 {
+  counter-increment: list-6;
+}
+
+.reply-body ol li.ql-indent-6:before {
+  content: counter(list-6, decimal) ". ";
+}
+
+.reply-body ol li.ql-indent-6 {
+  counter-reset: list-7 list-8 list-9;
+}
+
+.reply-body ol li.ql-indent-7 {
+  counter-increment: list-7;
+}
+
+.reply-body ol li.ql-indent-7:before {
+  content: counter(list-7, lower-alpha) ". ";
+}
+
+.reply-body ol li.ql-indent-7 {
+  counter-reset: list-8 list-9;
+}
+
+.reply-body ol li.ql-indent-8 {
+  counter-increment: list-8;
+}
+
+.reply-body ol li.ql-indent-8:before {
+  content: counter(list-8, lower-roman) ". ";
+}
+
+.reply-body ol li.ql-indent-8 {
+  counter-reset: list-9;
+}
+
+.reply-body ol li.ql-indent-9 {
+  counter-increment: list-9;
+}
+
+.reply-body ol li.ql-indent-9:before {
+  content: counter(list-9, decimal) ". ";
+}
+
+.reply-body .ql-indent-1:not(.ql-direction-rtl) {
+  padding-left: 3em;
+}
+
+.reply-body li.ql-indent-1:not(.ql-direction-rtl) {
+  padding-left: 4.5em;
+}
+
+.reply-body .ql-indent-1.ql-direction-rtl.ql-align-right {
+  padding-right: 3em;
+}
+
+.reply-body li.ql-indent-1.ql-direction-rtl.ql-align-right {
+  padding-right: 4.5em;
+}
+
+.reply-body .ql-indent-2:not(.ql-direction-rtl) {
+  padding-left: 6em;
+}
+
+.reply-body li.ql-indent-2:not(.ql-direction-rtl) {
+  padding-left: 7.5em;
+}
+
+.reply-body .ql-indent-2.ql-direction-rtl.ql-align-right {
+  padding-right: 6em;
+}
+
+.reply-body li.ql-indent-2.ql-direction-rtl.ql-align-right {
+  padding-right: 7.5em;
+}
+
+.reply-body .ql-indent-3:not(.ql-direction-rtl) {
+  padding-left: 9em;
+}
+
+.reply-body li.ql-indent-3:not(.ql-direction-rtl) {
+  padding-left: 10.5em;
+}
+
+.reply-body .ql-indent-3.ql-direction-rtl.ql-align-right {
+  padding-right: 9em;
+}
+
+.reply-body li.ql-indent-3.ql-direction-rtl.ql-align-right {
+  padding-right: 10.5em;
+}
+
+.reply-body .ql-indent-4:not(.ql-direction-rtl) {
+  padding-left: 12em;
+}
+
+.reply-body li.ql-indent-4:not(.ql-direction-rtl) {
+  padding-left: 13.5em;
+}
+
+.reply-body .ql-indent-4.ql-direction-rtl.ql-align-right {
+  padding-right: 12em;
+}
+
+.reply-body li.ql-indent-4.ql-direction-rtl.ql-align-right {
+  padding-right: 13.5em;
+}
+
+.reply-body .ql-indent-5:not(.ql-direction-rtl) {
+  padding-left: 15em;
+}
+
+.reply-body li.ql-indent-5:not(.ql-direction-rtl) {
+  padding-left: 16.5em;
+}
+
+.reply-body .ql-indent-5.ql-direction-rtl.ql-align-right {
+  padding-right: 15em;
+}
+
+.reply-body li.ql-indent-5.ql-direction-rtl.ql-align-right {
+  padding-right: 16.5em;
+}
+
+.reply-body .ql-indent-6:not(.ql-direction-rtl) {
+  padding-left: 18em;
+}
+
+.reply-body li.ql-indent-6:not(.ql-direction-rtl) {
+  padding-left: 19.5em;
+}
+
+.reply-body .ql-indent-6.ql-direction-rtl.ql-align-right {
+  padding-right: 18em;
+}
+
+.reply-body li.ql-indent-6.ql-direction-rtl.ql-align-right {
+  padding-right: 19.5em;
+}
+
+.reply-body .ql-indent-7:not(.ql-direction-rtl) {
+  padding-left: 21em;
+}
+
+.reply-body li.ql-indent-7:not(.ql-direction-rtl) {
+  padding-left: 22.5em;
+}
+
+.reply-body .ql-indent-7.ql-direction-rtl.ql-align-right {
+  padding-right: 21em;
+}
+
+.reply-body li.ql-indent-7.ql-direction-rtl.ql-align-right {
+  padding-right: 22.5em;
+}
+
+.reply-body .ql-indent-8:not(.ql-direction-rtl) {
+  padding-left: 24em;
+}
+
+.reply-body li.ql-indent-8:not(.ql-direction-rtl) {
+  padding-left: 25.5em;
+}
+
+.reply-body .ql-indent-8.ql-direction-rtl.ql-align-right {
+  padding-right: 24em;
+}
+
+.reply-body li.ql-indent-8.ql-direction-rtl.ql-align-right {
+  padding-right: 25.5em;
+}
+
+.reply-body .ql-indent-9:not(.ql-direction-rtl) {
+  padding-left: 27em;
+}
+
+.reply-body li.ql-indent-9:not(.ql-direction-rtl) {
+  padding-left: 28.5em;
+}
+
+.reply-body .ql-indent-9.ql-direction-rtl.ql-align-right {
+  padding-right: 27em;
+}
+
+.reply-body li.ql-indent-9.ql-direction-rtl.ql-align-right {
+  padding-right: 28.5em;
+}
+
+.reply-body .ql-video {
+  display: block;
+  max-width: 100%;
+}
+
+.reply-body .ql-video.ql-align-center {
+  margin: 0 auto;
+}
+
+.reply-body .ql-video.ql-align-right {
+  margin: 0 0 0 auto;
+}
+
+.reply-body .ql-bg-black {
+  background-color: #000;
+}
+
+.reply-body .ql-bg-red {
+  background-color: #e60000;
+}
+
+.reply-body .ql-bg-orange {
+  background-color: #f90;
+}
+
+.reply-body .ql-bg-yellow {
+  background-color: #ff0;
+}
+
+.reply-body .ql-bg-green {
+  background-color: #008a00;
+}
+
+.reply-body .ql-bg-blue {
+  background-color: #06c;
+}
+
+.reply-body .ql-bg-purple {
+  background-color: #93f;
+}
+
+.reply-body .ql-color-white {
+  color: #fff;
+}
+
+.reply-body .ql-color-red {
+  color: #e60000;
+}
+
+.reply-body .ql-color-orange {
+  color: #f90;
+}
+
+.reply-body .ql-color-yellow {
+  color: #ff0;
+}
+
+.reply-body .ql-color-green {
+  color: #008a00;
+}
+
+.reply-body .ql-color-blue {
+  color: #06c;
+}
+
+.reply-body .ql-color-purple {
+  color: #93f;
+}
+
+.reply-body .ql-font-serif {
+  font-family: Georgia, Times New Roman, serif;
+}
+
+.reply-body .ql-font-monospace {
+  font-family: Monaco, Courier New, monospace;
+}
+
+.reply-body .ql-size-small {
+  font-size: 0.75em;
+}
+
+.reply-body .ql-size-large {
+  font-size: 1.5em;
+}
+
+.reply-body .ql-size-huge {
+  font-size: 2.5em;
+}
+
+.reply-body .ql-direction-rtl {
+  direction: rtl;
+  text-align: inherit;
+}
+
+.reply-body .ql-align-center {
+  text-align: center;
+}
+
+.reply-body .ql-align-justify {
+  text-align: justify;
+}
+
+.reply-body .ql-align-right {
+  text-align: right;
+}
+
+.reply-body.ql-blank::before {
+  color: rgba(0, 0, 0, 0.6);
+  content: attr(data-placeholder);
+  font-style: italic;
+  left: 15px;
+  pointer-events: none;
+  position: absolute;
+  right: 15px;
+}
+
+.reply-body a:-webkit-any-link {
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.reply-body a:link {
+  color: (internal value);
+  text-decoration: underline;
+  cursor: auto;
+}
+
+.reply-body a:visited {
+  color: (internal value);
+  text-decoration: underline;
+  cursor: auto;
+}
+
+.reply-body a:link:active {
+  color: (internal value);
+}
+
+.reply-body a:visited:active {
+  color: (internal value);
+}
+
+.reply-body blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  margin-left: 0px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+.reply-body blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
 }
 @charset "UTF-8";
 

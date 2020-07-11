@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import Parchment from "parchment";
+
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
@@ -52,7 +54,8 @@ export default {
       content: this.value,
       editorOptions: {
         placeholder: this.placeholder
-      }
+      },
+      editor: {}
     };
   },
   methods: {
@@ -60,15 +63,13 @@ export default {
       this.content = "";
     },
     focus() {
-      var editor = this.$el.querySelector(".ql-editor");
-      editor.focus({
+      this.editor.focus({
         preventScroll: true
       });
     },
     styleEditor() {
       if (this.styleAttributes) {
-        var editor = this.$el.querySelector(".ql-editor");
-        editor.classList.add(this.styleAttributes);
+        this.editor.classList.add(this.styleAttributes);
       }
     },
     initializeSettings() {
@@ -77,25 +78,20 @@ export default {
     }
   },
 
-  // mounted() {
-  //   // var htmlToInsert =
-  //   //   "<p class='bg-red-500 text-blue-500'>here is some <strong>awesome</strong> text</p>";
-  //   // editor[0].innerHTML = htmlToInsert;
-  // },
   watch: {
     content(newValue, oldValue) {
       this.$emit("input", newValue);
     },
     quotedData(newValue, oldValue) {
-      var editor = this.$el.querySelector(".ql-editor");
-      editor.innerHTML = newValue;
+      this.editor.innerHTML = newValue;
+      this.focus();
     },
     shouldClear() {
       this.content = "";
     }
-    //  <p class='text-blue-500'> <a href='google.com'> this is a link </a> here is some <strong>awesome</strong> text</p>
   },
   mounted() {
+    this.editor = this.$refs.myTextEditor.$el.querySelector(".ql-editor");
     this.$emit("input", this.content);
     EventBus.$on("newReply", this.clearInput);
     this.initializeSettings();
@@ -108,8 +104,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
-blockquote {
-  @apply .bg-blue-500;
-}
+<style lang="scss" >
 </style>

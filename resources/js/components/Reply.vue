@@ -24,7 +24,7 @@
           <div class="flex items-center text-xs text-gray-lightest">
             <a class="mr-3 fas fa-share-alt"></a>
             <a v-if="signedIn" class="mx-3 far fa-bookmark"></a>
-            <div class="bg-blue-reply-border text-white px-5/2 py-2">#{{ index + 1 }}</div>
+            <div class="bg-blue-reply-border text-white px-5/2 py-2">#{{ replyNumber }}</div>
           </div>
         </div>
         <div class="p-5/2 h-full">
@@ -41,8 +41,8 @@
             </form>
           </div>
           <div v-else class="flex flex-col h-full pb-8">
-            <div class="flex-1 text-black-semi text-sm pr-48">
-              <wysiwyg v-model="body" :read-only="true"></wysiwyg>
+            <div class="flex-1 text-black-semi text-sm pr-48 reply-body">
+              <highlight :content="body"></highlight>
             </div>
             <div v-if="hasLikes" class="flex pl-1 mb-2">
               <i v-if class="text-blue-like text-sm fas fa-thumbs-up"></i>
@@ -68,7 +68,12 @@
               </div>
               <div class="flex">
                 <like-button @like="updateLikeStatus" :reply="reply"></like-button>
-                <quote-reply :reply="reply"></quote-reply>
+                <quote-reply
+                  :perPage="numberOfRepliesPerPage"
+                  :currentPage="currentPage"
+                  :replyNumber="replyNumber "
+                  :reply="reply"
+                ></quote-reply>
               </div>
             </div>
           </div>
@@ -101,6 +106,12 @@ export default {
     reply: {
       type: Object,
       default: {}
+    },
+    currentPage: {
+      type: Number
+    },
+    numberOfRepliesPerPage: {
+      type: Number
     }
   },
   data() {
@@ -119,6 +130,11 @@ export default {
     },
     hasLikes() {
       return this.reply.likes_count > 0;
+    },
+    replyNumber() {
+      return (
+        (this.currentPage - 1) * this.numberOfRepliesPerPage + this.index + 1
+      );
     }
   },
   methods: {

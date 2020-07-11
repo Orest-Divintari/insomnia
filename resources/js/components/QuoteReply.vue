@@ -14,20 +14,52 @@ export default {
     reply: {
       type: Object,
       default: {}
+    },
+    replyNumber: {
+      type: Number
+    },
+    perPage: {
+      type: Number
+    },
+    currentPage: {
+      type: Number
     }
   },
   methods: {
     data() {
-      return "<p class='bg-gray-50'> <a> mans </a> </p> <blockquote>  mans </blockquote>";
-
-      // return '<blockquote class="blockquote"> <div class="bg-red-500"> <div class="title">ola anthira</div> <div>ola kala</div> </div></blockquote>';
+      return (
+        "<blockquote> <a href=" +
+        this.goToReply +
+        ">" +
+        this.reply.poster.name +
+        " said to post " +
+        this.replyNumber +
+        " </a> </blockquote> <br><br>"
+      );
     },
     quoteReply() {
       EventBus.$emit("quotedReply", this.data());
+    }
+  },
+  computed: {
+    goToReply() {
+      if (
+        this.replyNumber > this.perPage * this.currentPage - this.perPage &&
+        this.replyNumber < this.perPage * this.currentPage
+      ) {
+        return (
+          window.location.pathname +
+          "?page=" +
+          this.currentPage +
+          "#post-" +
+          this.reply.id
+        );
+      }
+      return "/api/replies/" + this.reply.id;
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 </style>
