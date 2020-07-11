@@ -24,7 +24,7 @@
           <div class="flex items-center text-xs text-gray-lightest">
             <a class="mr-3 fas fa-share-alt"></a>
             <a v-if="signedIn" class="mx-3 far fa-bookmark"></a>
-            <div class="bg-blue-reply-border text-white px-5/2 py-2">#{{ replyNumber }}</div>
+            <div class="bg-blue-reply-border text-white px-5/2 py-2">#{{ reply.position }}</div>
           </div>
         </div>
         <div class="p-5/2 h-full">
@@ -68,12 +68,7 @@
               </div>
               <div class="flex">
                 <like-button @like="updateLikeStatus" :reply="reply"></like-button>
-                <quote-reply
-                  :perPage="numberOfRepliesPerPage"
-                  :currentPage="currentPage"
-                  :replyNumber="replyNumber "
-                  :reply="reply"
-                ></quote-reply>
+                <quote-reply :reply="reply"></quote-reply>
               </div>
             </div>
           </div>

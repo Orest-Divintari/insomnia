@@ -14,11 +14,12 @@ class ThreadObserver
      */
     public function created(Thread $thread)
     {
-        $thread->replies()->create([
+        $thread->addReply([
             'body' => $thread->body,
             'user_id' => $thread->user_id,
             'updated_at' => $thread->updated_at,
             'created_at' => $thread->created_at,
+            'position' => $thread->replies_count + 1,
         ]);
 
         if (auth()->check()) {

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <input :value="content" :name="name" type="hidden" />
     <quill-editor
       ref="myTextEditor"
       :disabled="readOnly"
@@ -22,6 +23,10 @@ import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 export default {
   props: {
+    name: {
+      type: String,
+      default: ""
+    },
     shouldClear: {
       type: Boolean,
       default: false

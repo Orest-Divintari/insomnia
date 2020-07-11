@@ -9,15 +9,7 @@
 
     <main class="section">
 
-        <x-breadcrumb.container>
-            <x-breadcrumb.item :title="'Forum'" :route="route('forum')"></x-breadcrumb.item>
-            <x-breadcrumb.item :title="$category->category->group->title" :route="route('forum')"></x-breadcrumb.item>
-            <x-breadcrumb.item :title="$category->category->title"
-                :route="route('categories.show', $category->category->slug)">
-            </x-breadcrumb.item>
-            <x-breadcrumb.leaf :title="$category->title" :route="route('categories.show', $category->slug)">
-            </x-breadcrumb.leaf>
-        </x-breadcrumb.container>
+
 
         <x-form._errors></x-form._errors>
 

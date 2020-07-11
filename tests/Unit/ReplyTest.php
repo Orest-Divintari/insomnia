@@ -122,4 +122,22 @@ class ReplyTest extends TestCase
         $this->assertTrue($reply->fresh()->is_liked);
     }
 
+    /** @test */
+    public function every_reply_that_belongs_to_a_thread_has_a_position_in_ascending_order()
+    {
+        $this->withoutExceptionHandling();
+        $thread = create(Thread::class);
+
+        $firstReply = $thread->addReply(raw(Reply::class) + ['position' => $thread->replies_count + 1]);
+        $secondReply = $thread->addReply(raw(Reply::class) + ['position' => $thread->replies_count + 1]);
+
+        $anotherThread = create(Thread::class);
+
+        $replyOnAnotherThread = $anotherThread->addReply(raw(Reply::class) + ['position' => $anotherThread->replies_count + 1]);
+
+        $this->assertEquals(2, $firstReply->position);
+        $this->assertEquals(3, $secondReply->position);
+        $this->assertEquals(2, $replyOnAnotherThread->position);
+    }
+
 }

@@ -67,6 +67,7 @@ class CreateThreadsTest extends TestCase
         $this->assertDatabaseHas('replies', [
             'body' => $thread['body'],
             'user_id' => $thread['user_id'],
+            'position' => 1,
         ]);
 
     }

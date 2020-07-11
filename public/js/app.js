@@ -2342,7 +2342,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     data: function data() {
-      return "<blockquote> <a href=" + this.goToReply + ">" + this.reply.poster.name + " said to post " + this.replyNumber + " </a> </blockquote> <br><br>";
+      return "<blockquote> <a href=" + this.goToReply + ">" + this.reply.poster.name + " said to post " + this.replyNumber + " </a> " + "</blockquote> <br><br>";
     },
     quoteReply: function quoteReply() {
       _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit("quotedReply", this.data());
@@ -2374,8 +2374,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Paginator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Paginator */ "./resources/js/components/Paginator.vue");
 /* harmony import */ var _ReplyForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ReplyForm */ "./resources/js/components/ReplyForm.vue");
 /* harmony import */ var _eventBus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../eventBus */ "./resources/js/eventBus.js");
-//
-//
 //
 //
 //
@@ -2447,11 +2445,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Highlight__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Highlight */ "./resources/js/components/Highlight.vue");
 /* harmony import */ var _LikeButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LikeButton */ "./resources/js/components/LikeButton.vue");
 /* harmony import */ var _QuoteReply__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./QuoteReply */ "./resources/js/components/QuoteReply.vue");
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2944,6 +2937,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2953,6 +2947,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    name: {
+      type: String,
+      "default": ""
+    },
     shouldClear: {
       type: Boolean,
       "default": false
@@ -79508,9 +79506,7 @@ var render = function() {
           attrs: {
             index: index,
             reply: reply,
-            threadPoster: _vm.thread.poster.name,
-            currentPage: _vm.dataset.current_page,
-            numberOfRepliesPerPage: _vm.dataset.per_page
+            threadPoster: _vm.thread.poster.name
           }
         })
       }),
@@ -79628,7 +79624,7 @@ var render = function() {
                   {
                     staticClass: "bg-blue-reply-border text-white px-5/2 py-2"
                   },
-                  [_vm._v("#" + _vm._s(_vm.replyNumber))]
+                  [_vm._v("#" + _vm._s(_vm.reply.position))]
                 )
               ]
             )
@@ -79749,14 +79745,7 @@ var render = function() {
                               on: { like: _vm.updateLikeStatus }
                             }),
                             _vm._v(" "),
-                            _c("quote-reply", {
-                              attrs: {
-                                perPage: _vm.numberOfRepliesPerPage,
-                                currentPage: _vm.currentPage,
-                                replyNumber: _vm.replyNumber,
-                                reply: _vm.reply
-                              }
-                            })
+                            _c("quote-reply", { attrs: { reply: _vm.reply } })
                           ],
                           1
                         )
@@ -80044,7 +80033,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", {
                     staticClass: "text-xs text-black",
-                    domProps: { textContent: _vm._s(thread.replies_count) }
+                    domProps: { textContent: _vm._s(thread.replies_count - 1) }
                   })
                 ]),
                 _vm._v(" "),
@@ -80122,6 +80111,11 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("input", {
+        attrs: { name: _vm.name, type: "hidden" },
+        domProps: { value: _vm.content }
+      }),
+      _vm._v(" "),
       _c("quill-editor", {
         ref: "myTextEditor",
         attrs: {

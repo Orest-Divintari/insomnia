@@ -34,7 +34,8 @@ export default {
         this.reply.poster.name +
         " said to post " +
         this.replyNumber +
-        " </a> </blockquote> <br><br>"
+        " </a> " +
+        "</blockquote> <br><br>"
       );
     },
     quoteReply() {

@@ -59,18 +59,18 @@ class ForumSeeder extends Seeder
                     'group_category_id' => $groupCategory->id,
                 ]);
 
-                if (empty($subCategories)) {
-                    $this->createThreadWithReplies($parentCategory);
-                }
-                foreach ($subCategories as $subCategory) {
+                // if (empty($subCategories)) {
+                //     $this->createThreadWithReplies($parentCategory);
+                // }
+                // foreach ($subCategories as $subCategory) {
 
-                    $childrenCategory = factory('App\Category')->create([
-                        'parent_id' => $parentCategory->id,
-                        'group_category_id' => $groupCategory->id,
-                        'title' => $subCategory,
-                    ]);
-                    $this->createThreadWithReplies($childrenCategory);
-                }
+                //     $childrenCategory = factory('App\Category')->create([
+                //         'parent_id' => $parentCategory->id,
+                //         'group_category_id' => $groupCategory->id,
+                //         'title' => $subCategory,
+                //     ]);
+                //     $this->createThreadWithReplies($childrenCategory);
+                // }
             }
         }
 
@@ -78,16 +78,25 @@ class ForumSeeder extends Seeder
 
     public function createThreadWithReplies($category)
     {
-        $thread = factory('App\Thread', static::NUM_OF_THREADS)->create([
-            'category_id' => $category->id,
-            'replies_count' => static::NUM_OF_REPLIES,
-        ])->each(function ($currentThread) {
-            factory('App\Reply', static::NUM_OF_REPLIES)->create([
-                'repliable_id' => $currentThread->id,
-                'repliable_type' => 'App\Thread',
-            ]);
+        for ($threadCounter = 0; $threadCounter < static::NUM_OF_THREADS; $threadCounter++) {
+            print_r($threadCounter);
+            factory('App\Thread')->create([
+                'category_id' => $category->id,
+                'replies_count' => 0,
+            ])->each(function ($currentThread) {
 
-        });
+                for ($replyCounter = 0; $replyCounter < static::NUM_OF_REPLIES; $replyCounter++) {
+                    print_r($replyCounter);
+                    factory('App\Reply')->create([
+                        'repliable_id' => $currentThread->id,
+                        'repliable_type' => 'App\Thread',
+                        'position' => $currentThread->fresh()->replies_count + 1,
+                    ]);
 
+                    $currentThread->increment('replies_count');
+                }
+            });
+
+        }
     }
 }
