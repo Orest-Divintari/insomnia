@@ -128,12 +128,12 @@ class ReplyTest extends TestCase
         $this->withoutExceptionHandling();
         $thread = create(Thread::class);
 
-        $firstReply = $thread->addReply(raw(Reply::class) + ['position' => $thread->replies_count + 1]);
-        $secondReply = $thread->addReply(raw(Reply::class) + ['position' => $thread->replies_count + 1]);
+        $firstReply = $thread->addReply(raw(Reply::class));
+        $secondReply = $thread->addReply(raw(Reply::class));
 
         $anotherThread = create(Thread::class);
 
-        $replyOnAnotherThread = $anotherThread->addReply(raw(Reply::class) + ['position' => $anotherThread->replies_count + 1]);
+        $replyOnAnotherThread = $anotherThread->addReply(raw(Reply::class));
 
         $this->assertEquals(2, $firstReply->position);
         $this->assertEquals(3, $secondReply->position);

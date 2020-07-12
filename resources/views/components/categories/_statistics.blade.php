@@ -3,6 +3,6 @@
     <p class="text-gray-lightest text-xs font-hairline"> Threads </p>
 </div>
 <div class="flex flex-col items-center px-3">
-    <p class="text-sm tracking-wide">{{ $repliesCount - 1 }}</p>
+    <p class="text-sm tracking-wide">{{ $repliesCount }}</p>
     <p class="text-gray-lightest text-xs font-hairline"> Messages </p>
 </div>

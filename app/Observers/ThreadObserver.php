@@ -14,7 +14,7 @@ class ThreadObserver
      */
     public function created(Thread $thread)
     {
-        $thread->addReply([
+        $thread->replies()->create([
             'body' => $thread->body,
             'user_id' => $thread->user_id,
             'updated_at' => $thread->updated_at,

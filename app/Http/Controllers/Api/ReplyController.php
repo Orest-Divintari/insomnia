@@ -24,9 +24,9 @@ class ReplyController extends Controller
         $reply = $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id(),
-            'position' => $thread->replies_count + 1,
         ])->load('poster')
             ->loadCount('likes');
+
         return response($reply, 201);
     }
 
