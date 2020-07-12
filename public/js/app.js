@@ -80036,7 +80036,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", {
                     staticClass: "text-xs text-black",
-                    domProps: { textContent: _vm._s(thread.replies_count - 1) }
+                    domProps: { textContent: _vm._s(thread.replies_count) }
                   })
                 ]),
                 _vm._v(" "),

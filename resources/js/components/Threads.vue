@@ -38,7 +38,7 @@
         <div class="p-2 text-gray-lightest w-32 mr-4">
           <div class="flex justify-between items-end">
             <p class="text-sm flex-1">Replies:</p>
-            <p class="text-xs text-black" v-text="thread.replies_count - 1"></p>
+            <p class="text-xs text-black" v-text="thread.replies_count"></p>
           </div>
           <div class="flex justify-between items-end">
             <p class="text-sm">Views:</p>

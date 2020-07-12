@@ -23,8 +23,11 @@
                 <x-sub_head_tab_item name="Home" destination='forum'></x-sub_head_tab_item>
                 <x-sub_head_tab_item name="New Posts" destination='home'></x-sub_head_tab_item>
                 <x-sub_head_tab_item name="Support" destination='home'></x-sub_head_tab_item>
+                <x-sub_head_tab_item name="My Threads" destination="{{ route('filtered-threads.index') . '?by=' . auth()->user()->name }}"></x-sub_head_tab_item>
+
             </div>
-            <div class="px-5">Search</div>
+            <div class=" px-5">Search
+            </div>
         </div>
     </x-slot>
     <x-slot name="main">

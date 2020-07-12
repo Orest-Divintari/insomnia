@@ -9,17 +9,19 @@
             <p class="text-smaller text-gray-lightest">{{ $category->excerpt }}</p>
         </div>
         @auth
+        @if($category->exists)
         <div class="py-4">
-            <a href="{{ route('threads.create', $category)  }}" class="btn-post"><span
+            <a href="{{ route('threads.create', ['categorySlug' => $category->slug])  }}" class="btn-post"><span
                     class="fas fa-pen text-white text-xs mr-1"></span>Post
                 Thread</a>
         </div>
+        @endif
         @endauth
     </header>
     @endif
     <main class="section">
 
-        @if(!empty($category))
+        @if($category->exists)
         <x-breadcrumb.container>
             <x-breadcrumb.item :title="'Forum'" :route="route('forum')"></x-breadcrumb.item>
             @if(!$category->isRoot() && !$category->hasSubCategories())

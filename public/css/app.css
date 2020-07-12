@@ -7957,7 +7957,7 @@ html {
   background-color: rgba(66, 102, 147, var(--bg-opacity));
 }
 
-.sub-head-tab-item {
+.sub-head-tab-container {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   --text-opacity: 1;
@@ -7967,10 +7967,21 @@ html {
   font-size: 0.8125rem;
 }
 
-.sub-head-tab-item:hover {
+.sub-head-tab-container:hover {
   --bg-opacity: 1;
   background-color: #CFDEEB;
   background-color: rgba(207, 222, 235, var(--bg-opacity));
+}
+
+.sub-head-tab-item {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-right-width: 1px;
+  --border-opacity: 1;
+  border-color: #cbd5e0;
+  border-color: rgba(203, 213, 224, var(--border-opacity));
 }
 
 .space-y-0 > :not(template) ~ :not(template){

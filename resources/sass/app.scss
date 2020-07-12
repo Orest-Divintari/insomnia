@@ -76,11 +76,15 @@ html {
     }
 }
 
-.sub-head-tab-item {
+.sub-head-tab-container {
     @apply .py-2 .text-blue-link-menu .leading-6 .text-smaller;
     &:hover {
         @apply .bg-blue-mid-light;
     }
+}
+
+.sub-head-tab-item {
+    @apply .px-5 .py-1 .border-r .border-gray-400;
 }
 
 @tailwind utilities;

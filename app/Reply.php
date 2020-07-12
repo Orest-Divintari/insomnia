@@ -3,13 +3,20 @@
 namespace App;
 
 use App\Events\Subscription\ReplyWasLiked;
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
 {
+    use Filterable;
 
+    /**
+     * Number of visible replies per page
+     *
+     * @var int
+     */
     const PER_PAGE = 10;
 
     /**
@@ -183,18 +190,6 @@ class Reply extends Model
     public function getIsLikedAttribute()
     {
         return $this->likes->contains('user_id', auth()->id());
-    }
-
-    /**
-     * Filter the replies based on the passed filters
-     *
-     * @param @query
-     * @param App\Filters\ReplyFilters $filters
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeFilter($query, $filters)
-    {
-        return $filters->apply($query);
     }
 
     /**

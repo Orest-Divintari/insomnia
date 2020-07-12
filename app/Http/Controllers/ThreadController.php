@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Filters\ReplyFilters;
+use App\Filters\ThreadFilters;
 use App\Http\Requests\CreateThreadRequest;
 use App\Reply;
 use App\Thread;
@@ -17,9 +18,15 @@ class ThreadController extends Controller
      * @param Category $category
      * @return Illuminate\View\View
      */
-    public function index(Category $category)
+    public function index(Category $category, ThreadFilters $filters)
     {
-        $threads = $category->threads()->paginate(Thread::PER_PAGE);
+        $threads = Thread::latest()->filter($filters);
+        if ($category->exists) {
+            $threads->where('category_id', $category->id);
+        }
+
+        $threads = $threads->paginate(Thread::PER_PAGE);
+
         return view('threads.index', compact('category', 'threads'));
     }
 
@@ -29,9 +36,9 @@ class ThreadController extends Controller
      * @param string $category
      * @return Illuminate\View\View
      */
-    public function create($category)
+    public function create($categorySlug)
     {
-        $category = Category::whereSlug($category)->firstOrFail();
+        $category = Category::whereSlug($categorySlug)->firstOrFail();
         return view('threads.create', compact('category'));
     }
 

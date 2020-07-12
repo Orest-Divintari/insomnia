@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Category;
 use App\Reply;
 use App\Thread;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -69,6 +70,27 @@ class ReadThreadsTest extends TestCase
 
         $this->get(route('api.replies.show', $reply))
             ->assertSee($reply->title);
+
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_username()
+    {
+        $uric = create(User::class, [
+            'name' => 'uric',
+        ]);
+
+        $this->signIn($uric);
+
+        $threadByUric = create(Thread::class, [
+            'user_id' => $uric->id,
+        ]);
+
+        $threadByAnotherUser = create(Thread::class);
+
+        $this->get(route('filtered-threads.index') . "?by={$uric->name}")
+            ->assertSee($threadByUric->title)
+            ->assertDontSee($threadByAnotherUser->title);
 
     }
 

@@ -25,6 +25,10 @@ Route::get('/forum/categories/{category}', 'CategoryController@show')
     ->name('categories.show');
 
 //threads
+
+Route::get('/threads', 'ThreadController@index')
+    ->name('filtered-threads.index');
+
 Route::get('/categories/{category}/threads/', 'ThreadController@index')
     ->name('threads.index');
 
@@ -35,7 +39,7 @@ Route::get('/threads/{thread}', 'ThreadController@show')
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/threads/create/{categoryId}', 'ThreadController@create')
+    Route::get('/threads/create/{categorySlug}', 'ThreadController@create')
         ->name('threads.create');
 
     Route::post('/threads', 'ThreadController@store')

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
+use App\Traits\Filterable;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -10,7 +11,18 @@ use Illuminate\Support\Str;
 class Thread extends Model
 {
 
-    const PER_PAGE = 1;
+    use Filterable;
+
+    /**
+     * Number of visible threads per page
+     * @var int
+     */
+    const PER_PAGE = 5;
+
+    /**
+     * Shortened length of the thread title
+     * @var int
+     */
     const TITLE_LENGTH = 25;
 
     /**
