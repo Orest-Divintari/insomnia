@@ -126,8 +126,8 @@ class ReplyTest extends TestCase
     public function every_reply_that_belongs_to_a_thread_has_a_position_in_ascending_order()
     {
         $this->withoutExceptionHandling();
-        $thread = create(Thread::class);
 
+        $thread = create(Thread::class);
         $firstReply = $thread->addReply(raw(Reply::class));
         $secondReply = $thread->addReply(raw(Reply::class));
 
@@ -135,9 +135,9 @@ class ReplyTest extends TestCase
 
         $replyOnAnotherThread = $anotherThread->addReply(raw(Reply::class));
 
-        $this->assertEquals(2, $firstReply->position);
-        $this->assertEquals(3, $secondReply->position);
-        $this->assertEquals(2, $replyOnAnotherThread->position);
+        $this->assertEquals(2, $firstReply->fresh()->position);
+        $this->assertEquals(3, $secondReply->fresh()->position);
+        $this->assertEquals(2, $replyOnAnotherThread->fresh()->position);
     }
 
 }
