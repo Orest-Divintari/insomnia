@@ -2342,7 +2342,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     data: function data() {
-      return "<blockquote> <a href=" + this.goToReply + ">" + this.reply.poster.name + " said to post " + this.replyNumber + " </a> " + "</blockquote> <br><br>";
+      return "<blockquote> <a href=" + this.goToReply + ">" + this.reply.poster.name + " said to post " + this.reply.position + " </a> " + "</blockquote> <br><br>";
     },
     quoteReply: function quoteReply() {
       _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit("quotedReply", this.data());

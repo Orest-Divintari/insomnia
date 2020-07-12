@@ -217,4 +217,19 @@ class Reply extends Model
 
         return $replies;
     }
+
+    /**
+     * Detecte the quoted reply and its poster
+     *
+     * @return array
+     */
+    public function quotedReply()
+    {
+        preg_match_all(
+            '^<blockquote> <a href="[^>]+>(\w+) said to post (\d+) </a> </blockquote>',
+            $this->body,
+            $matches
+        );
+        return $matches;
+    }
 }

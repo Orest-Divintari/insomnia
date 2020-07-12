@@ -93,6 +93,12 @@ class UserNotificationsTest extends TestCase
     }
 
     /** @test */
+    public function a_user_receives_a_notification_when_his_repy_is_quoted_by_another_user()
+    {
+
+    }
+
+    /** @test */
     public function a_user_can_fetch_his_unread_notifications()
     {
         $thread = create(Thread::class);

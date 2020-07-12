@@ -33,7 +33,7 @@ export default {
         ">" +
         this.reply.poster.name +
         " said to post " +
-        this.replyNumber +
+        this.reply.position +
         " </a> " +
         "</blockquote> <br><br>"
       );
