@@ -23,6 +23,9 @@ export default {
     },
     data() {
       return { title: this.title };
+    },
+    sortedByLikes() {
+      return window.location.href.includes("?sortByLikes=1");
     }
   },
   methods: {

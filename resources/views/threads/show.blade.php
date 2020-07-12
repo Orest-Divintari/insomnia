@@ -16,7 +16,13 @@
                         {{ $thread->date_created }}</a>
                     <p class=" dot"></p>
                     <i class="fas fa-long-arrow-alt-down mr-1 "></i>
-                    <p class="hover:underline">Sort</p>
+                    <a v-if="sortedByLikes" href="{{ route('threads.show', $thread )}}" class="hover:underline">Sort
+                        (Post Date) </a>
+                    <a v-else href="{{ route('threads.show', $thread ) . '?sortByLikes=1'}}"
+                        class="hover:underline">Sort
+                        (Likes) </a>
+
+
                 </div>
             </header>
 

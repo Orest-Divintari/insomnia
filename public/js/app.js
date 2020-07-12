@@ -2758,6 +2758,9 @@ __webpack_require__.r(__webpack_exports__);
       return {
         title: this.title
       };
+    },
+    sortedByLikes: function sortedByLikes() {
+      return window.location.href.includes("?sortByLikes=1");
     }
   },
   methods: {

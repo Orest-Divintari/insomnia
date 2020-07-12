@@ -184,4 +184,37 @@ class Reply extends Model
     {
         return $this->likes->contains('user_id', auth()->id());
     }
+
+    /**
+     * Filter the replies based on the passed filters
+     *
+     * @param @query
+     * @param App\Filters\ReplyFilters $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
+
+    /**
+     * Get paginated replies with likes for a specific thread
+     *
+     * @param  $thread
+     * @param App\Filters\ReplyFilters $filters
+     * @return Model
+     */
+    public static function forThread($thread, $filters)
+    {
+        $replies = static::where('repliable_id', $thread->id)
+            ->withLikes()
+            ->filter($filters)
+            ->paginate(static::PER_PAGE);
+
+        $replies->each(function ($reply) {
+            $reply->append('is_liked');
+        });
+
+        return $replies;
+    }
 }

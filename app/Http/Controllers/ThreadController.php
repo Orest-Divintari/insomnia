@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Filters\ReplyFilters;
 use App\Http\Requests\CreateThreadRequest;
 use App\Reply;
 use App\Thread;
@@ -53,18 +54,13 @@ class ThreadController extends Controller
      * @param Thread $thread
      * @return Illuminate\View\View
      */
-    public function show($threadSlug)
+    public function show($threadSlug, ReplyFilters $filters)
     {
+        // dd(request('sortByLikes'));
         $thread = Thread::without('recentReply')
             ->whereSlug($threadSlug)->firstOrFail();
 
-        $replies = $thread->replies()
-            ->withLikes()
-            ->paginate(Reply::PER_PAGE);
-
-        $replies->each(function ($reply) {
-            $reply->append('is_liked');
-        });
+        $replies = Reply::forThread($thread, $filters);
 
         if (auth()->check()) {
             auth()->user()->read($thread);
