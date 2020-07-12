@@ -27,7 +27,7 @@ class ReplyController extends Controller
         ])->load('poster')
             ->loadCount('likes');
 
-        return response($reply, 201);
+        return response($reply->fresh(), 201);
     }
 
     /**
