@@ -6,6 +6,7 @@ use App\Category;
 use App\Reply;
 use App\Thread;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -92,6 +93,64 @@ class ReadThreadsTest extends TestCase
             ->assertSee($threadByUric->title)
             ->assertDontSee($threadByAnotherUser->title);
 
+    }
+
+    /** @test */
+    public function user_can_read_the_most_recent_threads_that_dont_have_replies()
+    {
+        $oldThread = create(Thread::class, [
+            'created_at' => Carbon::now()->subDay(),
+            'id' => 10,
+        ]);
+
+        $response = $this->getJson(route('filtered-threads.index') . '?newThreads=1');
+        $this->assertEquals($this->thread->id, $response['data'][0]['id']);
+        $this->assertEquals($oldThread->id, $response['data'][1]['id']);
+    }
+
+    /** @test */
+    public function user_can_read_the_most_recent_threads_that_have_replies()
+    {
+        $newThreadWithReplies = create(Thread::class);
+        $newThreadWithReplies->addReply(raw(Reply::class));
+
+        $oldThreadWithReples = create(Thread::class, [
+            'updated_at' => Carbon::now()->subDay(),
+        ]);
+        $oldThreadWithReples->addReply(raw(Reply::class));
+        $threadWithNoReplies = $this->thread;
+
+        $response = $this->getJson(route('filtered-threads.index') . "?newPosts=1");
+        $this->assertCount(2, $response['data']);
+
+    }
+
+    /** @test */
+    public function a_user_can_read_the_threads_that_has_replies_to()
+    {
+        $user = $this->signIn();
+        $threadWithNoParticipation = create(Thread::class);
+        $this->post(route('api.replies.store', $this->thread), ['body' => 'some random text']);
+        $this->get(route('filtered-threads.index') . "?participatedBy=" . $user->name)
+            ->assertSee($this->thread->title)
+            ->assertDontSee($threadWithNoParticipation->title);
+    }
+
+    /** @test */
+    public function user_can_read_trending_threads()
+    {
+        $this->thread->addReply(raw(Reply::class));
+        $this->thread->addReply(raw(Reply::class));
+        $this->thread->addReply(raw(Reply::class));
+        $this->thread->update(['views' => 50]);
+
+        $lessTrendingThread = create(Thread::class);
+        $lessTrendingThread->addReply(raw(Reply::class));
+        $lessTrendingThread->update(['views' => 100]);
+
+        $response = $this->getJson(route('filtered-threads.index') . "?trending=1");
+        $this->assertEquals($this->thread->id, $response['data'][0]['id']);
+        $this->assertEquals($lessTrendingThread->id, $response['data'][1]['id']);
     }
 
 }
