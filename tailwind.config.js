@@ -35,9 +35,8 @@ module.exports = {
                 "blue-form-input": "#E7F1FE",
                 "blue-like": "#0070D6",
 
-                "blue-form-bottom": "#E1EAF3",
+                "white-catskill": "#E1EAF3",
                 "blue-form-hover-button": "#334866",
-                "blue-border": "#E1EAF3",
                 "blue-form-link": "#859DC1",
                 "gray-form-label": "#9FA8B2",
                 "black-form-text": "#2C2C2C",

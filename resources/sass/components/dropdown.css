@@ -3,10 +3,11 @@
 }
 
 .dropdown-item {
-    @apply .px-4 .py-2 .cursor-pointer .border-t .border-blue-light .bg-blue-lighter .text-black-semi .text-smaller;
-    &:hover {
-        @apply .bg-blue-light;
-    }
+    @apply .block .px-4 .py-2 .cursor-pointer .border-t .border-blue-light .bg-blue-lighter .text-black-semi .text-smaller;
+}
+
+.dropdown-item:hover {
+    @apply .bg-white-catskill .text-blue-mid;
 }
 
 .dropdown-title {

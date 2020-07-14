@@ -30,7 +30,7 @@
     @apply .flex .flex-col .items-center .px-5;
 }
 .category-block {
-    @apply .border .border-blue-border .py-2 .pl-2;
+    @apply .border .border-white-catskill .py-2 .pl-2;
 }
 
 .thread-activity-title {

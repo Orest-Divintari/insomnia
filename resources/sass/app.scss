@@ -85,6 +85,9 @@ html {
 
 .sub-head-tab-item {
     @apply .px-5 .py-1 .border-r .border-gray-400;
+    &:hover {
+        @apply .text-black;
+    }
 }
 
 @tailwind utilities;

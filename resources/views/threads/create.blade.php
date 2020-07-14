@@ -25,7 +25,7 @@
                 <wysiwyg value="{{ old('body') }}" name="body" class="p-4" :style-attributes="'min-h-64'" required>
                 </wysiwyg>
 
-                <div class="border-t border-blue-border">
+                <div class="border-t border-white-catskill">
                     <div class="form-row">
                         <!-- LEFT -->
                         <div class="form-left-col ">
