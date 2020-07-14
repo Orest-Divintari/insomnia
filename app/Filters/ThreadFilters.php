@@ -44,9 +44,8 @@ class ThreadFilters extends Filters
     public function newThreads()
     {
 
-        $this->builder->where('replies_count', '=', 0)
-            ->orderBy('created_at', 'DESC')
-        ;
+        $this->builder->orderBy('created_at', 'DESC');
+
     }
 
     /**
