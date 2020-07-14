@@ -20,6 +20,7 @@ class ThreadFilters extends Filters
         'newPosts',
         'participatedBy',
         'trending',
+        'unanswered',
     ];
 
     /**
@@ -37,7 +38,7 @@ class ThreadFilters extends Filters
     }
 
     /**
-     * Fetch the most recent threads that don't have replies
+     * Fetch the most recently created threads
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -49,7 +50,7 @@ class ThreadFilters extends Filters
     }
 
     /**
-     * Fetch the most recent threads that have replies
+     * Fetch the threads with the most recent replies
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -75,7 +76,9 @@ class ThreadFilters extends Filters
     }
 
     /**
-     * Trending threads
+     * Get the Trending threads
+     *
+     * The trending thread is defined by the number of replies and views
      *
      * @return void
      */
@@ -84,6 +87,16 @@ class ThreadFilters extends Filters
         $this->builder->where('replies_count', '>', 0)
             ->orderBy('replies_count', 'DESC')
             ->orderBy('views', 'DESC');
+    }
+
+    /**
+     * Get the threads that have no replies
+     *
+     * @return void
+     */
+    public function unanswered()
+    {
+        $this->builder->where('replies_count', '=', '0');
     }
 
 }

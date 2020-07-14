@@ -96,7 +96,7 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function user_can_read_the_most_recent_threads_that_dont_have_replies()
+    public function user_can_read_the_threads_ordered_by_date_of_creation_in_descending_order()
     {
         $oldThread = create(Thread::class, [
             'created_at' => Carbon::now()->subDay(),
@@ -109,7 +109,7 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function user_can_read_the_most_recent_threads_that_have_replies()
+    public function user_can_fetch_the_threads_with_the_most_recent_replies()
     {
         $newThreadWithReplies = create(Thread::class);
         $newThreadWithReplies->addReply(raw(Reply::class));
@@ -126,7 +126,7 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_read_the_threads_that_has_replies_to()
+    public function a_user_can_read_the_threads_that_has_replied_to()
     {
         $user = $this->signIn();
         $threadWithNoParticipation = create(Thread::class);
@@ -151,6 +151,17 @@ class ReadThreadsTest extends TestCase
         $response = $this->getJson(route('filtered-threads.index') . "?trending=1");
         $this->assertEquals($this->thread->id, $response['data'][0]['id']);
         $this->assertEquals($lessTrendingThread->id, $response['data'][1]['id']);
+    }
+
+    /** @test */
+    public function user_can_read_the_unanswered_threads()
+    {
+        $threadWithReplies = create(Thread::class);
+        $threadWithReplies->addReply(raw(Reply::class));
+
+        $this->get(route('filtered-threads.index') . "?unanswered=1")
+            ->assertSee($this->thread->title)
+            ->assertDontSee($threadWithReplies->title);
     }
 
 }
