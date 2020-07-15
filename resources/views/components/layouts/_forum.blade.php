@@ -36,6 +36,7 @@
                             class=" dropdown-item hover:bg-white-catskill">Threads you started</a>
                         <a href="{{ route('filtered-threads.index') . '?participatedBy=' . auth()->user()->name }}"
                             class="dropdown-item">Threads you replied to</a>
+                        <a href="{{ route('filtered-threads.index') . '?watched=1'}}" class="dropdown-item">Watched</a>
                     </template>
                 </dropdown>
                 @endauth

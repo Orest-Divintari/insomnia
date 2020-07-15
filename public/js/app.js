@@ -2907,6 +2907,12 @@ __webpack_require__.r(__webpack_exports__);
         },
         by: {
           "Started by": this.filterValue
+        },
+        watched: {
+          "Show only": "Watched"
+        },
+        trending: {
+          "Show only": "Trending"
         }
       }
     };
@@ -3007,7 +3013,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       filters: {},
       startedBy: "",
       updatedBy: "",
-      lastUpdated: ""
+      lastUpdated: "",
+      unanswered: ""
     };
   },
   methods: {
@@ -3200,7 +3207,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    notAnswered: function notAnswered() {
+      return window.location.href.includes("?unanswered=1");
+    }
+  }
+});
 
 /***/ }),
 
@@ -80457,7 +80476,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("dropdown", {
-          attrs: { styleClasses: "w-64" },
+          attrs: { styleClasses: "w-80" },
           scopedSlots: _vm._u([
             {
               key: "dropdown-trigger",
@@ -80467,7 +80486,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "p-3/2 text-blue-mid text-xs hover:text-blue-ship-cove hover:bg-gray-loblolly rounded"
+                        "cursor-pointer p-3/2 text-blue-mid text-xs hover:text-blue-ship-cove hover:bg-gray-loblolly rounded"
                     },
                     [
                       _vm._v("\n          Filters\n          "),
@@ -80486,7 +80505,13 @@ var render = function() {
                     _vm._v("Show only")
                   ]),
                   _vm._v(" "),
-                  _c("unanswered-filter"),
+                  _c("unanswered-filter", {
+                    on: {
+                      checked: function($event) {
+                        _vm.unanswered = $event.target.checked
+                      }
+                    }
+                  }),
                   _vm._v(" "),
                   _c("started-by-filter", {
                     model: {
@@ -80706,25 +80731,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "dropdown-item" }, [
+    _c("label", { staticClass: "form-label", attrs: { for: "unanswered" } }, [
+      _vm._v("Unanswered")
+    ]),
+    _vm._v(" "),
+    _c("input", {
+      ref: "unasnwered",
+      staticClass: "from-input",
+      attrs: { type: "checkbox", id: "unanswered" },
+      domProps: { checked: _vm.notAnswered }
+    })
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dropdown-item" }, [
-      _c("label", { staticClass: "form-label", attrs: { for: "unanswered" } }, [
-        _vm._v("Unanswered")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "from-input",
-        attrs: { type: "checkbox", id: "unanswered" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

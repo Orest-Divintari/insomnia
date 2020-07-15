@@ -164,4 +164,22 @@ class ReadThreadsTest extends TestCase
             ->assertDontSee($threadWithReplies->title);
     }
 
+    /** @test */
+    public function a_user_can_read_the_threads_tha_has_subscribred_to()
+    {
+        $threadThatHasntSubscribedTo = create(Thread::class);
+
+        $user = create(User::class, [
+            'name' => 'jorgo',
+        ]);
+        $this->signIn($user);
+
+        $this->thread->subscribe($user->id);
+
+        $this->get(route('filtered-threads.index') . "?watched=1")
+            ->assertSee($this->thread->title)
+            ->assertDontSee($threadThatHasntSubscribedTo->title);
+
+    }
+
 }

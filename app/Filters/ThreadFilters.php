@@ -21,6 +21,7 @@ class ThreadFilters extends Filters
         'participatedBy',
         'trending',
         'unanswered',
+        'watched',
     ];
 
     /**
@@ -80,7 +81,7 @@ class ThreadFilters extends Filters
      *
      * The trending thread is defined by the number of replies and views
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function trending()
     {
@@ -92,11 +93,24 @@ class ThreadFilters extends Filters
     /**
      * Get the threads that have no replies
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function unanswered()
     {
         $this->builder->where('replies_count', '=', '0');
+    }
+
+    /**
+     * Get the threads that the authenticated user has subscribed to
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function watched()
+    {
+        $this->builder->whereHas('subscriptions', function ($query) {
+            $query->where('user_id', auth()->id());
+        });
+
     }
 
 }

@@ -1,12 +1,24 @@
 <template>
   <div class="dropdown-item">
     <label class="form-label" for="unanswered">Unanswered</label>
-    <input class="from-input" type="checkbox" id="unanswered" />
+    <input
+      :checked="notAnswered"
+      ref="unasnwered"
+      class="from-input"
+      type="checkbox"
+      id="unanswered"
+    />
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    notAnswered() {
+      return window.location.href.includes("?unanswered=1");
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

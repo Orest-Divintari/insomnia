@@ -10,10 +10,10 @@
           :filter-value="value"
         ></thread-filter-tags>
       </div>
-      <dropdown :styleClasses="'w-64'">
+      <dropdown :styleClasses="'w-80'">
         <template v-slot:dropdown-trigger>
           <div
-            class="p-3/2 text-blue-mid text-xs hover:text-blue-ship-cove hover:bg-gray-loblolly rounded"
+            class="cursor-pointer p-3/2 text-blue-mid text-xs hover:text-blue-ship-cove hover:bg-gray-loblolly rounded"
           >
             Filters
             <span class="pb-1 fas fa-sort-down"></span>
@@ -21,7 +21,7 @@
         </template>
         <template v-slot:dropdown-items>
           <div class="dropdown-title">Show only</div>
-          <unanswered-filter></unanswered-filter>
+          <unanswered-filter @checked="unanswered = $event.target.checked"></unanswered-filter>
           <started-by-filter v-model="startedBy"></started-by-filter>
           <updated-by-filter v-model="updatedBy"></updated-by-filter>
           <last-updated-filter v-model="lastUpdated"></last-updated-filter>
@@ -50,7 +50,8 @@ export default {
       filters: {},
       startedBy: "",
       updatedBy: "",
-      lastUpdated: ""
+      lastUpdated: "",
+      unanswered: ""
     };
   },
   methods: {
