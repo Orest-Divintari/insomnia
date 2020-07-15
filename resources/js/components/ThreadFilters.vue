@@ -1,57 +1,82 @@
 <template>
-  <div @click="removeFilter">
-    <div class="flex justify-between">
+  <div>
+    <div class="flex justify-between bg-white-catskill rounded-t py-2 pl-1 pr-3">
       <div class="flex">
-        <div class="mr-1/2">
-          <div
-            class="flex items-center ml-2 bg-gray-geyser rounded py-1/2 px-3 hover:bg-gray-loblolly hover:text-blue-ship-cove text-gray-700 text-xs"
-          >
-            <button>
-              {{ title }}:
-              <span class="text-black-semi">{{value}}</span>
-            </button>
-            <i class="ml-1 pt-1/2 fas fa-times"></i>
-          </div>
-        </div>
+        <thread-filter-tags
+          @removeFilter="removeFilter"
+          v-for="(value, key) in filters"
+          :key="key"
+          :filter-key="key"
+          :filter-value="value"
+        ></thread-filter-tags>
       </div>
+      <dropdown :styleClasses="'w-64'">
+        <template v-slot:dropdown-trigger>
+          <div
+            class="p-3/2 text-blue-mid text-xs hover:text-blue-ship-cove hover:bg-gray-loblolly rounded"
+          >
+            Filters
+            <span class="pb-1 fas fa-sort-down"></span>
+          </div>
+        </template>
+        <template v-slot:dropdown-items>
+          <div class="dropdown-title">Show only</div>
+          <unanswered-filter></unanswered-filter>
+          <started-by-filter v-model="startedBy"></started-by-filter>
+          <updated-by-filter v-model="updatedBy"></updated-by-filter>
+          <last-updated-filter v-model="lastUpdated"></last-updated-filter>
+        </template>
+      </dropdown>
     </div>
   </div>
 </template>
 
 <script>
+import ThreadFilterTags from "../components/ThreadFilterTags";
+import StartedByFilter from "../components/StartedByFilter";
+import UpdatedByFilter from "../components/UpdatedByFilter";
+import LastUpdatedFilter from "../components/LastUpdatedFilter";
+import UnansweredFilter from "../components/UnansweredFilter";
 export default {
-  props: {
-    filterKey: {
-      default: ""
-    },
-    filterValue: {
-      default: ""
-    }
+  components: {
+    ThreadFilterTags,
+    StartedByFilter,
+    UpdatedByFilter,
+    LastUpdatedFilter,
+    UnansweredFilter
   },
   data() {
     return {
-      description: {
-        unread: { "Show Only": "unread" },
-        participatedBy: { Contributed: this.filterValue },
-        unanswered: { "Show only ": "unanswered" },
-        newPosts: { "Show only": "new posts" },
-        newThreads: { "Show only": "new threads" },
-        by: { "Started by": this.filterValue }
-      }
+      filters: {},
+      startedBy: "",
+      updatedBy: "",
+      lastUpdated: ""
     };
   },
-  computed: {
-    title() {
-      return Object.keys(this.description[this.filterKey])[0];
+  methods: {
+    findFilters() {
+      var matches = window.location.href.matchAll(/\?([\w]+)(?:=)([\w]+)/gi);
+      for (let match of matches) {
+        var key = match[1];
+        var value = match[2];
+        var filter = { key: value };
+        this.filters[key] = value;
+      }
     },
-    value() {
-      return Object.values(this.description[this.filterKey])[0];
+    removeFilter(key) {
+      Vue.delete(this.filters, key);
+      this.updateFilters();
+    },
+    updateFilters() {
+      var path = window.location.pathname;
+      for (const [key, value] of Object.entries(this.filters)) {
+        path = path + "?" + key + "=" + value + "&";
+      }
+      window.location.href = path;
     }
   },
-  methods: {
-    removeFilter() {
-      this.$emit("removeFilter", this.filterKey);
-    }
+  created() {
+    this.findFilters();
   }
 };
 </script>

@@ -1,14 +1,6 @@
 <template>
   <div>
-    <div class="flex bg-white-catskill rounded-t py-3 pl-1 pr-3">
-      <thread-filters
-        @removeFilter="removeFilter"
-        v-for="(value, key) in filters"
-        :key="key"
-        :filter-key="key"
-        :filter-value="value"
-      ></thread-filters>
-    </div>
+    <thread-filters></thread-filters>
     <div
       v-for="(thread, index) in data"
       :key="thread.id"
@@ -92,8 +84,7 @@ export default {
   data() {
     return {
       data: this.threads.data,
-      dataset: this.threads,
-      filters: {}
+      dataset: this.threads
     };
   },
   methods: {
@@ -118,31 +109,9 @@ export default {
       axios
         .get(this.endpoint(thread.slug))
         .catch(error => console.log(error.response));
-    },
-    findFilters() {
-      var matches = window.location.href.matchAll(/\?([\w]+)(?:=)([\w]+)/gi);
-      for (let match of matches) {
-        var key = match[1];
-        var value = match[2];
-        var filter = { key: value };
-        this.filters[key] = value;
-      }
-    },
-    removeFilter(key) {
-      Vue.delete(this.filters, key);
-      this.updateFilters();
-    },
-    updateFilters() {
-      var path = window.location.pathname;
-      for (const [key, value] of Object.entries(this.filters)) {
-        path = path + "?" + key + "=" + value + "&";
-      }
-      window.location.href = path;
     }
   },
-  created() {
-    this.findFilters();
-  },
+
   mounted() {}
 };
 </script>
