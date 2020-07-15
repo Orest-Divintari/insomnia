@@ -32,8 +32,11 @@ module.exports = {
                 "gray-lighter": "#D7E2EF",
                 "gray-lightest": "#949DA7",
                 "gray-mid": "#6C7680",
+                "gray-geyser": "#D3DBE3",
+                "gray-loblolly": "#C5CCD2",
                 "blue-form-input": "#E7F1FE",
                 "blue-like": "#0070D6",
+                "blue-ship-cove": "#6686B1",
 
                 "white-catskill": "#E1EAF3",
                 "blue-form-hover-button": "#334866",
