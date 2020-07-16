@@ -19,7 +19,7 @@
             </p>
             @endif
         </div>
-        @if($category->threads->count() > 0)
+        @if($category->threads->isNotEmpty())
         <div class="flex items-center ">
             @if($category->hasSubCategories())
             <x-categories._statistics :threadsCount="$category->parent_category_threads_count"

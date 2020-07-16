@@ -42,7 +42,7 @@ class Thread extends Model
      *
      * @var array
      */
-    protected $with = ['recentReply', 'poster'];
+    // protected $with = ['recentReply', 'poster'];
 
     /**
      * The attributes that are mass assignable

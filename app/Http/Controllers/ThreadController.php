@@ -20,13 +20,14 @@ class ThreadController extends Controller
      */
     public function index(Category $category, ThreadFilters $filters)
     {
-        $threads = Thread::filter($filters)->latest();
+        $threads = Thread::with(['recentReply', 'poster'])->filter($filters)->latest();
 
         if ($category->exists) {
             $threads->where('category_id', $category->id);
         }
 
         $threads = $threads->paginate(Thread::PER_PAGE);
+
         $threadFilters = $filters->getThreadFilters();
         if (request()->wantsJson()) {
             return $threads;
@@ -67,7 +68,7 @@ class ThreadController extends Controller
      */
     public function show($threadSlug, ReplyFilters $filters)
     {
-        $thread = Thread::without('recentReply')
+        $thread = Thread::with('poster')->without('recentReply')
             ->whereSlug($threadSlug)->firstOrFail();
 
         $replies = Reply::forThread($thread, $filters);

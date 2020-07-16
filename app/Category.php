@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 class Category extends Model
 {
 
+    protected $with = ['threads'];
     /**
      * Don't auto-apply mass assignment protection.
      *
@@ -175,6 +176,16 @@ class Category extends Model
             'threads as replies_count' => function ($query) {
                 $query->select(DB::raw('sum(replies_count)'));
             }]);
+    }
+
+    /**
+     * Determine if the given category has threads
+     *
+     * @return boolean
+     */
+    public function hasThreads()
+    {
+        return $this->threads->isNotEmpty();
     }
 
 }

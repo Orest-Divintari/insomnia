@@ -161,4 +161,16 @@ class CategoryTest extends TestCase
         $category = create(Category::class);
         $this->assertTrue($category->isRoot());
     }
+
+    /** @test */
+    public function a_category_knows_if_it_has_threads()
+    {
+        $this->assertFalse($this->category->hasThreads());
+
+        createMany(Thread::class, 10, [
+            'category_id' => $this->category->id,
+        ]);
+
+        $this->assertTrue($this->category->fresh()->hasThreads());
+    }
 }
