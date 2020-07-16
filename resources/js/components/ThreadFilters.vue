@@ -3,7 +3,7 @@
     <div class="flex justify-between bg-white-catskill rounded-t py-2 pl-1 pr-3">
       <div class="flex">
         <thread-filter-tags
-          @removeFilter="removeFilter"
+          @removeFilter="removeFilter(key);apply()"
           v-for="(value, key) in filters"
           :key="key"
           :filter-key="key"
@@ -21,10 +21,15 @@
         </template>
         <template v-slot:dropdown-items>
           <div class="dropdown-title">Show only</div>
-          <unanswered-filter @checked="unanswered = $event.target.checked"></unanswered-filter>
-          <started-by-filter v-model="startedBy"></started-by-filter>
-          <updated-by-filter v-model="updatedBy"></updated-by-filter>
-          <last-updated-filter v-model="lastUpdated"></last-updated-filter>
+          <unanswered-filter v-if="showUnanswered" :is-checked="form.unanswered" @checked="toggle"></unanswered-filter>
+          <watched-filter :is-checked="form.watched" @checked="toggle"></watched-filter>
+          <started-by-filter v-model="form.startedBy"></started-by-filter>
+          <updated-by-filter v-model="form.updatedBy"></updated-by-filter>
+          <last-updated-filter v-model="form.lastUpdated"></last-updated-filter>
+          <last-created-filter v-model="form.lastCreated"></last-created-filter>
+          <div class="text-right dropdown-item">
+            <button @click="apply" class="form-button-small">Filter</button>
+          </div>
         </template>
       </dropdown>
     </div>
@@ -36,48 +41,74 @@ import ThreadFilterTags from "../components/ThreadFilterTags";
 import StartedByFilter from "../components/StartedByFilter";
 import UpdatedByFilter from "../components/UpdatedByFilter";
 import LastUpdatedFilter from "../components/LastUpdatedFilter";
+import LastCreatedFilter from "../components/LastCreatedFilter";
 import UnansweredFilter from "../components/UnansweredFilter";
+import WatchedFilter from "../components/WatchedFilter";
 export default {
   components: {
     ThreadFilterTags,
     StartedByFilter,
     UpdatedByFilter,
     LastUpdatedFilter,
-    UnansweredFilter
+    LastCreatedFilter,
+    UnansweredFilter,
+    WatchedFilter
+  },
+  props: {
+    threadFilters: {
+      default: {}
+    }
   },
   data() {
     return {
-      filters: {},
-      startedBy: "",
-      updatedBy: "",
-      lastUpdated: "",
-      unanswered: ""
+      filters: this.threadFilters,
+      form: {
+        startedBy: "",
+        updatedBy: "",
+        lastUpdated: "",
+        lastCreated: "",
+        unanswered: false,
+        watched: false
+      }
     };
   },
+  computed: {
+    showUnanswered() {
+      return !this.form.trending == true;
+    }
+  },
   methods: {
-    findFilters() {
-      var matches = window.location.href.matchAll(/\?([\w]+)(?:=)([\w]+)/gi);
-      for (let match of matches) {
-        var key = match[1];
-        var value = match[2];
-        var filter = { key: value };
-        this.filters[key] = value;
+    toggle(isChecked, filterType) {
+      if (this.filters[filterType] == true) {
+        this.removeFilter(filterType);
+      } else {
+        this.filters[filterType] = isChecked;
       }
     },
-    removeFilter(key) {
-      Vue.delete(this.filters, key);
-      this.updateFilters();
+    removeFilter(filterType) {
+      Vue.delete(this.filters, filterType);
+      delete this.form[filterType];
     },
-    updateFilters() {
-      var path = window.location.pathname;
+    apply() {
+      this.updateFilters();
+      var path = window.location.pathname + "?";
       for (const [key, value] of Object.entries(this.filters)) {
-        path = path + "?" + key + "=" + value + "&";
+        path = path + key + "=" + value + "&";
       }
       window.location.href = path;
+    },
+    updateFilters() {
+      for (var filter in this.form) {
+        if (this.form[filter] != "") {
+          this.filters[filter] = this.form[filter];
+        }
+      }
     }
   },
   created() {
-    this.findFilters();
+    for (var filter in this.filters) {
+      this.form[filter] = this.filters[filter];
+    }
   }
 };
 </script>

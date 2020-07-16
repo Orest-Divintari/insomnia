@@ -89,7 +89,7 @@ class ReadThreadsTest extends TestCase
 
         $threadByAnotherUser = create(Thread::class);
 
-        $this->get(route('filtered-threads.index') . "?by={$uric->name}")
+        $this->get(route('filtered-threads.index') . "?startedBy={$uric->name}")
             ->assertSee($threadByUric->title)
             ->assertDontSee($threadByAnotherUser->title);
 
@@ -131,7 +131,7 @@ class ReadThreadsTest extends TestCase
         $user = $this->signIn();
         $threadWithNoParticipation = create(Thread::class);
         $this->post(route('api.replies.store', $this->thread), ['body' => 'some random text']);
-        $this->get(route('filtered-threads.index') . "?participatedBy=" . $user->name)
+        $this->get(route('filtered-threads.index') . "?contributed=" . $user->name)
             ->assertSee($this->thread->title)
             ->assertDontSee($threadWithNoParticipation->title);
     }
@@ -179,6 +179,44 @@ class ReadThreadsTest extends TestCase
         $this->get(route('filtered-threads.index') . "?watched=1")
             ->assertSee($this->thread->title)
             ->assertDontSee($threadThatHasntSubscribedTo->title);
+
+    }
+
+    /** @test */
+    public function user_can_read_the_threads_that_have_been_last_updated_X_days_ago()
+    {
+
+        $todaysThread = create(Thread::class);
+
+        $oldThread = create(Thread::class, [
+            'updated_at' => Carbon::now()->subMonth(),
+        ]);
+
+        $numberOdDays = 3;
+        $lastUpdated = Carbon::now()->subDays($numberOdDays);
+
+        $this->get(route('filtered-threads.index') . "?lastUpdated=" . $numberOdDays)
+            ->assertSee($todaysThread->title)
+            ->assertDontSee($oldThread->title);
+
+    }
+
+    /** @test */
+    public function user_can_read_the_threads_that_have_been_last_crated_X_days_ago()
+    {
+
+        $todaysThread = create(Thread::class);
+
+        $oldThread = create(Thread::class, [
+            'created_at' => Carbon::now()->subMonth(),
+        ]);
+        
+        $numberOdDays = 3;
+        $lastUpdated = Carbon::now()->subDays($numberOdDays);
+
+        $this->get(route('filtered-threads.index') . "?lastCreated=" . $numberOdDays)
+            ->assertSee($todaysThread->title)
+            ->assertDontSee($oldThread->title);
 
     }
 

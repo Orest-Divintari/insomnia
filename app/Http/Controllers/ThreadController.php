@@ -27,10 +27,11 @@ class ThreadController extends Controller
         }
 
         $threads = $threads->paginate(Thread::PER_PAGE);
+        $threadFilters = $filters->getThreadFilters();
         if (request()->wantsJson()) {
             return $threads;
         }
-        return view('threads.index', compact('category', 'threads'));
+        return view('threads.index', compact('category', 'threads', 'threadFilters'));
     }
 
     /**
@@ -66,7 +67,6 @@ class ThreadController extends Controller
      */
     public function show($threadSlug, ReplyFilters $filters)
     {
-        // dd(request('sortByLikes'));
         $thread = Thread::without('recentReply')
             ->whereSlug($threadSlug)->firstOrFail();
 

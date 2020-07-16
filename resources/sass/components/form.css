@@ -57,6 +57,14 @@ div.form-left-col {
 .form-button:hover {
     @apply .bg-blue-form-hover-button;
 }
+
+.form-button-small {
+    @apply .py-3/2 .px-2 .font-bold .bg-blue-mid .text-white text-xs .rounded;
+}
+
+.form-button-small:hover {
+    @apply .bg-blue-form-hover-button;
+}
 .error {
     @apply .w-full .py-4 .bg-red-alert .rounded .mb-3 .shadow-md .border-l-2 .border-red-alert-text .font-light .text-red-alert-text .pl-5 .flex .items-center;
 }

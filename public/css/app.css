@@ -125,6 +125,28 @@ div.form-left-col {
   background-color: rgba(51, 72, 102, var(--bg-opacity));
 }
 
+.form-button-small {
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-weight: 700;
+  --bg-opacity: 1;
+  background-color: #426693;
+  background-color: rgba(66, 102, 147, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  font-size: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.form-button-small:hover {
+  --bg-opacity: 1;
+  background-color: #334866;
+  background-color: rgba(51, 72, 102, var(--bg-opacity));
+}
+
 .error {
   width: 100%;
   padding-top: 1rem;

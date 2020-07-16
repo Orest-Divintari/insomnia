@@ -51,4 +51,5 @@ class Filters
     {
         return array_intersect(array_keys($this->request->all()), $this->filters);
     }
+
 }

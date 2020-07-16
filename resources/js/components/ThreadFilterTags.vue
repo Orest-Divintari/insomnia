@@ -8,7 +8,7 @@
           >
             <button>
               {{ title }}:
-              <span class="text-black-semi">{{value}}</span>
+              <span class="text-black-semi">{{ value }}</span>
             </button>
             <i class="ml-1 pt-1/2 fas fa-times"></i>
           </div>
@@ -32,13 +32,15 @@ export default {
     return {
       description: {
         unread: { "Show Only": "unread" },
-        participatedBy: { Contributed: this.filterValue },
+        constributed: { Contributed: this.filterValue },
         unanswered: { "Show only ": "unanswered" },
         newPosts: { "Show only": "new posts" },
         newThreads: { "Show only": "new threads" },
-        by: { "Started by": this.filterValue },
+        startedBy: { "Started by": this.filterValue },
         watched: { "Show only": "Watched" },
-        trending: { "Show only": "Trending" }
+        trending: { "Show only": "Trending" },
+        lastUpdated: { "Last Updated": this.filterValue + " days" },
+        lastCreated: { "Last Created": this.filterValue + " days" }
       }
     };
   },

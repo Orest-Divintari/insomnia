@@ -5,6 +5,8 @@ namespace App\Filters;
 use App\Filters\Filters;
 use App\Thread;
 use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class ThreadFilters extends Filters
 {
@@ -15,13 +17,15 @@ class ThreadFilters extends Filters
      * @var array
      */
     protected $filters = [
-        'by',
+        'startedBy',
         'newThreads',
         'newPosts',
-        'participatedBy',
+        'contributed',
         'trending',
         'unanswered',
         'watched',
+        'lastUpdated',
+        'lastCreated',
     ];
 
     /**
@@ -30,7 +34,7 @@ class ThreadFilters extends Filters
      * @param String $username
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function by($username)
+    public function startedBy($username)
     {
         $user = User::whereName($username)->firstOrFail();
 
@@ -66,7 +70,7 @@ class ThreadFilters extends Filters
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function participatedBy($username)
+    public function constributed($username)
     {
         $user = User::where('name', $username)->firstOrFail();
 
@@ -111,6 +115,99 @@ class ThreadFilters extends Filters
             $query->where('user_id', auth()->id());
         });
 
+    }
+
+    /**
+     * Get the threads that were last updated before the given number of days
+     *
+     * @param int $numberOfDays
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function lastUpdated($numberOfDays)
+    {
+        $this->builder
+            ->where('updated_at', ">=", Carbon::now()->subDays($numberOfDays));
+    }
+
+    /**
+     * Get the threads that were created the last give number of days
+     *
+     * @param int $numberOfDays
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function lastCreated($numberOfDays)
+    {
+        $this->builder
+            ->where('created_at', ">=", Carbon::now()->subDays($numberOfDays));
+    }
+
+    /**
+     * Get the filter keys and values passed in the request
+     *
+     * @return array
+     */
+    public function getThreadFilters()
+    {
+        $filters = $this->findFilters();
+
+        $filters = $this->castValues($filters);
+
+        $this->validateFilters($filters->toArray());
+        return $filters;
+    }
+
+    /**
+     * Find the the supported filters
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function findFilters()
+    {
+        return collect($this->request->all())
+            ->filter(function ($value, $key) {
+                return in_array($key, $this->filters);
+            });
+    }
+
+    /**
+     * Cast the requested filter values to boolean
+     *
+     * @param \Illuminate\Database\Eloquent\Collection $filters
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function castValues($filters)
+    {
+        return $filters->map(function ($value, $key) {
+
+            if ($value == 'true') {
+                $value = true;
+            } elseif ($value == 'false') {
+                $value = false;
+            }
+            return $value;
+        });
+    }
+
+    /**
+     * Validate the requested filters
+     *
+     * @param array $filters
+     * @return void
+     */
+    public function validateFilters($filters)
+    {
+        return Validator::make($filters, [
+            'startedBy' => "sometimes|required|string|exists:users,name",
+            'contributed' => "sometimes|required|string|exists:users,name",
+            'contributed' => "sometimes|required|string|exists:users,name",
+            'lastUpdated' => 'sometimes|required|integer|min:0',
+            'lastCreated' => 'sometimes|required|integer|min:0',
+            'newThreads' => 'sometimes|required|boolean',
+            'newPosts' => 'sometimes|required|boolean',
+            'watched' => 'sometimes|required|boolean',
+            'unanswered' => 'sometimes|required|boolean',
+            'trending' => 'sometimes|required|boolean',
+        ]);
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Reply;
 use App\Thread;
 
 class ThreadObserver
@@ -14,14 +15,16 @@ class ThreadObserver
      */
     public function created(Thread $thread)
     {
-
-        $thread->replies()->create([
-            'body' => $thread->body,
-            'user_id' => $thread->user_id,
-            'updated_at' => $thread->updated_at,
-            'created_at' => $thread->created_at,
-            'position' => $thread->replies_count + 1,
-        ]);
+        $reply = new Reply();
+        $reply->setTouchedRelations([]);
+        $reply->body = $thread->body;
+        $reply->user_id = $thread->user_id;
+        $reply->updated_at = $thread->updated_at;
+        $reply->created_at = $thread->created_at;
+        $reply->position = $thread->replies_count + 1;
+        $reply->repliable_id = $thread->id;
+        $reply->repliable_type = 'App\Thread';
+        $reply->save();
 
         if (auth()->check()) {
             $thread->subscribe();

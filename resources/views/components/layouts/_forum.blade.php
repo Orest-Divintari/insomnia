@@ -32,25 +32,26 @@
                         </div>
                     </template>
                     <template v-slot:dropdown-items>
-                        <a href="{{ route('filtered-threads.index') . '?by=' . auth()->user()->name }}"
+                        <a href="{{ route('filtered-threads.index') . '?startedBy=' . auth()->user()->name }}"
                             class=" dropdown-item hover:bg-white-catskill">Threads you started</a>
-                        <a href="{{ route('filtered-threads.index') . '?participatedBy=' . auth()->user()->name }}"
+                        <a href="{{ route('filtered-threads.index') . '?contributed=' . auth()->user()->name }}"
                             class="dropdown-item">Threads you replied to</a>
-                        <a href="{{ route('filtered-threads.index') . '?watched=1'}}" class="dropdown-item">Watched</a>
+                        <a href="{{ route('filtered-threads.index') . '?watched=true'}}"
+                            class="dropdown-item">Watched</a>
                     </template>
                 </dropdown>
                 @endauth
                 <x-sub_head_tab_item name="New Threads"
-                    destination="{{ route('filtered-threads.index') . '?newThreads=1'}}"></x-sub_head_tab_item>
+                    destination="{{ route('filtered-threads.index') . '?newThreads=true'}}"></x-sub_head_tab_item>
                 <x-sub_head_tab_item name="New Posts"
-                    destination="{{ route('filtered-threads.index') . '?newPosts=1'}}">
+                    destination="{{ route('filtered-threads.index') . '?newPosts=true'}}">
                 </x-sub_head_tab_item>
                 <x-sub_head_tab_item name="Unanswered"
-                    destination="{{ route('filtered-threads.index') . '?unanswered=1'}}">
+                    destination="{{ route('filtered-threads.index') . '?unanswered=true'}}">
                 </x-sub_head_tab_item>
 
                 <x-sub_head_tab_item name="Trending"
-                    destination="{{ route('filtered-threads.index') . '?trending=1' }}">
+                    destination="{{ route('filtered-threads.index') . '?trending=true' }}">
                 </x-sub_head_tab_item>
 
             </div>

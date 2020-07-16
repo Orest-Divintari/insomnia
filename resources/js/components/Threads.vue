@@ -1,6 +1,6 @@
 <template>
   <div>
-    <thread-filters></thread-filters>
+    <thread-filters :threadFilters="threadFilters"></thread-filters>
     <div
       v-for="(thread, index) in data"
       :key="thread.id"
@@ -78,7 +78,10 @@ export default {
     ThreadFilters
   },
   props: {
-    threads: Object
+    threads: Object,
+    threadFilters: {
+      default: {}
+    }
   },
   mixins: [replies],
   data() {

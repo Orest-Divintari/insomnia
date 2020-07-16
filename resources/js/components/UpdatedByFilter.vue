@@ -15,7 +15,7 @@
 export default {
   computed: {
     showFilter() {
-      return !window.location.href.includes("/threads?participatedBy=");
+      return !window.location.href.includes("/threads?contributed=");
     }
   }
 };

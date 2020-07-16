@@ -1,14 +1,14 @@
 <template>
   <div class="dropdown-item">
     <div class="flex flex-row-reverse items-center justify-end">
-      <label class="ml-3 form-label" for="unanswered">Unanswered</label>
+      <label class="ml-3 form-label" for="watched">Watched</label>
       <input
-        @click="$emit('checked', $event.target.checked , 'unanswered')"
+        @click="$emit('checked', $event.target.checked, 'watched')"
         :checked="isChecked"
         ref="unasnwered"
         class="from-input"
         type="checkbox"
-        id="unanswered"
+        id="watched"
       />
     </div>
   </div>
