@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 
 class Thread extends Model
 {
-
     use Filterable;
 
     /**
@@ -42,7 +41,6 @@ class Thread extends Model
      *
      * @var array
      */
-    // protected $with = ['recentReply', 'poster'];
 
     /**
      * The attributes that are mass assignable
@@ -83,9 +81,22 @@ class Thread extends Model
 
     public function recentReply()
     {
-        return $this->morphOne(Reply::class, 'repliable')
-            ->orderBy('updated_at', 'desc')
-            ->orderBy('id', 'desc');
+        // return $this->belongsTo(Reply::class);
+        return $this->morphOne(Reply::class, 'repliable');
+    }
+
+    public function scopeWithRecentReply($query)
+    {
+        // dd($query->where('threads.id', '=', 50)->get()->toArray());
+        $query->addSelect([
+            'recent_reply_id' => Reply::select('id')
+                ->where('replies.repliable_id', 50)
+                ->latest('created_at')
+                ->take(1),
+        ])->with('recentReply.poster');
+        // $query->where('threads.id', '=', 5);
+        // dd($query->get()->toArray());
+
     }
 
     /**

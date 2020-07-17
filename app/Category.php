@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class Category extends Model
 {
 
-    protected $with = ['threads'];
+    // protected $with = ['threads'];
     /**
      * Don't auto-apply mass assignment protection.
      *
@@ -120,13 +120,14 @@ class Category extends Model
      */
     public function parentCategoryRecentlyActiveThread()
     {
-        return $this->hasOneThrough(
-            Thread::class,
-            Category::class,
-            'parent_id',
-            'category_id'
-        )->latest('updated_at')
-            ->without('poster');
+        return $this->belongsTo(Thread::class);
+        // return $this->hasOneThrough(
+        //     Thread::class,
+        //     Category::class,
+        //     'parent_id',
+        //     'category_id'
+        // )->latest('updated_at')
+        //     ->without('poster');
     }
 
     /**
@@ -136,11 +137,54 @@ class Category extends Model
      */
     public function recentlyActiveThread()
     {
-        return $this->hasOne(Thread::class)
-            ->latest('updated_at')
-            ->without('poster');
+        return $this->belongsTo(Thread::class);
+        // return $this->hasOne(Thread::class)
+        //     ->latest('updated_at')
+        //     ->without('poster');
     }
 
+    public function scopeRecentActiveThread($query)
+    {
+        return $query->addSelect([
+            'recently_active_thread_id' => Thread::select('id')
+                ->whereColumn('category_id', 'categories.id')
+                ->latest('updated_at')
+                ->take(1),
+        ])->with('recentlyActiveThread');
+
+        // $query->addSelect(['recent_reply_id' => DB::table('replies')->select('replies.id')->join('threads', 'replies.repliable_id', '=', 'threads.id')->where('replies.repliable_id', 'threads.id')->latest('created_at')->take(1)]);
+        // dd($query->get()->toArray());
+        // $query->addSelect([
+        //     'recent_reply_id' => Reply::select('id')
+        //         ->where('replies.id', 'threads.id')
+        //         ->latest('created_at')
+        //         ->take(1),
+        // ]);
+
+        // dd($query->get()->toArray());
+        // $query->withRecentReply();
+        // $query->where('threads.id', '=', 50);
+        // dd($query->get()->toArray());
+        // dd($query->get()->toArray());
+        // $query->whereId('threads.id', '=', '5');
+
+    }
+
+    public function scopeParentRecentActiveThread($query)
+    {
+        $childrenCategoriesIds = DB::table('categories')
+            ->select('categories.id')
+            ->join('categories as parent_categories', 'categories.parent_id', '=', 'parent_categories.id')
+            ->get()
+            ->pluck('id');
+
+        return $query->addSelect([
+            'parent_category_recently_active_thread_id' => Thread::select('id')
+                ->whereIn('category_id', $childrenCategoriesIds)
+                ->latest('updated_at')
+                ->take(1),
+        ])->with('parentCategoryRecentlyActiveThread');
+    }
     /**
      * Determines the path to category's avatar
      *
@@ -160,7 +204,7 @@ class Category extends Model
      */
     public function scopeWithActivity(Builder $query)
     {
-        return $query->with(['recentlyActiveThread']);
+        return $query->recentActiveThread();
     }
 
     /**

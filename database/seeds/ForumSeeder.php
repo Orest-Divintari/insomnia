@@ -4,8 +4,8 @@ use Illuminate\Database\Seeder;
 
 class ForumSeeder extends Seeder
 {
-    const NUM_OF_REPLIES = 5;
-    const NUM_OF_THREADS = 2;
+    const NUM_OF_REPLIES = 10;
+    const NUM_OF_THREADS = 10;
     /**
      * Run the database seeds.
      *
@@ -16,7 +16,7 @@ class ForumSeeder extends Seeder
 
         $groups = [
             'Macs' => [
-                'macOS' => ['macOS catalina', 'macOS lion', 'macOS big Sur'],
+                'macOS' => ['macOS catalina'],
                 'notebooks' => ['macBook pro', 'macBook air', 'macbook'],
                 'Mac Accessories' => [],
             ],
@@ -59,18 +59,19 @@ class ForumSeeder extends Seeder
                     'group_category_id' => $groupCategory->id,
                 ]);
 
-                // if (empty($subCategories)) {
-                //     $this->createThreadWithReplies($parentCategory);
-                // }
-                // foreach ($subCategories as $subCategory) {
+                if (empty($subCategories)) {
+                    $this->createThreadWithReplies($parentCategory);
+                } else {
+                    foreach ($subCategories as $subCategory) {
 
-                //     $childrenCategory = factory('App\Category')->create([
-                //         'parent_id' => $parentCategory->id,
-                //         'group_category_id' => $groupCategory->id,
-                //         'title' => $subCategory,
-                //     ]);
-                //     $this->createThreadWithReplies($childrenCategory);
-                // }
+                        $childrenCategory = factory('App\Category')->create([
+                            'parent_id' => $parentCategory->id,
+                            'group_category_id' => $groupCategory->id,
+                            'title' => $subCategory,
+                        ]);
+                        $this->createThreadWithReplies($childrenCategory);
+                    }
+                }
             }
         }
 
@@ -79,23 +80,20 @@ class ForumSeeder extends Seeder
     public function createThreadWithReplies($category)
     {
         for ($threadCounter = 0; $threadCounter < static::NUM_OF_THREADS; $threadCounter++) {
-            print_r($threadCounter);
-            factory('App\Thread')->create([
+            $thread = factory('App\Thread')->create([
                 'category_id' => $category->id,
                 'replies_count' => 0,
-            ])->each(function ($currentThread) {
+            ]);
 
-                for ($replyCounter = 0; $replyCounter < static::NUM_OF_REPLIES; $replyCounter++) {
-                    print_r($replyCounter);
-                    factory('App\Reply')->create([
-                        'repliable_id' => $currentThread->id,
-                        'repliable_type' => 'App\Thread',
-                        'position' => $currentThread->fresh()->replies_count + 1,
-                    ]);
+            for ($replyCounter = 0; $replyCounter < static::NUM_OF_REPLIES; $replyCounter++) {
+                factory('App\Reply')->create([
+                    'repliable_id' => $thread->id,
+                    'repliable_type' => 'App\Thread',
+                    'position' => $thread->fresh()->replies_count + 1,
+                ]);
 
-                    $currentThread->increment('replies_count');
-                }
-            });
+                $thread->increment('replies_count');
+            }
 
         }
     }

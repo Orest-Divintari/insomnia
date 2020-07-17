@@ -36,7 +36,6 @@
 
         </x-breadcrumb.container>
         @endif
-
         <threads :thread-filters="{{ json_encode($threadFilters) }}" :threads="{{ $threads->toJson()}}"></threads>
     </main>
 

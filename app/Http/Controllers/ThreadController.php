@@ -20,7 +20,7 @@ class ThreadController extends Controller
      */
     public function index(Category $category, ThreadFilters $filters)
     {
-        $threads = Thread::with(['recentReply', 'poster'])->filter($filters)->latest();
+        $threads = Thread::with(['recentReply.poster', 'poster'])->filter($filters)->latest();
 
         if ($category->exists) {
             $threads->where('category_id', $category->id);

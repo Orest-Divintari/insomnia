@@ -29,6 +29,22 @@ class GroupCategory extends Model
     {
         return $query->with([
             'categories.subCategories',
+            // 'categories.recentlyActiveThread',
+            'categories.parentCategoryRecentlyActiveThread',
+            'categories' => function ($query) {
+                $query->recentActiveThread();
+                $query->parentRecentActiveThread();
+                // $query->parentRecentActiveThread();
+                $query->withCount(['threads', 'parentCategoryThreads']);
+
+                $query->withCount(['threads as replies_count' => function ($query) {
+                    $query->select(DB::raw('sum(replies_count)'));
+                }]);
+
+                $query->withCount(['parentCategoryThreads as parent_category_replies_count' => function ($query) {
+                    $query->select(DB::raw('sum(replies_count)'));
+                }]);
+            },
         ]);
     }
 
