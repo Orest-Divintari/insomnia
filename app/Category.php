@@ -159,17 +159,21 @@ class Category extends Model
      */
     public function scopeParentRecentActiveThread(Builder $query)
     {
-        $childrenCategoriesIds = DB::table('categories')
-            ->select('categories.id')
-            ->join('categories as parent_categories', 'categories.parent_id', '=', 'parent_categories.id')
-            ->get()
-            ->pluck('id');
-
-        return $query->addSelect([
-            'parent_category_recently_active_thread_id' => Thread::select('id')
-                ->where('threads.id', 1)
-                ->take(1),
-        ])->with(['parentCategoryRecentlyActiveThread' => function ($q) {
+        return $query->addSelect(DB::raw('(
+            SELECT
+                id
+            FROM
+                threads
+            WHERE
+                threads.category_id in(
+                    SELECT
+                        children_category.id FROM categories AS children_category
+                    WHERE
+                        children_category.parent_id = categories.id)
+            ORDER BY
+                updated_at DESC
+            LIMIT 1) AS parent_category_recently_active_thread_id')
+        )->with(['parentCategoryRecentlyActiveThread' => function ($q) {
             return $q->withRecentReply();
         }]);
 

@@ -73,7 +73,7 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread, ReplyFilters $filters)
     {
-        $thread->with('poster');
+        $thread->load('poster');
 
         $replies = Reply::forThread($thread, $filters);
 

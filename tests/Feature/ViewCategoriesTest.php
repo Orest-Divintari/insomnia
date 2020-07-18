@@ -62,25 +62,29 @@ class ViewCategoriesTest extends TestCase
         ]);
 
         $recentThreadOne = create(Thread::class, [
+            'title' => 'recentThreadOne',
             'category_id' => $subCategoryOne->id,
         ]);
 
-        $recentThreadOne = create(Thread::class, [
+        $oldThreadOne = create(Thread::class, [
             'category_id' => $subCategoryOne->id,
+            'title' => 'oldThreadOne',
             'updated_at' => Carbon::now()->subMinute(),
         ]);
 
         $recentThreadTwo = create(Thread::class, [
+            'title' => 'recentThreadTwo',
             'category_id' => $subCategoryTwo->id,
         ]);
 
         $oldThreadTwo = create(Thread::class, [
+            'title' => 'oldThreadTwo',
             'category_id' => $subCategoryTwo->id,
             'updated_at' => Carbon::now()->subMonth(),
         ]);
 
         $this->get(route('forum'))
-            ->assertSee($category->parentCategoryRecentlyActiveThread->shortTitle);
+            ->assertSee($recentThreadOne->shortTitle);
     }
 
     /** @test */
@@ -98,7 +102,7 @@ class ViewCategoriesTest extends TestCase
         ]);
 
         $this->get(route('forum'))
-            ->assertSee($category->recentlyActiveThread->shortTitle);
+            ->assertSee($recentThread->shortTitle);
     }
 
     /** @test */
