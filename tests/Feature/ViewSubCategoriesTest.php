@@ -81,14 +81,13 @@ class ViewSubCategoriesTest extends TestCase
             'updated_at' => Carbon::now()->subMonth(),
         ]);
 
-        $reply = create(Reply::class, [
+        create(Reply::class, [
             'repliable_id' => $thread->id,
             'repliable_type' => Thread::class,
-
         ]);
+
         $this->get(route('categories.show', $this->category))
-            ->assertSee($reply->poster->shortName)
-            ->assertDontSee($thread->poster->shortName);
+            ->assertSee($thread->replies->first()->poster->shortName);
 
     }
 

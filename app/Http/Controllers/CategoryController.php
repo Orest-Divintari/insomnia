@@ -32,6 +32,8 @@ class CategoryController extends Controller
                 ->withActivity()
                 ->withStatistics()
                 ->get();
+            
+
             return view('sub_categories.index', compact('category', 'subCategories'));
         }
         return redirect(route('threads.index', $category->slug));
