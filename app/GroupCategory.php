@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -22,19 +23,20 @@ class GroupCategory extends Model
     /**
      * Eager-Load the categories and subcategories relationship
      *
-     * @param Builder $query
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeWithCategories($query)
+    public function scopeWithCategories(Builder $query)
     {
+
         return $query->with([
             'categories.subCategories',
-            // 'categories.recentlyActiveThread',
-            'categories.parentCategoryRecentlyActiveThread',
             'categories' => function ($query) {
+
                 $query->recentActiveThread();
+
                 $query->parentRecentActiveThread();
-                // $query->parentRecentActiveThread();
+
                 $query->withCount(['threads', 'parentCategoryThreads']);
 
                 $query->withCount(['threads as replies_count' => function ($query) {
@@ -54,10 +56,10 @@ class GroupCategory extends Model
      * If it is a parent category, then fetch
      * the most recently active thread among all its children
      *
-     * @param Builder $query
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeWithActivity($query)
+    public function scopeWithActivity(Builder $query)
     {
         $query->with([
             'categories.recentlyActiveThread',
@@ -68,10 +70,10 @@ class GroupCategory extends Model
     /**
      * Eager-Load the total number of threads and replies associated with a category
      *
-     * @param Builder $query
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeWithStatistics($query)
+    public function scopeWithStatistics(Builder $query)
     {
         return $query->with(['categories' => function ($query) {
 

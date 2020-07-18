@@ -173,12 +173,12 @@ class Reply extends Model
     /**
      * Get all the like information for a reply
      *
-     * @param Builder $builder
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeWithLikes(Builder $builder)
+    public function scopeWithLikes(Builder $query)
     {
-        return $builder->with('likes')
+        return $query->with('likes')
             ->withCount('likes');
     }
 

@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         Thread::observe(ThreadObserver::class);
 
         View::composer('categories.index', function ($view) {
-            $latestPosts = Thread::with(['recentReply', 'category'])
+            $latestPosts = Thread::with('category')->withRecentReply()
                 ->has('replies')
                 ->latest('updated_at')
                 ->take(10)

@@ -134,6 +134,7 @@ class ReadThreadsTest extends TestCase
         $this->get(route('filtered-threads.index') . "?contributed=" . $user->name)
             ->assertSee($this->thread->title)
             ->assertDontSee($threadWithNoParticipation->title);
+
     }
 
     /** @test */
@@ -210,7 +211,7 @@ class ReadThreadsTest extends TestCase
         $oldThread = create(Thread::class, [
             'created_at' => Carbon::now()->subMonth(),
         ]);
-        
+
         $numberOdDays = 3;
         $lastUpdated = Carbon::now()->subDays($numberOdDays);
 

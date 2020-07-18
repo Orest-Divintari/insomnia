@@ -20,7 +20,10 @@ class ThreadController extends Controller
      */
     public function index(Category $category, ThreadFilters $filters)
     {
-        $threads = Thread::with(['recentReply.poster', 'poster'])->filter($filters)->latest();
+        $threads = Thread::with('poster')
+            ->withRecentReply()
+            ->filter($filters)
+            ->latest();
 
         if ($category->exists) {
             $threads->where('category_id', $category->id);
@@ -29,9 +32,11 @@ class ThreadController extends Controller
         $threads = $threads->paginate(Thread::PER_PAGE);
 
         $threadFilters = $filters->getThreadFilters();
+
         if (request()->wantsJson()) {
             return $threads;
         }
+
         return view('threads.index', compact('category', 'threads', 'threadFilters'));
     }
 
@@ -66,10 +71,9 @@ class ThreadController extends Controller
      * @param Thread $thread
      * @return Illuminate\View\View
      */
-    public function show($threadSlug, ReplyFilters $filters)
+    public function show(Thread $thread, ReplyFilters $filters)
     {
-        $thread = Thread::with('poster')->without('recentReply')
-            ->whereSlug($threadSlug)->firstOrFail();
+        $thread->with('poster');
 
         $replies = Reply::forThread($thread, $filters);
 
@@ -77,11 +81,7 @@ class ThreadController extends Controller
             return $replies;
         };
 
-        if (auth()->check()) {
-            auth()->user()->read($thread);
-        }
-
-        $thread->increment('views');
+        $thread->isVisited();
 
         return view('threads.show', compact('thread', 'replies'));
 

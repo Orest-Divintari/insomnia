@@ -5,11 +5,13 @@ namespace App;
 use App\Events\Subscription\NewReplyWasPostedToThread;
 use App\Traits\Filterable;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Thread extends Model
 {
+
     use Filterable;
 
     /**
@@ -79,23 +81,31 @@ class Thread extends Model
         return $this->morphMany(Reply::class, 'repliable');
     }
 
+    /**
+     * Get the most recent reply of a thread
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function recentReply()
     {
-        // return $this->belongsTo(Reply::class);
-        return $this->morphOne(Reply::class, 'repliable');
+        return $this->belongsTo(Reply::class);
     }
 
-    public function scopeWithRecentReply($query)
+    /**
+     * Eager load the most recent reply for a thread
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeWithRecentReply(Builder $query)
     {
-        // dd($query->where('threads.id', '=', 50)->get()->toArray());
-        $query->addSelect([
+        return $query->addSelect([
             'recent_reply_id' => Reply::select('id')
-                ->where('replies.repliable_id', 50)
+                ->whereColumn('repliable_id', 'threads.id')
+                ->where('repliable_type', 'App\Thread')
                 ->latest('created_at')
                 ->take(1),
         ])->with('recentReply.poster');
-        // $query->where('threads.id', '=', 5);
-        // dd($query->get()->toArray());
 
     }
 
@@ -275,6 +285,20 @@ class Thread extends Model
         return $this->subscriptions()->where([
             'user_id' => $userId,
         ])->exists();
+    }
+
+    /**
+     * User visits a thread
+     *
+     * @return boolean
+     */
+    public function isVisited()
+    {
+        if (auth()->check()) {
+            auth()->user()->read($this);
+        }
+
+        $this->increment('views');
     }
 
 }
