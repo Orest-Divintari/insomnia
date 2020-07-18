@@ -70,7 +70,7 @@ class ThreadFilters extends Filters
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function constributed($username)
+    public function contributed($username)
     {
         $user = User::where('name', $username)->firstOrFail();
 
