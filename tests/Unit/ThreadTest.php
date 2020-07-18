@@ -64,18 +64,16 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_a_most_recent_reply()
     {
-        $newReply = create(Reply::class, [
-            'repliable_type' => Thread::class,
-            'repliable_id' => $this->thread->id,
-        ]);
 
+        $newReply = $this->thread->replies()->first();
         $oldReply = create(Reply::class, [
             'repliable_type' => Thread::class,
             'repliable_id' => $this->thread->id,
             'updated_at' => Carbon::now()->subDay(),
         ]);
+        $thread = Thread::where('id', $this->thread->id)->withRecentReply()->first();
 
-        $this->assertEquals($this->thread->fresh()->recentReply->id, $newReply->id);
+        $this->assertEquals($thread->recentReply->id, $newReply->id);
 
     }
 

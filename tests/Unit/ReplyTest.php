@@ -125,10 +125,11 @@ class ReplyTest extends TestCase
     /** @test */
     public function every_reply_that_belongs_to_a_thread_has_a_position_in_ascending_order()
     {
-        $this->withoutExceptionHandling();
 
         $thread = create(Thread::class);
+
         $firstReply = $thread->addReply(raw(Reply::class));
+
         $secondReply = $thread->addReply(raw(Reply::class));
 
         $anotherThread = create(Thread::class);

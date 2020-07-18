@@ -41,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
                 ->take(10)
                 ->get();
 
+                
             $totalThreads = Thread::count();
             $totalMessages = Reply::count();
             $totalMembers = User::count();

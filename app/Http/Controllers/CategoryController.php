@@ -15,6 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $groups = GroupCategory::withCategories()->get();
+
         return view('categories.index', compact('groups'));
     }
 

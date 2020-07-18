@@ -30,17 +30,11 @@ class ParticipateInForumTest extends TestCase
     {
         $user = $this->signIn();
         $thread = create(Thread::class);
-        $reply = raw(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
 
-        $this->post(route('api.replies.store', $thread), $reply);
+        $this->post(route('api.replies.store', $thread), ['body' => 'some body']);
 
         $this->assertDatabaseHas('replies', [
-            'body' => $reply['body'],
-            'repliable_id' => $thread->id,
-            'repliable_type' => 'App\Thread',
+            'body' => 'some body',
             'user_id' => $user->id,
         ]);
 
@@ -73,10 +67,17 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function non_authorized_users_cannot_update_a_reply()
     {
+        $thread = create(Thread::class);
+
+        $reply = create(Reply::class, [
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+
         $this->signIn();
 
-        $reply = create(Reply::class);
         $newBody = ['body' => 'changed body'];
+
         $this->patch(route('api.replies.update', $reply), $newBody)
             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
@@ -84,12 +85,13 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function authorized_users_may_update_a_reply()
     {
-        $this->withoutExceptionHandling();
+        $thread = create(Thread::class);
 
         $user = $this->signIn();
 
         $reply = create(Reply::class, [
-            'body' => 'old body',
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
             'user_id' => $user->id,
         ]);
 
@@ -105,7 +107,6 @@ class ParticipateInForumTest extends TestCase
         $this->assertDataBaseHas('replies', [
             'body' => $newBody['body'],
             'user_id' => $user->id,
-
         ]);
 
     }

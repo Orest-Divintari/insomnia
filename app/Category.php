@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 class Category extends Model
 {
 
-    // protected $with = ['threads'];
     /**
      * Don't auto-apply mass assignment protection.
      *

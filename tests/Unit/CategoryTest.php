@@ -112,9 +112,9 @@ class CategoryTest extends TestCase
             'updated_at' => Carbon::now()->subMinute(),
         ]);
 
-        $this->assertEquals($recentThread->id, $this->category
-                ->recentlyActiveThread
-                ->id
+        $category = Category::where('id', $this->category->id)->recentActiveThread()->first();
+        $this->assertEquals($recentThread->id, $category
+                ->recently_active_thread_id
         );
     }
 
@@ -133,13 +133,10 @@ class CategoryTest extends TestCase
             'category_id' => $subCategory->id,
             'updated_at' => Carbon::now()->subMinute(),
         ]);
-
+        $parentCategory = Category::where('id', $this->category->id)->parentRecentActiveThread()->first();
         $this->assertEquals(
             $recentThread->id,
-            $this->category
-                ->fresh()
-                ->parentCategoryRecentlyActiveThread
-                ->id
+            $parentCategory->parent_category_recently_active_thread_id
         );
     }
 
