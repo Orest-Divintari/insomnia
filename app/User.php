@@ -42,6 +42,16 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * Get the route key name for Laravel.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+
+    /**
      * Determines the path to user's avatar
      *
      * @param string $avatar
@@ -98,6 +108,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * A user has replies
+     *
+     * @return void
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    /**
      * Get the subscriptions associated with the user
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
@@ -118,4 +138,45 @@ class User extends Authenticatable implements MustVerifyEmail
         return ThreadSubscription::Of($threadId, $this->id);
     }
 
+    /**
+     * Get the number of replies the user has made
+     *
+     * @return int
+     */
+    public function getMessagesCountAttribute()
+    {
+        return $this->replies()->count();
+    }
+
+    /**
+     * Get the number of likes the user has received
+     *
+     * @return int
+     */
+    public function getLikesScoreAttribute()
+    {
+        return Reply::where('replies.user_id', $this->id)
+            ->join('likes', 'replies.id', '=', 'likes.reply_id')
+            ->count();
+    }
+
+    /**
+     * Format the date the user joined the forum
+     *
+     * @return void
+     */
+    public function getJoinDateAttribute()
+    {
+        return $this->created_at->toFormattedDateString();
+    }
+
+    /**
+     * Get the profile posts of the user
+     *
+     * @return void
+     */
+    public function profilePosts()
+    {
+        return $this->hasMany(ProfilePost::class, 'profile_user_id');
+    }
 }

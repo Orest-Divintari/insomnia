@@ -35,6 +35,11 @@ Route::get('/categories/{category}/threads/', 'ThreadController@index')
 Route::get('/threads/{thread}', 'ThreadController@show')
     ->name('threads.show');
 
+//profile
+
+Route::get('/profiles/{user}', 'ProfileController@show')
+    ->name('profiles.show');
+
 // ------- WEB AUTH -------
 
 Route::group(['middleware' => 'auth'], function () {
@@ -55,7 +60,24 @@ Route::group([
     'name' => 'api',
 ], function () {
 
+    // profile posts
+    Route::get('/profiles/{user}/posts', 'ProfilePostController@index')
+        ->name('api.profile-posts.index');
+
+    Route::get('/categories/{category}/threads', 'ThreadController@index')
+        ->name('api.threads.index');
+
     Route::group(['middleware' => 'auth'], function () {
+
+        Route::post('/profiles/{user}/posts', 'ProfilePostController@store')
+            ->middleware('verified')
+            ->name('api.profile-posts.store');
+
+        Route::patch('/profile/posts/{post}', 'ProfilePostController@update')
+            ->name('api.profile-posts.update');
+
+        Route::delete('/profile/posts/{post}', 'ProfilePostController@destroy')
+            ->name('api.profile-posts.destroy');
 
         Route::get('/replies/{reply}', 'ReplyController@show')
             ->name('api.replies.show');
@@ -94,6 +116,4 @@ Route::group([
             ->name('api.user-notifications.destroy');
     });
 
-    Route::get('/categories/{category}/threads', 'ThreadController@index')
-        ->name('api.threads.index');
 });

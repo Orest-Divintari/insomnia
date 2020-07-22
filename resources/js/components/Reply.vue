@@ -14,7 +14,7 @@
         >Original Poster</p>
         <i class="mt-2 fas fa-chevron-down"></i>
       </div>
-      <div class="w-full">
+      <div class="reply-right-col">
         <div class="flex justify-between items-center">
           <a
             :href="'#post-'+reply.id"
@@ -41,7 +41,7 @@
             </form>
           </div>
           <div v-else class="flex flex-col h-full pb-8">
-            <div class="flex-1 text-black-semi text-sm pr-48 reply-body">
+            <div class="reply-body">
               <highlight :content="body"></highlight>
             </div>
             <div v-if="hasLikes" class="flex pl-1 mb-2">
@@ -60,7 +60,7 @@
                 <button
                   v-if="authorize('owns', reply)"
                   @click="editing=true"
-                  class="ml-2 btn-reply-control"
+                  class="btn-reply-control"
                 >
                   <span class="fas fa-pen"></span>
                   Edit

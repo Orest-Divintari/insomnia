@@ -19,7 +19,7 @@ Vue.component(
     require("./components/notifications/Notification.vue").default
 );
 Vue.component("Dropdown", require("./components/Dropdown.vue").default);
-
+Vue.component("Profile", require("./components/Profile.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Like;
+use App\ProfilePost;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -104,6 +105,65 @@ class UserTest extends TestCase
             $user->subscription($thread->id)->thread_id
         );
 
+    }
+
+    /** @test */
+    public function a_user_has_replies()
+    {
+        $user = create(User::class);
+
+        $thread = create(Thread::class);
+
+        $thread->addReply(raw(Reply::class, [
+            'user_id' => $user->id,
+        ]));
+
+        $this->assertCount(1, $user->replies);
+    }
+    /** @test */
+    public function a_user_has_messages_count()
+    {
+        $user = create(User::class);
+
+        $thread = create(Thread::class);
+        $thread->addReply(raw(Reply::class, [
+            'user_id' => $user->id,
+        ]));
+
+        $this->assertEquals(1, $user->fresh()->messages_count);
+
+    }
+
+    /** @test */
+    public function a_user_has_a_likes_score()
+    {
+        $user = create(User::class);
+
+        $thread = create(Thread::class);
+
+        $reply = $thread->addReply(raw(Reply::class, [
+            'user_id' => $user->id,
+        ]));
+
+        $anotherUser = create(User::class);
+
+        $reply->likedBy($anotherUser->id);
+
+        $this->assertEquals(1, $user->fresh()->likes_score);
+
+    }
+
+    /** @test */
+    public function a_user_has_profile_posts()
+    {
+        $user = create(User::class);
+
+        create(ProfilePost::class, [
+            'poster_id' => $user->id,
+            'profile_user_id' => $user->id,
+        ]);
+
+        $this->assertCount(1, $user->profilePosts);
     }
 
 }

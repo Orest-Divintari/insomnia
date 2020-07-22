@@ -70,28 +70,11 @@
         </header>
 
         <main class="p-5 h-screen bg-semi-white">{{$main}}</main>
-        <!-- <footer class="px-5 bg-blue-light">
-            <div class="flex justify-between">
-                <div>Editors</div>
-                <div>Links</div>
-                <div>Videos</div>
-            </div>
-        </footer> -->
+
     </div>
 
-    <!-- Include the Quill library -->
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
-    <!-- Initialize Quill editor -->
-    <script>
-    // var quill = new Quill('#editor', {
-    //     theme: 'snow',
-    //     readOnly: true,
-    //     modules: {
-    //         "toolbar": false
-    //     }
-    // });
-    </script>
+
 </body>
 
 </html>

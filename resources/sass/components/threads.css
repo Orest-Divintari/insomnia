@@ -5,16 +5,18 @@
     @apply .bg-white .rounded  .py-1 .text-xs .font-semibold .border .border-blue-light tracking-wide;
 }
 
-.btn-thread-control {
+.btn-white-blue {
     @apply .btn-control .text-blue-mid .px-2;
 }
 
-.btn-thread-control:hover {
+.btn-white-blue:hover {
     @apply .bg-blue-lighter;
 }
-
+.btn-white-blue:focus {
+    @apply outline-none;
+}
 .btn-reply-control {
-    @apply .btn-control .text-gray-mid px-3;
+    @apply .btn-control .text-gray-mid px-3 mr-2;
 }
 
 .btn-reply-control:hover {
@@ -31,4 +33,8 @@
 
 .reply-container {
     @apply .flex .border-t-6 .border-blue-reply-border .mb-4;
+}
+
+.reply-right-col {
+    @apply .w-full .p-3;
 }

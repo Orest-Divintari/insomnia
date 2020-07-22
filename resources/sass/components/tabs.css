@@ -1,0 +1,19 @@
+.is-active {
+    @apply .text-white .bg-blue-mid;
+}
+
+.tabs {
+    @apply .text-sm .text-gray-lightest;
+}
+
+.tab {
+    @apply .px-3 py-2 .rounded;
+}
+
+.tab:hover {
+    @apply .text-black-semi .bg-white-catskill;
+}
+
+.tab-disable-hover:hover {
+    @apply .text-white .bg-blue-mid;
+}

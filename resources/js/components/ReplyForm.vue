@@ -4,7 +4,7 @@
       <div class="reply-left-col">
         <img :src="user.avatar_path" class="avatar-xl" alt />
       </div>
-      <div class="w-full p-3">
+      <div class="reply-right-col">
         <form @submit.prevent="post">
           <wysiwyg
             v-model="body"

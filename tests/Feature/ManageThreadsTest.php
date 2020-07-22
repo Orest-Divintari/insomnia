@@ -46,5 +46,4 @@ class ManageThreadsTest extends TestCase
         $this->assertDatabaseHas('threads', $newTitle);
 
     }
-
 }

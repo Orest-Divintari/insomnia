@@ -42,19 +42,19 @@
                 </x-breadcrumb.container>
 
                 <div class="mt-7 flex justify-end">
-                    <button class="btn-thread-control mr-1">Ignore</button>
+                    <button class="btn-white-blue mr-1">Ignore</button>
 
                     <subscribe-button thread-slug="{{ $thread->slug }}"
                         subscription-status="{{ json_encode($thread->subscribedByAuthUser)}}" class="mr-1">
                     </subscribe-button>
 
 
-                    <button class="btn-thread-control mr-1">Lock</button>
-                    <button class="btn-thread-control mr-1">Pin</button>
+                    <button class="btn-white-blue mr-1">Lock</button>
+                    <button class="btn-white-blue mr-1">Pin</button>
                     @if(Gate::allows('manage', $thread))
                     <dropdown>
                         <template v-slot:dropdown-trigger>
-                            <div class="btn-thread-control flex items-center "> <span
+                            <div class="btn-white-blue flex items-center "> <span
                                     class="text-xl fas fa-ellipsis-h leading-none mr-3/2"></span>
                                 <span class="fas fa-sort-down text-2xs leading-none pb-1"></span>
                             </div>

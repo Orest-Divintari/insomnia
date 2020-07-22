@@ -14,6 +14,7 @@
 @import "./components/threads.css";
 @import "./components/dropdown.css";
 @import "./components/highlight.css";
+@import "./components/tabs.css";
 
 .section {
     @apply pt-5;
@@ -50,6 +51,9 @@ html {
 }
 .avatar-xl {
     @apply .avatar .w-24 .h-24;
+}
+.avatar-2xl {
+    @apply .avatar .w-48 .h-48;
 }
 
 .dot {

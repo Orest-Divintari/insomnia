@@ -1,3 +1,6 @@
+.reply-body {
+    @apply .flex-1 .text-black-semi .text-sm .pr-48 .mb-3;
+}
 .reply-body h1 {
     display: block;
     font-size: 2em;

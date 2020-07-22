@@ -4,7 +4,7 @@
       <div @click="toggle">
         <slot name="dropdown-trigger"></slot>
       </div>
-      <div v-if="isOpen" class="dropdown-menu" :class="styleClasses">
+      <div v-if="isOpen" class="z-10 dropdown-menu" :class="styleClasses">
         <slot name="dropdown-items"></slot>
       </div>
     </div>
