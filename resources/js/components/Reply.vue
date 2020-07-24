@@ -125,11 +125,6 @@ export default {
     },
     hasLikes() {
       return this.reply.likes_count > 0;
-    },
-    replyNumber() {
-      return (
-        (this.currentPage - 1) * this.numberOfRepliesPerPage + this.index + 1
-      );
     }
   },
   methods: {

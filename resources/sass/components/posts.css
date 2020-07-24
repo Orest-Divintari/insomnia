@@ -1,0 +1,7 @@
+.input-profile-post {
+    @apply .p-3 .rounded .border .border-gray-lightest;
+}
+
+.input-profile-post:focus {
+    @apply .outline-none;
+}

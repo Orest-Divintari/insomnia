@@ -42,7 +42,7 @@ class ProfilePostController extends Controller
      */
     public function destroy(ProfilePost $post)
     {
-        $this->authorize('manage', $post);
+        $this->authorize('delete', $post);
         $post->delete();
     }
 

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\ProfilePost;
+use App\Reply;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -34,5 +35,43 @@ class ProfilePostTest extends TestCase
         ]);
 
         $this->assertEquals(Carbon::now()->calendar(), $profilePost->date_created);
+    }
+
+    /** @test */
+    public function a_post_has_comments()
+    {
+        $post = create(ProfilePost::class);
+
+        $comment = create(Reply::class, [
+            'repliable_type' => ProfilePost::class,
+            'repliable_id' => $post->id,
+        ]);
+
+        $this->assertCount(1, $post->comments);
+    }
+
+    /** @test */
+    public function a_post_can_add_a_new_comment()
+    {
+        $post = create(ProfilePost::class);
+
+        $post->addComment([
+            'body' => 'some body',
+            'user_id' => 1,
+        ]);
+
+        $this->assertCount(1, $post->comments);
+    }
+
+    /** @test */
+    public function a_profile_post_knows_the_owner_of_the_profile_in_which_was_posted()
+    {
+        $profileUser = create(User::class);
+
+        $post = create(ProfilePost::class, [
+            'profile_user_id' => $profileUser->id,
+        ]);
+
+        $this->assertEquals($profileUser->id, $post->profileOwner->id);
     }
 }

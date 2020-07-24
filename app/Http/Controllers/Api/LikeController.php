@@ -12,7 +12,7 @@ class LikeController extends Controller
      * Store a new like in the database
      *
      * @param Reply $reply
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function store(Reply $reply)
     {
@@ -20,13 +20,14 @@ class LikeController extends Controller
         $reply->likedBy(auth()->id());
 
         return response('The post has been liked', 204);
+
     }
 
     /**
      * Unlike a the given reply
      *
      * @param Reply $reply
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Reply $reply)
     {

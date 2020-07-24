@@ -9,7 +9,7 @@
       :user="user"
     ></profile-post>
     <div class="flex justify-end">
-      <button class="w-24 btn-white-blue" @click="fetchMore">See more</button>
+      <button v-if="postsExist" class="w-28 btn-white-blue" @click="fetchMore">Older posts</button>
     </div>
   </div>
 </template>
@@ -34,6 +34,11 @@ export default {
       dataset: {}
     };
   },
+  computed: {
+    postsExist() {
+      return this.dataset.next_page_url != null;
+    }
+  },
   methods: {
     refresh(data) {
       this.dataset = data;
@@ -49,10 +54,12 @@ export default {
         .catch(error => console.log(error));
     },
     fetchData() {
-      axios
-        .get(this.path())
-        .then(({ data }) => this.refresh(data))
-        .catch(error => console.log(error));
+      if (this.posts.length == 0) {
+        axios
+          .get(this.path())
+          .then(({ data }) => this.refresh(data))
+          .catch(error => console.log(error));
+      }
     },
     add(data) {
       this.posts.unshift(data);

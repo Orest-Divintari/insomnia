@@ -73,9 +73,7 @@
       <tab name="Profile Posts" :selected="true">
         <profile-posts :user="user"></profile-posts>
       </tab>
-      <tab name="Latest Activity">
-        <latest-activity></latest-activity>
-      </tab>
+      <tab name="Latest Activity"></tab>
       <tab name="Postings">
         <recent-content></recent-content>
       </tab>

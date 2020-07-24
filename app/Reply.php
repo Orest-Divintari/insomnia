@@ -72,13 +72,24 @@ class Reply extends Model
     }
 
     /**
-     * A reply belongs to a user
+     * A thread reply belongs to a user
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function poster()
     {
         return $this->belongsTo(User::class, 'user_id');
+
+    }
+
+    /**
+     * A comment belongs to a profile post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function profilePost()
+    {
+        return $this->belongsTo(ProfilePost::class, 'repliable_id');
     }
 
     /**
@@ -214,7 +225,7 @@ class Reply extends Model
     }
 
     /**
-     * Detecte the quoted reply and its poster
+     * Detect the quoted reply and its poster
      *
      * @return array
      */

@@ -48,4 +48,35 @@ class ProfilePost extends Model
     {
         return $this->created_at->calendar();
     }
+
+    /**
+     * Add a new comment to current profile post
+     *
+     * @param array $comment
+     * @return Comment
+     */
+    public function addComment($comment)
+    {
+        return $this->comments()->create($comment);
+    }
+
+    /**
+     * Get the comments associated with the post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function comments()
+    {
+        return $this->morphMany(Reply::class, 'repliable');
+    }
+
+    /**
+     * Get the owner of the profile in which the post was posted
+     *
+     * @return void
+     */
+    public function profileOwner()
+    {
+        return $this->belongsTo(User::class, 'profile_user_id');
+    }
 }

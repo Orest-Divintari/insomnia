@@ -33,6 +33,7 @@
             <button @click="destroy" class="btn-reply-control">Delete</button>
           </div>
         </div>
+        <comments :post="post"></comments>
       </div>
     </div>
   </div>
@@ -41,11 +42,11 @@
 <script>
 import Highlight from "./Highlight";
 import Wysiwyg from "./Wysiwyg";
-import Comment from "./Comment";
+import Comments from "./Comments";
 export default {
   components: {
     Highlight,
-    Comment
+    Comments
   },
   props: {
     post: {

@@ -69,6 +69,17 @@ Route::group([
 
     Route::group(['middleware' => 'auth'], function () {
 
+        // commnets
+        Route::post('/posts/{post}/comments', 'CommentController@store')
+            ->name('api.comments.store')
+            ->middleware('verified');
+
+        Route::patch('/commnets/{comment}', 'CommentController@update')
+            ->name('api.comments.update');
+
+        Route::delete('/commnets/{comment}', 'CommentController@destroy')
+            ->name('api.comments.destroy');
+        // profile posts
         Route::post('/profiles/{user}/posts', 'ProfilePostController@store')
             ->middleware('verified')
             ->name('api.profile-posts.store');
@@ -79,6 +90,7 @@ Route::group([
         Route::delete('/profile/posts/{post}', 'ProfilePostController@destroy')
             ->name('api.profile-posts.destroy');
 
+        // thread replies
         Route::get('/replies/{reply}', 'ReplyController@show')
             ->name('api.replies.show');
 
@@ -91,24 +103,28 @@ Route::group([
         Route::delete('/replies/{reply}', 'ReplyController@destroy')
             ->name('api.replies.destroy');
 
+        // threads
         Route::patch('/threads/{thread}', 'ThreadController@update')
             ->name('api.threads.update');
 
         Route::delete('/threads/{thread}', 'ThreadController@delete')
             ->name('api.threads.update');
 
+        // likes
         Route::post('/replies/{reply}/likes', 'LikeController@store')
             ->name('api.likes.store');
 
         Route::delete('/replies/{reply}/likes', 'LikeController@destroy')
             ->name('api.likes.destroy');
 
+        // thread subscription
         Route::post('/threads/{thread}/subscriptions', 'ThreadSubscriptionController@store')
             ->name('api.thread-subscriptions.store');
 
         Route::delete('/threads/{thread}/subscriptions', 'ThreadSubscriptionController@destroy')
             ->name('api.thread-subscriptions.destroy');
 
+        // user notifications
         Route::get('/notifications', 'UserNotificationController@index')
             ->name('api.user-notifications.index');
 

@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Reply;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateReplyRequest extends FormRequest
+class PostCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,9 +13,7 @@ class UpdateReplyRequest extends FormRequest
      */
     public function authorize()
     {
-        $reply = $this->route('reply');
-        return $reply && $this->user()->can('update', $reply);
-
+        return auth()->check();
     }
 
     /**
@@ -29,12 +26,5 @@ class UpdateReplyRequest extends FormRequest
         return [
             'body' => 'required',
         ];
-    }
-
-    public function update(Reply $reply)
-    {
-        $reply->update(
-            $this->validated()
-        );
     }
 }

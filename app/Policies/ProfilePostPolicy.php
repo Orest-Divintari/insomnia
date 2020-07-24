@@ -31,4 +31,16 @@ class ProfilePostPolicy
     {
         return $user->is($post->poster);
     }
+
+    /**
+     * Determine whether the user can delete a profile post
+     *
+     * @param User $user
+     * @param ProfilePost $post
+     * @return boolean
+     */
+    public function delete(User $user, ProfilePost $post)
+    {
+        return $post->poster->is($user) || $post->profileOwner->is($user);
+    }
 }

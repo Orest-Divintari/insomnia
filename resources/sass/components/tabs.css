@@ -7,7 +7,7 @@
 }
 
 .tab {
-    @apply .px-3 py-2 .rounded;
+    @apply .px-3 py-2 .rounded .rounded-b-none;
 }
 
 .tab:hover {
