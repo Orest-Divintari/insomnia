@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-white">
     <input :value="content" :name="name" type="hidden" />
     <quill-editor
       ref="myTextEditor"
@@ -25,42 +25,42 @@ export default {
   props: {
     name: {
       type: String,
-      default: ""
+      default: "",
     },
     shouldClear: {
       type: Boolean,
-      default: false
+      default: false,
     },
     quotedData: {
-      default: ""
+      default: "",
     },
     styleAttributes: {
       type: String,
-      default: ""
+      default: "",
     },
     placeholder: {
       type: String,
-      default: ""
+      default: "",
     },
     readOnly: {
       type: Boolean,
-      default: false
+      default: false,
     },
     value: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   components: {
-    quillEditor
+    quillEditor,
   },
   data() {
     return {
       content: this.value,
       editorOptions: {
-        placeholder: this.placeholder
+        placeholder: this.placeholder,
       },
-      editor: {}
+      editor: {},
     };
   },
   methods: {
@@ -69,7 +69,7 @@ export default {
     },
     focus() {
       this.editor.focus({
-        preventScroll: true
+        preventScroll: true,
       });
     },
     styleEditor() {
@@ -80,7 +80,7 @@ export default {
     initializeSettings() {
       this.styleEditor();
       this.focus();
-    }
+    },
   },
 
   watch: {
@@ -93,7 +93,7 @@ export default {
     },
     shouldClear() {
       this.content = "";
-    }
+    },
   },
   mounted() {
     this.editor = this.$refs.myTextEditor.$el.querySelector(".ql-editor");
@@ -105,7 +105,7 @@ export default {
     if (this.readOnly) {
       this.editorOptions["theme"] = "bubble";
     }
-  }
+  },
 };
 </script>
 

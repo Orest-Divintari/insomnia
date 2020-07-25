@@ -15,7 +15,7 @@ class CreateLikesTable extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reply_id')->constrained();
+            $table->unsignedBigInteger('reply_id');
             $table->foreignId('user_id')->constrained();
             $table->unique(['user_id', 'reply_id']);
             $table->timestamps();

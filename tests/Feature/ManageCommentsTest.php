@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Like;
 use App\ProfilePost;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -144,5 +145,25 @@ class ManageCommentsTest extends TestCase
             'user_id' => $commentOwner->id,
             'body' => $comment->body,
         ]);
+    }
+
+    /** @test */
+    public function when_a_comment_is_deleted_the_associated_likes_are_deleted_also()
+    {
+        $user = $this->signIn();
+        $post = create(ProfilePost::class);
+
+        $comment = $post->addComment([
+            'body' => 'some body',
+            'user_id' => $user->id,
+        ]);
+
+        $comment->likedBy($user->id);
+
+        $this->assertCount(1, $comment->likes);
+
+        $comment->delete();
+
+        $this->assertCount(0, Like::all()->count());
     }
 }

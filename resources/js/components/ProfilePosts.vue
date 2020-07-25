@@ -20,29 +20,29 @@ import ProfilePost from "../components/ProfilePost";
 export default {
   components: {
     Status,
-    ProfilePost
+    ProfilePost,
   },
   props: {
     user: {
       type: Object,
-      default: {}
-    }
+      default: {},
+    },
   },
   data() {
     return {
       posts: [],
-      dataset: {}
+      dataset: {},
     };
   },
   computed: {
     postsExist() {
       return this.dataset.next_page_url != null;
-    }
+    },
   },
   methods: {
-    refresh(data) {
-      this.dataset = data;
-      this.posts = this.posts.concat(data.data);
+    refresh(paginatedCollection) {
+      this.dataset = paginatedCollection;
+      this.posts = this.posts.concat(paginatedCollection.data);
     },
     path() {
       return "/api/profiles/" + this.user.name + "/posts";
@@ -51,26 +51,26 @@ export default {
       axios
         .get(this.dataset.next_page_url)
         .then(({ data }) => this.refresh(data))
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     },
     fetchData() {
       if (this.posts.length == 0) {
         axios
           .get(this.path())
           .then(({ data }) => this.refresh(data))
-          .catch(error => console.log(error));
+          .catch((error) => console.log(error));
       }
     },
     add(data) {
       this.posts.unshift(data);
     },
-    remove(postIndex) {
-      this.posts.splice(postIndex, 1);
-    }
+    remove(index) {
+      this.posts.splice(index, 1);
+    },
   },
   created() {
     this.fetchData();
-  }
+  },
 };
 </script>
 

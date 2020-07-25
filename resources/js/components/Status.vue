@@ -5,31 +5,36 @@
         <img :src="user.avatar_path" class="avatar-lg" alt />
       </div>
       <div class="reply-right-col">
-        <profile-post-form v-model="body" placeholder="Update your status" :button-name="Posteee"></profile-post-form>
+        <profile-post-input
+          @posted="post"
+          v-model="body"
+          placeholder="Update your status"
+          button-name="Post"
+        ></profile-post-input>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import ProfilePostForm from "./ProfilePostForm";
+import ProfilePostInput from "./ProfilePostInput";
 import Wysiwyg from "../components/Wysiwyg";
 export default {
   components: {
     Wysiwyg,
-    ProfilePostForm
+    ProfilePostInput,
   },
   props: {
     user: {
       type: Object,
-      default: {}
-    }
+      default: {},
+    },
   },
   data() {
     return {
       body: "",
       isTyping: false,
-      posted: false
+      posted: false,
     };
   },
   methods: {
@@ -45,9 +50,9 @@ export default {
       axios
         .post(path, this.data())
         .then(({ data }) => this.newPost(data))
-        .catch(error => console.log(error));
-    }
-  }
+        .catch((error) => console.log(error));
+    },
+  },
 };
 </script>
 

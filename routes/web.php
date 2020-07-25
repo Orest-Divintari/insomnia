@@ -74,11 +74,15 @@ Route::group([
             ->name('api.comments.store')
             ->middleware('verified');
 
-        Route::patch('/commnets/{comment}', 'CommentController@update')
+        Route::patch('/comments/{comment}', 'CommentController@update')
             ->name('api.comments.update');
 
-        Route::delete('/commnets/{comment}', 'CommentController@destroy')
+        Route::delete('/comments/{comment}', 'CommentController@destroy')
             ->name('api.comments.destroy');
+
+        Route::get('/posts/{post}/comments', 'CommentController@index')
+            ->name('api.comments.index');
+
         // profile posts
         Route::post('/profiles/{user}/posts', 'ProfilePostController@store')
             ->middleware('verified')

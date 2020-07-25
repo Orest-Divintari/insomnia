@@ -1,7 +1,31 @@
 .input-profile-post {
-    @apply .p-3 .rounded .border .border-gray-lightest;
+    @apply .p-3 .rounded .border .border-gray-lighter w-full;
 }
 
 .input-profile-post:focus {
     @apply .outline-none;
+}
+
+.comment-container {
+    @apply border border-b-0 border-gray-lighter bg-blue-lighter flex;
+}
+
+.comment-avatar {
+    @apply pl-3 pt-3;
+}
+
+.post-right-col {
+    @apply w-full p-3 flex flex-col;
+}
+
+.post-username {
+    @apply text-blue-mid font-bold;
+}
+
+.post-username:hover {
+    @apply underline;
+}
+
+.post-header {
+    @apply flex items-center mb-3;
 }

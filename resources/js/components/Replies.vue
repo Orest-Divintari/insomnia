@@ -9,7 +9,7 @@
       :threadPoster="thread.poster.name"
     ></reply>
     <paginator @isPaginated="isPaginated=true" :dataset="dataset"></paginator>
-    <reply-form v-if="signedIn"></reply-form>
+    <reply-form @created="add" v-if="signedIn"></reply-form>
     <p v-else class="text-xs mt-4 text-center">
       You must
       <a href="/login" class="text-blue-mid underline">sign in</a> or
@@ -27,33 +27,30 @@ export default {
   components: {
     Reply,
     Paginator,
-    ReplyForm
+    ReplyForm,
   },
   props: {
     thread: {
       type: Object,
-      default: {}
+      default: {},
     },
     replies: {
       type: Object,
-      default: {}
-    }
+      default: {},
+    },
   },
   data() {
     return {
       isPaginated: false,
       items: this.replies.data,
-      dataset: this.replies
+      dataset: this.replies,
     };
   },
   methods: {
     add(item) {
       this.items.push(item);
-    }
+    },
   },
-  mounted() {
-    EventBus.$on("newReply", this.add);
-  }
 };
 </script>
 

@@ -46,10 +46,7 @@
             </div>
             <div v-if="hasLikes" class="flex pl-1 mb-2">
               <i v-if class="text-blue-like text-sm fas fa-thumbs-up"></i>
-              <a
-                href
-                class="text-gray-lightest text-xs underline ml-1"
-              >{{ this.reply.likes_count }} likes</a>
+              <a href class="text-gray-lightest text-xs underline ml-1">{{ this.likesCount }} likes</a>
             </div>
             <div v-if="signedIn" class="flex justify-between">
               <div class="flex">
@@ -67,7 +64,7 @@
                 </button>
               </div>
               <div class="flex">
-                <like-button @like="updateLikeStatus" :reply="reply"></like-button>
+                <like-button @liked="updateLikeStatus" :item="reply"></like-button>
                 <quote-reply :reply="reply"></quote-reply>
               </div>
             </div>
@@ -87,33 +84,34 @@ export default {
   components: {
     Highlight,
     LikeButton,
-    QuoteReply
+    QuoteReply,
   },
   props: {
     threadPoster: {
       type: String,
-      default: ""
+      default: "",
     },
     index: {
       type: Number,
-      default: 1
+      default: 1,
     },
     reply: {
       type: Object,
-      default: {}
+      default: {},
     },
     currentPage: {
-      type: Number
+      type: Number,
     },
     numberOfRepliesPerPage: {
-      type: Number
-    }
+      type: Number,
+    },
   },
   data() {
     return {
       editing: false,
       body: this.reply.body,
-      isLiked: this.reply.is_liked
+      isLiked: this.reply.is_liked,
+      likesCount: this.reply.likes_count,
     };
   },
   computed: {
@@ -124,19 +122,19 @@ export default {
       return { body: this.body };
     },
     hasLikes() {
-      return this.reply.likes_count > 0;
-    }
+      return this.likesCount > 0;
+    },
   },
   methods: {
     updateLikeStatus(status) {
       this.isLiked = status;
-      status ? this.reply.likes_count++ : this.reply.likes_count--;
+      status ? this.likesCount++ : this.likesCount--;
     },
     update() {
       axios
         .patch(this.path, this.data)
         .then(() => this.updated())
-        .catch(error => console.log(error.response));
+        .catch((error) => console.log(error.response));
     },
     updated() {
       this.editing = false;
@@ -144,8 +142,8 @@ export default {
     cancel() {
       this.editing = false;
       this.body = this.reply.body;
-    }
-  }
+    },
+  },
 };
 </script>
 

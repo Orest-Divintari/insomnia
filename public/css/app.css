@@ -1216,12 +1216,54 @@ div.form-left-col {
   border-radius: 0.25rem;
   border-width: 1px;
   --border-opacity: 1;
-  border-color: #949DA7;
-  border-color: rgba(148, 157, 167, var(--border-opacity));
+  border-color: #D7E2EF;
+  border-color: rgba(215, 226, 239, var(--border-opacity));
+  width: 100%;
 }
 
 .input-profile-post:focus {
   outline: 0;
+}
+
+.comment-container {
+  border-width: 1px;
+  border-bottom-width: 0;
+  --border-opacity: 1;
+  border-color: #D7E2EF;
+  border-color: rgba(215, 226, 239, var(--border-opacity));
+  --bg-opacity: 1;
+  background-color: #EDF4F9;
+  background-color: rgba(237, 244, 249, var(--bg-opacity));
+  display: flex;
+}
+
+.comment-avatar {
+  padding-left: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+.post-right-col {
+  width: 100%;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-username {
+  --text-opacity: 1;
+  color: #426693;
+  color: rgba(66, 102, 147, var(--text-opacity));
+  font-weight: 700;
+}
+
+.post-username:hover {
+  text-decoration: underline;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
 }
 @charset "UTF-8";
 

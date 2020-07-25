@@ -28,32 +28,32 @@ export default {
     return {
       body: "",
       quotedData: "",
-      posted: false
+      posted: false,
     };
   },
   computed: {
     path() {
       return "/api" + window.location.pathname + "/replies";
-    }
+    },
   },
   methods: {
     post() {
       axios
         .post(this.path, { body: this.body })
         .then(({ data }) => this.addReply(data))
-        .catch(error => console.log(error.response));
+        .catch((error) => console.log(error.response));
     },
     addReply(data) {
       this.posted = true;
-      EventBus.$emit("newReply", data);
+      this.$emit("created", data);
       this.body = "";
-    }
+    },
   },
   mounted() {
-    EventBus.$on("quotedReply", quotedData => {
+    EventBus.$on("quotedReply", (quotedData) => {
       this.quotedData = quotedData;
     });
-  }
+  },
 };
 </script>
 

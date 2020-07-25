@@ -99,14 +99,14 @@ export default {
     Tab,
     LatestActivity,
     RecentContent,
-    About
+    About,
   },
   props: {
     user: {
       type: Object,
-      default: {}
-    }
-  }
+      default: {},
+    },
+  },
 };
 </script>
 

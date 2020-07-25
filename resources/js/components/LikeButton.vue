@@ -3,7 +3,7 @@
     <button
       @click="toggle"
       class="btn-reply-control mr-2"
-      :class="{'text-blue-like': this.currentReply.is_liked }"
+      :class="[{'text-blue-like': this.isLiked}, styleAttributes]"
     >
       <span class="fas fa-thumbs-up"></span> Like
     </button>
@@ -13,44 +13,49 @@
 <script>
 export default {
   props: {
-    reply: {
+    item: {
       type: Object,
-      default: {}
-    }
+      default: {},
+      required: true,
+    },
+    styleAttributes: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
-      currentReply: this.reply
+      isLiked: this.item.is_liked,
     };
   },
   computed: {
     path() {
-      return "/api/replies/" + this.reply.id + "/likes";
-    }
+      return "/api/replies/" + this.item.id + "/likes";
+    },
   },
   methods: {
     toggle() {
-      this.currentReply.is_liked ? this.unlike() : this.like();
+      this.isLiked ? this.unlike() : this.like();
     },
     like() {
       axios
         .post(this.path)
         .then(() => {
-          this.currentReply.is_liked = true;
-          this.$emit("like", true);
+          this.isLiked = true;
+          this.$emit("liked", true);
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     },
     unlike() {
       axios
         .delete(this.path)
         .then(() => {
-          this.currentReply.is_liked = false;
-          this.$emit("like", false);
+          this.isLiked = false;
+          this.$emit("liked", false);
         })
-        .catch(error => console.log(error));
-    }
-  }
+        .catch((error) => console.log(error));
+    },
+  },
 };
 </script>
 

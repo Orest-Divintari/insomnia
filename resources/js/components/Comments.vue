@@ -1,27 +1,69 @@
 <template>
-  <div></div>
+  <div class="mt-3">
+    <div v-if="commentsExist" class="mb-2 bg-blue-lighter border border-gray-lighter p-2">
+      <button
+        @click="fetchMore"
+        class="text-smaller text-blue-ship-cove font-hairline hover:underline focus:outline-none"
+      >View previous comments...</button>
+    </div>
+    <comment
+      @deleted="remove(index)"
+      v-for="(comment,index) in comments"
+      :key="comment.id"
+      :comment="comment"
+    ></comment>
+    <new-comment @created="add" :profile-post="post"></new-comment>
+  </div>
 </template>
 
 <script>
-import Comment from "./Comment";
-import NewComment from "./NewComment";
 export default {
   props: {
     post: {
       type: Object,
       default: {},
-      required: true
+      required: true,
     },
-    components: {
-      Comment,
-      NewComment
-    }
   },
   data() {
     return {
-      comments: []
+      comments: [],
+      dataset: {},
     };
-  }
+  },
+  computed: {
+    commentsExist() {
+      return this.dataset.next_page_url != null;
+    },
+  },
+  methods: {
+    add(data) {
+      this.comments.push(data);
+    },
+    remove(index) {
+      this.comments.splice(index, 1);
+    },
+    refresh(paginatedCollection) {
+      this.dataset = paginatedCollection;
+      this.comments.unshift(...paginatedCollection.data.reverse());
+    },
+    fetchData() {
+      let path = "/api/posts/" + this.post.id + "/comments";
+      axios
+        .get(path)
+        .then(({ data }) => this.refresh(data))
+        .catch((error) => console.log(error));
+    },
+    fetchMore() {
+      axios
+        .get(this.dataset.next_page_url)
+        .then(({ data }) => this.refresh(data))
+        .catch((error) => console.log(error));
+    },
+  },
+  created() {
+    this.fetchData();
+  },
 };
 </script>
 

@@ -35,7 +35,6 @@ class CreateCommentTest extends TestCase
         $this->post(route('api.comments.store', $post), [])
             ->assertRedirect(route('verification.notice'));
     }
-    
 
     /** @test */
     public function authenticated_users_that_have_verified_the_email_can_post_comments()

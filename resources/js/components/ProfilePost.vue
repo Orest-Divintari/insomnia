@@ -5,11 +5,11 @@
         <img :src="post.poster.avatar_path
         " class="avatar-lg" alt />
       </div>
-      <div class="reply-right-col flex flex-col">
-        <div class="flex items-center mb-3">
+      <div class="post-right-col">
+        <div class="post-header">
           <a
             :href="'/profiles/' + post.poster.name"
-            class="hover:underline text-blue-mid font-bold"
+            class="post-username"
             v-text="post.poster.name"
           ></a>
           <p class="dot"></p>
@@ -17,7 +17,7 @@
         </div>
         <div v-if="editing">
           <wysiwyg v-model="body" name="body"></wysiwyg>
-          <div class="form-button-container justify-center">
+          <div class="mt-5">
             <button @click="update" class="form-button mr-3">
               <span class="fas fa-save mr-1"></span> Save
             </button>
@@ -46,22 +46,22 @@ import Comments from "./Comments";
 export default {
   components: {
     Highlight,
-    Comments
+    Comments,
   },
   props: {
     post: {
       type: Object,
-      default: {}
+      default: {},
     },
     user: {
       type: Object,
-      default: {}
-    }
+      default: {},
+    },
   },
   data() {
     return {
       body: this.post.body,
-      editing: false
+      editing: false,
     };
   },
   methods: {
@@ -77,21 +77,21 @@ export default {
     update() {
       axios
         .patch(this.path(), this.data())
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
 
       this.cancel();
     },
     destroy() {
       axios
         .delete(this.path())
-        .then(response => this.deletePost())
-        .catch(error => console.log(error));
+        .then((response) => this.deletePost())
+        .catch((error) => console.log(error));
     },
     deletePost() {
       this.$emit("deleted");
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class>
     <input
       @click="isTyping=true"
       v-if="isTyping != true"
@@ -15,7 +15,7 @@
     ></wysiwyg>
     <button @click="post" v-if="isTyping" class="form-button px-4 mt-3">
       <span class="fas fa-reply"></span>
-      {{buttoName}}
+      {{buttonName}}
     </button>
   </div>
 </template>
@@ -25,37 +25,37 @@ export default {
   props: {
     placeholder: {
       type: String,
-      default: ""
+      default: "",
     },
     posted: {
       type: Boolean,
-      default: false
+      default: false,
     },
     content: {
       type: String,
-      default: ""
+      default: "",
     },
     buttonName: {
       type: String,
-      default: "post"
-    }
+      default: "post",
+    },
   },
   data() {
     return {
       body: this.content,
-      isTyping: false
+      isTyping: false,
     };
   },
   methods: {
     post() {
       this.$emit("posted");
-    }
+    },
   },
   watch: {
     body() {
       this.$emit("input", this.body);
-    }
-  }
+    },
+  },
 };
 </script>
 

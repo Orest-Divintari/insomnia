@@ -20,6 +20,8 @@ Vue.component(
 );
 Vue.component("Dropdown", require("./components/Dropdown.vue").default);
 Vue.component("Profile", require("./components/Profile.vue").default);
+Vue.component("NewComment", require("./components/NewComment.vue").default);
+Vue.component("Comment", require("./components/Comment.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
