@@ -2,7 +2,7 @@
   <div>
     <thread-filters :threadFilters="threadFilters"></thread-filters>
     <div
-      v-for="(thread, index) in data"
+      v-for="(thread, index) in threads"
       :key="thread.id"
       class="border border-white-catskill"
       :class="containerClasses(index)"
@@ -69,32 +69,32 @@
 </template>
 
 <script>
-import paginator from "./Paginator";
-import replies from "../mixins/replies";
-import ThreadFilters from "../components/ThreadFilters";
+import paginator from "../Paginator";
+import replies from "../../mixins/replies";
+import ThreadFilters from "./ThreadFilters";
 export default {
   components: {
     paginator,
-    ThreadFilters
+    ThreadFilters,
   },
   props: {
-    threads: Object,
+    paginatedThreads: Object,
     threadFilters: {
-      default: {}
-    }
+      default: {},
+    },
   },
   mixins: [replies],
   data() {
     return {
-      data: this.threads.data,
-      dataset: this.threads
+      threads: this.paginatedThreads.data,
+      dataset: this.paginatedThreads,
     };
   },
   methods: {
     containerClasses(index) {
       return [
         index % 2 == 1 ? "bg-blue-lighter" : "bg-white",
-        index == 0 ? "" : "border-t-0"
+        index == 0 ? "" : "border-t-0",
       ];
     },
     endpoint(slug) {
@@ -111,11 +111,11 @@ export default {
       console.log(this.endpoint(thread.slug));
       axios
         .get(this.endpoint(thread.slug))
-        .catch(error => console.log(error.response));
-    }
+        .catch((error) => console.log(error.response));
+    },
   },
 
-  mounted() {}
+  mounted() {},
 };
 </script>
 

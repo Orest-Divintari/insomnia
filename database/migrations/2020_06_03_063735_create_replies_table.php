@@ -19,8 +19,7 @@ class CreateRepliesTable extends Migration
             $table->foreignId('repliable_id');
             $table->string('repliable_type');
             $table->unsignedBigInteger('position')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->unique(['user_id', 'repliable_id', 'repliable_type']);
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

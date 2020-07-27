@@ -59,7 +59,7 @@
 import EventBus from "../eventBus";
 export default {
   props: {
-    dataset: Object
+    dataset: Object,
   },
   data() {
     return {
@@ -71,7 +71,7 @@ export default {
       firstPage: 1,
       lastPage: 0,
       currentPage: false,
-      pages: []
+      pages: [],
     };
   },
   methods: {
@@ -153,7 +153,7 @@ export default {
       }
 
       this.pages.push(this.lastPage);
-    }
+    },
   },
 
   computed: {
@@ -163,18 +163,18 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   watch: {
     dataset() {
       this.initialize();
       this.computePageRange();
-    }
+    },
   },
   created() {
     this.initialize();
     this.computePageRange();
-  }
+  },
 };
 </script>
 

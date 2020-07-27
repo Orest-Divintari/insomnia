@@ -9,9 +9,9 @@ require("./bootstrap");
 window.Vue = require("vue");
 
 Vue.component("hamburger", require("./components/Hamburger.vue").default);
-Vue.component("Threads", require("./components/Threads.vue").default);
-Vue.component("Thread", require("./components/Thread.vue").default);
-Vue.component("Replies", require("./components/Replies.vue").default);
+Vue.component("Threads", require("./components/threads/Threads.vue").default);
+Vue.component("Thread", require("./components/threads/Thread.vue").default);
+Vue.component("Replies", require("./components/threads/Replies.vue").default);
 Vue.component("search", require("./components/Search.vue").default);
 Vue.component("Wysiwyg", require("./components/Wysiwyg.vue").default);
 Vue.component(
@@ -19,9 +19,12 @@ Vue.component(
     require("./components/notifications/Notification.vue").default
 );
 Vue.component("Dropdown", require("./components/Dropdown.vue").default);
-Vue.component("Profile", require("./components/Profile.vue").default);
-Vue.component("NewComment", require("./components/NewComment.vue").default);
-Vue.component("Comment", require("./components/Comment.vue").default);
+Vue.component("Profile", require("./components/profile/Profile.vue").default);
+Vue.component(
+    "NewComment",
+    require("./components/profile/NewComment.vue").default
+);
+Vue.component("Comment", require("./components/profile/Comment.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

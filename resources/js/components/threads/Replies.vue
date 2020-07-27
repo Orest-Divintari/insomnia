@@ -4,12 +4,11 @@
     <reply
       v-for="(reply, index) in items"
       :key="reply.id"
-      :index="index"
       :reply="reply"
       :threadPoster="thread.poster.name"
     ></reply>
     <paginator @isPaginated="isPaginated=true" :dataset="dataset"></paginator>
-    <reply-form @created="add" v-if="signedIn"></reply-form>
+    <new-reply @created="add" v-if="signedIn"></new-reply>
     <p v-else class="text-xs mt-4 text-center">
       You must
       <a href="/login" class="text-blue-mid underline">sign in</a> or
@@ -20,14 +19,13 @@
 
 <script>
 import Reply from "./Reply";
-import Paginator from "./Paginator";
-import ReplyForm from "./ReplyForm";
-import EventBus from "../eventBus";
+import Paginator from "../Paginator";
+import NewReply from "./NewReply";
 export default {
   components: {
     Reply,
     Paginator,
-    ReplyForm,
+    NewReply,
   },
   props: {
     thread: {

@@ -27,11 +27,19 @@
             <highlight :content="body"></highlight>
           </div>
 
-          <div class="flex justify-between" v-if="authorize('owns', comment)">
+          <div class="flex justify-between">
             <div>
               <button class="btn-reply-control bg-blue-lighter">{{ comment.date_created }}</button>
-              <button @click="editing=true" class="btn-reply-control bg-blue-lighter">Edit</button>
-              <button @click="destroy" class="btn-reply-control bg-blue-lighter">Delete</button>
+              <button
+                v-if="authorize('owns', comment)"
+                @click="editing=true"
+                class="btn-reply-control bg-blue-lighter"
+              >Edit</button>
+              <button
+                v-if="authorize('owns', comment) || authorize('is', profileUser)"
+                @click="destroy"
+                class="btn-reply-control bg-blue-lighter"
+              >Delete</button>
             </div>
             <like-button
               :styleAttributes="'bg-blue-lighter'"
@@ -50,8 +58,9 @@
 </template>
 
 <script>
-import Highlight from "./Highlight";
-import LikeButton from "./LikeButton";
+import Highlight from "../Highlight";
+import LikeButton from "../LikeButton";
+import replies from "../../mixins/replies";
 export default {
   components: {
     Highlight,
@@ -63,7 +72,13 @@ export default {
       default: {},
       required: true,
     },
+    profileUser: {
+      type: Object,
+      default: {},
+      required: true,
+    },
   },
+  mixins: [replies],
   data() {
     return {
       body: this.comment.body,
@@ -76,29 +91,19 @@ export default {
     path() {
       return "/api/comments/" + this.comment.id;
     },
-    data() {
-      return { body: this.body };
-    },
-    hasLikes() {
-      return this.likesCount > 0;
-    },
   },
   methods: {
-    updateLikeStatus(status) {
-      this.isLiked = status;
-      status ? this.likesCount++ : this.likesCount--;
-    },
     cancel() {
       this.editing = false;
+      this.body = this.comment.body;
     },
     update() {
       axios
         .patch(this.path, this.data)
-        .then(() => (this.editing = false))
+        .then(() => this.updated())
         .catch((error) => console.log(error));
     },
     destroy() {
-      console.log("asdas");
       axios
         .delete(this.path)
         .then(() => this.deleteComment())

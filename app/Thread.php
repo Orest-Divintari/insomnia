@@ -4,6 +4,8 @@ namespace App;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
 use App\Traits\Filterable;
+use App\Traits\FormatsDate;
+use App\Traits\Subscribable;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -12,10 +14,11 @@ use Illuminate\Support\Str;
 class Thread extends Model
 {
 
-    use Filterable;
+    use Filterable, FormatsDate, Subscribable;
 
     /**
      * Number of visible threads per page
+     *
      * @var int
      */
     const PER_PAGE = 5;
@@ -49,7 +52,13 @@ class Thread extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'slug', 'body', 'user_id', 'category_id'];
+    protected $fillable = [
+        'title',
+        'slug',
+        'body',
+        'user_id',
+        'category_id',
+    ];
 
     /**
      * Get the route key name
@@ -138,7 +147,7 @@ class Thread extends Model
     public function setSlugAttribute($slug)
     {
         if (Thread::where('slug', $slug)->exists()) {
-            $slug = $this->createUnique($slug);
+            $slug = $this->createUniqueSlug($slug);
         }
         $this->attributes['slug'] = $slug;
 
@@ -150,7 +159,7 @@ class Thread extends Model
      * @param string $slug
      * @return string $slug
      */
-    protected function createUnique($slug)
+    protected function createUniqueSlug($slug)
     {
         $counter = 2;
         $originalSlug = $slug;
@@ -171,26 +180,6 @@ class Thread extends Model
     public function getShortTitleAttribute()
     {
         return Str::limit($this->title, static::TITLE_LENGTH, '');
-    }
-
-    /**
-     * Transform the date it was updated to human readable datetime
-     *
-     * @return string
-     */
-    public function getDateUpdatedAttribute()
-    {
-        return $this->updated_at->calendar();
-    }
-
-    /**
-     * Transform the date it was created to human readable datetime
-     *
-     * @return string
-     */
-    public function getDateCreatedAttribute()
-    {
-        return $this->updated_at->calendar();
     }
 
     /**
@@ -223,81 +212,15 @@ class Thread extends Model
     }
 
     /**
-     * A thread can have many subscriptions
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function subscriptions()
-    {
-        return $this->hasMany(ThreadSubscription::class);
-    }
-
-    /**
-     * Subscribe a user to the current thread
-     *
-     * @param int|null $userId
-     * @param boolean $prefersEmail
-     * @return void
-     */
-    public function subscribe($userId = null, $prefersEmail = true)
-    {
-        $this->subscriptions()->create([
-            'user_id' => $userId ?? auth()->id(),
-            'prefers_email' => $prefersEmail,
-        ]);
-
-    }
-
-    /**
-     * Unsubscribe a user from the current thread
-     *
-     * @param int|null $userId
-     * @return void
-     */
-    public function unsubscribe($userId = null)
-    {
-        $this->subscriptions()->where([
-            'user_id' => $userId ?? auth()->id(),
-        ])->delete();
-    }
-
-    /**
-     * Determine whether the authenicated user has subscribed to current thread
-     *
-     * @return boolean
-     */
-    public function getSubscribedByAuthUserAttribute()
-    {
-        return $this->subscriptions()->where([
-            'user_id' => auth()->id(),
-        ])->exists();
-
-    }
-
-    /**
-     * Determine whether a user is subscribed to current thread
-     *
-     * @param int $userId
-     * @return boolean
-     */
-    public function isSubscribedBy($userId)
-    {
-        return $this->subscriptions()->where([
-            'user_id' => $userId,
-        ])->exists();
-    }
-
-    /**
      * User visits a thread
      *
      * @return boolean
      */
-    public function isVisited()
+    public function recordVisit()
     {
         if (auth()->check()) {
             auth()->user()->read($this);
         }
-
         $this->increment('views');
     }
 

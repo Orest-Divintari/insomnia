@@ -54,6 +54,8 @@ class ProfilePostController extends Controller
      */
     public function index(User $user)
     {
-        return $user->profilePosts()->latest()->paginate(ProfilePost::PER_PAGE);
+        return $user->profilePosts()
+            ->latest()
+            ->paginate(ProfilePost::PER_PAGE);
     }
 }

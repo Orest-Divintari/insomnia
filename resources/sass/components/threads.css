@@ -34,7 +34,3 @@
 .reply-container {
     @apply .flex .border-t-6 .border-blue-reply-border .mb-4;
 }
-
-.reply-right-col {
-    @apply .w-full .p-3;
-}

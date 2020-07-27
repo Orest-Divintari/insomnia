@@ -11,6 +11,7 @@
       v-for="(comment,index) in comments"
       :key="comment.id"
       :comment="comment"
+      :profile-user="profileUser"
     ></comment>
     <new-comment @created="add" :profile-post="post"></new-comment>
   </div>
@@ -20,6 +21,11 @@
 export default {
   props: {
     post: {
+      type: Object,
+      default: {},
+      required: true,
+    },
+    profileUser: {
       type: Object,
       default: {},
       required: true,
@@ -35,6 +41,9 @@ export default {
     commentsExist() {
       return this.dataset.next_page_url != null;
     },
+    path() {
+      return "/api/posts/" + this.post.id + "/comments";
+    },
   },
   methods: {
     add(data) {
@@ -48,9 +57,8 @@ export default {
       this.comments.unshift(...paginatedCollection.data.reverse());
     },
     fetchData() {
-      let path = "/api/posts/" + this.post.id + "/comments";
       axios
-        .get(path)
+        .get(this.path)
         .then(({ data }) => this.refresh(data))
         .catch((error) => console.log(error));
     },

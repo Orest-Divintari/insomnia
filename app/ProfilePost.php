@@ -2,10 +2,18 @@
 
 namespace App;
 
+use App\Traits\FormatsDate;
 use Illuminate\Database\Eloquent\Model;
 
 class ProfilePost extends Model
 {
+    use FormatsDate;
+
+    /**
+     * Number of visible posts per page
+     *
+     * @var int
+     */
     const PER_PAGE = 3;
 
     /**
@@ -37,16 +45,6 @@ class ProfilePost extends Model
     public function poster()
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Format the date the post was created
-     *
-     * @return string
-     */
-    public function getDateCreatedAttribute()
-    {
-        return $this->created_at->calendar();
     }
 
     /**

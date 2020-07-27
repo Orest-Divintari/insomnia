@@ -5,12 +5,12 @@
         <div class="comment-avatar">
           <img :src="user.avatar_path" class="avatar-sm" alt />
         </div>
-        <div class="reply-right-col">
+        <div class="w-full p-3">
           <profile-post-input
             @posted="post"
             :posted="posted"
             v-model="body"
-            placeholder="Write a comment"
+            placeholder="Write a comment..."
             button-name="Post comment"
           ></profile-post-input>
         </div>
@@ -54,7 +54,7 @@ export default {
         .catch((error) => console.log(error));
     },
     refresh(data) {
-      this.posted = true;
+      this.posted = !this.posted;
       this.$emit("created", data);
       this.body = "";
     },

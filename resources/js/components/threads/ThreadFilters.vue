@@ -37,13 +37,13 @@
 </template>
 
 <script>
-import ThreadFilterTags from "../components/ThreadFilterTags";
-import StartedByFilter from "../components/StartedByFilter";
-import UpdatedByFilter from "../components/UpdatedByFilter";
-import LastUpdatedFilter from "../components/LastUpdatedFilter";
-import LastCreatedFilter from "../components/LastCreatedFilter";
-import UnansweredFilter from "../components/UnansweredFilter";
-import WatchedFilter from "../components/WatchedFilter";
+import ThreadFilterTags from "./ThreadFilterTags";
+import StartedByFilter from "./StartedByFilter";
+import UpdatedByFilter from "./UpdatedByFilter";
+import LastUpdatedFilter from "./LastUpdatedFilter";
+import LastCreatedFilter from "./LastCreatedFilter";
+import UnansweredFilter from "./UnansweredFilter";
+import WatchedFilter from "./WatchedFilter";
 export default {
   components: {
     ThreadFilterTags,
@@ -52,12 +52,12 @@ export default {
     LastUpdatedFilter,
     LastCreatedFilter,
     UnansweredFilter,
-    WatchedFilter
+    WatchedFilter,
   },
   props: {
     threadFilters: {
-      default: {}
-    }
+      default: {},
+    },
   },
   data() {
     return {
@@ -68,14 +68,14 @@ export default {
         lastUpdated: "",
         lastCreated: "",
         unanswered: false,
-        watched: false
-      }
+        watched: false,
+      },
     };
   },
   computed: {
     showUnanswered() {
       return !this.form.trending == true;
-    }
+    },
   },
   methods: {
     toggle(isChecked, filterType) {
@@ -103,13 +103,13 @@ export default {
           this.filters[filter] = this.form[filter];
         }
       }
-    }
+    },
   },
   created() {
     for (var filter in this.filters) {
       this.form[filter] = this.filters[filter];
     }
-  }
+  },
 };
 </script>
 

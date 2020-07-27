@@ -2,22 +2,29 @@
 
 namespace App;
 
-use App\Events\Subscription\ReplyWasLiked;
 use App\Traits\Filterable;
-use Illuminate\Database\Eloquent\Builder;
+use App\Traits\FormatsDate;
+use App\Traits\Likeable;
 use Illuminate\Database\Eloquent\Model;
 use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
 {
-    use Filterable;
+    use Filterable, Likeable, FormatsDate;
 
     /**
-     * Number of visible replies per page
+     * Number of thread replies per page
      *
      * @var int
      */
-    const PER_PAGE = 10;
+    const REPLIES_PER_PAGE = 10;
+
+    /**
+     * Number of post profile comments per page
+     *
+     * @var int
+     */
+    const COMMENTS_PER_PAGE = 3;
 
     /**
      * The accessors to append to the model's array form.
@@ -50,6 +57,20 @@ class Reply extends Model
      * @var array
      */
     protected $touches = ['thread'];
+
+    /**
+     * Boot the Model
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($reply) {
+            $reply->likes->each->delete();
+        });
+    }
 
     /**
      * Touch the Thread relationship
@@ -93,79 +114,14 @@ class Reply extends Model
     }
 
     /**
-     * Transform the date that it was updated to readable format
-     *
-     * @return string
-     */
-    public function getDateUpdatedAttribute()
-    {
-        return $this->updated_at->calendar();
-    }
-
-    /**
-     * Transform the date that it was created to readable format
-     *
-     * @return string
-     */
-    public function getDateCreatedAttribute()
-    {
-        return $this->created_at->calendar();
-    }
-
-    /**
      * Clean the body from malicious context
      *
      * @param string $body
      * @return string
      */
-    public function getBodyAttriute($body)
+    public function getBodyAttribute($body)
     {
         return Purify::clean($body);
-    }
-
-    /**
-     * A reply has likes
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
-    }
-
-    /**
-     * Like the current reply
-     *
-     * @param integer $userId
-     * @return void
-     */
-    public function likedBy($userId = null)
-    {
-        $currentUserId = $userId ?: auth()->id();
-
-        if (!$this->likes()->where('user_id', $currentUserId)->exists()) {
-            $this->likes()->create([
-                'user_id' => $currentUserId,
-            ]);
-
-            event(new ReplyWasLiked($this->thread, $this));
-        }
-    }
-
-    /**
-     * Unlike the current reply
-     *
-     * @param integer $userId
-     * @return void
-     */
-    public function unlikedBy($userId = null)
-    {
-        $currentUserId = $userId ?: auth()->id();
-        $this->likes()
-            ->where('user_id', $currentUserId)
-            ->get()
-            ->each
-            ->delete();
     }
 
     /**
@@ -176,31 +132,12 @@ class Reply extends Model
      */
     public function getPageNumberAttribute()
     {
-        $numberOfRepliesBefore = $this->thread->replies()->where('id', '<=', $this->id)->count();
+        $numberOfRepliesBefore = $this->thread
+            ->replies()
+            ->where('id', '<=', $this->id)
+            ->count();
 
-        return (int) ceil($numberOfRepliesBefore / Reply::PER_PAGE);
-    }
-
-    /**
-     * Get all the like information for a reply
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeWithLikes(Builder $query)
-    {
-        return $query->with('likes')
-            ->withCount('likes');
-    }
-
-    /**
-     * Determine whether the reply is liked by the authenticated user
-     *
-     * @return boolean
-     */
-    public function getIsLikedAttribute()
-    {
-        return $this->likes->contains('user_id', auth()->id());
+        return (int) ceil($numberOfRepliesBefore / Reply::REPLIES_PER_PAGE);
     }
 
     /**
@@ -213,9 +150,10 @@ class Reply extends Model
     public static function forThread($thread, $filters)
     {
         $replies = static::where('repliable_id', $thread->id)
+            ->where('repliable_type', Thread::class)
             ->withLikes()
             ->filter($filters)
-            ->paginate(static::PER_PAGE);
+            ->paginate(static::REPLIES_PER_PAGE);
 
         $replies->each(function ($reply) {
             $reply->append('is_liked');
@@ -225,17 +163,24 @@ class Reply extends Model
     }
 
     /**
-     * Detect the quoted reply and its poster
+     * Get paginated comments with likes for a specific profile post
      *
-     * @return array
+     * @param  $thread
+     * @param App\Filters\ReplyFilters $filters
+     * @return Model
      */
-    public function quotedReply()
+    public static function forProfilePost($post)
     {
-        preg_match_all(
-            '^<blockquote> <a href="[^>]+>(\w+) said to post (\d+) </a> </blockquote>',
-            $this->body,
-            $matches
-        );
-        return $matches;
+        $comments = static::where('repliable_id', $post->id)
+            ->where('repliable_type', ProfilePost::class)
+            ->withLikes()
+            ->latest()
+            ->paginate(static::COMMENTS_PER_PAGE);
+
+        $comments->each(function ($comment) {
+            $comment->append('is_liked');
+        });
+
+        return $comments;
     }
 }

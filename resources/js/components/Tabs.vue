@@ -21,7 +21,7 @@
 export default {
   data() {
     return {
-      tabs: []
+      tabs: [],
     };
   },
   created() {
@@ -29,11 +29,11 @@ export default {
   },
   methods: {
     selectTab(selectedTab) {
-      this.tabs.forEach(tab => {
+      this.tabs.forEach((tab) => {
         tab.isActive = tab.name == selectedTab.name;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

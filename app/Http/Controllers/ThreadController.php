@@ -81,7 +81,7 @@ class ThreadController extends Controller
             return $replies;
         };
 
-        $thread->isVisited();
+        $thread->recordVisit();
 
         return view('threads.show', compact('thread', 'replies'));
 

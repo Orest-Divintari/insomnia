@@ -8,22 +8,22 @@
 </template>
 
 <script>
-import EventBus from "../eventBus";
+import EventBus from "../../eventBus";
 export default {
   props: {
     reply: {
       type: Object,
-      default: {}
+      default: {},
     },
     replyNumber: {
-      type: Number
+      type: Number,
     },
     perPage: {
-      type: Number
+      type: Number,
     },
     currentPage: {
-      type: Number
-    }
+      type: Number,
+    },
   },
   methods: {
     data() {
@@ -40,7 +40,7 @@ export default {
     },
     quoteReply() {
       EventBus.$emit("quotedReply", this.data());
-    }
+    },
   },
   computed: {
     goToReply() {
@@ -57,8 +57,8 @@ export default {
         );
       }
       return "/api/replies/" + this.reply.id;
-    }
-  }
+    },
+  },
 };
 </script>
 

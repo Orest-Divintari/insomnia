@@ -104,7 +104,7 @@ class ReplyTest extends TestCase
         ]);
 
         $reply = Reply::find(15);
-        $correctPageNumber = ceil(15 / Reply::PER_PAGE);
+        $correctPageNumber = ceil(15 / Reply::REPLIES_PER_PAGE);
         $this->assertEquals($correctPageNumber, $reply->pageNumber);
     }
 

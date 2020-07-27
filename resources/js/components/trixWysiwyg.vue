@@ -18,33 +18,33 @@ export default {
   props: {
     name: {
       type: String,
-      default: ""
+      default: "",
     },
     value: {
       type: String,
-      default: ""
+      default: "",
     },
     placeholder: {
       type: String,
-      default: " "
+      default: " ",
     },
     classes: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   methods: {
     clearInput() {
       this.$refs.trix.value = "";
-    }
+    },
   },
   mounted() {
-    this.$refs.trix.addEventListener("trix-change", e => {
+    this.$refs.trix.addEventListener("trix-change", (e) => {
       this.$emit("input", e.target.innerHTML);
     });
 
     EventBus.$on("newReply", this.clearInput);
-  }
+  },
 };
 </script>
 

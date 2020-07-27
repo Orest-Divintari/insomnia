@@ -4,7 +4,7 @@
       <div class="reply-left-col">
         <img :src="user.avatar_path" class="avatar-xl" alt />
       </div>
-      <div class="reply-right-col">
+      <div class="w-full p-3">
         <form @submit.prevent="post">
           <wysiwyg
             v-model="body"
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import EventBus from "../eventBus";
+import EventBus from "../../eventBus";
 export default {
   components: {},
   data() {
@@ -44,7 +44,7 @@ export default {
         .catch((error) => console.log(error.response));
     },
     addReply(data) {
-      this.posted = true;
+      this.posted = !this.posted;
       this.$emit("created", data);
       this.body = "";
     },

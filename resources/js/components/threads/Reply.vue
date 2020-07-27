@@ -14,7 +14,7 @@
         >Original Poster</p>
         <i class="mt-2 fas fa-chevron-down"></i>
       </div>
-      <div class="reply-right-col">
+      <div class="w-full">
         <div class="flex justify-between items-center">
           <a
             :href="'#post-'+reply.id"
@@ -76,9 +76,10 @@
 </template>
 
 <script>
-import Highlight from "./Highlight";
-import LikeButton from "./LikeButton";
+import Highlight from "../Highlight";
+import LikeButton from "../LikeButton";
 import QuoteReply from "./QuoteReply";
+import replies from "../../mixins/replies";
 
 export default {
   components: {
@@ -91,21 +92,12 @@ export default {
       type: String,
       default: "",
     },
-    index: {
-      type: Number,
-      default: 1,
-    },
     reply: {
       type: Object,
       default: {},
     },
-    currentPage: {
-      type: Number,
-    },
-    numberOfRepliesPerPage: {
-      type: Number,
-    },
   },
+  mixins: [replies],
   data() {
     return {
       editing: false,
@@ -118,26 +110,13 @@ export default {
     path() {
       return "/api/replies/" + this.reply.id;
     },
-    data() {
-      return { body: this.body };
-    },
-    hasLikes() {
-      return this.likesCount > 0;
-    },
   },
   methods: {
-    updateLikeStatus(status) {
-      this.isLiked = status;
-      status ? this.likesCount++ : this.likesCount--;
-    },
     update() {
       axios
         .patch(this.path, this.data)
         .then(() => this.updated())
         .catch((error) => console.log(error.response));
-    },
-    updated() {
-      this.editing = false;
     },
     cancel() {
       this.editing = false;

@@ -33,15 +33,15 @@
             <button @click="destroy" class="btn-reply-control">Delete</button>
           </div>
         </div>
-        <comments :post="post"></comments>
+        <comments :profile-user="profileUser" :post="post"></comments>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Highlight from "./Highlight";
-import Wysiwyg from "./Wysiwyg";
+import Highlight from "../Highlight";
+import Wysiwyg from "../Wysiwyg";
 import Comments from "./Comments";
 export default {
   components: {
@@ -53,7 +53,7 @@ export default {
       type: Object,
       default: {},
     },
-    user: {
+    profileUser: {
       type: Object,
       default: {},
     },

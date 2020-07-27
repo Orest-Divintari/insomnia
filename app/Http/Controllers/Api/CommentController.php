@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    const PER_PAGE = 3;
 
     /**
      * Store a new comment
@@ -27,8 +26,7 @@ class CommentController extends Controller
             'user_id' => auth()->id(),
             'body' => request('body'),
         ])->load('poster')
-            ->loadCount('likes')
-            ->append('is_liked');
+            ->loadCount('likes');
     }
 
     /**
@@ -58,18 +56,14 @@ class CommentController extends Controller
     }
 
     /**
-     * Get the comments associated with the post
+     * Get the comments associated with the profile post
      *
      * @param ProfilePost $post
-     * @return void
+     * @return array
      */
     public function index(ProfilePost $post)
     {
-        $comments = $post->comments()->withCount('likes')->latest()->paginate(static::PER_PAGE);
-        $comments->each(function ($comment) {
-            $comment->append('is_liked');
-        });
-        return $comments;
+        return Reply::forProfilePost($post);
     }
 
 }

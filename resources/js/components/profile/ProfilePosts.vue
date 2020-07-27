@@ -1,12 +1,12 @@
 <template>
   <div>
-    <status @added="add" :user="user"></status>
+    <new-profile-post @added="add" :profile-user="profileUser"></new-profile-post>
     <profile-post
       v-for="(post, index) in posts"
       :key="post.id"
       @deleted="remove(index)"
       :post="post"
-      :user="user"
+      :profile-user="profileUser"
     ></profile-post>
     <div class="flex justify-end">
       <button v-if="postsExist" class="w-28 btn-white-blue" @click="fetchMore">Older posts</button>
@@ -15,15 +15,15 @@
 </template>
 
 <script>
-import Status from "../components/Status";
-import ProfilePost from "../components/ProfilePost";
+import NewProfilePost from "./NewProfilePost";
+import ProfilePost from "./ProfilePost";
 export default {
   components: {
-    Status,
+    NewProfilePost,
     ProfilePost,
   },
   props: {
-    user: {
+    profileUser: {
       type: Object,
       default: {},
     },
@@ -45,7 +45,7 @@ export default {
       this.posts = this.posts.concat(paginatedCollection.data);
     },
     path() {
-      return "/api/profiles/" + this.user.name + "/posts";
+      return "/api/profiles/" + this.profileUser.name + "/posts";
     },
     fetchMore() {
       axios

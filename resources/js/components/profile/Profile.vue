@@ -3,10 +3,10 @@
     <div class="border border-gray-lighter rounded relative">
       <div class="bg-white-catskill p-4 flex">
         <div class="w-56">
-          <img :src="user.avatar_path" class="avatar-2xl absolute" alt="avatar" />
+          <img :src="profileUser.avatar_path" class="avatar-2xl absolute" alt="avatar" />
         </div>
         <div>
-          <p class="text-2xl" v-text="user.name"></p>
+          <p class="text-2xl" v-text="profileUser.name"></p>
           <p class="text-sm">Macrumors newbie</p>
         </div>
       </div>
@@ -16,11 +16,11 @@
           <div class="flex justify-between p-4">
             <div>
               <p class="text-xs text-gray-lightest">Messages</p>
-              <p class="text-md text-center" v-text="user.messages_count"></p>
+              <p class="text-md text-center" v-text="profileUser.messages_count"></p>
             </div>
             <div>
               <p class="text-xs text-gray-lightest">Likes Score</p>
-              <p class="text-md text-center" v-text="user.likes_score"></p>
+              <p class="text-md text-center" v-text="profileUser.likes_score"></p>
             </div>
             <div>
               <p class="text-xs text-gray-lightest">Points</p>
@@ -35,15 +35,15 @@
                 <div class="flex">
                   <p>
                     <span class="text-gray-lightest">Joined:</span>
-                    {{ user.join_date }}
+                    {{ profileUser.join_date }}
                   </p>
                   <p class="self-center dot"></p>
                   <p>
                     Viewing member profile
                     <a
                       class="italic hover:underline text-blue-like"
-                      :href="'/profiles/' + user.name"
-                      v-text="user.name"
+                      :href="'/profiles/' + profileUser.name"
+                      v-text="profileUser.name"
                     ></a>
                   </p>
                 </div>
@@ -58,9 +58,9 @@
                     <div class="dropdown-title">Find content</div>
                     <div class="dropdown-item">Find all content by {{ user.name }}</div>
                     <a
-                      :href="'/threads?startedBy=' + user.name"
+                      :href="'/threads?startedBy=' + profileUser.name"
                       class="dropdown-item"
-                    >Find all threads by {{ user.name }}</a>
+                    >Find all threads by {{ profileUser.name }}</a>
                   </template>
                 </dropdown>
               </div>
@@ -71,7 +71,7 @@
     </div>
     <tabs class="mt-5">
       <tab name="Profile Posts" :selected="true">
-        <profile-posts :user="user"></profile-posts>
+        <profile-posts :profile-user="profileUser"></profile-posts>
       </tab>
       <tab name="Latest Activity"></tab>
       <tab name="Postings">
@@ -89,8 +89,8 @@ import ProfilePosts from "./ProfilePosts";
 import LatestActivity from "./LatestActivity";
 import RecentContent from "./RecentContent";
 import About from "./About";
-import Tabs from "./Tabs";
-import Tab from "./Tab";
+import Tabs from "../Tabs";
+import Tab from "../Tab";
 
 export default {
   components: {
@@ -102,7 +102,7 @@ export default {
     About,
   },
   props: {
-    user: {
+    profileUser: {
       type: Object,
       default: {},
     },

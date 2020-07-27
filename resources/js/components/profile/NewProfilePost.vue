@@ -2,13 +2,14 @@
   <div v-if="signedIn">
     <div class="reply-container">
       <div class="reply-left-col w-24">
-        <img :src="user.avatar_path" class="avatar-lg" alt />
+        <img :src="profileUser.avatar_path" class="avatar-lg" alt />
       </div>
-      <div class="reply-right-col">
+      <div class="w-full p-3">
         <profile-post-input
           @posted="post"
+          :posted="posted"
           v-model="body"
-          placeholder="Update your status"
+          placeholder="Update your status..."
           button-name="Post"
         ></profile-post-input>
       </div>
@@ -18,14 +19,14 @@
 
 <script>
 import ProfilePostInput from "./ProfilePostInput";
-import Wysiwyg from "../components/Wysiwyg";
+import Wysiwyg from "../Wysiwyg";
 export default {
   components: {
     Wysiwyg,
     ProfilePostInput,
   },
   props: {
-    user: {
+    profileUser: {
       type: Object,
       default: {},
     },
@@ -37,19 +38,24 @@ export default {
       posted: false,
     };
   },
-  methods: {
+  computed: {
     data() {
       return { body: this.body };
     },
-    newPost(data) {
+    path() {
+      return "/api/profiles/" + this.profileUser.name + "/posts";
+    },
+  },
+  methods: {
+    refresh(data) {
+      console.log(data);
       this.posted = !this.posted;
       this.$emit("added", data);
     },
     post() {
-      let path = "/api/profiles/" + this.user.name + "/posts";
       axios
-        .post(path, this.data())
-        .then(({ data }) => this.newPost(data))
+        .post(this.path, this.data)
+        .then(({ data }) => this.refresh(data))
         .catch((error) => console.log(error));
     },
   },

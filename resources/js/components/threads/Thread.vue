@@ -1,20 +1,20 @@
 <script>
-import SubscribeButton from "./subscription/SubscribeButton";
+import SubscribeButton from "../subscription/SubscribeButton";
 export default {
   components: {
-    SubscribeButton
+    SubscribeButton,
   },
   props: {
     thread: {
       type: Object,
-      default: {}
-    }
+      default: {},
+    },
   },
   data() {
     return {
       title: this.thread.title,
       isSubscribed: this.thread.subscribed_by_auth_user,
-      editing: false
+      editing: false,
     };
   },
   computed: {
@@ -26,7 +26,7 @@ export default {
     },
     sortedByLikes() {
       return window.location.href.includes("?sortByLikes=1");
-    }
+    },
   },
   methods: {
     hideDropdown() {
@@ -43,10 +43,10 @@ export default {
     update() {
       axios
         .patch(this.path, this.data)
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
-    }
-  }
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
+    },
+  },
 };
 </script>
 

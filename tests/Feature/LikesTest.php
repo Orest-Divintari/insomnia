@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Like;
 use App\Reply;
 use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -95,4 +96,26 @@ class LikesTest extends TestCase
         $this->assertCount(0, $reply->fresh()->likes);
 
     }
+
+    /** @test */
+    public function when_a_reply_is_deleted_all_the_associated_likes_are_deleted()
+    {
+        $user = $this->signIn();
+
+        $thread = create(Thread::class);
+
+        $reply = create(Reply::class, [
+            'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+        $reply->likedBy($user->id);
+
+        $this->assertCount(1, $reply->likes);
+
+        $reply->delete();
+
+        $this->assertEquals(0, Like::all()->count());
+    }
+
 }

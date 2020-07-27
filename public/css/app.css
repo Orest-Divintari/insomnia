@@ -445,11 +445,6 @@ div.form-left-col {
   border-color: rgba(162, 187, 223, var(--border-opacity));
   margin-bottom: 1rem;
 }
-
-.reply-right-col {
-  width: 100%;
-  padding: 0.75rem;
-}
 .dropdown-menu {
   position: absolute;
   border-width: 1px;
