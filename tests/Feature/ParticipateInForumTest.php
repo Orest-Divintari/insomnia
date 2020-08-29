@@ -115,7 +115,9 @@ class ParticipateInForumTest extends TestCase
     public function authorized_users_may_delete_a_reply()
     {
         $user = $this->signIn();
+
         $thread = create(Thread::class);
+
         $reply = create(Reply::class, [
             'user_id' => $user->id,
             'repliable_id' => $thread->id,
@@ -128,6 +130,7 @@ class ParticipateInForumTest extends TestCase
         $this->assertDatabaseMissing('replies', [
             'id' => $reply->id,
             'repliable_id' => $thread->id,
+            'repliable_type' => Thread::class,
         ]);
 
         // first reply == body of thread

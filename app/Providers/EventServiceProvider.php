@@ -21,6 +21,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Subscription\NewReplyWasPostedToThread' => [
             'App\Listeners\Subscription\NotifyThreadSubscribers',
         ],
+        'App\Events\Profile\NewCommentWasAddedToProfilePost' => [
+            'App\Listeners\Profile\NotifyPostParticipants',
+        ],
+        'App\Events\Profile\NewPostWasAddedToProfile' => [
+            'App\Listeners\Profile\NotifyProfileOwnerOfNewPost',
+        ],
         'App\Events\Subscription\ReplyWasLiked' => [
             'App\Listeners\Subscription\NotifyReplyPoster',
         ],

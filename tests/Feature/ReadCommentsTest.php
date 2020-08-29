@@ -18,6 +18,5 @@ class ReadCommentsTest extends TestCase
         $this->signIn();
 
         $response = $this->get(route('api.comments.index', $post))->json();
-        dd($response);
     }
 }

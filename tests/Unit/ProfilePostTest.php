@@ -55,9 +55,10 @@ class ProfilePostTest extends TestCase
     {
         $post = create(ProfilePost::class);
 
+        $user = $this->signIn();
         $post->addComment([
             'body' => 'some body',
-            'user_id' => 1,
+            'user_id' => $user->id,
         ]);
 
         $this->assertCount(1, $post->comments);
@@ -74,4 +75,5 @@ class ProfilePostTest extends TestCase
 
         $this->assertEquals($profileUser->id, $post->profileOwner->id);
     }
+
 }

@@ -35,7 +35,7 @@ class ReplyPolicy
     }
 
     /**
-     * Determine whether a user can delete a comment
+     * Determine whether a user can delete a post comment
      *
      * @param User $user
      * @param Reply $comment
@@ -44,6 +44,18 @@ class ReplyPolicy
     public function deleteComment(User $user, Reply $comment)
     {
         return $comment->poster->is($user) || $comment->repliable->profileOwner->is($user);
+    }
+
+    /**
+     * Determine whether a user can delete a thread reply
+     *
+     * @param User $user
+     * @param Reply $comment
+     * @return boolean
+     */
+    public function deleteReply(User $user, Reply $reply)
+    {
+        return $reply->poster->is($user);
     }
 
 }

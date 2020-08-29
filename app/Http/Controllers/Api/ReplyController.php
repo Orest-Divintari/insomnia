@@ -51,7 +51,7 @@ class ReplyController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        $this->authorize('manage', $reply);
+        $this->authorize('deleteReply', $reply);
         $reply->delete();
         return response('Reply has been deleted', 200);
     }

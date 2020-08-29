@@ -18,6 +18,8 @@ class CommentTest extends TestCase
 
         $post = create(ProfilePost::class);
 
+        $this->signIn($user);
+
         $comment = $post->addComment([
             'body' => 'some body',
             'user_id' => $user->id,
@@ -32,6 +34,8 @@ class CommentTest extends TestCase
         $user = create(User::class);
 
         $post = create(ProfilePost::class);
+
+        $this->signIn($user);
 
         $comment = $post->addComment([
             'body' => 'some body',

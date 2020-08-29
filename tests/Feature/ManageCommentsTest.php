@@ -15,16 +15,16 @@ class ManageCommentsTest extends TestCase
     /** @test */
     public function unathorized_users_cannot_edit_a_comment()
     {
-        $user = create(User::class);
+        $this->signIn();
 
         $post = create(ProfilePost::class);
+
+        $user = create(User::class);
 
         $comment = $post->addComment([
             'body' => 'some body',
             'user_id' => $user->id,
         ]);
-
-        $this->signIn();
 
         $this->patch(route('api.comments.update', $comment))
             ->assertStatus(Response::HTTP_FORBIDDEN);
@@ -37,6 +37,8 @@ class ManageCommentsTest extends TestCase
         $postOwner = create(User::class);
 
         $commentOwner = create(User::class);
+
+        $this->signIn($commentOwner);
 
         $post = create(ProfilePost::class, [
             'profile_user_id' => $postOwner->id,
@@ -74,7 +76,7 @@ class ManageCommentsTest extends TestCase
     /** @test */
     public function unathorized_users_cannot_delete_a_comment()
     {
-        $user = create(User::class);
+        $user = $this->signIn();
 
         $post = create(ProfilePost::class);
 
@@ -93,6 +95,8 @@ class ManageCommentsTest extends TestCase
     public function the_user_who_posted_the_comment_can_delete_it()
     {
         $postOwner = create(User::class);
+
+        $this->signIn($postOwner);
 
         $commentOwner = create(User::class);
 
@@ -124,6 +128,8 @@ class ManageCommentsTest extends TestCase
         $profileUser = create(User::class);
 
         $commentOwner = create(User::class);
+
+        $this->signIn($commentOwner);
 
         $post = create(ProfilePost::class, [
             'profile_user_id' => $profileUser->id,

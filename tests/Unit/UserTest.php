@@ -166,4 +166,25 @@ class UserTest extends TestCase
         $this->assertCount(1, $user->profilePosts);
     }
 
+    /** @test */
+    public function a_user_can_post_to_another_user_profile()
+    {
+
+        $user = $this->signIn();
+
+        $profileUser = create(User::class);
+
+        $post = ['body' => 'some body'];
+
+        $newPost = $user->postToProfile($post, $profileUser);
+
+        $this->assertEquals($newPost['body'], $post['body']);
+
+        $this->assertDatabaseHas('profile_posts', [
+            'body' => $post['body'],
+            'profile_user_id' => $profileUser->id,
+            'poster_id' => auth()->id(),
+        ]);
+    }
+
 }

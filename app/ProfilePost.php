@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Traits\FormatsDate;
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,7 +56,17 @@ class ProfilePost extends Model
      */
     public function addComment($comment)
     {
-        return $this->comments()->create($comment);
+
+        $newComment = $this->comments()->create($comment);
+
+        event(new NewCommentWasAddedToProfilePost(
+            $this,
+            $newComment,
+            auth()->user(),
+            $this->profileOwner,
+        ));
+
+        return $newComment;
     }
 
     /**
@@ -77,4 +88,5 @@ class ProfilePost extends Model
     {
         return $this->belongsTo(User::class, 'profile_user_id');
     }
+
 }

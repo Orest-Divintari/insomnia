@@ -18,10 +18,16 @@ class ReadProfilePostsTest extends TestCase
 
         $poster = create(User::class);
 
-        create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
-            'poster_id' => $poster->id,
-        ]);
+        $totalNumberOfPosts = 100;
+
+        createMany(
+            ProfilePost::class,
+            $totalNumberOfPosts,
+            [
+                'profile_user_id' => $profileUser->id,
+                'poster_id' => $poster->id,
+            ]
+        );
 
         $response = $this->get(route('api.profile-posts.index', $profileUser))->json();
 

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\Profile\NewPostWasAddedToProfile;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -178,5 +179,27 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profilePosts()
     {
         return $this->hasMany(ProfilePost::class, 'profile_user_id');
+    }
+
+    /**
+     * Add a new post to given profile
+     *
+     * @param array $post
+     * @param User $profileUser
+     * @return ProfilePost
+     */
+    public function postToProfile($post, $profileUser)
+    {
+
+        $post = ProfilePost::create([
+            'body' => $post['body'],
+            'profile_user_id' => $profileUser->id,
+            'poster_id' => auth()->id(),
+        ]);
+
+        event(new NewPostWasAddedToProfile($post, $profileUser, auth()->user()));
+
+        return $post;
+
     }
 }

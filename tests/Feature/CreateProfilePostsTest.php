@@ -26,7 +26,6 @@ class CreateProfilePostsTest extends TestCase
     /** @test */
     public function an_authenticated_user_has_to_verify_the_email_before_creating_a_profile_post()
     {
-        $this->withoutExceptionHandling();
 
         $profileUser = create(User::class);
 
@@ -54,7 +53,7 @@ class CreateProfilePostsTest extends TestCase
         ];
 
         $response = $this->post(route('api.profile-posts.store', $profileUser), $post)->json();
-        dd($response);
+
         $this->assertDatabaseHas('profile_posts', [
             'body' => $post['body'],
             'profile_user_id' => $profileUser->id,
@@ -63,7 +62,7 @@ class CreateProfilePostsTest extends TestCase
     }
 
     /** @test */
-    public function a_post_required_a_body()
+    public function a_post_requires_a_body()
     {
         $profileUser = create(User::class);
 
