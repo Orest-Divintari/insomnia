@@ -205,9 +205,13 @@ class Thread extends Model
     public function addReply($reply)
     {
         $reply = $this->replies()->create($reply);
+
         $this->increment('replies_count');
+
         $reply->update(['position' => $this->replies_count + 1]);
+
         event(new NewReplyWasPostedToThread($this, $reply));
+
         return $reply;
     }
 
