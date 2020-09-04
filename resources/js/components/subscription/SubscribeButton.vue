@@ -14,23 +14,23 @@ import UnwatchModal from "./UnwatchModal";
 export default {
   components: {
     WatchModal,
-    UnwatchModal
+    UnwatchModal,
   },
   props: {
     subscriptionStatus: {
-      default: false
+      default: false,
     },
     threadSlug: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
       isSubscribed: this.subscriptionStatus == "true" ? true : false,
       thread: this.threadSlug,
       showWatchModal: false,
-      showUnwatchModal: false
+      showUnwatchModal: false,
     };
   },
   computed: {
@@ -39,7 +39,7 @@ export default {
     },
     path() {
       return "/api/threads/" + this.thread + "/subscriptions";
-    }
+    },
   },
   methods: {
     toggleModals() {
@@ -53,20 +53,20 @@ export default {
     },
     subscribe(mailNotifications) {
       axios
-        .post(this.path, mailNotifications)
-        .then(response => {
+        .put(this.path, mailNotifications)
+        .then((response) => {
           this.isSubscribed = true;
           console.log(response);
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     },
     unsubscribe() {
       axios
         .delete(this.path)
-        .then(response => (this.isSubscribed = false))
-        .catch(error => console.log(error));
-    }
-  }
+        .then((response) => (this.isSubscribed = false))
+        .catch((error) => console.log(error));
+    },
+  },
 };
 </script>
 
