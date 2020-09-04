@@ -8,17 +8,19 @@ use App\Thread;
 class ThreadSubscriptionController extends Controller
 {
     /**
-     * Store a new thread subscription
+     * Store or update thread subscription
+     *
+     * It is possible to enable or disable email notifications
+     * for a thread subscription
      *
      * @param Thread $thread
      * @return \Illuminate\Http\Response
      */
-    public function store(Thread $thread)
+    public function update(Thread $thread)
     {
         request()->validate([
             'email_notifications' => 'required|boolean',
         ]);
-
         $thread->subscribe(auth()->id(), request('email_notifications'));
 
         return response()->noContent();

@@ -122,8 +122,8 @@ Route::group([
             ->name('api.likes.destroy');
 
         // thread subscription
-        Route::post('/threads/{thread}/subscriptions', 'ThreadSubscriptionController@store')
-            ->name('api.thread-subscriptions.store');
+        Route::put('/threads/{thread}/subscriptions', 'ThreadSubscriptionController@update')
+            ->name('api.thread-subscriptions.update');
 
         Route::delete('/threads/{thread}/subscriptions', 'ThreadSubscriptionController@destroy')
             ->name('api.thread-subscriptions.destroy');

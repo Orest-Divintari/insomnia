@@ -16,7 +16,7 @@ class SubscribeToThreadsTest extends TestCase
     public function guests_cannot_subscribe_to_a_thread()
     {
         $thread = create(Thread::class);
-        $this->post(route('api.thread-subscriptions.store', $thread))
+        $this->put(route('api.thread-subscriptions.update', $thread))
             ->assertRedirect('login');
     }
 
@@ -48,7 +48,7 @@ class SubscribeToThreadsTest extends TestCase
             'email_notifications' => true,
         ];
 
-        $this->post(route('api.thread-subscriptions.store', $thread), $prefersEmail);
+        $this->put(route('api.thread-subscriptions.update', $thread), $prefersEmail);
 
         $this->assertCount(1, $user->fresh()->subscriptions);
 
@@ -67,7 +67,7 @@ class SubscribeToThreadsTest extends TestCase
 
         $this->assertCount(0, $thread->subscriptions);
 
-        $this->post(route('api.thread-subscriptions.store', $thread), [])
+        $this->put(route('api.thread-subscriptions.update', $thread), [])
             ->assertSessionHasErrors('email_notifications');
     }
 
@@ -83,7 +83,7 @@ class SubscribeToThreadsTest extends TestCase
         $prefersEmail = [
             'email_notifications' => true,
         ];
-        $this->post(route('api.thread-subscriptions.store', $thread), $prefersEmail);
+        $this->put(route('api.thread-subscriptions.update', $thread), $prefersEmail);
 
         $this->assertCount(1, $user->subscriptions);
         $this->assertCount(1, $thread->subscriptions);
