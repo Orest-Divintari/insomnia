@@ -139,7 +139,7 @@ class ParticipateInForumTest extends TestCase
     }
 
     /** @test */
-    public function non_authorized_users_cannot_delete_a_reply()
+    public function unauthorized_users_cannot_delete_a_reply()
     {
         $this->signIn();
         $thread = create(Thread::class);
