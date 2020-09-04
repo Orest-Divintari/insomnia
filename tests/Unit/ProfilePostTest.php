@@ -55,11 +55,14 @@ class ProfilePostTest extends TestCase
     {
         $post = create(ProfilePost::class);
 
-        $user = $this->signIn();
-        $post->addComment([
-            'body' => 'some body',
-            'user_id' => $user->id,
-        ]);
+        $poster = $this->signIn();
+        $post->addComment(
+            [
+                'body' => 'some body',
+                'user_id' => $poster->id,
+            ],
+            $poster
+        );
 
         $this->assertCount(1, $post->comments);
     }
@@ -67,13 +70,13 @@ class ProfilePostTest extends TestCase
     /** @test */
     public function a_profile_post_knows_the_owner_of_the_profile_in_which_was_posted()
     {
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $post = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
         ]);
 
-        $this->assertEquals($profileUser->id, $post->profileOwner->id);
+        $this->assertEquals($profileOwner->id, $post->profileOwner->id);
     }
 
 }

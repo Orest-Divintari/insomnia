@@ -11,7 +11,7 @@
       v-for="(comment,index) in comments"
       :key="comment.id"
       :comment="comment"
-      :profile-user="profileUser"
+      :profile-owner="profileOwner"
     ></comment>
     <new-comment @created="add" :profile-post="post"></new-comment>
   </div>
@@ -25,7 +25,7 @@ export default {
       default: {},
       required: true,
     },
-    profileUser: {
+    profileOwner: {
       type: Object,
       default: {},
       required: true,

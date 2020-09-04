@@ -29,11 +29,11 @@ class CreateProfilePostRequest extends FormRequest
         ];
     }
 
-    public function persist($profileUser)
+    public function persist($profileOwner)
     {
         return ProfilePost::create([
             'body' => $this->input('body'),
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $this->user()->id,
         ]);
     }

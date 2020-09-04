@@ -144,10 +144,9 @@ class UserTest extends TestCase
         $reply = $thread->addReply(raw(Reply::class, [
             'user_id' => $user->id,
         ]));
-
         $anotherUser = create(User::class);
 
-        $reply->likedBy($anotherUser->id);
+        $reply->likedBy($anotherUser);
 
         $this->assertEquals(1, $user->fresh()->likes_score);
 
@@ -160,7 +159,7 @@ class UserTest extends TestCase
 
         create(ProfilePost::class, [
             'poster_id' => $user->id,
-            'profile_user_id' => $user->id,
+            'profile_owner_id' => $user->id,
         ]);
 
         $this->assertCount(1, $user->profilePosts);
@@ -172,17 +171,17 @@ class UserTest extends TestCase
 
         $user = $this->signIn();
 
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $post = ['body' => 'some body'];
 
-        $newPost = $user->postToProfile($post, $profileUser);
+        $newPost = $user->postToProfile($post, $profileOwner);
 
         $this->assertEquals($newPost['body'], $post['body']);
 
         $this->assertDatabaseHas('profile_posts', [
             'body' => $post['body'],
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => auth()->id(),
         ]);
     }

@@ -2,7 +2,7 @@
   <div v-if="signedIn">
     <div class="reply-container">
       <div class="reply-left-col w-24">
-        <img :src="profileUser.avatar_path" class="avatar-lg" alt />
+        <img :src="profileOwner.avatar_path" class="avatar-lg" alt />
       </div>
       <div class="w-full p-3">
         <profile-post-input
@@ -26,7 +26,7 @@ export default {
     ProfilePostInput,
   },
   props: {
-    profileUser: {
+    profileOwner: {
       type: Object,
       default: {},
     },
@@ -43,7 +43,7 @@ export default {
       return { body: this.body };
     },
     path() {
-      return "/api/profiles/" + this.profileUser.name + "/posts";
+      return "/api/profiles/" + this.profileOwner.name + "/posts";
     },
   },
   methods: {

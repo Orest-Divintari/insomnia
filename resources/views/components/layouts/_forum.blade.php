@@ -6,6 +6,8 @@
             <x-head_tab_item name="Register" destination="register"></x-head_tab_item>
             @endguest
             @auth
+            <notification></notification>
+
             <div class="flex items-center">
                 <a href="{{ '/profiles/' . auth()->user()->name }}" class="flex items-center head-tab-item">
                     <img src="{{ auth()->user()->avatar_path }}" class="avatar-sm mr-1" alt="">
@@ -13,6 +15,7 @@
                 </a>
             </div>
             @endauth
+
 
         </div>
     </x-slot>

@@ -3,29 +3,35 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProfilePostHasNewComment extends Notification
+class ProfilePostHasNewComment extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $post;
+    protected $profilePost;
     protected $comment;
     protected $commentPoster;
-    protected $profileUser;
+    protected $profileOwner;
 
     /**
      * Create a new notification instance.
      *
+     * @param ProfilePost $profilePost
+     * @param Reply $comment
+     * @param User $commentPoster
+     * @param User $profileOwner
+     *
      * @return void
      */
-    public function __construct($post, $comment, $commentPoster, $profileUser)
+    public function __construct($profilePost, $comment, $commentPoster, $profileOwner)
     {
-        $this->post = $post;
+        $this->profilePost = $profilePost;
         $this->comment = $comment;
         $this->commentPoster = $commentPoster;
-        $this->profileUser = $profileUser;
+        $this->profileOwner = $profileOwner;
     }
 
     /**
@@ -63,9 +69,11 @@ class ProfilePostHasNewComment extends Notification
     {
         return [
             'commentPoster' => $this->commentPoster,
-            'post' => $this->post,
+            'profilePost' => $this->profilePost,
+            'postPoster' => $this->profilePost->poster,
             'comment' => $this->comment,
-            'profileUser' => $this->profileUser,
+            'profileOwner' => $this->profileOwner,
+            'type' => 'postComment',
         ];
     }
 }

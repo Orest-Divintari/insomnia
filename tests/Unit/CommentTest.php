@@ -14,16 +14,18 @@ class CommentTest extends TestCase
     /** @test */
     public function a_comment_belongs_to_a_user()
     {
-        $user = create(User::class);
 
         $post = create(ProfilePost::class);
 
-        $this->signIn($user);
+        $poster = $this->signIn();
 
-        $comment = $post->addComment([
-            'body' => 'some body',
-            'user_id' => $user->id,
-        ]);
+        $comment = $post->addComment(
+            [
+                'body' => 'some body',
+                'user_id' => $poster->id,
+            ],
+            $poster
+        );
 
         $this->assertInstanceOf(User::class, $comment->poster);
     }
@@ -31,16 +33,17 @@ class CommentTest extends TestCase
     /** @test */
     public function a_comment_belongs_to_a_profile_post()
     {
-        $user = create(User::class);
+        $poster = $this->signIn();
 
         $post = create(ProfilePost::class);
 
-        $this->signIn($user);
-
-        $comment = $post->addComment([
-            'body' => 'some body',
-            'user_id' => $user->id,
-        ]);
+        $comment = $post->addComment(
+            [
+                'body' => 'some body',
+                'user_id' => $poster->id,
+            ],
+            $poster
+        );
 
         $this->assertInstanceOf(ProfilePost::class, $comment->profilePost);
     }

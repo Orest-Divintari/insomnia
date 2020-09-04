@@ -2,8 +2,11 @@
 
 namespace App\Traits;
 
+use App\Events\Profile\CommentWasLiked;
 use App\Events\Subscription\ReplyWasLiked;
 use App\Like;
+use App\ProfilePost;
+use App\Thread;
 use Illuminate\Database\Eloquent\Builder;
 
 trait Likeable
@@ -24,17 +27,49 @@ trait Likeable
      * @param integer $userId
      * @return void
      */
-    public function likedBy($userId = null)
+    public function likedBy($user = null)
     {
-        $currentUserId = $userId ?: auth()->id();
-
-        if (!$this->likes()->where('user_id', $currentUserId)->exists()) {
-            $this->likes()->create([
-                'user_id' => $currentUserId,
+        $liker = $user ?: auth()->user();
+        $likerId = $liker->id;
+        if (!$this->likes()->where('user_id', $likerId)->exists()) {
+            $like = $this->likes()->create([
+                'user_id' => $likerId,
             ]);
+            if ($this->isComment()) {
 
-            event(new ReplyWasLiked($this->thread, $this));
+                event(new CommentWasLiked(
+                    $liker,
+                    $like,
+                    $this,
+                    $this->poster,
+                    $this->profilePost,
+                    $this->profilePost->profileOwner
+                ));
+
+            } elseif ($this->isThreadReply()) {
+                event(new ReplyWasLiked($liker, $like, $this->thread, $this));
+            }
         }
+    }
+
+    /**
+     * Determine whether it is a comment of a profile post
+     *
+     * @return boolean
+     */
+    public function isComment()
+    {
+        return $this->repliable_type == ProfilePost::class;
+    }
+
+    /**
+     * Determine whether it is a thread reply
+     *
+     * @return boolean
+     */
+    public function isThreadReply()
+    {
+        return $this->repliable_type == Thread::class;
     }
 
     /**
@@ -43,9 +78,10 @@ trait Likeable
      * @param integer $userId
      * @return void
      */
-    public function unlikedBy($userId = null)
+    public function unlikedBy($user = null)
     {
-        $currentUserId = $userId ?: auth()->id();
+        $currentUserId = $user->id ?: auth()->id();
+
         $this->likes()
             ->where('user_id', $currentUserId)
             ->get()

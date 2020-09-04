@@ -16,7 +16,7 @@ class CreateProfilePostsTable extends Migration
         Schema::create('profile_posts', function (Blueprint $table) {
             $table->id();
             $table->text('body');
-            $table->foreignId('profile_user_id')
+            $table->foreignId('profile_owner_id')
                 ->references('id')
                 ->on('users');
             $table->foreignId('poster_id')

@@ -1,3 +1,3 @@
 <x-layouts._forum>
-    <profile :profile-user="{{ $user }}"></profile>
+    <profile :profile-owner="{{ $user }}"></profile>
 </x-layouts._forum>

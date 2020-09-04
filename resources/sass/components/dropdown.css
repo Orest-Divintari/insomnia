@@ -10,6 +10,22 @@
     @apply .bg-white-catskill .text-blue-mid;
 }
 
+.dropdown-notification-item {
+    @apply .dropdown-item;
+}
+
+.dropdown-notification-item:hover {
+    @apply .bg-white-catskill;
+}
+
+.dropdown-notification-item a.notification-profile:hover {
+    @apply underline;
+}
+
+.dropdown-notification-item .notification-content:hover a {
+    @apply underline;
+}
+
 .dropdown-title {
     @apply .px-4 .py-2 .bg-white .text-black-semi .text-md;
 }

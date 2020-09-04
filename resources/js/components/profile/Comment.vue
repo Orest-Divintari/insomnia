@@ -36,7 +36,7 @@
                 class="btn-reply-control bg-blue-lighter"
               >Edit</button>
               <button
-                v-if="authorize('owns', comment) || authorize('is', profileUser)"
+                v-if="authorize('owns', comment) || authorize('is', profileOwner)"
                 @click="destroy"
                 class="btn-reply-control bg-blue-lighter"
               >Delete</button>
@@ -72,7 +72,7 @@ export default {
       default: {},
       required: true,
     },
-    profileUser: {
+    profileOwner: {
       type: Object,
       default: {},
       required: true,

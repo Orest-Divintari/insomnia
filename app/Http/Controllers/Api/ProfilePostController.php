@@ -17,15 +17,14 @@ class ProfilePostController extends Controller
      */
     public function store(User $user)
     {
+
         $post = request()->validate([
             'body' => 'required|string',
         ]);
 
         $newPost = auth()->user()->postToProfile($post, $user);
 
-        // $post = $request->persist($user)->load('poster');
-        // event(new NewPostWasAddedToProfile);
-        return $newPost;
+        return $newPost->load('poster');
     }
 
     /**

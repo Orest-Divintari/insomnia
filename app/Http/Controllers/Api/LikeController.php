@@ -16,8 +16,7 @@ class LikeController extends Controller
      */
     public function store(Reply $reply)
     {
-
-        $reply->likedBy(auth()->id());
+        $reply->likedBy(auth()->user());
 
         return response('The post has been liked', 204);
 
@@ -31,7 +30,7 @@ class LikeController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        $reply->unlikedBy(auth()->id());
+        $reply->unlikedBy(auth()->user());
         return response('The post has been unliked', 204);
     }
 }

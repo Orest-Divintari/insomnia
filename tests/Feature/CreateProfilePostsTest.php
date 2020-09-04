@@ -13,13 +13,13 @@ class CreateProfilePostsTest extends TestCase
     /** @test */
     public function guests_cannot_create_a_profile_post()
     {
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $post = [
             'body' => 'some news',
         ];
 
-        $this->post(route('api.profile-posts.store', $profileUser), $post)
+        $this->post(route('api.profile-posts.store', $profileOwner), $post)
             ->assertRedirect('login');
     }
 
@@ -27,7 +27,7 @@ class CreateProfilePostsTest extends TestCase
     public function an_authenticated_user_has_to_verify_the_email_before_creating_a_profile_post()
     {
 
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = create(User::class, [
             'email_verified_at' => null,
@@ -35,7 +35,7 @@ class CreateProfilePostsTest extends TestCase
 
         $this->signIn($poster);
 
-        $this->post(route('api.profile-posts.store', $profileUser), [])
+        $this->post(route('api.profile-posts.store', $profileOwner), [])
             ->assertRedirect(route('verification.notice'));
     }
 
@@ -46,17 +46,17 @@ class CreateProfilePostsTest extends TestCase
 
         $poster = $this->signIn();
 
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $post = [
             'body' => 'some news',
         ];
 
-        $response = $this->post(route('api.profile-posts.store', $profileUser), $post)->json();
+        $response = $this->post(route('api.profile-posts.store', $profileOwner), $post)->json();
 
         $this->assertDatabaseHas('profile_posts', [
             'body' => $post['body'],
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
         ]);
     }
@@ -64,11 +64,11 @@ class CreateProfilePostsTest extends TestCase
     /** @test */
     public function a_post_requires_a_body()
     {
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $this->signIn();
 
-        $this->post(route('api.profile-posts.store', $profileUser), ['body' => ''])
+        $this->post(route('api.profile-posts.store', $profileOwner), ['body' => ''])
             ->assertSessionHasErrors('body');
     }
 }

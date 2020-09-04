@@ -56,7 +56,7 @@ class Reply extends Model
      *
      * @var array
      */
-    protected $touches = ['thread'];
+    protected $touches = ['repliable'];
 
     /**
      * Boot the Model

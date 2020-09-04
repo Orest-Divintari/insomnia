@@ -3,30 +3,35 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProfileHasNewPost extends Notification implements ShouldQueue
+class CommentHasNewLike extends Notification
 {
-
     use Queueable;
-
-    protected $postPoster;
-    protected $profilePost;
-    protected $profileOwner;
+    public $comment;
+    public $commentPoster;
+    public $profilePost;
+    public $profileOwner;
+    public $liker;
     /**
      * Create a new notification instance.
      *
-     * @param ProfilePost $post
-     * @param User $profilePoster
+     * @param User $liker
+     * @param Like $like
+     * @param Reply $comment
+     * @param User $commentPoster
+     * @param ProfilePost $profilePost
      * @param User $profileOwner
      *
      * @return void
      */
-    public function __construct($profilePost, $postPoster, $profileOwner)
+    public function __construct($liker, $like, $comment, $commentPoster, $profilePost, $profileOwner)
     {
-        $this->postPoster = $postPoster;
+        $this->liker = $liker;
+        $this->like = $like;
+        $this->comment = $comment;
+        $this->commentPoster = $commentPoster;
         $this->profilePost = $profilePost;
         $this->profileOwner = $profileOwner;
     }
@@ -65,10 +70,13 @@ class ProfileHasNewPost extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'postPoster' => $this->postPoster,
-            'profilePost' => $this->profilePost,
             'profileOwner' => $this->profileOwner,
-            'type' => "profilePost",
+            'commentPoster' => $this->commentPoster,
+            'profilePost' => $this->profilePost,
+            'comment' => $this->comment,
+            'liker' => $this->liker,
+            'like' => $this->like,
+            'type' => 'commentLike',
         ];
     }
 }

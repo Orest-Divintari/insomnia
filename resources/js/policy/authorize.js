@@ -1,9 +1,9 @@
 let authorize = {
-    owns(user, model) {
-        return user.id == model.user_id || user.id == model.profile_user_id;
+    owns(authUser, model) {
+        return authUser.id == model.user_id || authUser.id == model.poster_id;
     },
-    is(user, profileUser) {
-        return user.id == profileUser.id;
+    is(authUser, user) {
+        return authUser.id == user.id;
     }
 };
 export default authorize;

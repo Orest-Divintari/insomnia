@@ -9,26 +9,27 @@ class NewCommentWasAddedToProfilePost
 {
     use Dispatchable, SerializesModels;
 
-    public $post;
+    public $profilePost;
     public $comment;
     public $commentPoster;
-    public $profileUser;
+    public $profileOwner;
 
     /**
      * Create a new event instance.
      *
      *
-     * @param ProfilePost $post
-     * @param User $profileUser
-     * @param User $poster
+     * @param ProfilePost $profilePost
+     * @param Reply $comment
+     * @param User $commentPoster
+     * @param User $profileOwner
      * @return void
      */
-    public function __construct($post, $comment, $commentPoster, $profileUser)
+    public function __construct($profilePost, $comment, $commentPoster, $profileOwner)
     {
-        $this->post = $post;
+        $this->profilePost = $profilePost;
         $this->comment = $comment;
         $this->commentPoster = $commentPoster;
-        $this->profileUser = $profileUser;
+        $this->profileOwner = $profileOwner;
     }
 
 }

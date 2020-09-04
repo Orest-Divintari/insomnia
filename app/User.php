@@ -178,26 +178,27 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function profilePosts()
     {
-        return $this->hasMany(ProfilePost::class, 'profile_user_id');
+        return $this->hasMany(ProfilePost::class, 'profile_owner_id');
     }
 
     /**
      * Add a new post to given profile
      *
      * @param array $post
-     * @param User $profileUser
+     * @param User $profileOwner
      * @return ProfilePost
      */
-    public function postToProfile($post, $profileUser)
+    public function postToProfile($post, $profileOwner)
     {
+        $poster = auth()->user();
 
         $post = ProfilePost::create([
             'body' => $post['body'],
-            'profile_user_id' => $profileUser->id,
-            'poster_id' => auth()->id(),
+            'profile_owner_id' => $profileOwner->id,
+            'poster_id' => $poster->id,
         ]);
 
-        event(new NewPostWasAddedToProfile($post, $profileUser, auth()->user()));
+        event(new NewPostWasAddedToProfile($post, $poster, $profileOwner));
 
         return $post;
 

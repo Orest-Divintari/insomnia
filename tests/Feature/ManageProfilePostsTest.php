@@ -17,12 +17,12 @@ class ManageProfilePostsTest extends TestCase
     public function unauthorized_users_cannot_update_a_profile_post()
     {
 
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = $this->signIn();
 
         $profilePost = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
         ]);
 
         $this->patch(
@@ -35,12 +35,12 @@ class ManageProfilePostsTest extends TestCase
     /** @test */
     public function authorized_users_can_update_a_profile_post()
     {
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = $this->signIn();
 
         $profilePost = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
         ]);
 
@@ -51,13 +51,13 @@ class ManageProfilePostsTest extends TestCase
 
         $this->assertDatabaseHas('profile_posts', [
             'body' => 'new body',
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
         ]);
 
         $this->assertDatabaseMissing('profile_posts', [
             'body' => $profilePost->body,
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
         ]);
     }
@@ -65,12 +65,12 @@ class ManageProfilePostsTest extends TestCase
     /** @test */
     public function a_profile_post_requires_a_body()
     {
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = $this->signIn();
 
         $profilePost = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
         ]);
 
@@ -84,12 +84,12 @@ class ManageProfilePostsTest extends TestCase
     /** @test */
     public function unathorized_users_cannot_delete_a_profile_post()
     {
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = $this->signIn();
 
         $profilePost = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
         ]);
 
         $this->delete(route('api.profile-posts.destroy', $profilePost->id))
@@ -99,12 +99,12 @@ class ManageProfilePostsTest extends TestCase
     /** @test */
     public function the_user_who_posted_the_post_can_delete_it()
     {
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = $this->signIn();
 
         $profilePost = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
         ]);
 
@@ -112,7 +112,7 @@ class ManageProfilePostsTest extends TestCase
 
         $this->assertDatabaseMissing('profile_posts', [
             'body' => $profilePost->body,
-            'profile_user_id' => $profilePost->profile_user_id,
+            'profile_owner_id' => $profilePost->profile_owner_id,
             'poster_id' => $profilePost->poster_id,
         ]);
     }
@@ -120,14 +120,14 @@ class ManageProfilePostsTest extends TestCase
     /** @test */
     public function the_user_who_owns_the_profile_can_delete_any_post_on_his_profile()
     {
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = create(User::class);
 
-        $this->signIn($profileUser);
+        $this->signIn($profileOwner);
 
         $profilePost = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
         ]);
 
@@ -135,7 +135,7 @@ class ManageProfilePostsTest extends TestCase
 
         $this->assertDatabaseMissing('profile_posts', [
             'body' => $profilePost->body,
-            'profile_user_id' => $profilePost->profile_user_id,
+            'profile_owner_id' => $profilePost->profile_owner_id,
             'poster_id' => $profilePost->poster_id,
         ]);
     }
@@ -143,11 +143,16 @@ class ManageProfilePostsTest extends TestCase
     /** @test */
     public function when_a_post_is_deleted_then_all_the_associated_comments_are_deleted()
     {
+        $poster = $this->signIn();
+
         $profilePost = create(ProfilePost::class);
 
-        $profilePost->addComment(raw(Reply::class, [
-            'repliable_type' => ProfilePost::class,
-        ]));
+        $profilePost->addComment(
+            raw(Reply::class, [
+                'repliable_type' => ProfilePost::class,
+            ]),
+            $poster
+        );
 
         $this->assertCount(1, $profilePost->comments);
 

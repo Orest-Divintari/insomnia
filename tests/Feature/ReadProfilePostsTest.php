@@ -14,7 +14,7 @@ class ReadProfilePostsTest extends TestCase
     /** @test */
     public function a_user_can_read_the_posts_of_a_profile()
     {
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = create(User::class);
 
@@ -24,12 +24,12 @@ class ReadProfilePostsTest extends TestCase
             ProfilePost::class,
             $totalNumberOfPosts,
             [
-                'profile_user_id' => $profileUser->id,
+                'profile_owner_id' => $profileOwner->id,
                 'poster_id' => $poster->id,
             ]
         );
 
-        $response = $this->get(route('api.profile-posts.index', $profileUser))->json();
+        $response = $this->get(route('api.profile-posts.index', $profileOwner))->json();
 
         $this->assertCount(ProfilePost::PER_PAGE, $response['data']);
 

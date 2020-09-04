@@ -4,6 +4,7 @@ namespace App\Listeners\Profile;
 
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Notifications\ProfilePostHasNewComment;
+use App\ProfilePost;
 
 class NotifyPostParticipants
 {
@@ -27,6 +28,7 @@ class NotifyPostParticipants
      */
     public function handle(NewCommentWasAddedToProfilePost $event)
     {
+
         $this->event = $event;
         $this->notifyParticipants();
         $this->notifyProfileOwner();
@@ -41,9 +43,13 @@ class NotifyPostParticipants
      */
     public function notifyParticipants()
     {
-        $this->event->post->fresh()->comments()
-            ->where('user_id', '!=', $this->event->commentPoster->id)
-            ->get()
+
+        $this->event->profilePost->comments()
+            ->whereNotIn('user_id', [
+                $this->event->commentPoster->id,
+                $this->event->profilePost->poster->id,
+                $this->event->profileOwner->id]
+            )->get()
             ->each(function ($comment) {
                 $comment->poster->notify(
                     $this->createNotification()
@@ -60,8 +66,10 @@ class NotifyPostParticipants
     public function notifyProfilePostOwner()
     {
 
-        $this->event->post->poster
-            ->notify($this->createNotification());
+        if ($this->event->profilePost->poster->id != $this->event->commentPoster->id) {
+            $this->event->profilePost->poster
+                ->notify($this->createNotification());
+        }
     }
 
     /**
@@ -72,8 +80,10 @@ class NotifyPostParticipants
      */
     public function notifyProfileOwner()
     {
-        if ($this->event->post->poster->id != $this->event->profileUser->id) {
-            $this->event->profileUser->notify(
+        if ($this->event->profilePost->poster->id != $this->event->profileOwner->id &&
+            $this->event->commentPoster->id != $this->event->profileOwner->id) {
+
+            $this->event->profileOwner->notify(
                 $this->createNotification()
             );
         }
@@ -87,10 +97,10 @@ class NotifyPostParticipants
     public function createNotification()
     {
         return new ProfilePostHasNewComment(
-            $this->event->post,
+            $this->event->profilePost,
             $this->event->comment,
             $this->event->commentPoster,
-            $this->event->profileUser
+            $this->event->profileOwner
         );
     }
 

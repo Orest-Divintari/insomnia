@@ -54,7 +54,7 @@ class ProfilePost extends Model
      * @param array $comment
      * @return Comment
      */
-    public function addComment($comment)
+    public function addComment($comment, $poster)
     {
 
         $newComment = $this->comments()->create($comment);
@@ -62,7 +62,7 @@ class ProfilePost extends Model
         event(new NewCommentWasAddedToProfilePost(
             $this,
             $newComment,
-            auth()->user(),
+            $poster,
             $this->profileOwner,
         ));
 
@@ -86,7 +86,7 @@ class ProfilePost extends Model
      */
     public function profileOwner()
     {
-        return $this->belongsTo(User::class, 'profile_user_id');
+        return $this->belongsTo(User::class, 'profile_owner_id');
     }
 
 }

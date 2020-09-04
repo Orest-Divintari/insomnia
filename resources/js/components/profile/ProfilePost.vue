@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :id="'profile-post-' + post.id">
     <div class="reply-container">
       <div class="reply-left-col w-24">
         <img :src="post.poster.avatar_path
@@ -33,7 +33,7 @@
             <button @click="destroy" class="btn-reply-control">Delete</button>
           </div>
         </div>
-        <comments :profile-user="profileUser" :post="post"></comments>
+        <comments :profile-owner="profileOwner" :post="post"></comments>
       </div>
     </div>
   </div>
@@ -53,7 +53,7 @@ export default {
       type: Object,
       default: {},
     },
-    profileUser: {
+    profileOwner: {
       type: Object,
       default: {},
     },

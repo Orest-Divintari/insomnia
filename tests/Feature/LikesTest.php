@@ -30,6 +30,7 @@ class LikesTest extends TestCase
         $user = $this->signIn();
 
         $thread = create(Thread::class);
+
         $reply = create(Reply::class, [
             'repliable_id' => $thread->id,
             'repliable_type' => Thread::class,
@@ -109,7 +110,7 @@ class LikesTest extends TestCase
             'repliable_type' => Thread::class,
         ]);
 
-        $reply->likedBy($user->id);
+        $reply->likedBy($user);
 
         $this->assertCount(1, $reply->likes);
 

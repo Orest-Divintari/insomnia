@@ -32,7 +32,7 @@ class UpdateProfilePostRequest extends FormRequest
     /**
      * Update the profile post
      *
-     * @param  User $profileUser
+     * @param  User $profileOwner
      * @param  ProfilePost $post
      * @return ProfilePost
      */

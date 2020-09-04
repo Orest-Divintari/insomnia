@@ -30,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Subscription\ReplyWasLiked' => [
             'App\Listeners\Subscription\NotifyReplyPoster',
         ],
+        'App\Events\Profile\CommentWasLiked' => [
+            'App\Listeners\Profile\NotifyCommentPoster',
+        ],
     ];
 
     /**

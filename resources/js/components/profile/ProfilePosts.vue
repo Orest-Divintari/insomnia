@@ -1,12 +1,12 @@
 <template>
   <div>
-    <new-profile-post @added="add" :profile-user="profileUser"></new-profile-post>
+    <new-profile-post @added="add" :profile-owner="profileOwner"></new-profile-post>
     <profile-post
       v-for="(post, index) in posts"
       :key="post.id"
       @deleted="remove(index)"
       :post="post"
-      :profile-user="profileUser"
+      :profile-owner="profileOwner"
     ></profile-post>
     <div class="flex justify-end">
       <button v-if="postsExist" class="w-28 btn-white-blue" @click="fetchMore">Older posts</button>
@@ -23,7 +23,7 @@ export default {
     ProfilePost,
   },
   props: {
-    profileUser: {
+    profileOwner: {
       type: Object,
       default: {},
     },
@@ -45,7 +45,7 @@ export default {
       this.posts = this.posts.concat(paginatedCollection.data);
     },
     path() {
-      return "/api/profiles/" + this.profileUser.name + "/posts";
+      return "/api/profiles/" + this.profileOwner.name + "/posts";
     },
     fetchMore() {
       axios
