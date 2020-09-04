@@ -10,5 +10,9 @@ export default {
                 "#profile-post-" +
                 this.notificationData.profilePost.id;
         },
+        showReply() {
+            window.location.href =
+                "/api/replies/" + this.notificationData.reply.id;
+        }
     }
 };

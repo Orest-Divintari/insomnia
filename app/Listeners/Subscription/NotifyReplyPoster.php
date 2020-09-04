@@ -36,7 +36,12 @@ class NotifyReplyPoster
             return;
         }
 
-        $poster->notify(new ReplyHasNewLike($event->thread, $event->reply));
+        $poster->notify(new ReplyHasNewLike(
+            $this->event->liker,
+            $this->event->like,
+            $this->event->thread,
+            $this->event->reply
+        ));
 
     }
 
@@ -49,7 +54,6 @@ class NotifyReplyPoster
      */
     public function isOwnerOfReply($poster)
     {
-        return auth()->id() == $poster->id || !$this->event->thread->isSubscribedBy($poster->id);
-
+        return $this->event->liker->id == $poster->id;
     }
 }

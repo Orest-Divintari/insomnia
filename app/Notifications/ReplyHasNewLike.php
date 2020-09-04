@@ -3,22 +3,32 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ReplyHasNewLike extends Notification
+class ReplyHasNewLike extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $reply;
-    protected $thread;
+    public $reply;
+    public $thread;
+    public $like;
+    public $liker;
     /**
      * Create a new notification instance.
      *
+     * @param User $liker
+     * @param Like $like
+     * @param Thread $thread
+     * @param Reply $reply
+     *
      * @return void
      */
-    public function __construct($thread, $reply)
+    public function __construct($liker, $like, $thread, $reply)
     {
+        $this->liker = $liker;
+        $this->like = $like;
         $this->reply = $reply;
         $this->thread = $thread;
     }
@@ -31,9 +41,7 @@ class ReplyHasNewLike extends Notification
      */
     public function via($notifiable)
     {
-        return $notifiable
-            ->subscription($this->thread->id)
-            ->prefers_email ? ['mail', 'database'] : ['database'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -44,7 +52,6 @@ class ReplyHasNewLike extends Notification
      */
     public function toMail($notifiable)
     {
-
         return (new MailMessage)
             ->view('emails.subscription.notify_reply_poster', [
                 'reply' => $this->reply,
@@ -59,10 +66,11 @@ class ReplyHasNewLike extends Notification
      */
     public function toArray($notifiable)
     {
-
         return [
             'reply' => $this->reply,
-            'type' => 'like',
+            'type' => 'replyLike',
+            'liker' => $this->liker,
+            'like' => $this->like,
         ];
     }
 }
