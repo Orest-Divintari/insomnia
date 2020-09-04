@@ -40,7 +40,6 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_read_the_paginated_threads_associated_with_a_category()
     {
-        $this->withoutExceptionHandling();
         $category = create(Category::class);
         createMany(Thread::class, 100, [
             'category_id' => $category->id,
