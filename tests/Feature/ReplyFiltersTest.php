@@ -25,9 +25,9 @@ class ReplyFiltersTest extends TestCase
         $user = create(User::class);
         $anotherUser = create(User::class);
 
-        $popularReply->likedBy($user->id);
-        $popularReply->likedBy($anotherUser->id);
-        $unpopularReply->likedBy($anotherUser->id);
+        $popularReply->likedBy($user);
+        $popularReply->likedBy($anotherUser);
+        $unpopularReply->likedBy($anotherUser);
 
         $response = $this->getJson(route('threads.show', $thread) . "?sortByLikes=1");
         $this->assertEquals($popularReply->id, $response['data'][0]['id']);

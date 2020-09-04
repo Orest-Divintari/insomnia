@@ -66,7 +66,7 @@ class ReplyTest extends TestCase
             'repliable_type' => Thread::class,
         ]);
 
-        $reply->likedBy($user->id);
+        $reply->likedBy($user);
 
         $this->assertCount(1, $reply->fresh()->likes);
 
@@ -83,11 +83,11 @@ class ReplyTest extends TestCase
             'repliable_type' => Thread::class,
         ]);
 
-        $reply->likedBy($user->id);
+        $reply->likedBy($user);
 
         $this->assertCount(1, $reply->fresh()->likes);
 
-        $reply->unlikedBy($user->id);
+        $reply->unlikedBy($user);
 
         $this->assertCount(0, $reply->fresh()->likes);
 
@@ -117,7 +117,7 @@ class ReplyTest extends TestCase
 
         $this->assertFalse($reply->fresh()->is_liked);
 
-        $reply->likedBy($user->id);
+        $reply->likedBy($user);
 
         $this->assertTrue($reply->fresh()->is_liked);
     }
