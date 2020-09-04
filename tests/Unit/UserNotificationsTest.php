@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Like;
+use App\Notifications\CommentHasNewLike;
 use App\Notifications\ProfileHasNewPost;
 use App\Notifications\ProfilePostHasNewComment;
 use App\Notifications\ReplyHasNewLike;
@@ -43,19 +45,27 @@ class UserNotificationsTest extends TestCase
     /** @test */
     public function when_a_reply_is_liked_a_notification_is_sent_to_email_and_database()
     {
+
         Notification::fake();
 
-        $user = $this->signIn();
+        $replyPoster = $this->signIn();
 
         $thread = create(Thread::class);
 
         $reply = $thread->addReply(raw(Reply::class));
 
-        $notification = new ReplyHasNewLike($thread, $reply);
+        $liker = $this->signIn();
 
-        $user->notify($notification);
+        $like = Like::create([
+            'user_id' => $liker->id,
+            'reply_id' => $reply->id,
+        ]);
 
-        $this->assertEquals(['mail', 'database'], $notification->via($user));
+        $notification = new ReplyHasNewLike($liker, $like, $thread, $reply);
+
+        $replyPoster->notify($notification);
+
+        $this->assertEquals(['mail', 'database'], $notification->via($replyPoster));
 
     }
 
@@ -63,50 +73,26 @@ class UserNotificationsTest extends TestCase
     public function when_a_thread_has_new_reply_only_database_notifications_are_stored_when_emails_are_disabled()
     {
         Notification::fake();
-        $user = $this->signIn();
+
+        $threadPoster = $this->signIn();
+
         $thread = create(Thread::class);
 
         $reply = create(Reply::class, [
             'repliable_id' => $thread->id,
             'repliable_type' => Thread::class,
+
         ]);
 
-        $thread->addReply(raw(Reply::class));
-
-        $user->subscription($thread->id)->disableEmails();
+        $threadPoster->subscription($thread->id)->disableEmails();
 
         $notification = new ThreadHasNewReply($thread, $reply);
 
-        $user->notify($notification);
+        $threadPoster->notify($notification);
 
-        $this->assertEquals(['database'], $notification->via($user));
+        $this->assertEquals(['database'], $notification->via($threadPoster));
 
-        $this->assertNotEquals(['mail', 'database'], $notification->via($user));
-    }
-
-    /** @test */
-    public function when_a_reply_has_new_like_only_database_notifications_are_stored_when_emails_are_disabled()
-    {
-        Notification::fake();
-        $user = $this->signIn();
-        $thread = create(Thread::class);
-
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
-
-        $thread->addReply(raw(Reply::class));
-
-        $user->subscription($thread->id)->disableEmails();
-
-        $notification = new ReplyHasNewLike($thread, $reply);
-
-        $user->notify($notification);
-
-        $this->assertEquals(['database'], $notification->via($user));
-
-        $this->assertNotEquals(['mail', 'database'], $notification->via($user));
+        $this->assertNotEquals(['mail', 'database'], $notification->via($threadPoster));
     }
 
     /** @test */
@@ -114,20 +100,20 @@ class UserNotificationsTest extends TestCase
     {
         Notification::fake();
 
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = $this->signIn();
 
         $post = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
         ]);
 
-        $notification = new ProfileHasNewPost($poster, $post);
+        $notification = new ProfileHasNewPost($post, $poster, $profileOwner);
 
-        $profileUser->notify($notification);
+        $profileOwner->notify($notification);
 
-        $this->assertEquals(['mail', 'database'], $notification->via($profileUser));
+        $this->assertEquals(['mail', 'database'], $notification->via($profileOwner));
 
     }
 
@@ -136,12 +122,12 @@ class UserNotificationsTest extends TestCase
     {
         Notification::fake();
 
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = $this->signIn();
 
         $post = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
 
         ]);
@@ -164,11 +150,11 @@ class UserNotificationsTest extends TestCase
             'repliable_id' => $post->id,
         ]);
 
-        $notification = new ProfilePostHasNewComment($post, $georgeComment, $george, $profileUser);
+        $notification = new ProfilePostHasNewComment($post, $georgeComment, $george, $profileOwner);
 
         $george->notify($notification);
 
-        $this->assertEquals(['mail', 'database'], $notification->via($profileUser));
+        $this->assertEquals(['mail', 'database'], $notification->via($profileOwner));
 
     }
 
@@ -177,12 +163,12 @@ class UserNotificationsTest extends TestCase
     {
         Notification::fake();
 
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = $this->signIn();
 
         $post = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
 
         ]);
@@ -196,11 +182,11 @@ class UserNotificationsTest extends TestCase
             'repliable_id' => $post->id,
         ]);
 
-        $notification = new ProfilePostHasNewComment($post, $johnComment, $john, $profileUser);
+        $notification = new ProfilePostHasNewComment($post, $johnComment, $john, $profileOwner);
 
         $poster->notify($notification);
 
-        $this->assertEquals(['mail', 'database'], $notification->via($profileUser));
+        $this->assertEquals(['mail', 'database'], $notification->via($profileOwner));
     }
 
     /** @test */
@@ -208,12 +194,12 @@ class UserNotificationsTest extends TestCase
     {
         Notification::fake();
 
-        $profileUser = create(User::class);
+        $profileOwner = create(User::class);
 
         $poster = $this->signIn();
 
         $post = create(ProfilePost::class, [
-            'profile_user_id' => $profileUser->id,
+            'profile_owner_id' => $profileOwner->id,
             'poster_id' => $poster->id,
 
         ]);
@@ -227,11 +213,45 @@ class UserNotificationsTest extends TestCase
             'repliable_id' => $post->id,
         ]);
 
-        $notification = new ProfilePostHasNewComment($post, $johnComment, $john, $profileUser);
+        $notification = new ProfilePostHasNewComment($post, $johnComment, $john, $profileOwner);
 
-        $profileUser->notify($notification);
+        $profileOwner->notify($notification);
 
-        $this->assertEquals(['mail', 'database'], $notification->via($profileUser));
+        $this->assertEquals(['mail', 'database'], $notification->via($profileOwner));
+    }
+
+    /** @test */
+    public function the_comment_poster_receives_email_and_database_notifications_when_his_comment_is_liked()
+    {
+        Notification::fake();
+
+        $profilePost = create(ProfilePost::class);
+        $commentPoster = create(User::class);
+        $liker = $this->signIn();
+
+        $comment = create(Reply::class, [
+            'user_id' => $commentPoster->id,
+            'repliable_type' => ProfilePost::class,
+            'repliable_id' => $profilePost->id,
+        ]);
+
+        $like = Like::create([
+            'user_id' => $liker->id,
+            'reply_id' => $comment->id,
+        ]);
+
+        $notification = new CommentHasNewLike(
+            $liker,
+            $like,
+            $comment,
+            $commentPoster,
+            $profilePost,
+            $profilePost->profileOwner
+        );
+
+        $commentPoster->notify($notification);
+
+        $this->assertEquals(['mail', 'database'], $notification->via($commentPoster));
     }
 
 }
