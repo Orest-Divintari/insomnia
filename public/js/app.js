@@ -82324,7 +82324,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "profile-post-" + _vm.post.id } }, [
+  return _c("div", { attrs: { id: "#profile-post-" + _vm.post.id } }, [
     _c("div", { staticClass: "reply-container" }, [
       _c("div", { staticClass: "reply-left-col w-24" }, [
         _c("img", {
