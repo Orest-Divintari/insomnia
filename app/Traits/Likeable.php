@@ -31,6 +31,7 @@ trait Likeable
     {
         $liker = $user ?: auth()->user();
         $likerId = $liker->id;
+
         if (!$this->likes()->where('user_id', $likerId)->exists()) {
             $like = $this->likes()->create([
                 'user_id' => $likerId,

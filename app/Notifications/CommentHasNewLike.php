@@ -3,17 +3,20 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CommentHasNewLike extends Notification
+class CommentHasNewLike extends Notification implements ShouldQueue
 {
     use Queueable;
+
     public $comment;
     public $commentPoster;
     public $profilePost;
     public $profileOwner;
     public $liker;
+
     /**
      * Create a new notification instance.
      *

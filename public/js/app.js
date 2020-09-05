@@ -3858,7 +3858,7 @@ __webpack_require__.r(__webpack_exports__);
     subscribe: function subscribe(mailNotifications) {
       var _this = this;
 
-      axios.post(this.path, mailNotifications).then(function (response) {
+      axios.put(this.path, mailNotifications).then(function (response) {
         _this.isSubscribed = true;
         console.log(response);
       })["catch"](function (error) {

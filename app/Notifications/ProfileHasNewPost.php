@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notification;
 
 class ProfileHasNewPost extends Notification implements ShouldQueue
 {
-
     use Queueable;
 
     protected $postPoster;
