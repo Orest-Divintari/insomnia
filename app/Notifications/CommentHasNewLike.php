@@ -16,6 +16,7 @@ class CommentHasNewLike extends Notification implements ShouldQueue
     public $profilePost;
     public $profileOwner;
     public $liker;
+    public $like;
 
     /**
      * Create a new notification instance.
