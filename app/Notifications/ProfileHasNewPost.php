@@ -67,7 +67,7 @@ class ProfileHasNewPost extends Notification implements ShouldQueue
             'postPoster' => $this->postPoster,
             'profilePost' => $this->profilePost,
             'profileOwner' => $this->profileOwner,
-            'type' => "profilePost",
+            'type' => "profile-post-notification",
         ];
     }
 }

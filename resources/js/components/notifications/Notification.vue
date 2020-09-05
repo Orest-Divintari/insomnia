@@ -20,30 +20,7 @@
             :key="notification.id"
             class="dropdown-notification-item"
           >
-            <reply-like-notification
-              v-if="isReplyLike(notification)"
-              :notification-data="notification.data"
-            ></reply-like-notification>
-
-            <thread-reply-notification
-              v-if="isReply(notification)"
-              :notification-data="notification.data"
-            ></thread-reply-notification>
-
-            <post-comment-notification
-              v-if="isPostComment(notification)"
-              :notification-data="notification.data"
-            ></post-comment-notification>
-
-            <profile-post-notification
-              v-if="isProfilePost(notification)"
-              :notification-data="notification.data"
-            ></profile-post-notification>
-
-            <comment-like-notification
-              v-if="isCommentLike(notification)"
-              :notification-data="notification.data"
-            ></comment-like-notification>
+            <component :is="notification.data.type" :notification-data="notification.data"></component>
           </div>
         </div>
         <div v-else>
@@ -88,21 +65,6 @@ export default {
   methods: {
     readPath(notificationId) {
       return "/api/notifications/" + notificationId;
-    },
-    isReply(notification) {
-      return notification.data.type == "reply";
-    },
-    isReplyLike(notification) {
-      return notification.data.type == "replyLike";
-    },
-    isCommentLike(notification) {
-      return notification.data.type == "commentLike";
-    },
-    isProfilePost(notification) {
-      return notification.data.type == "profilePost";
-    },
-    isPostComment(notification) {
-      return notification.data.type == "postComment";
     },
     refresh({ data }) {
       this.notifications = data;

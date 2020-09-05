@@ -73,7 +73,7 @@ class ProfilePostHasNewComment extends Notification implements ShouldQueue
             'postPoster' => $this->profilePost->poster,
             'comment' => $this->comment,
             'profileOwner' => $this->profileOwner,
-            'type' => 'postComment',
+            'type' => 'post-comment-notification',
         ];
     }
 }

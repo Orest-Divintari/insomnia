@@ -10,30 +10,27 @@ export default {
     name: {
       type: String,
       default: "",
-      required: true
+      required: true,
     },
     selected: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      isActive: false
+      isActive: false,
     };
   },
 
   computed: {
     hrefDescription() {
-      return this.name
-        .toLowerCase()
-        .split(" ")
-        .join("-");
-    }
+      return this.name.toLowerCase().split(" ").join("-");
+    },
   },
   mounted() {
     this.isActive = this.selected;
-  }
+  },
 };
 </script>
 

@@ -66,7 +66,7 @@ class ThreadHasNewReply extends Notification implements ShouldQueue
         return [
             'thread' => $this->thread,
             'reply' => $this->reply,
-            'type' => 'reply',
+            'type' => 'thread-reply-notification',
         ];
     }
 }

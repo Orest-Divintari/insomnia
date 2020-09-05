@@ -68,7 +68,7 @@ class ReplyHasNewLike extends Notification implements ShouldQueue
     {
         return [
             'reply' => $this->reply,
-            'type' => 'replyLike',
+            'type' => 'reply-like-notification',
             'liker' => $this->liker,
             'like' => $this->like,
         ];

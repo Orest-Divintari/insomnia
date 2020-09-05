@@ -2667,29 +2667,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2722,21 +2699,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     readPath: function readPath(notificationId) {
       return "/api/notifications/" + notificationId;
-    },
-    isReply: function isReply(notification) {
-      return notification.data.type == "reply";
-    },
-    isReplyLike: function isReplyLike(notification) {
-      return notification.data.type == "replyLike";
-    },
-    isCommentLike: function isCommentLike(notification) {
-      return notification.data.type == "commentLike";
-    },
-    isProfilePost: function isProfilePost(notification) {
-      return notification.data.type == "profilePost";
-    },
-    isPostComment: function isPostComment(notification) {
-      return notification.data.type == "postComment";
     },
     refresh: function refresh(_ref) {
       var data = _ref.data;
@@ -81348,45 +81310,10 @@ var render = function() {
                             }
                           },
                           [
-                            _vm.isReplyLike(notification)
-                              ? _c("reply-like-notification", {
-                                  attrs: {
-                                    "notification-data": notification.data
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.isReply(notification)
-                              ? _c("thread-reply-notification", {
-                                  attrs: {
-                                    "notification-data": notification.data
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.isPostComment(notification)
-                              ? _c("post-comment-notification", {
-                                  attrs: {
-                                    "notification-data": notification.data
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.isProfilePost(notification)
-                              ? _c("profile-post-notification", {
-                                  attrs: {
-                                    "notification-data": notification.data
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.isCommentLike(notification)
-                              ? _c("comment-like-notification", {
-                                  attrs: {
-                                    "notification-data": notification.data
-                                  }
-                                })
-                              : _vm._e()
+                            _c(notification.data.type, {
+                              tag: "component",
+                              attrs: { "notification-data": notification.data }
+                            })
                           ],
                           1
                         )

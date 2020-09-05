@@ -80,7 +80,7 @@ class CommentHasNewLike extends Notification implements ShouldQueue
             'comment' => $this->comment,
             'liker' => $this->liker,
             'like' => $this->like,
-            'type' => 'commentLike',
+            'type' => 'comment-like-notification',
         ];
     }
 }
