@@ -4,11 +4,12 @@ namespace App;
 
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Traits\FormatsDate;
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
 
 class ProfilePost extends Model
 {
-    use FormatsDate;
+    use FormatsDate, RecordsActivity;
 
     /**
      * Number of visible posts per page

@@ -13,4 +13,14 @@ $factory->define(Reply::class, function (Faker $faker) {
         'repliable_type' => 'App\Thread',
         'user_id' => factory(User::class),
     ];
+
 });
+
+$factory->state(Reply::class, 'thread', [
+    'repliable_id' => 1,
+]);
+
+$factory->state(Reply::class, 'profilePost', [
+    'repliable_id' => 1,
+    'repliable_type' => 'App\ProfilePost',
+]);

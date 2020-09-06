@@ -5,6 +5,7 @@ namespace App;
 use App\Events\Subscription\NewReplyWasPostedToThread;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
+use App\Traits\RecordsActivity;
 use App\Traits\Subscribable;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +15,7 @@ use Illuminate\Support\Str;
 class Thread extends Model
 {
 
-    use Filterable, FormatsDate, Subscribable;
+    use Filterable, FormatsDate, Subscribable, RecordsActivity;
 
     /**
      * Number of visible threads per page
@@ -59,6 +60,17 @@ class Thread extends Model
         'user_id',
         'category_id',
     ];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($thread) {
+            $thread->createReply();
+        });
+    }
 
     /**
      * Get the route key name
@@ -226,6 +238,29 @@ class Thread extends Model
             auth()->user()->read($this);
         }
         $this->increment('views');
+    }
+
+    /**
+     * Create a reply which is the body of the thread
+     *
+     * @return void
+     */
+    public function createReply()
+    {
+        $reply = new Reply();
+        $reply->setTouchedRelations([]);
+        $reply->body = $this->body;
+        $reply->user_id = $this->user_id;
+        $reply->updated_at = $this->updated_at;
+        $reply->created_at = $this->created_at;
+        $reply->repliable_id = $this->id;
+        $reply->position = 1;
+        $reply->repliable_type = 'App\Thread';
+        $reply->save();
+
+        if (auth()->check()) {
+            $this->subscribe();
+        }
     }
 
 }

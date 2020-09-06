@@ -11,9 +11,20 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    const NAME_LENGTH = 10;
-    protected $appends = ['avatar_path', 'short_name'];
+
     use Notifiable;
+
+    /**
+     * Set the maximum length for a username
+     */
+    const NAME_LENGTH = 10;
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['avatar_path', 'short_name'];
 
     /**
      * The attributes that are mass assignable.
@@ -202,5 +213,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $post;
 
+    }
+
+    /**
+     * Get all activities for the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 }

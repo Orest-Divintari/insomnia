@@ -75,7 +75,6 @@ class ViewSubCategoriesTest extends TestCase
     /** @test */
     public function a_user_can_view_the_user_name_who_posted_the_most_recent_reply()
     {
-
         $thread = create(Thread::class, [
             'category_id' => $this->subCategory->id,
             'updated_at' => Carbon::now()->subMonth(),

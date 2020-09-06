@@ -19,8 +19,8 @@ class UserNotificationsTest extends TestCase
     {
         parent::setUp();
 
-        $this->thread = create(Thread::class);
         $this->user = $this->signIn();
+        $this->thread = create(Thread::class);
         $this->thread->subscribe($this->user->id);
         $this->thread->addReply(raw(Reply::class));
         $this->thread->addReply(raw(Reply::class));

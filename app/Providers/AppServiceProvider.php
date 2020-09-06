@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Notifications\ThreadHasNewReply;
-use App\Observers\ThreadObserver;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -32,8 +31,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        Thread::observe(ThreadObserver::class);
-
         View::composer('categories.index', function ($view) {
             $latestPosts = Thread::with('category')->withRecentReply()
                 ->has('replies')
@@ -41,7 +38,6 @@ class AppServiceProvider extends ServiceProvider
                 ->take(10)
                 ->get();
 
-                
             $totalThreads = Thread::count();
             $totalMessages = Reply::count();
             $totalMembers = User::count();

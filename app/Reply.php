@@ -5,12 +5,13 @@ namespace App;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
 {
-    use Filterable, Likeable, FormatsDate;
+    use Filterable, Likeable, FormatsDate, RecordsActivity;
 
     /**
      * Number of thread replies per page

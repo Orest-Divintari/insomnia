@@ -3,11 +3,12 @@
 namespace App;
 
 use App\Traits\FormatsDate;
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model
 {
-    use FormatsDate;
+    use FormatsDate, RecordsActivity;
 
     protected $guarded = [];
 
