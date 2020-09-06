@@ -64,7 +64,11 @@ trait RecordsActivity
     public function getActivityType($event)
     {
 
-        $type = strtolower(class_basename($this));
+        $class = class_basename($this);
+
+        $class = ltrim(implode(' ', preg_split('/(?=[A-Z])/', $class)));
+
+        $type = strtolower(implode("_", explode(" ", $class)));
 
         if (class_basename($this) == 'Reply') {
             if (class_basename($this->repliable_type) == 'ProfilePost') {
