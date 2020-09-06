@@ -27,7 +27,7 @@ class ActivityTest extends TestCase
         $this->assertDatabaseHas('activities', [
             'subject_id' => $thread->id,
             'subject_type' => Thread::class,
-            'type' => 'created_thread_activity',
+            'type' => 'created-thread-activity',
             'user_id' => $user->id,
         ]);
 
@@ -47,7 +47,7 @@ class ActivityTest extends TestCase
         $this->assertDatabaseHas('activities', [
             'subject_id' => $reply->id,
             'subject_type' => Reply::class,
-            'type' => 'created_reply_activity',
+            'type' => 'created-reply-activity',
             'user_id' => $user->id,
         ]);
     }
@@ -69,7 +69,7 @@ class ActivityTest extends TestCase
         $this->assertDatabaseHas('activities', [
             'subject_id' => $comment->id,
             'subject_type' => Reply::class,
-            'type' => 'created_comment_activity',
+            'type' => 'created-comment-activity',
             'user_id' => $user->id,
         ]);
     }
@@ -88,7 +88,7 @@ class ActivityTest extends TestCase
         $this->assertDatabaseHas('activities', [
             'subject_id' => $profilePost->id,
             'subject_type' => ProfilePost::class,
-            'type' => 'created_profile_post_activity',
+            'type' => 'created-profile-post-activity',
             'user_id' => $user->id,
         ]);
     }
@@ -111,7 +111,7 @@ class ActivityTest extends TestCase
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,
             'subject_type' => Like::class,
-            'type' => 'created_like_activity',
+            'type' => 'created-reply-like-activity',
             'user_id' => $user->id,
         ]);
 
@@ -136,7 +136,7 @@ class ActivityTest extends TestCase
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,
             'subject_type' => Like::class,
-            'type' => 'created_like_activity',
+            'type' => 'created-comment-like-activity',
             'user_id' => $user->id,
         ]);
 

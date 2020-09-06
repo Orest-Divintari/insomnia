@@ -68,7 +68,7 @@ trait RecordsActivity
 
         $class = ltrim(implode(' ', preg_split('/(?=[A-Z])/', $class)));
 
-        $type = strtolower(implode("_", explode(" ", $class)));
+        $type = strtolower(implode("-", explode(" ", $class)));
 
         if (class_basename($this) == 'Reply') {
             if (class_basename($this->repliable_type) == 'ProfilePost') {
@@ -77,8 +77,15 @@ trait RecordsActivity
                 $type = 'reply';
             }
         }
+        if (class_basename($this) == 'Like') {
+            if (class_basename($this->reply->repliable_type) == 'ProfilePost') {
+                $type = "comment-like";
+            } elseif (class_basename($this->reply->repliable_type) == 'Thread') {
+                $type = "reply-like";
+            }
+        }
 
-        return "{$event}_{$type}_activity";
+        return "{$event}-{$type}-activity";
     }
 
     /**
