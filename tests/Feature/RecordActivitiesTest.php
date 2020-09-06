@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Like;
 use App\ProfilePost;
 use App\Reply;
 use App\Thread;
@@ -37,9 +38,11 @@ class ActivityTest extends TestCase
     {
         $user = $this->signIn();
 
-        $reply = create(Reply::class, ['user_id' => $user->id], $state = 'thread');
+        $thread = create(Thread::class);
 
-        $this->assertCount(1, $user->fresh()->activities);
+        $reply = $thread->addReply(raw(Reply::class, ['user_id' => $user->id]));
+
+        $this->assertCount(2, $user->fresh()->activities);
 
         $this->assertDatabaseHas('activities', [
             'subject_id' => $reply->id,
@@ -54,11 +57,14 @@ class ActivityTest extends TestCase
     {
         $user = $this->signIn();
 
-        $comment = create(Reply::class, [
-            'user_id' => $user->id,
-            'repliable_id' => 1,
-            'repliable_type' => 'App\ProfilePost',
-        ]);
+        $profilePost = create(ProfilePost::class);
+
+        $comment = $profilePost->addComment(
+            raw(Reply::class, ['user_id' => $user->id]),
+            $user
+        );
+
+        $this->assertCount(2, $user->activities);
 
         $this->assertDatabaseHas('activities', [
             'subject_id' => $comment->id,
@@ -82,7 +88,7 @@ class ActivityTest extends TestCase
         $this->assertDatabaseHas('activities', [
             'subject_id' => $profilePost->id,
             'subject_type' => ProfilePost::class,
-            'type' => 'created_profilepost_activity',
+            'type' => 'created_profile_post_activity',
             'user_id' => $user->id,
         ]);
     }
@@ -92,17 +98,19 @@ class ActivityTest extends TestCase
     {
         $user = $this->signIn();
 
-        $reply = create(Reply::class, [
-            'repliable_id' => 1,
-            'repliable_type' => Thread::class,
-        ]);
+        $thread = create(Thread::class);
 
-        $reply->likedBy($user);
-        $this->assertCount(2, $user->activities);
+        $reply = $thread->addReply(
+            raw(Reply::class, ['user_id' => $user->id])
+        );
+
+        $like = $reply->likedBy($user);
+
+        $this->assertCount(3, $user->activities);
 
         $this->assertDatabaseHas('activities', [
-            'subject_id' => $reply->id,
-            'subject_type' => Reply::class,
+            'subject_id' => $like->id,
+            'subject_type' => Like::class,
             'type' => 'created_like_activity',
             'user_id' => $user->id,
         ]);
@@ -114,15 +122,23 @@ class ActivityTest extends TestCase
     {
         $user = $this->signIn();
 
-        $reply = create(
-            Reply::class,
-            [],
-            $state = 'profilePost'
+        $profilePost = create(ProfilePost::class);
+
+        $comment = $profilePost->addComment(
+            raw(Reply::class, ['user_id' => $user->id]),
+            $user
         );
 
-        $reply->likedBy($user);
+        $like = $comment->likedBy($user);
 
-        $this->assertCount(2, $user->activities);
+        $this->assertCount(3, $user->activities);
+
+        $this->assertDatabaseHas('activities', [
+            'subject_id' => $like->id,
+            'subject_type' => Like::class,
+            'type' => 'created_like_activity',
+            'user_id' => $user->id,
+        ]);
 
     }
 }

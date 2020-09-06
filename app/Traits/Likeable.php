@@ -50,6 +50,7 @@ trait Likeable
             } elseif ($this->isThreadReply()) {
                 event(new ReplyWasLiked($liker, $like, $this->thread, $this));
             }
+            return $like;
         }
     }
 
