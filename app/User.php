@@ -157,7 +157,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getMessagesCountAttribute()
     {
-        return $this->replies()->count();
+        return $this->profilePosts()->count();
     }
 
     /**
