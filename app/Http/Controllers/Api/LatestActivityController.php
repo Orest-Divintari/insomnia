@@ -14,8 +14,15 @@ class LatestActivityController extends Controller
      * @param User $user
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index(User $user)
+    public function index(User $user, $postings = false)
     {
-        return Activity::feed($user);
+        $activities = Activity::feed($user);
+
+        if ($postings) {
+            $activities->onlyPostings();
+        }
+
+        return $activities
+            ->paginate(Activity::NUMBER_OF_ACTIVITIES);
     }
 }

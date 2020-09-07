@@ -39,6 +39,7 @@ module.exports = {
                 "blue-ship-cove": "#6686B1",
                 "blue-link": "#4d6c99",
                 "blue-link-hover": "#6686B1",
+                "blue-botticelli": "#D3DDE9",
 
                 "white-catskill": "#E1EAF3",
                 "blue-form-hover-button": "#334866",

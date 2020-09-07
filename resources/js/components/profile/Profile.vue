@@ -77,7 +77,7 @@
         <latest-activity :profile-owner="profileOwner"></latest-activity>
       </tab>
       <tab name="Postings">
-        <recent-content></recent-content>
+        <postings :profile-owner="profileOwner"></postings>
       </tab>
       <tab name="About">
         <about></about>
@@ -89,7 +89,7 @@
 <script>
 import ProfilePosts from "./ProfilePosts";
 import LatestActivity from "./LatestActivity";
-import RecentContent from "./RecentContent";
+import Postings from "./Postings";
 import About from "./About";
 import Tabs from "../Tabs";
 import Tab from "../Tab";
@@ -100,7 +100,7 @@ export default {
     Tabs,
     Tab,
     LatestActivity,
-    RecentContent,
+    Postings,
     About,
   },
   props: {

@@ -3,38 +3,29 @@
     <div
       class="border border-gray-lighter p-4"
       :class="classes(index)"
-      v-for="(activity, index) in activities"
-      :key="activity.id"
+      v-for="(posting, index) in postings"
+      :key="posting.id"
     >
       <div class="flex">
         <img :src="profileOwner.avatar_path" class="avatar-lg" alt />
-        <component
-          :activity="activity"
-          class="pl-4"
-          :is="activity.type"
-          :profile-owner="profileOwner"
-        ></component>
+        <component :posting="posting" :is="posting.type" class="pl-4" :profile-owner="profileOwner"></component>
       </div>
     </div>
-    <fetch-more-button v-if="itemsExist" @fetchMore="fetchMore" name="Show older items"></fetch-more-button>
+    <fetch-more-button v-if="itemsExist" @fetchMore="fetchMore" name="See more"></fetch-more-button>
   </div>
 </template>
 
 <script>
+import CreatedComment from "../postings/CreatedComment";
+import CreatedProfilePost from "../postings/CreatedProfilePost";
+import CreatedReply from "../postings/CreatedReply";
+import CreatedThread from "../postings/CreatedThread";
 import FetchMoreButton from "./FetchMoreButton";
-import CreatedCommentLike from "../activities/CreatedCommentLike";
-import CreatedReplyLike from "../activities/CreatedReplyLike";
-import CreatedReply from "../activities/CreatedReply";
-import CreatedComment from "../activities/CreatedComment";
-import CreatedProfilePost from "../activities/CreatedProfilePost";
-import CreatedThread from "../activities/CreatedThread";
 export default {
   components: {
-    CreatedCommentLike,
-    CreatedReplyLike,
-    CreatedReply,
     CreatedComment,
     CreatedProfilePost,
+    CreatedReply,
     CreatedThread,
     FetchMoreButton,
   },
@@ -47,13 +38,13 @@ export default {
   },
   data() {
     return {
-      activities: [],
+      postings: [],
       dataset: [],
     };
   },
   computed: {
     path() {
-      return "/api/profiles/" + this.profileOwner.name + "/latestActivity";
+      return "/api/profiles/" + this.profileOwner.name + "/latestActivity/true";
     },
     itemsExist() {
       return this.dataset.next_page_url != null;
@@ -62,14 +53,13 @@ export default {
   methods: {
     classes(index) {
       return [
-        index % 2 == 1 ? "bg-blue-lighter" : "bg-white",
         index == 0 ? "rounded rounded-b-none" : "border-t-0 ",
         index == this.dataset.total - 1 ? "rounded rounded-t-none" : "",
       ];
     },
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
-      this.activities = this.activities.concat(paginatedCollection.data);
+      this.postings = this.postings.concat(paginatedCollection.data);
     },
     fetchMore() {
       axios
@@ -81,7 +71,7 @@ export default {
       axios
         .get(this.path)
         .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log("gamw to spiti"));
+        .catch((error) => console.log(error));
     },
   },
   created() {

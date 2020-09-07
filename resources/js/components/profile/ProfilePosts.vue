@@ -8,9 +8,7 @@
       :post="post"
       :profile-owner="profileOwner"
     ></profile-post>
-    <div class="flex justify-end">
-      <button v-if="postsExist" class="w-28 btn-white-blue" @click="fetchMore">Older posts</button>
-    </div>
+    <fetch-more-button v-if="itemsExist" @fetchMore="fetchMore" name="Show older posts"></fetch-more-button>
   </div>
 </template>
 
@@ -35,7 +33,7 @@ export default {
     };
   },
   computed: {
-    postsExist() {
+    itemsExist() {
       return this.dataset.next_page_url != null;
     },
   },

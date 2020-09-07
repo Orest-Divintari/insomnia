@@ -51,18 +51,16 @@ class Activity extends Model
                     }],
                     Like::class => ['reply.repliable'],
                 ]);
-            }])
-            ->paginate(static::NUMBER_OF_ACTIVITIES);
+            }]);
     }
 
     /**
-     * Eager load the poster
+     * Fetch only the posting activities
      *
-     * @param [type] $query
-     * @return void
+     * @return Builder
      */
-    public function scopeWithThreads($query)
+    public function scopeOnlyPostings($query)
     {
-        return $query->with('subject.poster');
+        return $query->where('subject_type', '!=', 'App\Like');
     }
 }

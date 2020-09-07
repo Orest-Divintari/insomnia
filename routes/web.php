@@ -61,7 +61,7 @@ Route::group([
 ], function () {
 
     // latest activity
-    Route::get('/profiles/{user}/latestActivity', 'LatestActivityController@index')
+    Route::get('/profiles/{user}/latestActivity/{postings?}', 'LatestActivityController@index')
         ->name('api.latest-activity.index');
 
     // profile posts
