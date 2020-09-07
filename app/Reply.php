@@ -70,6 +70,7 @@ class Reply extends Model
 
         static::deleting(function ($reply) {
             $reply->likes->each->delete();
+            $reply->activities->each->delete();
         });
     }
 
@@ -183,5 +184,15 @@ class Reply extends Model
         });
 
         return $comments;
+    }
+
+    /**
+     * Get the activities of the reply
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'subject');
     }
 }

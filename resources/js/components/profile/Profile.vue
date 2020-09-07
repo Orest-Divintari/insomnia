@@ -73,7 +73,9 @@
       <tab name="Profile Posts" :selected="true">
         <profile-posts :profile-owner="profileOwner"></profile-posts>
       </tab>
-      <tab name="Latest Activity"></tab>
+      <tab name="Latest Activity">
+        <latest-activity :profile-owner="profileOwner"></latest-activity>
+      </tab>
       <tab name="Postings">
         <recent-content></recent-content>
       </tab>

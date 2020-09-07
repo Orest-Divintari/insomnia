@@ -71,4 +71,5 @@ class CreateProfilePostsTest extends TestCase
         $this->post(route('api.profile-posts.store', $profileOwner), ['body' => ''])
             ->assertSessionHasErrors('body');
     }
+
 }

@@ -37,6 +37,8 @@ module.exports = {
                 "blue-form-input": "#E7F1FE",
                 "blue-like": "#0070D6",
                 "blue-ship-cove": "#6686B1",
+                "blue-link": "#4d6c99",
+                "blue-link-hover": "#6686B1",
 
                 "white-catskill": "#E1EAF3",
                 "blue-form-hover-button": "#334866",
@@ -77,8 +79,8 @@ module.exports = {
                 "4xs": "0.1rem",
                 "3xs": "0.25rem",
                 "2xs": "0.6rem",
-                md: "0.9375rem",
-                smaller: "0.8125rem"
+                smaller: "0.8125rem",
+                md: "0.9375rem"
             }
         }
     },

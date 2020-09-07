@@ -42,6 +42,7 @@
               >Delete</button>
             </div>
             <like-button
+              v-if="!authorize('owns', comment)"
               :styleAttributes="'bg-blue-lighter'"
               @liked="updateLikeStatus"
               :item="comment"

@@ -2,17 +2,17 @@
   <div>
     <a
       @click="showProfile(notificationData.liker)"
-      class="text-blue-mid notification-profile"
+      class="blue-link notification-profile"
     >{{ notificationData.liker.name }}</a>
     <div
       @click="showPost(notificationData.profileOwner, notificationData.profilePost)"
       class="text-black inline notification-content"
     >
       <span>liked</span>
-      <a v-if="ownsComment()" class="text-blue-mid">your comment</a>
-      <a v-else class="text-blue-mid">{{ notificationData.commentPoster }}'s comment</a>
+      <a v-if="ownsComment(notificationData.comment)" class="blue-link">your comment</a>
+      <a v-else class="blue-link">{{ notificationData.commentPoster }}'s comment</a>
       on
-      <span v-if="ownsProfile()">your profile</span>
+      <span v-if="ownsProfile(notificationData.profileOwner)">your profile</span>
       <span v-else>{{ notificationData.profileOwner.name }}'s profile</span>.
       <p class="text-xs text-gray-lightest">{{ notificationData.like.date_created }}</p>
     </div>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import notifications from "../../mixins/notifications";
+import view from "../../mixins/view";
 import authorization from "../../mixins/authorization";
 export default {
   props: {
@@ -29,7 +29,7 @@ export default {
       default: {},
     },
   },
-  mixins: [notifications, authorization],
+  mixins: [view, authorization],
 };
 </script>
 

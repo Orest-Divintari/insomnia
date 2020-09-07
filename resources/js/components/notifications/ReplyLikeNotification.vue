@@ -2,11 +2,11 @@
   <div>
     <a
       @click="showProfile(notificationData.liker)"
-      class="text-blue-mid notification-profile"
+      class="blue-link notification-profile"
     >{{ notificationData.liker.name }}</a>
-    <div @click="showReply()" class="inline notification-content w-full">
+    <div @click="showReply(notificationData.reply)" class="inline notification-content w-full">
       liked
-      <a class="text-blue-mid">your post</a>
+      <a @click="showThread(notificationData.reply.thread)" class="blue-link">your post</a>
       in the thread {{ notificationData.reply.thread.title }}
       <p class="text-xs text-gray-lightest">{{ notificationData.like.date_created }}</p>
     </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import notifications from "../../mixins/notifications";
+import view from "../../mixins/view";
 export default {
   props: {
     notificationData: {
@@ -22,7 +22,7 @@ export default {
       default: {},
     },
   },
-  mixins: [notifications],
+  mixins: [view],
 };
 </script>
 

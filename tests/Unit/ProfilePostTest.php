@@ -79,4 +79,14 @@ class ProfilePostTest extends TestCase
         $this->assertEquals($profileOwner->id, $post->profileOwner->id);
     }
 
+    /** @test */
+    public function a_profile_post_has_activities()
+    {
+        $user = $this->signIn();
+
+        $profilePost = create(ProfilePost::class, ['poster_id' => $user->id]);
+
+        $this->assertCount(1, $profilePost->activities);
+    }
+
 }

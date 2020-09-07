@@ -7,7 +7,7 @@
           :class="{'is-active' : tab.isActive , 'tab-disable-hover' : tab.isActive}"
           v-for="(tab,index) in tabs"
           :key="tab.id"
-          @click="selectTab(tab)"
+          @click="selectTab(tab.name)"
         >
           <a :href="'#' + tab.hrefDescription">{{tab.name}}</a>
         </li>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import EventBus from "../eventBus";
 export default {
   data() {
     return {
@@ -28,11 +29,16 @@ export default {
     this.tabs = this.$children;
   },
   methods: {
-    selectTab(selectedTab) {
+    selectTab(selectedTabName) {
       this.tabs.forEach((tab) => {
-        tab.isActive = tab.name == selectedTab.name;
+        tab.isActive = tab.name == selectedTabName;
       });
     },
+  },
+  mounted() {
+    EventBus.$on("selectTab", (tabName) => {
+      this.selectTab(tabName);
+    });
   },
 };
 </script>

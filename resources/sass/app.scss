@@ -25,6 +25,12 @@
     @apply .text-3xl .font-bold .tracking-wide py-1/2;
 }
 
+.blue-link {
+    @apply .text-blue-link .cursor-pointer;
+}
+.blue-link:hover {
+    @apply .text-blue-link-hover underline;
+}
 * {
     @apply .font-insomnia;
 }

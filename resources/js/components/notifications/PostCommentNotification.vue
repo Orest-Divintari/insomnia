@@ -1,20 +1,29 @@
 <template>
   <div>
     <a
-      class="text-blue-mid notification-profile"
+      class="blue-link notification-profile"
       @click="showProfile(notificationData.commentPoster)"
     >{{ notificationData.commentPoster.name}}</a>
 
-    <div @click="showPost" class="inline notification-content">
+    <div
+      @click="showPost(notificationData.profileOwner, notificationData.profilePost)"
+      class="inline notification-content"
+    >
       <span class="no-underline hover:no-underline">commented on</span>
-      <a v-if="ownsProfile() && ownsPost()" class="text-blue-mid">your status</a>
-      <a v-if="!ownsProfile() && ownsPost()" class="text-blue-mid">your post</a>
       <a
-        v-if="!ownsProfile() && !ownsPost()"
-        class="text-blue-mid"
+        v-if="ownsProfile(notificationData.profileOwner) && ownsPost(notificationData.profileOwner, notificationData.profilePost)"
+        class="blue-link"
+      >your status</a>
+      <a
+        v-if="!ownsProfile(notificationData.profileOwner) && ownsPost(notificationData.profileOwner, notificationData.profilePost)"
+        class="blue-link"
+      >your post</a>
+      <a
+        v-if="!ownsProfile(notificationData.profileOwner) && !ownsPost(notificationData.profileOwner, notificationData.profilePost)"
+        class="blue-link"
       >{{ notificationData.postPoster.name }}'s post</a>
       <div class="inline">
-        <span v-if="ownsProfile()">on your profile</span>
+        <span v-if="ownsProfile(notificationData.profileOwner)">on your profile</span>
         <span v-else>on {{ notificationData.profileOwner.name }}'s profile</span>
       </div>
       <p class="text-xs text-gray-lightest">{{ notificationData.profilePost.date_updated }}</p>
@@ -23,7 +32,7 @@
 </template>
 
 <script>
-import notifications from "../../mixins/notifications";
+import view from "../../mixins/view";
 import authorization from "../../mixins/authorization";
 export default {
   props: {
@@ -32,7 +41,7 @@ export default {
       default: {},
     },
   },
-  mixins: [notifications, authorization],
+  mixins: [view, authorization],
 };
 </script>F
 

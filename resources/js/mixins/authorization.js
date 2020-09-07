@@ -1,13 +1,13 @@
 export default {
     methods: {
-        ownsProfile() {
-            return this.authorize("is", this.notificationData.profileOwner);
+        ownsProfile(profileOwner) {
+            return this.authorize("is", profileOwner);
         },
-        ownsPost() {
-            return this.authorize("owns", this.notificationData.profilePost);
+        ownsPost(post) {
+            return this.authorize("owns", post);
         },
-        ownsComment() {
-            return this.authorize("owns", this.notificationData.comment);
+        ownsComment(comment) {
+            return this.authorize("owns", comment);
         }
     }
 };

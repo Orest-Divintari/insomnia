@@ -141,4 +141,16 @@ class ReplyTest extends TestCase
         $this->assertEquals(2, $replyOnAnotherThread->fresh()->position);
     }
 
+    /** @test */
+    public function a_reply_has_activities()
+    {
+        $user = $this->signIn();
+
+        $thread = create(Thread::class);
+
+        $reply = $thread->addReply(raw(Reply::class, ['user_id' => $user->id]));
+
+        $this->assertCount(1, $reply->activities);
+    }
+
 }

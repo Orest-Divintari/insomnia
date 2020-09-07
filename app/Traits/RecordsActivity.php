@@ -85,7 +85,7 @@ trait RecordsActivity
             }
         }
 
-        return "{$event}-{$type}-activity";
+        return "{$event}-{$type}";
     }
 
     /**
@@ -115,4 +115,5 @@ trait RecordsActivity
     {
         return $this->morphMany(Activity::class, 'subject');
     }
+
 }

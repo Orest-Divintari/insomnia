@@ -1,19 +1,22 @@
 <template>
   <div>
     <a
-      class="text-blue-mid notification-profile"
+      class="blue-link notification-profile"
       @click="showProfile(notificationData.postPoster)"
     >{{ notificationData.postPoster.name}}</a>
     <div @click="showPost()" class="text-black inline notification-content">
       <span>wrote a message on</span>
-      <a @click="showProfile(notificationData.profileOwner)" class="text-blue-mid">your profile</a>.
+      <a
+        @click="showProfile(notificationData.profileOwner, notificationData.profilePost)"
+        class="blue-link"
+      >your profile</a>.
       <p class="text-xs text-gray-lightest">{{ notificationData.profilePost.date_created }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import notifications from "../../mixins/notifications";
+import view from "../../mixins/view";
 export default {
   props: {
     notificationData: {
@@ -21,7 +24,7 @@ export default {
       default: {},
     },
   },
-  mixins: [notifications],
+  mixins: [view],
   methods: {},
 };
 </script>

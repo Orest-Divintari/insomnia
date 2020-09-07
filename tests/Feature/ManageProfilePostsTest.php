@@ -158,6 +158,6 @@ class ManageProfilePostsTest extends TestCase
 
         $profilePost->delete();
 
-        $this->assertCount(Reply::all()->count(), $profilePost->comments);
+        $this->assertCount(0, Reply::where('repliable_type', '=', ProfilePost::class)->get());
     }
 }

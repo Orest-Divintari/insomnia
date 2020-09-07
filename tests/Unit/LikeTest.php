@@ -29,4 +29,19 @@ class LikeTest extends TestCase
         $this->assertInstanceOf(Reply::class, $like->reply);
 
     }
+
+    /** @test */
+    public function a_like_has_activity()
+    {
+        $user = $this->signIn();
+
+        $thread = create(Thread::class);
+
+        $reply = $thread->addReply(raw(Reply::class, ['user_id' => $user->id]));
+
+        $like = $reply->likedBy($user);
+
+        $this->assertCount(1, $like->activities);
+
+    }
 }

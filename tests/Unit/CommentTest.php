@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\ProfilePost;
+use App\Reply;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -46,6 +47,18 @@ class CommentTest extends TestCase
         );
 
         $this->assertInstanceOf(ProfilePost::class, $comment->profilePost);
+    }
+
+    /** @test */
+    public function a_comment_has_activities()
+    {
+        $user = $this->signIn();
+
+        $thread = create(ProfilePost::class);
+
+        $comment = $thread->addComment(raw(Reply::class, ['user_id' => $user->id]), $user);
+
+        $this->assertCount(1, $comment->activities);
     }
 
 }

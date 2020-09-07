@@ -40,6 +40,21 @@ class ProfilePost extends Model
     protected $guarded = [];
 
     /**
+     * Boot the Model
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($profilePost) {
+            $profilePost->activities->each->delete();
+            $profilePost->comments->each->delete();
+        });
+    }
+
+    /**
      * A profile post has an owner
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -88,6 +103,16 @@ class ProfilePost extends Model
     public function profileOwner()
     {
         return $this->belongsTo(User::class, 'profile_owner_id');
+    }
+
+    /**
+     * Get the activities of the profile post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'subject');
     }
 
 }
