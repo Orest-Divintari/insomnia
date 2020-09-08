@@ -22,9 +22,12 @@ class ActivityTest extends TestCase
         ]);
 
         $reply = $thread->addReply(raw(Reply::class, ['user_id' => $user->id]));
+
         $reply->likedBy($user);
 
-        $activity = Activity::feed($user);
+        $activity = Activity::feed($user)->paginate(Activity::NUMBER_OF_ACTIVITIES);
+
+        $this->assertCount(3, $activity);
 
     }
 }

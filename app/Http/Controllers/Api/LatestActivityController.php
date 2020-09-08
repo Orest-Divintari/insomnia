@@ -12,6 +12,7 @@ class LatestActivityController extends Controller
      * Get the activities of the user
      *
      * @param User $user
+     * @param Bool $postings
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index(User $user, $postings = false)
