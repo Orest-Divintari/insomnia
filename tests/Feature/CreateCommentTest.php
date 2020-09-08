@@ -42,6 +42,7 @@ class CreateCommentTest extends TestCase
         $user = $this->signIn();
 
         $post = create(ProfilePost::class);
+
         $comment = ['body' => 'some body'];
 
         $this->post(route('api.comments.store', $post), $comment);
@@ -58,7 +59,6 @@ class CreateCommentTest extends TestCase
     /** @test */
     public function a_comment_requires_a_body()
     {
-
         $user = $this->signIn();
 
         $post = create(ProfilePost::class);
