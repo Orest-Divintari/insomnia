@@ -41,7 +41,7 @@ class ProfilePostTest extends TestCase
     public function a_post_has_comments()
     {
         $post = create(ProfilePost::class);
-
+        
         $comment = create(Reply::class, [
             'repliable_type' => ProfilePost::class,
             'repliable_id' => $post->id,

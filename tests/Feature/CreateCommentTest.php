@@ -30,7 +30,7 @@ class CreateCommentTest extends TestCase
 
         $this->signIn($user);
 
-        $post = create(ProfilePost::class);
+        $post = raw(ProfilePost::class);
 
         $this->post(route('api.comments.store', $post), [])
             ->assertRedirect(route('verification.notice'));
