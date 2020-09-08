@@ -32,7 +32,7 @@ export default {
     return {
       description: {
         unread: { "Show Only": "unread" },
-        constributed: { Contributed: this.filterValue },
+        contributed: { Contributed: this.filterValue },
         unanswered: { "Show only ": "unanswered" },
         newPosts: { "Show only": "new posts" },
         newThreads: { "Show only": "new threads" },
