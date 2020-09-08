@@ -60,7 +60,9 @@ class ActivityTest extends TestCase
         $profilePost = create(ProfilePost::class);
 
         $comment = $profilePost->addComment(
-            raw(Reply::class, ['user_id' => $user->id]),
+            raw(Reply::class, [
+                'user_id' => $user->id,
+            ]),
             $user
         );
 
@@ -187,6 +189,13 @@ class ActivityTest extends TestCase
         $comment->delete();
 
         $this->assertCount(1, $user->fresh()->activities);
+
+        $this->assertDatabaseMissing('activities', [
+            'subject_id' => $comment->id,
+            'subject_type' => Reply::class,
+            'type' => 'created-comment',
+            'user_id' => $user->id,
+        ]);
     }
 
     /** @test */
@@ -215,6 +224,13 @@ class ActivityTest extends TestCase
         $comment->unlikedBy($user);
 
         $this->assertCount(2, $user->fresh()->activities);
+
+        $this->assertDatabaseMissing('activities', [
+            'subject_id' => $like->id,
+            'subject_type' => Like::class,
+            'type' => 'created-comment-like',
+            'user_id' => $user->id,
+        ]);
     }
 
     /** @test */
@@ -243,6 +259,13 @@ class ActivityTest extends TestCase
         $comment->unlikedBy($user);
 
         $this->assertCount(2, $user->fresh()->activities);
+
+        $this->assertDatabaseMissing('activities', [
+            'subject_id' => $like->id,
+            'subject_type' => Like::class,
+            'type' => 'created-comment-like',
+            'user_id' => $user->id,
+        ]);
     }
 
     /** @test */
@@ -267,6 +290,14 @@ class ActivityTest extends TestCase
         $profilePost->delete();
 
         $this->assertCount(0, $user->fresh()->activities);
+
+        $this->assertDatabaseMissing('activities', [
+            'subject_id' => $profilePost->id,
+            'subject_type' => ProfilePost::class,
+            'type' => 'created-profile-post',
+            'user_id' => $user->id,
+        ]);
+
     }
 
 }
