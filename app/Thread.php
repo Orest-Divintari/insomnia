@@ -263,4 +263,14 @@ class Thread extends Model
         }
     }
 
+    /**
+     * Get the activities of the thread
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'subject');
+    }
+
 }
