@@ -125,10 +125,7 @@ class UserTest extends TestCase
     {
         $user = create(User::class);
 
-        $thread = create(Thread::class);
-        $thread->addReply(raw(Reply::class, [
-            'user_id' => $user->id,
-        ]));
+        create(ProfilePost::class, ['profile_owner_id' => $user->id]);
 
         $this->assertEquals(1, $user->fresh()->messages_count);
 
