@@ -3,8 +3,7 @@
 namespace Tests\Feature;
 
 use App\Like;
-use App\Reply;
-use App\Thread;
+use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,11 +14,8 @@ class LikesTest extends TestCase
     /** @test */
     public function a_guest_cannot_like_a_reply()
     {
-        $thread = create(Thread::class);
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+        $reply = ReplyFactory::create();
+
         $this->post(route('api.likes.store', $reply))
             ->assertRedirect('login');
     }
@@ -29,12 +25,8 @@ class LikesTest extends TestCase
     {
         $user = $this->signIn();
 
-        $thread = create(Thread::class);
+        $reply = ReplyFactory::create();
 
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
         $this->post(route('api.likes.store', $reply));
 
         $this->assertDatabaseHas('likes', [
@@ -51,11 +43,8 @@ class LikesTest extends TestCase
     {
         $user = $this->signIn();
 
-        $thread = create(Thread::class);
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+        $reply = ReplyFactory::create();
+
         $this->post(route('api.likes.store', $reply));
 
         $this->assertCount(1, $reply->fresh()->likes);
@@ -71,21 +60,15 @@ class LikesTest extends TestCase
 
         $user = $this->signIn();
 
-        $thread = create(Thread::class);
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
-
-        $reply->likes()->create([
-            'user_id' => $user->id,
-        ]);
+        $reply = ReplyFactory::create();
 
         $this->post(route('api.likes.store', $reply));
+
         $this->assertDatabaseHas('likes', [
             'reply_id' => $reply->id,
             'user_id' => $user->id,
         ]);
+
         $this->assertCount(1, $reply->fresh()->likes);
 
         $this->delete(route('api.likes.destroy', $reply));
@@ -103,12 +86,7 @@ class LikesTest extends TestCase
     {
         $user = $this->signIn();
 
-        $thread = create(Thread::class);
-
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+        $reply = ReplyFactory::create();
 
         $reply->likedBy($user);
 

@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
+use \Facades\Tests\Setup\CommentFactory;
 
 class ManageCommentsTest extends TestCase
 {
@@ -15,19 +16,9 @@ class ManageCommentsTest extends TestCase
     /** @test */
     public function unathorized_users_cannot_edit_a_comment()
     {
+        $comment = CommentFactory::create();
+
         $poster = $this->signIn();
-
-        $post = create(ProfilePost::class);
-
-        $user = create(User::class);
-
-        $comment = $post->addComment(
-            [
-                'body' => 'some body',
-                'user_id' => $user->id,
-            ],
-            $poster
-        );
 
         $this->patch(route('api.comments.update', $comment))
             ->assertStatus(Response::HTTP_FORBIDDEN);
@@ -37,25 +28,9 @@ class ManageCommentsTest extends TestCase
     /** @test */
     public function the_user_who_posted_the_comment_may_edit_the_comment()
     {
-        $postOwner = create(User::class);
+        $commentPoster = $this->signIn();
 
-        $commentOwner = create(User::class);
-
-        $poster = $this->signIn($commentOwner);
-
-        $post = create(ProfilePost::class, [
-            'profile_owner_id' => $postOwner->id,
-        ]);
-
-        $comment = $post->addComment(
-            [
-                'body' => 'some body',
-                'user_id' => $commentOwner->id,
-            ],
-            $poster
-        );
-
-        $this->signIn($commentOwner);
+        $comment = CommentFactory::by($commentPoster)->create();
 
         $updatedComment = [
             'body' => 'updated body',
@@ -66,14 +41,14 @@ class ManageCommentsTest extends TestCase
         $this->assertDatabaseMissing('replies', [
             'repliable_id' => $comment->id,
             'repliable_type' => ProfilePost::class,
-            'user_id' => $commentOwner->id,
+            'user_id' => $commentPoster->id,
             'body' => $comment->body,
         ]);
 
         $this->assertDatabaseHas('replies', [
             'repliable_id' => $comment->id,
             'repliable_type' => ProfilePost::class,
-            'user_id' => $commentOwner->id,
+            'user_id' => $commentPoster->id,
             'body' => $updatedComment['body'],
         ]);
 
@@ -82,19 +57,9 @@ class ManageCommentsTest extends TestCase
     /** @test */
     public function unathorized_users_cannot_delete_a_comment()
     {
-        $poster = $this->signIn();
+        $comment = CommentFactory::create();
 
-        $post = create(ProfilePost::class);
-
-        $comment = $post->addComment(
-            [
-                'body' => 'some body',
-                'user_id' => $poster->id,
-            ],
-            $poster
-        );
-
-        $this->signIn();
+        $unauthorizedUser = $this->signIn();
 
         $this->delete(route('api.comments.destroy', $comment))
             ->assertStatus(Response::HTTP_FORBIDDEN);
@@ -103,28 +68,23 @@ class ManageCommentsTest extends TestCase
     /** @test */
     public function the_user_who_posted_the_comment_can_delete_it()
     {
-        $postOwner = create(User::class);
+        $commentPoster = $this->signIn();
 
-        $commentOwner = $this->signIn();
+        $comment = CommentFactory::by($commentPoster)->create();
 
-        $post = create(ProfilePost::class, [
-            'profile_owner_id' => $postOwner->id,
+        $this->assertDatabaseHas('replies', [
+            'repliable_id' => $comment->id,
+            'repliable_type' => ProfilePost::class,
+            'user_id' => $commentPoster->id,
+            'body' => $comment->body,
         ]);
-
-        $comment = $post->addComment(
-            [
-                'body' => 'some body',
-                'user_id' => $commentOwner->id,
-            ],
-            $commentOwner
-        );
 
         $this->delete(route('api.comments.destroy', $comment));
 
         $this->assertDatabaseMissing('replies', [
             'repliable_id' => $comment->id,
             'repliable_type' => ProfilePost::class,
-            'user_id' => $commentOwner->id,
+            'user_id' => $commentPoster->id,
             'body' => $comment->body,
         ]);
 
@@ -135,19 +95,13 @@ class ManageCommentsTest extends TestCase
     {
         $profileOwner = create(User::class);
 
-        $commentOwner = $this->signIn();
-
         $post = create(ProfilePost::class, [
             'profile_owner_id' => $profileOwner->id,
         ]);
 
-        $comment = $post->addComment(
-            [
-                'body' => 'some body',
-                'user_id' => $commentOwner->id,
-            ],
-            $commentOwner
-        );
+        $commentPoster = $this->signIn();
+
+        $comment = CommentFactory::by($commentPoster)->create();
 
         $this->signIn($profileOwner);
 
@@ -156,7 +110,7 @@ class ManageCommentsTest extends TestCase
         $this->assertDatabaseMissing('replies', [
             'repliable_id' => $comment->id,
             'repliable_type' => ProfilePost::class,
-            'user_id' => $commentOwner->id,
+            'user_id' => $commentPoster->id,
             'body' => $comment->body,
         ]);
     }
