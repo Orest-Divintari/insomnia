@@ -33,7 +33,6 @@ class ThreadNotificationsTest extends TestCase
     /** @test */
     public function a_user_subscribed_to_a_thread_receives_a_notification_when_a_new_reply_is_posted_by_another_user()
     {
-
         $this->put(
             route('api.thread-subscriptions.update', $this->thread),
             ['email_notifications' => true]

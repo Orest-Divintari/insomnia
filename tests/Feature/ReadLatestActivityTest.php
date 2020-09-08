@@ -33,8 +33,6 @@ class ReadLatestActivityTest extends TestCase
     /** @test */
     public function a_user_can_read_only_the_posting_activities()
     {
-        $this->withoutExceptionHandling();
-
         $profileOwner = $this->signIn();
 
         $numberOfPostingActivities = 5;

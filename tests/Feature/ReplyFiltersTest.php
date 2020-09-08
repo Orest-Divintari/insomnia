@@ -15,7 +15,6 @@ class ReplyFiltersTest extends TestCase
     /** @test */
     public function a_user_can_filter_replies_based_on_the_number_of_likes()
     {
-
         $this->signIn();
 
         $thread = create(Thread::class);

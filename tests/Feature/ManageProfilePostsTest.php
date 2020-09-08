@@ -16,7 +16,6 @@ class ManageProfilePostsTest extends TestCase
     /** @test */
     public function unauthorized_users_cannot_update_a_profile_post()
     {
-
         $profileOwner = create(User::class);
 
         $poster = $this->signIn();

@@ -15,6 +15,7 @@ class ManageThreadsTest extends TestCase
     public function non_authorized_users_may_not_update_the_title_of_a_thread()
     {
         $this->signIn();
+
         $thread = create(Thread::class, [
             'title' => 'old title',
         ]);
@@ -36,6 +37,7 @@ class ManageThreadsTest extends TestCase
         $newTitle = [
             'title' => 'new title',
         ];
+
         $this->assertDatabaseHas('threads', [
             'id' => $thread->id,
             'title' => 'old title',

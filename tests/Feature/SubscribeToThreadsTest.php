@@ -24,6 +24,7 @@ class SubscribeToThreadsTest extends TestCase
     public function when_a_user_creates_a_thread_automatically_is_subscribed_to_newly_created_thread()
     {
         $user = $this->signIn();
+
         $thread = raw(Thread::class);
 
         $title = ['title' => $thread['title']];

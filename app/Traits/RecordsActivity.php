@@ -11,6 +11,7 @@ trait RecordsActivity
      */
     public static function bootRecordsActivity()
     {
+
         if (!auth()->check()) {
             return;
         }

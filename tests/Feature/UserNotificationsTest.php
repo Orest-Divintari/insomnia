@@ -36,7 +36,6 @@ class UserNotificationsTest extends TestCase
     /** @test */
     public function a_user_can_mark_a_database_notification_as_read()
     {
-
         $this->assertCount(2, $this->response);
 
         $firstNotification = $this->user->unreadNotifications->first();

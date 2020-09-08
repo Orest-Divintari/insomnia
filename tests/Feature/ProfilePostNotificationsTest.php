@@ -24,6 +24,7 @@ class ProfilePostNotificationsTest extends TestCase
         $this->signIn();
 
         $profileOwner = create(User::class);
+
         $post = ['body' => 'some body'];
 
         $this->post(route('api.profile-posts.store', $profileOwner), $post);

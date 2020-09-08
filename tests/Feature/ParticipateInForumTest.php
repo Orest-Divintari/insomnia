@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Reply;
 use App\Thread;
+use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
@@ -16,10 +17,8 @@ class ParticipateInForumTest extends TestCase
     public function guests_may_not_post_replies_to_a_thread()
     {
         $thread = create(Thread::class);
-        $reply = raw(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+
+        $reply = raw(Reply::class);
 
         $this->post(route('api.replies.store', $thread), $reply)
             ->assertRedirect('login');
@@ -29,6 +28,7 @@ class ParticipateInForumTest extends TestCase
     public function authorized_users_may_post_replies_to_a_thread()
     {
         $user = $this->signIn();
+
         $thread = create(Thread::class);
 
         $this->post(route('api.replies.store', $thread), ['body' => 'some body']);
@@ -47,12 +47,10 @@ class ParticipateInForumTest extends TestCase
     public function a_newly_posted_reply_requires_a_body()
     {
         $this->signIn();
+
         $thread = create(Thread::class);
-        $reply = raw(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-            'body' => '',
-        ]);
+
+        $reply = ['body' => ''];
 
         $this->post(route('api.replies.store', $thread), $reply)
             ->assertSessionHasErrors('body');
@@ -65,14 +63,9 @@ class ParticipateInForumTest extends TestCase
     }
 
     /** @test */
-    public function non_authorized_users_cannot_update_a_reply()
+    public function unauthorized_users_cannot_update_a_reply()
     {
-        $thread = create(Thread::class);
-
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+        $reply = ReplyFactory::create();
 
         $this->signIn();
 
@@ -85,15 +78,9 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function authorized_users_may_update_a_reply()
     {
-        $thread = create(Thread::class);
+        $replyPoster = $this->signIn();
 
-        $user = $this->signIn();
-
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-            'user_id' => $user->id,
-        ]);
+        $reply = ReplyFactory::by($replyPoster)->create();
 
         $newBody = ['body' => 'changed body'];
 
@@ -101,12 +88,12 @@ class ParticipateInForumTest extends TestCase
 
         $this->assertDatabaseMissing('replies', [
             'body' => 'old body',
-            'user_id' => $user->id,
+            'user_id' => $replyPoster->id,
         ]);
 
         $this->assertDataBaseHas('replies', [
             'body' => $newBody['body'],
-            'user_id' => $user->id,
+            'user_id' => $replyPoster->id,
         ]);
 
     }
@@ -114,38 +101,25 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function authorized_users_may_delete_a_reply()
     {
-        $user = $this->signIn();
+        $replyPoster = $this->signIn();
 
-        $thread = create(Thread::class);
-
-        $reply = create(Reply::class, [
-            'user_id' => $user->id,
-            'repliable_id' => $thread->id,
-        ]);
-
-        $this->assertEquals($thread->id, $reply->repliable->id);
+        $reply = ReplyFactory::by($replyPoster)->create();
 
         $this->delete(route('api.replies.destroy', $reply));
 
         $this->assertDatabaseMissing('replies', [
             'id' => $reply->id,
-            'repliable_id' => $thread->id,
             'repliable_type' => Thread::class,
         ]);
-
-        // first reply == body of thread
-        $this->assertCount(1, $thread->fresh()->replies);
 
     }
 
     /** @test */
     public function unauthorized_users_cannot_delete_a_reply()
     {
-        $this->signIn();
-        $thread = create(Thread::class);
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-        ]);
+        $reply = ReplyFactory::create();
+
+        $unauthorizedUser = $this->signIn();
 
         $this->delete(route('api.replies.destroy', $reply))
             ->assertStatus(Response::HTTP_FORBIDDEN);

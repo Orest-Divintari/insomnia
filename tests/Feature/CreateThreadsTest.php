@@ -18,6 +18,7 @@ class CreateThreadsTest extends TestCase
     public function guests_may_not_see_the_post_new_thread_form()
     {
         $category = create(Category::class);
+
         $this->get(route('threads.create', $category))
             ->assertRedirect('login');
     }
@@ -37,6 +38,7 @@ class CreateThreadsTest extends TestCase
         ]);
 
         $this->signIn($user);
+
         $this->post(route('threads.store'), [])
             ->assertRedirect(route('verification.notice'));
     }
@@ -45,10 +47,15 @@ class CreateThreadsTest extends TestCase
     public function authenticated_users_that_have_confirmed_their_email_may_post_threads()
     {
         $this->signIn();
+
         $thread = raw(Thread::class);
+
         $title = ['title' => $thread['title']];
+
         $response = $this->post(route('threads.store'), $thread);
+
         $this->assertDatabaseHas('threads', $title);
+
         $this->get($response->headers->get('location'))
             ->assertSee($title['title']);
 
@@ -58,6 +65,7 @@ class CreateThreadsTest extends TestCase
     public function a_reply_is_created_when_a_new_thread_is_created_as_the_body_of_the_thread()
     {
         $user = $this->signIn();
+
         $thread = raw(Thread::class, [
             'user_id' => $user->id,
         ]);
@@ -103,7 +111,9 @@ class CreateThreadsTest extends TestCase
     protected function post_thread($overrides)
     {
         $user = $this->signIn();
+
         $thread = raw(Thread::class, $overrides + ['user_id' => $user->id]);
+
         return $this->post(route('threads.store'), $thread);
     }
 
@@ -123,7 +133,9 @@ class CreateThreadsTest extends TestCase
         $thread = raw(Thread::class, [
             'title' => $title,
         ]);
+
         $this->post(route('threads.store'), $thread);
+
         $this->assertEquals(Thread::latest('id')->first()->slug, $slug);
 
     }

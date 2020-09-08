@@ -32,7 +32,9 @@ class ReadThreadsTest extends TestCase
     public function a_user_can_read_the_threads_associated_with_a_category()
     {
         $category = create(Category::class);
+
         $thread = create(Thread::class, ['category_id' => $category->id]);
+
         $this->get(route('threads.index', $category))
             ->assertSee($thread->title);
     }
@@ -41,6 +43,7 @@ class ReadThreadsTest extends TestCase
     public function a_user_can_read_the_paginated_threads_associated_with_a_category()
     {
         $category = create(Category::class);
+
         createMany(Thread::class, 100, [
             'category_id' => $category->id,
         ]);
@@ -55,7 +58,6 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_go_to_a_specific_reply_on_a_paginated_thread()
     {
-
         $thread = create(Thread::class, ['replies_count' => 30]);
 
         createMany(Reply::class, 30, [
@@ -128,8 +130,11 @@ class ReadThreadsTest extends TestCase
     public function a_user_can_read_the_threads_that_has_replied_to()
     {
         $user = $this->signIn();
+
         $threadWithNoParticipation = create(Thread::class);
+
         $this->post(route('api.replies.store', $this->thread), ['body' => 'some random text']);
+
         $this->get(route('filtered-threads.index') . "?contributed=" . $user->name)
             ->assertSee($this->thread->title)
             ->assertDontSee($threadWithNoParticipation->title);
