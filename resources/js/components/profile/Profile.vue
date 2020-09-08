@@ -47,7 +47,7 @@
                     ></a>
                   </p>
                 </div>
-                <dropdown>
+                <dropdown :styleClasses="'w-56'">
                   <template v-slot:dropdown-trigger>
                     <div class="btn-white-blue flex items-center">
                       <p>Find</p>
