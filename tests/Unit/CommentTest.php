@@ -56,7 +56,11 @@ class CommentTest extends TestCase
 
         $thread = create(ProfilePost::class);
 
-        $comment = $thread->addComment(raw(Reply::class, ['user_id' => $user->id]), $user);
+        $comment = $thread->addComment(
+            raw(Reply::class, [
+                'user_id' => $user->id,
+            ]),
+            $user);
 
         $this->assertCount(1, $comment->activities);
     }

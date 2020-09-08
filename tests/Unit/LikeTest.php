@@ -37,7 +37,10 @@ class LikeTest extends TestCase
 
         $thread = create(Thread::class);
 
-        $reply = $thread->addReply(raw(Reply::class, ['user_id' => $user->id]));
+        $reply = $thread->addReply(
+            raw(Reply::class, [
+                'user_id' => $user->id,
+            ]));
 
         $like = $reply->likedBy($user);
 
