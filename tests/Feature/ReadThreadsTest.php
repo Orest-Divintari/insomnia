@@ -129,15 +129,38 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_read_the_threads_that_has_replied_to()
     {
-        $user = $this->signIn();
+        $anotherUser = $this->signIn();
 
-        $threadWithNoParticipation = create(Thread::class);
+        $threadWithoutParticipation = create(Thread::class);
 
-        $this->post(route('api.replies.store', $this->thread), ['body' => 'some random text']);
+        $threadWithoutParticipation->addReply(
+            raw(Reply::class, [
+                'user_id' => $anotherUser,
+            ])
+        );
 
-        $this->get(route('filtered-threads.index') . "?contributed=" . $user->name)
-            ->assertSee($this->thread->title)
-            ->assertDontSee($threadWithNoParticipation->title);
+        $threadWithoutReplies = create(Thread::class);
+
+        $user = create(User::class, ['name' => 'orestis']);
+
+        $this->signIn($user);
+
+        $thread = create(Thread::class);
+
+        $thread->addReply(
+            raw(Reply::class, [
+                'user_id' => $user->id,
+                'created_at' => Carbon::now()->addMinute(),
+            ]));
+
+        $response = $this->getJson(
+            route('filtered-threads.index') . "?contributed=" . $user->name
+        )->json();
+
+        $this->assertEquals(
+            $user->id,
+            $response['data'][0]['recent_reply']['poster']['id']
+        );
 
     }
 

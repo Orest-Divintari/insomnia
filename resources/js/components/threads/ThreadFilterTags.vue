@@ -22,11 +22,11 @@
 export default {
   props: {
     filterKey: {
-      default: ""
+      default: "",
     },
     filterValue: {
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
@@ -40,8 +40,8 @@ export default {
         watched: { "Show only": "Watched" },
         trending: { "Show only": "Trending" },
         lastUpdated: { "Last Updated": this.filterValue + " days" },
-        lastCreated: { "Last Created": this.filterValue + " days" }
-      }
+        lastCreated: { "Last Created": this.filterValue + " days" },
+      },
     };
   },
   computed: {
@@ -50,13 +50,13 @@ export default {
     },
     value() {
       return Object.values(this.description[this.filterKey])[0];
-    }
+    },
   },
   methods: {
     removeFilter() {
       this.$emit("removeFilter", this.filterKey);
-    }
-  }
+    },
+  },
 };
 </script>
 

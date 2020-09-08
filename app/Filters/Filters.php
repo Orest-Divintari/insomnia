@@ -38,6 +38,7 @@ class Filters
                 $this->$filter($this->request->$filter);
             }
         }
+
         return $this->builder;
 
     }

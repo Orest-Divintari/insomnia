@@ -49,9 +49,7 @@ class ThreadFilters extends Filters
      */
     public function newThreads()
     {
-
         $this->builder->orderBy('created_at', 'DESC');
-
     }
 
     /**
@@ -74,10 +72,12 @@ class ThreadFilters extends Filters
     {
         $user = User::where('name', $username)->firstOrFail();
 
-        $this->builder->whereHas("replies", function ($query) use ($user) {
-            $query->where('user_id', $user->id);
+        $this->builder->whereHas('replies', function ($query) use ($user) {
+            $query->where([
+                ['position', ">", 1],
+                'user_id' => $user->id,
+            ]);
         });
-
     }
 
     /**
@@ -198,7 +198,6 @@ class ThreadFilters extends Filters
     {
         return Validator::make($filters, [
             'startedBy' => "sometimes|required|string|exists:users,name",
-            'contributed' => "sometimes|required|string|exists:users,name",
             'contributed' => "sometimes|required|string|exists:users,name",
             'lastUpdated' => 'sometimes|required|integer|min:0',
             'lastCreated' => 'sometimes|required|integer|min:0',
