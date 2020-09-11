@@ -11,11 +11,12 @@ use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
 
-    use Filterable, FormatsDate, Subscribable, RecordsActivity;
+    use Filterable, FormatsDate, Subscribable, RecordsActivity, Searchable;
 
     /**
      * Number of visible threads per page

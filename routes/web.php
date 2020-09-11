@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+//search
+
+Route::get('/search', 'SearchController@show')
+    ->name('search.show');
+
 // categories
 Route::get('/forum', 'CategoryController@index')
     ->name('forum');

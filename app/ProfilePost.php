@@ -6,10 +6,11 @@ use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Traits\FormatsDate;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class ProfilePost extends Model
 {
-    use FormatsDate, RecordsActivity;
+    use FormatsDate, RecordsActivity, Searchable;
 
     /**
      * Number of visible posts per page

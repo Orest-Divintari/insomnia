@@ -7,11 +7,12 @@ use App\Traits\FormatsDate;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
 {
-    use Filterable, Likeable, FormatsDate, RecordsActivity;
+    use Filterable, Likeable, FormatsDate, RecordsActivity, Searchable;
 
     /**
      * Number of thread replies per page
