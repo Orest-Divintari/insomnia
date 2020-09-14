@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\Notifications\ThreadHasNewReply;
 use App\Reply;
+use App\Search\AllPosts;
+use App\Search\ProfilePosts;
+use App\Search\Threads;
 use App\Thread;
 use App\User;
 use Illuminate\Support\Facades\View;
@@ -45,5 +48,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with(compact('latestPosts', 'totalThreads', 'totalMessages', 'totalMembers'));
         });
 
+        Threads::bootSearchable();
+        ProfilePosts::bootSearchable();
+        AllPosts::bootSearchable();
     }
 }

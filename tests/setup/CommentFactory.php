@@ -11,19 +11,42 @@ class CommentFactory
 
     protected $user;
 
-    public function create()
+    public function create($attributes = [])
     {
         $this->user = $this->user ?: factory(User::class)->create();
 
         $profilePost = factory(ProfilePost::class)->create();
 
-        $comment = factory(Reply::class)->create([
-            'user_id' => $this->user->id,
-            'repliable_id' => $profilePost->id,
-            'repliable_type' => ProfilePost::class,
-        ]);
+        $comment = factory(Reply::class)->create(
+            array_merge(
+                [
+                    'user_id' => $this->user->id,
+                    'repliable_id' => $profilePost->id,
+                    'repliable_type' => ProfilePost::class,
+                ],
+                $attributes
+            ));
 
         return $comment;
+    }
+
+    public function createMany($count = 1, $attributes = [])
+    {
+        $this->user = $this->user ?: factory(User::class)->create();
+
+        $profilePost = factory(ProfilePost::class)->create();
+
+        $comments = factory(Reply::class, $count)->create(
+            array_merge(
+                [
+                    'user_id' => $this->user->id,
+                    'repliable_id' => $profilePost->id,
+                    'repliable_type' => ProfilePost::class,
+                ],
+                $attributes
+            ));
+
+        return $comments;
     }
 
     public function by($user)

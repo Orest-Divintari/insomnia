@@ -36,6 +36,7 @@ class Reply extends Model
     protected $appends = [
         'date_updated',
         'date_created',
+        'type',
     ];
 
     /**
@@ -70,7 +71,13 @@ class Reply extends Model
         parent::boot();
 
         static::deleting(function ($reply) {
+
+            if ($reply->repliable_type == 'App\Thread') {
+                $reply->repliable->decrement('replies_count');
+            }
+
             $reply->likes->each->delete();
+
             $reply->activities->each->delete();
         });
     }
@@ -196,4 +203,52 @@ class Reply extends Model
     {
         return $this->morphMany(Activity::class, 'subject');
     }
+
+    /**
+     * Get the indexable data array for the model
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+
+        // if ($this->repliable_type == 'App\Thread') {
+        //     $type = 'thread_reply';
+        // } elseif ($this->repliable_type == 'App\ProfilePost') {
+        //     $type = 'profile_post_comment';
+        // }
+
+        // return [
+        //     'body' => $this->body,
+        //     'poster' => $this->poster->name,
+        //     'created_at' => $this->created_at,
+        //     'type' => $type,
+        // ];
+
+        return $this->withoutRelations()->toArray();
+
+    }
+
+    /**
+     * Get the type of the model
+     *
+     * @return string
+     */
+    public function getTypeAttribute()
+    {
+        if ($this->repliable_type == 'App\Thread') {
+            return 'thread-reply';
+        } elseif ($this->repliable_type == 'App\ProfilePost') {
+            return 'profile-post-comment';
+        }
+    }
+
+    public function shouldBeSearchable()
+    {
+        if ($this->repliable_type == 'App\Thread') {
+            return $this->position > 1;
+        }
+        return true;
+    }
+
 }

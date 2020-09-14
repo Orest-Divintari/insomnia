@@ -2,13 +2,13 @@
 
 namespace App;
 
-use App\ProfilePost;
+use App\Search\ProfilePosts;
 
 class SearchProfilePosts
 {
 
     public function query()
     {
-        return ProfilePost::search(request('q'));
+        return ProfilePosts::search(request('q'));
     }
 }

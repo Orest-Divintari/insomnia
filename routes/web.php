@@ -22,6 +22,9 @@ Route::get('/', function () {
 Route::get('/search', 'SearchController@show')
     ->name('search.show');
 
+Route::get('/search/advanced', 'SearchController@create')
+    ->name('search.advanced');
+
 // categories
 Route::get('/forum', 'CategoryController@index')
     ->name('forum');
@@ -39,6 +42,9 @@ Route::get('/categories/{category}/threads/', 'ThreadController@index')
 
 Route::get('/threads/{thread}', 'ThreadController@show')
     ->name('threads.show');
+
+Route::delete('/threads/thread', 'ThreadController@destroy')
+    ->name('threads.destroy');
 
 //profile
 

@@ -8,7 +8,7 @@ class Search
      * Number of results per page
      * @var int
      */
-    const RESULTS_PER_PAGE = 2;
+    const RESULTS_PER_PAGE = 10;
 
     public function getResults()
     {
@@ -17,9 +17,10 @@ class Search
         } elseif (request('type') == 'profile_post') {
             $results = app(SearchProfilePosts::class)->query();
         } elseif (request()->missing('type')) {
-            $results = app(SearchEverything::class)->query();
+            $results = app(SearchAllPosts::class)->query();
         }
 
         return $results->paginate(static::RESULTS_PER_PAGE);
+
     }
 }

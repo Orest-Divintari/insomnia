@@ -13,6 +13,7 @@ class ForumSeeder extends Seeder
      */
     public function run()
     {
+        config(['scout.driver' => null]);
 
         $groups = [
             'Macs' => [

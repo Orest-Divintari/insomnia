@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
+use App\Search\Threads;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\RecordsActivity;
@@ -41,8 +42,8 @@ class Thread extends Model
         'date_created',
         'date_updated',
         'has_been_updated',
+        'type',
     ];
-
     /**
      * Relationships to always eager-load
      *
@@ -68,8 +69,13 @@ class Thread extends Model
     protected static function boot()
     {
         parent::boot();
+
         static::created(function ($thread) {
             $thread->createReply();
+        });
+
+        static::deleting(function ($thread) {
+            $thread->replies->each->delete();
         });
     }
 
@@ -242,7 +248,10 @@ class Thread extends Model
     }
 
     /**
+     *
      * Create a reply which is the body of the thread
+     * Subscribe the creator to the thread
+     * Do not sync this reply with algolia
      *
      * @return void
      */
@@ -274,4 +283,23 @@ class Thread extends Model
         return $this->morphMany(Activity::class, 'subject');
     }
 
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'thread_title';
+    }
+
+    /**
+     * Get the type of the model
+     *
+     * @return string
+     */
+    public function getTypeAttribute()
+    {
+        return 'thread';
+    }
 }

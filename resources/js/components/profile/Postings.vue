@@ -8,7 +8,12 @@
     >
       <div class="flex">
         <img :src="profileOwner.avatar_path" class="avatar-lg" alt />
-        <component :posting="posting" :is="posting.type" class="pl-4" :profile-owner="profileOwner"></component>
+        <component
+          :posting="posting.subject"
+          :is="posting.type"
+          class="pl-4"
+          :profile-owner="profileOwner"
+        ></component>
       </div>
     </div>
     <fetch-more-button v-if="itemsExist" @fetchMore="fetchMore" name="See more"></fetch-more-button>

@@ -20,8 +20,23 @@ class SearchController extends Controller
      */
     public function show(Search $search)
     {
+
         if (request()->expectsJson()) {
             return $search->getResults();
         }
+
+        $results = $search->getResults();
+
+        return view('search.show', compact('results'));
+    }
+
+    /**
+     * Display the advanced search form
+     *
+     * @return void
+     */
+    public function create()
+    {
+        return view('search.advanced');
     }
 }
