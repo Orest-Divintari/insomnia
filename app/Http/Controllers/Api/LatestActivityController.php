@@ -18,7 +18,7 @@ class LatestActivityController extends Controller
     public function index(User $user, $postings = false)
     {
         $activities = Activity::feed($user);
-
+        
         if ($postings) {
             $activities->onlyPostings();
         }

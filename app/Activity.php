@@ -47,9 +47,11 @@ class Activity extends Model
                     Reply::class => ['repliable' => function (MorphTo $morphTo) {
                         $morphTo->morphWith([
                             Thread::class => ['category'],
+                            ProfilePost::class => ['profileOwner'],
                         ]);
                     }],
                     Like::class => ['reply.repliable'],
+                    ProfilePost::class => ['profileOwner'],
                 ]);
             }]);
     }

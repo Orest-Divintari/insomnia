@@ -33,7 +33,6 @@
             <x-breadcrumb.leaf :title="$category->title" :route="route('categories.show', $category->slug)">
             </x-breadcrumb.leaf>
             @endif
-
         </x-breadcrumb.container>
         @endif
 

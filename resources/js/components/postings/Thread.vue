@@ -1,25 +1,28 @@
 <template>
   <div>
-    <a @click="showThread(posting.subject)" class="blue-link">{{ posting.subject.title }}</a>
-    <p class="italic text-smaller">{{ posting.subject.title }}</p>
+    <a @click="showThread(posting)" class="blue-link">{{ posting.title }}</a>
+    <p class="italic text-smaller">{{ posting.title }}</p>
     <div class="flex items-center text-xs text-gray-lightest">
-      <a @click="showProfile(profileOwner)" class="cursor-pointer underline">{{ profileOwner.name }}</a>
+      <a
+        @click="showProfile(posting.poster)"
+        class="cursor-pointer underline"
+      >{{ posting.poster.name }}</a>
       <p class="dot"></p>
       <p>Thread</p>
       <p class="dot"></p>
-      <p>{{ posting.subject.date_created }}</p>
+      <p>{{ posting.date_created }}</p>
       <p class="dot"></p>
       <p>
         Replies:
-        {{ posting.subject.replies_count }}
+        {{ posting.replies_count }}
       </p>
       <p class="dot"></p>
       <p>
         Category :
         <a
-          @click="showCategory(posting.subject.category)"
+          @click="showCategory(posting.category)"
           class="cursor-pointer underline"
-        >{{ posting.subject.category.title }}</a>
+        >{{ posting.category.title }}</a>
       </p>
     </div>
   </div>
@@ -34,14 +37,13 @@ export default {
       type: Object,
       default: {},
     },
-    profileOwner: {
-      type: Object,
-      default: {},
-    },
   },
   mixins: [view],
   components: {
     highlight,
+  },
+  created() {
+    this.$emit("getPoster", this.posting.poster);
   },
 };
 </script>

@@ -12,10 +12,6 @@ trait RecordsActivity
     public static function bootRecordsActivity()
     {
 
-        if (!auth()->check()) {
-            return;
-        }
-
         $recordableEvents = self::recordableEvents();
         foreach ($recordableEvents as $event) {
             static::$event(function ($model) use ($event) {
@@ -32,9 +28,9 @@ trait RecordsActivity
      */
     public function recordActivity($event)
     {
-        if (self::firstReply()) {
+        if (!auth()->check() || self::firstReply()) {
             return;
-        };
+        }
 
         $this->activity()->create([
             'user_id' => auth()->id(),

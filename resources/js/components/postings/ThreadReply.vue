@@ -1,20 +1,20 @@
 <template>
   <div>
-    <a @click="showReply(posting.subject)" class="blue-link">{{ posting.subject.thread.title }}</a>
-    <highlight class="italic text-smaller" :content="posting.subject.body"></highlight>
+    <a @click="showReply(posting)" class="blue-link">{{ posting.repliable.title }}</a>
+    <highlight class="italic text-smaller" :content="posting.body"></highlight>
     <div class="flex items-center text-xs text-gray-lightest">
-      <a @click="showProfile(profileOwner)" class="underline">{{ profileOwner.name }}</a>
+      <a @click="showProfile(posting.poster)" class="underline">{{ profileOwner.name }}</a>
       <p class="dot"></p>
-      <p>Post #{{ posting.subject.position }}</p>
+      <p>Post #{{ posting.position }}</p>
       <p class="dot"></p>
-      <p>{{ posting.subject.date_created }}</p>
+      <p>{{ posting.date_created }}</p>
       <p class="dot"></p>
       <p>
         Category :
         <a
-          @click="showCategory(posting.subject.category)"
+          @click="showCategory(posting.repliable.category)"
           class="cursor-pointer underline"
-        >{{ posting.subject.thread.category.title }}</a>
+        >{{ posting.repliable.category.title }}</a>
       </p>
     </div>
   </div>
@@ -29,14 +29,13 @@ export default {
       type: Object,
       default: {},
     },
-    profileOwner: {
-      type: Object,
-      default: {},
-    },
   },
   mixins: [view],
   components: {
     highlight,
+  },
+  created() {
+    this.$emit("getPoster", this.posting.poster);
   },
 };
 </script>

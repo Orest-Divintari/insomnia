@@ -18,6 +18,7 @@ module.exports = {
                 "2": 2
             },
             colors: {
+                gallery: "#EEEEEE",
                 "green-mid": "#048004",
                 "blue-dark": "#162A44",
                 "blue-lighter": "#EDF4F9",

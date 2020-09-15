@@ -26,8 +26,8 @@ class SearchController extends Controller
         }
 
         $results = $search->getResults();
-
-        return view('search.show', compact('results'));
+        $query = request('q');
+        return view('search.show', compact('results', 'query'));
     }
 
     /**

@@ -8,12 +8,7 @@
     >
       <div class="flex">
         <img :src="poster.avatar_path" class="avatar-lg" alt />
-        <component
-          @getPoster="setPoster"
-          :posting="posting.subject"
-          :is="posting.type"
-          class="pl-4"
-        ></component>
+        <component @getPoster="setPoster" :posting="posting" :is="posting.type" class="pl-4"></component>
       </div>
     </div>
     <fetch-more-button v-if="itemsExist" @fetchMore="fetchMore" name="See more"></fetch-more-button>
@@ -21,37 +16,32 @@
 </template>
 
 <script>
-import CreatedComment from "../postings/ProfilePostComment";
-import CreatedProfilePost from "../postings/ProfilePost";
-import CreatedReply from "../postings/ThreadReply";
-import CreatedThread from "../postings/Thread";
-import FetchMoreButton from "./FetchMoreButton";
+import ProfilePost from "../postings/ProfilePost";
+import ProfilePostComment from "../postings/ProfilePostComment";
+import ThreadReply from "../postings/ThreadReply";
+import Thread from "../postings/Thread";
 export default {
   components: {
-    CreatedComment,
-    CreatedProfilePost,
-    CreatedReply,
-    CreatedThread,
-    FetchMoreButton,
+    ProfilePost,
+    ProfilePostComment,
+    Thread,
+    ThreadReply,
   },
   props: {
-    profileOwner: {
+    dataset: {
       type: Object,
-      default: {},
       required: true,
+      default: {},
     },
   },
+
   data() {
     return {
-      postings: [],
-      dataset: [],
       poster: {},
+      postings: this.dataset.data,
     };
   },
   computed: {
-    path() {
-      return "/api/profiles/" + this.profileOwner.name + "/latestActivity/true";
-    },
     itemsExist() {
       return this.dataset.next_page_url != null;
     },
@@ -76,15 +66,6 @@ export default {
         .then(({ data }) => this.refresh(data))
         .catch((error) => console.log(error));
     },
-    fetchData() {
-      axios
-        .get(this.path)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
-    },
-  },
-  created() {
-    this.fetchData();
   },
 };
 </script>
