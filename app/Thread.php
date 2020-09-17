@@ -61,6 +61,7 @@ class Thread extends Model
         'body',
         'user_id',
         'category_id',
+        'replies_count',
     ];
 
     /**
