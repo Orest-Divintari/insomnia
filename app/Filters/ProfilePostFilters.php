@@ -18,16 +18,16 @@ class ProfilePostFilters extends Filters
     ];
 
     /**
-     * Fetch the threads for the given username
+     * Fetch the posts that are on the given user's profile
      *
      * @param String $username
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
-    public function postedBy($username)
+    public function profileOwner($username)
     {
-        $user = User::whereName($username)->firstOrFail();
+        $profileOwner = User::whereName($username)->firstOrFail();
 
-        $this->builder->where('user_id', $user->id);
-
+        $this->builder->where('profile_owner_id', '=', $profileOwner->id);
     }
+
 }
