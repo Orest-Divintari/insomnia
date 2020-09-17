@@ -152,4 +152,15 @@ class ThreadFilters extends Filters
         $this->builder->where('replies_count', '=', $numberOfReplies);
     }
 
+    /**
+     * Get the filter keys and values passed in the request
+     *
+     * @return array
+     */
+    public function getThreadFilters()
+    {
+        return (new ManageThreadFilters($this->filters))
+            ->getThreadFilters();
+    }
+
 }
