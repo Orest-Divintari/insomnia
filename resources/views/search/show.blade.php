@@ -10,7 +10,10 @@
             <x-breadcrumb.leaf :title="'Search'" :route="route('search.advanced')"></x-breadcrumb.leaf>
         </x-breadcrumb.container>
     </div>
+    @if(is_string($results))
+    <h1 class="section-title">{{ $results }}</h1>
+    @else
     <search-results :dataset="{{ $results->toJson() }}"></search-results>
-
+    @endif
 
 </x-layouts._forum>

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Filters\AllPostsFilter;
 use App\Search\AllPosts;
 
 class SearchAllPosts
@@ -9,7 +10,9 @@ class SearchAllPosts
 
     public function query()
     {
-        return AllPosts::search(request('q'));
+        return app(AllPostsFilter::class)->apply(
+            AllPosts::search(request('q'))
+        );
     }
 
 }

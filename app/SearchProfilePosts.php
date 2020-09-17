@@ -2,13 +2,22 @@
 
 namespace App;
 
+use App\Filters\ProfilePostFilters;
 use App\Search\ProfilePosts;
 
 class SearchProfilePosts
 {
+    protected $filters;
+
+    public function __construct()
+    {
+        $this->filters = app(ProfilePostFilters::class);
+    }
 
     public function query()
     {
-        return ProfilePosts::search(request('q'));
+        return $this->filters->apply(
+            ProfilePosts::search(request('q'))
+        );
     }
 }

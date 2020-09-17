@@ -1,4 +1,5 @@
 <?php
+namespace App\Filters;
 
 use App\Filters\Filters;
 use App\Filters\PostsFilter;
