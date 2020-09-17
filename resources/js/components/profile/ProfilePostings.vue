@@ -21,17 +21,17 @@
 </template>
 
 <script>
-import CreatedComment from "../postings/ProfilePostComment";
-import CreatedProfilePost from "../postings/ProfilePost";
-import CreatedReply from "../postings/ThreadReply";
-import CreatedThread from "../postings/Thread";
+import ProfilePostComment from "../postings/ProfilePostComment";
+import ProfilePost from "../postings/ProfilePost";
+import ThreadReply from "../postings/ThreadReply";
+import Thread from "../postings/Thread";
 import FetchMoreButton from "./FetchMoreButton";
 export default {
   components: {
-    CreatedComment,
-    CreatedProfilePost,
-    CreatedReply,
-    CreatedThread,
+    "created-comment": ProfilePostComment,
+    "created-profile-post": ProfilePost,
+    "created-reply": ThreadReply,
+    "created-thread": Thread,
     FetchMoreButton,
   },
   props: {

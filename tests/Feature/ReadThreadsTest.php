@@ -90,7 +90,7 @@ class ReadThreadsTest extends TestCase
 
         $threadByAnotherUser = create(Thread::class);
 
-        $this->get(route('filtered-threads.index') . "?startedBy={$uric->name}")
+        $this->get(route('filtered-threads.index') . "?postedBy={$uric->name}")
             ->assertSee($threadByUric->title)
             ->assertDontSee($threadByAnotherUser->title);
 

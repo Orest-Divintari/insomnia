@@ -34,7 +34,7 @@
                         </div>
                     </template>
                     <template v-slot:dropdown-items>
-                        <a href="{{ route('filtered-threads.index') . '?startedBy=' . auth()->user()->name }}"
+                        <a href="{{ route('filtered-threads.index') . '?postedBy=' . auth()->user()->name }}"
                             class=" dropdown-item hover:bg-white-catskill">Threads you started</a>
                         <a href="{{ route('filtered-threads.index') . '?contributed=' . auth()->user()->name }}"
                             class="dropdown-item">Threads you replied to</a>
@@ -57,7 +57,8 @@
                 </x-sub_head_tab_item>
 
             </div>
-            <div class=" px-5">Search
+            <div class=" px-5">
+                <search-bar></search-bar>
             </div>
         </div>
     </x-slot>

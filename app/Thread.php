@@ -49,7 +49,7 @@ class Thread extends Model
      *
      * @var array
      */
-
+    protected $with = ['category', 'poster'];
     /**
      * The attributes that are mass assignable
      *

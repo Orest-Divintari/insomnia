@@ -36,7 +36,7 @@ export default {
         unanswered: { "Show only ": "unanswered" },
         newPosts: { "Show only": "new posts" },
         newThreads: { "Show only": "new threads" },
-        startedBy: { "Started by": this.filterValue },
+        postedBy: { "Posted by": this.filterValue },
         watched: { "Show only": "Watched" },
         trending: { "Show only": "Trending" },
         lastUpdated: { "Last Updated": this.filterValue + " days" },

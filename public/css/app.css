@@ -1294,6 +1294,32 @@ div.form-left-col {
   align-items: center;
   margin-bottom: 0.75rem;
 }
+.active {
+  --bg-opacity: 1;
+  background-color: #4d6c99;
+  background-color: rgba(77, 108, 153, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+}
+
+.not-active {
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #949DA7;
+  color: rgba(148, 157, 167, var(--text-opacity));
+}
+
+.not-active:hover {
+  --bg-opacity: 1;
+  background-color: #E1EAF3;
+  background-color: rgba(225, 234, 243, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--text-opacity));
+}
 @charset "UTF-8";
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */

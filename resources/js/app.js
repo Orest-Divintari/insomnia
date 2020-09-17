@@ -26,6 +26,10 @@ Vue.component(
 );
 Vue.component("Comment", require("./components/profile/Comment.vue").default);
 Vue.component(
+    "SearchBar",
+    require("./components/search/SearchBar.vue").default
+);
+Vue.component(
     "SearchResults",
     require("./components/search/SearchResults.vue").default
 );

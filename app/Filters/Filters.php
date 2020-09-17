@@ -28,7 +28,7 @@ class Filters
      * @param Illuminate\Database\Eloquent\Builder $builder
      * @return Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Builder $builder)
+    public function apply($builder)
     {
         $this->builder = $builder;
 
@@ -50,7 +50,12 @@ class Filters
      */
     public function getFilters()
     {
-        return array_intersect(array_keys($this->request->all()), $this->filters);
+        $filters = array_filter(
+            $this->request->all(),
+            fn($value, $request) => isset($value),
+            ARRAY_FILTER_USE_BOTH
+        );
+        return array_intersect(array_keys($filters), $this->filters);
     }
 
 }

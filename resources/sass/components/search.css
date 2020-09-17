@@ -1,0 +1,11 @@
+.active {
+    @apply .bg-blue-link .text-white;
+}
+
+.not-active {
+    @apply .bg-white .text-gray-lightest;
+}
+
+.not-active:hover {
+    @apply .bg-white-catskill .text-black-semi;
+}

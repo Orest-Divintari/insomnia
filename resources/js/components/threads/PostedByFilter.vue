@@ -15,9 +15,9 @@
 export default {
   computed: {
     showFilter() {
-      return !window.location.href.includes("/threads?by=");
-    }
-  }
+      return !window.location.href.includes("/threads?postedBy=");
+    },
+  },
 };
 </script>
 

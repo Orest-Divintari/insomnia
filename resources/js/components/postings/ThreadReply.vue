@@ -3,7 +3,7 @@
     <a @click="showReply(posting)" class="blue-link">{{ posting.repliable.title }}</a>
     <highlight class="italic text-smaller" :content="posting.body"></highlight>
     <div class="flex items-center text-xs text-gray-lightest">
-      <a @click="showProfile(posting.poster)" class="underline">{{ profileOwner.name }}</a>
+      <a @click="showProfile(posting.poster)" class="underline">{{ posting.poster.name }}</a>
       <p class="dot"></p>
       <p>Post #{{ posting.position }}</p>
       <p class="dot"></p>

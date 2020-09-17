@@ -11,4 +11,5 @@ class SearchAllPosts
     {
         return AllPosts::search(request('q'));
     }
+
 }

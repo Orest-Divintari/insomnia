@@ -29,12 +29,12 @@ class AllPosts extends Aggregator
     }
 
     protected $relations = [
-        ProfilePost::class => ['poster'],
+        ProfilePost::class => ['poster', 'profileOwner'],
         Thread::class => ['poster', 'category'],
         Reply::class => [
             'poster',
-            'repliable.poster',
-            'repliable.category',
+            'repliable',
         ],
     ];
+
 }

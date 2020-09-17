@@ -59,6 +59,14 @@ Vue.directive("click-outside", {
     }
 });
 
+Vue.directive("focus", {
+    // When the bound element is inserted into the DOM...
+    inserted: function(el) {
+        // Focus the element
+        el.focus();
+    }
+});
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

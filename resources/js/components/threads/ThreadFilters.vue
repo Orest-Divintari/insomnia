@@ -23,7 +23,7 @@
           <div class="dropdown-title">Show only</div>
           <unanswered-filter v-if="showUnanswered" :is-checked="form.unanswered" @checked="toggle"></unanswered-filter>
           <watched-filter :is-checked="form.watched" @checked="toggle"></watched-filter>
-          <started-by-filter v-model="form.startedBy"></started-by-filter>
+          <started-by-filter v-model="form.postedBy"></started-by-filter>
           <updated-by-filter v-model="form.updatedBy"></updated-by-filter>
           <last-updated-filter v-model="form.lastUpdated"></last-updated-filter>
           <last-created-filter v-model="form.lastCreated"></last-created-filter>
@@ -38,7 +38,7 @@
 
 <script>
 import ThreadFilterTags from "./ThreadFilterTags";
-import StartedByFilter from "./StartedByFilter";
+import PostedByFilter from "./PostedByFilter";
 import UpdatedByFilter from "./UpdatedByFilter";
 import LastUpdatedFilter from "./LastUpdatedFilter";
 import LastCreatedFilter from "./LastCreatedFilter";
@@ -47,7 +47,7 @@ import WatchedFilter from "./WatchedFilter";
 export default {
   components: {
     ThreadFilterTags,
-    StartedByFilter,
+    PostedByFilter,
     UpdatedByFilter,
     LastUpdatedFilter,
     LastCreatedFilter,
@@ -63,7 +63,7 @@ export default {
     return {
       filters: this.threadFilters,
       form: {
-        startedBy: "",
+        postedBy: "",
         updatedBy: "",
         lastUpdated: "",
         lastCreated: "",

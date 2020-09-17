@@ -58,7 +58,7 @@
                     <div class="dropdown-title">Find content</div>
                     <div class="dropdown-item">Find all content by {{ user.name }}</div>
                     <a
-                      :href="'/threads?startedBy=' + profileOwner.name"
+                      :href="'/threads?postedBy=' + profileOwner.name"
                       class="dropdown-item"
                     >Find all threads by {{ profileOwner.name }}</a>
                   </template>
@@ -77,7 +77,7 @@
         <latest-activity :profile-owner="profileOwner"></latest-activity>
       </tab>
       <tab name="Postings">
-        <postings :profile-owner="profileOwner"></postings>
+        <profile-postings :profile-owner="profileOwner"></profile-postings>
       </tab>
       <tab name="About">
         <about></about>
@@ -89,7 +89,7 @@
 <script>
 import ProfilePosts from "./ProfilePosts";
 import LatestActivity from "./LatestActivity";
-import Postings from "./Postings";
+import ProfilePostings from "./ProfilePostings";
 import About from "./About";
 import Tabs from "../Tabs";
 import Tab from "../Tab";
@@ -100,7 +100,7 @@ export default {
     Tabs,
     Tab,
     LatestActivity,
-    Postings,
+    ProfilePostings,
     About,
   },
   props: {

@@ -16,6 +16,7 @@
 @import "./components/highlight.css";
 @import "./components/tabs.css";
 @import "./components/posts.css";
+@import "./components/search.css";
 
 .section {
     @apply pt-5;
@@ -66,8 +67,8 @@ html {
 .dot {
     @apply .bg-gray-600  .w-tiny .h-tiny .rounded-full .mx-2;
 }
-.btn-fetch-more{
-    @apply 
+.btn-fetch-more {
+    @apply;
 }
 .btn-paginator {
     @apply .px-2 .py-1/2 .mr-5/2 .rounded .text-gray-lightest .text-sm .bg-blue-light;

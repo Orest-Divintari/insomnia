@@ -17,7 +17,7 @@ class ThreadFilters extends Filters
      * @var array
      */
     protected $filters = [
-        'startedBy',
+        'postedBy',
         'newThreads',
         'newPosts',
         'contributed',
@@ -26,6 +26,7 @@ class ThreadFilters extends Filters
         'watched',
         'lastUpdated',
         'lastCreated',
+        'numberOfReplies',
     ];
 
     /**
@@ -34,7 +35,7 @@ class ThreadFilters extends Filters
      * @param String $username
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function startedBy($username)
+    public function postedBy($username)
     {
         $user = User::whereName($username)->firstOrFail();
 
@@ -142,6 +143,17 @@ class ThreadFilters extends Filters
     }
 
     /**
+     * Get the threads with minimum number of rerplies
+     *
+     * @param int $numberOfReplies
+     * @return Builder
+     */
+    public function numberOfReplies($numberOfReplies)
+    {
+        $this->builder->where('replies_count', '=', $numberOfReplies);
+    }
+
+    /**
      * Get the filter keys and values passed in the request
      *
      * @return array
@@ -153,6 +165,7 @@ class ThreadFilters extends Filters
         $filters = $this->castValues($filters);
 
         $this->validateFilters($filters->toArray());
+
         return $filters;
     }
 
@@ -197,7 +210,7 @@ class ThreadFilters extends Filters
     public function validateFilters($filters)
     {
         return Validator::make($filters, [
-            'startedBy' => "sometimes|required|string|exists:users,name",
+            'postedBy' => "sometimes|required|string|exists:users,name",
             'contributed' => "sometimes|required|string|exists:users,name",
             'lastUpdated' => 'sometimes|required|integer|min:0',
             'lastCreated' => 'sometimes|required|integer|min:0',
@@ -206,6 +219,7 @@ class ThreadFilters extends Filters
             'watched' => 'sometimes|required|boolean',
             'unanswered' => 'sometimes|required|boolean',
             'trending' => 'sometimes|required|boolean',
+            'numberOfReplies' => 'required|integer|min:0',
         ]);
     }
 
