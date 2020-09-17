@@ -13,7 +13,11 @@
                     <img src="{{ auth()->user()->avatar_path }}" class="avatar-sm mr-1" alt="">
                     <p> {{ auth()->user()->name  }} </p>
                 </a>
+                <form action="{{ route('logout') }}" method="POST">
+                    <button href="{{ route('logout') }}" class="head-tab-item">Logout</button>
+                </form>
             </div>
+
             @endauth
 
 
