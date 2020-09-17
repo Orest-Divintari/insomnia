@@ -1,8 +1,9 @@
 <?php
 
-use Dotenv\Validator;
-
 namespace App\Filters;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ManageThreadFilters
 {
@@ -37,7 +38,7 @@ class ManageThreadFilters
      */
     public function findFilters()
     {
-        return collect($this->request->all())
+        return collect(request()->all())
             ->filter(function ($value, $key) {
                 return in_array($key, $this->filters);
             });
