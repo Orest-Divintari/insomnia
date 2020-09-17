@@ -3,11 +3,12 @@
 namespace App\Filters;
 
 use App\Filters\Filters;
+use App\Filters\PostsFilter;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
 
-class ThreadFilters extends Filters
+class ThreadFilters extends PostsFilter
 {
 
     /**

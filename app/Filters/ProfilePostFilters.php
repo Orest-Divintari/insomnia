@@ -1,9 +1,10 @@
 <?php
 
 use App\Filters\Filters;
+use App\Filters\PostsFilter;
 use App\User;
 
-class ProfilePostFilters extends Filters
+class ProfilePostFilters extends PostsFilter
 {
 
     /**
