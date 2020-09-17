@@ -16,9 +16,9 @@ class PostsFilter extends Filters
      */
     public function postedBy($username)
     {
-        $user = User::whereName($username)->firstOrFail();
+        $userId = User::whereName($username)->firstOrFail()->id;
 
-        $this->builder->where('user_id', $user->id);
+        $this->builder->where('user_id', $userId);
 
     }
 
