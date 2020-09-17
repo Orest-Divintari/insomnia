@@ -19,7 +19,7 @@ class ProfilePostTest extends TestCase
         $user = create(User::class);
 
         $profilePost = create(ProfilePost::class, [
-            'poster_id' => $user->id,
+            'user_id' => $user->id,
 
         ]);
         $this->assertEquals($user->id, $profilePost->poster->id);
@@ -31,7 +31,7 @@ class ProfilePostTest extends TestCase
         $user = create(User::class);
 
         $profilePost = create(ProfilePost::class, [
-            'poster_id' => $user->id,
+            'user_id' => $user->id,
         ]);
 
         $this->assertEquals(Carbon::now()->calendar(), $profilePost->date_created);
@@ -41,7 +41,7 @@ class ProfilePostTest extends TestCase
     public function a_post_has_comments()
     {
         $post = create(ProfilePost::class);
-        
+
         $comment = create(Reply::class, [
             'repliable_type' => ProfilePost::class,
             'repliable_id' => $post->id,
@@ -84,7 +84,7 @@ class ProfilePostTest extends TestCase
     {
         $user = $this->signIn();
 
-        $profilePost = create(ProfilePost::class, ['poster_id' => $user->id]);
+        $profilePost = create(ProfilePost::class, ['user_id' => $user->id]);
 
         $this->assertCount(1, $profilePost->activities);
     }

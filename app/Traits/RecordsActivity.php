@@ -13,6 +13,7 @@ trait RecordsActivity
     {
 
         $recordableEvents = self::recordableEvents();
+
         foreach ($recordableEvents as $event) {
             static::$event(function ($model) use ($event) {
                 $model->recordActivity($event);
@@ -60,7 +61,6 @@ trait RecordsActivity
      */
     public function getActivityType($event)
     {
-
         $class = class_basename($this);
 
         $class = ltrim(implode(' ', preg_split('/(?=[A-Z])/', $class)));

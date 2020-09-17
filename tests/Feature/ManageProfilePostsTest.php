@@ -40,7 +40,7 @@ class ManageProfilePostsTest extends TestCase
 
         $profilePost = create(ProfilePost::class, [
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
         ]);
 
         $this->patch(
@@ -51,13 +51,13 @@ class ManageProfilePostsTest extends TestCase
         $this->assertDatabaseHas('profile_posts', [
             'body' => 'new body',
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
         ]);
 
         $this->assertDatabaseMissing('profile_posts', [
             'body' => $profilePost->body,
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
         ]);
     }
 
@@ -70,7 +70,7 @@ class ManageProfilePostsTest extends TestCase
 
         $profilePost = create(ProfilePost::class, [
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
         ]);
 
         $this->patch(
@@ -104,7 +104,7 @@ class ManageProfilePostsTest extends TestCase
 
         $profilePost = create(ProfilePost::class, [
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
         ]);
 
         $this->delete(route('api.profile-posts.destroy', $profilePost->id));
@@ -112,7 +112,7 @@ class ManageProfilePostsTest extends TestCase
         $this->assertDatabaseMissing('profile_posts', [
             'body' => $profilePost->body,
             'profile_owner_id' => $profilePost->profile_owner_id,
-            'poster_id' => $profilePost->poster_id,
+            'user_id' => $profilePost->user_id,
         ]);
     }
 
@@ -127,7 +127,7 @@ class ManageProfilePostsTest extends TestCase
 
         $profilePost = create(ProfilePost::class, [
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
         ]);
 
         $this->delete(route('api.profile-posts.destroy', $profilePost->id));
@@ -135,7 +135,7 @@ class ManageProfilePostsTest extends TestCase
         $this->assertDatabaseMissing('profile_posts', [
             'body' => $profilePost->body,
             'profile_owner_id' => $profilePost->profile_owner_id,
-            'poster_id' => $profilePost->poster_id,
+            'user_id' => $profilePost->user_id,
         ]);
     }
 

@@ -34,7 +34,7 @@ class CreateProfilePostRequest extends FormRequest
         return ProfilePost::create([
             'body' => $this->input('body'),
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $this->user()->id,
+            'user_id' => $this->user()->id,
         ]);
     }
 }

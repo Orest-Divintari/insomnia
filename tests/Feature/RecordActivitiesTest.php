@@ -75,7 +75,7 @@ class ActivityTest extends TestCase
         $user = $this->signIn();
 
         $profilePost = create(ProfilePost::class, [
-            'poster_id' => $user->id,
+            'user_id' => $user->id,
         ]);
 
         $this->assertCount(1, $profilePost->activities);
@@ -241,7 +241,7 @@ class ActivityTest extends TestCase
         $user = $this->signIn();
 
         $profilePost = create(ProfilePost::class, [
-            'poster_id' => $user->id,
+            'user_id' => $user->id,
         ]);
 
         $this->assertCount(1, $profilePost->activities);

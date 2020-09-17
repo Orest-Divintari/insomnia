@@ -25,7 +25,7 @@ class ReadProfilePostsTest extends TestCase
             $totalNumberOfPosts,
             [
                 'profile_owner_id' => $profileOwner->id,
-                'poster_id' => $poster->id,
+                'user_id' => $poster->id,
             ]
         );
 

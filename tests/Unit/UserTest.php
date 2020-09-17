@@ -155,7 +155,7 @@ class UserTest extends TestCase
         $user = create(User::class);
 
         create(ProfilePost::class, [
-            'poster_id' => $user->id,
+            'user_id' => $user->id,
             'profile_owner_id' => $user->id,
         ]);
 
@@ -179,7 +179,7 @@ class UserTest extends TestCase
         $this->assertDatabaseHas('profile_posts', [
             'body' => $post['body'],
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => auth()->id(),
+            'user_id' => auth()->id(),
         ]);
     }
 

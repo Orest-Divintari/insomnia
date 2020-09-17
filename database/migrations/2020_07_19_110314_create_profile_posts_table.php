@@ -19,7 +19,7 @@ class CreateProfilePostsTable extends Migration
             $table->foreignId('profile_owner_id')
                 ->references('id')
                 ->on('users');
-            $table->foreignId('poster_id')
+            $table->foreignId('user_id')
                 ->references('id')
                 ->on('users');;
             $table->timestamps();

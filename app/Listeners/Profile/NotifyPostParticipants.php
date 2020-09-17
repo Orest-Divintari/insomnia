@@ -28,7 +28,6 @@ class NotifyPostParticipants
      */
     public function handle(NewCommentWasAddedToProfilePost $event)
     {
-
         $this->event = $event;
         $this->notifyParticipants();
         $this->notifyProfileOwner();
@@ -43,7 +42,7 @@ class NotifyPostParticipants
      */
     public function notifyParticipants()
     {
-
+        
         $this->event->profilePost->comments()
             ->whereNotIn('user_id', [
                 $this->event->commentPoster->id,
@@ -65,7 +64,6 @@ class NotifyPostParticipants
      */
     public function notifyProfilePostOwner()
     {
-
         if ($this->event->profilePost->poster->id != $this->event->commentPoster->id) {
             $this->event->profilePost->poster
                 ->notify($this->createNotification());

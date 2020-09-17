@@ -139,7 +139,7 @@ class SearchTest extends TestCase
             $results = $this->getJson(
                 route('search.show', ['type' => 'profile_post', 'q' => $searchTerm]
                 ))->json()['data'];
-        } while (empty($results));
+        } while (count($results) != $this->desiredItems);
 
         $this->assertCount($this->desiredItems, $results);
 
@@ -175,7 +175,7 @@ class SearchTest extends TestCase
             $results = $this->getJson(
                 route('search.show', ['type' => 'profile_post', 'q' => $searchTerm]
                 ))->json()['data'];
-        } while (empty($results));
+        } while (count($results) != $this->desiredItems);
 
         $this->assertCount($this->desiredItems, $results);
 

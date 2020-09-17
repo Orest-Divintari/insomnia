@@ -57,7 +57,7 @@ class CreateProfilePostsTest extends TestCase
         $this->assertDatabaseHas('profile_posts', [
             'body' => $post['body'],
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
         ]);
     }
 

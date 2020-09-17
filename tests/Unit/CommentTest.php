@@ -27,7 +27,6 @@ class CommentTest extends TestCase
             ],
             $poster
         );
-
         $this->assertInstanceOf(User::class, $comment->poster);
     }
 

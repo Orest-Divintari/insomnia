@@ -62,7 +62,7 @@ class ProfilePost extends Model
      */
     public function poster()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -75,7 +75,6 @@ class ProfilePost extends Model
     {
 
         $newComment = $this->comments()->create($comment);
-
         event(new NewCommentWasAddedToProfilePost(
             $this,
             $newComment,

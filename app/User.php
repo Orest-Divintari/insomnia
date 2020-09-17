@@ -206,7 +206,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $post = ProfilePost::create([
             'body' => $post['body'],
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
         ]);
 
         event(new NewPostWasAddedToProfile($post, $poster, $profileOwner));

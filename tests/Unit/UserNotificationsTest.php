@@ -106,7 +106,7 @@ class UserNotificationsTest extends TestCase
 
         $post = create(ProfilePost::class, [
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
         ]);
 
         $notification = new ProfileHasNewPost($post, $poster, $profileOwner);
@@ -128,7 +128,7 @@ class UserNotificationsTest extends TestCase
 
         $post = create(ProfilePost::class, [
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
 
         ]);
 
@@ -169,7 +169,7 @@ class UserNotificationsTest extends TestCase
 
         $post = create(ProfilePost::class, [
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
 
         ]);
 
@@ -200,7 +200,7 @@ class UserNotificationsTest extends TestCase
 
         $post = create(ProfilePost::class, [
             'profile_owner_id' => $profileOwner->id,
-            'poster_id' => $poster->id,
+            'user_id' => $poster->id,
 
         ]);
 

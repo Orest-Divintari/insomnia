@@ -27,7 +27,7 @@ class ProfilePostFilters extends Filters
     {
         $user = User::whereName($username)->firstOrFail();
 
-        $this->builder->where('poster_id', $user->id);
+        $this->builder->where('user_id', $user->id);
 
     }
 }

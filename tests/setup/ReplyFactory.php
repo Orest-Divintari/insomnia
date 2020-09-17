@@ -23,7 +23,7 @@ class ReplyFactory
                     'user_id' => $this->user->id,
                     'repliable_id' => $thread->id,
                     'repliable_type' => Thread::class,
-                    'position' => 1,
+                    'position' => 2,
                 ],
                 $attributes
             ));
