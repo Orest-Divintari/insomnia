@@ -1,7 +1,9 @@
 <template>
   <div>
     <a @click="showThread(posting)" class="blue-link">{{ posting.title }}</a>
-    <p class="italic text-smaller">{{ posting.title }}</p>
+    <p class="italic text-smaller">
+      <highlight :content="posting.body"></highlight>
+    </p>
     <div class="flex items-center text-xs text-gray-lightest">
       <a
         @click="showProfile(posting.poster)"
