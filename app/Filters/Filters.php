@@ -32,10 +32,10 @@ class Filters
     {
         $this->builder = $builder;
 
-        foreach ($this->getFilters() as $filter) {
+        foreach ($this->getFilters() as $filter => $value) {
 
             if (method_exists($this, $filter)) {
-                $this->$filter($this->request->$filter);
+                $this->$filter($value);
             }
         }
 
@@ -50,12 +50,11 @@ class Filters
      */
     public function getFilters()
     {
-        $filters = array_filter(
-            $this->request->all(),
+        return array_filter(
+            $this->request->only($this->filters),
             fn($value, $request) => isset($value),
             ARRAY_FILTER_USE_BOTH
         );
-        return array_intersect(array_keys($filters), $this->filters);
     }
 
 }
