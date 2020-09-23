@@ -3,9 +3,6 @@
 namespace App\Search;
 
 use Algolia\ScoutExtended\Searchable\Aggregator;
-use App\ProfilePost;
-use App\Reply;
-use App\Thread;
 
 class AllPosts extends Aggregator
 {
@@ -27,14 +24,5 @@ class AllPosts extends Aggregator
         }
         return true;
     }
-
-    protected $relations = [
-        ProfilePost::class => ['poster', 'profileOwner'],
-        Thread::class => ['poster', 'category'],
-        Reply::class => [
-            'poster',
-            'repliable',
-        ],
-    ];
 
 }

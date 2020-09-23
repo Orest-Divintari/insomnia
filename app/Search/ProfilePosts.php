@@ -3,8 +3,6 @@
 namespace App\Search;
 
 use Algolia\ScoutExtended\Searchable\Aggregator;
-use App\ProfilePost;
-use App\Reply;
 
 class ProfilePosts extends Aggregator
 {
@@ -27,10 +25,5 @@ class ProfilePosts extends Aggregator
     {
         return class_basename($this->model) == 'ProfilePost' || $this->model->repliable_type == 'App\ProfilePost';
     }
-
-    protected $relations = [
-        ProfilePost::class => ['poster'],
-        Reply::class => ['poster', 'repliable.poster'],
-    ];
 
 }
