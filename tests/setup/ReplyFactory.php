@@ -50,6 +50,7 @@ class ReplyFactory
                     ],
                     $attributes
                 ));
+
         }
         return collect($replies);
 
