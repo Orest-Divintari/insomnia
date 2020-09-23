@@ -37,6 +37,7 @@ class FilterManager
         foreach ($this->modelFilters as $modelFilterClass) {
 
             $modelFilter = app($modelFilterClass, compact('builder'));
+
             foreach ($this->getRequestedFilters($modelFilter) as $filter => $value) {
                 if (method_exists($modelFilter, $filter) && $this->isNotApplied($filter)) {
 
