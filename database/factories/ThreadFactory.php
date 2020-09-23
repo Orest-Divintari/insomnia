@@ -14,7 +14,7 @@ $factory->define(Thread::class, function (Faker $faker) {
         'title' => $title,
         'slug' => Str::slug($title),
         'body' => $faker->paragraph(),
-        'user_id' => factory(User::class),
+        'user_id' => auth()->id() ?: factory(User::class),
         'category_id' => factory(Category::class),
         'pinned' => false,
         'locked' => false,
