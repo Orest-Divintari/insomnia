@@ -20,7 +20,6 @@ class SearchController extends Controller
      */
     public function show(Search $search)
     {
-
         if (request()->expectsJson()) {
             return $search->getResults();
         }
