@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Filters\ReplyFilters;
-use App\Filters\ThreadFilters;
 use App\Http\Requests\CreateThreadRequest;
 use App\Reply;
 use App\Thread;
@@ -18,8 +17,10 @@ class ThreadController extends Controller
      * @param Category $category
      * @return Illuminate\View\View
      */
-    public function index(Category $category, ThreadFilters $filters)
+    public function index(Category $category)
     {
+        $filters = app('ThreadFilters');
+
         $threads = Thread::with('poster')
             ->filter($filters)
             ->withRecentReply()
@@ -28,10 +29,9 @@ class ThreadController extends Controller
         if ($category->exists) {
             $threads->where('category_id', $category->id);
         }
-
         $threads = $threads->paginate(Thread::PER_PAGE);
 
-        $threadFilters = $filters->getThreadFilters();
+        $threadFilters = $filters->getRequestedFilters();
 
         if (request()->wantsJson()) {
             return $threads;
