@@ -303,4 +303,16 @@ class Thread extends Model
     {
         return 'thread';
     }
+
+    /**
+     * Get the information that is required to display a thread
+     * as a search result with algolia
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithSearchInfo($query)
+    {
+        return $query->with(['poster', 'category']);
+    }
 }

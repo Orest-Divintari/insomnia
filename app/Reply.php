@@ -7,6 +7,7 @@ use App\Traits\FormatsDate;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Laravel\Scout\Searchable;
 use Stevebauman\Purify\Facades\Purify;
 
@@ -249,6 +250,27 @@ class Reply extends Model
             return $this->position > 1;
         }
         return true;
+    }
+
+    /**
+     * Get the informatiomn that is required to display a thread reply or a comment
+     * as a search result with algolia
+     *
+     * @param Builer $query
+     * @return Builer
+     */
+    public function scopeWithSearchInfo($query)
+    {
+        return $query->with(['repliable' => function (MorphTo $morphTo) {
+            $morphTo->morphWith([
+                Thread::class => ['poster', 'category'],
+                ProfilePost::class => ['poster', 'profileOwner'],
+            ]);
+        }])->addSelect(
+            [
+                'replies_count' => Thread::select('replies_count')
+                    ->whereColumn('threads.id', 'replies.repliable_id'),
+            ]);
     }
 
 }

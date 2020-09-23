@@ -120,4 +120,15 @@ class ProfilePost extends Model
         return 'profile-post';
     }
 
+    /**
+     * Get the information that is required to display a profile post
+     * as as search result with algolia
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithSearchInfo($query)
+    {
+        return $query->with(['poster', 'profileOwner']);
+    }
 }
