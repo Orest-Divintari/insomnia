@@ -13,11 +13,18 @@ class ProfilePostFilters extends PostsFilter
      *
      * @var array
      */
-    protected $filters = [
+    public $filters = [
         'postedBy',
         'profileOwner',
         'lastCreated',
     ];
+
+    public $builder;
+
+    public function __construct($builder)
+    {
+        $this->builder = $builder;
+    }
 
     /**
      * Fetch the posts that are on the given user's profile
