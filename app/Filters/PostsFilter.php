@@ -5,7 +5,7 @@ namespace App\Filters;
 use App\User;
 use Carbon\Carbon;
 
-class PostsFilter extends Filters
+class PostsFilter
 {
 
     /**
