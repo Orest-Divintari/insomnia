@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Search\SearchAllPosts;
+use App\Search\SearchProfilePosts;
+use App\Search\SearchThreads;
 use Exception;
 
 class Search
