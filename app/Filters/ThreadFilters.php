@@ -16,7 +16,7 @@ class ThreadFilters extends PostsFilter
      *
      * @var array
      */
-    protected $filters = [
+    public $filters = [
         'postedBy',
         'newThreads',
         'newPosts',
@@ -28,6 +28,13 @@ class ThreadFilters extends PostsFilter
         'lastCreated',
         'numberOfReplies',
     ];
+
+    public $builder;
+
+    public function __construct($builder)
+    {
+        $this->builder = $builder;
+    }
 
     /**
      * Fetch the most recently created threads
@@ -125,17 +132,6 @@ class ThreadFilters extends PostsFilter
     public function numberOfReplies($numberOfReplies)
     {
         $this->builder->where('replies_count', '>=', $numberOfReplies);
-    }
-
-    /**
-     * Get the filter keys and values passed in the request
-     *
-     * @return array
-     */
-    public function getThreadFilters()
-    {
-        return (new ManageThreadFilters($this->filters))
-            ->getThreadFilters();
     }
 
 }
