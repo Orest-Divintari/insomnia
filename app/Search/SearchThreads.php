@@ -21,7 +21,7 @@ class SearchThreads
         $filters = app('ThreadFilters');
         $searchQuery = request('q');
 
-        if (isset($q)) {
+        if (isset($searchQuery)) {
             $query = Threads::search($searchQuery);
         } else {
             $query = Activity::whereHasMorph('subject', ['App\Reply'], function ($builder) {
