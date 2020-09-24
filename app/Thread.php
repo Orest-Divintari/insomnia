@@ -44,12 +44,7 @@ class Thread extends Model
         'has_been_updated',
         'type',
     ];
-    /**
-     * Relationships to always eager-load
-     *
-     * @var array
-     */
-    protected $with = ['category', 'poster'];
+
     /**
      * The attributes that are mass assignable
      *
@@ -77,6 +72,7 @@ class Thread extends Model
 
         static::deleting(function ($thread) {
             $thread->replies->each->delete();
+            $thread->subscriptions->each->delete();
         });
     }
 
