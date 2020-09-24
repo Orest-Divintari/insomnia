@@ -24,7 +24,7 @@ class ProfilePost extends Model
      *
      * @var array
      */
-    protected $with = ['poster', 'profileOwner'];
+    protected $with = ['poster'];
 
     /**
      * The accessors to append to the model's array form.
