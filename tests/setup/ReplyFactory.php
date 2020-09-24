@@ -36,7 +36,11 @@ class ReplyFactory
 
         $this->user = $this->user ?: factory(User::class)->create();
 
-        $thread = factory(Thread::class)->create();
+        if (array_key_exists('repliable_id', $attributes)) {
+            $thread = Thread::find($attributes['repliable_id']);
+        } else {
+            $thread = create(Thread::class);
+        }
 
         for ($repliesCounter = 1; $repliesCounter <= $count; $repliesCounter++) {
 
@@ -50,6 +54,7 @@ class ReplyFactory
                     ],
                     $attributes
                 ));
+            $thread->increment('replies_count');
 
         }
         return collect($replies);
