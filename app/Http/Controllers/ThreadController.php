@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Filters\ReplyFilters;
 use App\Http\Requests\CreateThreadRequest;
 use App\Reply;
 use App\Thread;
@@ -70,9 +69,10 @@ class ThreadController extends Controller
      * @param Thread $thread
      * @return Illuminate\View\View
      */
-    public function show(Thread $thread, ReplyFilters $filters)
+    public function show(Thread $thread)
     {
         $thread->load('poster');
+        $filters = app('ReplyFilters');
 
         $replies = Reply::forThread($thread, $filters);
 

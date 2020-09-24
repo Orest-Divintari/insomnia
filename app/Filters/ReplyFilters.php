@@ -5,14 +5,21 @@ namespace App\Filters;
 use App\Filters\Filters;
 use Illuminate\Database\Eloquent\Builder;
 
-class ReplyFilters extends Filters
+class ReplyFilters
 {
     /**
      * Supported filters for replies
      *
      * @var array
      */
-    protected $filters = ['sortByLikes'];
+    public $filters = ['sortByLikes'];
+
+    public $builder;
+
+    public function __construct($builder)
+    {
+        $this->builder = $builder;
+    }
 
     /**
      * Order replies by the number of likes

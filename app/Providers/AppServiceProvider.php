@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Filters\FilterManager;
 use App\Filters\ProfilePostFilters;
+use App\Filters\ReplyFilters;
 use App\Filters\ThreadFilters;
 use App\Notifications\ThreadHasNewReply;
 use App\Reply;
@@ -44,6 +45,12 @@ class AppServiceProvider extends ServiceProvider
             $filterManager = app(FilterManager::class);
             $filterManager->addFilter(ThreadFilters::class);
             $filterManager->addFilter(ProfilePostFilters::class);
+            return $filterManager;
+        });
+
+        $this->app->bind('ReplyFilters', function ($app) {
+            $filterManager = app(FilterManager::class);
+            $filterManager->addFilter(ReplyFilters::class);
             return $filterManager;
         });
     }
