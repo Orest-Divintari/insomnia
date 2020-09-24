@@ -6,6 +6,7 @@ use App\Search\SearchAllPosts;
 use App\Search\SearchProfilePosts;
 use App\Search\SearchThreads;
 use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Search
 {
@@ -35,7 +36,33 @@ class Search
             return 'No results';
         }
 
-        return $results->paginate(static::RESULTS_PER_PAGE);
+        return $this->getActivitySubject(
+            $results->paginate(static::RESULTS_PER_PAGE)
+        );
+    }
 
+    /**
+     * When the activities table is used to get the results
+     * then the results are enclosed in the subject attribute
+     * This happens when there is no search query word
+     *
+     * @param Collection $results
+     * @return void
+     */
+    public function getActivitySubject($results)
+    {
+        $data = collect(collect($results)['data']);
+        if ($data->flatten()->contains('subject')) {
+            $pagination = $results->toArray();
+            $subjects = $data->pluck('subject');
+            $results = new LengthAwarePaginator(
+                $subjects,
+                $pagination['total'],
+                $pagination['per_page'],
+                $pagination['current_page'],
+                ['path' => $pagination['path']]
+            );
+        }
+        return $results;
     }
 }
