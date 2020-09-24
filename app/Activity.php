@@ -65,4 +65,23 @@ class Activity extends Model
     {
         return $query->where('subject_type', '!=', 'App\Like');
     }
+
+    /**
+     * Get the activity for threads and replies and eager load the respective relationships
+     * for displaying as a search result
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeForThreadsAndReplies($query)
+    {
+        return $query->whereHasMorph('subject', ['App\Reply'], function ($builder) {
+            $builder->where('repliable_type', 'App\Thread');
+        })->orWhere('subject_type', 'App\Thread')->with(['subject' => function (MorphTo $morphTo) {
+            $morphTo->morphWith([
+                Thread::class => ['poster', 'category'],
+                Reply::class => ['poster', 'repliable.category'],
+            ]);
+        }]);
+    }
 }
