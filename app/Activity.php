@@ -73,15 +73,27 @@ class Activity extends Model
      * @param Builder $query
      * @return Builder
      */
-    public function scopeForThreadsAndReplies($query)
+    public function scopeOfThreadsAndReplies($query)
     {
-        return $query->whereHasMorph('subject', ['App\Reply'], function ($builder) {
-            $builder->where('repliable_type', 'App\Thread');
-        })->orWhere('subject_type', 'App\Thread')->with(['subject' => function (MorphTo $morphTo) {
-            $morphTo->morphWith([
-                Thread::class => ['poster', 'category'],
-                Reply::class => ['poster', 'repliable.category'],
-            ]);
+        $repliesActivity = $query->whereHasMorph('subject', ['App\Reply'], function ($builder) {
+            $builder->onlyReplies();
+        })->addSelect(
+            [
+                'replies_count' => Thread::select('replies_count')
+                    ->whereRaw('threads.id=(SELECT repliable_id from replies where replies.id=activities.subject_id)'),
+            ]
+        )->with(['subject' => function ($builder) {
+            $builder->withSearchInfo();
         }]);
+
+        $threadsActivity = Activity::where('subject_type', 'App\Thread')
+            ->addSelect(
+                ['replies_count' => Thread::select('replies_count')
+                        ->whereColumn('threads.id', 'activities.subject_id'),
+                ]
+            )->with(['subject' => function ($builder) {
+            $builder->withSearchInfo();
+        }]);
+        return [$repliesActivity, $threadsActivity];
     }
 }

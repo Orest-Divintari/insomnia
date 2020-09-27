@@ -24,9 +24,7 @@ class SearchThreads
         if (isset($searchQuery)) {
             $query = Threads::search($searchQuery);
         } else {
-            $query = Activity::whereHasMorph('subject', ['App\Reply'], function ($builder) {
-                $builder->where('repliable_type', 'App\Thread');
-            })->orWhere('subject_type', 'App\Thread');
+            $query = Activity::ofThreadsAndReplies();
         }
         return $filters->apply($query);
     }
