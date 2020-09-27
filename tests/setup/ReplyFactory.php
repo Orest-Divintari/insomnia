@@ -15,7 +15,7 @@ class ReplyFactory
 
         $this->user = $this->user ?: factory(User::class)->create();
 
-        $thread = factory(Thread::class)->create();
+        $thread = $this->createThread($attributes);
 
         $reply = factory(Reply::class)->create(
             array_merge(
@@ -36,11 +36,7 @@ class ReplyFactory
 
         $this->user = $this->user ?: factory(User::class)->create();
 
-        if (array_key_exists('repliable_id', $attributes)) {
-            $thread = Thread::find($attributes['repliable_id']);
-        } else {
-            $thread = create(Thread::class);
-        }
+        $thread = $this->createThread($attributes);
 
         for ($repliesCounter = 1; $repliesCounter <= $count; $repliesCounter++) {
 
@@ -61,6 +57,15 @@ class ReplyFactory
 
     }
 
+    public function createThread($attributes)
+    {
+        if (array_key_exists('repliable_id', $attributes)) {
+            $thread = Thread::find($attributes['repliable_id']);
+        } else {
+            $thread = create(Thread::class);
+        }
+        return $thread;
+    }
     public function by($user)
     {
         $this->user = $user;
