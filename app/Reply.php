@@ -264,13 +264,17 @@ class Reply extends Model
         return $query->with(['repliable' => function (MorphTo $morphTo) {
             $morphTo->morphWith([
                 Thread::class => ['poster', 'category'],
-                ProfilePost::class => ['poster', 'profileOwner'],
+                ProfilePost::class => ['profileOwner'],
             ]);
-        }])->addSelect(
-            [
-                'replies_count' => Thread::select('replies_count')
-                    ->whereColumn('threads.id', 'replies.repliable_id'),
-            ]);
+        }]);
+    }
+
+    public function scopeOnlyReplies($query)
+    {
+        return $query->where([
+            ['repliable_type', '=', 'App\Thread'],
+            ['position', '>', '1'],
+        ]);
     }
 
 }

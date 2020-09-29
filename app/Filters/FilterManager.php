@@ -27,23 +27,37 @@ class FilterManager
     }
 
     /**
-     * Apply filters
+     * Apply filters on the given builder
      *
-     * @param mixed $builder
-     * @return mixed
+     * @param Builder|Builder[] $builder
+     * @return Builder
      */
     public function apply($builder)
+    {
+        if (gettype($builder) == 'array') {
+            return $this->applyOnQueries($builder);
+        }
+        return $this->applyOnQuery($builder);
+    }
+
+    /**
+     * Apply the filters on the given builder
+     *
+     * @param Builder $builder
+     * @return Builder
+     */
+    public function applyOnQuery($builder)
     {
         foreach ($this->modelFilters as $modelFilterClass) {
 
             $modelFilter = app($modelFilterClass, compact('builder'));
 
             foreach ($this->getRequestedFilters($modelFilter) as $filter => $value) {
-                if (method_exists($modelFilter, $filter) && $this->isNotApplied($filter)) {
+                if (method_exists($modelFilter, $filter) && $this->isNotApplied($modelFilterClass, $filter)) {
 
                     $modelFilter->$filter($value);
 
-                    $this->appliedFilters[] = $filter;
+                    $this->appliedFilters[$modelFilterClass] = $filter;
                 }
             }
             $builder = $modelFilter->builder;
@@ -52,14 +66,38 @@ class FilterManager
     }
 
     /**
-     * Determine if the given filter has been already applied
+     * Apply the filters on multiple queries and finally union the filtered queries
+     *
+     * @param Builder[] $builders
+     * @return Builder
+     */
+    public function applyOnQueries($builders)
+    {
+        $filteredQueries = [];
+        foreach ($builders as $builder) {
+            $filteredQueries[] = $this->applyOnQuery($builder);
+        }
+        $unionQuery = $filteredQueries[0];
+        for ($queryCounter = 1; $queryCounter < count($builders); $queryCounter++) {
+            $unionQuery = $unionQuery->union($filteredQueries[$queryCounter]);
+        }
+        return $unionQuery;
+    }
+
+    /**
+     * Avoids the case where different modelFilters want to apply the same filter
      *
      * @param mixed $filter
      * @return boolean
      */
-    public function isNotApplied($filter)
+    public function isNotApplied($modelFilterClass, $filter)
     {
-        return !in_array($filter, $this->appliedFilters);
+        foreach ($this->appliedFilters as $appliedFilterClass => $appliedFilter) {
+            if ($appliedFilter == $filter) {
+                return $appliedFilterClass == $modelFilterClass;
+            }
+        }
+        return empty($this->appliedFilters);
     }
 
     /**

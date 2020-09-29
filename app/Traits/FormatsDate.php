@@ -4,6 +4,7 @@ namespace App\Traits;
 
 trait FormatsDate
 {
+
     /**
      * Transform the date that it was updated to readable format
      *
@@ -23,4 +24,5 @@ trait FormatsDate
     {
         return $this->created_at->calendar();
     }
+
 }

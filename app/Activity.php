@@ -2,11 +2,14 @@
 
 namespace App;
 
+use App\Traits\FormatsDate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Activity extends Model
 {
+    use FormatsDate;
+
     /**
      * Number of activities per page
      *
@@ -75,25 +78,38 @@ class Activity extends Model
      */
     public function scopeOfThreadsAndReplies($query)
     {
-        $repliesActivity = $query->whereHasMorph('subject', ['App\Reply'], function ($builder) {
-            $builder->onlyReplies();
-        })->addSelect(
-            [
-                'replies_count' => Thread::select('replies_count')
-                    ->whereRaw('threads.id=(SELECT repliable_id from replies where replies.id=activities.subject_id)'),
-            ]
-        )->with(['subject' => function ($builder) {
+        $repliesActivity = $query
+            ->whereHasMorph('subject', ['App\Reply'], function ($builder) {
+                $builder->onlyReplies();
+            })->with(['subject' => function ($builder) {
             $builder->withSearchInfo();
         }]);
 
         $threadsActivity = Activity::where('subject_type', 'App\Thread')
-            ->addSelect(
-                ['replies_count' => Thread::select('replies_count')
-                        ->whereColumn('threads.id', 'activities.subject_id'),
-                ]
-            )->with(['subject' => function ($builder) {
-            $builder->withSearchInfo();
-        }]);
+            ->with(['subject' => function ($builder) {
+                $builder->withSearchInfo();
+            }]);
+
+        // $repliesActivity = $query->whereHasMorph('subject', ['App\Reply'], function ($builder) {
+        //     $builder->onlyReplies();
+        // })->addSelect(
+        //     [
+        //         'replies_count' => Thread::select('replies_count')
+        //             ->whereRaw('threads.id=(SELECT repliable_id from replies where replies.id=activities.subject_id)'),
+        //     ]
+        // )->with(['subject' => function ($builder) {
+        //     $builder->withSearchInfo();
+        // }]);
+
+        // $threadsActivity = Activity::where('subject_type', 'App\Thread')
+        //     ->addSelect(
+        //         ['replies_count' => Thread::select('replies_count')
+        //                 ->whereColumn('threads.id', 'activities.subject_id'),
+        //         ]
+        //     )->with(['subject' => function ($builder) {
+        //     $builder->withSearchInfo();
+        // }]);
+
         return [$repliesActivity, $threadsActivity];
     }
 }
