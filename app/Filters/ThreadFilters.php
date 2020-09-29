@@ -3,12 +3,12 @@
 namespace App\Filters;
 
 use App\Filters\Filters;
-use App\Filters\PostsFilter;
+use App\Filters\PostFilters;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
 
-class ThreadFilters extends PostsFilter
+class ThreadFilters extends PostFilters
 {
 
     /**
@@ -39,7 +39,7 @@ class ThreadFilters extends PostsFilter
     /**
      * Fetch the most recently created threads
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return void
      */
     public function newThreads()
     {
@@ -49,7 +49,7 @@ class ThreadFilters extends PostsFilter
     /**
      * Fetch the threads with the most recent replies
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return void
      */
     public function newPosts()
     {
@@ -60,7 +60,7 @@ class ThreadFilters extends PostsFilter
     /**
      * Fetch the threads that you have participated
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return void
      */
     public function contributed($username)
     {
@@ -79,7 +79,7 @@ class ThreadFilters extends PostsFilter
      *
      * The trending thread is defined by the number of replies and views
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return void
      */
     public function trending()
     {
@@ -91,7 +91,7 @@ class ThreadFilters extends PostsFilter
     /**
      * Get the threads that have no replies
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return void
      */
     public function unanswered()
     {
@@ -101,7 +101,7 @@ class ThreadFilters extends PostsFilter
     /**
      * Get the threads that the authenticated user has subscribed to
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return void
      */
     public function watched()
     {
@@ -115,23 +115,24 @@ class ThreadFilters extends PostsFilter
      * Get the threads that were last updated before the given number of days
      *
      * @param int $numberOfDays
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return void
      */
     public function lastUpdated($numberOfDays)
     {
+
         $this->builder
             ->where('updated_at', ">=", Carbon::now()->subDays($numberOfDays));
     }
 
-    /**
-     * Get the threads with minimum number of rerplies
-     *
-     * @param int $numberOfReplies
-     * @return Builder
-     */
-    public function numberOfReplies($numberOfReplies)
-    {
-        $this->builder->where('replies_count', '>=', $numberOfReplies);
-    }
+    // /**
+    //  * Get the threads with minimum number of rerplies
+    //  *
+    //  * @param int $numberOfReplies
+    //  * @return void
+    //  */
+    // public function numberOfReplies($numberOfReplies)
+    // {
+    //     $this->builder->where('replies_count', '>=', $numberOfReplies);
+    // }
 
 }
