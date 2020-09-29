@@ -28,17 +28,29 @@ class Search
                 $results = app(SearchAllPosts::class)->query();
             }
         } catch (Exception $e) {
-
             return 'No results';
         }
 
-        if (is_null($results)) {
+        if (!isset($results) || empty($results)) {
             return 'No results';
         }
 
-        return $this->getActivitySubject(
-            $results->paginate(static::RESULTS_PER_PAGE)
-        );
+        return $this->getPaginatedData($results);
+    }
+
+    /**
+     * Paginates and transforms the data if results are returned from activities table
+     *
+     * @param Collection $results
+     * @return Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getPaginatedData($results)
+    {
+        $results = $results->paginate(static::RESULTS_PER_PAGE);
+        if (array_key_exists('subject', $results->toArray()['data'][0])) {
+            return $this->getActivitySubject($results);
+        }
+        return $results;
     }
 
     /**
@@ -46,8 +58,8 @@ class Search
      * then the results are enclosed in the subject attribute
      * This happens when there is no search query word
      *
-     * @param Collection $results
-     * @return void
+     * @param Illuminate\Pagination\LengthAwarePaginator $results
+     * @return Illuminate\Pagination\LengthAwarePaginator
      */
     public function getActivitySubject($results)
     {
