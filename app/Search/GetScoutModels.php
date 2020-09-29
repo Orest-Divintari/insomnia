@@ -5,16 +5,19 @@ class GetScoutModels
 {
 
     /**
-     * Get the records for each model based on the ids
+     * Get the records and the associative relationships
+     * for each model based on an array of ids
      *
      * @param mixed $model
-     * @param int[] $modelKeys
+     * @param int[] $ids
      * @return Collection
      */
-    public static function getById($model, $modelKeys)
+    public static function getById($model, $ids)
     {
         return $model->withSearchInfo()
-            ->whereIn('id', $modelKeys)
-            ->get();
+            ->whereIn(
+                $model->getScoutKeyName(),
+                $ids
+            )->get();
     }
 }
