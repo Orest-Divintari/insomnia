@@ -6,6 +6,8 @@ use App\Like;
 use App\Reply;
 use App\Thread;
 use App\User;
+use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -125,7 +127,6 @@ class ReplyTest extends TestCase
     /** @test */
     public function every_reply_that_belongs_to_a_thread_has_a_position_in_ascending_order()
     {
-
         $thread = create(Thread::class);
 
         $firstReply = $thread->addReply(raw(Reply::class));
@@ -151,6 +152,94 @@ class ReplyTest extends TestCase
         $reply = $thread->addReply(raw(Reply::class, ['user_id' => $user->id]));
 
         $this->assertCount(1, $reply->activities);
+        $this->assertEquals(
+            $reply->id,
+            $reply->activities->first()
+                ->subject->id);
+        }
+
+        /** @test */
+        public function a_reply_knows_if_it_is_a_thread_reply_and_doesnt_consist_the_body_of_a_thread()
+    {
+        ReplyFactory::create();
+        CommentFactory::create();
+
+        $this->assertCount(1, Reply::onlyReplies()->get());
+    }
+
+    /** @test */
+    public function a_reply_can_eager_load_the_data_required_to_display_when_a_user_searches_a_reply()
+    {
+        ReplyFactory::create();
+        $reply = Reply::withSearchInfo()->first();
+        $replyArray = $reply->toArray();
+
+        $this->assertArrayHasKey('poster', $replyArray);
+        $this->assertEquals($reply->poster->id, $replyArray['poster']['id']);
+
+        $this->assertArrayHasKey('repliable', $replyArray);
+        $this->assertEquals($reply->repliable->id, $replyArray['repliable']['id']);
+
+        $this->assertArrayHasKey('poster', $reply['repliable']);
+        $this->assertEquals($reply->repliable->poster->id, $replyArray['repliable']['poster']['id']);
+
+        $this->assertEquals($reply->repliable->category->id, $replyArray['repliable']['category']['id']);
+        $this->assertArrayHasKey('category', $reply['repliable']);
+    }
+
+    /** @test */
+    public function a_reply_knows_if_it_is_a_thread_reply_or_a_comment()
+    {
+        $reply = ReplyFactory::create();
+        $comment = CommentFactory::create();
+
+        $this->assertEquals($reply->type, 'thread-reply');
+        $this->assertEquals($comment->type, 'profile-post-comment');
+    }
+
+    /** @test */
+    public function a_reply_is_sanitized_automatically()
+    {
+        $reply = ReplyFactory::create([
+            'body' =>
+            '<script>alert("bad")</script><p>This is okay.</p>',
+        ]);
+
+        $this->assertEquals("<p>This is okay.</p>", $reply->body);
+    }
+
+    /** @test */
+    public function get_the_paginated_replies_with_likes_and_filtered_for_a_specific_thread()
+    {
+        $thread = create(Thread::class);
+        $replies = ReplyFactory::createMany(
+            Reply::REPLIES_PER_PAGE * 2,
+            ['repliable_id' => $thread->id]
+        );
+
+        $reply = $replies->first();
+        $user = $this->signIn();
+        $reply->likedBy($user);
+
+        $replyFilters = app('ReplyFilters');
+
+        $paginatedReplies = Reply::forThread($thread, $replyFilters);
+        $replyArray = $paginatedReplies->firstWhere('id', $reply->id);
+
+        $this->assertEquals(
+            1,
+            $paginatedReplies
+                ->toArray()['current_page']
+        );
+        $this->assertArrayHasKey(
+            'is_liked',
+            $replyArray
+        );
+        $this->assertTrue($replyArray['is_liked']);
+        $this->assertEquals(
+            $replyArray['repliable_id'],
+            $reply->repliable->id
+        );
     }
 
 }
