@@ -125,7 +125,7 @@ class Reply extends Model
     }
 
     /**
-     * Clean the body from malicious context
+     * Sanitize the body from malicious context
      *
      * @param string $body
      * @return string
@@ -244,6 +244,12 @@ class Reply extends Model
         }
     }
 
+    /**
+     * The first thread reply consists the body of the thread
+     * therefore it should not be searchable
+     *
+     * @return boolean
+     */
     public function shouldBeSearchable()
     {
         if ($this->repliable_type == 'App\Thread') {
@@ -269,6 +275,13 @@ class Reply extends Model
         }]);
     }
 
+    /**
+     * Get only the thread replies
+     * and exclude the replies consist the body of a thread
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeOnlyReplies($query)
     {
         return $query->where([
