@@ -40,4 +40,14 @@ class ReplyFilters
     {
         $this->builder->orderBy('likes_count', 'DESC');
     }
+
+    /**
+     * Returns the builder
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public function getBuilder()
+    {
+        return $this->builder;
+    }
 }
