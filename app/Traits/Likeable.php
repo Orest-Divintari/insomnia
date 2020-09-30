@@ -24,8 +24,8 @@ trait Likeable
     /**
      * Like the current reply
      *
-     * @param integer $userId
-     * @return void
+     * @param User $$user
+     * @return Like
      */
     public function likedBy($user = null)
     {
@@ -36,19 +36,25 @@ trait Likeable
             $like = $this->likes()->create([
                 'user_id' => $likerId,
             ]);
+
             if ($this->isComment()) {
-
-                event(new CommentWasLiked(
-                    $liker,
-                    $like,
-                    $this,
-                    $this->poster,
-                    $this->profilePost,
-                    $this->profilePost->profileOwner
-                ));
-
+                event(
+                    new CommentWasLiked(
+                        $liker,
+                        $like,
+                        $this,
+                        $this->poster,
+                        $this->profilePost,
+                        $this->profilePost->profileOwner
+                    ));
             } elseif ($this->isThreadReply()) {
-                event(new ReplyWasLiked($liker, $like, $this->thread, $this));
+                event(
+                    new ReplyWasLiked(
+                        $liker,
+                        $like,
+                        $this->thread,
+                        $this
+                    ));
             }
             return $like;
         }
