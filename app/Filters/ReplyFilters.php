@@ -14,8 +14,18 @@ class ReplyFilters
      */
     public $filters = ['sortByLikes'];
 
+    /**
+     * The builder on which the filters are applied
+     *
+     * @var Illuminate\Database\Eloquent\Builder
+     */
     public $builder;
 
+    /**
+     * Create a new ReplyFilters instance.
+     *
+     * @param Illuminate\Database\Eloquent\Builder $builder
+     */
     public function __construct($builder)
     {
         $this->builder = $builder;
@@ -24,7 +34,7 @@ class ReplyFilters
     /**
      * Order replies by the number of likes
      *
-     * @return Illuminate\Database\Eloquent\Builder $builder
+     * @return void
      */
     public function sortByLikes()
     {
