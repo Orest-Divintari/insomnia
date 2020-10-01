@@ -45,8 +45,13 @@ class ThreadFilters extends Filters
      */
     public function newPosts()
     {
-        $this->builder->where('replies_count', '>', 0)
-            ->orderBy('updated_at', 'DESC');
+        $this->builder->addSelect([
+            'recent_reply_created_date' => Reply::select('created_at')
+                ->whereColumn('repliable_id', 'threads.id')
+                ->where('repliable_type', 'App\Thread')
+                ->latest('created_at')
+                ->take(1),
+        ])->orderBy('recent_reply_created_date', 'DESC');
     }
 
     /**
