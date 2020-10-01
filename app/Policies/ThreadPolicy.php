@@ -19,7 +19,6 @@ class ThreadPolicy
      */
     public function manage(User $user, Thread $thread)
     {
-
         return $thread->poster->is($user);
     }
 }
