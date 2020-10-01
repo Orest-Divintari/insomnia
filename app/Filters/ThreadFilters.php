@@ -109,16 +109,15 @@ class ThreadFilters extends Filters
     }
 
     /**
-     * Get the threads that were last updated before the given number of days
+     * Get the threads that were last updated the given number of days
      *
-     * @param int $numberOfDays
+     * @param int $daysAgo
      * @return void
      */
-    public function lastUpdated($numberOfDays)
+    public function lastUpdated($daysAgo)
     {
-
         $this->builder
-            ->where('updated_at', ">=", Carbon::now()->subDays($numberOfDays));
+            ->where('updated_at', ">=", Carbon::now()->subDays($daysAgo));
     }
 
     // /**
