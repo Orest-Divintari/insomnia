@@ -17,14 +17,14 @@ class ReplyFilters
     /**
      * The builder on which the filters are applied
      *
-     * @var Illuminate\Database\Eloquent\Builder
+     * @var Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
      */
     public $builder;
 
     /**
      * Create a new ReplyFilters instance.
      *
-     * @param Illuminate\Database\Eloquent\Builder $builder
+     * @param Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder $builder
      */
     public function __construct($builder)
     {
@@ -44,7 +44,7 @@ class ReplyFilters
     /**
      * Returns the builder
      *
-     * @return Illuminate\Database\Eloquent\Builder
+     * @return Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
      */
     public function getBuilder()
     {
