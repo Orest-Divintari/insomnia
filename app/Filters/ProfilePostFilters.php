@@ -2,10 +2,9 @@
 namespace App\Filters;
 
 use App\Filters\Filters;
-use App\Filters\PostFilters;
 use App\User;
 
-class ProfilePostFilters extends PostFilters
+class ProfilePostFilters extends Filters
 {
 
     /**
