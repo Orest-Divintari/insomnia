@@ -30,7 +30,7 @@ class FilterManager
      * Apply filters on the given builder
      *
      * @param Builder|Builder[] $builder
-     * @return Builder
+     * @return Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
      */
     public function apply($builder)
     {
@@ -43,8 +43,8 @@ class FilterManager
     /**
      * Apply the filters on the given builder
      *
-     * @param Builder $builder
-     * @return Builder
+     * @param Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder $builder
+     * @return Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
      */
     public function applyOnQuery($builder)
     {
@@ -60,7 +60,7 @@ class FilterManager
                     $this->appliedFilters[$modelFilterClass] = $filter;
                 }
             }
-            $builder = $modelFilter->builder;
+            $builder = $modelFilter->getBuilder();
         }
         return $builder;
     }
@@ -69,7 +69,7 @@ class FilterManager
      * Apply the filters on multiple queries and finally union the filtered queries
      *
      * @param Builder[] $builders
-     * @return Builder
+     * @return Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
      */
     public function applyOnQueries($builders)
     {
