@@ -142,4 +142,50 @@ class ThreadFiltersTest extends TestCase
         $this->assertEquals($desiredThread->id, $threads[0]->id);
     }
 
+    /** @test */
+    public function get_the_threads_that_are_posted_by_a_given_user()
+    {
+        create(Thread::class);
+        $user = create(User::class);
+        $desiredThread = create(Thread::class, ['user_id' => $user->id]);
+
+        $this->threadFilters->postedBy($user->name);
+        $threads = $this->threadFilters->getBuilder()->get();
+
+        $this->assertCount(1, $threads);
+        $this->assertEquals($desiredThread->id, $threads[0]->id);
+    }
+
+    /** @test */
+    public function get_the_threads_that_were_created_a_given_number_of_days_ago()
+    {
+        $olderThread = create(
+            Thread::class,
+            ['created_at' => Carbon::now()->subDays(10)]
+        );
+        $numberOfDesiredThreads = 2;
+        $daysAgo = 5;
+        $desiredThreads = createMany(
+            Thread::class,
+            2,
+            ['created_at' => Carbon::now()->subDays($daysAgo)]
+        );
+
+        $this->threadFilters->lastCreated($daysAgo);
+        $threads = $this->threadFilters->getBuilder()->get();
+
+        $this->assertCount($numberOfDesiredThreads, $threads);
+        $this->assertTrue(
+            $threads->containsStrict(
+                'id',
+                $desiredThreads[0]->id)
+        );
+        $this->assertTrue(
+            $threads->containsStrict(
+                'id',
+                $desiredThreads[1]->id
+            )
+        );
+    }
+
 }
