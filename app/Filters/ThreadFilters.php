@@ -28,13 +28,6 @@ class ThreadFilters extends Filters
         'numberOfReplies',
     ];
 
-    public $builder;
-
-    public function __construct($builder)
-    {
-        $this->builder = $builder;
-    }
-
     /**
      * Fetch the most recently created threads
      *
