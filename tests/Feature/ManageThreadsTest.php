@@ -14,11 +14,11 @@ class ManageThreadsTest extends TestCase
     /** @test */
     public function non_authorized_users_may_not_update_the_title_of_a_thread()
     {
-        $this->signIn();
-
         $thread = create(Thread::class, [
             'title' => 'old title',
         ]);
+
+        $this->signIn();
 
         $this->patch(route('api.threads.update', $thread), ['title' => 'new title'])
             ->assertStatus(Response::HTTP_FORBIDDEN);
