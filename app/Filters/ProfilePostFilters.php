@@ -10,7 +10,7 @@ class ProfilePostFilters extends Filters
     /**
      * Supported filters for threads
      *
-     * @var array
+     * @var string[]
      */
     public $filters = [
         'postedBy',
@@ -22,7 +22,7 @@ class ProfilePostFilters extends Filters
      * Fetch the posts that are on the given user's profile
      *
      * @param String $username
-     * @return Builder
+     * @return void
      */
     public function profileOwner($username)
     {
