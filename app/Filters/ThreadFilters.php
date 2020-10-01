@@ -3,17 +3,17 @@
 namespace App\Filters;
 
 use App\Filters\Filters;
+use App\Reply;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
 
 class ThreadFilters extends Filters
 {
-
     /**
      * Supported filters for threads
      *
-     * @var array
+     * @var string[]
      */
     public $filters = [
         'postedBy',
@@ -66,7 +66,7 @@ class ThreadFilters extends Filters
         $this->builder->whereHas('replies', function ($query) use ($user) {
             $query->where([
                 ['position', ">", 1],
-                'user_id' => $user->id,
+                ['user_id', '=', $user->id],
             ]);
         });
     }
@@ -105,7 +105,6 @@ class ThreadFilters extends Filters
         $this->builder->whereHas('subscriptions', function ($query) {
             $query->where('user_id', auth()->id());
         });
-
     }
 
     /**
