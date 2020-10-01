@@ -78,17 +78,22 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_filter_threads_by_username()
     {
-        $uric = create(User::class, [
-            'name' => 'uric',
-        ]);
-
+        $uric = create(
+            User::class,
+            [
+                'name' => 'uric',
+            ]
+        );
         $this->signIn($uric);
-
         $threadByUric = create(Thread::class, [
             'user_id' => $uric->id,
         ]);
 
-        $threadByAnotherUser = create(Thread::class);
+        $anotherUser = create(User::class);
+        $threadByAnotherUser = create(
+            Thread::class,
+            ['user_id' => $anotherUser->id]
+        );
 
         $this->get(route('filtered-threads.index') . "?postedBy={$uric->name}")
             ->assertSee($threadByUric->title)
@@ -112,18 +117,19 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function user_can_fetch_the_threads_with_the_most_recent_replies()
     {
-        $newThreadWithReplies = create(Thread::class);
-        $newThreadWithReplies->addReply(raw(Reply::class));
+        $recentlyActiveThread = $this->thread;
+        $recentlyActiveThread->addReply(raw(Reply::class));
 
-        $oldThreadWithReples = create(Thread::class, [
+        $inactiveThread = create(Thread::class, [
             'updated_at' => Carbon::now()->subDay(),
         ]);
-        $oldThreadWithReples->addReply(raw(Reply::class));
-        $threadWithNoReplies = $this->thread;
+        $inactiveThread->addReply(raw(Reply::class));
 
-        $response = $this->getJson(route('filtered-threads.index') . "?newPosts=1");
-        $this->assertCount(2, $response['data']);
+        $threads = $this->getJson(route('filtered-threads.index') . "?newPosts=1")->json()['data'];
 
+        $this->assertCount(2, $threads);
+        $this->assertEquals($recentlyActiveThread->id, $threads[0]['id']);
+        $this->assertEquals($inactiveThread->id, $threads[1]['id']);
     }
 
     /** @test */
@@ -132,7 +138,6 @@ class ReadThreadsTest extends TestCase
         $anotherUser = $this->signIn();
 
         $threadWithoutParticipation = create(Thread::class);
-
         $threadWithoutParticipation->addReply(
             raw(Reply::class, [
                 'user_id' => $anotherUser,
@@ -142,11 +147,9 @@ class ReadThreadsTest extends TestCase
         $threadWithoutReplies = create(Thread::class);
 
         $user = create(User::class, ['name' => 'orestis']);
-
         $this->signIn($user);
 
         $thread = create(Thread::class);
-
         $thread->addReply(
             raw(Reply::class, [
                 'user_id' => $user->id,
@@ -161,7 +164,6 @@ class ReadThreadsTest extends TestCase
             $user->id,
             $response['data'][0]['recent_reply']['poster']['id']
         );
-
     }
 
     /** @test */
@@ -201,7 +203,6 @@ class ReadThreadsTest extends TestCase
             'name' => 'jorgo',
         ]);
         $this->signIn($user);
-
         $this->thread->subscribe($user->id);
 
         $this->get(route('filtered-threads.index') . "?watched=1")
@@ -213,17 +214,16 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function user_can_read_the_threads_that_have_been_last_updated_X_days_ago()
     {
-
         $todaysThread = create(Thread::class);
 
         $oldThread = create(Thread::class, [
             'updated_at' => Carbon::now()->subMonth(),
         ]);
 
-        $numberOdDays = 3;
-        $lastUpdated = Carbon::now()->subDays($numberOdDays);
+        $daysAgo = 3;
+        $lastUpdated = Carbon::now()->subDays($daysAgo);
 
-        $this->get(route('filtered-threads.index') . "?lastUpdated=" . $numberOdDays)
+        $this->get(route('filtered-threads.index') . "?lastUpdated=" . $daysAgo)
             ->assertSee($todaysThread->title)
             ->assertDontSee($oldThread->title);
 
@@ -232,17 +232,15 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function user_can_read_the_threads_that_have_been_last_crated_X_days_ago()
     {
-
         $todaysThread = create(Thread::class);
-
         $oldThread = create(Thread::class, [
             'created_at' => Carbon::now()->subMonth(),
         ]);
 
-        $numberOdDays = 3;
-        $lastUpdated = Carbon::now()->subDays($numberOdDays);
+        $daysAgo = 3;
+        $lastUpdated = Carbon::now()->subDays($daysAgo);
 
-        $this->get(route('filtered-threads.index') . "?lastCreated=" . $numberOdDays)
+        $this->get(route('filtered-threads.index') . "?lastCreated=" . $daysAgo)
             ->assertSee($todaysThread->title)
             ->assertDontSee($oldThread->title);
 
