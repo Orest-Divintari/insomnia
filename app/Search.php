@@ -28,11 +28,11 @@ class Search
                 $results = app(SearchAllPosts::class)->query();
             }
         } catch (Exception $e) {
-            return 'No results';
+            return $this->noResults();
         }
 
         if (!isset($results) || empty($results)) {
-            return 'No results';
+            return $this->noResults();
         }
 
         return $this->getPaginatedData($results);
@@ -76,5 +76,15 @@ class Search
             );
         }
         return $results;
+    }
+
+    /**
+     * Return a message if no results are found
+     *
+     * @return string
+     */
+    public function noResults()
+    {
+        return 'No results';
     }
 }
