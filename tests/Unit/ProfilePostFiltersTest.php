@@ -37,7 +37,7 @@ class ProfilePostFiltersTest extends TestCase
         $desiredProfilePost = create(ProfilePost::class, ['profile_owner_id' => $user->id]);
 
         $this->profilePostFilters->profileOwner($user->name);
-        $profilePosts = $this->profilePostFilters->getBuilder()->get();
+        $profilePosts = $this->profilePostFilters->builder()->get();
 
         $this->assertCount(1, $profilePosts);
         $this->assertEquals($desiredProfilePost->id, $profilePosts[0]->id);
@@ -60,7 +60,7 @@ class ProfilePostFiltersTest extends TestCase
         );
 
         $this->profilePostFilters->lastCreated($daysAgo);
-        $profilePosts = $this->profilePostFilters->getBuilder()->get();
+        $profilePosts = $this->profilePostFilters->builder()->get();
 
         $this->assertCount(
             $numberOfDesiredProfilePosts,

@@ -60,7 +60,7 @@ class FilterManager
                     $this->appliedFilters[$modelFilterClass] = $filter;
                 }
             }
-            $builder = $modelFilter->getBuilder();
+            $builder = $modelFilter->builder();
         }
         return $builder;
     }

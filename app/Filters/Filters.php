@@ -68,7 +68,7 @@ class Filters
      *
      * @return Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
      */
-    public function getBuilder()
+    public function builder()
     {
         return $this->builder;
     }

@@ -39,7 +39,7 @@ class ThreadFiltersTest extends TestCase
         $newThread = create(Thread::class);
 
         $this->threadFilters->newThreads();
-        $newThreads = $this->threadFilters->getBuilder()->get();
+        $newThreads = $this->threadFilters->builder()->get();
 
         $this->assertEquals(
             $newThread->id,
@@ -62,7 +62,7 @@ class ThreadFiltersTest extends TestCase
         ReplyFactory::create(['repliable_id' => $recentlyActiveThread->id]);
 
         $this->threadFilters->newPosts();
-        $newPosts = $this->threadFilters->getBuilder()->get();
+        $newPosts = $this->threadFilters->builder()->get();
 
         $this->assertEquals(
             $recentlyActiveThread->id,
@@ -78,7 +78,7 @@ class ThreadFiltersTest extends TestCase
         ReplyFactory::create();
 
         $this->threadFilters->contributed($user->name);
-        $contributedThread = $this->threadFilters->getBuilder()->get();
+        $contributedThread = $this->threadFilters->builder()->get();
 
         $this->assertCount(1, $contributedThread);
         $this->assertEquals($reply->repliable_id, $contributedThread[0]->id);
@@ -92,7 +92,7 @@ class ThreadFiltersTest extends TestCase
         $thirdMostPopularThread = create(Thread::class, ['views' => 5, 'replies_count' => 5]);
 
         $this->threadFilters->trending();
-        $trendingThreads = $this->threadFilters->getBuilder()->get();
+        $trendingThreads = $this->threadFilters->builder()->get();
 
         $this->assertEquals($mostPopularThread->id, $trendingThreads[0]->id);
         $this->assertEquals($secondMostPopularThread->id, $trendingThreads[1]->id);
@@ -106,7 +106,7 @@ class ThreadFiltersTest extends TestCase
         $unansweredThread = create(Thread::class);
 
         $this->threadFilters->unanswered();
-        $unansweredThreads = $this->threadFilters->getBuilder()->get();
+        $unansweredThreads = $this->threadFilters->builder()->get();
 
         $this->assertCount(1, $unansweredThreads);
         $this->assertEquals($unansweredThread->id, $unansweredThreads[0]->id);
@@ -122,7 +122,7 @@ class ThreadFiltersTest extends TestCase
         $subscribedThread->subscribe($user->id);
 
         $this->threadFilters->watched();
-        $subscribedThreads = $this->threadFilters->getBuilder()->get();
+        $subscribedThreads = $this->threadFilters->builder()->get();
 
         $this->assertCount(1, $subscribedThreads);
         $this->assertEquals($subscribedThread->id, $subscribedThreads[0]->id);
@@ -136,7 +136,7 @@ class ThreadFiltersTest extends TestCase
         createMany(Thread::class, 3, ['updated_at' => Carbon::now()->subDays(5)]);
 
         $this->threadFilters->lastUpdated($daysAgo);
-        $threads = $this->threadFilters->getBuilder()->get();
+        $threads = $this->threadFilters->builder()->get();
 
         $this->assertCount(1, $threads);
         $this->assertEquals($desiredThread->id, $threads[0]->id);
@@ -150,7 +150,7 @@ class ThreadFiltersTest extends TestCase
         $desiredThread = create(Thread::class, ['user_id' => $user->id]);
 
         $this->threadFilters->postedBy($user->name);
-        $threads = $this->threadFilters->getBuilder()->get();
+        $threads = $this->threadFilters->builder()->get();
 
         $this->assertCount(1, $threads);
         $this->assertEquals($desiredThread->id, $threads[0]->id);
@@ -172,7 +172,7 @@ class ThreadFiltersTest extends TestCase
         );
 
         $this->threadFilters->lastCreated($daysAgo);
-        $threads = $this->threadFilters->getBuilder()->get();
+        $threads = $this->threadFilters->builder()->get();
 
         $this->assertCount($numberOfDesiredThreads, $threads);
         $this->assertTrue(
