@@ -7,75 +7,307 @@ use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
-class SearchThreadsTest extends TestCase
+class SearchThreadsTest extends SearchTest
 {
     use RefreshDatabase;
+
+    protected $numberOfDesiredThreads;
+    protected $numberOfDesiredReplies;
+    protected $numberOfUndesiredReplies;
+    protected $numberOfUndesiredThreads;
+    protected $totalNumberOfDesiredItems;
+    protected $totalNumberOfUndesiredItems;
 
     public function setUp(): void
     {
         parent::setUp();
         config(['scout.driver' => 'algolia']);
+        $this->numberOfDesiredThreads = 1;
+        $this->numberOfUndesiredThreads = 1;
+        $this->numberOfDesiredReplies = 1;
+        $this->numberOfUndesiredReplies = 1;
+        $this->totalNumberOfDesiredItems = $this->numberOfDesiredReplies + $this->numberOfDesiredThreads;
+        $this->totalNumberOfUndesiredItems = $this->numberOfUndesiredReplies + $this->numberOfUndesiredThreads;
+
     }
 
     /** @test */
-    public function a_user_can_get_threads_by_username()
+    public function get_the_threads_that_are_created_by_a_given_username()
     {
-        $uric = create(User::class, ['name' => 'uric']);
-        $this->signIn($uric);
-        $threadByUric = create(Thread::class, ['user_id' => $uric->id]);
+        $user = $this->signIn();
+        $desiredThread = create(
+            Thread::class,
+            ['user_id' => $user->id]
+        );
 
         $anotherUser = $this->signIn();
-        $otherThreads = createMany(Thread::class, 5);
+        $undesiredThread = create(Thread::class);
 
-        do {
-            $results = $this->getJson(
-                route(
-                    'search.show',
-                    ['type' => 'thread', 'postedBy' => $uric->name]
-                )
-            )->json()['data'];
-        } while (empty($results));
+        $results = $this->search(
+            [
+                'type' => 'thread',
+                'postedBy' => $user->name,
+            ],
+            $this->numberOfDesiredThreads
+        );
 
-        $this->assertCount(1, $results);
+        $this->assertCount(
+            $this->numberOfDesiredThreads, $results
+        );
+        $first = $this->numberOfDesiredThreads - 1;
+        $this->assertThread($results[$first], $desiredThread);
 
-        $threadByUric->delete();
-        $otherThreads->each->delete();
+        $desiredThread->delete();
+        $undesiredThread->delete();
     }
 
     /** @test */
-    public function a_user_can_search_threads_in_combination_with_a_given_user_name()
+    public function get_the_replies_that_a_given_username_has_posted()
     {
-        $searchTerm = 'yo';
-
-        $uric = create(User::class, ['name' => 'uric']);
-        $this->signIn($uric);
-        $threadByUric = create(Thread::class, [
-            'user_id' => $uric->id,
-            'body' => $searchTerm,
+        $undesiredThread = create(Thread::class);
+        ReplyFactory::create([
+            'repliable_id' => $undesiredThread->id,
         ]);
 
-        $anotherUser = $this->signIn();
-        $otherThreads = createMany(Thread::class, 5);
+        $desiredThread = create(Thread::class);
+        $user = $this->signIn();
+        $desiredReply = ReplyFactory::create([
+            'repliable_id' => $desiredThread->id,
+            'user_id' => $user->id,
+        ]);
 
-        do {
-            $results = $this->getJson(
-                route(
-                    'search.show',
-                    [
-                        'type' => 'thread',
-                        'postedBy' => $uric->name,
-                        'q' => $searchTerm,
-                    ]
-                )
-            )->json()['data'];
-        } while (empty($results));
+        $results = $this->search(
+            [
+                'type' => 'thread',
+                'postedBy' => $user->name,
+            ],
+            $this->numberOfDesiredReplies
+        );
 
-        $this->assertCount(1, $results);
+        $this->assertCount(
+            $this->numberOfDesiredReplies, $results
+        );
+        $first = $this->numberOfDesiredReplies - 1;
+        $this->assertReply(
+            $results[$first],
+            $desiredReply,
+            $desiredThread
+        );
 
-        $threadByUric->delete();
-        $otherThreads->each->delete();
+        $desiredThread->delete();
+        $undesiredThread->delete();
+    }
+
+    /** @test */
+    public function get_the_threads_and_replies_that_are_posted_by_a_given_username()
+    {
+        $undesiredThread = create(Thread::class);
+        $undesiredReply = ReplyFactory::create([
+            'repliable_id' => $undesiredThread->id,
+        ]);
+
+        $user = $this->signIn();
+        $desiredThread = create(
+            Thread::class,
+            ['user_id' => $user->id]
+        );
+        $desiredReply = ReplyFactory::create([
+            'user_id' => $user->id,
+            'repliable_id' => $desiredThread->id,
+        ]);
+
+        $results = $this->search(
+            [
+                'type' => 'thread',
+                'postedBy' => $user->name,
+            ],
+            $this->totalNumberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $this->totalNumberOfDesiredItems, $results
+        );
+        $results = collect($results);
+        $resultedReply = $results->firstWhere('type', 'thread-reply');
+        $resultedThread = $results->firstWhere('type', 'thread');
+
+        $this->assertThread($resultedThread, $desiredThread);
+        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
+    }
+
+    /** @test */
+    public function get_the_threads_that_were_created_that_last_given_number_of_days()
+    {
+        $this->signIn();
+        $daysAgo = 5;
+        Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
+        $desiredThread = create(Thread::class);
+
+        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
+        $undesiredThread = create(Thread::class);
+
+        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+        $results = $this->search(
+            [
+                'type' => 'thread',
+                'lastCreated' => $daysAgo,
+            ],
+            $this->numberOfDesiredThreads
+        );
+
+        $this->assertCount(
+            $this->numberOfDesiredThreads, $results
+        );
+        $first = $this->numberOfDesiredThreads - 1;
+        $this->assertThread($results[$first], $desiredThread);
+
+        $desiredThread->delete();
+        $undesiredThread->delete();
+    }
+    /** @test */
+    public function a_user_can_get_threads_and_replies_that_were_created_the_last_given_number_of_days()
+    {
+        $this->signIn();
+        $daysAgo = 5;
+        Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
+        $desiredThread = create(Thread::class);
+        $desiredReply = ReplyFactory::create([
+            'repliable_id' => $desiredThread->id,
+        ]);
+
+        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
+        $undesiredThread = create(Thread::class);
+        $undesiredReply = ReplyFactory::create([
+            'repliable_id' => $undesiredThread->id,
+        ]);
+
+        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+        $results = $this->search(
+            [
+                'type' => 'thread',
+                'lastCreated' => $daysAgo,
+            ],
+            $this->numberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $this->numberOfDesiredItems, $results
+        );
+        $results = collect($results);
+        $resultedReply = $results->firstWhere('type', 'thread-reply');
+        $resultedThread = $results->firstWhere('type', 'thread');
+        $this->assertThread($resultedThread, $desiredThread);
+        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
+
+        $desiredThread->delete();
+        $undesiredThread->delete();
+    }
+
+    /** @test */
+    public function search_threads_given_a_search_term()
+    {
+        $undesiredThread = create(Thread::class);
+
+        $user = $this->signIn();
+        $desiredThread = create(Thread::class, [
+            'user_id' => $user->id,
+            'body' => $this->searchTerm,
+        ]);
+
+        $results = $this->search(
+            [
+                'type' => 'thread',
+                'postedBy' => $user->name,
+                'q' => $this->searchTerm,
+            ],
+            $this->numberOfDesiredThreads
+        );
+
+        $this->assertCount(
+            $this->numberOfDesiredThreads, $results
+        );
+        $first = $this->numberOfDesiredThreads - 1;
+        $this->assertThread($results[$first], $desiredThread);
+
+        $desiredThread->delete();
+        $undesiredThread->delete();
+    }
+
+    /** @test */
+    public function search_replies_given_a_search_term()
+    {
+        $undesiredThread = create(Thread::class);
+        ReplyFactory::create([
+            'repliable_id' => $undesiredThread->id,
+        ]);
+
+        $desiredThread = create(Thread::class);
+        $user = $this->signIn();
+        $desiredReply = ReplyFactory::create([
+            'repliable_id' => $desiredThread->id,
+            'user_id' => $user->id,
+            'body' => $this->searchTerm,
+        ]);
+
+        $results = $this->search(
+            [
+                'type' => 'thread',
+                'q' => $this->searchTerm,
+            ],
+            $this->numberOfDesiredReplies
+        );
+
+        $this->assertCount(
+            $this->numberOfDesiredReplies, $results
+        );
+        $first = $this->numberOfUndesiredReplies - 1;
+        $this->assertReply($results[$first], $desiredReply, $desiredThread);
+
+        $desiredThread->delete();
+        $undesiredThread->delete();
+    }
+
+    /** @test */
+    public function search_threads_and_replies_given_a_search_term()
+    {
+        $undesiredThread = create(Thread::class);
+        $undesiredReply = ReplyFactory::create([
+            'repliable_id' => $undesiredThread->id,
+        ]);
+
+        $desiredThread = create(
+            Thread::class,
+            ['body' => $this->searchTerm]
+        );
+        $desiredReply = ReplyFactory::create([
+            'body' => $this->searchTerm,
+            'repliable_id' => $desiredThread->id,
+        ]);
+
+        $results = $this->search(
+            [
+                'type' => 'thread',
+                'q' => $this->searchTerm,
+            ],
+            $this->totalNumberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $this->totalNumberOfDesiredItems, $results
+        );
+
+        $results = collect($results);
+        $resultedThread = $results->firstWhere('type', 'thread');
+        $resultedReply = $results->firstWhere('type', 'thread-reply');
+
+        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
+        $this->assertThread($resultedThread, $desiredThread);
+
+        $desiredThread->delete();
+        $undesiredThread->delete();
     }
 
     // /** @test */
@@ -165,174 +397,263 @@ class SearchThreadsTest extends TestCase
     // }
 
     /** @test */
-    public function a_user_can_get_threads_and_replies_by_creation_date()
+    public function a_user_can_search_threads_and_replies_that_were_created_the_last_given_number_of_days_given_a_search_term()
     {
         $this->signIn();
-        $numOfDesiredThreads = 2;
-        $numOfDesiredReplies = 5;
-        $numberOfDesiredItems = $numOfDesiredThreads + $numOfDesiredReplies;
-        $numOfUndesiredThreads = 5;
-
-        Carbon::setTestNow(Carbon::now()->subDays(5));
-        $desiredThreads = createMany(
+        $daysAgo = 5;
+        Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
+        $desiredThread = create(
             Thread::class,
-            $numOfDesiredThreads
+            ['body' => $this->searchTerm]
         );
-        ReplyFactory::createMany(
-            $numOfDesiredReplies,
-            ['repliable_id' => $desiredThreads->first()->id]
-        );
+        $desiredReply = ReplyFactory::create([
+            'body' => $this->searchTerm,
+            'repliable_id' => $desiredThread->id,
+        ]);
 
-        Carbon::setTestNow(Carbon::now()->addDays(5));
-        Carbon::setTestNow(Carbon::now()->subDays(10));
-
-        $undesiredThreads = createMany(
+        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
+        $undesiredThread = create(Thread::class);
+        $anotherUndesiredThread = create(
             Thread::class,
-            $numOfUndesiredThreads,
+            ['body' => $this->searchTerm]
         );
-        ReplyFactory::createMany(
-            5,
-            ['repliable_id' => $undesiredThreads->first()->id]
+        $undesiredReply = ReplyFactory::create([
+            'repliable_id' => $undesiredThread->id,
+        ]);
+        $anotherUndesiredReply = ReplyFactory::create([
+            'repliable_id' => $anotherUndesiredThread->id,
+            'body' => $this->searchTerm,
+        ]);
+
+        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+        $results = $this->search(
+            [
+                'type' => 'thread',
+                'q' => $this->searchTerm,
+                'lastCreated' => $daysAgo,
+            ],
+            $this->totalNumberOfDesiredItems
         );
 
-        Carbon::setTestNow(Carbon::now()->addDays(10));
-        do {
-            $results = $this->getJson(route('search.show', ['type' => 'thread', 'lastCreated' => 5]))
-                ->json()['data'];
-        } while (empty($results));
+        $this->assertCount(
+            $this->totalNumberOfDesiredItems, $results
+        );
+        $results = collect($results);
+        $resultedReply = $results->firstWhere('type', 'thread-reply');
+        $resultedThread = $results->firstWhere('type', 'thread');
+        $this->assertThread($resultedThread, $desiredThread);
+        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
 
-        $this->assertCount($numberOfDesiredItems, $results);
-
-        $desiredThreads->each->replies->each->delete();
-        $desiredThreads->each->delete();
-        $undesiredThreads->each->replies->each->delete();
-        $undesiredThreads->each->delete();
+        $desiredThread->delete();
+        $undesiredThread->delete();
     }
 
     /** @test */
-    public function a_user_can_search_threads_and_replies_in_combination_with_creation_date()
+    public function a_user_can_search_threads_and_replies_given_a_search_term_and_username_that_where_created_the_last_given_number_of_days()
     {
-        $searchTerm = 'yo';
-
-        $this->signIn();
-        $numOfDesiredThreads = 2;
-        $numOfDesiredReplies = 5;
-        $numberOfDesiredItems = $numOfDesiredThreads + $numOfDesiredReplies;
-        $numOfUndesiredThreads = 5;
-
-        Carbon::setTestNow(Carbon::now()->subDays(5));
-        $desiredThreads = createMany(
+        $user = $this->signIn();
+        $daysAgo = 5;
+        Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
+        $desiredThread = create(
             Thread::class,
-            $numOfDesiredThreads,
-            ['body' => $searchTerm]
-        );
-        ReplyFactory::createMany(
-            $numOfDesiredReplies,
             [
-                'body' => $searchTerm,
-                'repliable_id' => $desiredThreads->first()->id,
-            ],
-
-        );
-
-        Carbon::setTestNow(Carbon::now()->addDays(5));
-        Carbon::setTestNow(Carbon::now()->subDays(10));
-
-        $undesiredThreads = createMany(
-            Thread::class,
-            $numOfUndesiredThreads,
-            ['body' => $searchTerm]
-        );
-        ReplyFactory::createMany(
-            5,
-            [
-                'body' => $searchTerm,
-                'repliable_id' => $undesiredThreads->first()->id,
+                'body' => $this->searchTerm,
+                'user_id' => $user->id,
             ]
         );
-
-        Carbon::setTestNow(Carbon::now()->addDays(10));
-        do {
-            $results = $this->getJson(route('search.show', ['q' => $searchTerm, 'type' => 'thread', 'lastCreated' => 5]))
-                ->json()['data'];
-        } while (empty($results));
-
-        $this->assertCount($numberOfDesiredItems, $results);
-
-        $desiredThreads->each->replies->each->delete();
-        $desiredThreads->each->delete();
-        $undesiredThreads->each->replies->each->delete();
-        $undesiredThreads->each->delete();
-
-    }
-
-    /** @test */
-    public function a_user_can_search_threads_by_username_and_creation_date()
-    {
-        $searchTerm = 'yo';
-        $daysAgo = 5;
-        $numberOfReplies = 5;
-        $numberOfDesiredThreads = 1;
-
-        $uric = $this->signIn();
-        $numberOfDesiredItems = $numberOfReplies + $numberOfDesiredThreads;
-
-        Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-
-        $threadByUric = create(Thread::class, [
-            'user_id' => $uric->id,
-            'body' => $searchTerm,
+        $desiredReply = ReplyFactory::create([
+            'body' => $this->searchTerm,
+            'repliable_id' => $desiredThread->id,
+            'user_id' => $user->id,
         ]);
-        ReplyFactory::createMany(
-            $numberOfReplies,
+
+        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
+        $undesiredThread = create(Thread::class);
+        $anotherUndesiredThread = create(
+            Thread::class,
+            ['body' => $this->searchTerm]
+        );
+        $thirdUndesiredThread = create(
+            Thread::class,
             [
-                'body' => $searchTerm,
-                'user_id' => $uric->id,
-                'repliable_id' => $threadByUric->id,
-            ]);
+                'body' => $this->searchTerm,
+                'user_id' => $user->id,
+            ]
+        );
+        $undesiredReply = ReplyFactory::create([
+            'repliable_id' => $undesiredThread->id,
+        ]);
+        $anotherUndesiredReply = ReplyFactory::create([
+            'repliable_id' => $anotherUndesiredThread->id,
+            'body' => $this->searchTerm,
+        ]);
+        $thirdUndesiredReply = ReplyFactory::create([
+            'repliable_id' => $anotherUndesiredThread->id,
+            'body' => $this->searchTerm,
+            'user_id' => $user->id,
+        ]);
 
-        $anotherUser = $this->signIn();
-        $otherThread = create(Thread::class);
-        ReplyFactory::createMany(
-            $numberOfReplies,
+        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+        $results = $this->search(
             [
-                'body' => $searchTerm,
-                'repliable_id' => $otherThread->id,
-            ]);
+                'type' => 'thread',
+                'q' => $this->searchTerm,
+                'lastCreated' => $daysAgo,
+                'postedBy' => $user->name,
+            ],
+            $this->totalNumberOfDesiredItems
+        );
 
-        do {
-            $results = $this->getJson(
-                route(
-                    'search.show',
-                    [
-                        'type' => 'thread',
-                        'postedBy' => $uric->name,
-                        'lastCreated' => $daysAgo,
-                        'q' => $searchTerm,
-                    ]
-                )
-            )->json()['data'];
-        } while (empty($results));
+        $this->assertCount(
+            $this->totalNumberOfDesiredItems, $results
+        );
 
-        $this->assertCount($numberOfDesiredItems, $results);
+        $results = collect($results);
+        $resultedReply = $results->firstWhere('type', 'thread-reply');
+        $resultedThread = $results->firstWhere('type', 'thread');
 
-        $threadByUric->replies->each->delete();
-        $threadByUric->delete();
+        $this->assertThread($resultedThread, $desiredThread);
+        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
 
-        $otherThread->replies->each->delete();
-        $otherThread->delete();
+        $desiredThread->delete();
+        $undesiredThread->delete();
+        $anotherUndesiredThread->delete();
+        $thirdUndesiredThread->delete();
     }
 
     /** @test */
-    // public function tsek()
-    // {
-    //     $thread = create(Thread::class, ['body' => 'one', 'title' => 'two']);
-    //     create(Thread::class, ['title' => 'two']);
+    public function when_there_are_no_threads_stored_in_the_database()
+    {
+        $results = $this->getJson(route('search.show'), ['type' => 'thread']);
 
-    //     dd(Thread::search('one')->with([
-    //         'facets' => ['*'],
-    //         'facetFilters' => 'title:two',
-    //     ])->get()->toArray());
-    // }
+        $this->assertEquals('No results', $results->getContent());
+    }
+
+    /** @test */
+    public function when_no_threads_are_found_for_the_given_username()
+    {
+        $thread = create(Thread::class);
+        $reply = ReplyFactory::create();
+
+        $results = $this->getJson(route('search.show', [
+            'type' => 'thread',
+            'postedBy' => 'benz',
+        ]));
+
+        $this->assertEquals('No results', $results->getContent());
+    }
+
+    /** @test */
+    public function when_no_threads_are_created_the_last_given_number_of_days()
+    {
+        $oldThread = create(Thread::class, [
+            'created_at' => Carbon::now()->subDays(10),
+        ]);
+
+        $results = $this->getJson(route('search.show', [
+            'type' => 'thread',
+            'lastCreated' => 1,
+        ]));
+
+        $this->assertEquals('No results', $results->getContent());
+
+    }
+
+    /** @test */
+    public function when_no_threads_are_found_for_the_given_search_query()
+    {
+        $thread = create(Thread::class);
+
+        $results = $this->getJson(route('search.show', [
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+        ]));
+
+        $this->assertEquals('No results', $results->getContent());
+    }
+
+      /** @test */
+      public function when_no_threads_are_found_for_the_given_search_query_the_last_given_number_of_days()
+      {
+          $oldThread = create(Thread::class, [
+              'body' => $this->searchTerm,
+              'created_at' => Carbon::now()->subDays(10),
+          ]);
+  
+          $results = $this->getJson(route('search.show', [
+              'type' => 'thread',
+              'q' => $this->searchTerm,
+              'lastCreated' => 1,
+          ]));
+  
+          $this->assertEquals('No results', $results->getContent());
+  
+      }
+
+    /** @test */
+    public function when_no_threads_are_found_given_a_search_query_for_the_given_username()
+    {
+        $thread = create(Thread::class, [
+            'body' => $this->searchTerm,
+        ]);
+
+        $results = $this->getJson(route('search.show', [
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+            'postedBy' => 'benz',
+        ]));
+
+        $this->assertEquals('No results', $results->getContent());
+    }
+
+    
+    /**
+     * Assert that the reply is correct and the required relationships are loaded
+     *
+     * @param array $resultedReply
+     * @param Reply $desiredReply
+     * @param Thread $desiredThread
+     * @return void
+     */
+    public function assertReply($resultedReply, $desiredReply, $desiredThread)
+    {
+        $this->assertEquals(
+            $resultedReply['id'], $desiredReply->id
+        );
+        $this->assertEquals(
+            $resultedReply['poster']['id'], $desiredReply->poster->id
+        );
+        $this->assertEquals(
+            $resultedReply['repliable']['id'], $desiredThread->id
+        );
+        $this->assertEquals(
+            $resultedReply['repliable']['poster']['id'], $desiredThread->poster->id
+        );
+        $this->assertEquals(
+            $resultedReply['repliable']['category']['id'], $desiredThread->category->id,
+        );
+    }
+
+    /**
+     * Assert that thread is correct and the required relationships are loaded
+     *
+     * @param array $resultedThread
+     * @param Thread $desiredThread
+     * @return void
+     */
+    public function assertThread($resultedThread, $desiredThread)
+    {
+        $this->assertEquals(
+            $resultedThread['id'], $desiredThread->id
+        );
+        $this->assertEquals(
+            $resultedThread['poster']['id'], $desiredThread->poster->id
+        );
+        $this->assertEquals(
+            $resultedThread['category']['id'], $desiredThread->category->id,
+        );
+    }
 
 }
