@@ -49,9 +49,7 @@ class FilterManager
     public function applyOnQuery($builder)
     {
         foreach ($this->modelFilters as $modelFilterClass) {
-
             $modelFilter = app($modelFilterClass, compact('builder'));
-
             foreach ($this->getRequestedFilters($modelFilter) as $filter => $value) {
                 if (method_exists($modelFilter, $filter) && $this->isNotApplied($modelFilterClass, $filter)) {
 
@@ -62,6 +60,7 @@ class FilterManager
             }
             $builder = $modelFilter->builder();
         }
+
         return $builder;
     }
 

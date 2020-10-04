@@ -131,4 +131,5 @@ class ProfilePost extends Model
     {
         return $query->with(['poster', 'profileOwner']);
     }
+
 }

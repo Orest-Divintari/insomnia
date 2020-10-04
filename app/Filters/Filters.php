@@ -53,7 +53,6 @@ class Filters
     public function lastCreated($daysAgo)
     {
         $daysAgo = Carbon::now()->subDays($daysAgo);
-
         if (is_subclass_of($this->builder, 'Laravel\Scout\Builder')) {
             $this->builder
                 ->where('created_at', '>=', $daysAgo->timestamp);
