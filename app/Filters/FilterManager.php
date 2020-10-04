@@ -92,9 +92,9 @@ class FilterManager
      */
     public function isNotApplied($modelFilterClass, $filter)
     {
-        $appliedFilters = collect($this->appliedFilters);
-        if ($appliedFilters->contains($filter)) {
-            return $appliedFilters->contains($modelFilterClass, $filter);
+        if (in_array($filter, $this->appliedFilters)) {
+            return array_key_exists($modelFilterClass, $this->appliedFilters) &&
+            $this->appliedFilters[$modelFilterClass] == $filter;
         }
         return true;
     }
