@@ -85,19 +85,18 @@ class FilterManager
     }
 
     /**
-     * Avoids the case where different modelFilters want to apply the same filter
+     * Prevents the case where different modelFilters want to apply the same filter
      *
      * @param mixed $filter
      * @return boolean
      */
     public function isNotApplied($modelFilterClass, $filter)
     {
-        foreach ($this->appliedFilters as $appliedFilterClass => $appliedFilter) {
-            if ($appliedFilter == $filter) {
-                return $appliedFilterClass == $modelFilterClass;
-            }
+        $appliedFilters = collect($this->appliedFilters);
+        if ($appliedFilters->contains($filter)) {
+            return $appliedFilters->contains($modelFilterClass, $filter);
         }
-        return empty($this->appliedFilters);
+        return true;
     }
 
     /**
