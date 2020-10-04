@@ -7,6 +7,7 @@ use App\Thread;
 use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ReplyFactory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -154,6 +155,18 @@ class ThreadFiltersTest extends TestCase
 
         $this->assertCount(1, $threads);
         $this->assertEquals($desiredThread->id, $threads[0]->id);
+    }
+
+    /** @test */
+    public function throw_error_if_the_given_username_does_not_exist()
+    {
+        create(Thread::class);
+        $user = create(User::class);
+        $desiredThread = create(Thread::class, ['user_id' => $user->id]);
+
+        $randomName = 'asdf';
+        $this->expectException(ModelNotFoundException::class);
+        $this->threadFilters->postedBy($randomName);
     }
 
     /** @test */
