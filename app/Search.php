@@ -36,9 +36,6 @@ class Search
             return $this->noResults();
         }
 
-        if (!isset($results) || empty($results)) {
-            return $this->noResults();
-        }
         return $this->getPaginatedData($results);
     }
 
