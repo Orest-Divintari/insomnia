@@ -149,17 +149,17 @@ class FilterManager
      */
     public function cleanUp()
     {
-        $this->getNonEmpty();
+        $this->discardEmpty();
         $this->castValues();
     }
 
     /**
-     * Filters out the requested filters that have no value
+     * Discards the requested filters that have no value
      *
      * @param array $fiters
      * @return array
      */
-    public function getNonEmpty()
+    public function discardEmpty()
     {
         $this->requestedFilters = array_filter(
             $this->requestedFilters,
