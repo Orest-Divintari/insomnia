@@ -16,6 +16,11 @@ class Search
      */
     const RESULTS_PER_PAGE = 10;
 
+    /**
+     * Get paginated search results
+     *
+     * @return Illuminate\Pagination\LengthAwarePaginator|string
+     */
     public function getResults()
     {
         try
@@ -34,7 +39,6 @@ class Search
         if (!isset($results) || empty($results)) {
             return $this->noResults();
         }
-
         return $this->getPaginatedData($results);
     }
 
