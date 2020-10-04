@@ -39,15 +39,20 @@ class Search
     }
 
     /**
-     * Paginates and transforms the data if results are returned from activities table
+     * Paginates the data
+     * Transforms the data if results
+     * are returned from activities table
      *
      * @param Collection $results
-     * @return Illuminate\Pagination\LengthAwarePaginator
+     * @return Illuminate\Pagination\LengthAwarePaginator|string
      */
     public function getPaginatedData($results)
     {
         $results = $results->paginate(static::RESULTS_PER_PAGE);
-        if (array_key_exists('subject', $results->toArray()['data'][0])) {
+
+        if (empty($results->items())) {
+            return $this->noResults();
+        } elseif (array_key_exists('subject', $results->toArray()['data'][0])) {
             return $this->getActivitySubject($results);
         }
         return $results;
