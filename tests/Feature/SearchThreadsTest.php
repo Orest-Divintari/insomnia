@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Thread;
-use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -574,23 +573,23 @@ class SearchThreadsTest extends SearchTest
         $this->assertEquals('No results', $results->getContent());
     }
 
-      /** @test */
-      public function when_no_threads_are_found_for_the_given_search_query_the_last_given_number_of_days()
-      {
-          $oldThread = create(Thread::class, [
-              'body' => $this->searchTerm,
-              'created_at' => Carbon::now()->subDays(10),
-          ]);
-  
-          $results = $this->getJson(route('search.show', [
-              'type' => 'thread',
-              'q' => $this->searchTerm,
-              'lastCreated' => 1,
-          ]));
-  
-          $this->assertEquals('No results', $results->getContent());
-  
-      }
+    /** @test */
+    public function when_no_threads_are_found_for_the_given_search_query_the_last_given_number_of_days()
+    {
+        $oldThread = create(Thread::class, [
+            'body' => $this->searchTerm,
+            'created_at' => Carbon::now()->subDays(10),
+        ]);
+
+        $results = $this->getJson(route('search.show', [
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+            'lastCreated' => 1,
+        ]));
+
+        $this->assertEquals('No results', $results->getContent());
+
+    }
 
     /** @test */
     public function when_no_threads_are_found_given_a_search_query_for_the_given_username()
@@ -608,7 +607,6 @@ class SearchThreadsTest extends SearchTest
         $this->assertEquals('No results', $results->getContent());
     }
 
-    
     /**
      * Assert that the reply is correct and the required relationships are loaded
      *
