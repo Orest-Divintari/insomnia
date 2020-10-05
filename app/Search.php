@@ -50,7 +50,6 @@ class Search
     public function getPaginatedData($results)
     {
         $results = $results->paginate(static::RESULTS_PER_PAGE);
-
         if (empty($results->items())) {
             return $this->noResults();
         } elseif (array_key_exists('subject', $results->toArray()['data'][0])) {
@@ -70,17 +69,17 @@ class Search
     public function getActivitySubject($results)
     {
         $data = collect(collect($results)['data']);
-        if ($data->flatten()->contains('subject')) {
-            $pagination = $results->toArray();
-            $subjects = $data->pluck('subject');
-            $results = new LengthAwarePaginator(
-                $subjects,
-                $pagination['total'],
-                $pagination['per_page'],
-                $pagination['current_page'],
-                ['path' => $pagination['path']]
-            );
-        }
+
+        $pagination = $results->toArray();
+        $subjects = $data->pluck('subject');
+        $results = new LengthAwarePaginator(
+            $subjects,
+            $pagination['total'],
+            $pagination['per_page'],
+            $pagination['current_page'],
+            ['path' => $pagination['path']]
+        );
+
         return $results;
     }
 
