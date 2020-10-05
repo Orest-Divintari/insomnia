@@ -2,10 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\ProfilePost;
-use App\Thread;
-use Facades\Tests\Setup\CommentFactory;
-use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,244 +10,388 @@ class SearchTest extends TestCase
     use RefreshDatabase;
 
     protected $threadsToDelete;
-    protected $undesiredItems;
-    protected $desiredItems;
+    protected $numberOfUndesiredItems;
+    protected $numberOfDesiredItems;
+    protected $searchTerm;
+
     public function setUp(): void
     {
         parent::setUp();
-        $this->undesiredItems = 2;
-        $this->desiredItems = 2;
-        $this->itemsToDelete = $this->undesiredItems + $this->desiredItems;
+        $this->numberOfUndesiredItems = 2;
+        $this->numberOfDesiredItems = 2;
+        $this->numberOfItemsToDelete = $this->numberOfUndesiredItems + $this->numberOfDesiredItems;
+        $this->searchTerm = 'iphone';
         config(['scout.driver' => 'algolia']);
+    }
+
+    /** @test */
+    public function when_there_are_no_threads_stored_in_the_database()
+    {
+        $results = $this->getJson(route('search.show'), ['type' => 'thread']);
+
+        $this->assertEquals('No results', $results->getContent());
+    }
+
+    /** @test */
+    public function when_no_threads_are_found_for_the_given_username()
+    {
+        $thread = create(Thread::class);
+        $reply = ReplyFactory::create();
+
+        $results = $this->getJson(route('search.show', [
+            'type' => 'thread',
+            'postedBy' => 'benz',
+        ]));
+
+        $this->assertEquals('No results', $results->getContent());
+    }
+
+    /** @test */
+    public function when_no_threads_are_created_the_last_given_number_of_days()
+    {
+        $oldThread = create(Thread::class, [
+            'created_at' => Carbon::now()->subDays(10),
+        ]);
+
+        $results = $this->getJson(route('search.show', [
+            'type' => 'thread',
+            'lastCreated' => 1,
+        ]));
+
+        $this->assertEquals('No results', $results->getContent());
 
     }
 
     /** @test */
-    public function a_user_can_use_the_advance_search()
+    public function when_no_threads_are_found_for_the_given_search_query()
     {
-        $this->get(route('search.advanced'))
-            ->assertOk();
+        $thread = create(Thread::class);
+
+        $results = $this->getJson(route('search.show', [
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+        ]));
+
+        $this->assertEquals('No results', $results->getContent());
     }
 
     /** @test */
-    public function a_user_can_search_thread_replies()
+    public function when_no_threads_are_found_for_the_given_search_query_the_last_given_number_of_days()
     {
-        $undesiredItems = ReplyFactory::createMany($this->undesiredItems);
+        $oldThread = create(Thread::class, [
+            'body' => $this->searchTerm,
+            'created_at' => Carbon::now()->subDays(10),
+        ]);
 
-        $searchTerm = 'iphone';
+        $results = $this->getJson(route('search.show', [
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+            'lastCreated' => 1,
+        ]));
 
-        $desiredItems = ReplyFactory::createMany($this->desiredItems, ['body' => $searchTerm]);
+        $this->assertEquals('No results', $results->getContent());
 
+    }
+
+    /** @test */
+    public function when_no_threads_are_found_given_a_search_query_for_the_given_username()
+    {
+        $thread = create(Thread::class, [
+            'body' => $this->searchTerm,
+        ]);
+
+        $results = $this->getJson(route('search.show', [
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+            'postedBy' => 'benz',
+        ]));
+
+        $this->assertEquals('No results', $results->getContent());
+    }
+
+    // /** @test */
+    // public function a_user_can_use_the_advance_search()
+    // {
+    //     $this->get(route('search.advanced'))
+    //         ->assertOk();
+    // }
+
+    // /** @test */
+    // public function a_user_can_search_thread_replies()
+    // {
+    //     $undesiredItems = ReplyFactory::createMany($this->numberOfUndesiredItems);
+    //     $desiredItems = ReplyFactory::createMany(
+    //         $this->numberOfDesiredItems,
+    //         ['body' => $this->searchTerm]
+    //     );
+
+    //     $results = $this->search([
+    //         'q' => $this->searchTerm,
+    //         'type' => 'thread',
+    //     ]);
+
+    //     $this->assertCount(
+    //         $this->numberOfDesiredItems,
+    //         $results
+    //     );
+
+    //     Thread::latest()
+    //         ->take(2)
+    //         ->get()
+    //         ->each
+    //         ->delete();
+    // }
+
+    // /** @test */
+    // public function a_user_can_search_threads_and_replies()
+    // {
+    //     createMany(
+    //         Thread::class,
+    //         $this->numberOfUndesiredItems
+    //     );
+    //     createMany(
+    //         Thread::class,
+    //         $this->numberOfDesiredItems,
+    //         ['body' => $this->searchTerm]
+    //     );
+    //     ReplyFactory::createMany(
+    //         2,
+    //         ['body' => $this->searchTerm]
+    //     );
+
+    //     $this->numberOfDesiredItems += 2;
+    //     $this->numberOfItemsToDelete += 2;
+
+    //     $results = $this->search([
+    //         'type' => 'thread',
+    //         'q' => $this->searchTerm,
+    //     ]);
+
+    //     $this->assertCount(
+    //         $this->numberOfDesiredItems,
+    //         $results
+    //     );
+
+    //     Thread::latest()
+    //         ->take($this->numberOfItemsToDelete)
+    //         ->get()
+    //         ->each
+    //         ->delete();
+    // }
+
+    // /** @test */
+    // public function a_user_can_search_only_threads_by_title()
+    // {
+    //     createMany(
+    //         Thread::class,
+    //         $this->numberOfUndesiredItems,
+    //         ['body' => $this->searchTerm]
+    //     );
+    //     createMany(
+    //         Thread::class,
+    //         $this->numberOfDesiredItems,
+    //         ['title' => $this->searchTerm]
+    //     );
+
+    //     $results = $this->search([
+    //         'q' => $this->searchTerm,
+    //         'type' => 'thread',
+    //         'only_title' => true,
+    //     ]);
+
+    //     $this->assertCount(
+    //         $this->numberOfDesiredItems,
+    //         $results
+    //     );
+
+    //     Thread::latest()
+    //         ->take($this->numberOfItemsToDelete)
+    //         ->get()
+    //         ->each
+    //         ->delete();
+    // }
+
+    // /** @test */
+    // public function a_user_can_search_profile_posts()
+    // {
+    //     createMany(
+    //         ProfilePost::class,
+    //         $this->numberOfUndesiredItems
+    //     );
+    //     createMany(
+    //         ProfilePost::class,
+    //         $this->numberOfDesiredItems,
+    //         ['body' => $this->searchTerm]
+    //     );
+
+    //     $results = $this->search([
+    //         'type' => 'profile_post',
+    //         'q' => $this->searchTerm,
+    //     ]);
+
+    //     $this->assertCount(
+    //         $this->numberOfDesiredItems,
+    //         $results
+    //     );
+
+    //     ProfilePost::latest()
+    //         ->take($this->numberOfItemsToDelete)
+    //         ->get()
+    //         ->each
+    //         ->delete();
+    // }
+
+    // /** @test */
+    // public function user_can_search_profile_posts_and_comments()
+    // {
+    //     createMany(
+    //         ProfilePost::class,
+    //         $this->numberOfUndesiredItems
+    //     );
+    //     createMany(
+    //         ProfilePost::class,
+    //         $this->numberOfDesiredItems,
+    //         ['body' => $this->searchTerm]
+    //     );
+    //     CommentFactory::createMany(
+    //         2,
+    //         ['body' => $this->searchTerm]
+    //     );
+
+    //     $this->numberOfDesiredItems += 2;
+    //     $this->numberOfItemsToDelete += 2;
+
+    //     $results = $this->search([
+    //         'type' => 'profile_post',
+    //         'q' => $this->searchTerm,
+    //     ]);
+
+    //     $this->assertCount(
+    //         $this->numberOfDesiredItems,
+    //         $results
+    //     );
+
+    //     ProfilePost::latest()
+    //         ->take($this->numberOfItemsToDelete)
+    //         ->get()
+    //         ->each
+    //         ->delete();
+    // }
+
+    // /** @test */
+    // public function a_user_can_search_all_posts()
+    // {
+    //     $totalDesiredItems = 0;
+    //     $totalThreadsToDelete = 0;
+    //     $totalProfilePostsToDelete = 0;
+
+    //     createMany(Thread::class, $this->numberOfUndesiredItems);
+    //     $totalThreadsToDelete += $this->numberOfUndesiredItems;
+
+    //     createMany(ProfilePost::class, $this->numberOfUndesiredItems);
+    //     $totalProfilePostsToDelete += $this->numberOfUndesiredItems;
+
+    //     ReplyFactory::createMany($this->numberOfUndesiredItems);
+    //     $totalThreadsToDelete++;
+
+    //     CommentFactory::createMany($this->numberOfUndesiredItems);
+    //     $totalProfilePostsToDelete++;
+
+    //     createMany(
+    //         Thread::class,
+    //         $this->numberOfDesiredItems,
+    //         ['body' => $this->searchTerm]
+    //     );
+    //     $totalDesiredItems += $this->numberOfDesiredItems;
+    //     $totalThreadsToDelete += $this->numberOfDesiredItems;
+
+    //     createMany(
+    //         Thread::class,
+    //         $this->numberOfDesiredItems,
+    //         ['title' => $this->searchTerm]
+    //     );
+    //     $totalDesiredItems += $this->numberOfDesiredItems;
+    //     $totalThreadsToDelete += $this->numberOfDesiredItems;
+
+    //     createMany(
+    //         ProfilePost::class,
+    //         $this->numberOfDesiredItems,
+    //         ['body' => $this->searchTerm]
+    //     );
+    //     $totalDesiredItems += $this->numberOfDesiredItems;
+    //     $totalProfilePostsToDelete += $this->numberOfDesiredItems;
+
+    //     ReplyFactory::createMany(
+    //         $this->numberOfDesiredItems,
+    //         ['body' => $this->searchTerm]
+    //     );
+    //     $totalDesiredItems += $this->numberOfDesiredItems;
+    //     $totalThreadsToDelete++;
+
+    //     CommentFactory::createMany(
+    //         $this->numberOfDesiredItems,
+    //         ['body' => $this->searchTerm]
+    //     );
+    //     $totalDesiredItems += $this->numberOfDesiredItems;
+    //     $totalProfilePostsToDelete++;
+
+    //     $this->numberOfDesiredItems = $totalDesiredItems;
+    //     $results = $this->search([
+    //         'q' => $this->searchTerm,
+    //     ]);
+
+    //     $this->assertCount(
+    //         $this->numberOfDesiredItems,
+    //         $results
+    //     );
+
+    //     Thread::latest()
+    //         ->take($totalThreadsToDelete)
+    //         ->get()
+    //         ->each
+    //         ->delete();
+
+    //     ProfilePost::latest()
+    //         ->take($totalProfilePostsToDelete)
+    //         ->get()
+    //         ->each
+    //         ->delete();
+    // }
+
+    /**
+     * Validate the results of the request
+     *
+     * @param mixed $results
+     * @return boolean
+     */
+    public function validate($results, $numberOfItems)
+    {
+        if (!is_object(json_decode($results->getContent()))) {
+            return true;
+        } elseif (count($results->json()['data']) != $numberOfItems) {
+            return true;
+        }
+    }
+
+    /**
+     * Make a search request with the given parameters
+     *
+     * @param array $parameters
+     * @return array
+     */
+    public function search($parameters, $numberOfItems = null)
+    {
+        $numberOfItems = $numberOfItems ?: $this->numberOfDesiredItems;
+        $counter = 0;
         do {
             sleep(0.2);
             $results = $this->getJson(
-                route('search.show', ['type' => 'thread', 'q' => $searchTerm])
-            )->json()['data'];
-        } while (count($results) != $this->desiredItems);
+                route('search.show', $parameters)
+            );
+            $counter++;
 
-        $this->assertCount($this->desiredItems, $results);
+        } while ($this->validate($results, $numberOfItems));
 
-        Thread::latest()->take(2)->get()->each->delete();
-
+        return $results->json()['data'];
     }
-
-    /** @test */
-    public function a_user_can_search_threads_and_replies()
-    {
-        createMany(
-            Thread::class,
-            $this->undesiredItems
-        );
-
-        $searchTerm = 'voodoo';
-
-        createMany(
-            Thread::class,
-            $this->desiredItems,
-            ['body' => $searchTerm]
-        );
-
-        ReplyFactory::createMany(2, ['body' => $searchTerm]);
-
-        $this->desiredItems += 2;
-        $this->itemsToDelete += 2;
-
-        do {
-            sleep(0.2);
-            $results = $this->getJson(
-                route(
-                    'search.show', ['type' => 'thread', 'q' => $searchTerm]
-                ))->json()['data'];
-        } while (count($results) != $this->desiredItems);
-
-        $this->assertCount($this->desiredItems, $results);
-
-        Thread::latest()->take($this->itemsToDelete)->get()->each->delete();
-
-    }
-
-    /** @test */
-    public function a_user_can_search_only_threads_by_title()
-    {
-        $searchTerm = 'iphone';
-
-        createMany(
-            Thread::class,
-            $this->undesiredItems,
-            ['body' => $searchTerm]
-        );
-
-        createMany(
-            Thread::class,
-            $this->desiredItems,
-            ['title' => $searchTerm]
-        );
-
-        do {
-            sleep(0.2);
-            $results = $this->getJson(
-                route('search.show', ['type' => 'thread', 'q' => $searchTerm, 'only_title' => true]
-                ))->json()['data'];
-        } while (count($results) != $this->desiredItems);
-
-        $this->assertCount($this->desiredItems, $results);
-
-        Thread::latest()->take($this->itemsToDelete)
-            ->get()
-            ->each
-            ->delete();
-    }
-
-    /** @test */
-    public function a_user_can_search_profile_posts()
-    {
-        createMany(ProfilePost::class, $this->undesiredItems);
-
-        $searchTerm = 'voodoo';
-
-        createMany(
-            ProfilePost::class,
-            $this->desiredItems,
-            ['body' => $searchTerm]
-        );
-
-        do {
-            $results = $this->getJson(
-                route('search.show', ['type' => 'profile_post', 'q' => $searchTerm]
-                ))->json()['data'];
-        } while (count($results) != $this->desiredItems);
-
-        $this->assertCount($this->desiredItems, $results);
-
-        ProfilePost::latest()->take($this->itemsToDelete)
-            ->get()
-            ->each
-            ->delete();
-
-    }
-
-    /** @test */
-    public function user_can_search_profile_posts_and_comments()
-    {
-        createMany(
-            ProfilePost::class,
-            $this->undesiredItems
-        );
-
-        $searchTerm = 'voodoo';
-
-        createMany(
-            ProfilePost::class,
-            $this->desiredItems,
-            ['body' => $searchTerm]
-        );
-
-        CommentFactory::createMany(2, ['body' => $searchTerm]);
-
-        $this->desiredItems += 2;
-        $this->itemsToDelete += 2;
-
-        do {
-            $results = $this->getJson(
-                route('search.show', ['type' => 'profile_post', 'q' => $searchTerm]
-                ))->json()['data'];
-        } while (count($results) != $this->desiredItems);
-
-        $this->assertCount($this->desiredItems, $results);
-
-        ProfilePost::latest()->take($this->itemsToDelete)
-            ->get()
-            ->each
-            ->delete();
-    }
-
-    /** @test */
-    public function a_user_can_search_all_posts()
-    {
-        $searchTerm = 'mac';
-
-        $totalDesiredItems = 0;
-        $totalThreadsToDelete = 0;
-        $totalProfilePostsToDelete = 0;
-
-        createMany(Thread::class, $this->undesiredItems);
-        $totalThreadsToDelete += $this->undesiredItems;
-
-        createMany(ProfilePost::class, $this->undesiredItems);
-        $totalProfilePostsToDelete += $this->undesiredItems;
-
-        ReplyFactory::createMany($this->undesiredItems);
-        $totalThreadsToDelete++;
-
-        CommentFactory::createMany($this->undesiredItems);
-        $totalProfilePostsToDelete++;
-
-        createMany(Thread::class, $this->desiredItems, ['body' => $searchTerm]);
-        $totalDesiredItems += $this->desiredItems;
-        $totalThreadsToDelete += $this->desiredItems;
-
-        createMany(Thread::class, $this->desiredItems, ['title' => $searchTerm]);
-        $totalDesiredItems += $this->desiredItems;
-        $totalThreadsToDelete += $this->desiredItems;
-
-        createMany(ProfilePost::class, $this->desiredItems, ['body' => $searchTerm]);
-        $totalDesiredItems += $this->desiredItems;
-        $totalProfilePostsToDelete += $this->desiredItems;
-
-        ReplyFactory::createMany($this->desiredItems, ['body' => $searchTerm]);
-        $totalDesiredItems += $this->desiredItems;
-        $totalThreadsToDelete++;
-
-        CommentFactory::createMany($this->desiredItems, ['body' => $searchTerm]);
-        $totalDesiredItems += $this->desiredItems;
-        $totalProfilePostsToDelete++;
-
-        do {
-            $results = $this->getJson(
-                route('search.show', ['q' => $searchTerm]
-                ))->json()['data'];
-        } while (count($results) != $totalDesiredItems);
-
-        $this->assertCount($totalDesiredItems, $results);
-
-        Thread::latest()->take($totalThreadsToDelete)->get()->each->delete();
-
-        ProfilePost::latest()->take($totalProfilePostsToDelete)->get()->each->delete();
-    }
-
-    /** @test */
-    public function tsek()
-    {
-        // CommentFactory::create(['body' => 'yoyo']);
-
-        ReplyFactory::create(['body' => 'yoyo', 'position' => 2]);
-
-        do {
-            sleep(0.3);
-            $results = $this->getJson(route('search.show', ['q' => 'yoyo']))
-                ->json()['data'];
-        } while (empty($results));
-
-    }
-
 }
