@@ -2,17 +2,26 @@
 
 namespace App\Search;
 
-use App\Search\ProfilePosts;
+use App\Activity;
 
 class SearchProfilePosts
 {
 
+    /**
+     * Search profile posts and comments
+     *
+     * @return mixed
+     */
     public function query()
     {
         $filters = app('ProfilePostFilters');
- 
-        return $filters->apply(
-            ProfilePosts::search(request('q'))
-        );
+        $searchQuery = request('q');
+
+        if (isset($searchQuery)) {
+            $query = ProfilePosts::search($searchQuery);
+        } else {
+            $query = Activity::ofProfilePostsAndComments();
+        }
+        return $filters->apply($query);
     }
 }

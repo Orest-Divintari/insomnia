@@ -89,4 +89,14 @@ class ProfilePostTest extends TestCase
         $this->assertCount(1, $profilePost->activities);
     }
 
+    /** @test */
+    public function a_profile_post_has_search_info()
+    {
+        create(ProfilePost::class);
+
+        $profilePost = ProfilePost::withSearchInfo()->get()->toArray()[0];
+        $this->assertArrayHasKey('poster', $profilePost);
+        $this->assertArrayHasKey('profile_owner', $profilePost);
+    }
+
 }

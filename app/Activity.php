@@ -70,6 +70,44 @@ class Activity extends Model
     }
 
     /**
+     * Get the activity of profile posts and comments
+     * and eager load the required relationships for displaying as search result
+     *
+     * @param Builder $query
+     * @return array
+     */
+    public function scopeOfProfilePostsAndComments($query)
+    {
+        $commentsActivity = $query->whereHasMorph('subject', ['App\Reply'], function ($builder) {
+            $builder->onlyComments();
+        })->with(['subject' => function ($builder) {
+            $builder->withSearchInfo();
+        }])->addSelect([
+            'profile_owner_id' => ProfilePost::select('profile_owner_id')
+                ->whereRaw('profile_posts.id =
+                (
+                   SELECT
+                      repliable_id
+                   from
+                      replies
+                   where
+                      replies.id = activities.subject_id
+                )'),
+        ]);
+
+        $profilePostsActivity = Activity::where(
+            'subject_type', '=', 'App\ProfilePost'
+        )->with(['subject' => function ($builder) {
+            $builder->withSearchInfo();
+        }])->addSelect([
+            'profile_owner_id' => ProfilePost::select('profile_owner_id')
+                ->whereColumn('profile_posts.id', 'activities.subject_id'),
+        ]);
+
+        return [$commentsActivity, $profilePostsActivity];
+    }
+
+    /**
      * Get the activity for threads and replies and eager load the respective relationships
      * for displaying as a search result
      *

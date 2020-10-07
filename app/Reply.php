@@ -212,22 +212,11 @@ class Reply extends Model
      */
     public function toSearchableArray()
     {
-
-        // if ($this->repliable_type == 'App\Thread') {
-        //     $type = 'thread_reply';
-        // } elseif ($this->repliable_type == 'App\ProfilePost') {
-        //     $type = 'profile_post_comment';
-        // }
-
-        // return [
-        //     'body' => $this->body,
-        //     'poster' => $this->poster->name,
-        //     'created_at' => $this->created_at,
-        //     'type' => $type,
-        // ];
-
-        return $this->withoutRelations()->toArray();
-
+        $array = $this->withoutRelations()->toArray();
+        if ($this->repliable_type == 'App\ProfilePost') {
+            $array['profile_owner_id'] = $this->repliable->profile_owner_id;
+        }
+        return $array;
     }
 
     /**
@@ -277,7 +266,7 @@ class Reply extends Model
 
     /**
      * Get only the thread replies
-     * and exclude the replies consist the body of a thread
+     * and exclude the replies that consist the body of a thread
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
@@ -288,6 +277,17 @@ class Reply extends Model
             ['repliable_type', '=', 'App\Thread'],
             ['position', '>', '1'],
         ]);
+    }
+
+    /**
+     * Get only the profile post comments
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOnlyComments($query)
+    {
+        return $query->where('repliable_type', 'App\ProfilePost');
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Like;
+use App\ProfilePost;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -239,6 +240,20 @@ class ReplyTest extends TestCase
         $this->assertEquals(
             $replyArray['repliable_id'],
             $reply->repliable->id
+        );
+    }
+
+    /** @test */
+    public function get_only_profile_post_comments()
+    {
+        ReplyFactory::create();
+        CommentFactory::create();
+
+        $comments = Reply::onlyComments()->get();
+        $this->assertCount(1, $comments);
+        $this->assertEquals(
+            $comments->first()->repliable_type,
+            ProfilePost::class
         );
     }
 
