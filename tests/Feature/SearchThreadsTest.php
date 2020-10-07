@@ -43,16 +43,16 @@ class SearchThreadsTest extends SearchTest
         $anotherUser = $this->signIn();
         $undesiredThread = create(Thread::class);
 
-        $results = $this->search(
-            [
-                'type' => 'thread',
-                'postedBy' => $user->name,
-            ],
+        $results = $this->search([
+            'type' => 'thread',
+            'postedBy' => $user->name,
+        ],
             $this->numberOfDesiredThreads
         );
 
         $this->assertCount(
-            $this->numberOfDesiredThreads, $results
+            $this->numberOfDesiredThreads,
+            $results
         );
         $first = $this->numberOfDesiredThreads - 1;
         $this->assertThread($results[$first], $desiredThread);
@@ -76,11 +76,10 @@ class SearchThreadsTest extends SearchTest
             'user_id' => $user->id,
         ]);
 
-        $results = $this->search(
-            [
-                'type' => 'thread',
-                'postedBy' => $user->name,
-            ],
+        $results = $this->search([
+            'type' => 'thread',
+            'postedBy' => $user->name,
+        ],
             $this->numberOfDesiredReplies
         );
 
@@ -116,11 +115,10 @@ class SearchThreadsTest extends SearchTest
             'repliable_id' => $desiredThread->id,
         ]);
 
-        $results = $this->search(
-            [
-                'type' => 'thread',
-                'postedBy' => $user->name,
-            ],
+        $results = $this->search([
+            'type' => 'thread',
+            'postedBy' => $user->name,
+        ],
             $this->totalNumberOfDesiredItems
         );
 
@@ -148,11 +146,10 @@ class SearchThreadsTest extends SearchTest
         $undesiredThread = create(Thread::class);
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
-        $results = $this->search(
-            [
-                'type' => 'thread',
-                'lastCreated' => $daysAgo,
-            ],
+        $results = $this->search([
+            'type' => 'thread',
+            'lastCreated' => $daysAgo,
+        ],
             $this->numberOfDesiredThreads
         );
 
@@ -184,11 +181,10 @@ class SearchThreadsTest extends SearchTest
         ]);
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
-        $results = $this->search(
-            [
-                'type' => 'thread',
-                'lastCreated' => $daysAgo,
-            ],
+        $results = $this->search([
+            'type' => 'thread',
+            'lastCreated' => $daysAgo,
+        ],
             $this->numberOfDesiredItems
         );
 
@@ -274,12 +270,11 @@ class SearchThreadsTest extends SearchTest
             'body' => $this->searchTerm,
         ]);
 
-        $results = $this->search(
-            [
-                'type' => 'thread',
-                'postedBy' => $user->name,
-                'q' => $this->searchTerm,
-            ],
+        $results = $this->search([
+            'type' => 'thread',
+            'postedBy' => $user->name,
+            'q' => $this->searchTerm,
+        ],
             $this->numberOfDesiredThreads
         );
 
@@ -309,11 +304,10 @@ class SearchThreadsTest extends SearchTest
             'body' => $this->searchTerm,
         ]);
 
-        $results = $this->search(
-            [
-                'type' => 'thread',
-                'q' => $this->searchTerm,
-            ],
+        $results = $this->search([
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+        ],
             $this->numberOfDesiredReplies
         );
 
@@ -344,11 +338,10 @@ class SearchThreadsTest extends SearchTest
             'repliable_id' => $desiredThread->id,
         ]);
 
-        $results = $this->search(
-            [
-                'type' => 'thread',
-                'q' => $this->searchTerm,
-            ],
+        $results = $this->search([
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+        ],
             $this->totalNumberOfDesiredItems
         );
 
@@ -484,12 +477,11 @@ class SearchThreadsTest extends SearchTest
         ]);
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
-        $results = $this->search(
-            [
-                'type' => 'thread',
-                'q' => $this->searchTerm,
-                'lastCreated' => $daysAgo,
-            ],
+        $results = $this->search([
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+            'lastCreated' => $daysAgo,
+        ],
             $this->totalNumberOfDesiredItems
         );
 
@@ -553,13 +545,12 @@ class SearchThreadsTest extends SearchTest
         ]);
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
-        $results = $this->search(
-            [
-                'type' => 'thread',
-                'q' => $this->searchTerm,
-                'lastCreated' => $daysAgo,
-                'postedBy' => $user->name,
-            ],
+        $results = $this->search([
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+            'lastCreated' => $daysAgo,
+            'postedBy' => $user->name,
+        ],
             $this->totalNumberOfDesiredItems
         );
 
