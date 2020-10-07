@@ -15,7 +15,7 @@ class CommentFactory
     {
         $this->user = $this->user ?: factory(User::class)->create();
 
-        $profilePost = factory(ProfilePost::class)->create();
+        $profilePost = $this->createProfilePost($attributes);
 
         $comment = factory(Reply::class)->create(
             array_merge(
@@ -47,6 +47,16 @@ class CommentFactory
             ));
 
         return $comments;
+    }
+
+    public function createProfilePost($attributes)
+    {
+        if (array_key_exists('repliable_id', $attributes)) {
+            $profilePost = ProfilePost::find($attributes['repliable_id']);
+        } else {
+            $profilePost = create(ProfilePost::class);
+        }
+        return $profilePost;
     }
 
     public function by($user)
