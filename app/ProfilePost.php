@@ -31,7 +31,7 @@ class ProfilePost extends Model
      *
      * @var array
      */
-    protected $appends = ['date_created'];
+    protected $appends = ['date_created', 'type'];
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -115,7 +115,7 @@ class ProfilePost extends Model
         return $this->morphMany(Activity::class, 'subject');
     }
 
-    public function getTypeAttribte()
+    public function getTypeAttribute()
     {
         return 'profile-post';
     }
