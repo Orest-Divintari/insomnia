@@ -206,6 +206,64 @@ class SearchThreadsTest extends SearchTest
     }
 
     /** @test */
+    public function get_the_threads_and_replies_that_were_created_the_last_given_number_of_days_by_a_given_username()
+    {
+        $user = $this->signIn();
+        $daysAgo = 5;
+        Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
+        $desiredThread = create(
+            Thread::class,
+            ['user_id' => $user->id]
+        );
+        $desiredReply = ReplyFactory::create([
+            'repliable_id' => $desiredThread->id,
+            'user_id' => $user->id,
+        ]);
+
+        $anotherUser = $this->signIn();
+        $undesiredThread = create(Thread::class);
+        $undesiredReply = ReplyFactory::create([
+            'repliable_id' => $undesiredThread->id,
+        ]);
+
+        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
+        $this->signIn($user);
+        $anotherUndesiredThread = create(
+            Thread::class,
+            ['user_id' => $user->id]
+        );
+        $anotherUndesiredReply = ReplyFactory::create([
+            'repliable_id' => $anotherUndesiredThread->id,
+            'user_id' => $user->id,
+        ]);
+
+        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+        $results = $this->search([
+            'type' => 'thread',
+            'lastCreated' => $daysAgo,
+            'postedBy' => $user->name,
+        ],
+            $this->totalNumberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $this->totalNumberOfDesiredItems, $results
+        );
+
+        $results = collect($results);
+        $resultedReply = $results->firstWhere('type', 'thread-reply');
+        $resultedThread = $results->firstWhere('type', 'thread');
+
+        $this->assertThread($resultedThread, $desiredThread);
+        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
+
+        $desiredThread->delete();
+        $undesiredThread->delete();
+        $anotherUndesiredThread->delete();
+    }
+
+    /** @test */
     public function search_threads_given_a_search_term()
     {
         $undesiredThread = create(Thread::class);
