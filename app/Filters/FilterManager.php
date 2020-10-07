@@ -51,8 +51,9 @@ class FilterManager
         foreach ($this->modelFilters as $modelFilterClass) {
             $modelFilter = app($modelFilterClass, compact('builder'));
             foreach ($this->getRequestedFilters($modelFilter) as $filter => $value) {
-                if (method_exists($modelFilter, $filter) && $this->isNotApplied($modelFilterClass, $filter)) {
-
+                if (method_exists($modelFilter, $filter)
+                    && $this->isNotApplied($modelFilterClass, $filter)
+                ) {
                     $modelFilter->$filter($value);
 
                     $this->appliedFilters[$modelFilterClass] = $filter;
@@ -60,7 +61,6 @@ class FilterManager
             }
             $builder = $modelFilter->builder();
         }
-
         return $builder;
     }
 
@@ -92,8 +92,8 @@ class FilterManager
     public function isNotApplied($modelFilterClass, $filter)
     {
         if (in_array($filter, $this->appliedFilters)) {
-            return array_key_exists($modelFilterClass, $this->appliedFilters) &&
-            $this->appliedFilters[$modelFilterClass] == $filter;
+            return array_key_exists($modelFilterClass, $this->appliedFilters)
+            && $this->appliedFilters[$modelFilterClass] == $filter;
         }
         return true;
     }
