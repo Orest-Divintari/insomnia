@@ -62,9 +62,10 @@ class Activity extends Model
     /**
      * Fetch only the posting activities
      *
+     * @param  Builder
      * @return Builder
      */
-    public function scopeOnlyPostings($query)
+    public function scopeOfAllPosts($query)
     {
         return $query->where('subject_type', '!=', 'App\Like');
     }
@@ -103,7 +104,6 @@ class Activity extends Model
             'profile_owner_id' => ProfilePost::select('profile_owner_id')
                 ->whereColumn('profile_posts.id', 'activities.subject_id'),
         ]);
-
         return [$commentsActivity, $profilePostsActivity];
     }
 
@@ -147,7 +147,6 @@ class Activity extends Model
         //     )->with(['subject' => function ($builder) {
         //     $builder->withSearchInfo();
         // }]);
-
         return [$repliesActivity, $threadsActivity];
     }
 }
