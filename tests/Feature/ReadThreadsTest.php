@@ -230,7 +230,7 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function user_can_read_the_threads_that_have_been_last_crated_X_days_ago()
+    public function user_can_read_the_threads_that_have_been_last_created_X_days_ago()
     {
         $todaysThread = create(Thread::class);
         $oldThread = create(Thread::class, [
