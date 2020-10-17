@@ -67,7 +67,25 @@ class Activity extends Model
      */
     public function scopeOfAllPosts($query)
     {
-        return $query->where('subject_type', '!=', 'App\Like');
+        return $query->whereHasMorph(
+            'subject',
+            [
+                'App\Thread',
+                'App\Reply',
+                'App\ProfilePost',
+            ]
+        );
+    }
+
+    /**
+     * Get only the thread activities
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOfThreads($query)
+    {
+        return $query->whereHasMorph('subject', ['App\Thread']);
     }
 
     /**
