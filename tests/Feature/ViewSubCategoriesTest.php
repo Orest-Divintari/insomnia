@@ -91,7 +91,7 @@ class ViewSubCategoriesTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_the_name_of_the_user_who_crated_the_most_recent_thread()
+    public function a_user_can_view_the_name_of_the_user_who_created_the_most_recent_thread()
     {
         $recentThread = create(Thread::class, [
             'category_id' => $this->subCategory->id,
