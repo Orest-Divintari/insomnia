@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Thread;
+use Carbon\Carbon;
+use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -27,7 +30,7 @@ class SearchTest extends TestCase
     /** @test */
     public function when_there_are_no_threads_stored_in_the_database()
     {
-        $results = $this->getJson(route('search.show'), ['type' => 'thread']);
+        $results = $this->getJson(route('search.show', ['type' => 'thread']));
 
         $this->assertEquals('No results', $results->getContent());
     }
