@@ -56,7 +56,7 @@ class FilterManager
                 ) {
                     $modelFilter->$filter($value);
 
-                    $this->appliedFilters[$modelFilterClass] = $filter;
+                    $this->appliedFilters[$modelFilterClass][] = $filter;
                 }
             }
             $builder = $modelFilter->builder();
