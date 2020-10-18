@@ -52,7 +52,7 @@ class FilterManager
             $modelFilter = app($modelFilterClass, compact('builder'));
             foreach ($this->getRequestedFilters($modelFilter) as $filter => $value) {
                 if (method_exists($modelFilter, $filter)
-                    && $this->isNotApplied($modelFilterClass, $filter)
+                    && $this->canBeApplied($modelFilterClass, $filter)
                 ) {
                     $modelFilter->$filter($value);
 
@@ -89,11 +89,11 @@ class FilterManager
      * @param mixed $filter
      * @return boolean
      */
-    public function isNotApplied($modelFilterClass, $filter)
+    public function canBeApplied($modelFilterClass, $filter)
     {
-        if (in_array($filter, $this->appliedFilters)) {
-            return array_key_exists($modelFilterClass, $this->appliedFilters)
-            && $this->appliedFilters[$modelFilterClass] == $filter;
+        if ($this->filterIsApplied($filter)) {
+            return $this->filterClassIsApplied($modelFilterClass)
+            && $this->filterIsAppliedByFilterClass($modelFilterClass, $filter);
         }
         return true;
     }
@@ -101,12 +101,37 @@ class FilterManager
     /**
      * Chains model filters
      *
-     * @param  $modelFilter
-     * @return void
+     * @param mixed $modelFilterClass
+     * @param string $filter
+     * @return bool
      */
-    public function addFilter($modelFilter)
+    public function filterIsAppliedByFilterClass($modelFilterClass, $filter)
     {
-        $this->modelFilters[] = $modelFilter;
+        return collect($this->appliedFilters[$modelFilterClass])->contains($filter);
+    }
+
+    /**
+     * Determine whether the given filter class has applied any filters
+     *
+     * @param mixed $modelFilterClass
+     * @return bool
+     */
+    public function filterClassIsApplied($modelFilterClass)
+    {
+        return array_key_exists($modelFilterClass, $this->appliedFilters);
+    }
+
+    /**
+     * Determine whether the given filter has been applied
+     *
+     * @param string $filter
+     * @return bool
+     */
+    public function filterIsApplied($filter)
+    {
+        return collect($this->appliedFilters)
+            ->flatten()
+            ->contains($filter);
     }
 
     /**
