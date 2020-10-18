@@ -23,16 +23,6 @@ class Filters
     protected $builder;
 
     /**
-     * Create a new ThreadFilters instance
-     *
-     * @param Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder $builder
-     */
-    public function __construct($builder)
-    {
-        $this->builder = $builder;
-    }
-
-    /**
      * Fetch the threads for the given username
      *
      * @param String $username
@@ -71,4 +61,10 @@ class Filters
     {
         return $this->builder;
     }
+
+    public function setBuilder($builder)
+    {
+        $this->builder = $builder;
+    }
+
 }
