@@ -2,10 +2,10 @@
 
 namespace App;
 
-use App\Search\SearchAllPosts;
-use App\Search\SearchProfilePosts;
-use App\Search\SearchThreads;
+use App\Search\ModelFilterFactory;
+use App\Search\SearchStrategyFactory;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class Search
@@ -17,28 +17,75 @@ class Search
     const RESULTS_PER_PAGE = 10;
 
     /**
-     * Get paginated search results
+     * The model factory that is used
+     * to get the requested model filter
      *
-     * @return Illuminate\Pagination\LengthAwarePaginator|string
+     * @var mixed
      */
-    public function getResults()
+    protected $filtersFactory;
+
+    /**
+     * The strategy factory that is used
+     * to get requested the search strategy
+     *
+     * @var [type]
+     */
+    protected $searchStrategyFactory;
+
+    /**
+     * Create a new search instance
+     *
+     * @param SearchStrategyFactory $strategyFactory
+     * @param ModelFilterFactory $filtersFactory
+     */
+    public function __construct(SearchStrategyFactory $searchStrategyFactory, ModelFilterFactory $filtersFactory)
     {
-        try
-        {
-            if (request('type') == 'thread') {
-                $results = app(SearchThreads::class)->query();
-            } elseif (request('type') == 'profile_post') {
-                $results = app(SearchProfilePosts::class)->query();
-            } elseif (request()->missing('type')) {
-                $results = app(SearchAllPosts::class)->query();
-            }
+        $this->searchStrategyFactory = $searchStrategyFactory;
+        $this->filtersFactory = $filtersFactory;
+    }
+
+    /**
+     * Get the search results
+     * apply model filters on search results
+     * and return paginated data
+     *
+     * @return Collection|string
+     */
+    public function handle(Request $request)
+    {
+        try {
+            $strategy = $this->strategyFor($request);
+            $filters = $this->filtersFor($request);
+
+            $builder = $strategy->search($request);
+            $results = $filters->apply($builder);
+            return $this->getPaginatedData($results);
         } catch (Exception $e) {
             return $this->noResults();
         }
-
-        return $this->getPaginatedData($results);
     }
 
+    /**
+     * Get a search strategy instance
+     *
+     * @param Request $request
+     * @return SearchStrategyInterface
+     */
+    public function strategyFor(Request $request)
+    {
+        return $this->searchStrategyFactory->create($request);
+    }
+
+    /**
+     * Get a model filter instance
+     *
+     * @param Request $request
+     * @return App\Filters\Filter
+     */
+    public function filtersFor(Request $request)
+    {
+        return $this->filtersFactory->create($request);
+    }
     /**
      * Paginates the data
      * Transforms the data if results
@@ -51,7 +98,7 @@ class Search
     {
         $results = $results->paginate(static::RESULTS_PER_PAGE);
         if (empty($results->items())) {
-            return $this->noResults();
+            throw new Exception('No results');
         } elseif (array_key_exists('subject', $results->toArray()['data'][0])) {
             return $this->getActivitySubject($results);
         }
@@ -79,7 +126,6 @@ class Search
             $pagination['current_page'],
             ['path' => $pagination['path']]
         );
-
         return $results;
     }
 

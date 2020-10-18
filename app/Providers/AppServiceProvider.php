@@ -2,10 +2,6 @@
 
 namespace App\Providers;
 
-use App\Filters\FilterManager;
-use App\Filters\ProfilePostFilters;
-use App\Filters\ReplyFilters;
-use App\Filters\ThreadFilters;
 use App\Notifications\ThreadHasNewReply;
 use App\Reply;
 use App\Search\AllPosts;
@@ -27,31 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ThreadHasNewReply::class, function ($app, $params) {
             return new ThreadHasNewReply($params['thread'], $params['reply']);
-        });
-
-        $this->app->bind('ThreadFilters', function ($app) {
-            $filterManager = app(FilterManager::class);
-            $filterManager->addFilter(ThreadFilters::class);
-            return $filterManager;
-        });
-
-        $this->app->bind('ProfilePostFilters', function ($app) {
-            $filterManager = app(FilterManager::class);
-            $filterManager->addFilter(ProfilePostFilters::class);
-            return $filterManager;
-        });
-
-        $this->app->bind('AllPostsFilters', function ($app) {
-            $filterManager = app(FilterManager::class);
-            $filterManager->addFilter(ThreadFilters::class);
-            $filterManager->addFilter(ProfilePostFilters::class);
-            return $filterManager;
-        });
-
-        $this->app->bind('ReplyFilters', function ($app) {
-            $filterManager = app(FilterManager::class);
-            $filterManager->addFilter(ReplyFilters::class);
-            return $filterManager;
         });
     }
 
