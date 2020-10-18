@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
+
+    protected $request;
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
     /**
      * Number of results per page
      * @var int
@@ -21,11 +27,11 @@ class SearchController extends Controller
     public function show(Search $search)
     {
         if (request()->expectsJson()) {
-            return $search->getResults();
+            return $search->handle($this->request);
         }
+        $results = $search->handle($this->request);
+        $query = $this->request->input('q');
 
-        $results = $search->getResults();
-        $query = request('q');
         return view('search.show', compact('results', 'query'));
     }
 
