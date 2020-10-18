@@ -7,23 +7,22 @@ use Illuminate\Http\Request;
 
 class FilterManager
 {
-
     public $request;
     public $builder;
     public $appliedFilters = [];
     public $supportedFilters = [];
     public $modelFilters = [];
     public $requestedFilters = [];
+    public $chain;
 
     /**
-     * Create new FilterManager instance
+     * Create a new FilterManager instance
      *
-     * @param Request $request
-     * @param array
+     * @param ModelFilterChain $chain
      */
-    public function __construct(Request $request)
+    public function __construct(ModelFilterChain $chain)
     {
-        $this->request = $request;
+        $this->chain = $chain;
     }
 
     /**
@@ -38,6 +37,7 @@ class FilterManager
             return $this->applyOnQueries($builder);
         }
         return $this->applyOnQuery($builder);
+
     }
 
     /**
@@ -48,9 +48,12 @@ class FilterManager
      */
     public function applyOnQuery($builder)
     {
-        foreach ($this->modelFilters as $modelFilterClass) {
-            $modelFilter = app($modelFilterClass, compact('builder'));
+        foreach ($this->chain->getFilters() as $modelFilterClass) {
+
+            $modelFilter = new $modelFilterClass();
+            $modelFilter->setBuilder($builder);
             foreach ($this->getRequestedFilters($modelFilter) as $filter => $value) {
+
                 if (method_exists($modelFilter, $filter)
                     && $this->canBeApplied($modelFilterClass, $filter)
                 ) {
@@ -99,7 +102,7 @@ class FilterManager
     }
 
     /**
-     * Chains model filters
+     * Determine whether the given filter has been applied by the given model filter
      *
      * @param mixed $modelFilterClass
      * @param string $filter
@@ -208,6 +211,50 @@ class FilterManager
                 }
                 return $value;
             })->toArray();
+    }
+
+    /**
+     * Add ThreadFilters to the chain
+     *
+     * @return FilterManager
+     */
+    public function withThreadFilters()
+    {
+        $this->chain->withThreadFilters();
+        return $this;
+    }
+
+    /**
+     * Add ReplyFilters to the chain
+     *
+     * @return FilterManager
+     */
+    public function withReplyFilters()
+    {
+        $this->chain->withReplyFilters();
+        return $this;
+    }
+
+    /**
+     * Add ProfilePostFilters to the chain
+     *
+     * @return FilterManager
+     */
+    public function withProfilePostFilters()
+    {
+        $this->chain->withProfilePostFilters();
+        return $this;
+    }
+
+    /**
+     * Add all post filters to the chain
+     *
+     * @return FilterManager
+     */
+    public function withAllPostsFilters()
+    {
+        $this->chain->withAllPostsFilters();
+        return $this;
     }
 
 }
