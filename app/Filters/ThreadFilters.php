@@ -55,7 +55,7 @@ class ThreadFilters extends Filters
     }
 
     /**
-     * Fetch the threads that you have participated
+     * Fetch the threads that the given user has participated
      *
      * @return void
      */
