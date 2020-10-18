@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Filters\FilterManager;
 use App\Http\Requests\CreateThreadRequest;
 use App\Reply;
 use App\Thread;
+use DeepCopy\Filter\Filter;
 
 class ThreadController extends Controller
 {
+
+    protected $filterManager;
+    public function __construct(FilterManager $filterManager)
+    {
+        $this->filterManager = $filterManager;
+    }
 
     /**
      * Display the list of threads
@@ -18,8 +26,7 @@ class ThreadController extends Controller
      */
     public function index(Category $category)
     {
-        $filters = app('ThreadFilters');
-
+        $filters = $this->filterManager->withThreadFilters();
         $threads = Thread::with('poster')
             ->filter($filters)
             ->withRecentReply()
@@ -53,7 +60,7 @@ class ThreadController extends Controller
 
     /**
      * Store a newly created thread in storage
-     *
+     * @param CreateThreadRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateThreadRequest $request)
@@ -72,7 +79,7 @@ class ThreadController extends Controller
     public function show(Thread $thread)
     {
         $thread->load('poster');
-        $filters = app('ReplyFilters');
+        $filters = $this->filterManager->withReplyFilters();
 
         $replies = Reply::forThread($thread, $filters);
 
