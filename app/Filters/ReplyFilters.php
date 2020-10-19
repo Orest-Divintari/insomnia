@@ -2,10 +2,11 @@
 
 namespace App\Filters;
 
+use App\Filters\FilterInterface;
 use App\Filters\Filters;
 use Illuminate\Database\Eloquent\Builder;
 
-class ReplyFilters
+class ReplyFilters implements FilterInterface
 {
     /**
      * Supported filters for replies

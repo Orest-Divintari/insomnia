@@ -1,9 +1,9 @@
 <?php
 namespace App\Filters;
 
+use App\Filters\FilterInterface;
 use App\Filters\Filters;
 use App\User;
-use FilterInterface;
 
 class ProfilePostFilters extends PostFilters implements FilterInterface
 {

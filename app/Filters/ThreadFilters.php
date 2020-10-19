@@ -2,12 +2,12 @@
 
 namespace App\Filters;
 
+use App\Filters\FilterInterface;
 use App\Filters\Filters;
 use App\Reply;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
-use FilterInterface;
 
 class ThreadFilters extends PostFilters implements FilterInterface
 {
