@@ -23,10 +23,8 @@ class ProfilePostFiltersTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->profilePostFilters = app(
-            ProfilePostFilters::class,
-            ['builder' => ProfilePost::query()]
-        );
+        $this->profilePostFilters = app(ProfilePostFilters::class);
+        $this->profilePostFilters->setBuilder(ProfilePost::query());
     }
 
     /** @test */

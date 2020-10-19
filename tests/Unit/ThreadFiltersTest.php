@@ -25,10 +25,8 @@ class ThreadFiltersTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->threadFilters = app(
-            ThreadFilters::class,
-            ['builder' => Thread::query()]
-        );
+        $this->threadFilters = app(ThreadFilters::class);
+        $this->threadFilters->setBuilder(Thread::query());
     }
     /** @test */
     public function sort_threads_by_creation_date()
