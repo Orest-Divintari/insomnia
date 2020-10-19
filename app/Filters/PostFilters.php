@@ -5,7 +5,7 @@ namespace App\Filters;
 use App\User;
 use Carbon\Carbon;
 
-class Filters
+class PostFilters
 {
 
     /**
@@ -62,6 +62,12 @@ class Filters
         return $this->builder;
     }
 
+    /**
+     * Set the builder
+     *
+     * @param Builder $builder
+     * @return void
+     */
     public function setBuilder($builder)
     {
         $this->builder = $builder;
