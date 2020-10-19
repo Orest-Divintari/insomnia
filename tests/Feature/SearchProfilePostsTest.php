@@ -324,7 +324,7 @@ class SearchProfilePostsTest extends SearchTest
         $results = $this->search([
             'type' => 'profile_post',
             'lastCreated' => $daysAgo,
-            'profileOwner' => $user->name,
+            'profileOwner' => $profileOwner->name,
         ],
             $this->totalNumberOfDesiredItems
         );
