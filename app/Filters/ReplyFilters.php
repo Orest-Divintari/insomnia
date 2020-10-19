@@ -22,13 +22,24 @@ class ReplyFilters
     public $builder;
 
     /**
-     * Create a new ReplyFilters instance.
+     * Set the builder
      *
-     * @param Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder $builder
+     * @param Builder $builder
+     * @return void
      */
-    public function __construct($builder)
+    public function setBuilder($builder)
     {
         $this->builder = $builder;
+    }
+
+    /**
+     * Return the builder
+     *
+     * @return Builder
+     */
+    public function builder()
+    {
+        return $this->builder;
     }
 
     /**
@@ -41,13 +52,4 @@ class ReplyFilters
         $this->builder->orderBy('likes_count', 'DESC');
     }
 
-    /**
-     * Returns the builder
-     *
-     * @return Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
-     */
-    public function builder()
-    {
-        return $this->builder;
-    }
 }

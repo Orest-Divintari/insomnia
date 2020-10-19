@@ -3,8 +3,9 @@ namespace App\Filters;
 
 use App\Filters\Filters;
 use App\User;
+use FilterInterface;
 
-class ProfilePostFilters extends Filters
+class ProfilePostFilters extends PostFilters implements FilterInterface
 {
 
     /**

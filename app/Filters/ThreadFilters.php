@@ -7,8 +7,9 @@ use App\Reply;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
+use FilterInterface;
 
-class ThreadFilters extends Filters
+class ThreadFilters extends PostFilters implements FilterInterface
 {
     /**
      * Supported filters for threads
