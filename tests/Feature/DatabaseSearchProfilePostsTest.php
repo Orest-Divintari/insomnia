@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\ProfilePost;
+use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
