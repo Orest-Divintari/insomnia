@@ -47,11 +47,10 @@ class SearchProfilePostsTest extends SearchTest
         $anotherUser = $this->signIn();
         $undesiredProfilePost = create(ProfilePost::class);
 
-        $results = $this->search(
-            [
-                'type' => 'profile_post',
-                'postedBy' => $user->name,
-            ],
+        $results = $this->search([
+            'type' => 'profile_post',
+            'postedBy' => $user->name,
+        ],
             $this->numberOfDesiredProfilePosts
         );
         $this->assertCount(
@@ -301,10 +300,10 @@ class SearchProfilePostsTest extends SearchTest
             ProfilePost::class,
             ['profile_owner_id' => $profileOwner->id]
         );
+
         $desiredComment = CommentFactory::create([
             'repliable_id' => $desiredProfilePost->id,
         ]);
-
         $undesiredProfilePost = create(ProfilePost::class);
         $undesiredComment = CommentFactory::create([
             'repliable_id' => $undesiredProfilePost->id,
@@ -338,7 +337,11 @@ class SearchProfilePostsTest extends SearchTest
         $resultedProfilePost = $results->firstWhere('type', 'profile-post');
 
         $this->assertProfilePost($resultedProfilePost, $desiredProfilePost);
-        $this->assertComment($resultedComment, $desiredComment, $desiredProfilePost);
+        $this->assertComment(
+            $resultedComment,
+            $desiredComment,
+            $desiredProfilePost
+        );
 
         $desiredProfilePost->delete();
         $undesiredProfilePost->delete();
