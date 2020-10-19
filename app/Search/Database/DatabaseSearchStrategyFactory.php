@@ -2,7 +2,6 @@
 
 namespace App\Search\Database;
 
-use App\Search\Algolia\SearchThreadsTitle;
 use App\Search\Database\SearchAllPosts;
 use App\Search\Database\SearchProfilePosts;
 use App\Search\Database\SearchThreadsAndReplies;
@@ -21,13 +20,11 @@ class DatabaseSearchStrategyFactory implements SearchStrategyFactoryInterface
     public function create(Request $request)
     {
         $type = $request->input('type');
-        $onlyTitle = $request->input('only_title');
-        if ($type == 'thread' && !$onlyTitle) {
+
+        if ($type == 'thread') {
             return new SearchThreadsAndReplies();
-        } elseif ($type == 'profile_post' && !$onlyTitle) {
+        } elseif ($type == 'profile_post') {
             return new SearchProfilePosts();
-        } elseif ($type == 'thread' && $onlyTitle) {
-            return new SearchThreadsTitle();
         } elseif (is_null($type)) {
             return new SearchAllPosts();
         }
