@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Filters\ReplyFilters;
 use App\Like;
 use App\ProfilePost;
 use App\Reply;
@@ -222,7 +223,7 @@ class ReplyTest extends TestCase
         $user = $this->signIn();
         $reply->likedBy($user);
 
-        $replyFilters = app('ReplyFilters');
+        $replyFilters = app(ReplyFilters::class);
 
         $paginatedReplies = Reply::forThread($thread, $replyFilters);
         $replyArray = $paginatedReplies->firstWhere('id', $reply->id);

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Filters\FilterManager;
 use App\Filters\ModelFilterChain;
+use App\Filters\ReplyFilters;
 use App\Search\ModelFilterFactory;
 use Illuminate\Support\ServiceProvider;
 
@@ -47,6 +48,10 @@ class FilterServiceProvider extends ServiceProvider
         $this->app->bind(ModelFilterFactory::class, function ($app) {
             $filterManager = app(FilterManager::class);
             return new ModelFilterFactory($filterManager);
+        });
+
+        $this->app->bind(ReplyFilters::class, function ($app) {
+            return app(FilterManager::class)->withReplyFilters();
         });
     }
 
