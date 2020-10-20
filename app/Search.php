@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Search\ModelFilterFactory;
-use App\Search\SearchStrategyFactory;
+use App\Search\SearchIndexFactory;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -25,22 +25,22 @@ class Search
     protected $filtersFactory;
 
     /**
-     * The strategy factory that is used
-     * to get requested the search strategy
+     * The search index factory that is used
+     * to get requested the search index
      *
-     * @var [type]
+     * @var SearchIndexFactory
      */
-    protected $searchStrategyFactory;
+    protected $indexFactory;
 
     /**
-     * Create a new search instance
+     * Create a new Search instance
      *
-     * @param SearchStrategyFactory $strategyFactory
+     * @param SearchIndexFactory $searchIndexFactory
      * @param ModelFilterFactory $filtersFactory
      */
-    public function __construct(SearchStrategyFactory $searchStrategyFactory, ModelFilterFactory $filtersFactory)
+    public function __construct(SearchIndexFactory $searchIndexFactory, ModelFilterFactory $filtersFactory)
     {
-        $this->searchStrategyFactory = $searchStrategyFactory;
+        $this->indexFactory = $searchIndexFactory;
         $this->filtersFactory = $filtersFactory;
     }
 
@@ -49,16 +49,26 @@ class Search
      * apply model filters on search results
      * and return paginated data
      *
+     * @param Request $request
      * @return Collection|string
      */
     public function handle(Request $request)
     {
-        try {
-            $strategy = $this->strategyFor($request);
-            $filters = $this->filtersFor($request);
+        $type = $request->input('type') ?: '';
+        $onlyTitle = $request->input('only_title') ?: false;
+        $searchQuery = $request->input('q') ?: '';
 
-            $builder = $strategy->search($request);
+        try {
+            $index = $this->indexFor(
+                $searchQuery,
+                $type,
+                $onlyTitle
+            );
+            $filters = $this->filtersFor($type);
+
+            $builder = $index->search($searchQuery);
             $results = $filters->apply($builder);
+
             return $this->getPaginatedData($results);
         } catch (Exception $e) {
             return $this->noResults();
@@ -66,71 +76,51 @@ class Search
     }
 
     /**
-     * Get a search strategy instance
+     * Get the search index instance
      *
-     * @param Request $request
-     * @return SearchStrategyInterface
+     * @param string $searchQuery
+     * @param string $type
+     * @param bool $onlyTitle
+     * @return SearchIndexInterface
      */
-    public function strategyFor(Request $request)
+    public function indexFor(string $searchQuery, string $type, bool $onlyTitle = false)
     {
-        return $this->searchStrategyFactory->create($request);
+        return $this->indexFactory
+            ->create($searchQuery, $type, $onlyTitle);
     }
 
     /**
      * Get a model filter instance
      *
-     * @param Request $request
-     * @return App\Filters\Filter
+     * @param string $type
+     * @return FilterManager
      */
-    public function filtersFor(Request $request)
+    public function filtersFor(string $type)
     {
-        return $this->filtersFactory->create($request);
+        return $this->filtersFactory->create($type);
     }
+
     /**
      * Paginates the data
      * Transforms the data if results
      * are returned from activities table
      *
      * @param Collection $results
-     * @return Illuminate\Pagination\LengthAwarePaginator|string
+     * @return Illuminate\Pagination\LengthAwarePaginator
      */
     public function getPaginatedData($results)
     {
         $results = $results->paginate(static::RESULTS_PER_PAGE);
+
         if (empty($results->items())) {
             throw new Exception('No results');
-        } elseif (array_key_exists('subject', $results->toArray()['data'][0])) {
-            return $this->getActivitySubject($results);
         }
+
         return $results;
     }
 
     /**
-     * When the activities table is used to get the results
-     * then the results are enclosed in the subject attribute
-     * This happens when there is no search query word
-     *
-     * @param Illuminate\Pagination\LengthAwarePaginator $results
-     * @return Illuminate\Pagination\LengthAwarePaginator
-     */
-    public function getActivitySubject($results)
-    {
-        $data = collect(collect($results)['data']);
-
-        $pagination = $results->toArray();
-        $subjects = $data->pluck('subject');
-        $results = new LengthAwarePaginator(
-            $subjects,
-            $pagination['total'],
-            $pagination['per_page'],
-            $pagination['current_page'],
-            ['path' => $pagination['path']]
-        );
-        return $results;
-    }
-
-    /**
-     * Return a message if no results are found
+     * Return message when no results are found
      *
      * @return string
      */

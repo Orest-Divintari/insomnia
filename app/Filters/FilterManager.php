@@ -28,62 +28,27 @@ class FilterManager
     /**
      * Apply filters on the given builder
      *
-     * @param Builder|Builder[] $builder
-     * @return Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
+     * @param Builder
+     * @return Laravel\ScoutExtended\Builder|Illuminate\Database\Eloquent\Builder
      */
     public function apply($builder)
     {
-        if (gettype($builder) == 'array') {
-            return $this->applyOnQueries($builder);
-        }
-        return $this->applyOnQuery($builder);
-
-    }
-
-    /**
-     * Apply the filters on the given builder
-     *
-     * @param Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder $builder
-     * @return Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
-     */
-    public function applyOnQuery($builder)
-    {
         foreach ($this->chain->getFilters() as $modelFilterClass) {
-
             $modelFilter = new $modelFilterClass();
             $modelFilter->setBuilder($builder);
+
             foreach ($this->getRequestedFilters($modelFilter) as $filter => $value) {
 
                 if (method_exists($modelFilter, $filter)
                     && $this->canBeApplied($modelFilterClass, $filter)
                 ) {
                     $modelFilter->$filter($value);
-
                     $this->appliedFilters[$modelFilterClass][] = $filter;
                 }
             }
             $builder = $modelFilter->builder();
         }
         return $builder;
-    }
-
-    /**
-     * Apply the filters on multiple queries and finally union the filtered queries
-     *
-     * @param Builder[] $builders
-     * @return Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
-     */
-    public function applyOnQueries($builders)
-    {
-        $filteredQueries = [];
-        foreach ($builders as $builder) {
-            $filteredQueries[] = $this->applyOnQuery($builder);
-        }
-        $unionQuery = $filteredQueries[0];
-        for ($queryCounter = 1; $queryCounter < count($builders); $queryCounter++) {
-            $unionQuery = $unionQuery->union($filteredQueries[$queryCounter]);
-        }
-        return $unionQuery;
     }
 
     /**
@@ -110,7 +75,8 @@ class FilterManager
      */
     public function filterIsAppliedByFilterClass($modelFilterClass, $filter)
     {
-        return collect($this->appliedFilters[$modelFilterClass])->contains($filter);
+        return collect($this->appliedFilters[$modelFilterClass])
+            ->contains($filter);
     }
 
     /**

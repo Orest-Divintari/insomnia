@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Search;
 use App\Search\ModelFilterFactory;
-use App\Search\SearchStrategyFactory;
+use App\Search\SearchIndexFactory;
 use Illuminate\Support\ServiceProvider;
 
 class SearchServiceProvider extends ServiceProvider
@@ -18,11 +18,11 @@ class SearchServiceProvider extends ServiceProvider
     {
         $this->app->bind(Search::class, function ($app) {
 
-            $searchStrategyFactory = app(SearchStrategyFactory::class);
+            $searchIndexFactory = app(SearchIndexFactory::class);
 
             $filtersFactory = app(ModelFilterFactory::class);
 
-            return new Search($searchStrategyFactory, $filtersFactory);
+            return new Search($searchIndexFactory, $filtersFactory);
         });
     }
 
