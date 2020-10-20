@@ -49,21 +49,4 @@ class ActivityTest extends TestCase
         $this->assertCount($numberOfTotalActivities, Activity::all());
         $this->assertCount($numberOfPostingActivities, Activity::ofAllPosts()->get());
     }
-
-    /** @test */
-    public function a_user_can_get_the_activity_of_threads()
-    {
-        $user = $this->signIn();
-
-        $thread = create(Thread::class);
-        $reply = ReplyFactory::create(['repliable_id' => $thread->id]);
-        $profilePost = create(ProfilePost::class);
-        $comment = CommentFactory::create(['repliable_id' => $profilePost->id]);
-        $reply->likedBy($user);
-        $comment->likedBy($user);
-        $numberOfTotalActivities = 6;
-        $numberOfThreadActivities = 1;
-        $this->assertCount($numberOfTotalActivities, Activity::all());
-        $this->assertCount($numberOfThreadActivities, Activity::ofThreads()->get());
-    }
 }

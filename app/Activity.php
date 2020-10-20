@@ -60,7 +60,7 @@ class Activity extends Model
     }
 
     /**
-     * Fetch only the posting activities
+     * Get the activity of all posts
      *
      * @param  Builder
      * @return Builder
@@ -70,101 +70,9 @@ class Activity extends Model
         return $query->whereHasMorph(
             'subject',
             [
-                'App\Thread',
-                'App\Reply',
-                'App\ProfilePost',
-            ]
-        );
-    }
-
-    /**
-     * Get only the thread activities
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeOfThreads($query)
-    {
-        return $query->whereHasMorph('subject', ['App\Thread']);
-    }
-
-    /**
-     * Get the activity of profile posts and comments
-     * and eager load the required relationships for displaying as search result
-     *
-     * @param Builder $query
-     * @return array
-     */
-    public function scopeOfProfilePostsAndComments($query)
-    {
-        $commentsActivity = $query->whereHasMorph('subject', ['App\Reply'], function ($builder) {
-            $builder->onlyComments();
-        })->with(['subject' => function ($builder) {
-            $builder->withSearchInfo();
-        }])->addSelect([
-            'profile_owner_id' => ProfilePost::select('profile_owner_id')
-                ->whereRaw('profile_posts.id =
-                (
-                   SELECT
-                      repliable_id
-                   from
-                      replies
-                   where
-                      replies.id = activities.subject_id
-                )'),
-        ]);
-
-        $profilePostsActivity = Activity::where(
-            'subject_type', '=', 'App\ProfilePost'
-        )->with(['subject' => function ($builder) {
-            $builder->withSearchInfo();
-        }])->addSelect([
-            'profile_owner_id' => ProfilePost::select('profile_owner_id')
-                ->whereColumn('profile_posts.id', 'activities.subject_id'),
-        ]);
-        return [$commentsActivity, $profilePostsActivity];
-    }
-
-    /**
-     * Get the activity for threads and replies and eager load the respective relationships
-     * for displaying as a search result
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeOfThreadsAndReplies($query)
-    {
-        $repliesActivity = $query
-            ->whereHasMorph('subject', ['App\Reply'], function ($builder) {
-                $builder->onlyReplies();
-            })->with(['subject' => function ($builder) {
-            $builder->withSearchInfo();
-        }]);
-
-        $threadsActivity = Activity::where('subject_type', 'App\Thread')
-            ->with(['subject' => function ($builder) {
-                $builder->withSearchInfo();
-            }]);
-
-        // $repliesActivity = $query->whereHasMorph('subject', ['App\Reply'], function ($builder) {
-        //     $builder->onlyReplies();
-        // })->addSelect(
-        //     [
-        //         'replies_count' => Thread::select('replies_count')
-        //             ->whereRaw('threads.id=(SELECT repliable_id from replies where replies.id=activities.subject_id)'),
-        //     ]
-        // )->with(['subject' => function ($builder) {
-        //     $builder->withSearchInfo();
-        // }]);
-
-        // $threadsActivity = Activity::where('subject_type', 'App\Thread')
-        //     ->addSelect(
-        //         ['replies_count' => Thread::select('replies_count')
-        //                 ->whereColumn('threads.id', 'activities.subject_id'),
-        //         ]
-        //     )->with(['subject' => function ($builder) {
-        //     $builder->withSearchInfo();
-        // }]);
-        return [$repliesActivity, $threadsActivity];
+                Thread::class,
+                ProfilePost::class,
+                Reply::class,
+            ]);
     }
 }
