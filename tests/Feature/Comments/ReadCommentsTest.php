@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Comments;
 
 use App\ProfilePost;
 use Facades\Tests\Setup\CommentFactory;

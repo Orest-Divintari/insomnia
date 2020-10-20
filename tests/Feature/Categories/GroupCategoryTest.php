@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Categories;
 
 use App\Category;
 use App\GroupCategory;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\ProfilePosts;
 
 use App\ProfilePost;
 use App\Reply;

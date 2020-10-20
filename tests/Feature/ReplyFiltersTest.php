@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Filters\ReplyFilters;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -29,6 +30,7 @@ class ReplyFiltersTest extends TestCase
         $unpopularReply->likedBy($anotherUser);
 
         $response = $this->getJson(route('threads.show', $thread) . "?sortByLikes=1");
+
         $this->assertEquals($popularReply->id, $response['data'][0]['id']);
         $this->assertEquals($unpopularReply->id, $response['data'][1]['id']);
 
