@@ -3,7 +3,11 @@
     <div class="border border-gray-lighter rounded relative">
       <div class="bg-white-catskill p-4 flex">
         <div class="w-56">
-          <img :src="profileOwner.avatar_path" class="avatar-2xl absolute" alt="avatar" />
+          <img
+            :src="profileOwner.avatar_path"
+            class="avatar-2xl absolute"
+            alt="avatar"
+          />
         </div>
         <div>
           <p class="text-2xl" v-text="profileOwner.name"></p>
@@ -16,11 +20,17 @@
           <div class="flex justify-between p-4">
             <div>
               <p class="text-xs text-gray-lightest">Messages</p>
-              <p class="text-md text-center" v-text="profileOwner.messages_count"></p>
+              <p
+                class="text-md text-center"
+                v-text="profileOwner.messages_count"
+              ></p>
             </div>
             <div>
               <p class="text-xs text-gray-lightest">Likes Score</p>
-              <p class="text-md text-center" v-text="profileOwner.likes_score"></p>
+              <p
+                class="text-md text-center"
+                v-text="profileOwner.likes_score"
+              ></p>
             </div>
             <div>
               <p class="text-xs text-gray-lightest">Points</p>
@@ -56,11 +66,18 @@
                   </template>
                   <template v-slot:dropdown-items>
                     <div class="dropdown-title">Find content</div>
-                    <div class="dropdown-item">Find all content by {{ user.name }}</div>
+                    <div class="dropdown-item">
+                      <a :href="'/search?postedBy=' + profileOwner.name"
+                        >Find all content by {{ profileOwner.name }}
+                      </a>
+                    </div>
                     <a
-                      :href="'/threads?postedBy=' + profileOwner.name"
+                      :href="
+                        '/search?type=thread&postedBy=' + profileOwner.name
+                      "
                       class="dropdown-item"
-                    >Find all threads by {{ profileOwner.name }}</a>
+                      >Find all threads by {{ profileOwner.name }}</a
+                    >
                   </template>
                 </dropdown>
               </div>

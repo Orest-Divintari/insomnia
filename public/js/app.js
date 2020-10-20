@@ -4141,6 +4141,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -84096,9 +84113,22 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "dropdown-item" }, [
-                                  _vm._v(
-                                    "Find all content by " +
-                                      _vm._s(_vm.user.name)
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href:
+                                          "/search?postedBy=" +
+                                          _vm.profileOwner.name
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Find all content by " +
+                                          _vm._s(_vm.profileOwner.name) +
+                                          "\n                    "
+                                      )
+                                    ]
                                   )
                                 ]),
                                 _vm._v(" "),
@@ -84108,7 +84138,7 @@ var render = function() {
                                     staticClass: "dropdown-item",
                                     attrs: {
                                       href:
-                                        "/threads?postedBy=" +
+                                        "/search?type=thread&postedBy=" +
                                         _vm.profileOwner.name
                                     }
                                   },
