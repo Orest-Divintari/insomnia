@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Search;
 
 use App\ProfilePost;
 use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Feature\SearchProfilePostsTest;
+use Tests\Feature\Search\SearchProfilePostsTest;
 
-class DatabaseSearchProfilePostsTest extends SearchProfilePostsTest
+class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTest
 {
     use RefreshDatabase;
 

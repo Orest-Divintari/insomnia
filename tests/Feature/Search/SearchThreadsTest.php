@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Search;
 
-use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Feature\Search\SearchTest;
 
 class SearchThreadsTest extends SearchTest
 {
@@ -114,52 +114,5 @@ class SearchThreadsTest extends SearchTest
     //     $threadByUric->delete();
     //     $otherThreads->each->delete();
     // }
-
-    /**
-     * Assert that the reply is correct and the required relationships are loaded
-     *
-     * @param array $resultedReply
-     * @param Reply $desiredReply
-     * @param Thread $desiredThread
-     * @return void
-     */
-    public function assertReply($resultedReply, $desiredReply, $desiredThread)
-    {
-        $this->assertEquals(
-            $resultedReply['id'], $desiredReply->id
-        );
-        $this->assertEquals(
-            $resultedReply['poster']['id'], $desiredReply->poster->id
-        );
-        $this->assertEquals(
-            $resultedReply['repliable']['id'], $desiredThread->id
-        );
-        $this->assertEquals(
-            $resultedReply['repliable']['poster']['id'], $desiredThread->poster->id
-        );
-        $this->assertEquals(
-            $resultedReply['repliable']['category']['id'], $desiredThread->category->id,
-        );
-    }
-
-    /**
-     * Assert that thread is correct and the required relationships are loaded
-     *
-     * @param array $resultedThread
-     * @param Thread $desiredThread
-     * @return void
-     */
-    public function assertThread($resultedThread, $desiredThread)
-    {
-        $this->assertEquals(
-            $resultedThread['id'], $desiredThread->id
-        );
-        $this->assertEquals(
-            $resultedThread['poster']['id'], $desiredThread->poster->id
-        );
-        $this->assertEquals(
-            $resultedThread['category']['id'], $desiredThread->category->id,
-        );
-    }
 
 }
