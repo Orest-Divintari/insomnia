@@ -42,7 +42,7 @@ class PostFilters
      */
     public function lastCreated($daysAgo)
     {
-        $daysAgo = Carbon::now()->subDays($daysAgo);
+        $daysAgo = Carbon::now()->subDays($daysAgo)->startOfDay();
         if (is_subclass_of($this->builder, 'Laravel\Scout\Builder')) {
             $this->builder
                 ->where('created_at', '>=', $daysAgo->timestamp);

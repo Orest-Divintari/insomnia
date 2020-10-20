@@ -116,8 +116,9 @@ class ThreadFilters extends PostFilters implements FilterInterface
      */
     public function lastUpdated($daysAgo)
     {
-        $this->builder
-            ->where('updated_at', ">=", Carbon::now()->subDays($daysAgo));
+        $res = $this->builder
+            ->where('updated_at', '>=', Carbon::now()->subDays($daysAgo)->startOfDay());
+
     }
 
     // /**
