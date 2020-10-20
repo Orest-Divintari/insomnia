@@ -48,7 +48,6 @@ class FilterServiceProvider extends ServiceProvider
             $filterManager = app(FilterManager::class);
             return new ModelFilterFactory($filterManager);
         });
-
     }
 
     /**
