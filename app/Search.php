@@ -55,7 +55,7 @@ class Search
     public function handle(Request $request)
     {
         $type = $request->input('type') ?: '';
-        $onlyTitle = $request->input('only_title') ?: false;
+        $onlyTitle = $request->boolean('only_title') ?: false;
         $searchQuery = $request->input('q') ?: '';
 
         try {
