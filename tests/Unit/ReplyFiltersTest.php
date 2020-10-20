@@ -22,10 +22,8 @@ class ReplyFiltersTest extends TestCase
         $user = $this->signIn();
         $likedReply->likedBy($user);
 
-        $replyFilters = app(
-            ReplyFilters::class,
-            ['builder' => Reply::withCount('likes')]
-        );
+        $replyFilters = new ReplyFilters();
+        $replyFilters->setBuilder(Reply::withLikes());
         $replyFilters->sortByLikes();
         $sortedReplies = $replyFilters->builder()->get();
         $this->assertEquals($likedReply->id, $sortedReplies->first()->id);
