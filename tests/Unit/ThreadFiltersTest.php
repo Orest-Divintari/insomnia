@@ -25,7 +25,7 @@ class ThreadFiltersTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->threadFilters = app(ThreadFilters::class);
+        $this->threadFilters = new ThreadFilters();
         $this->threadFilters->setBuilder(Thread::query());
     }
     /** @test */
