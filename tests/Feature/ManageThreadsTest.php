@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Threads;
+namespace Tests\Feature;
 
 use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;

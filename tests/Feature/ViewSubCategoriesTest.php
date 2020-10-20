@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Categories;
+namespace Tests\Feature;
 
 use App\Category;
 use App\Reply;
