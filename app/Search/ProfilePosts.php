@@ -23,7 +23,8 @@ class ProfilePosts extends Aggregator
      */
     public function shouldBeSearchable()
     {
-        return class_basename($this->model) == 'ProfilePost' || $this->model->repliable_type == 'App\ProfilePost';
+        return class_basename($this->model) == 'ProfilePost'
+        || $this->model->repliable_type == 'App\ProfilePost';
     }
 
 }
