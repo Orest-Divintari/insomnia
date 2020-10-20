@@ -131,9 +131,16 @@ class ThreadFiltersTest extends TestCase
     public function get_the_threads_that_were_last_updated_x_days_ago()
     {
         $daysAgo = 2;
-        $desiredThread = create(Thread::class, ['updated_at' => Carbon::now()->subDays($daysAgo)]);
-        createMany(Thread::class, 3, ['updated_at' => Carbon::now()->subDays(5)]);
-
+        $desiredThread = create(
+            Thread::class,
+            ['updated_at' => Carbon::now()->subDays($daysAgo)]
+        );
+        createMany(
+            Thread::class,
+            3,
+            ['updated_at' => Carbon::now()->subDays(5)]
+        );
+        
         $this->threadFilters->lastUpdated($daysAgo);
         $threads = $this->threadFilters->builder()->get();
 
