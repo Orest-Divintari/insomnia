@@ -22,20 +22,18 @@ class ModelFilterFactory
     }
 
     /**
-     * Create the requested model filter
+     * Create a filter manager with the requested model filters
      *
-     * @param Request $request
+     * @param string $type
      * @return FilterManager
      */
-    public function create(Request $request)
+    public function create(string $type)
     {
-        $type = $request->input('type');
-
         if ($type == 'thread') {
             return $this->filterManager->withThreadFilters();
         } elseif ($type == 'profile_post') {
             return $this->filterManager->withProfilePostFilters();
-        } elseif (is_null($type)) {
+        } elseif (empty($type)) {
             return $this->filterManager->withAllPostsFilters();
         }
     }
