@@ -3,7 +3,6 @@
 namespace Tests\Feature\Search;
 
 use App\ProfilePost;
-use App\Search\Threads;
 use App\Thread;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
@@ -186,15 +185,5 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
         $desiredProfilePost->delete();
         $anotherUndesiredThread->delete();
         $anotherUndesiredProfilePost->delete();
-    }
-
-    /** @test */
-    public function tsek()
-    {
-        create(Thread::class);
-
-        $builder = Threads::search('');
-
-        dd($builder);
     }
 }
