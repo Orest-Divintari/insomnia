@@ -4,7 +4,6 @@ namespace Tests\Feature\Search;
 
 use App\Thread;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Feature\Search\SearchThreadsTest;
 
 class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
@@ -13,9 +12,12 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
     /** @test */
     public function search_threads_title_given_a_search_term()
     {
-        $this->withoutExceptionHandling();
 
         $undesiredThread = create(Thread::class);
+        $anotherUndesiredThread = create(
+            Thread::class,
+            ['body' => $this->searchTerm]
+        );
 
         $user = $this->signIn();
         $desiredThread = create(Thread::class, [
@@ -39,6 +41,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
 
         $desiredThread->delete();
         $undesiredThread->delete();
+        $anotherUndesiredThread->delete();
     }
 
     /** @test */
@@ -54,7 +57,10 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $undesiredThread = create(Thread::class);
+        $undesiredThread = create(
+            Thread::class,
+            ['body' => $this->searchTerm]
+        );
         $anotherUndesiredThread = create(
             Thread::class,
             ['title' => $this->searchTerm]
@@ -97,7 +103,10 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $undesiredThread = create(Thread::class);
+        $undesiredThread = create(
+            Thread::class,
+            ['body' => $this->searchTerm]
+        );
         $anotherUndesiredThread = create(
             Thread::class,
             ['title' => $this->searchTerm]
