@@ -35,7 +35,7 @@
             :is-checked="form.watched"
             @checked="toggle"
           ></watched-filter>
-          <started-by-filter v-model="form.postedBy"></started-by-filter>
+          <posted-by-filter v-model="form.postedBy"></posted-by-filter>
           <updated-by-filter v-model="form.updatedBy"></updated-by-filter>
           <last-updated-filter v-model="form.lastUpdated"></last-updated-filter>
           <last-created-filter v-model="form.lastCreated"></last-created-filter>
