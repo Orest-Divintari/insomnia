@@ -8,10 +8,19 @@
     >
       <div class="flex">
         <img :src="poster.avatar_path" class="avatar-lg" alt />
-        <component @getPoster="setPoster" :posting="posting" :is="posting.type" class="pl-4"></component>
+        <component
+          @getPoster="setPoster"
+          :posting="posting"
+          :is="posting.type"
+          class="pl-4"
+        ></component>
       </div>
     </div>
-    <fetch-more-button v-if="itemsExist" @fetchMore="fetchMore" name="See more"></fetch-more-button>
+    <fetch-more-button
+      v-if="itemsExist"
+      @fetchMore="fetchMore"
+      name="See more"
+    ></fetch-more-button>
   </div>
 </template>
 
