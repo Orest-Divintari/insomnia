@@ -1,6 +1,8 @@
 <template>
   <div>
-    <a @click="showThread(posting)" class="blue-link">{{ posting.title }}</a>
+    <a @click="showThread(posting)" class="blue-link"
+      ><highlight :content="posting.title"></highlight
+    ></a>
     <p class="italic text-smaller">
       <highlight :content="posting.body"></highlight>
     </p>
@@ -8,7 +10,8 @@
       <a
         @click="showProfile(posting.poster)"
         class="cursor-pointer underline"
-      >{{ posting.poster.name }}</a>
+        >{{ posting.poster.name }}</a
+      >
       <p class="dot"></p>
       <p>Thread</p>
       <p class="dot"></p>
@@ -24,7 +27,8 @@
         <a
           @click="showCategory(posting.category)"
           class="cursor-pointer underline"
-        >{{ posting.category.title }}</a>
+          >{{ posting.category.title }}</a
+        >
       </p>
     </div>
   </div>

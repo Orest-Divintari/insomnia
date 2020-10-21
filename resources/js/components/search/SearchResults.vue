@@ -10,7 +10,7 @@
         <img :src="poster.avatar_path" class="avatar-lg" alt />
         <component
           @getPoster="setPoster"
-          :posting="posting"
+          :posting="highlightQuery(posting)"
           :is="posting.type"
           class="pl-4"
         ></component>
@@ -42,6 +42,10 @@ export default {
       required: true,
       default: {},
     },
+    query: {
+      type: String,
+      default: "",
+    },
   },
 
   data() {
@@ -56,6 +60,23 @@ export default {
     },
   },
   methods: {
+    highlightQuery(posting) {
+      posting.body = this.highlightWords(posting.body);
+      posting.title ? this.highlightWords(posting.title) : "";
+
+      return posting;
+    },
+    highlightWords(words) {
+      let cleanText = words.replace(/<\/?[^>]+(>|$)/g, "");
+      let cleanWords = cleanText.split(" ");
+      let highlightedWords = cleanWords.map((word) => {
+        if (this.query.includes(word)) {
+          return "<strong>" + word + "</strong>";
+        }
+        return word;
+      });
+      return highlightedWords.join(" ");
+    },
     setPoster(poster) {
       this.poster = poster;
     },

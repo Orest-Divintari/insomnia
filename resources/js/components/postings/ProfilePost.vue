@@ -8,7 +8,8 @@
       <a
         @click="showProfile(posting.poster)"
         class="cursor-pointer underline"
-      >{{ posting.poster.name }}</a>
+        >{{ posting.poster.name }}</a
+      >
       <p class="dot"></p>
       <p>Profile post</p>
       <p class="dot"></p>
