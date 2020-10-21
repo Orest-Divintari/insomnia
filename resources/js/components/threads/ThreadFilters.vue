@@ -1,9 +1,14 @@
 <template>
   <div>
-    <div class="flex justify-between bg-white-catskill rounded-t py-2 pl-1 pr-3">
+    <div
+      class="flex justify-between bg-white-catskill rounded-t py-2 pl-1 pr-3"
+    >
       <div class="flex">
         <thread-filter-tags
-          @removeFilter="removeFilter(key);apply()"
+          @removeFilter="
+            removeFilter(key);
+            apply();
+          "
           v-for="(value, key) in filters"
           :key="key"
           :filter-key="key"
@@ -21,8 +26,15 @@
         </template>
         <template v-slot:dropdown-items>
           <div class="dropdown-title">Show only</div>
-          <unanswered-filter v-if="showUnanswered" :is-checked="form.unanswered" @checked="toggle"></unanswered-filter>
-          <watched-filter :is-checked="form.watched" @checked="toggle"></watched-filter>
+          <unanswered-filter
+            v-if="showUnanswered"
+            :is-checked="form.unanswered"
+            @checked="toggle"
+          ></unanswered-filter>
+          <watched-filter
+            :is-checked="form.watched"
+            @checked="toggle"
+          ></watched-filter>
           <started-by-filter v-model="form.postedBy"></started-by-filter>
           <updated-by-filter v-model="form.updatedBy"></updated-by-filter>
           <last-updated-filter v-model="form.lastUpdated"></last-updated-filter>
