@@ -1,10 +1,10 @@
 <template>
   <div>
     <a @click="showThread(posting)" class="blue-link"
-      ><highlight :content="posting.title"></highlight
+      ><highlight :content="title"></highlight
     ></a>
     <p class="italic text-smaller">
-      <highlight :content="posting.body"></highlight>
+      <highlight :content="body"></highlight>
     </p>
     <div class="flex items-center text-xs text-gray-lightest">
       <a
@@ -37,16 +37,36 @@
 <script>
 import view from "../../mixins/view";
 import highlight from "../Highlight";
+import postings from "../../mixins/postings";
 export default {
   props: {
     posting: {
       type: Object,
       default: {},
     },
+    query: {
+      type: String,
+      default: "",
+    },
   },
-  mixins: [view],
+  mixins: [view, postings],
   components: {
     highlight,
+  },
+  computed: {
+    title() {
+      if (this.query != "") {
+        return this.highlightQueryWords(this.posting.title);
+      }
+      return this.posting.title;
+    },
+    body() {
+      let cleanBody = this.clean(this.posting.body);
+      if (this.query != "") {
+        return this.highlightQueryWords(cleanBody);
+      }
+      return cleanBody;
+    },
   },
   created() {
     this.$emit("getPoster", this.posting.poster);

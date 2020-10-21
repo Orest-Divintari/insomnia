@@ -1,9 +1,11 @@
 <template>
   <div>
-    <a @click="showReply(posting)" class="blue-link">{{ posting.repliable.title }}</a>
-    <highlight class="italic text-smaller" :content="posting.body"></highlight>
+    <a @click="showReply(posting)" class="blue-link">{{ threadTitle }}</a>
+    <highlight class="italic text-smaller" :content="body"></highlight>
     <div class="flex items-center text-xs text-gray-lightest">
-      <a @click="showProfile(posting.poster)" class="underline">{{ posting.poster.name }}</a>
+      <a @click="showProfile(posting.poster)" class="underline">{{
+        posting.poster.name
+      }}</a>
       <p class="dot"></p>
       <p>Post #{{ posting.position }}</p>
       <p class="dot"></p>
@@ -14,7 +16,8 @@
         <a
           @click="showCategory(posting.repliable.category)"
           class="cursor-pointer underline"
-        >{{ posting.repliable.category.title }}</a>
+          >{{ posting.repliable.category.title }}</a
+        >
       </p>
     </div>
   </div>
@@ -23,16 +26,37 @@
 <script>
 import view from "../../mixins/view";
 import highlight from "../Highlight";
+import postings from "../../mixins/postings";
 export default {
   props: {
     posting: {
       type: Object,
       default: {},
     },
+    query: {
+      type: String,
+      default: "",
+    },
   },
-  mixins: [view],
+  mixins: [view, postings],
   components: {
     highlight,
+  },
+  computed: {
+    threadTitle() {
+      let title = this.posting.repliable.title;
+      if (this.query != "") {
+        return this.highlightQueryWords(title);
+      }
+      return title;
+    },
+    body() {
+      let cleanBody = this.clean(this.posting.body);
+      if (this.query != "") {
+        return this.highlightQueryWords(cleanBody);
+      }
+      return cleanBody;
+    },
   },
   created() {
     this.$emit("getPoster", this.posting.poster);

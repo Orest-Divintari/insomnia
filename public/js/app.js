@@ -2766,6 +2766,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Highlight__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Highlight */ "./resources/js/components/Highlight.vue");
 /* harmony import */ var _mixins_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/view */ "./resources/js/mixins/view.js");
+/* harmony import */ var _mixins_postings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/postings */ "./resources/js/mixins/postings.js");
 //
 //
 //
@@ -2791,14 +2792,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     highlight: _Highlight__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_postings__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     activity: {
       type: Object,
@@ -2807,6 +2808,11 @@ __webpack_require__.r(__webpack_exports__);
     profileOwner: {
       type: Object,
       "default": {}
+    }
+  },
+  computed: {
+    body: function body() {
+      return this.clean(this.activity.subject.body);
     }
   }
 });
@@ -2880,6 +2886,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Highlight__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Highlight */ "./resources/js/components/Highlight.vue");
 /* harmony import */ var _mixins_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/view */ "./resources/js/mixins/view.js");
+/* harmony import */ var _mixins_postings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/postings */ "./resources/js/mixins/postings.js");
 //
 //
 //
@@ -2903,13 +2910,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     highlight: _Highlight__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_postings__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     activity: {
       type: Object,
@@ -2918,6 +2926,11 @@ __webpack_require__.r(__webpack_exports__);
     profileOwner: {
       type: Object,
       "default": {}
+    }
+  },
+  computed: {
+    body: function body() {
+      return this.clean(this.activity.subject.body);
     }
   }
 });
@@ -3266,6 +3279,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/view */ "./resources/js/mixins/view.js");
 /* harmony import */ var _Highlight__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Highlight */ "./resources/js/components/Highlight.vue");
+/* harmony import */ var _mixins_postings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/postings */ "./resources/js/mixins/postings.js");
 //
 //
 //
@@ -3286,6 +3300,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3293,11 +3308,26 @@ __webpack_require__.r(__webpack_exports__);
     posting: {
       type: Object,
       "default": {}
+    },
+    query: {
+      type: String,
+      "default": ""
     }
   },
-  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_0__["default"], _mixins_postings__WEBPACK_IMPORTED_MODULE_2__["default"]],
   components: {
     highlight: _Highlight__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  computed: {
+    body: function body() {
+      var cleanBody = this.clean(this.posting.body);
+
+      if (this.query != "") {
+        return this.highlightQueryWords(cleanBody);
+      }
+
+      return cleanBody;
+    }
   },
   created: function created() {
     this.$emit("getPoster", this.posting.poster);
@@ -3317,6 +3347,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Highlight__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Highlight */ "./resources/js/components/Highlight.vue");
 /* harmony import */ var _mixins_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/view */ "./resources/js/mixins/view.js");
+/* harmony import */ var _mixins_postings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/postings */ "./resources/js/mixins/postings.js");
 //
 //
 //
@@ -3336,6 +3367,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3343,11 +3379,26 @@ __webpack_require__.r(__webpack_exports__);
     posting: {
       type: Object,
       "default": {}
+    },
+    query: {
+      type: String,
+      "default": ""
     }
   },
-  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_postings__WEBPACK_IMPORTED_MODULE_2__["default"]],
   components: {
     highlight: _Highlight__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  computed: {
+    body: function body() {
+      var cleanBody = this.clean(this.posting.body);
+
+      if (this.query != "") {
+        return this.highlightQueryWords(cleanBody);
+      }
+
+      return cleanBody;
+    }
   },
   created: function created() {
     this.$emit("getPoster", this.posting.poster);
@@ -3367,6 +3418,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/view */ "./resources/js/mixins/view.js");
 /* harmony import */ var _Highlight__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Highlight */ "./resources/js/components/Highlight.vue");
+/* harmony import */ var _mixins_postings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/postings */ "./resources/js/mixins/postings.js");
 //
 //
 //
@@ -3403,6 +3455,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3410,11 +3463,33 @@ __webpack_require__.r(__webpack_exports__);
     posting: {
       type: Object,
       "default": {}
+    },
+    query: {
+      type: String,
+      "default": ""
     }
   },
-  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_0__["default"], _mixins_postings__WEBPACK_IMPORTED_MODULE_2__["default"]],
   components: {
     highlight: _Highlight__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  computed: {
+    title: function title() {
+      if (this.query != "") {
+        return this.highlightQueryWords(this.posting.title);
+      }
+
+      return this.posting.title;
+    },
+    body: function body() {
+      var cleanBody = this.clean(this.posting.body);
+
+      if (this.query != "") {
+        return this.highlightQueryWords(cleanBody);
+      }
+
+      return cleanBody;
+    }
   },
   created: function created() {
     this.$emit("getPoster", this.posting.poster);
@@ -3434,6 +3509,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/view */ "./resources/js/mixins/view.js");
 /* harmony import */ var _Highlight__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Highlight */ "./resources/js/components/Highlight.vue");
+/* harmony import */ var _mixins_postings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/postings */ "./resources/js/mixins/postings.js");
 //
 //
 //
@@ -3456,6 +3532,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3463,11 +3543,35 @@ __webpack_require__.r(__webpack_exports__);
     posting: {
       type: Object,
       "default": {}
+    },
+    query: {
+      type: String,
+      "default": ""
     }
   },
-  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_mixins_view__WEBPACK_IMPORTED_MODULE_0__["default"], _mixins_postings__WEBPACK_IMPORTED_MODULE_2__["default"]],
   components: {
     highlight: _Highlight__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  computed: {
+    threadTitle: function threadTitle() {
+      var title = this.posting.repliable.title;
+
+      if (this.query != "") {
+        return this.highlightQueryWords(title);
+      }
+
+      return title;
+    },
+    body: function body() {
+      var cleanBody = this.clean(this.posting.body);
+
+      if (this.query != "") {
+        return this.highlightQueryWords(cleanBody);
+      }
+
+      return cleanBody;
+    }
   },
   created: function created() {
     this.$emit("getPoster", this.posting.poster);
@@ -4692,6 +4796,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -4726,25 +4831,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    highlightQuery: function highlightQuery(posting) {
-      posting.body = this.highlightWords(posting.body);
-      posting.title ? this.highlightWords(posting.title) : "";
-      return posting;
-    },
-    highlightWords: function highlightWords(words) {
-      var _this = this;
-
-      var cleanText = words.replace(/<\/?[^>]+(>|$)/g, "");
-      var cleanWords = cleanText.split(" ");
-      var highlightedWords = cleanWords.map(function (word) {
-        if (_this.query.includes(word)) {
-          return "<strong>" + word + "</strong>";
-        }
-
-        return word;
-      });
-      return highlightedWords.join(" ");
-    },
     setPoster: function setPoster(poster) {
       this.poster = poster;
     },
@@ -4756,11 +4842,11 @@ __webpack_require__.r(__webpack_exports__);
       this.postings = this.postings.concat(paginatedCollection.data);
     },
     fetchMore: function fetchMore() {
-      var _this2 = this;
+      var _this = this;
 
       axios.get(this.dataset.next_page_url).then(function (_ref) {
         var data = _ref.data;
-        return _this2.refresh(data);
+        return _this.refresh(data);
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -82480,7 +82566,7 @@ var render = function() {
       _vm._v(" "),
       _c("highlight", {
         staticClass: "italic text-smaller",
-        attrs: { content: _vm.activity.subject.body }
+        attrs: { content: _vm.body }
       }),
       _vm._v(" "),
       _c(
@@ -82653,7 +82739,7 @@ var render = function() {
       _vm._v(" "),
       _c("highlight", {
         staticClass: "italic text-smaller",
-        attrs: { content: _vm.activity.subject.body }
+        attrs: { content: _vm.body }
       }),
       _vm._v(" "),
       _c(
@@ -83220,7 +83306,7 @@ var render = function() {
         [
           _c("highlight", {
             staticClass: "text-md",
-            attrs: { content: _vm.posting.body }
+            attrs: { content: _vm.body }
           })
         ],
         1
@@ -83228,7 +83314,7 @@ var render = function() {
       _vm._v(" "),
       _c("highlight", {
         staticClass: "italic text-smaller",
-        attrs: { content: _vm.posting.body }
+        attrs: { content: _vm.body }
       }),
       _vm._v(" "),
       _c(
@@ -83302,7 +83388,7 @@ var render = function() {
         [
           _c("highlight", {
             staticClass: "text-md",
-            attrs: { content: _vm.posting.body }
+            attrs: { content: _vm.body }
           })
         ],
         1
@@ -83310,7 +83396,7 @@ var render = function() {
       _vm._v(" "),
       _c("highlight", {
         staticClass: "italic text-smaller",
-        attrs: { content: _vm.posting.body }
+        attrs: { content: _vm.body }
       }),
       _vm._v(" "),
       _c(
@@ -83376,14 +83462,14 @@ var render = function() {
           }
         }
       },
-      [_c("highlight", { attrs: { content: _vm.posting.title } })],
+      [_c("highlight", { attrs: { content: _vm.title } })],
       1
     ),
     _vm._v(" "),
     _c(
       "p",
       { staticClass: "italic text-smaller" },
-      [_c("highlight", { attrs: { content: _vm.posting.body } })],
+      [_c("highlight", { attrs: { content: _vm.body } })],
       1
     ),
     _vm._v(" "),
@@ -83474,12 +83560,12 @@ var render = function() {
             }
           }
         },
-        [_vm._v(_vm._s(_vm.posting.repliable.title))]
+        [_vm._v(_vm._s(_vm.threadTitle))]
       ),
       _vm._v(" "),
       _c("highlight", {
         staticClass: "italic text-smaller",
-        attrs: { content: _vm.posting.body }
+        attrs: { content: _vm.body }
       }),
       _vm._v(" "),
       _c(
@@ -84813,7 +84899,7 @@ var render = function() {
                 _c(posting.type, {
                   tag: "component",
                   staticClass: "pl-4",
-                  attrs: { posting: _vm.highlightQuery(posting) },
+                  attrs: { posting: posting, query: _vm.query },
                   on: { getPoster: _vm.setPoster }
                 })
               ],
@@ -102484,6 +102570,37 @@ __webpack_require__.r(__webpack_exports__);
     },
     ownsComment: function ownsComment(comment) {
       return this.authorize("owns", comment);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/postings.js":
+/*!*****************************************!*\
+  !*** ./resources/js/mixins/postings.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    highlightQueryWords: function highlightQueryWords(words) {
+      var _this = this;
+
+      var highlightedWords = words.split(" ").map(function (word) {
+        if (_this.query.includes(word)) {
+          return "<strong>" + word + "</strong>";
+        }
+
+        return word;
+      });
+      return highlightedWords.join(" ");
+    },
+    clean: function clean(content) {
+      return content.replace(/<\/?[^>]+(>|$)/g, "");
     }
   }
 });
