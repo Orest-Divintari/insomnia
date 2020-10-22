@@ -57,29 +57,32 @@
                     ></a>
                   </p>
                 </div>
-                <dropdown :styleClasses="'w-56'">
-                  <template v-slot:dropdown-trigger>
-                    <div class="btn-white-blue flex items-center">
-                      <p>Find</p>
-                      <span class="ml-1 fas fa-caret-down"></span>
-                    </div>
-                  </template>
-                  <template v-slot:dropdown-items>
-                    <div class="dropdown-title">Find content</div>
-                    <div class="dropdown-item">
-                      <a :href="'/search?postedBy=' + profileOwner.name"
-                        >Find all content by {{ profileOwner.name }}
-                      </a>
-                    </div>
-                    <a
-                      :href="
-                        '/search?type=thread&postedBy=' + profileOwner.name
-                      "
-                      class="dropdown-item"
-                      >Find all threads by {{ profileOwner.name }}</a
-                    >
-                  </template>
-                </dropdown>
+                <div class="flex">
+                  <follow-button :profileOwner="profileOwner"></follow-button>
+                  <dropdown :styleClasses="'w-56'">
+                    <template v-slot:dropdown-trigger>
+                      <div class="btn-white-blue flex items-center">
+                        <p>Find</p>
+                        <span class="ml-1 fas fa-caret-down"></span>
+                      </div>
+                    </template>
+                    <template v-slot:dropdown-items>
+                      <div class="dropdown-title">Find content</div>
+                      <div class="dropdown-item">
+                        <a :href="'/search?postedBy=' + profileOwner.name"
+                          >Find all content by {{ profileOwner.name }}
+                        </a>
+                      </div>
+                      <a
+                        :href="
+                          '/search?type=thread&postedBy=' + profileOwner.name
+                        "
+                        class="dropdown-item"
+                        >Find all threads by {{ profileOwner.name }}</a
+                      >
+                    </template>
+                  </dropdown>
+                </div>
               </div>
             </div>
           </div>
@@ -107,6 +110,7 @@
 import ProfilePosts from "./ProfilePosts";
 import LatestActivity from "./LatestActivity";
 import ProfilePostings from "./ProfilePostings";
+import FollowButton from "./FollowButton";
 import About from "./About";
 import Tabs from "../Tabs";
 import Tab from "../Tab";
@@ -119,6 +123,7 @@ export default {
     LatestActivity,
     ProfilePostings,
     About,
+    FollowButton,
   },
   props: {
     profileOwner: {

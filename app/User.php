@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\Profile\NewPostWasAddedToProfile;
+use App\Traits\Followable;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,7 +13,7 @@ use Illuminate\Support\Str;
 class User extends Authenticatable implements MustVerifyEmail
 {
 
-    use Notifiable;
+    use Notifiable, Followable;
 
     /**
      * Set the maximum length for a username
@@ -224,4 +225,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Activity::class);
     }
+
 }

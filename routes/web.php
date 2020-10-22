@@ -84,6 +84,10 @@ Route::group([
 
     Route::group(['middleware' => 'auth'], function () {
 
+        // follows
+        Route::post('/users/follow/', 'FollowController@store')
+            ->name('api.follow.store');
+
         // commnets
         Route::post('/posts/{post}/comments', 'CommentController@store')
             ->name('api.comments.store')
