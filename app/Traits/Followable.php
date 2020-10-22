@@ -6,7 +6,6 @@ use App\User;
 
 trait Followable
 {
-
     /**
      * Get all following users
      *
@@ -30,7 +29,9 @@ trait Followable
      */
     public function follow(User $user)
     {
-        $this->follows()->save($user);
+        if (!$this->following($user)) {
+            $this->follows()->save($user);
+        }
     }
 
     /**
