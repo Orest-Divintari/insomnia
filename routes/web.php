@@ -71,6 +71,14 @@ Route::group([
     'name' => 'api',
 ], function () {
 
+    // following
+    Route::get('/users/{user}/follows', 'FollowsController@index')
+        ->name('api.follows.index');
+
+    // followers
+    Route::get('/users/{user}/followedBy', 'FollowedByController@index')
+        ->name('api.followedBy.index');
+
     // latest activity
     Route::get('/profiles/{user}/latestActivity/{postings?}', 'LatestActivityController@index')
         ->name('api.latest-activity.index');

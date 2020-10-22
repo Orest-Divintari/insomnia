@@ -96,4 +96,74 @@ class FollowTest extends TestCase
         );
         $this->assertFalse($user->following($anotherUser));
     }
+
+    /** @test */
+    public function an_authenticated_user_can_follow_another_user_only_once()
+    {
+        $user = $this->signIn();
+
+        $this->assertCount(0, $user->follows);
+
+        $anotherUser = create(User::class);
+
+        $this->post(
+            route('api.follow.store'),
+            ['username' => $anotherUser->name]
+        );
+
+        $this->post(
+            route('api.follow.store'),
+            ['username' => $anotherUser->name]
+        );
+
+        $this->assertCount(1, $user->fresh()->follows);
+        $this->assertTrue($user->fresh()->following($anotherUser));
+    }
+
+    /** @test */
+    public function a_user_can_view_the_paginated_list_of_followers_of_profile_user()
+    {
+        $profileOwner = create(User::class);
+        $followerA = create(User::class);
+        $followerB = create(User::class);
+
+        $followerA->follow($profileOwner);
+        $followerB->follow($profileOwner);
+
+        $followers = $this->getJson(
+            route('api.followedBy.index', $profileOwner)
+        )->json()['data'];
+
+        $this->assertCount(2, $followers);
+        $this->assertEquals(
+            $followerA->id, $followers[0]['id']
+        );
+        $this->assertEquals(
+            $followerB->id, $followers[1]['id']
+        );
+    }
+
+    /** @test */
+    public function a_user_can_view_the_paginated_list_of_users_that_profile_user_follows()
+    {
+        $this->withoutExceptionHandling();
+        $profileOwner = create(User::class);
+        $userA = create(User::class);
+        $userB = create(User::class);
+
+        $profileOwner->follow($userA);
+        $profileOwner->follow($userB);
+
+        $follows = $this->getJson(
+            route('api.follows.index', $profileOwner)
+        )->json()['data'];
+
+        $this->assertCount(2, $follows);
+        $this->assertEquals(
+            $userA->id, $follows[0]['id']
+        );
+        $this->assertEquals(
+            $userB->id, $follows[1]['id']
+        );
+    }
 }
