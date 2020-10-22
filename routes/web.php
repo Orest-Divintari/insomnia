@@ -88,7 +88,10 @@ Route::group([
         Route::post('/users/follow/', 'FollowController@store')
             ->name('api.follow.store');
 
-        // commnets
+        Route::post('/users/unfollow/', 'FollowController@destroy')
+            ->name('api.follow.destroy');
+
+        // comments
         Route::post('/posts/{post}/comments', 'CommentController@store')
             ->name('api.comments.store')
             ->middleware('verified');

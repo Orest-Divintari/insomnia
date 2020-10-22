@@ -11,7 +11,7 @@ class FollowTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function guest_users_cannot_follow_or_unfollow_other_users()
+    public function guest_users_cannot_follow_other_users()
     {
         $user = create(User::class);
         $anotherUser = create(User::class);
@@ -23,7 +23,19 @@ class FollowTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannnot_follow_or_unfollow_another_user_that_does_not_exist()
+    public function guest_users_cannot_unfollow_other_users()
+    {
+        $user = create(User::class);
+        $anotherUser = create(User::class);
+
+        $this->post(
+            route('api.follow.destroy'),
+            ['username' => $anotherUser->name]
+        )->assertRedirect('login');
+    }
+
+    /** @test */
+    public function a_user_cannnot_follow_a_user_that_does_not_exist()
     {
         $user = $this->signIn();
 
@@ -31,6 +43,19 @@ class FollowTest extends TestCase
 
         $this->post(
             route('api.follow.store'),
+            $nonExistingUser
+        )->assertSessionHasErrors('username');
+    }
+
+    /** @test */
+    public function a_user_cannot_unfollow_a_user_that_does_not_exist()
+    {
+        $user = $this->signIn();
+
+        $nonExistingUser = ['username' => 'random name'];
+
+        $this->post(
+            route('api.follow.destroy'),
             $nonExistingUser
         )->assertSessionHasErrors('username');
     }
@@ -66,7 +91,7 @@ class FollowTest extends TestCase
         $this->assertTrue($user->following($anotherUser));
 
         $this->post(
-            route('api.follow.store'),
+            route('api.follow.destroy'),
             ['username' => $anotherUser->name]
         );
         $this->assertFalse($user->following($anotherUser));

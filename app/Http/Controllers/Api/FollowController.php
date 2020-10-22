@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FollowRequest;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -10,31 +11,39 @@ class FollowController extends Controller
 {
 
     protected $request;
-
+    protected $followRequest;
     /**
      * Create a new instance
      *
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, FollowRequest $followRequest)
     {
         $this->request = $request;
+        $this->followRequest = $followRequest;
     }
 
     /**
-     * Toggle follow
+     * Store a new follow
      *
      * @param User $user
      * @return void
      */
     public function store()
     {
-        $user = $this->request->validate([
-            'username' => 'exists:users,name',
-        ]);
-
-        $user = User::whereName($user['username'])->first();
-
-        $this->request->user()->toggleFollow($user);
+        $this->request->user()
+            ->follow($this->followRequest->getUser());
     }
+
+    /**
+     * Remove an existing follow
+     *
+     * @return void
+     */
+    public function destroy()
+    {
+        $this->request->user()
+            ->unfollow($this->followRequest->getUser());
+    }
+
 }
