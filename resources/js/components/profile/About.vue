@@ -1,6 +1,7 @@
 <template>
   <div>
     <follows
+      class="mb-2"
       v-if="hasFollowing"
       :profile-owner="profileOwner"
       :dataset="followsDataset"

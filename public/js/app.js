@@ -3606,6 +3606,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -84079,6 +84080,7 @@ var render = function() {
     [
       _vm.hasFollowing
         ? _c("follows", {
+            staticClass: "mb-2",
             attrs: {
               "profile-owner": _vm.profileOwner,
               dataset: _vm.followsDataset
