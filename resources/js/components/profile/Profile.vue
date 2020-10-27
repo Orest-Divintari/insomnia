@@ -58,7 +58,10 @@
                   </p>
                 </div>
                 <div class="flex">
-                  <follow-button :profileOwner="profileOwner"></follow-button>
+                  <follow-button
+                    v-if="!authorize('is', profileOwner)"
+                    :profileOwner="profileOwner"
+                  ></follow-button>
                   <dropdown :styleClasses="'w-56'">
                     <template v-slot:dropdown-trigger>
                       <div class="btn-white-blue flex items-center">
