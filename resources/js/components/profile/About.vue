@@ -1,9 +1,64 @@
 <template>
-  <div>about</div>
+  <div>
+    <follows
+      v-if="hasFollowing"
+      :profile-owner="profileOwner"
+      :dataset="followsDataset"
+    ></follows>
+    <followed-by
+      v-if="hasFollowers"
+      :profile-owner="profileOwner"
+      :dataset="followedByDataset"
+    ></followed-by>
+  </div>
 </template>
 
 <script>
-export default {};
+import Follows from "./Follows";
+import FollowedBy from "./FollowedBy";
+export default {
+  components: {
+    Follows,
+    FollowedBy,
+  },
+  props: {
+    profileOwner: {
+      type: Object,
+      default: {},
+      required: true,
+    },
+  },
+  data() {
+    return {
+      followsDataset: {},
+      followedByDataset: {},
+      hasFollowing: false,
+      hasFollowers: false,
+    };
+  },
+  computed: {
+    path() {
+      return "/api/profiles/" + this.profileOwner.name + "/about";
+    },
+  },
+  methods: {
+    fetchData() {
+      axios
+        .get(this.path)
+        .then(({ data }) => this.refreshData(data))
+        .catch((error) => console.log(error));
+    },
+    refreshData(data) {
+      this.followsDataset = data.follows;
+      this.followedByDataset = data.followedBy;
+      this.hasFollowing = this.followsDataset.total > 0;
+      this.hasFollowers = this.followedByDataset.total > 0;
+    },
+  },
+  created() {
+    this.fetchData();
+  },
+};
 </script>
 
 <style lang="scss" scoped>

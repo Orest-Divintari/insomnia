@@ -8,6 +8,8 @@ use App\Reply;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
+use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Cache;
@@ -165,7 +167,6 @@ class UserTest extends TestCase
     /** @test */
     public function a_user_can_post_to_another_user_profile()
     {
-
         $user = $this->signIn();
 
         $profileOwner = create(User::class);
@@ -181,6 +182,43 @@ class UserTest extends TestCase
             'profile_owner_id' => $profileOwner->id,
             'user_id' => auth()->id(),
         ]);
+    }
+
+    /** @test */
+    public function a_user_knows_the_message_count_which_is_the_number_of_posts_on_his_profile()
+    {
+        $profileOwner = create(User::class);
+
+        create(
+            ProfilePost::class,
+            ['profile_owner_id' => $profileOwner->id]
+        );
+
+        $profileOwner = User::withMessageCount()
+            ->whereId($profileOwner->id)
+            ->first();
+
+        $this->assertEquals(1, $profileOwner->message_count);
+    }
+
+    /** @test */
+    public function a_user_knows_the_like_score_which_is_how_many_times_his_replies_are_liked()
+    {
+        $user = create(User::class);
+
+        $reply = ReplyFactory::create(['user_id' => $user->id]);
+        $comment = CommentFactory::create(['user_id' => $user->id]);
+
+        $liker = $this->signIn();
+
+        $comment->likedBy($liker);
+        $reply->likedBy($liker);
+
+        $user = User::withLikeScore()
+            ->whereId($user->id)
+            ->first();
+
+        $this->assertEquals(2, $user->like_score);
     }
 
 }

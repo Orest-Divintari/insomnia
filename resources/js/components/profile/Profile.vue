@@ -100,7 +100,7 @@
         <profile-postings :profile-owner="profileOwner"></profile-postings>
       </tab>
       <tab name="About">
-        <about></about>
+        <about :profile-owner="profileOwner"></about>
       </tab>
     </tabs>
   </div>

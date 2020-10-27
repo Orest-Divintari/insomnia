@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Follow;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -126,4 +127,35 @@ class FollowTest extends TestCase
         $this->assertTrue($profileOwner->followedByVisitor);
     }
 
+    /** @test */
+    public function a_user_knows_the_number_of_followers()
+    {
+        $user = create(User::class);
+
+        $john = create(User::class);
+        $george = create(User::class);
+        $john->follow($user);
+        $george->follow($user);
+
+        $this->assertEquals(
+            2,
+            $user->loadCount('followedBy')->followed_by_count
+        );
+    }
+
+    /** @test */
+    public function a_user_knows_the_number_of_users_that_follows()
+    {
+        $user = create(User::class);
+
+        $john = create(User::class);
+        $george = create(User::class);
+        $user->follow($john);
+        $user->follow($george);
+
+        $this->assertEquals(
+            2,
+            $user->loadCount('follows')->follows_count
+        );
+    }
 }

@@ -226,4 +226,51 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Activity::class);
     }
 
+    /**
+     * Get the number of posts on user's profile
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithMessageCount($query)
+    {
+        return $query->addSelect([
+            'message_count' => ProfilePost::select(DB::raw('count(*)'))
+                ->whereColumn('profile_owner_id', 'users.id'),
+        ]);
+    }
+
+    /**
+     * Get the total number of likes for user's posts
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithLikeScore($query)
+    {
+        return $query->addSelect([
+            'like_score' => Reply::select(DB::raw('count(*)'))
+                ->whereColumn('replies.user_id', 'users.id')
+                ->join('likes', 'replies.id', '=', 'likes.reply_id'),
+        ]);
+    }
+
+    /**
+     * Get the user's profile information
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithProfileInfo($query)
+    {
+        return $query
+            ->withMessageCount()
+            ->withLikeScore();
+    }
+
+    public function scopeWithFollows($query)
+    {
+        return $query->with('follows')->withCount('follows');
+    }
+
 }

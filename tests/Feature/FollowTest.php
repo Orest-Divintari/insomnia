@@ -2,7 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Follows;
+use App\ProfilePost;
 use App\User;
+use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -166,4 +169,83 @@ class FollowTest extends TestCase
             $userB->id, $follows[1]['id']
         );
     }
+
+    /** @test */
+    public function profile_visitor_can_view_the_like_score_of_users_that_the_profile_owner_follows()
+    {
+        $profileOwner = create(User::class);
+
+        $followingUser = create(User::class);
+        $reply = ReplyFactory::create(['user_id' => $followingUser->id]);
+        $anotherUser = $this->signIn();
+        $reply->likedBy($anotherUser);
+
+        $profileOwner->follow($followingUser);
+
+        $response = $this->getJson(
+            route('api.follows.index', $profileOwner)
+        )->json()['data'];
+
+        $this->assertEquals(1, $response[0]['like_score']);
+    }
+
+    /** @test */
+    public function profile_visitor_can_view_the_like_score_of_profile_owner_followers()
+    {
+        $profileOwner = create(User::class);
+
+        $follower = create(User::class);
+        $reply = ReplyFactory::create(['user_id' => $follower->id]);
+        $anotherUser = $this->signIn();
+        $reply->likedBy($anotherUser);
+
+        $follower->follow($profileOwner);
+
+        $response = $this->getJson(
+            route('api.followedBy.index', $profileOwner)
+        )->json()['data'];
+
+        $this->assertEquals(1, $response[0]['like_score']);
+    }
+
+    /** @test */
+    public function a_profile_visitor_can_view_the_number_of_messages_of_users_that_profile_owner_follows()
+    {
+        $profileOwner = create(User::class);
+
+        $followingUser = create(User::class);
+        $profilePost = create(
+            ProfilePost::class,
+            ['profile_owner_id' => $followingUser->id]
+        );
+
+        $profileOwner->follow($followingUser);
+
+        $response = $this->getJson(
+            route('api.follows.index', $profileOwner)
+        )->json()['data'];
+
+        $this->assertEquals(1, $response[0]['message_count']);
+    }
+
+    /** @test */
+    public function a_profile_visitor_can_view_the_number_of_messags_of_profile_owner_followers()
+    {
+        $profileOwner = create(User::class);
+
+        $follower = create(User::class);
+        $profilePost = create(
+            ProfilePost::class,
+            ['profile_owner_id' => $follower->id]
+        );
+
+        $follower->follow($profileOwner);
+
+        $response = $this->getJson(
+            route('api.followedBy.index', $profileOwner)
+        )->json()['data'];
+
+        $this->assertEquals(1, $response[0]['message_count']);
+    }
+
 }
