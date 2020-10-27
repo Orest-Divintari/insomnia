@@ -84565,7 +84565,7 @@ var render = function() {
       { staticClass: "border border-gray-lighter p-4 rounded" },
       [
         _c("h1", { staticClass: "text-md text-black-semi mb-2" }, [
-          _vm._v("Following")
+          _vm._v("Followers")
         ]),
         _vm._v(" "),
         _c(

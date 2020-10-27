@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="border border-gray-lighter p-4 rounded">
-      <h1 class="text-md text-black-semi mb-2">Following</h1>
+      <h1 class="text-md text-black-semi mb-2">Followers</h1>
       <div class="flex flex-row">
         <a
           v-for="(user, index) in followedByUsers"
