@@ -13,7 +13,7 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
-        $user->append('messages_count', 'likes_score', 'join_date', 'followed_by_visitor');
+        $user->append('message_count', 'like_score', 'join_date', 'followed_by_visitor');
 
         if (request()->expectsJson()) {
             return $user;

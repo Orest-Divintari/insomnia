@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -156,7 +157,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return int
      */
-    public function getMessagesCountAttribute()
+    public function getMessageCountAttribute()
     {
         return $this->profilePosts()->count();
     }
@@ -166,7 +167,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return int
      */
-    public function getLikesScoreAttribute()
+    public function getLikeScoreAttribute()
     {
         return Reply::where('replies.user_id', $this->id)
             ->join('likes', 'replies.id', '=', 'likes.reply_id')

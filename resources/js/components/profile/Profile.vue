@@ -22,14 +22,14 @@
               <p class="text-xs text-gray-lightest">Messages</p>
               <p
                 class="text-md text-center"
-                v-text="profileOwner.messages_count"
+                v-text="profileOwner.message_count"
               ></p>
             </div>
             <div>
               <p class="text-xs text-gray-lightest">Likes Score</p>
               <p
                 class="text-md text-center"
-                v-text="profileOwner.likes_score"
+                v-text="profileOwner.like_score"
               ></p>
             </div>
             <div>
