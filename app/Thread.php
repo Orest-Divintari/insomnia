@@ -7,6 +7,7 @@ use App\Search\Threads;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\RecordsActivity;
+use App\Traits\Sluggable;
 use App\Traits\Subscribable;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +18,12 @@ use Laravel\Scout\Searchable;
 class Thread extends Model
 {
 
-    use Filterable, FormatsDate, Subscribable, RecordsActivity, Searchable;
+    use Filterable,
+    FormatsDate,
+    Subscribable,
+    RecordsActivity,
+    Searchable,
+        Sluggable;
 
     /**
      * Number of visible threads per page
@@ -74,16 +80,6 @@ class Thread extends Model
             $thread->replies->each->delete();
             $thread->subscriptions->each->delete();
         });
-    }
-
-    /**
-     * Get the route key name
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'slug';
     }
 
     /**
@@ -152,40 +148,6 @@ class Thread extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
-    }
-
-    /**
-     * Assert the slug is unique
-     *
-     * @param string $slug
-     * @return void
-     */
-    public function setSlugAttribute($slug)
-    {
-        if (Thread::where('slug', $slug)->exists()) {
-            $slug = $this->createUniqueSlug($slug);
-        }
-        $this->attributes['slug'] = $slug;
-
-    }
-
-    /**
-     * Create a unique slug
-     *
-     * @param string $slug
-     * @return string $slug
-     */
-    protected function createUniqueSlug($slug)
-    {
-        $counter = 2;
-        $originalSlug = $slug;
-        while (Thread::whereSlug($slug)->exists()) {
-
-            $slug = "{$originalSlug}.{$counter}";
-            $counter++;
-        }
-
-        return $slug;
     }
 
     /**

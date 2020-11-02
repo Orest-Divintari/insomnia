@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
+    use Sluggable;
     /**
      * Don't auto-apply mass assignment protection.
      *
