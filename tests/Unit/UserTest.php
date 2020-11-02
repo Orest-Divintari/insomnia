@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Conversation;
 use App\Like;
 use App\ProfilePost;
 use App\Reply;
@@ -219,6 +220,20 @@ class UserTest extends TestCase
             ->first();
 
         $this->assertEquals(2, $user->like_score);
+    }
+
+    /** @test */
+    public function a_user_can_participate_to_conversations()
+    {
+        $user = $this->signIn();
+
+        $conversation = create(Conversation::class);
+
+        $this->assertCount(1, $user->conversations);
+        $this->assertDatabaseHas('conversation_participants', [
+            'conversation_id' => $conversation->id,
+            'user_id' => $user->id,
+        ]);
     }
 
 }
