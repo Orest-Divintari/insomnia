@@ -6,6 +6,7 @@ use App\Actions\CreateNamesArrayAction;
 use App\Conversation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CreateConversationRequest extends FormRequest
 {
@@ -56,8 +57,13 @@ class CreateConversationRequest extends FormRequest
      */
     public function persist()
     {
+        $title = $this->input('title');
+        $slug = Str::slug($title);
         return Conversation::create(
-            ['title' => $this->input('title')]
+            [
+                'title' => $title,
+                "slug" => $slug,
+            ]
         );
     }
 

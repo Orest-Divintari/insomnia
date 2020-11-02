@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Conversation;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 
-class ConversationTest extends TestCase
+class CreateConversationTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -234,8 +235,28 @@ class ConversationTest extends TestCase
     }
 
     /** @test */
-    public function to_start_a_conversation_a_string_must_be_passed_which_subsequently_is_converted_to_array_for_validation()
+    public function a_conversation_requires_a_unique_slug()
     {
+        $user = $this->signIn();
+        $this->assertUniqueSlug('some title', 'some-title');
+        $this->assertUniqueSlug('some title', 'some-title.2');
+        $this->assertUniqueSlug('some title', 'some-title.3');
+        $this->assertUniqueSlug('some title 55', 'some-title-55');
+        $this->assertUniqueSlug('some title 55', 'some-title-55.2');
+    }
+
+    public function assertUniqueSlug($title, $slug)
+    {
+        $this->postConversation(
+            $title,
+            $this->messageBody,
+            $this->participantA->name
+        );
+
+        $this->assertEquals(
+            Conversation::latest('id')->first()->slug,
+            $slug
+        );
 
     }
 
