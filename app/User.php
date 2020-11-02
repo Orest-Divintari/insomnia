@@ -274,4 +274,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->with('follows')->withCount('follows');
     }
 
+    /**
+     * A user may have many conversations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function conversations()
+    {
+        return $this->belongsToMany(
+            Conversation::class,
+            'conversation_participants',
+            'user_id',
+            'conversation_id'
+        );
+    }
+
 }

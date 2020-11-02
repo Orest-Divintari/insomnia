@@ -478,6 +478,25 @@ div.form-left-col {
   font-size: 0.8125rem;
 }
 
+.dropdown-footer-item {
+  display: block;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-top-width: 1px;
+  --border-opacity: 1;
+  border-color: #DDE6F1;
+  border-color: rgba(221, 230, 241, var(--border-opacity));
+  --bg-opacity: 1;
+  background-color: #EDF4F9;
+  background-color: rgba(237, 244, 249, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--text-opacity));
+  font-size: 0.8125rem;
+}
+
 .dropdown-item:hover {
   --bg-opacity: 1;
   background-color: #E1EAF3;

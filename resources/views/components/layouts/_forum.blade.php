@@ -5,14 +5,20 @@
             <x-head_tab_item name="Login" destination="login"></x-head_tab_item>
             <x-head_tab_item name="Register" destination="register"></x-head_tab_item>
             @endguest
-            @auth
-            <notification></notification>
 
+
+            @auth
             <div class="flex items-center">
+
                 <a href="{{ '/profiles/' . auth()->user()->name }}" class="flex items-center head-tab-item">
                     <img src="{{ auth()->user()->avatar_path }}" class="avatar-sm mr-1" alt="">
                     <p> {{ auth()->user()->name  }} </p>
                 </a>
+                @verified
+                <conversations></conversations>
+                @endverified
+                <notification></notification>
+
                 <form action="{{ route('logout') }}" method="POST">
                     <button class="head-tab-item">Logout</button>
                 </form>

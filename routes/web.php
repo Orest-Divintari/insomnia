@@ -62,6 +62,20 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware('verified')
         ->name('threads.store');
 
+    // conversation
+
+    Route::post('/conversations', 'ConversationController@store')
+        ->middleware('verified')
+        ->name('conversations.store');
+
+    Route::get('/conversations/create', 'ConversationController@create')
+        ->middleware('verified')
+        ->name('conversations.create');
+
+    Route::get('/conversations/index', 'ConversationController@index')
+        ->name('conversations.index')
+        ->middleware('verified');
+
 });
 
 // ------ API -------

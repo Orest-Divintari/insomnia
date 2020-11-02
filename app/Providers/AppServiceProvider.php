@@ -2,13 +2,16 @@
 
 namespace App\Providers;
 
+use App\Conversation;
 use App\Notifications\ThreadHasNewReply;
+use App\Observers\ConversationObserver;
 use App\Reply;
 use App\Search\AllPosts;
 use App\Search\ProfilePosts;
 use App\Search\Threads;
 use App\Thread;
 use App\User;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -51,5 +54,13 @@ class AppServiceProvider extends ServiceProvider
         Threads::bootSearchable();
         ProfilePosts::bootSearchable();
         AllPosts::bootSearchable();
+
+        Conversation::observe(ConversationObserver::class);
+
+        Blade::if('verified', function () {
+            if (auth()->check()) {
+                return auth()->user()->email_verified_at;
+            }
+        });
     }
 }
