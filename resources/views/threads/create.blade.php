@@ -9,8 +9,6 @@
 
     <main class="section">
 
-
-
         <x-form._errors></x-form._errors>
 
         <div class="form-container">
