@@ -68,17 +68,18 @@ class ConversationTest extends TestCase
     /** @test */
     public function a_conversation_has_messages()
     {
+        $this->withExceptionHandling();
         $this->signIn();
-
         $conversation = create(Conversation::class);
 
         $message = ['body' => 'some message'];
-        $conversation->addMessage($message);
 
+        $conversation->addMessage($message['body']);
         $this->assertCount(1, $conversation->messages);
 
-        $this->assertDatabaseHas('messages', [
-            'conversation_id' => $conversation->id,
+        $this->assertDatabaseHas('replies', [
+            'repliable_id' => $conversation->id,
+            'repliable_type' => Conversation::class,
             'body' => $message['body'],
             'user_id' => auth()->id(),
         ]);

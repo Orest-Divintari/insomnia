@@ -60,11 +60,11 @@ class Conversation extends Model
     /**
      * A conversation may have many messages
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function messages()
     {
-        return $this->hasMany(Message::class);
+        return $this->morphMany(Reply::class, 'repliable');
     }
 
     /**
