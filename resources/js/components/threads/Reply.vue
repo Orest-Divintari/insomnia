@@ -104,9 +104,10 @@ export default {
     QuoteReply,
   },
   props: {
-    repliablePoster: {
-      type: String,
-      default: "",
+    repliable: {
+      type: Object,
+      default: {},
+      required: false,
     },
     reply: {
       type: Object,
@@ -130,7 +131,7 @@ export default {
       return this.reply.repliable_type.includes("Thread");
     },
     isOriginalPoster() {
-      return this.reply.poster.name == this.repliablePoster;
+      return this.reply.poster.name == this.repliable.poster.name;
     },
   },
   methods: {
