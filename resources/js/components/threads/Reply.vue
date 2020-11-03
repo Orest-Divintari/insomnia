@@ -9,7 +9,7 @@
           v-text="reply.poster.name"
         ></a>
         <p
-          v-if="reply.poster.name == threadPoster"
+          v-if="isThreadReply && isOriginalPoster"
           class="bg-green-mid rounded text-white border border-green-900 px-7 text-xs font-hairline"
         >Original Poster</p>
         <i class="mt-2 fas fa-chevron-down"></i>
@@ -88,7 +88,7 @@ export default {
     QuoteReply,
   },
   props: {
-    threadPoster: {
+    repliablePoster: {
       type: String,
       default: "",
     },
@@ -109,6 +109,12 @@ export default {
   computed: {
     path() {
       return "/api/replies/" + this.reply.id;
+    },
+    isThreadReply() {
+      return this.reply.repliable_type.includes("Thread");
+    },
+    isOriginalPoster() {
+      return this.reply.poster.name == this.repliablePoster;
     },
   },
   methods: {

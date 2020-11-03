@@ -5847,6 +5847,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -5857,7 +5862,7 @@ __webpack_require__.r(__webpack_exports__);
     NewReply: _NewReply__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: {
-    thread: {
+    repliable: {
       type: Object,
       "default": {}
     },
@@ -5895,6 +5900,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LikeButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../LikeButton */ "./resources/js/components/LikeButton.vue");
 /* harmony import */ var _QuoteReply__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./QuoteReply */ "./resources/js/components/threads/QuoteReply.vue");
 /* harmony import */ var _mixins_replies__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/replies */ "./resources/js/mixins/replies.js");
+/* harmony import */ var _mixins_authorization__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mixins/authorization */ "./resources/js/mixins/authorization.js");
 //
 //
 //
@@ -5972,6 +5978,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -5983,7 +6005,7 @@ __webpack_require__.r(__webpack_exports__);
     QuoteReply: _QuoteReply__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: {
-    threadPoster: {
+    repliablePoster: {
       type: String,
       "default": ""
     },
@@ -5992,7 +6014,7 @@ __webpack_require__.r(__webpack_exports__);
       "default": {}
     }
   },
-  mixins: [_mixins_replies__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_mixins_replies__WEBPACK_IMPORTED_MODULE_3__["default"], _mixins_authorization__WEBPACK_IMPORTED_MODULE_4__["default"]],
   data: function data() {
     return {
       editing: false,
@@ -6004,6 +6026,12 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     path: function path() {
       return "/api/replies/" + this.reply.id;
+    },
+    isThreadReply: function isThreadReply() {
+      return this.reply.repliable_type.includes("Thread");
+    },
+    isOriginalPoster: function isOriginalPoster() {
+      return this.reply.poster.name == this.repliablePoster;
     }
   },
   methods: {
@@ -86342,7 +86370,7 @@ var render = function() {
       _vm._l(_vm.items, function(reply, index) {
         return _c("reply", {
           key: reply.id,
-          attrs: { reply: reply, threadPoster: _vm.thread.poster.name }
+          attrs: { reply: reply, repliablePoster: _vm.repliable.poster.name }
         })
       }),
       _vm._v(" "),
@@ -86376,7 +86404,7 @@ var render = function() {
               },
               [_vm._v("register")]
             ),
-            _vm._v(" to reply here.\n  ")
+            _vm._v(" to reply\n    here.\n  ")
           ])
     ],
     2
@@ -86421,14 +86449,14 @@ var render = function() {
             domProps: { textContent: _vm._s(_vm.reply.poster.name) }
           }),
           _vm._v(" "),
-          _vm.reply.poster.name == _vm.threadPoster
+          _vm.isThreadReply && _vm.isOriginalPoster
             ? _c(
                 "p",
                 {
                   staticClass:
                     "bg-green-mid rounded text-white border border-green-900 px-7 text-xs font-hairline"
                 },
-                [_vm._v("Original Poster")]
+                [_vm._v("\n        Original Poster\n      ")]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -86459,7 +86487,13 @@ var render = function() {
                   {
                     staticClass: "bg-blue-reply-border text-white px-5/2 py-2"
                   },
-                  [_vm._v("#" + _vm._s(_vm.reply.position))]
+                  [
+                    _vm._v(
+                      "\n            #" +
+                        _vm._s(_vm.reply.position) +
+                        "\n          "
+                    )
+                  ]
                 )
               ]
             )
@@ -86508,7 +86542,7 @@ var render = function() {
                               attrs: { type: "submit" },
                               on: { click: _vm.cancel }
                             },
-                            [_vm._v("Cancel")]
+                            [_vm._v("\n                Cancel\n              ")]
                           )
                         ]
                       )
@@ -86547,7 +86581,7 @@ var render = function() {
                         _c("div", { staticClass: "flex" }, [
                           _vm._m(1),
                           _vm._v(" "),
-                          _vm.authorize("owns", _vm.reply)
+                          _vm.ownsPost(_vm.reply)
                             ? _c(
                                 "button",
                                 {

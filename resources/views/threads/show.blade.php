@@ -106,7 +106,7 @@
 
 
 
-                <replies :thread="thread" :replies="{{ json_encode($replies) }}"></replies>
+                <replies :repliable="thread" :replies="{{ json_encode($replies) }}"></replies>
             </main>
         </div>
     </thread>

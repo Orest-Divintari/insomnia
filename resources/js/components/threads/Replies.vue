@@ -5,7 +5,7 @@
       v-for="(reply, index) in items"
       :key="reply.id"
       :reply="reply"
-      :threadPoster="thread.poster.name"
+      :repliablePoster="repliable.poster.name"
     ></reply>
     <paginator @isPaginated="isPaginated=true" :dataset="dataset"></paginator>
     <new-reply @created="add" v-if="signedIn"></new-reply>
@@ -28,7 +28,7 @@ export default {
     NewReply,
   },
   props: {
-    thread: {
+    repliable: {
       type: Object,
       default: {},
     },
