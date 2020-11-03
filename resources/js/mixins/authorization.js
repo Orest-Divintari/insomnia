@@ -9,5 +9,6 @@ export default {
         ownsComment(comment) {
             return this.authorize("owns", comment);
         }
+        
     }
 };
