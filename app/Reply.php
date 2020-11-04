@@ -167,9 +167,8 @@ class Reply extends Model
     /**
      * Get paginated comments with likes for a specific profile post
      *
-     * @param  $thread
-     * @param App\Filters\ReplyFilters $filters
-     * @return Model
+     * @param ProfilePost $post
+     * @return Illuminate\Pagination\LengthAwarePaginator
      */
     public static function forProfilePost($post)
     {
@@ -177,7 +176,7 @@ class Reply extends Model
             ->where('repliable_type', ProfilePost::class)
             ->withLikes()
             ->latest()
-            ->paginate(static::COMMENTS_PER_PAGE);
+            ->paginate($post::REPLIES_PER_PAGE);
 
         $comments->each(function ($comment) {
             $comment->append('is_liked');
