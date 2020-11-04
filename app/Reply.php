@@ -134,7 +134,7 @@ class Reply extends Model
             ->where('id', '<=', $this->id)
             ->count();
 
-        return (int) ceil($numberOfRepliesBefore / Reply::REPLIES_PER_PAGE);
+        return (int) ceil($numberOfRepliesBefore / $this->repliable::REPLIES_PER_PAGE);
     }
 
     /**
