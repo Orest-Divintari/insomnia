@@ -73,5 +73,4 @@ class ReplyController extends Controller
             '#post-' . $reply->id
         );
     }
-
 }
