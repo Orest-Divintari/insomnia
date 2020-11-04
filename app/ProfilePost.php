@@ -20,6 +20,13 @@ class ProfilePost extends Model
     const PER_PAGE = 3;
 
     /**
+     * Number of profile post comments per page
+     *
+     * @var int
+     */
+    const REPLIES_PER_PAGE = 3;
+
+    /**
      * Relationships to always eager-laod
      *
      * @var array

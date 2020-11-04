@@ -16,20 +16,6 @@ class Reply extends Model
     use Filterable, Likeable, FormatsDate, RecordsActivity, Searchable;
 
     /**
-     * Number of thread replies per page
-     *
-     * @var int
-     */
-    const REPLIES_PER_PAGE = 10;
-
-    /**
-     * Number of post profile comments per page
-     *
-     * @var int
-     */
-    const COMMENTS_PER_PAGE = 3;
-
-    /**
      * The accessors to append to the model's array form.
      *
      * @var array

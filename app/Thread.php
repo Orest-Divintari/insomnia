@@ -33,6 +33,13 @@ class Thread extends Model
     const PER_PAGE = 5;
 
     /**
+     * Number of thread replies per page;
+     *
+     * @var int
+     */
+    const REPLIES_PER_PAGE = 10;
+
+    /**
      * Shortened length of the thread title
      * @var int
      */
