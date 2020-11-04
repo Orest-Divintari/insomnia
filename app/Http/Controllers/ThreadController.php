@@ -81,7 +81,7 @@ class ThreadController extends Controller
         $thread->load('poster');
         $filters = $this->filterManager->withReplyFilters();
 
-        $replies = Reply::forThread($thread, $filters);
+        $replies = Reply::forRepliable($thread, $filters);
 
         if (request()->wantsJson()) {
             return $replies;
