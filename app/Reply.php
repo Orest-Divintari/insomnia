@@ -143,7 +143,7 @@ class Reply extends Model
      */
     public function getPageNumberAttribute()
     {
-        $numberOfRepliesBefore = $this->thread
+        $numberOfRepliesBefore = $this->repliable
             ->replies()
             ->where('id', '<=', $this->id)
             ->count();
