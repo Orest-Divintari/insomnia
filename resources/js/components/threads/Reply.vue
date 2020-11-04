@@ -34,7 +34,7 @@
             </div>
           </div>
         </div>
-        <div class="p-5/2 h-full">
+        <div class="p-5/2 h-full" :class="{ 'mt-4': !isThreadReply }">
           <div v-if="editing">
             <form @submit.prevent="update">
               <input type="text" />
