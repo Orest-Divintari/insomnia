@@ -23,7 +23,10 @@
             v-text="reply.date_created"
             class="text-xs text-gray-lightest hover:underline font-hairline pl-3"
           ></a>
-          <div class="flex items-center text-xs text-gray-lightest">
+          <div
+            v-if="isThreadReply"
+            class="flex items-center text-xs text-gray-lightest"
+          >
             <a class="mr-3 fas fa-share-alt"></a>
             <a v-if="signedIn" class="mx-3 far fa-bookmark"></a>
             <div class="bg-blue-reply-border text-white px-5/2 py-2">
