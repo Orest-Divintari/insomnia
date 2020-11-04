@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :id="'post-' + reply.id" class="reply-container">
+    <div :id="typeId" class="reply-container">
       <div class="reply-left-col">
         <img :src="reply.poster.avatar_path" class="avatar-xl" alt />
         <a
@@ -19,7 +19,7 @@
       <div class="w-full">
         <div class="flex justify-between items-center">
           <a
-            :href="'#post-' + reply.id"
+            :href="'#' + typeId"
             v-text="reply.date_created"
             class="text-xs text-gray-lightest hover:underline font-hairline pl-3"
           ></a>
@@ -132,6 +132,14 @@ export default {
     },
     isOriginalPoster() {
       return this.reply.poster.name == this.repliable.poster.name;
+    },
+    typeId() {
+      if (this.isThreadReply) {
+        var type = "post-";
+      } else if (this.reply.repliable_type.includes("Conversation")) {
+        var type = "convMessage-";
+      }
+      return type + this.reply.id;
     },
   },
   methods: {
