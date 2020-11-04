@@ -235,6 +235,11 @@ class Reply extends Model
         if ($this->repliable_type == 'App\Thread') {
             return $this->position > 1;
         }
+
+        if ($this->repliable_type == 'App\Conversation') {
+            return false;
+        }
+
         return true;
     }
 
