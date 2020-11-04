@@ -138,19 +138,24 @@ class Reply extends Model
     }
 
     /**
-     * Get paginated replies with likes for a specific thread
+     * Get the paginated replies with likes for the given repliable
      *
-     * @param  $thread
-     * @param App\Filters\ReplyFilters $filters
-     * @return Model
+     * @param mixed $repliable
+     * @param FilterManager $filters
+     * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public static function forThread($thread, $filters)
+    public static function forRepliable($repliable, $filters = null)
     {
-        $replies = static::where('repliable_id', $thread->id)
-            ->where('repliable_type', Thread::class)
-            ->withLikes()
-            ->filter($filters)
-            ->paginate(static::REPLIES_PER_PAGE);
+        $replies = static::where('repliable_id', $repliable->id)
+            ->where('repliable_type', get_class($repliable))
+            ->withLikes();
+
+        if ($filters) {
+            $replies = $replies->filter($filters);
+        }
+
+        $replies = $replies
+            ->paginate($repliable::REPLIES_PER_PAGE);
 
         $replies->each(function ($reply) {
             $reply->append('is_liked');
