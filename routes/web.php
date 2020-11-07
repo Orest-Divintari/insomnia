@@ -112,6 +112,16 @@ Route::group([
 
     Route::group(['middleware' => 'auth'], function () {
 
+        // messages
+        Route::get('/messages/{message}', 'MessageController@show')
+            ->name('api.messages.show');
+
+        Route::post('/conversations/{conversation}/messages', 'MessageController@store')
+            ->name('api.messages.store');
+
+        Route::patch('/messages/{message}', 'MessageController@update')
+            ->name('api.messages.update');
+
         // follows
         Route::post('/users/follow/', 'FollowController@store')
             ->name('api.follow.store');
@@ -159,9 +169,6 @@ Route::group([
 
         // threads
         Route::patch('/threads/{thread}', 'ThreadController@update')
-            ->name('api.threads.update');
-
-        Route::delete('/threads/{thread}', 'ThreadController@delete')
             ->name('api.threads.update');
 
         // likes

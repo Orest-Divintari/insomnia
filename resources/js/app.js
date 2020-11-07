@@ -37,6 +37,14 @@ Vue.component(
     "Conversations",
     require("./components/conversations/Conversations.vue").default
 );
+Vue.component(
+    "ConversationsButton",
+    require("./components/conversations/ConversationsButton.vue").default
+);
+Vue.component(
+    "Conversation",
+    require("./components/conversations/Conversation.vue").default
+);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

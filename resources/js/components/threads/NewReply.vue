@@ -24,6 +24,12 @@
 import EventBus from "../../eventBus";
 export default {
   components: {},
+  props: {
+    repliable: {
+      type: Object,
+      default: {},
+    },
+  },
   data() {
     return {
       body: "",
@@ -32,8 +38,17 @@ export default {
     };
   },
   computed: {
+    threadReplyPath() {
+      return "/api/threads/" + this.repliable.slug + "/replies";
+    },
+    conversationMessagePath() {
+      return "/api/conversations/" + this.repliable.slug + "/messages";
+    },
     path() {
-      return "/api" + window.location.pathname + "/replies";
+      if (this.repliable.type == "conversation") {
+        return this.conversationMessagePath;
+      }
+      return this.threadReplyPath;
     },
   },
   methods: {

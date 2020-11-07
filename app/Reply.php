@@ -129,9 +129,9 @@ class Reply extends Model
      */
     public function getPageNumberAttribute()
     {
-        $numberOfRepliesBefore = $this->repliable
-            ->replies()
-            ->where('id', '<=', $this->id)
+        $numberOfRepliesBefore = Reply::where(
+            'repliable_type', get_class($this->repliable)
+        )->where('repliable_id', $this->repliable->id)
             ->count();
 
         return (int) ceil($numberOfRepliesBefore / $this->repliable::REPLIES_PER_PAGE);
