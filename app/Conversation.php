@@ -36,7 +36,7 @@ class Conversation extends Model
      * @param string[] $usernames
      * @return void
      */
-    public function addParticipants($usernames)
+    public function addParticipants(array $usernames)
     {
         $participantIds = $this
             ->getParticipantIds($usernames);
@@ -51,7 +51,7 @@ class Conversation extends Model
      * @param string[] $usernames
      * @return int[]
      */
-    public function getParticipantIds($usernames)
+    public function getParticipantIds(array $usernames)
     {
         return User::whereIn('name', $usernames)
             ->pluck('id');
