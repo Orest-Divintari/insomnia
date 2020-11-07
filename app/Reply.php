@@ -70,16 +70,6 @@ class Reply extends Model
     }
 
     /**
-     * Touch the Thread relationship
-     *
-     * @return Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function thread()
-    {
-        return $this->belongsTo(Thread::class, 'repliable_id');
-    }
-
-    /**
      * A reply belongs to a repliable model
      *
      * @return Illuminate\Database\Eloquent\Relations\MorphTo

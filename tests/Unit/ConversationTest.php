@@ -151,4 +151,41 @@ class ConversationTest extends TestCase
             'conversation'
         );
     }
+
+    /** @test */
+    public function a_conversation_can_be_read_by_many_participants()
+    {
+        $user = $this->signIn();
+
+        $conversation = create(Conversation::class);
+
+        $user->readConversation($conversation);
+
+        $anotherUser = $this->signIn();
+
+        $anotherUser->readConversation($conversation);
+
+        $this->assertCount(2, $conversation->reads);
+    }
+
+    /** @test */
+    public function a_conversation_is_updated_when_a_new_message_is_added()
+    {
+        $this->signIn();
+
+        $conversationDate = Carbon::now()->subDay();
+        $conversation = create(
+            Conversation::class,
+            ['updated_at' => $conversationDate]
+        );
+
+        $this->assertFalse(
+            $conversation->fresh()->updated_at > $conversationDate
+        );
+        $conversation->addMessage('some message');
+
+        $this->assertTrue(
+            $conversation->fresh()->updated_at > $conversationDate
+        );
+    }
 }

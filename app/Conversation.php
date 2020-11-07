@@ -4,6 +4,7 @@ namespace App;
 
 use App\Traits\FormatsDate;
 use App\Traits\Sluggable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -101,11 +102,14 @@ class Conversation extends Model
      */
     public function addMessage($message, $user = null)
     {
-        return $this->messages()
+        $message = $this->messages()
             ->create([
                 'body' => $message,
                 'user_id' => $user ? $user->id : auth()->id(),
             ]);
+        $message->repliable->update(['updated_at' => Carbon::now()]);
+
+        return $message;
     }
 
     /**
@@ -171,5 +175,37 @@ class Conversation extends Model
     public function getTypeAttribute()
     {
         return 'conversation';
+    }
+
+    /**
+     * Determine whether the conversation has been updated
+     * since the last time that was read by the authenticated user
+     *
+     * @return boolean
+     */
+    public function getHasBeenUpdatedAttribute()
+    {
+        if (!auth()->check()) {
+            return true;
+        }
+
+        $conversationRead = $this->reads()
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (is_null($conversationRead)) {
+            return true;
+        }
+        return $this->updated_at > $conversationRead->read_at;
+    }
+
+    /**
+     * A conversation can be read by many users
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reads()
+    {
+        return $this->hasMany(ReadConversation::class);
     }
 }

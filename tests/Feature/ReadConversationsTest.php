@@ -98,4 +98,21 @@ class ReadConversationsTest extends TestCase
         );
     }
 
+    /** @test */
+    public function a_conversation_is_marked_as_read_when_a_user_visits_the_conversation()
+    {
+        $conversationStarter = $this->signIn();
+
+        $conversation = ConversationFactory::create();
+
+        $this->assertTrue($conversation->hasBeenUpdated);
+
+        $this->get(
+            route('conversations.show', $conversation)
+        );
+
+        $this->assertFalse($conversation->hasBeenUpdated);
+
+    }
+
 }

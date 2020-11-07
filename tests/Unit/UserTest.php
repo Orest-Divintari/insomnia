@@ -10,6 +10,7 @@ use App\Thread;
 use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -234,6 +235,20 @@ class UserTest extends TestCase
             'conversation_id' => $conversation->id,
             'user_id' => $user->id,
         ]);
+    }
+
+    /** @test */
+    public function a_user_can_mark_a_conversation_as_read()
+    {
+        $conversationStarter = $this->signIn();
+
+        $conversation = ConversationFactory::create();
+
+        $this->assertTrue($conversation->hasBeenUpdated);
+
+        $conversationStarter->readConversation($conversation);
+
+        $this->assertFalse($conversation->hasBeenUpdated);
     }
 
 }
