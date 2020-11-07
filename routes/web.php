@@ -72,9 +72,11 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware('verified')
         ->name('conversations.create');
 
-    Route::get('/conversations/index', 'ConversationController@index')
-        ->name('conversations.index')
-        ->middleware('verified');
+    Route::get('/conversations', 'ConversationController@index')
+        ->name('conversations.index');
+
+    Route::get('/conversations/{conversation}', 'ConversationController@show')
+        ->name('conversations.show');
 
 });
 

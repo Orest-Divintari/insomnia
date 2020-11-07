@@ -23,6 +23,9 @@ export default {
         },
         hasLikes() {
             return this.likesCount > 0;
+        },
+        isThreadReply(){
+            return this.reply.repliable_type.includes("Thread");
         }
     }
 };

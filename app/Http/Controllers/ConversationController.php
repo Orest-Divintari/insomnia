@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversation;
 use App\Http\Requests\CreateConversationRequest;
+use App\Reply;
 use Illuminate\Http\Request;
 
 class ConversationController extends Controller
@@ -35,5 +37,54 @@ class ConversationController extends Controller
     public function create()
     {
         return view('conversations.create');
+    }
+
+    /**
+     * Display a specific conversation
+     *
+     * @param Conversation $conversation
+     * @return Illuminate\View\View
+     */
+    public function show(Conversation $conversation)
+    {
+        $this->authorize('view', $conversation);
+
+        $participants = $conversation->participants;
+
+        $messages = Reply::forRepliable($conversation);
+
+        if (request()->expectsJson()) {
+            return compact('conversation', 'participants', 'messages');
+        }
+
+        return view(
+            'conversations.show',
+            compact('conversation', 'messages', 'participants')
+        );
+    }
+
+    /**
+     * Display the conversations of the authenticated user
+     *
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        $conversations = auth()->user()
+            ->conversations()
+            ->withStarter()
+            ->withRecentMessage()
+            ->with('participants')
+            ->withCount('participants')
+            ->withCount('messages')
+            ->latest()
+            ->paginate(Conversation::PER_PAGE)
+            ->toJson();
+
+        if (request()->expectsJson()) {
+            return $conversations;
+        }
+
+        return view('conversations.index', compact('conversations'));
     }
 }

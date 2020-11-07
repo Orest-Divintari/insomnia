@@ -21,7 +21,8 @@
           <a
             :href="'#' + typeId"
             v-text="reply.date_created"
-            class="text-xs text-gray-lightest hover:underline font-hairline pl-3"
+            class="text-xs text-gray-lightest hover:underline font-hairline pl-5/2"
+            :class="{ 'mt-2': !isThreadReply }"
           ></a>
           <div
             v-if="isThreadReply"
@@ -128,10 +129,16 @@ export default {
   },
   computed: {
     path() {
+      if (this.isThreadReply) {
+        return this.threadReplyPath;
+      }
+      return this.conversationMessagePath;
+    },
+    threadReplyPath() {
       return "/api/replies/" + this.reply.id;
     },
-    isThreadReply() {
-      return this.reply.repliable_type.includes("Thread");
+    conversationMessagePath() {
+      return "/api/messages/" + this.reply.id;
     },
     isOriginalPoster() {
       return this.reply.poster.name == this.repliable.poster.name;

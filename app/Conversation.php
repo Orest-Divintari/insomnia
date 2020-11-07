@@ -2,12 +2,37 @@
 
 namespace App;
 
+use App\Traits\FormatsDate;
 use App\Traits\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Conversation extends Model
 {
-    use Sluggable;
+    use Sluggable, FormatsDate;
+
+    /**
+     * Number of conversations per page
+     */
+    const PER_PAGE = 10;
+
+    /**
+     * Number of conversation messages per page
+     *
+     * @var int
+     */
+    const REPLIES_PER_PAGE = 2;
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'date_created',
+        'type',
+    ];
     /**
      * Don't auto-apply mass assignment protection.
      *
@@ -81,5 +106,70 @@ class Conversation extends Model
                 'body' => $message,
                 'user_id' => $user ? $user->id : auth()->id(),
             ]);
+    }
+
+    /**
+     * Get the user who started the conversation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function starter()
+    {
+        return $this->belongsTo(User::class, 'starter_id');
+    }
+
+    /**
+     * Eager load the user who started the conversation
+     *
+     * @param Builder $builder
+     * @return Builder
+     */
+    public function scopeWithStarter(Builder $builder)
+    {
+        return $this->addSelect([
+            'starter_id' => DB::table('conversation_participants')
+                ->select('user_id')
+                ->whereColumn('conversation_id', 'conversations.id')
+                ->orderBy('created_at', 'asc')
+                ->take(1),
+        ])->with('starter');
+    }
+
+    /**
+     * Get the most recent message of the conversation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function recentMessage()
+    {
+        return $this->belongsTo(Reply::class);
+    }
+
+    /**
+     * Eager load the most recent message of the conversation
+     *
+     * @param  Builder $query
+     * @return Builder
+     */
+    public function scopeWithRecentMessage(Builder $query)
+    {
+        return $query->addSelect([
+            'recent_message_id' => Reply::select('id')
+                ->whereColumn('repliable_id', 'conversations.id')
+                ->where('repliable_type', 'App\Conversation')
+                ->latest('created_at')
+                ->take(1),
+        ])->with('recentMessage.poster');
+
+    }
+
+    /**
+     * Get the type of the model
+     *
+     * @return string
+     */
+    public function getTypeAttribute()
+    {
+        return 'conversation';
     }
 }

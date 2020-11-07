@@ -16,8 +16,14 @@ export default {
         showCategory(category) {
             window.location.href = "/forum/categories/" + category.slug;
         },
+        showConversation(conversation){
+            window.location.href="/conversations/" + conversation.slug;
+        },
         showThread(thread) {
             window.location.href = "/threads/" + thread.slug;
+        },
+        showMessage(message){
+            window.location.href="/api/messages/" + message.id;
         }
     }
 };

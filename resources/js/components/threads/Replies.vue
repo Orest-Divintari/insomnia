@@ -12,7 +12,11 @@
       :repliable="repliable"
     ></reply>
     <paginator @isPaginated="isPaginated = true" :dataset="dataset"></paginator>
-    <new-reply @created="add" v-if="signedIn"></new-reply>
+    <new-reply
+      :repliable="repliable"
+      @created="add"
+      v-if="signedIn"
+    ></new-reply>
     <p v-else class="text-xs mt-4 text-center">
       You must
       <a href="/login" class="text-blue-mid underline">sign in</a> or
