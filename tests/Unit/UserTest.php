@@ -124,13 +124,13 @@ class UserTest extends TestCase
         $this->assertCount(1, $user->replies);
     }
     /** @test */
-    public function a_user_has_messages_count()
+    public function a_user_has_messages_count_which_is_the_number_of_profile_posts_on_his_profile()
     {
         $user = create(User::class);
 
         create(ProfilePost::class, ['profile_owner_id' => $user->id]);
 
-        $this->assertEquals(1, $user->fresh()->messages_count);
+        $this->assertEquals(1, $user->fresh()->message_count);
 
     }
 
