@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use App\Conversation;
 use App\User;
+use Carbon\Carbon;
+use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,13 +16,12 @@ class ConversationTest extends TestCase
     /** @test */
     public function a_conversation_can_have_many_participants()
     {
-        $participantA = $this->signIn();
-
-        $conversation = create(Conversation::class);
-
+        $conversationStarter = $this->signIn();
         $participantB = create(User::class);
 
-        $conversation->addParticipants($participantB->name);
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants(array($participantB->name))
+            ->create();
 
         $this->assertCount(2, $conversation->participants);
     }
@@ -28,12 +29,12 @@ class ConversationTest extends TestCase
     /** @test */
     public function a_single_participant_might_be_added_to_conversation()
     {
-        $this->signIn();
-        $participant = create(User::class);
+        $conversationStarter = $this->signIn();
 
+        $participant = create(User::class);
         $conversation = create(Conversation::class);
 
-        $conversation->addParticipants($participant->name);
+        $conversation->addParticipants(array($participant->name));
 
         $this->assertEquals(
             $conversation->id,
@@ -44,12 +45,12 @@ class ConversationTest extends TestCase
     /** @test */
     public function multiple_participants_might_be_added_to_conversation()
     {
-        $this->signIn();
+        $conversationStarter = $this->signIn();
         $participantA = create(User::class);
         $participantB = create(User::class);
         $participantNames = [$participantA->name, $participantB->name];
-        $conversation = create(Conversation::class);
 
+        $conversation = create(Conversation::class);
         $conversation->addParticipants($participantNames);
 
         $participantNames = collect($participantNames)
@@ -68,13 +69,13 @@ class ConversationTest extends TestCase
     /** @test */
     public function a_conversation_has_messages()
     {
-        $this->withExceptionHandling();
-        $this->signIn();
-        $conversation = create(Conversation::class);
+        $conversationStarter = $this->signIn();
 
         $message = ['body' => 'some message'];
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withMessage($message['body'])
+            ->create();
 
-        $conversation->addMessage($message['body']);
         $this->assertCount(1, $conversation->messages);
 
         $this->assertDatabaseHas('replies', [
@@ -85,4 +86,69 @@ class ConversationTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function a_conversation_can_find_the_ids_of_participants_given_the_usernames()
+    {
+        $conversationStarter = $this->signIn();
+
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->create();
+        $particiapntIds = $conversation
+            ->getParticipantIds(array($conversationStarter->name));
+
+        $this->assertContains($conversationStarter->id, $particiapntIds);
+    }
+
+    /** @test */
+    public function a_conversation_has_a_starter_user()
+    {
+        $conversationStarter = $this->signIn();
+
+        ConversationFactory::by($conversationStarter)->create();
+
+        $conversation = Conversation::withStarter()->first();
+
+        $this->assertEquals(
+            $conversation->starter->id,
+            $conversationStarter->id
+        );
+    }
+
+    /** @test */
+    public function a_conversation_knows_which_one_is_the_most_recent_message()
+    {
+        $conversationStarter = $this->signIn();
+
+        $conversation = ConversationFactory::create();
+        $conversation->
+            messages()
+            ->first()
+            ->update(
+                ['created_at' => Carbon::now()->subHour()]
+            );
+
+        $newMessage = $conversation->addMessage('new message');
+
+        $conversation = Conversation::whereSlug($conversation->slug)
+            ->withRecentMessage()
+            ->first();
+
+        $this->assertEquals(
+            $newMessage->id,
+            $conversation->recentMessage->id
+        );
+    }
+
+    /** @test */
+    public function a_conversation_can_get_the_type_of_the_model()
+    {
+        $this->signIn();
+
+        $conversation = create(Conversation::class);
+
+        $this->assertEquals(
+            $conversation->type,
+            'conversation'
+        );
+    }
 }
