@@ -24,6 +24,7 @@ class ConversationController extends Controller
             $request->input('message')
         );
 
+        return redirect(route('conversations.show', $conversation));
     }
 
     /**

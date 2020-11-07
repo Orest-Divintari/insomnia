@@ -56,6 +56,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function an_authenticated_user_that_hasnt_verified_the_email_cannot_see_the_conversation_form()
     {
+        $this->withExceptionHandling();
         $user = create(User::class, ['email_verified_at' => null]);
         $this->signIn($user);
 
@@ -95,7 +96,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function an_authenticated_and_verified_user_can_start_a_new_conversation()
     {
-        $sender = $this->signIn();
+        $conversationStarter = $this->signIn();
 
         $this->postConversation(
             $this->title,
@@ -103,9 +104,10 @@ class CreateConversationTest extends TestCase
             $this->participantA->name
         );
 
-        $conversation = $sender->conversations()->first();
+        $conversation = $conversationStarter->conversations()->first();
         $this->assertTrue(
-            $conversation->participants->contains($this->participantA->id)
+            $conversation->participants
+                ->contains($this->participantA->id)
         );
         $this->assertEquals(
             $conversation->title,
@@ -118,7 +120,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function an_authenticated_and_verified_user_can_start_a_new_conversation_with_multiple_participants()
     {
-        $sender = $this->signIn();
+        $conversationStarter = $this->signIn();
 
         $participants = "{$this->participantA->name}, {$this->participantB->name}";
 
@@ -128,11 +130,11 @@ class CreateConversationTest extends TestCase
             $participants
         );
 
-        $conversation = $sender->conversations()->first();
+        $conversation = $conversationStarter->conversations()->first();
         $participantNames = collect([
             $this->participantA->name,
             $this->participantB->name,
-            $sender->name,
+            $conversationStarter->name,
         ]);
 
         $this->assertTrue(
@@ -151,7 +153,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function to_start_a_new_conversation_a_title_is_required()
     {
-        $sender = $this->signIn();
+        $conversationStarter = $this->signIn();
 
         $this->postConversation(
             $title = "",
@@ -163,7 +165,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function to_start_a_new_conversation_a_title_must_be_of_type_string()
     {
-        $sender = $this->signIn();
+        $conversationStarter = $this->signIn();
         $title = [1, 2, 3, 4];
 
         $this->postConversation(
@@ -176,7 +178,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function to_start_a_new_conversation_a_message_is_required()
     {
-        $sender = $this->signIn();
+        $conversationStarter = $this->signIn();
 
         $this->postConversation(
             $this->title,
@@ -188,7 +190,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function to_start_a_new_conversation_a_message_must_be_of_type_string()
     {
-        $sender = $this->signIn();
+        $conversationStarter = $this->signIn();
         $messageBody = ['one message', 'another message'];
 
         $this->postConversation(
@@ -201,7 +203,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function to_start_a_conversation_a_participant_name_is_required()
     {
-        $sender = $this->signIn();
+        $conversationStarter = $this->signIn();
 
         $this->postConversation(
             $this->title,
@@ -212,7 +214,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function to_start_new_conversation_the_participant_should_already_exist()
     {
-        $sender = $this->signIn();
+        $conversationStarter = $this->signIn();
 
         $this->postConversation(
             $this->title,
@@ -225,7 +227,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function to_start_a_new_conversation_all_participant_names_should_exist()
     {
-        $sender = $this->signIn();
+        $conversationStarter = $this->signIn();
         $participants = "{$this->participantA->name}, randomName";
         $this->postConversation(
             $this->title,
@@ -237,7 +239,7 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function a_conversation_requires_a_unique_slug()
     {
-        $user = $this->signIn();
+        $conversationStarter = $this->signIn();
         $this->assertUniqueSlug('some title', 'some-title');
         $this->assertUniqueSlug('some title', 'some-title.2');
         $this->assertUniqueSlug('some title', 'some-title.3');
@@ -257,7 +259,6 @@ class CreateConversationTest extends TestCase
             Conversation::latest('id')->first()->slug,
             $slug
         );
-
     }
 
 }
