@@ -113,6 +113,18 @@ class ReadConversationsTest extends TestCase
 
         $this->assertFalse($conversation->hasBeenUpdated);
 
+        $participant = create(User::class);
+
+        $conversation->addParticipants(array($participant->name));
+
+        $this->signIn($participant);
+
+        $this->assertTrue($conversation->hasBeenUpdated);
+
+        $participant->readConversation($conversation);
+
+        $this->assertFalse($conversation->hasBeenUpdated);
+
     }
 
 }
