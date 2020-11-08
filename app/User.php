@@ -289,4 +289,18 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    /**
+     * Mark a conversation as read
+     *
+     * @param Conversation $conversation
+     * @return void
+     */
+    public function readConversation(Conversation $conversation)
+    {
+        $conversation->reads()->create([
+            'user_id' => $this->id,
+            'read_at' => Carbon::now(),
+        ]);
+    }
+
 }

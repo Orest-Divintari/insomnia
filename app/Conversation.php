@@ -202,10 +202,10 @@ class Conversation extends Model
     /**
      * A conversation can be read by many users
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\morphMany
      */
     public function reads()
     {
-        return $this->hasMany(ReadConversation::class);
+        return $this->morphMany(Read::class, 'readable');
     }
 }

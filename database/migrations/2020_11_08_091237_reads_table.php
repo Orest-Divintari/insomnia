@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ReadConversationsTable extends Migration
+class ReadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class ReadConversationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('read_conversations', function (Blueprint $table) {
+        Schema::create('reads', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('conversation_id');
+            $table->foreignId('readable_id');
+            $table->foreignId('readable_type');
             $table->foreignId('user_id');
             $table->timestamp('read_at')->nullable();
-            $table->unique(['conversation_id', 'user_id', 'read_at']);
+            $table->unique(['readable_id', 'user_id', 'read_at']);
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class ReadConversationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('read_conversations');
+        Schema::dropIfExists('reads');
     }
 }
