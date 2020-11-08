@@ -18,7 +18,7 @@ class MessageController extends Controller
     public function show(Reply $message)
     {
         $this->authorize('view', $message->repliable);
-        
+
         return redirect(
             route('conversations.show', $message->repliable) .
             "?page=" . $message->pageNumber .
@@ -34,7 +34,7 @@ class MessageController extends Controller
      */
     public function store(Conversation $conversation)
     {
-        $this->authorize('update', $conversation);
+        $this->authorize('view', $conversation);
 
         $message = request()->validate([
             'body' => ['string', 'required'],
