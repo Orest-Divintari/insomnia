@@ -119,6 +119,9 @@ Route::group([
         Route::delete('/conversations/{conversation}/read', 'ReadConversationController@destroy')
             ->name('read-conversations.destroy');
 
+        // conversations
+        Route::patch('/conversations/{conversation}', 'ConversationController@update')
+            ->name('api.conversations.update');
         // messages
         Route::get('/messages/{message}', 'MessageController@show')
             ->name('api.messages.show');

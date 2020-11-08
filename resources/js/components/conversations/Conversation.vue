@@ -20,13 +20,16 @@ export default {
     readPath() {
       return "/api/conversations/" + this.conversation.slug + "/read";
     },
+    data() {
+      return { title: this.title };
+    },
   },
   methods: {
     hideDropdown() {
       this.editing = false;
     },
     hideModal() {
-      this.$modal.hide("edit-thread");
+      this.$modal.hide("edit-conversation");
     },
     toggleRead() {
       if (this.isRead) {
@@ -48,7 +51,7 @@ export default {
         .catch((error) => console.log(error));
     },
     edit() {
-      this.$modal.show("edit-thread");
+      this.$modal.show("edit-conversation");
     },
 
     update() {

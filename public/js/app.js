@@ -2966,6 +2966,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     readPath: function readPath() {
       return "/api/conversations/" + this.conversation.slug + "/read";
+    },
+    data: function data() {
+      return {
+        title: this.title
+      };
     }
   },
   methods: {
@@ -2973,7 +2978,7 @@ __webpack_require__.r(__webpack_exports__);
       this.editing = false;
     },
     hideModal: function hideModal() {
-      this.$modal.hide("edit-thread");
+      this.$modal.hide("edit-conversation");
     },
     toggleRead: function toggleRead() {
       if (this.isRead) {
@@ -3001,7 +3006,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     edit: function edit() {
-      this.$modal.show("edit-thread");
+      this.$modal.show("edit-conversation");
     },
     update: function update() {
       axios.patch(this.path, this.data).then(function (response) {

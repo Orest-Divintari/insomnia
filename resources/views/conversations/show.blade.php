@@ -33,12 +33,46 @@
                 </x-breadcrumb.container>
 
                 <div class="mt-7 flex justify-end">
-                    <button class="btn-white-blue mr-1">Edit</button>
+                    @if(Gate::allows('update', $conversation))
+                    <button @click="edit" class="btn-white-blue mr-1">Edit</button>
+                    <modal name="edit-conversation" height='auto'>
+                        <div class="form-container">
+                            <div
+                                class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
+                                <p> Edit Conversation </p>
+                                <button @click="hideModal" class="fas fa-times"></button>
+                            </div>
+                            <form @submit.prevent="update">
+                                <!-- ROW -->
+                                <div class="form-row">
+                                    <!-- LEFT -->
+                                    <div class="form-left-col ">
+                                        <label class="form-label" for="title">Title:</label>
+                                    </div>
+                                    <!-- RIGHT -->
+                                    <div class="form-right-col">
+                                        <p class="form-label-phone">Title:</p>
+                                        <div>
+                                            <input v-model="title" class="form-input" type="text" id="title"
+                                                name="title" required autocomplete="title">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-button-container justify-center">
+                                    <button @click="hideModal" type="submit" class="form-button ">Save</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </modal>
+                    @endif
                     <button class="btn-white-blue mr-1">Star</button>
                     <button @click="toggleRead" v-if="isRead" class="btn-white-blue mr-1">Mark unread</button>
                     <button @click="toggleRead" v-else class="btn-white-blue mr-1">Mark read</button>
                     <button class="btn-white-blue mr-1">Leave</button>
                 </div>
+
+
 
 
 
