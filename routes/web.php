@@ -112,6 +112,13 @@ Route::group([
 
     Route::group(['middleware' => 'auth'], function () {
 
+        // read conversations
+        Route::post('/conversations/{conversation}/read', 'ReadConversationController@store')
+            ->name('read-conversations.store');
+
+        Route::delete('/conversations/{conversation}/read', 'ReadConversationController@destroy')
+            ->name('read-conversations.destroy');
+
         // messages
         Route::get('/messages/{message}', 'MessageController@show')
             ->name('api.messages.show');

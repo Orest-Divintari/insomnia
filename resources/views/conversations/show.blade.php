@@ -35,7 +35,8 @@
                 <div class="mt-7 flex justify-end">
                     <button class="btn-white-blue mr-1">Edit</button>
                     <button class="btn-white-blue mr-1">Star</button>
-                    <button class="btn-white-blue mr-1">Mark read</button>
+                    <button @click="toggleRead" v-if="isRead" class="btn-white-blue mr-1">Mark unread</button>
+                    <button @click="toggleRead" v-else class="btn-white-blue mr-1">Mark read</button>
                     <button class="btn-white-blue mr-1">Leave</button>
                 </div>
 

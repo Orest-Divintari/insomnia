@@ -269,6 +269,12 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withLikeScore();
     }
 
+    /**
+     * Eager load the users that follows and the number of users
+     *
+     * @param [type] $query
+     * @return void
+     */
     public function scopeWithFollows($query)
     {
         return $query->with('follows')->withCount('follows');
@@ -301,6 +307,19 @@ class User extends Authenticatable implements MustVerifyEmail
             'user_id' => $this->id,
             'read_at' => Carbon::now(),
         ]);
+    }
+
+    /**
+     * Mark a conversation as unread
+     *
+     * @param Conversation $conversation
+     * @return void
+     */
+    public function unreadConversation(Conversation $conversation)
+    {
+        $conversation->reads()
+            ->where('user_id', auth()->id())
+            ->delete();
     }
 
 }

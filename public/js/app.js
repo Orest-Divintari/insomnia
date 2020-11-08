@@ -2956,6 +2956,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       title: this.conversation.title,
+      isRead: !this.conversation.has_been_updated,
       editing: false
     };
   },
@@ -2963,10 +2964,8 @@ __webpack_require__.r(__webpack_exports__);
     path: function path() {
       return "/api/conversations/" + this.conversation.slug;
     },
-    data: function data() {
-      return {
-        title: this.title
-      };
+    readPath: function readPath() {
+      return "/api/conversations/" + this.conversation.slug + "/read";
     }
   },
   methods: {
@@ -2975,6 +2974,31 @@ __webpack_require__.r(__webpack_exports__);
     },
     hideModal: function hideModal() {
       this.$modal.hide("edit-thread");
+    },
+    toggleRead: function toggleRead() {
+      if (this.isRead) {
+        this.markUnread();
+      } else {
+        this.markRead();
+      }
+    },
+    markRead: function markRead() {
+      var _this = this;
+
+      axios.post(this.readPath).then(function (response) {
+        return _this.isRead = true;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    markUnread: function markUnread() {
+      var _this2 = this;
+
+      axios["delete"](this.readPath).then(function (response) {
+        return _this2.isRead = false;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
     },
     edit: function edit() {
       this.$modal.show("edit-thread");

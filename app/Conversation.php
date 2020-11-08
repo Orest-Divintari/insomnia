@@ -33,6 +33,7 @@ class Conversation extends Model
     protected $appends = [
         'date_created',
         'type',
+        'has_been_updated',
     ];
     /**
      * Don't auto-apply mass assignment protection.
