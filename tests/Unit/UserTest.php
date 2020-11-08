@@ -251,4 +251,22 @@ class UserTest extends TestCase
         $this->assertFalse($conversation->hasBeenUpdated);
     }
 
+    /** @test */
+    public function a_user_can_mark_a_conversation_as_unread()
+    {
+        $conversationStarter = $this->signIn();
+
+        $conversation = ConversationFactory::create();
+
+        $this->assertTrue($conversation->hasBeenUpdated);
+
+        $conversationStarter->readConversation($conversation);
+
+        $this->assertFalse($conversation->hasBeenUpdated);
+
+        $conversationStarter->unreadConversation($conversation);
+
+        $this->assertTrue($conversation->hasBeenUpdated);
+    }
+
 }
