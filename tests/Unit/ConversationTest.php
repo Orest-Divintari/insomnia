@@ -104,9 +104,7 @@ class ConversationTest extends TestCase
     {
         $conversationStarter = $this->signIn();
 
-        ConversationFactory::by($conversationStarter)->create();
-
-        $conversation = Conversation::withStarter()->first();
+        $conversation = ConversationFactory::by($conversationStarter)->create();
 
         $this->assertEquals(
             $conversation->starter->id,

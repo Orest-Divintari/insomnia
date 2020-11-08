@@ -61,6 +61,7 @@ class CreateConversationRequest extends FormRequest
         $slug = Str::slug($title);
         return Conversation::create(
             [
+                'user_id' => $this->user()->id,
                 'title' => $title,
                 "slug" => $slug,
             ]

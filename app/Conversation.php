@@ -7,7 +7,6 @@ use App\Traits\Sluggable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Conversation extends Model
 {
@@ -116,28 +115,11 @@ class Conversation extends Model
     /**
      * Get the user who started the conversation
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return void
      */
     public function starter()
     {
-        return $this->belongsTo(User::class, 'starter_id');
-    }
-
-    /**
-     * Eager load the user who started the conversation
-     *
-     * @param Builder $builder
-     * @return Builder
-     */
-    public function scopeWithStarter(Builder $builder)
-    {
-        return $this->addSelect([
-            'starter_id' => DB::table('conversation_participants')
-                ->select('user_id')
-                ->whereColumn('conversation_id', 'conversations.id')
-                ->orderBy('created_at', 'asc')
-                ->take(1),
-        ])->with('starter');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

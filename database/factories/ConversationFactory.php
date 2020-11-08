@@ -10,6 +10,7 @@ $factory->define(Conversation::class, function (Faker $faker) {
     $title = $faker->sentence();
     $slug = Str::slug($title);
     return [
+        'user_id' => auth()->id(),
         'title' => $title,
         'slug' => $slug,
     ];
