@@ -166,10 +166,6 @@ class Conversation extends Model
      */
     public function getHasBeenUpdatedAttribute()
     {
-        if (!auth()->check()) {
-            return true;
-        }
-
         $conversationRead = $this->reads()
             ->where('user_id', auth()->id())
             ->first();
