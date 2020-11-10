@@ -4,7 +4,6 @@ namespace App;
 
 use App\Traits\FormatsDate;
 use App\Traits\Sluggable;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -107,7 +106,6 @@ class Conversation extends Model
                 'body' => $message,
                 'user_id' => $user ? $user->id : auth()->id(),
             ]);
-        $message->repliable->update(['updated_at' => Carbon::now()]);
 
         return $message;
     }
