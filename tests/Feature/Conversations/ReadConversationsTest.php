@@ -202,10 +202,10 @@ class ReadConversationsTest extends TestCase
             'readable_id' => $conversation->id,
             'readable_type' => 'App\Conversation',
             'user_id' => $conversationStarter->id,
-            'read_at' => $conversation->created_at,
+            'read_at' => $conversation->reads()->latest()->first()->read_at,
         ]);
 
-        $this->assertFalse($conversation->hasBeenUpdated);
+        $this->assertFalse($conversation->fresh()->hasBeenUpdated);
     }
 
     /** @test */
