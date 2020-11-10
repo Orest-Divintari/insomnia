@@ -189,4 +189,47 @@ class Conversation extends Model
     {
         return $this->morphMany(Read::class, 'readable');
     }
+
+    /**
+     * Hide a conversation from the given user
+     *
+     * @param User $user
+     * @return void
+     */
+    public function hideFrom(User $user)
+    {
+        ConversationParticipant::where('conversation_id', $this->id)
+            ->where('user_id', $user->id)
+            ->update(['hid' => true]);
+    }
+
+    /**
+     * User leaves conversation
+     *
+     * @param User $user
+     * @return void
+     */
+    public function leftBy(User $user)
+    {
+        ConversationParticipant::where('conversation_id', $this->id)
+            ->where('user_id', $user->id)
+            ->update(['left' => true]);
+    }
+
+    /**
+     * Make a hidden conversation visible again for the users who hid it
+     *
+     * @return void
+     */
+    public function unhide()
+    {
+        $userIds = ConversationParticipant::where('conversation_id', $this->id)
+            ->where(['hid' => true])
+            ->pluck('user_id');
+
+        ConversationParticipant::where('conversation_id', $this->id)
+            ->whereIn('user_id', $userIds)
+            ->update(['hid' => false]);
+    }
+
 }

@@ -292,7 +292,8 @@ class User extends Authenticatable implements MustVerifyEmail
             'conversation_participants',
             'user_id',
             'conversation_id'
-        );
+        )->wherePivot('hid', false)
+            ->wherePivot('left', false);
     }
 
     /**
@@ -323,5 +324,4 @@ class User extends Authenticatable implements MustVerifyEmail
             ->where('user_id', auth()->id())
             ->delete();
     }
-
 }

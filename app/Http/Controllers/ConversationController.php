@@ -72,7 +72,6 @@ class ConversationController extends Controller
      */
     public function index()
     {
-
         $conversations = auth()->user()
             ->conversations()
             ->with('starter')

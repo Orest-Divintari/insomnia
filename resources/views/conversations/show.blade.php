@@ -40,7 +40,7 @@
                             <div
                                 class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
                                 <p> Edit Conversation </p>
-                                <button @click="hideModal" class="fas fa-times"></button>
+                                <button @click="hideEditModal" class="fas fa-times"></button>
                             </div>
                             <form @submit.prevent="update">
                                 <!-- ROW -->
@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                                 <div class="form-button-container justify-center">
-                                    <button @click="hideModal" type="submit" class="form-button ">Save</button>
+                                    <button @click="hideEditModal" type="submit" class="form-button ">Save</button>
                                 </div>
 
                             </form>
@@ -69,7 +69,55 @@
                     <button class="btn-white-blue mr-1">Star</button>
                     <button @click="toggleRead" v-if="isRead" class="btn-white-blue mr-1">Mark unread</button>
                     <button @click="toggleRead" v-else class="btn-white-blue mr-1">Mark read</button>
-                    <button class="btn-white-blue mr-1">Leave</button>
+                    <button @click="showLeaveModal" class="btn-white-blue mr-1">Leave</button>
+                    <modal name="leave-conversation" width="48%" height='auto'>
+                        <div class="form-container">
+                            <div
+                                class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
+                                <p> Leave Conversation </p>
+                                <button @click="hideLeaveModal" class="fas fa-times"></button>
+                            </div>
+                            <p class="text-smaller text-black-semi p-4">
+                                Leaving a conversation will remove it from your conversation list.
+                            </p>
+                            <!-- ROW -->
+                            <div class="form-row">
+                                <!-- LEFT -->
+                                <div class="form-left-col">
+                                    <label class="form-label" for="leave">Future message handling:</label>
+                                </div>
+                                <!-- RIGHT -->
+                                <div class="form-right-col border-t border-white-catskill">
+                                    <p class="form-label-phone">Future message handling:</p>
+                                    <div class="flex flex-row-reverse items-center mt-5/2">
+                                        <div class="flex-1 flex flex-col">
+                                            <p class="text-sm text-black-semi flex-1">Allow future messages</p>
+                                        </div>
+                                        <input class="form-input w-3 mr-2 mt-1/2" type="radio" id="leave" name="leave"
+                                            ref="hide" checked>
+                                    </div>
+                                    <p class="ml-5 text-xs text-gray-lightest">Should this conversation receive
+                                        further responses in the future, this conversation will be restored
+                                        to your inbox.
+                                    </p>
+                                    <div class="flex flex-row-reverse items-center mt-3">
+                                        <div class="flex-1 flex flex-col">
+                                            <p class="text-sm text-black-semi flex-1">Ignore future messages</p>
+                                        </div>
+                                        <input class="form-input w-3 mr-2 mt-1/2" type="radio" id="leave" name="leave"
+                                            ref="leave">
+                                    </div>
+                                    <p class="ml-5 text-xs text-gray-lightest">You will not be notified of any
+                                        future responses and the conversation will remain deleted.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-button-container justify-center">
+                                <button @click="leave" type="button" class="form-button ">Leave</button>
+                            </div>
+
+                        </div>
+                    </modal>
                 </div>
 
 

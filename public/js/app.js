@@ -2961,7 +2961,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    path: function path() {
+    updatePath: function updatePath() {
       return "/api/conversations/" + this.conversation.slug;
     },
     readPath: function readPath() {
@@ -2971,14 +2971,42 @@ __webpack_require__.r(__webpack_exports__);
       return {
         title: this.title
       };
+    },
+    hidePath: function hidePath() {
+      return "/api/conversations/" + this.conversation.slug + "/hide";
+    },
+    leavePath: function leavePath() {
+      return "/api/conversations/" + this.conversation.slug + "/leave";
     }
   },
   methods: {
     hideDropdown: function hideDropdown() {
       this.editing = false;
     },
-    hideModal: function hideModal() {
+    hideEditModal: function hideEditModal() {
       this.$modal.hide("edit-conversation");
+    },
+    hideLeaveModal: function hideLeaveModal() {
+      this.$modal.hide("leave-conversation");
+    },
+    showLeaveModal: function showLeaveModal() {
+      this.$modal.show("leave-conversation");
+    },
+    leave: function leave() {
+      this.hideLeaveModal();
+      var path;
+
+      if (this.$refs.hide.checked) {
+        path = this.hidePath;
+      } else {
+        path = this.leavePath;
+      }
+
+      axios.post(path).then(function (response) {
+        return window.location.href = "/conversations";
+      })["catch"](function (error) {
+        return console.log(error);
+      });
     },
     toggleRead: function toggleRead() {
       if (this.isRead) {
@@ -3009,10 +3037,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$modal.show("edit-conversation");
     },
     update: function update() {
-      axios.patch(this.path, this.data).then(function (response) {
+      axios.patch(this.updatePath, this.data).then(function (response) {
         return console.log(response);
       })["catch"](function (error) {
-        return console.log(error);
+        return console.log(error.response.errors);
       });
     }
   }

@@ -17,7 +17,6 @@
                 @verified
                 <conversations-button></conversations-button>
                 @endverified
-                <notification></notification>
 
                 <form action="{{ route('logout') }}" method="POST">
                     <button class="head-tab-item">Logout</button>

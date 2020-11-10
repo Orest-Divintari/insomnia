@@ -119,6 +119,14 @@ Route::group([
         Route::delete('/conversations/{conversation}/read', 'ReadConversationController@destroy')
             ->name('read-conversations.destroy');
 
+        // hide conversation
+        Route::post('/conversations/{conversation}/hide', 'HideConversationController@store')
+            ->name('hide-conversations.store');
+
+        // leave conversation
+        Route::post('/conversations/{conversation}/leave', 'LeaveConversationController@store')
+            ->name('leave-conversations.store');
+
         // conversations
         Route::patch('/conversations/{conversation}', 'ConversationController@update')
             ->name('api.conversations.update');

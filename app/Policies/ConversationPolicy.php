@@ -33,9 +33,7 @@ class ConversationPolicy
      */
     public function update(User $user, Conversation $conversation)
     {
-        return $conversation->participants()
-            ->where('user_id', $user->id)
-            ->exists();
+        return $user->is($conversation->starter);
     }
 
 }

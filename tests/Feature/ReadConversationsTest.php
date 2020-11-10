@@ -38,7 +38,6 @@ class ReadConversationsTest extends TestCase
     /** @test */
     public function authorised_users_can_view_a_conversation_and_the_associated_messages()
     {
-        $this->withExceptionHandling();
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
         $message = ['body' => 'some message'];
@@ -64,7 +63,7 @@ class ReadConversationsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_his_own_conversations()
+    public function a_user_can_view_his_own_visible_conversations()
     {
         $conversationStarter = $this->signIn();
 
@@ -96,6 +95,65 @@ class ReadConversationsTest extends TestCase
                         ->pluck('id')
                         ->contains($value);
                 })
+        );
+    }
+
+    /** @test */
+    public function a_user_will_not_see_the_hidden_conversations()
+    {
+        $user = $this->signIn();
+
+        $participant = create(User::class);
+
+        $hiddenConversation = ConversationFactory::by($user)
+            ->withParticipants(array($participant->name))
+            ->create();
+
+        $visibleConversation = ConversationFactory::by($user)
+            ->withParticipants(array($participant->name))
+            ->create();
+
+        $hiddenConversation->hideFrom($participant);
+
+        $this->signIn($participant);
+        $conversations = $this->getJson(
+            route('conversations.index')
+        )->json()['data'];
+
+        $this->assertCount(1, $conversations);
+        $this->assertEquals(
+            $visibleConversation->id,
+            $conversations[0]['id']
+        );
+    }
+
+    /** @test */
+    public function a_user_will_not_see_the_conversations_that_has_left()
+    {
+        $user = $this->signIn();
+
+        $participant = create(User::class);
+
+        $leftConversation = ConversationFactory::by($user)
+            ->withParticipants(array($participant->name))
+            ->create();
+
+        $visibleConversation = ConversationFactory::by($user)
+            ->withParticipants(array($participant->name))
+            ->create();
+
+        $leftConversation->leftBy($participant);
+
+        $this->signIn($participant);
+
+        $conversations = $this->getJson(
+            route('conversations.index')
+        )->json()['data'];
+
+        $this->assertCount(1, $conversations);
+        $this->assertEquals(
+            $visibleConversation->id,
+            $conversations[0]['id']
         );
     }
 
@@ -153,6 +211,7 @@ class ReadConversationsTest extends TestCase
     /** @test */
     public function guests_cannot_mark_a_conversation_as_read()
     {
+
         $conversation = create(Conversation::class);
         $this->post(route('read-conversations.store', $conversation))
             ->assertRedirect('login');

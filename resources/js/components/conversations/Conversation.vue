@@ -14,7 +14,7 @@ export default {
     };
   },
   computed: {
-    path() {
+    updatePath() {
       return "/api/conversations/" + this.conversation.slug;
     },
     readPath() {
@@ -23,13 +23,38 @@ export default {
     data() {
       return { title: this.title };
     },
+    hidePath() {
+      return "/api/conversations/" + this.conversation.slug + "/hide";
+    },
+    leavePath() {
+      return "/api/conversations/" + this.conversation.slug + "/leave";
+    },
   },
   methods: {
     hideDropdown() {
       this.editing = false;
     },
-    hideModal() {
+    hideEditModal() {
       this.$modal.hide("edit-conversation");
+    },
+    hideLeaveModal() {
+      this.$modal.hide("leave-conversation");
+    },
+    showLeaveModal() {
+      this.$modal.show("leave-conversation");
+    },
+    leave() {
+      this.hideLeaveModal();
+      var path;
+      if (this.$refs.hide.checked) {
+        path = this.hidePath;
+      } else {
+        path = this.leavePath;
+      }
+      axios
+        .post(path)
+        .then((response) => (window.location.href = "/conversations"))
+        .catch((error) => console.log(error));
     },
     toggleRead() {
       if (this.isRead) {
@@ -53,12 +78,11 @@ export default {
     edit() {
       this.$modal.show("edit-conversation");
     },
-
     update() {
       axios
-        .patch(this.path, this.data)
+        .patch(this.updatePath, this.data)
         .then((response) => console.log(response))
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error.response.errors));
     },
   },
 };

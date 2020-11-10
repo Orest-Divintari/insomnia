@@ -154,15 +154,11 @@ class ConversationTest extends TestCase
     public function a_conversation_can_be_read_by_many_participants()
     {
         $user = $this->signIn();
-
         $conversation = create(Conversation::class);
-
         $user->readConversation($conversation);
 
         $anotherUser = $this->signIn();
-
         $anotherUser->readConversation($conversation);
-
         $this->assertCount(2, $conversation->reads);
     }
 
@@ -176,14 +172,59 @@ class ConversationTest extends TestCase
             Conversation::class,
             ['updated_at' => $conversationDate]
         );
-
         $this->assertFalse(
             $conversation->fresh()->updated_at > $conversationDate
         );
-        $conversation->addMessage('some message');
 
+        $conversation->addMessage('some message');
         $this->assertTrue(
             $conversation->fresh()->updated_at > $conversationDate
         );
+    }
+
+    /** @test */
+    public function a_conversation_can_be_hidden_from_a_user()
+    {
+        $user = $this->signIn();
+        createMany(Conversation::class, 2);
+        $this->assertCount(2, $user->conversations);
+
+        $conversation = Conversation::first();
+        $conversation->hideFrom($user);
+        $this->assertCount(1, $user->fresh()->conversations);
+    }
+
+    /** @test */
+    public function a_user_may_leave_a_conversation()
+    {
+        $user = $this->signIn();
+        createMany(Conversation::class, 2);
+        $this->assertCount(2, $user->conversations);
+
+        $conversation = Conversation::first();
+        $conversation->leftBy($user);
+        $this->assertCount(1, $user->fresh()->conversations);
+    }
+
+    /** @test */
+    public function a_hidden_conversation_reappears_when_a_new_message_is_added_to_conversation()
+    {
+        $user = $this->signIn();
+        createMany(Conversation::class, 2);
+
+        $this->assertCount(2, $user->conversations);
+
+        $conversation = Conversation::first();
+        $conversation->hideFrom($user);
+        $this->assertCount(1, $user->fresh()->conversations);
+
+        $conversation->addMessage('some message');
+        $this->assertCount(2, $user->fresh()->conversations);
+
+        $conversation->hideFrom($user);
+        $this->assertCount(1, $user->fresh()->conversations);
+
+        $conversation->unhide();
+        $this->assertCount(2, $user->fresh()->conversations);
     }
 }

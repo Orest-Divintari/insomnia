@@ -67,6 +67,16 @@ class Reply extends Model
 
             $reply->activities->each->delete();
         });
+
+        /**
+         * Unhide a conversation for all users who hid it
+         * when a new message is added
+         */
+        static::created(function ($reply) {
+            if ($reply->repliable_type == 'App\Conversation') {
+                $reply->repliable->unhide();
+            }
+        });
     }
 
     /**
