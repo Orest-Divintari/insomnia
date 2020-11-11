@@ -14,20 +14,23 @@ export default {
     };
   },
   computed: {
-    updatePath() {
+    path() {
       return "/api/conversations/" + this.conversation.slug;
     },
+    updatePath() {
+      return this.path;
+    },
     readPath() {
-      return "/api/conversations/" + this.conversation.slug + "/read";
+      return this.path + "/read";
     },
     data() {
       return { title: this.title };
     },
     hidePath() {
-      return "/api/conversations/" + this.conversation.slug + "/hide";
+      return this.path + "/hide";
     },
     leavePath() {
-      return "/api/conversations/" + this.conversation.slug + "/leave";
+      return this.path + "/leave";
     },
   },
   methods: {
