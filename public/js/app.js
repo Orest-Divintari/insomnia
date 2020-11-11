@@ -3002,7 +3002,7 @@ __webpack_require__.r(__webpack_exports__);
         path = this.leavePath;
       }
 
-      axios.post(path).then(function (response) {
+      axios.patch(path).then(function (response) {
         return window.location.href = "/conversations";
       })["catch"](function (error) {
         return console.log(error);
@@ -3018,7 +3018,7 @@ __webpack_require__.r(__webpack_exports__);
     markRead: function markRead() {
       var _this = this;
 
-      axios.post(this.readPath).then(function (response) {
+      axios.patch(this.readPath).then(function (response) {
         return _this.isRead = true;
       })["catch"](function (error) {
         return console.log(error);

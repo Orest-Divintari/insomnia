@@ -65,7 +65,7 @@ export default {
     },
     markRead() {
       axios
-        .post(this.readPath)
+        .patch(this.readPath)
         .then((response) => (this.isRead = true))
         .catch((error) => console.log(error));
     },

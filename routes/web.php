@@ -113,8 +113,8 @@ Route::group([
     Route::group(['middleware' => 'auth'], function () {
 
         // read conversations
-        Route::post('/conversations/{conversation}/read', 'ReadConversationController@store')
-            ->name('read-conversations.store');
+        Route::patch('/conversations/{conversation}/read', 'ReadConversationController@update')
+            ->name('read-conversations.update');
 
         Route::delete('/conversations/{conversation}/read', 'ReadConversationController@destroy')
             ->name('read-conversations.destroy');

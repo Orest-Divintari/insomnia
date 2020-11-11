@@ -195,7 +195,7 @@ class ReadConversationsTest extends TestCase
 
         $this->assertTrue($conversation->hasBeenUpdated);
 
-        $this->post(route('read-conversations.store', $conversation))
+        $this->patch(route('read-conversations.update', $conversation))
             ->assertOk();
 
         $this->assertDatabaseHas('reads', [
@@ -213,7 +213,7 @@ class ReadConversationsTest extends TestCase
     {
 
         $conversation = create(Conversation::class);
-        $this->post(route('read-conversations.store', $conversation))
+        $this->patch(route('read-conversations.update', $conversation))
             ->assertRedirect('login');
     }
 
@@ -228,7 +228,7 @@ class ReadConversationsTest extends TestCase
 
         $nonParticipant = $this->signIn();
 
-        $this->post(route('read-conversations.store', $conversation))
+        $this->patch(route('read-conversations.update', $conversation))
             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
@@ -265,7 +265,7 @@ class ReadConversationsTest extends TestCase
 
         $this->assertTrue($conversation->hasBeenUpdated);
 
-        $this->post(route('read-conversations.store', $conversation));
+        $this->patch(route('read-conversations.update', $conversation));
 
         $this->assertFalse($conversation->hasBeenUpdated);
 

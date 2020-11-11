@@ -13,17 +13,15 @@ class ReadConversationController extends Controller
      * @param Conversation $conversation
      * @return \Illuminate\Http\Response
      */
-    public function store(Conversation $conversation)
+    public function update(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-
         auth()->user()->readConversation($conversation);
-
         return response('Conversation has been marked as read', 200);
     }
 
     /**
-     * 
+     *
      *
      * @param Conversation $conversation
      * @return void
@@ -31,9 +29,7 @@ class ReadConversationController extends Controller
     public function destroy(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-
         auth()->user()->unreadConversation($conversation);
-
         return response('Conversation has been marked as unread', 200);
     }
 }
