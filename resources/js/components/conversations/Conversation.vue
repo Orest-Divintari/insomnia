@@ -52,7 +52,7 @@ export default {
         path = this.leavePath;
       }
       axios
-        .post(path)
+        .patch(path)
         .then((response) => (window.location.href = "/conversations"))
         .catch((error) => console.log(error));
     },

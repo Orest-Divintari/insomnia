@@ -120,12 +120,12 @@ Route::group([
             ->name('read-conversations.destroy');
 
         // hide conversation
-        Route::post('/conversations/{conversation}/hide', 'HideConversationController@store')
-            ->name('hide-conversations.store');
+        Route::patch('/conversations/{conversation}/hide', 'HideConversationController@update')
+            ->name('hide-conversations.update');
 
         // leave conversation
-        Route::post('/conversations/{conversation}/leave', 'LeaveConversationController@store')
-            ->name('leave-conversations.store');
+        Route::patch('/conversations/{conversation}/leave', 'LeaveConversationController@update')
+            ->name('leave-conversations.update');
 
         // conversations
         Route::patch('/conversations/{conversation}', 'ConversationController@update')

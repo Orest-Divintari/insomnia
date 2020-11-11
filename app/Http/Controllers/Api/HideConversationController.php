@@ -13,7 +13,7 @@ class HideConversationController extends Controller
      * @param Conversation $conversation
      * @return \Illuminate\Http\Response
      */
-    public function store(Conversation $conversation)
+    public function update(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
         $conversation->hideFrom(auth()->user());

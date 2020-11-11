@@ -16,7 +16,7 @@ class HideConversationTest extends TestCase
     {
         $conversation = create(Conversation::class);
 
-        $this->post(route('hide-conversations.store', $conversation))
+        $this->patch(route('hide-conversations.update', $conversation))
             ->assertRedirect('login');
     }
 
@@ -27,7 +27,7 @@ class HideConversationTest extends TestCase
 
         $user = $this->signIn();
 
-        $this->post(route('hide-conversations.store', $conversation))
+        $this->patch(route('hide-conversations.update', $conversation))
             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
@@ -40,7 +40,7 @@ class HideConversationTest extends TestCase
 
         $this->assertCount(1, $user->conversations);
 
-        $this->post(route('hide-conversations.store', $conversation))
+        $this->patch(route('hide-conversations.update', $conversation))
             ->assertOk();
 
         $this->assertCount(0, $user->fresh()->conversations);
