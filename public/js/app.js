@@ -2961,11 +2961,14 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    updatePath: function updatePath() {
+    path: function path() {
       return "/api/conversations/" + this.conversation.slug;
     },
+    updatePath: function updatePath() {
+      return this.path;
+    },
     readPath: function readPath() {
-      return "/api/conversations/" + this.conversation.slug + "/read";
+      return this.path + "/read";
     },
     data: function data() {
       return {
@@ -2973,10 +2976,10 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     hidePath: function hidePath() {
-      return "/api/conversations/" + this.conversation.slug + "/hide";
+      return this.path + "/hide";
     },
     leavePath: function leavePath() {
-      return "/api/conversations/" + this.conversation.slug + "/leave";
+      return this.path + "/leave";
     }
   },
   methods: {
@@ -2992,18 +2995,23 @@ __webpack_require__.r(__webpack_exports__);
     showLeaveModal: function showLeaveModal() {
       this.$modal.show("leave-conversation");
     },
+    viewConversationList: function viewConversationList() {
+      window.location.href = "/conversations";
+    },
     leave: function leave() {
+      var _this = this;
+
       this.hideLeaveModal();
       var path;
 
       if (this.$refs.hide.checked) {
         path = this.hidePath;
-      } else {
+      } else if (this.$refs.leave.checked) {
         path = this.leavePath;
       }
 
       axios.patch(path).then(function (response) {
-        return window.location.href = "/conversations";
+        return _this.viewConversationList();
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -3016,24 +3024,24 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     markRead: function markRead() {
-      var _this = this;
+      var _this2 = this;
 
       axios.patch(this.readPath).then(function (response) {
-        return _this.isRead = true;
+        return _this2.isRead = true;
       })["catch"](function (error) {
         return console.log(error);
       });
     },
     markUnread: function markUnread() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios["delete"](this.readPath).then(function (response) {
-        return _this2.isRead = false;
+        return _this3.isRead = false;
       })["catch"](function (error) {
         return console.log(error);
       });
     },
-    edit: function edit() {
+    showEditModal: function showEditModal() {
       this.$modal.show("edit-conversation");
     },
     update: function update() {

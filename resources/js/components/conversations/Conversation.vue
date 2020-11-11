@@ -46,17 +46,20 @@ export default {
     showLeaveModal() {
       this.$modal.show("leave-conversation");
     },
+    viewConversationList() {
+      window.location.href = "/conversations";
+    },
     leave() {
       this.hideLeaveModal();
       var path;
       if (this.$refs.hide.checked) {
         path = this.hidePath;
-      } else {
+      } else if (this.$refs.leave.checked) {
         path = this.leavePath;
       }
       axios
         .patch(path)
-        .then((response) => (window.location.href = "/conversations"))
+        .then((response) => this.viewConversationList())
         .catch((error) => console.log(error));
     },
     toggleRead() {
