@@ -78,7 +78,7 @@ export default {
         .then((response) => (this.isRead = false))
         .catch((error) => console.log(error));
     },
-    edit() {
+    showEditModal() {
       this.$modal.show("edit-conversation");
     },
     update() {

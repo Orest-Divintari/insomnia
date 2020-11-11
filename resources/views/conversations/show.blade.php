@@ -34,7 +34,7 @@
 
                 <div class="mt-7 flex justify-end">
                     @if(Gate::allows('update', $conversation))
-                    <button @click="edit" class="btn-white-blue mr-1">Edit</button>
+                    <button @click="showEditModal" class="btn-white-blue mr-1">Edit</button>
                     <modal name="edit-conversation" height='auto'>
                         <div class="form-container">
                             <div
