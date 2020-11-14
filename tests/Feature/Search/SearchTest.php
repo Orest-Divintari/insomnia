@@ -370,7 +370,7 @@ class SearchTest extends TestCase
             );
             $counter++;
 
-        } while ($this->validate($results, $numberOfItems) && $counter <= 40);
+        } while ($this->validate($results, $numberOfItems) && $counter <= 50);
 
         return $results->json()['data'];
     }
