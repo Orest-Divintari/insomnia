@@ -58,6 +58,7 @@ class Handler extends ExceptionHandler
 
             return redirect('/forum');
         }
+
         return parent::render($request, $exception);
     }
 }

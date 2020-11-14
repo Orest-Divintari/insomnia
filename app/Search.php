@@ -113,7 +113,7 @@ class Search
         $results = $results->paginate(static::RESULTS_PER_PAGE);
 
         if (empty($results->items())) {
-            throw new Exception('No results');
+            throw new SearchResultsNotFound();
         }
 
         return $results;
