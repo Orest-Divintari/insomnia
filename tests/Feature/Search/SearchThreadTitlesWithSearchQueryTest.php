@@ -12,7 +12,6 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
     /** @test */
     public function search_threads_title_given_a_search_term()
     {
-
         $undesiredThread = create(Thread::class);
         $anotherUndesiredThread = create(
             Thread::class,
