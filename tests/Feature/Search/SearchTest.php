@@ -16,7 +16,7 @@ class SearchTest extends TestCase
     protected $numberOfUndesiredItems;
     protected $numberOfDesiredItems;
     protected $searchTerm;
-
+    protected $noResultsMessage;
     public function setUp(): void
     {
         parent::setUp();
@@ -24,6 +24,7 @@ class SearchTest extends TestCase
         $this->numberOfDesiredItems = 2;
         $this->numberOfItemsToDelete = $this->numberOfUndesiredItems + $this->numberOfDesiredItems;
         $this->searchTerm = 'iphone';
+        $this->noResultsMessage = 'No results found.';
         config(['scout.driver' => 'algolia']);
     }
 
@@ -45,7 +46,7 @@ class SearchTest extends TestCase
             'q' => $this->searchTerm,
         ]));
 
-        $this->assertEquals('No results', $results->getContent());
+        $this->assertEquals($this->noResultsMessage, $results->getContent());
 
         $thread->delete();
     }
@@ -64,7 +65,7 @@ class SearchTest extends TestCase
             'lastCreated' => 1,
         ]));
 
-        $this->assertEquals('No results', $results->getContent());
+        $this->assertEquals($this->noResultsMessage, $results->getContent());
 
         $oldThread->delete();
     }
@@ -83,7 +84,7 @@ class SearchTest extends TestCase
             'postedBy' => $name,
         ]));
 
-        $this->assertEquals('No results', $results->getContent());
+        $this->assertEquals($this->noResultsMessage, $results->getContent());
 
         $thread->delete();
     }
