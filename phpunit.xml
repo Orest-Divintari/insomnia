@@ -11,6 +11,39 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
+        <testsuite name="Search">
+            <directory suffix="Test.php">./tests/Feature/Search</directory>
+        </testsuite>
+         <testsuite name="Threads">
+            <directory suffix="Test.php">./tests/Feature/Threads</directory>
+        </testsuite>
+         <testsuite name="Categories">
+            <directory suffix="Test.php">./tests/Feature/Categories</directory>
+        </testsuite>
+         <testsuite name="Profiles">
+            <directory suffix="Test.php">./tests/Feature/Profiles</directory>
+        </testsuite>
+         <testsuite name="Messages">
+            <directory suffix="Test.php">./tests/Feature/Messages</directory>
+        </testsuite>
+         <testsuite name="Notifications">
+            <directory suffix="Test.php">./tests/Feature/Notifications</directory>
+        </testsuite>
+         <testsuite name="ProfilePosts">
+            <directory suffix="Test.php">./tests/Feature/ProfilePosts</directory>
+        </testsuite>
+         <testsuite name="ThreadReplies">
+            <directory suffix="Test.php">./tests/Feature/ThreadReplies</directory>
+        </testsuite>
+         <testsuite name="Activities">
+            <directory suffix="Test.php">./tests/Feature/Activities</directory>
+        </testsuite>
+         <testsuite name="Conversations">
+            <directory suffix="Test.php">./tests/Feature/Conversations</directory>
+        </testsuite>
+         <testsuite name="ThreadSubscriptions">
+            <directory suffix="Test.php">./tests/Feature/ThreadSubscriptions</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
