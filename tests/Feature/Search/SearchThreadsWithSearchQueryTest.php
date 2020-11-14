@@ -15,7 +15,6 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
     /** @test */
     public function search_threads_given_a_search_term()
     {
-        $this->withoutExceptionHandling();
         $undesiredThread = create(Thread::class);
 
         $user = $this->signIn();
