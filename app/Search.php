@@ -2,9 +2,9 @@
 
 namespace App;
 
+use App\Exceptions\SearchResultsNotFound;
 use App\Search\ModelFilterFactory;
 use App\Search\SearchIndexFactory;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -58,21 +58,18 @@ class Search
         $onlyTitle = $request->boolean('only_title') ?: false;
         $searchQuery = $request->input('q') ?: '';
 
-        try {
-            $index = $this->indexFor(
-                $searchQuery,
-                $type,
-                $onlyTitle
-            );
-            $filters = $this->filtersFor($type);
+        $index = $this->indexFor(
+            $searchQuery,
+            $type,
+            $onlyTitle
+        );
+        $filters = $this->filtersFor($type);
 
-            $builder = $index->search($searchQuery);
-            $results = $filters->apply($builder);
+        $builder = $index->search($searchQuery);
+        $results = $filters->apply($builder);
 
-            return $this->getPaginatedData($results);
-        } catch (Exception $e) {
-            return $this->noResults();
-        }
+        return $this->getPaginatedData($results);
+
     }
 
     /**
