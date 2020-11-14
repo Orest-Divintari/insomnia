@@ -63,53 +63,6 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
     }
 
     /** @test */
-    public function get_all_posts_that_are_created_the_last_given_number_of_days()
-    {
-        $this->signIn();
-        $daysAgo = 5;
-        Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-        $desiredThread = create(Thread::class);
-        $desiredReply = ReplyFactory::create([
-            'repliable_id' => $desiredThread->id,
-        ]);
-        $desiredProfilePost = create(ProfilePost::class);
-        $desiredComment = CommentFactory::create([
-            'repliable_id' => $desiredProfilePost->id,
-        ]);
-
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
-        Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $undesiredProfilePost = create(ProfilePost::class);
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
-        $undesiredThread = create(Thread::class);
-        $undesiredReply = ReplyFactory::create([
-            'repliable_id' => $undesiredThread->id,
-        ]);
-
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
-        $results = $this->search([
-            'lastCreated' => $daysAgo,
-        ],
-            $this->totalNumberOfDesiredItems
-        );
-
-        $this->makeAssertions(
-            $results,
-            $desiredThread,
-            $desiredReply,
-            $desiredProfilePost,
-            $desiredComment
-        );
-
-        $undesiredThread->delete();
-        $undesiredProfilePost->delete();
-        $desiredThread->delete();
-        $desiredProfilePost->delete();
-    }
-
-    /** @test */
     public function get_all_posts_that_were_created_by_a_given_username_the_last_given_number_of_days()
     {
         $user = $this->signIn();
