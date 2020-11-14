@@ -66,6 +66,7 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
     public function search_all_posts_that_were_created_by_a_given_username_given_a_search_term()
     {
         $user = $this->signIn();
+
         $desiredThread = create(
             Thread::class,
             [
@@ -73,11 +74,13 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
                 'user_id' => $user->id,
             ]
         );
+
         $desiredReply = ReplyFactory::create([
             'body' => $this->searchTerm,
             'repliable_id' => $desiredThread->id,
             'user_id' => $user->id,
         ]);
+
         $desiredProfilePost = create(
             ProfilePost::class,
             [
@@ -107,7 +110,7 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
             Thread::class,
             [
                 'body' => $this->searchTerm,
-                'user_id' => $user->id,
+                'user_id' => $anotherUser->id,
             ]
         );
         $undesiredReply = ReplyFactory::create([
