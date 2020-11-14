@@ -32,41 +32,7 @@ class SearchTest extends TestCase
     {
         $results = $this->getJson(route('search.show', ['type' => 'thread']));
 
-        $this->assertEquals('No results', $results->getContent());
-    }
-
-    /** @test */
-    public function when_no_threads_are_found_for_the_given_username()
-    {
-        $thread = create(Thread::class);
-        $reply = ReplyFactory::create();
-
-        $results = $this->getJson(route('search.show', [
-            'type' => 'thread',
-            'postedBy' => 'benz',
-        ]));
-
-        $this->assertEquals('No results', $results->getContent());
-
-        $thread->delete();
-        $reply->repliable->delete();
-    }
-
-    /** @test */
-    public function when_no_threads_are_created_the_last_given_number_of_days()
-    {
-        $oldThread = create(Thread::class, [
-            'created_at' => Carbon::now()->subDays(10),
-        ]);
-
-        $results = $this->getJson(route('search.show', [
-            'type' => 'thread',
-            'lastCreated' => 1,
-        ]));
-
-        $this->assertEquals('No results', $results->getContent());
-
-        $oldThread->delete();
+        $this->assertEquals($this->noResultsMessage, $results->getContent());
     }
 
     /** @test */
@@ -109,11 +75,12 @@ class SearchTest extends TestCase
         $thread = create(Thread::class, [
             'body' => $this->searchTerm,
         ]);
-
+        $name = 'benz';
+        create(User::class, ['name' => $name]);
         $results = $this->getJson(route('search.show', [
             'type' => 'thread',
             'q' => $this->searchTerm,
-            'postedBy' => 'benz',
+            'postedBy' => $name,
         ]));
 
         $this->assertEquals('No results', $results->getContent());
