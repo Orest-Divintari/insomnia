@@ -110,7 +110,7 @@ class Search
         $results = $results->paginate(static::RESULTS_PER_PAGE);
 
         if (empty($results->items())) {
-            throw new SearchResultsNotFound();
+            return $this->noResults();
         }
 
         return $results;
@@ -123,6 +123,6 @@ class Search
      */
     public function noResults()
     {
-        return 'No results';
+        return 'No results found.';
     }
 }
