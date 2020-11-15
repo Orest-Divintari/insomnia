@@ -26,8 +26,8 @@
                     <!-- RIGHT -->
                     <div class="form-right-col pt-0">
                         <div class="flex flex-row-reverse items-center">
-                            <label class="form-label flex-1 ml-2" for="only_title">Search titles only</label>
-                            <input type="checkbox" name="only_title" {{ old('only_title') ? 'checked' : '' }}
+                            <label class="form-label flex-1 ml-2" for="onlyTitle">Search titles only</label>
+                            <input type="checkbox" name="onlyTitle" {{ old('onlyTitle') ? 'checked' : '' }}
                                 value="true">
                         </div>
                     </div>

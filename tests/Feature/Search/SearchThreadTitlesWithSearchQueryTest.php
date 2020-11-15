@@ -25,7 +25,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         ]);
 
         $results = $this->search([
-            'only_title' => true,
+            'onlyTitle' => true,
             'q' => $this->searchTerm,
         ],
             $this->numberOfDesiredThreads
@@ -68,7 +68,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
         $results = $this->search([
             'q' => $this->searchTerm,
-            'only_title' => true,
+            'onlyTitle' => true,
             'lastCreated' => $daysAgo,
         ],
             $this->numberOfDesiredThreads
@@ -121,7 +121,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
         $results = $this->search([
             'q' => $this->searchTerm,
-            'only_title' => true,
+            'onlyTitle' => true,
             'lastCreated' => $daysAgo,
             'postedBy' => $user->name,
         ],
