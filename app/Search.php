@@ -67,7 +67,7 @@ class Search
         $builder = $index->search($searchQuery);
         $results = $filters->apply($builder);
 
-        return $this->getPaginatedData($results);
+        return $this->fetch($results);
     }
 
     /**
@@ -96,12 +96,13 @@ class Search
     }
 
     /**
-     * Paginate the data
+     * Get the results from the database if there are any
+     * otherwise return no results message
      *
      * @param Collection $results
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getPaginatedData($results)
+    public function fetch($results)
     {
         $results = $results->paginate(static::RESULTS_PER_PAGE);
 
