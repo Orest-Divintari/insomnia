@@ -42,7 +42,7 @@ class SearchController extends Controller
      */
     public function create()
     {
-        return $this->getSearchType();
+        return $this->viewSearchForm();
     }
 
     /**
@@ -50,7 +50,7 @@ class SearchController extends Controller
      *
      * @return View
      */
-    public function getSearchType()
+    public function viewSearchForm()
     {
         $type = $this->request->input('type');
         if ($type == 'thread') {
