@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Exceptions\SearchResultsNotFound;
 use App\Search\ModelFilterFactory;
 use App\Search\SearchIndexFactory;
 use Illuminate\Http\Request;
@@ -69,7 +68,6 @@ class Search
         $results = $filters->apply($builder);
 
         return $this->getPaginatedData($results);
-
     }
 
     /**
