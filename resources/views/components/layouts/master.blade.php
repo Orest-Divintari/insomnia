@@ -70,7 +70,7 @@
         </header>
 
         <main class="p-5 h-screen bg-semi-white">{{$main}}</main>
-
+        <error-modal></error-modal>
     </div>
 
 

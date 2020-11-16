@@ -1,6 +1,6 @@
 import Vue from "vue";
 import authorization from "./policy/authorize";
-
+import EventBus from "./eventBus";
 window.Vue = Vue;
 window._ = require("lodash");
 
@@ -66,6 +66,13 @@ Vue.directive("focus", {
         el.focus();
     }
 });
+
+
+// -------- global error modal message function --------
+window.showError = function(message) {
+    EventBus.$emit("error", message);
+};
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
