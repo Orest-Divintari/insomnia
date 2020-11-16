@@ -28,8 +28,24 @@ class SearchRequest
             $this->rules($request),
             $this->messages()
         );
+        $this->afterValidation($request);
 
         return $this;
+    }
+
+    /**
+     * Disable title search when no search query is passed
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function afterValidation($request)
+    {
+        // When the search query is empty, there is no point in having onlyTitle equal to true
+        // since onlyTitle applies when a thread is being searched given a search query
+        if ($request->missing('q') && $request->boolean('onlyTitle')) {
+            $request->merge(['onlyTitle' => false]);
+        }
     }
 
     /**
