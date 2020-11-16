@@ -45,10 +45,6 @@ class SearchController extends Controller
                 ->withErrors($validator);
         }
 
-        // if (request()->expectsJson()) {
-        //     return $search->handle($this->request);
-        // }
-
         $results = $search->handle($this->request);
 
         return view('search.show', compact('results', 'query'));
