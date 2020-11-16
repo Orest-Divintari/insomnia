@@ -44,6 +44,9 @@
          <testsuite name="ThreadSubscriptions">
             <directory suffix="Test.php">./tests/Feature/ThreadSubscriptions</directory>
         </testsuite>
+        <testsuite name="Comments">
+            <directory suffix="Test.php">./tests/Feature/Comments</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
