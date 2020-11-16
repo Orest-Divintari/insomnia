@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Search;
 use Illuminate\Http\Request;
 
@@ -9,10 +10,17 @@ class SearchController extends Controller
 {
 
     protected $request;
+
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
+
     /**
      * Number of results per page
      * @var int
@@ -22,15 +30,26 @@ class SearchController extends Controller
     /**
      * Display the search results
      *
-     * @return void
+     * @return Illuminate\View\View;
      */
-    public function show(Search $search)
+    public function show(Search $search, SearchRequest $searchRequest)
     {
-        if (request()->expectsJson()) {
-            return $search->handle($this->request);
-        }
-        $results = $search->handle($this->request);
+        $validator = $searchRequest
+            ->validate($this->request)
+            ->getValidator();
+
         $query = $this->request->input('q');
+
+        if ($validator->fails()) {
+            return view('search.show', compact('query'))
+                ->withErrors($validator);
+        }
+
+        // if (request()->expectsJson()) {
+        //     return $search->handle($this->request);
+        // }
+
+        $results = $search->handle($this->request);
 
         return view('search.show', compact('results', 'query'));
     }
@@ -38,7 +57,7 @@ class SearchController extends Controller
     /**
      * Display the advanced search form
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function create()
     {
