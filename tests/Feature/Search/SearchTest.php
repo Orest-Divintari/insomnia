@@ -3,8 +3,8 @@
 namespace Tests\Feature\Search;
 
 use App\Thread;
+use App\User;
 use Carbon\Carbon;
-use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -163,7 +163,7 @@ class SearchTest extends TestCase
     //     $results = $this->search([
     //         'q' => $this->searchTerm,
     //         'type' => 'thread',
-    //         'only_title' => true,
+    //         'onlyTitle' => true,
     //     ]);
 
     //     $this->assertCount(
@@ -455,6 +455,35 @@ class SearchTest extends TestCase
         );
         $this->assertEquals(
             $resultedComment['repliable']['profile_owner']['id'], $desiredProfilePost->profileOwner->id,
+        );
+    }
+
+    /** @test */
+    public function when_searching_a_query_or_a_username_must_be_specified()
+    {
+        $this->get(route('search.show'))
+            ->assertSee('Please specify a search query or the name of a member.');
+    }
+
+    /** @test */
+    public function when_searcing_without_entering_a_search_query_then_an_existing_username_must_be_specified()
+    {
+        $user = create(User::class, ['name' => 'george']);
+        $nonExistingUsername = 'uric';
+
+        $this->get(route('search.show', [
+            'postedBy' => $nonExistingUsername,
+        ]))->assertSee('The following members could not be found: ' . $nonExistingUsername);
+    }
+
+    /** @test */
+    public function when_a_search_type_is_specified_it_must_be_one_of_the_specified_values()
+    {
+        $this->get(route(
+            'search.show',
+            ['q' => 'something', 'type' => 'asdfs']
+        ))->assertSee(
+            'The following search type could not be found: ' . request('type')
         );
     }
 }
