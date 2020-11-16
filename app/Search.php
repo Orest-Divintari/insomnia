@@ -46,7 +46,7 @@ class Search
     /**
      * Get the search results
      * apply model filters on search results
-     * and return paginated data
+     * and return paginated data or no results
      *
      * @param Request $request
      * @return Collection|string
