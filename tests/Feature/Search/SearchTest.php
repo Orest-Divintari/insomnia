@@ -29,62 +29,49 @@ class SearchTest extends TestCase
     }
 
     /** @test */
-    public function when_there_are_no_threads_stored_in_the_database()
-    {
-        $results = $this->getJson(route('search.show', ['type' => 'thread']));
-
-        $this->assertEquals($this->noResultsMessage, $results->getContent());
-    }
-
-    /** @test */
-    public function when_no_threads_are_found_for_the_given_search_query()
+    public function display_no_results_message_when_no_threads_are_found_for_the_given_search_query()
     {
         $thread = create(Thread::class);
 
-        $results = $this->getJson(route('search.show', [
+        $this->get(route('search.show', [
             'type' => 'thread',
             'q' => $this->searchTerm,
-        ]));
-
-        $this->assertEquals($this->noResultsMessage, $results->getContent());
+        ]))->assertSee($this->noResultsMessage);
 
         $thread->delete();
     }
 
     /** @test */
-    public function when_no_threads_are_found_for_the_given_search_query_the_last_given_number_of_days()
+    public function display_no_results_message_when_no_threads_are_found_for_the_given_search_query_the_last_given_number_of_days()
     {
         $oldThread = create(Thread::class, [
             'body' => $this->searchTerm,
             'created_at' => Carbon::now()->subDays(10),
         ]);
 
-        $results = $this->getJson(route('search.show', [
+        $results = $this->get(route('search.show', [
             'type' => 'thread',
             'q' => $this->searchTerm,
             'lastCreated' => 1,
-        ]));
-
-        $this->assertEquals($this->noResultsMessage, $results->getContent());
+        ]))->assertSee($this->noResultsMessage);
 
         $oldThread->delete();
     }
 
     /** @test */
-    public function when_no_threads_are_found_given_a_search_query_for_the_given_username()
+    public function display_no_results_message_when_no_threads_are_found_given_a_search_query_for_the_given_username()
     {
         $thread = create(Thread::class, [
             'body' => $this->searchTerm,
         ]);
         $name = 'benz';
         create(User::class, ['name' => $name]);
-        $results = $this->getJson(route('search.show', [
+
+        $results = $this->get(route('search.show', [
             'type' => 'thread',
             'q' => $this->searchTerm,
             'postedBy' => $name,
-        ]));
-
-        $this->assertEquals($this->noResultsMessage, $results->getContent());
+        ]))->assertSee($this->noResultsMessage);
 
         $thread->delete();
     }
