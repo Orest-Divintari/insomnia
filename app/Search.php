@@ -98,9 +98,7 @@ class Search
     }
 
     /**
-     * Paginates the data
-     * Transforms the data if results
-     * are returned from activities table
+     * Paginate the data
      *
      * @param Collection $results
      * @return Illuminate\Pagination\LengthAwarePaginator
