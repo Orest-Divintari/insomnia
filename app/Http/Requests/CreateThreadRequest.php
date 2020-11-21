@@ -9,6 +9,27 @@ use Illuminate\Support\Str;
 class CreateThreadRequest extends FormRequest
 {
     /**
+     * The error message for an invalid body
+     *
+     * @var string
+     */
+    protected $bodyErrorMessage = 'Please enter a valid message.';
+
+    /**
+     * The error message for an invalid title
+     *
+     * @var string
+     */
+    protected $titleErrorMessage = 'Please enter a valid title.';
+
+    /**
+     * The error message for an invalid category
+     *
+     * @var string
+     */
+    protected $categoryErrorMessage = "Please enter a valid category";
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -27,8 +48,8 @@ class CreateThreadRequest extends FormRequest
     {
         return [
             'body' => ['required', 'string'],
-            'title' => ['required', 'string', 'min:3', 'max:255'],
-            'category_id' => ['required', 'exists:categories,id', 'integer'],
+            'title' => ['required', 'string'],
+            'category_id' => ['required', 'integer', 'exists:categories,id'],
         ];
     }
 
@@ -47,6 +68,24 @@ class CreateThreadRequest extends FormRequest
                 'replies_count' => 0,
             ]
         ));
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'body.string' => $this->bodyErrorMessage,
+            'body.required' => $this->bodyErrorMessage,
+            'title.required' => $this->titleErrorMessage,
+            'title.string' => $this->titleErrorMessage,
+            'category_id.required' => $this->categoryErrorMessage,
+            'category_id.exists' => $this->categoryErrorMessage,
+            'category_id.integer' => $this->categoryErrorMessage,
+        ];
     }
 
 }
