@@ -14,6 +14,19 @@ class CreateThreadsTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
+    protected $bodyErrorMessage;
+    protected $titleErrorMessage;
+    protected $categoryErrorMessage;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->bodyErrorMessage = 'Please enter a valid message.';
+        $this->titleErrorMessage = 'Please enter a valid title.';
+        $this->categoryErrorMessage = 'Please enter a valid category.';
+    }
+
     /** @test */
     public function guests_may_not_see_the_post_new_thread_form()
     {
@@ -44,7 +57,7 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_that_have_confirmed_their_email_may_post_threads()
+    public function authenticated_users_that_have_confirmed_their_email_may_postThreads()
     {
         $this->signIn();
 
@@ -83,32 +96,53 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function a_thread_requires_a_body()
     {
-        $this->post_thread(['body' => ''])
-            ->assertSessionHasErrors('body');
+        $this->postThread(['body' => ''])
+            ->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
+    }
+
+    /** @test */
+    public function the_body_of_a_thread_must_be_of_stype_string()
+    {
+        $this->postThread(['body' => 15])
+            ->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
     }
 
     /** @test */
     public function a_thread_requires_a_title()
     {
-        $this->post_thread(['title' => ''])
-            ->assertSessionHasErrors('title');
+        $this->postThread(['title' => ''])
+            ->assertSessionHasErrors(['title' => $this->titleErrorMessage]);
+    }
+
+    /** @test */
+    public function a_thread_title_must_be_of_type_string()
+    {
+        $this->postThread(['title' => 15])
+            ->assertSessionHasErrors(['title' => $this->titleErrorMessage]);
     }
 
     /** @test */
     public function a_thread_requires_a_category()
     {
-        $this->post_thread(['category_id' => ''])
-            ->assertSessionHasErrors('category_id');
+        $this->postThread(['category_id' => ''])
+            ->assertSessionHasErrors(['category_id' => $this->categoryErrorMessage]);
     }
 
     /** @test */
     public function a_thread_requires_a_category_that_already_exists_in_the_database()
     {
-        $this->post_thread(['category_id' => 12345])
-            ->assertSessionHasErrors(('category_id'));
+        $this->postThread(['category_id' => 12345])
+            ->assertSessionHasErrors(['category_id' => $this->categoryErrorMessage]);
     }
 
-    protected function post_thread($overrides)
+    /** @test */
+    public function the_category_value_must_be_of_type_integer()
+    {
+        $this->postThread(['category_id' => '12345'])
+            ->assertSessionHasErrors(['category_id' => $this->categoryErrorMessage]);
+    }
+
+    protected function postThread($overrides)
     {
         $user = $this->signIn();
 
