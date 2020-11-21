@@ -28,7 +28,7 @@ class CreateConversationRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'string', 'min:3'],
+            'title' => ['required', 'string'],
             'message' => ['required', 'string'],
             'participants' => ['required', "array", 'min:1'],
             'participants.*' => ['required', 'string', 'exists:users,name'],
