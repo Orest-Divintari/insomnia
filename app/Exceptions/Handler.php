@@ -62,17 +62,9 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof ValidationException) {
-            // $errorMessages = (new ValidationErrorMessage($exception))
-            //     ->getMessages();
-
-            // if ($request->expectsJson()) {
-            //     return response($errorMessages, 422);
-            // }
-
-            // return redirect($exception->redirectTo ?? url()->previous())
-            //     ->withInput(Arr::except($request->input(), $this->dontFlash))
-            //     ->withErrors($exception->errors(), $exception->errorBag);
-
+            if ($request->expectsJson()) {
+                return response($exception->errors(), 422);
+            }
         }
 
         return parent::render($request, $exception);
