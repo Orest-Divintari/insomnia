@@ -68,4 +68,37 @@ class CreateConversationRequest extends FormRequest
         );
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        $messages = [
+            'title.required' => 'Please enter a valid title.',
+            'title.string' => 'Please enter a valid title.',
+            'message.required' => 'Please enter a valid message.',
+            'message.string' => 'Please enter a valid message.',
+        ];
+        $messages = $this->addParticipantExistsMessage($messages);
+
+        return $messages;
+    }
+
+    /**
+     * Add the message for participant.*.exists rule
+     *
+     * @param array $messages
+     * @return array
+     */
+    public function addParticipantExistsMessage($messages)
+    {
+        foreach (request('participants') as $index => $participant) {
+            if (isset($participant) && is_string($participant)) {
+                $messages["participants." . $index . ".exists"] = "The following participant could not be found: " . $participant;
+            }
+        }
+        return $messages;
+    }
 }
