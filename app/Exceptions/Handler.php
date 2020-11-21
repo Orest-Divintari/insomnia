@@ -4,7 +4,9 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -57,6 +59,20 @@ class Handler extends ExceptionHandler
             Auth::logout();
 
             return redirect('/forum');
+        }
+
+        if ($exception instanceof ValidationException) {
+            // $errorMessages = (new ValidationErrorMessage($exception))
+            //     ->getMessages();
+
+            // if ($request->expectsJson()) {
+            //     return response($errorMessages, 422);
+            // }
+
+            // return redirect($exception->redirectTo ?? url()->previous())
+            //     ->withInput(Arr::except($request->input(), $this->dontFlash))
+            //     ->withErrors($exception->errors(), $exception->errorBag);
+
         }
 
         return parent::render($request, $exception);
