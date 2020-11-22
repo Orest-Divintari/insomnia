@@ -75,9 +75,9 @@
                             <div
                                 class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
                                 <p> Edit Thread </p>
-                                <button @click="hideModal" class="fas fa-times"></button>
+                                <button @click="hideEditModal" class="fas fa-times"></button>
                             </div>
-                            <form @submit.prevent="update">
+                            <form>
 
                                 <!-- ROW -->
                                 <div class="form-row">
@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                                 <div class="form-button-container justify-center">
-                                    <button @click="hideModal" type="submit" class="form-button ">Save</button>
+                                    <button @click="update" type="button" class="form-button ">Save</button>
                                 </div>
 
                             </form>

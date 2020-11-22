@@ -32,10 +32,9 @@ export default {
     hideDropdown() {
       this.editing = false;
     },
-    hideModal() {
+    hideEditModal() {
       this.$modal.hide("edit-thread");
     },
-
     edit() {
       this.$modal.show("edit-thread");
     },
@@ -43,8 +42,8 @@ export default {
     update() {
       axios
         .patch(this.path, this.data)
-        .then((response) => console.log(response))
-        .catch((error) => console.log(error));
+        .then((response) => this.hideEditModal())
+        .catch((error) => showErrorModal(error.response.data));
     },
   },
 };
