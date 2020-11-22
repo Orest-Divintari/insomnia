@@ -1,6 +1,9 @@
 <template>
   <div>
-    <new-profile-post @added="add" :profile-owner="profileOwner"></new-profile-post>
+    <new-profile-post
+      @added="add"
+      :profile-owner="profileOwner"
+    ></new-profile-post>
     <profile-post
       v-for="(post, index) in posts"
       :key="post.id"
@@ -8,7 +11,11 @@
       :post="post"
       :profile-owner="profileOwner"
     ></profile-post>
-    <fetch-more-button v-if="itemsExist" @fetchMore="fetchMore" name="Show older posts"></fetch-more-button>
+    <fetch-more-button
+      v-if="itemsExist"
+      @fetchMore="fetchMore"
+      name="Show older posts"
+    ></fetch-more-button>
   </div>
 </template>
 
@@ -52,12 +59,10 @@ export default {
         .catch((error) => console.log(error));
     },
     fetchData() {
-      if (this.posts.length == 0) {
-        axios
-          .get(this.path())
-          .then(({ data }) => this.refresh(data))
-          .catch((error) => console.log(error));
-      }
+      axios
+        .get(this.path())
+        .then(({ data }) => this.refresh(data))
+        .catch((error) => console.log(error));
     },
     add(data) {
       this.posts.unshift(data);
