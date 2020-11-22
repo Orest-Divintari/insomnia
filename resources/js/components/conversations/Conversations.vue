@@ -31,7 +31,7 @@
                 @click="showProfile(participant)"
                 class="mr-1 text-xs text-gray-lightest leading-none hover:underline cursor-pointer"
                 v-text="
-                  participantName(
+                  participantNames(
                     participant,
                     participantsIndex,
                     conversation.participants.length
@@ -109,7 +109,7 @@ export default {
     };
   },
   methods: {
-    participantName(participant, index, total) {
+    participantNames(participant, index, total) {
       if (index < total - 1) {
         return participant.name + ",";
       }
@@ -122,8 +122,6 @@ export default {
       ];
     },
   },
-
-  mounted() {},
 };
 </script>
 
