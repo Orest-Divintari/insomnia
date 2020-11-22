@@ -77,4 +77,35 @@ class UpdateReplyTest extends TestCase
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 
+    /** @test */
+    public function authorized_users_may_delete_a_reply()
+    {
+        $replyPoster = $this->signIn();
+
+        $reply = ReplyFactory::by($replyPoster)->create();
+
+        $this->delete(route('api.replies.destroy', $reply));
+
+        $this->assertDatabaseMissing('replies', [
+            'id' => $reply->id,
+            'repliable_type' => Thread::class,
+        ]);
+
+    }
+
+    /** @test */
+    public function unauthorized_users_cannot_delete_a_reply()
+    {
+        $reply = ReplyFactory::create();
+
+        $unauthorizedUser = $this->signIn();
+
+        $this->delete(route('api.replies.destroy', $reply))
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $this->assertDatabaseHas('replies', [
+            'id' => $reply->id,
+        ]);
+    }
+
 }
