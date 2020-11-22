@@ -12,6 +12,8 @@ class CreateConversationMessageTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $errorMessage = 'Please enter a valid message.';
+
     /** @test */
     public function guests_cannot_add_a_message_to_a_conversation()
     {
@@ -40,10 +42,11 @@ class CreateConversationMessageTest extends TestCase
         $conversation = ConversationFactory::create();
         $message = ['body' => ''];
 
-        $this->post(
+        $this->postJson(
             route('api.messages.store', $conversation),
             $message
-        )->assertSessionHasErrors('body');
+        )->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
     }
 
     /** @test */
@@ -51,12 +54,14 @@ class CreateConversationMessageTest extends TestCase
     {
         $this->signIn();
         $conversation = ConversationFactory::create();
-        $message = ['body' => []];
+        $nonStringMessage = array(15);
+        $message = ['body' => $nonStringMessage];
 
-        $this->post(
+        $this->postJson(
             route('api.messages.store', $conversation),
             $message
-        )->assertSessionHasErrors('body');
+        )->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
     }
 
     /** @test */
