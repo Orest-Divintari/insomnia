@@ -6057,7 +6057,7 @@ __webpack_require__.r(__webpack_exports__);
         var data = _ref.data;
         return _this.addReply(data);
       })["catch"](function (error) {
-        return console.log(error.response);
+        return showModalError(error.response.data);
       });
     },
     addReply: function addReply(data) {
