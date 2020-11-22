@@ -4110,6 +4110,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4155,7 +4166,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.patch(this.path, this.data).then(function () {
         return _this.updated();
       })["catch"](function (error) {
-        return console.log(error);
+        return showModalError(error.response.data);
       });
     },
     destroy: function destroy() {
@@ -84979,7 +84990,7 @@ var render = function() {
                       attrs: { type: "submit" },
                       on: { click: _vm.cancel }
                     },
-                    [_vm._v("Cancel")]
+                    [_vm._v("\n            Cancel\n          ")]
                   )
                 ])
               ],
@@ -85001,7 +85012,13 @@ var render = function() {
                     _c(
                       "button",
                       { staticClass: "btn-reply-control bg-blue-lighter" },
-                      [_vm._v(_vm._s(_vm.comment.date_created))]
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(_vm.comment.date_created) +
+                            "\n            "
+                        )
+                      ]
                     ),
                     _vm._v(" "),
                     _vm.authorize("owns", _vm.comment)
@@ -85015,7 +85032,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Edit")]
+                          [_vm._v("\n              Edit\n            ")]
                         )
                       : _vm._e(),
                     _vm._v(" "),
@@ -85027,7 +85044,7 @@ var render = function() {
                             staticClass: "btn-reply-control bg-blue-lighter",
                             on: { click: _vm.destroy }
                           },
-                          [_vm._v("Delete")]
+                          [_vm._v("\n              Delete\n            ")]
                         )
                       : _vm._e()
                   ]),
