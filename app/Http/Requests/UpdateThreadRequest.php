@@ -26,14 +26,33 @@ class UpdateThreadRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
+            'title' => ['required', 'string'],
         ];
     }
 
+    /**
+     * Update an existing thread
+     *
+     * @param Thread $thread
+     * @return void
+     */
     public function update(Thread $thread)
     {
         $thread->update(
             $this->validated()
         );
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'title.required' => 'Please enter a valid title.',
+            'title.string' => 'Please enter a valid title.',
+        ];
     }
 }
