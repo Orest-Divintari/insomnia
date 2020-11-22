@@ -24,7 +24,20 @@ class PostCommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'body' => 'required',
+            'body' => ['string', 'required'],
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'body.required' => 'Please enter a valid message.',
+            'body.string' => 'Please enter a valid message.',
         ];
     }
 }
