@@ -42,7 +42,7 @@
                                 <p> Edit Conversation </p>
                                 <button @click="hideEditModal" class="fas fa-times"></button>
                             </div>
-                            <form @submit.prevent="update">
+                            <form>
                                 <!-- ROW -->
                                 <div class="form-row">
                                     <!-- LEFT -->
@@ -54,12 +54,12 @@
                                         <p class="form-label-phone">Title:</p>
                                         <div>
                                             <input v-model="title" class="form-input" type="text" id="title"
-                                                name="title" required autocomplete="title">
+                                                name="title" autocomplete="title">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-button-container justify-center">
-                                    <button @click="hideEditModal" type="submit" class="form-button ">Save</button>
+                                    <button @click="update" type="button" class="form-button ">Save</button>
                                 </div>
 
                             </form>
