@@ -80,6 +80,8 @@ class CreateConversationRequest extends FormRequest
             'title.string' => 'Please enter a valid title.',
             'message.required' => 'Please enter a valid message.',
             'message.string' => 'Please enter a valid message.',
+            'participants.required' => 'Please enter at least one username.',
+            'participants.min' => 'Please enter at least one username.',
         ];
         $messages = $this->addParticipantExistsMessage($messages);
 
