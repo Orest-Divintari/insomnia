@@ -12,6 +12,7 @@ class ManageConversationsTest extends TestCase
 
     use RefreshDatabase;
 
+    protected $errorMessage = 'Please enter a valid title.';
     /** @test */
     public function the_title_of_the_conversation_can_be_updated_by_the_user_who_started_the_conversation()
     {
@@ -30,7 +31,7 @@ class ManageConversationsTest extends TestCase
     }
 
     /** @test */
-    public function a_conversation_required_a_title_when_updated()
+    public function a_conversation_requires_a_title_when_updated()
     {
         $conversationStarter = $this->signIn();
 
@@ -38,10 +39,11 @@ class ManageConversationsTest extends TestCase
 
         $newTitle = ['title' => ''];
 
-        $this->patch(
+        $this->patchJson(
             route('api.conversations.update', $conversation),
             $newTitle
-        )->assertSessionHasErrors('title');
+        )->assertStatus(422)
+            ->assertJson(['title' => [$this->errorMessage]]);
     }
 
     /** @test */
@@ -53,10 +55,11 @@ class ManageConversationsTest extends TestCase
 
         $newTitle = ['title' => array(5)];
 
-        $this->patch(
+        $this->patchJson(
             route('api.conversations.update', $conversation),
             $newTitle
-        )->assertSessionHasErrors('title');
+        )->assertStatus(422)
+            ->assertJson(['title' => [$this->errorMessage]]);
     }
 
     /** @test */
