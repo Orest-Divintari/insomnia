@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     refresh(data) {
-      console.log(data);
       this.posted = !this.posted;
       this.$emit("added", data);
     },
