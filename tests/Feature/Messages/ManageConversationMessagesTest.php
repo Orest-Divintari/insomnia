@@ -12,6 +12,8 @@ class ManageConversationMessagesTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $errorMessage = 'Please enter a valid message.';
+
     /** @test */
     public function guests_cannot_update_conversation_messages()
     {
@@ -66,10 +68,11 @@ class ManageConversationMessagesTest extends TestCase
 
         $message = $conversation->messages()->first();
 
-        $this->patch(
+        $this->patchJson(
             route('api.messages.update', $message),
             $updatedMessage = ['body' => '']
-        )->assertSessionHasErrors('body');
+        )->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
     }
 
     /** @test */
@@ -80,9 +83,12 @@ class ManageConversationMessagesTest extends TestCase
 
         $message = $conversation->messages()->first();
 
-        $this->patch(
+        $nonStringMessage = array(15);
+        $this->patchJson(
             route('api.messages.update', $message),
-            $updatedMessage = ['body' => []]
-        )->assertSessionHasErrors('body');
+            $updatedMessage = ['body' => $nonStringMessage]
+        )->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
     }
+
 }
