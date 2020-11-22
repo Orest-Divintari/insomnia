@@ -4871,7 +4871,7 @@ __webpack_require__.r(__webpack_exports__);
         var data = _ref.data;
         return _this.refresh(data);
       })["catch"](function (error) {
-        return console.log(error);
+        return showModalError(error.response.data);
       });
     },
     refresh: function refresh(data) {
