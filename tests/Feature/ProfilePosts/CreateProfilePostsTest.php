@@ -10,6 +10,7 @@ class CreateProfilePostsTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $errorMessage = 'Please enter a valid message.';
     /** @test */
     public function guests_cannot_create_a_profile_post()
     {
@@ -68,10 +69,27 @@ class CreateProfilePostsTest extends TestCase
 
         $this->signIn();
 
-        $this->post(
+        $this->postJson(
             route('api.profile-posts.store', $profileOwner),
             ['body' => '']
-        )->assertSessionHasErrors('body');
+        )->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
+    }
+
+    /** @test */
+    public function a_post_body_must_be_of_type_string()
+    {
+        $profileOwner = create(User::class);
+
+        $this->signIn();
+
+        $nonStringBody = array(15);
+
+        $this->postJson(
+            route('api.profile-posts.store', $profileOwner),
+            ['body' => $nonStringBody]
+        )->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
     }
 
 }
