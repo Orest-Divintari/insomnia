@@ -105,7 +105,7 @@ class ManageProfilePostsTest extends TestCase
 
     /** @test */
     public function unathorized_users_cannot_delete_a_profile_post()
-    {
+{
         $profileOwner = create(User::class);
 
         $poster = $this->signIn();
