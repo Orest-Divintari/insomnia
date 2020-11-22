@@ -157,7 +157,7 @@ export default {
       axios
         .patch(this.path, this.data)
         .then(() => this.updated())
-        .catch((error) => console.log(error.response));
+        .catch((error) => showModalError(error.response.data));
     },
     cancel() {
       this.editing = false;
