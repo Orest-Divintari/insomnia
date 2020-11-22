@@ -20,7 +20,7 @@
     <fetch-more-button
       v-if="itemsExist"
       @fetchMore="fetchMore"
-      name="See more"
+      title="See more"
     ></fetch-more-button>
   </div>
 </template>

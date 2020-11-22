@@ -51,7 +51,7 @@
         class="sticky bottom-0"
         v-if="hasMore"
         @fetchMore="fetchMore"
-        name="More..."
+        title="More..."
       ></fetch-more-button>
     </modal>
   </div>

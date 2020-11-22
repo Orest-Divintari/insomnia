@@ -5,7 +5,7 @@
         class="w-32 focus:outline-none text-blue-mid py-2 text-xs mr-3 font-semibold hover:bg-blue-botticelli rounded"
         @click="$emit('fetchMore')"
       >
-        {{ name }}
+        {{ title }}
       </button>
     </div>
   </div>
@@ -14,7 +14,7 @@
 <script>
 export default {
   props: {
-    name: {
+    title: {
       type: String,
       default: "",
     },
