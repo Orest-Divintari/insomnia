@@ -13,6 +13,14 @@ class ManageCommentsTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $errorMessage;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->errorMessage = 'Please enter a valid message.';
+    }
+
     /** @test */
     public function unathorized_users_cannot_edit_a_comment()
     {
@@ -113,6 +121,36 @@ class ManageCommentsTest extends TestCase
             'user_id' => $commentPoster->id,
             'body' => $comment->body,
         ]);
+    }
+
+    /** @test */
+    public function when_updating_a_comment_a_body_is_required()
+    {
+        $commentPoster = $this->signIn();
+
+        $comment = CommentFactory::by($commentPoster)->create();
+        $emptyComment = [
+            'body' => '',
+        ];
+
+        $this->patchJson(route('api.comments.update', $comment), $emptyComment)
+            ->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
+    }
+
+    /** @test */
+    public function when_updating_a_comment_the_body_must_be_of_type_string()
+    {
+        $commentPoster = $this->signIn();
+
+        $comment = CommentFactory::by($commentPoster)->create();
+        $nonStringComment = [
+            'body' => array(15),
+        ];
+
+        $this->patchJson(route('api.comments.update', $comment), $nonStringComment)
+            ->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
     }
 
 }
