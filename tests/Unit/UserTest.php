@@ -268,5 +268,4 @@ class UserTest extends TestCase
 
         $this->assertTrue($conversation->hasBeenUpdated);
     }
-
 }
