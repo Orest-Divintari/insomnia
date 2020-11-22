@@ -30,6 +30,7 @@
 import Reply from "./Reply";
 import Paginator from "../Paginator";
 import NewReply from "./NewReply";
+import collection from "../../mixins/collection";
 export default {
   components: {
     Reply,
@@ -46,17 +47,13 @@ export default {
       default: {},
     },
   },
+  mixins: [collection],
   data() {
     return {
       isPaginated: false,
       items: this.replies.data,
       dataset: this.replies,
     };
-  },
-  methods: {
-    add(item) {
-      this.items.push(item);
-    },
   },
 };
 </script>

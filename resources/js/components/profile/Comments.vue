@@ -13,7 +13,7 @@
     </div>
     <comment
       @deleted="remove(index)"
-      v-for="(comment, index) in comments"
+      v-for="(comment, index) in items"
       :key="comment.id"
       :comment="comment"
       :profile-owner="profileOwner"
@@ -24,6 +24,7 @@
 
 <script>
 import fetch from "../../mixins/fetch";
+import collection from "../../mixins/collection";
 export default {
   props: {
     post: {
@@ -37,10 +38,10 @@ export default {
       required: true,
     },
   },
-  mixins: [fetch],
+  mixins: [fetch, collection],
   data() {
     return {
-      comments: [],
+      items: [],
       dataset: {},
     };
   },
@@ -53,15 +54,9 @@ export default {
     },
   },
   methods: {
-    add(data) {
-      this.comments.push(data);
-    },
-    remove(index) {
-      this.comments.splice(index, 1);
-    },
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
-      this.comments.unshift(...paginatedCollection.data.reverse());
+      this.items.unshift(...paginatedCollection.data.reverse());
     },
   },
   created() {
