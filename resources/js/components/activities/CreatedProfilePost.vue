@@ -2,23 +2,33 @@
   <div>
     <div class="text-md flex">
       <p>
-        <a @click="showProfile(profileOwner)" class="blue-link">{{ profileOwner.name }}</a>
+        <a @click="showProfile(profileOwner)" class="blue-link">{{
+          profileOwner.name
+        }}</a>
         <span v-if="ownsPost(activity.subject)">
           updated their
-          <a @click="showPost(profileOwner, activity.subject)" class="blue-link">status</a>
+          <a @click="showPost(profileOwner, activity.subject)" class="blue-link"
+            >status</a
+          >
         </span>
         <span v-else>
           left a message on
           <a
             @click="showPost(activity.subject.poster, activity.subject)"
             class="blue-link"
-          >{{ activity.subject.poster.name }}</a>'s profile.
+            >{{ activity.subject.poster.name }}</a
+          >'s profile.
         </span>
       </p>
     </div>
     <div>
-      <highlight class="italic text-smaller" :content="activity.subject.body"></highlight>
-      <p class="text-smaller text-gray-lightest">{{ activity.subject.date_created }}</p>
+      <highlight
+        class="italic text-smaller"
+        :content="activity.subject.body"
+      ></highlight>
+      <p class="text-smaller text-gray-lightest">
+        {{ activity.subject.date_created }}
+      </p>
     </div>
   </div>
 </template>
