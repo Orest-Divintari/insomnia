@@ -13,6 +13,13 @@ class ParticipateInForumTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $errorMessage;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->errorMessage = 'Please enter a valid message.';
+    }
     /** @test */
     public function guests_may_not_post_replies_to_a_thread()
     {
@@ -44,22 +51,67 @@ class ParticipateInForumTest extends TestCase
     }
 
     /** @test */
-    public function a_newly_posted_reply_requires_a_body()
+    public function a_reply_body_must_be_of_stype_string()
     {
-        $this->signIn();
-
         $thread = create(Thread::class);
+        $replyPoster = $this->signIn();
+        $emptyReply = ['body' => ''];
 
-        $reply = ['body' => ''];
+        $response = $this->postJson(route('api.replies.store', $thread), $emptyReply)
+            ->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
 
-        $this->post(route('api.replies.store', $thread), $reply)
-            ->assertSessionHasErrors('body');
+    }
+    /** @test */
+    public function when_posting_a_thread_reply_a_body_is_required()
+    {
+        $thread = create(Thread::class);
+        $replyPoster = $this->signIn();
+        $emptyReply = ['body' => ''];
 
-        $this->assertDatabaseMissing('replies', [
-            'body' => $reply['body'],
-            'repliable_id' => $thread->id,
-            'repliable_type' => 'App\Thread',
-        ]);
+        $this->postJson(route('api.replies.store', $thread), $emptyReply)
+            ->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
+    }
+
+    /** @test */
+    public function when_posting_a_thread_reply_the_body_must_be_of_type_string()
+    {
+        $thread = create(Thread::class);
+        $replyPoster = $this->signIn();
+        $incorrectReply = ['body' => 15];
+
+        $this->postJson(route('api.replies.store', $thread), $incorrectReply)
+            ->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
+    }
+
+    /** @test */
+    public function when_updating_a_thread_reply_a_body_is_required()
+    {
+        $replyPoster = $this->signIn();
+
+        $reply = ReplyFactory::by($replyPoster)->create();
+
+        $emptyReply = ['body' => ''];
+
+        $this->patchJson(route('api.replies.update', $reply), $emptyReply)
+            ->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
+    }
+
+    /** @test */
+    public function when_updating_a_thread_reply_a_string_must_be_given()
+    {
+        $replyPoster = $this->signIn();
+
+        $reply = ReplyFactory::by($replyPoster)->create();
+
+        $incorrectReply = ['body' => 15];
+
+        $this->patchJson(route('api.replies.update', $reply), $incorrectReply)
+            ->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
     }
 
     /** @test */
@@ -127,6 +179,5 @@ class ParticipateInForumTest extends TestCase
         $this->assertDatabaseHas('replies', [
             'id' => $reply->id,
         ]);
-
     }
 }
