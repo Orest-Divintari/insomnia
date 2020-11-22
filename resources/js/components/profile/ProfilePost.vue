@@ -2,8 +2,7 @@
   <div :id="'#profile-post-' + post.id">
     <div class="reply-container">
       <div class="reply-left-col w-24">
-        <img :src="post.poster.avatar_path
-        " class="avatar-lg" alt />
+        <img :src="post.poster.avatar_path" class="avatar-lg" alt />
       </div>
       <div class="post-right-col">
         <div class="post-header">
@@ -21,7 +20,9 @@
             <button @click="update" class="form-button mr-3">
               <span class="fas fa-save mr-1"></span> Save
             </button>
-            <button class="form-button" @click="cancel" type="submit">Cancel</button>
+            <button class="form-button" @click="cancel" type="submit">
+              Cancel
+            </button>
           </div>
         </div>
         <div v-else>
@@ -29,7 +30,9 @@
             <highlight :content="body"></highlight>
           </div>
           <div class="flex" v-if="authorize('owns', post)">
-            <button @click="editing=true" class="btn-reply-control">Edit</button>
+            <button @click="editing = true" class="btn-reply-control">
+              Edit
+            </button>
             <button @click="destroy" class="btn-reply-control">Delete</button>
           </div>
         </div>
@@ -78,7 +81,7 @@ export default {
       axios
         .patch(this.path(), this.data())
         .then((response) => console.log(response))
-        .catch((error) => console.log(error));
+        .catch((error) => showModalError(error.response.data));
 
       this.cancel();
     },
