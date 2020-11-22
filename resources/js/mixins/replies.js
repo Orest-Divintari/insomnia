@@ -10,12 +10,6 @@ export default {
             this.isLiked = status;
             status ? this.likesCount++ : this.likesCount--;
         },
-        fetchMore() {
-            axios
-                .get(this.dataset.next_page_url)
-                .then(({ data }) => this.refresh(data))
-                .catch(error => console.log(error));
-        }
     },
     computed: {
         data() {
