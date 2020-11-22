@@ -5,7 +5,14 @@
         <p class="text-lg text-black-semi">Ops! we ran into some problems.</p>
         <button @click="hide" class="fas fa-times text-lg"></button>
       </div>
-      <p class="block p-3 text-black-semi text-sm" v-text="message"></p>
+      <div v-for="(error, indexError) in errors">
+        <div v-for="(message, indexMessage) in error">
+          <li
+            class="block p-3 text-black-semi text-sm list-disc"
+            v-text="message"
+          ></li>
+        </div>
+      </div>
     </modal>
   </div>
 </template>
@@ -15,12 +22,12 @@ import EventBus from "../eventBus";
 export default {
   data() {
     return {
-      message: "",
+      errors: [],
     };
   },
   methods: {
-    flash(message) {
-      this.message = message;
+    showError(errors) {
+      this.errors = errors;
       this.show();
     },
     show() {
@@ -31,8 +38,8 @@ export default {
     },
   },
   created() {
-    EventBus.$on("error", (message) => {
-      this.flash(message);
+    EventBus.$on("error", (errors) => {
+      this.showError(errors);
     });
   },
 };

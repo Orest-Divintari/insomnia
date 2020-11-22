@@ -69,7 +69,7 @@ Vue.directive("focus", {
 
 
 // -------- global error modal message function --------
-window.showError = function(message) {
+window.showModalError = function(message) {
     EventBus.$emit("error", message);
 };
 
