@@ -10,7 +10,6 @@ export default {
     return {
       title: this.conversation.title,
       isRead: !this.conversation.has_been_updated,
-      editing: false,
     };
   },
   computed: {
@@ -34,9 +33,6 @@ export default {
     },
   },
   methods: {
-    hideDropdown() {
-      this.editing = false;
-    },
     hideEditModal() {
       this.$modal.hide("edit-conversation");
     },
