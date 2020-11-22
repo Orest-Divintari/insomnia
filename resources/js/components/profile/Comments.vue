@@ -1,14 +1,19 @@
 <template>
   <div class="mt-3">
-    <div v-if="commentsExist" class="mb-2 bg-blue-lighter border border-gray-lighter p-2">
+    <div
+      v-if="commentsExist"
+      class="mb-2 bg-blue-lighter border border-gray-lighter p-2"
+    >
       <button
         @click="fetchMore"
         class="text-smaller text-blue-ship-cove font-hairline hover:underline focus:outline-none"
-      >View previous comments...</button>
+      >
+        View previous comments...
+      </button>
     </div>
     <comment
       @deleted="remove(index)"
-      v-for="(comment,index) in comments"
+      v-for="(comment, index) in comments"
       :key="comment.id"
       :comment="comment"
       :profile-owner="profileOwner"
