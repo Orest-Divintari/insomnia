@@ -12,6 +12,7 @@ class CreateCommentTest extends TestCase
 
     use RefreshDatabase;
 
+    protected $bodyErrorMessage = 'Please enter a valid message.';
     /** @test */
     public function guests_cannot_post_a_comment()
     {
@@ -66,7 +67,7 @@ class CreateCommentTest extends TestCase
         $comment = ['body' => ''];
 
         $this->post(route('api.comments.store', $post), $comment)
-            ->assertSessionHasErrors('body');
+            ->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
 
         $this->assertDatabaseMissing('replies', [
             'repliable_id' => $post->id,
@@ -74,5 +75,19 @@ class CreateCommentTest extends TestCase
             'body' => $comment['body'],
             'user_id' => $user->id,
         ]);
+    }
+
+    /** @test */
+    public function a_comment_must_be_of_type_string()
+    {
+        $user = $this->signIn();
+
+        $post = create(ProfilePost::class);
+
+        $notStringBody = array(5);
+        $comment = ['body' => $notStringBody];
+
+        $this->post(route('api.comments.store', $post), $comment)
+            ->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
     }
 }
