@@ -6,6 +6,7 @@ use App\Conversation;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class CreateConversationTest extends TestCase
@@ -56,7 +57,6 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function an_authenticated_user_that_hasnt_verified_the_email_cannot_see_the_conversation_form()
     {
-        $this->withExceptionHandling();
         $user = create(User::class, ['email_verified_at' => null]);
         $this->signIn($user);
 
@@ -208,6 +208,7 @@ class CreateConversationTest extends TestCase
         $this->postConversation(
             $this->title,
             $this->messageBody,
+            $participant = ''
         )->assertSessionHasErrors('participants');
     }
 
@@ -215,25 +216,38 @@ class CreateConversationTest extends TestCase
     public function to_start_new_conversation_the_participant_should_already_exist()
     {
         $conversationStarter = $this->signIn();
+        $nonExistingUser = 'john';
 
         $this->postConversation(
             $this->title,
             $this->messageBody,
-            'randomName'
-        )->assertSessionHasErrors('participants.*');
-
+            $nonExistingUser
+        )->assertSessionHasErrors(['participants.*' => ['The following participant could not be found: ' . $nonExistingUser]]);
     }
 
     /** @test */
     public function to_start_a_new_conversation_all_participant_names_should_exist()
     {
         $conversationStarter = $this->signIn();
-        $participants = "{$this->participantA->name}, randomName";
-        $this->postConversation(
+        $nonExistingUser = 'randomName';
+        $anotherNonExistingUser = 'nonExisting';
+        $participants = "{$anotherNonExistingUser}, {$nonExistingUser}";
+
+        $response = $this->postConversation(
             $this->title,
             $this->messageBody,
             $participants
-        )->assertSessionHasErrors('participants.*');
+        )->assertSessionHasErrors(
+            ['participants.*' =>
+                ['The following participant could not be found: ' . $anotherNonExistingUser],
+            ],
+        );
+
+        $response->assertSessionHasErrors(
+            ['participants.*' =>
+                ['The following participant could not be found: ' . $anotherNonExistingUser],
+            ]
+        );
     }
 
     /** @test */
