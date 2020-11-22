@@ -50,10 +50,10 @@ export default {
     post() {
       axios
         .post(this.path, this.data)
-        .then(({ data }) => this.refresh(data))
+        .then(({ data }) => this.onSuccess(data))
         .catch((error) => showErrorModal(error.response.data));
     },
-    refresh(data) {
+    onSuccess(data) {
       this.posted = !this.posted;
       this.$emit("created", data);
       this.body = "";
