@@ -1,7 +1,7 @@
 <template>
   <div class="mt-3">
     <div
-      v-if="commentsExist"
+      v-if="nextPage"
       class="mb-2 bg-blue-lighter border border-gray-lighter p-2"
     >
       <button
@@ -46,7 +46,7 @@ export default {
     };
   },
   computed: {
-    commentsExist() {
+    nextPage() {
       return this.dataset.next_page_url != null;
     },
     path() {
