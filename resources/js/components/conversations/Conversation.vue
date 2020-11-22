@@ -50,7 +50,7 @@ export default {
       var path = this.leaveActionPath();
       axios
         .patch(path)
-        .then((response) => this.viewConversationList())
+        .then(() => this.viewConversationList())
         .catch((error) => console.log(error));
     },
     leaveActionPath() {
