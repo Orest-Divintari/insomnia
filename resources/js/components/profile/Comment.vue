@@ -105,14 +105,20 @@ export default {
     },
   },
   methods: {
-    cancel() {
+    edit() {
+      this.editing = true;
+    },
+    hideEdit() {
       this.editing = false;
+    },
+  cancel() {
+      this.hideEdit();
       this.body = this.comment.body;
     },
     update() {
       axios
         .patch(this.path, this.data)
-        .then(() => this.updated())
+        .then(() => this.hideEdit())
         .catch((error) => showErrorModal(error.response.data));
     },
     destroy() {
