@@ -13,6 +13,7 @@ class ManageProfilePostsTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $errorMessage = 'Please enter a valid message.';
     /** @test */
     public function unauthorized_users_cannot_update_a_profile_post()
     {
@@ -73,10 +74,32 @@ class ManageProfilePostsTest extends TestCase
             'user_id' => $poster->id,
         ]);
 
-        $this->patch(
+        $this->patchJson(
             route('api.profile-posts.update', $profilePost->id),
             ['body' => '']
-        )->assertSessionHasErrors('body');
+        )->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
+
+    }
+
+    /** @test */
+    public function the_body_of_a_profile_post_must_be_of_type_string()
+    {
+        $profileOwner = create(User::class);
+
+        $poster = $this->signIn();
+
+        $profilePost = create(ProfilePost::class, [
+            'profile_owner_id' => $profileOwner->id,
+            'user_id' => $poster->id,
+        ]);
+
+        $nonStringBody = array(15);
+        $this->patchJson(
+            route('api.profile-posts.update', $profilePost->id),
+            ['body' => $nonStringBody]
+        )->assertStatus(422)
+            ->assertJson(['body' => [$this->errorMessage]]);
 
     }
 
