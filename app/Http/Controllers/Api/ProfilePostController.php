@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateProfilePostRequest;
 use App\Http\Requests\UpdateProfilePostRequest;
 use App\ProfilePost;
 use App\User;
@@ -15,15 +16,9 @@ class ProfilePostController extends Controller
      * @param User $user
      * @return ProfilePost
      */
-    public function store(User $user)
+    public function store(User $user, CreateProfilePostRequest $request)
     {
-
-        $post = request()->validate([
-            'body' => 'required|string',
-        ]);
-
-        $newPost = auth()->user()->postToProfile($post, $user);
-
+        $newPost = auth()->user()->postToProfile(request('body'), $user);
         return $newPost->load('poster');
     }
 

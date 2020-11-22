@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\ProfilePost;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateProfilePostRequest extends FormRequest
@@ -25,16 +24,20 @@ class CreateProfilePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'body' => 'required|string',
+            'body' => ['required', 'string'],
         ];
     }
 
-    public function persist($profileOwner)
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
     {
-        return ProfilePost::create([
-            'body' => $this->input('body'),
-            'profile_owner_id' => $profileOwner->id,
-            'user_id' => $this->user()->id,
-        ]);
+        return [
+            'body.required' => 'Please enter a valid message.',
+            'body.string' => 'Please enter a valid message.',
+        ];
     }
 }
