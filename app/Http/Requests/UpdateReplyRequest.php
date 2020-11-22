@@ -27,14 +27,34 @@ class UpdateReplyRequest extends FormRequest
     public function rules()
     {
         return [
-            'body' => 'required',
+            'body' => ['string', 'required'],
         ];
     }
 
+    /**
+     * Update the specific reply
+     *
+     * @param Reply $reply
+     * @return void
+     */
     public function update(Reply $reply)
     {
         $reply->update(
             $this->validated()
         );
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'body.required' => 'Please enter a valid message.',
+            'body.string' => 'Please enter a valid message.',
+        ];
+    }
+
 }
