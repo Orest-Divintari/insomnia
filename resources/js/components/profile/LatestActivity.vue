@@ -16,7 +16,11 @@
         ></component>
       </div>
     </div>
-    <fetch-more-button v-if="itemsExist" @fetchMore="fetchMore" name="Show older items"></fetch-more-button>
+    <fetch-more-button
+      v-if="itemsExist"
+      @fetchMore="fetchMore"
+      name="Show older items"
+    ></fetch-more-button>
   </div>
 </template>
 
@@ -28,6 +32,7 @@ import CreatedReply from "../activities/CreatedReply";
 import CreatedComment from "../activities/CreatedComment";
 import CreatedProfilePost from "../activities/CreatedProfilePost";
 import CreatedThread from "../activities/CreatedThread";
+import fetch from "../../mixins/fetch";
 export default {
   components: {
     CreatedCommentLike,
@@ -45,6 +50,7 @@ export default {
       required: true,
     },
   },
+  mixins: [fetch],
   data() {
     return {
       activities: [],
@@ -70,18 +76,6 @@ export default {
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
       this.activities = this.activities.concat(paginatedCollection.data);
-    },
-    fetchMore() {
-      axios
-        .get(this.dataset.next_page_url)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
-    },
-    fetchData() {
-      axios
-        .get(this.path)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log("gamw to spiti"));
     },
   },
   created() {

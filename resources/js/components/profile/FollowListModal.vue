@@ -59,6 +59,7 @@
 
 <script>
 import FetchMoreButton from "../profile/FetchMoreButton";
+import fetch from "../../mixins/fetch";
 export default {
   components: {
     FetchMoreButton,
@@ -77,6 +78,7 @@ export default {
       default: "",
     },
   },
+  mixins: [fetch],
   data() {
     return {
       items: [],
@@ -107,12 +109,6 @@ export default {
     },
     hide() {
       this.$modal.hide(this.name);
-    },
-    fetchMore() {
-      axios
-        .get(this.dataset.next_page_url)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
     },
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;

@@ -30,6 +30,7 @@ import ProfilePost from "../postings/ProfilePost";
 import ProfilePostComment from "../postings/ProfilePostComment";
 import ThreadReply from "../postings/ThreadReply";
 import Thread from "../postings/Thread";
+import fetch from "../../mixins/fetch";
 export default {
   components: {
     ProfilePost,
@@ -48,7 +49,7 @@ export default {
       default: "",
     },
   },
-
+  mixins: [fetch],
   data() {
     return {
       poster: {},
@@ -73,12 +74,6 @@ export default {
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
       this.postings = this.postings.concat(paginatedCollection.data);
-    },
-    fetchMore() {
-      axios
-        .get(this.dataset.next_page_url)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
     },
   },
 };

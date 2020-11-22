@@ -17,6 +17,7 @@
 <script>
 import Follows from "./Follows";
 import FollowedBy from "./FollowedBy";
+import fetch from "../../mixins/fetch";
 export default {
   components: {
     Follows,
@@ -29,6 +30,7 @@ export default {
       required: true,
     },
   },
+  mixins: [fetch],
   data() {
     return {
       followsDataset: {},
@@ -43,13 +45,7 @@ export default {
     },
   },
   methods: {
-    fetchData() {
-      axios
-        .get(this.path)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
-    },
-    refresh({ data }) {
+    refresh(data) {
       this.followsDataset = data.follows;
       this.followedByDataset = data.followedBy;
       this.hasFollowing = this.followsDataset.total > 0;

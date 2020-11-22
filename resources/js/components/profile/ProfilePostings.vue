@@ -16,7 +16,11 @@
         ></component>
       </div>
     </div>
-    <fetch-more-button v-if="itemsExist" @fetchMore="fetchMore" name="See more"></fetch-more-button>
+    <fetch-more-button
+      v-if="itemsExist"
+      @fetchMore="fetchMore"
+      name="See more"
+    ></fetch-more-button>
   </div>
 </template>
 
@@ -26,6 +30,7 @@ import ProfilePost from "../postings/ProfilePost";
 import ThreadReply from "../postings/ThreadReply";
 import Thread from "../postings/Thread";
 import FetchMoreButton from "./FetchMoreButton";
+import fetch from "../../mixins/fetch";
 export default {
   components: {
     "created-comment": ProfilePostComment,
@@ -41,6 +46,7 @@ export default {
       required: true,
     },
   },
+  mixins: [fetch],
   data() {
     return {
       postings: [],
@@ -69,18 +75,6 @@ export default {
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
       this.postings = this.postings.concat(paginatedCollection.data);
-    },
-    fetchMore() {
-      axios
-        .get(this.dataset.next_page_url)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
-    },
-    fetchData() {
-      axios
-        .get(this.path)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
     },
   },
   created() {

@@ -42,6 +42,7 @@ import PostCommentNotification from "./PostCommentNotification";
 import CommentLikeNotification from "./CommentLikeNotification";
 
 import replies from "../../mixins/replies";
+import fetch from "../../mixins/fetch";
 export default {
   components: {
     ThreadReplyNotification,
@@ -50,7 +51,7 @@ export default {
     PostCommentNotification,
     CommentLikeNotification,
   },
-  mixins: [replies],
+  mixins: [replies, fetch],
   data() {
     return {
       notifications: [],
@@ -58,7 +59,7 @@ export default {
     };
   },
   computed: {
-    indexPath() {
+    path() {
       return "/api/notifications";
     },
     notificationsExist() {
@@ -72,12 +73,6 @@ export default {
     refresh(data) {
       this.notifications = data;
       this.notificationCount = this.notifications.length;
-    },
-    fetchData() {
-      axios
-        .get(this.indexPath)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
     },
     markAsRead(notificationId) {
       this.notificationCount--;

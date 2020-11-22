@@ -22,6 +22,7 @@
 <script>
 import FollowListModal from "./FollowListModal";
 import FetchMoreButton from "../profile/FetchMoreButton";
+import fetch from "../../mixins/fetch";
 export default {
   components: {
     FetchMoreButton,
@@ -37,6 +38,7 @@ export default {
       default: {},
     },
   },
+  mixins: [fetch],
   data() {
     return {
       followedByUsers: this.dataset.data,
@@ -48,12 +50,6 @@ export default {
     },
   },
   methods: {
-    fetchMore() {
-      axios
-        .get(this.dataset.next_page_url)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
-    },
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
       this.followedByUsers = this.followedByUsers.concat(

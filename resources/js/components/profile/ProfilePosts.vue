@@ -22,6 +22,7 @@
 <script>
 import NewProfilePost from "./NewProfilePost";
 import ProfilePost from "./ProfilePost";
+import fetch from "../../mixins/fetch";
 export default {
   components: {
     NewProfilePost,
@@ -33,6 +34,7 @@ export default {
       default: {},
     },
   },
+  mixins: [fetch],
   data() {
     return {
       posts: [],
@@ -43,27 +45,16 @@ export default {
     itemsExist() {
       return this.dataset.next_page_url != null;
     },
+    path() {
+      return "/api/profiles/" + this.profileOwner.name + "/posts";
+    },
   },
   methods: {
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
       this.posts = this.posts.concat(paginatedCollection.data);
     },
-    path() {
-      return "/api/profiles/" + this.profileOwner.name + "/posts";
-    },
-    fetchMore() {
-      axios
-        .get(this.dataset.next_page_url)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
-    },
-    fetchData() {
-      axios
-        .get(this.path())
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
-    },
+
     add(data) {
       this.posts.unshift(data);
     },

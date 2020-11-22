@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import fetch from "../../mixins/fetch";
 export default {
   props: {
     post: {
@@ -36,6 +37,7 @@ export default {
       required: true,
     },
   },
+  mixins: [fetch],
   data() {
     return {
       comments: [],
@@ -60,18 +62,6 @@ export default {
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
       this.comments.unshift(...paginatedCollection.data.reverse());
-    },
-    fetchData() {
-      axios
-        .get(this.path)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
-    },
-    fetchMore() {
-      axios
-        .get(this.dataset.next_page_url)
-        .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
     },
   },
   created() {
