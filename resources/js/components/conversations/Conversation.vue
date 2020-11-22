@@ -51,16 +51,18 @@ export default {
     },
     leave() {
       this.hideLeaveModal();
-      var path;
-      if (this.$refs.hide.checked) {
-        path = this.hidePath;
-      } else if (this.$refs.leave.checked) {
-        path = this.leavePath;
-      }
+      var path = this.leaveActionPath();
       axios
         .patch(path)
         .then((response) => this.viewConversationList())
         .catch((error) => console.log(error));
+    },
+    leaveActionPath() {
+      if (this.$refs.hide.checked) {
+        return this.hidePath;
+      } else if (this.$refs.leave.checked) {
+        return this.leavePath;
+      }
     },
     toggleRead() {
       if (this.isRead) {
