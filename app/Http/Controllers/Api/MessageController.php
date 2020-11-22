@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Conversation;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
 use App\Reply;
 
@@ -32,16 +33,10 @@ class MessageController extends Controller
      * @param Conversation $conversation
      * @return \Illuminate\Http\Response
      */
-    public function store(Conversation $conversation)
+    public function store(Conversation $conversation, CreateMessageRequest $request)
     {
-        $this->authorize('view', $conversation);
-
-        $message = request()->validate([
-            'body' => ['string', 'required'],
-        ]);
-
         return $conversation
-            ->addMessage($message['body'])
+            ->addMessage(request('body'))
             ->load('poster');
     }
 
