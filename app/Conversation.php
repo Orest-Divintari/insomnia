@@ -145,7 +145,6 @@ class Conversation extends Model
                 ->latest('created_at')
                 ->take(1),
         ])->with('recentMessage.poster');
-
     }
 
     /**
