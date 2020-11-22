@@ -46,10 +46,10 @@ export default {
     fetchData() {
       axios
         .get(this.path)
-        .then(({ data }) => this.refreshData(data))
+        .then(({ data }) => this.refresh(data))
         .catch((error) => console.log(error));
     },
-    refreshData(data) {
+    refresh({ data }) {
       this.followsDataset = data.follows;
       this.followedByDataset = data.followedBy;
       this.hasFollowing = this.followsDataset.total > 0;

@@ -20,7 +20,10 @@
             :key="notification.id"
             class="dropdown-notification-item"
           >
-            <component :is="notification.data.type" :notification-data="notification.data"></component>
+            <component
+              :is="notification.data.type"
+              :notification-data="notification.data"
+            ></component>
           </div>
         </div>
         <div v-else>
@@ -66,14 +69,14 @@ export default {
     readPath(notificationId) {
       return "/api/notifications/" + notificationId;
     },
-    refresh({ data }) {
+    refresh(data) {
       this.notifications = data;
       this.notificationCount = this.notifications.length;
     },
     fetchData() {
       axios
         .get(this.indexPath)
-        .then((response) => this.refresh(response))
+        .then(({ data }) => this.refresh(data))
         .catch((error) => console.log(error));
     },
     markAsRead(notificationId) {
