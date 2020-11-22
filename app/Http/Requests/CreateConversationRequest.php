@@ -96,6 +96,10 @@ class CreateConversationRequest extends FormRequest
      */
     public function addParticipantExistsMessage($messages)
     {
+        if (is_null(request('participants'))) {
+            return $messages;
+        }
+
         foreach (request('participants') as $index => $participant) {
             if (isset($participant) && is_string($participant)) {
                 $messages["participants." . $index . ".exists"] = "The following participant could not be found: " . $participant;
