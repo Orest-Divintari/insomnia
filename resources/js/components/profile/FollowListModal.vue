@@ -26,13 +26,13 @@
           :class="classes(index)"
         >
           <img
-            @click="goToProfile(member.name)"
+            @click="showProfile(member.name)"
             :src="member.avatar_path"
             class="cursor-pointer avatar-lg"
           />
           <div class="pl-4">
             <a
-              @click="goToProfile(member.name)"
+              @click="showProfile(member.name)"
               class="blue-link font-bold text-md"
               v-text="member.name"
             ></a>
@@ -60,6 +60,7 @@
 <script>
 import FetchMoreButton from "../profile/FetchMoreButton";
 import fetch from "../../mixins/fetch";
+import view from "../../mixins/view";
 export default {
   components: {
     FetchMoreButton,
@@ -78,7 +79,7 @@ export default {
       default: "",
     },
   },
-  mixins: [fetch],
+  mixins: [fetch, view],
   data() {
     return {
       items: [],
@@ -100,9 +101,6 @@ export default {
         "border",
         index == this.items.length - 1 ? "border-b" : "border-b-0",
       ];
-    },
-    goToProfile(username) {
-      window.location.href = "/profiles/" + username;
     },
     show() {
       this.$modal.show(this.name);

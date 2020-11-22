@@ -3,11 +3,13 @@
     <div class="border border-gray-lighter p-4 rounded">
       <h1 class="text-md text-black-semi mb-2">Following</h1>
       <div class="flex flex-row">
-        <a
+        <img
           v-for="(user, index) in followingUsers"
-          :href="/profiles/ + user.name"
-          ><img :src="user.avatar_path" class="avatar-lg mr-3" alt />
-        </a>
+          @click="showProfile(user)"
+          :src="user.avatar_path"
+          class="avatar-lg mr-3"
+          alt
+        />
       </div>
       <follow-list-modal
         name="follows-modal "
@@ -23,6 +25,7 @@
 import FollowListModal from "./FollowListModal";
 import FetchMoreButton from "../profile/FetchMoreButton";
 import fetch from "../../mixins/fetch";
+import view from "../../mixins/view";
 export default {
   components: {
     FetchMoreButton,
@@ -38,7 +41,7 @@ export default {
       default: {},
     },
   },
-  mixins: [fetch],
+  mixins: [fetch, view],
   data() {
     return {
       followingUsers: this.dataset.data,
