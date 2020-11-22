@@ -56,7 +56,7 @@ export default {
       axios
         .post(this.path, { body: this.body })
         .then(({ data }) => this.addReply(data))
-        .catch((error) => showModalError(error.response.data));
+        .catch((error) => showErrorModal(error.response.data));
     },
     addReply(data) {
       this.posted = !this.posted;

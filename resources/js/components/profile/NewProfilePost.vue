@@ -56,7 +56,7 @@ export default {
       axios
         .post(this.path, this.data)
         .then(({ data }) => this.refresh(data))
-        .catch((error) => showModalError(error.response.data));
+        .catch((error) => showErrorModal(error.response.data));
     },
   },
 };

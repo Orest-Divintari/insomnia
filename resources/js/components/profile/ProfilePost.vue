@@ -81,7 +81,7 @@ export default {
       axios
         .patch(this.path(), this.data())
         .then((response) => console.log(response))
-        .catch((error) => showModalError(error.response.data));
+        .catch((error) => showErrorModal(error.response.data));
 
       this.cancel();
     },
