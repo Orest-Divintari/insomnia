@@ -89,7 +89,7 @@ class AboutProfileUserTest extends TestCase
         );
 
         $this->assertEquals(
-            '/users/' . $profileOwner->name . '/follows',
+            '/api/users/' . $profileOwner->name . '/follows',
             $response['path']
         );
     }
