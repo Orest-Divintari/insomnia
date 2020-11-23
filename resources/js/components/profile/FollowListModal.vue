@@ -26,13 +26,13 @@
           :class="classes(index)"
         >
           <img
-            @click="showProfile(member.name)"
+            @click="showProfile(member)"
             :src="member.avatar_path"
             class="cursor-pointer avatar-lg"
           />
           <div class="pl-4">
             <a
-              @click="showProfile(member.name)"
+              @click="showProfile(member)"
               class="blue-link font-bold text-md"
               v-text="member.name"
             ></a>
