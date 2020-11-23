@@ -5,6 +5,9 @@ namespace Tests\Unit;
 use App\Like;
 use App\Reply;
 use App\Thread;
+use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\MessageFactory;
+use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -47,4 +50,32 @@ class LikeTest extends TestCase
         $this->assertCount(1, $like->activities);
 
     }
+
+    /** @test */
+    public function a_thread_reply_like_should_be_recordable()
+    {
+        $this->signIn();
+        $threadReply = ReplyFactory::create();
+        $like = $threadReply->likedBy();
+        $this->assertTrue($like->shouldBeRecordable());
+    }
+
+    /** @test */
+    public function a_profile_post_comment_like_should_be_recordable()
+    {
+        $this->signIn();
+        $comment = CommentFactory::create();
+        $like = $comment->likedBy();
+        $this->assertTrue($like->shouldBeRecordable());
+    }
+
+    /** @test */
+    public function a_conversation_message_like_should_not_be_recordable()
+    {
+        $this->signIn();
+        $message = MessageFactory::create();
+        $like = $message->likedBy();
+        $this->assertFalse($like->shouldBeRecordable());
+    }
+
 }
