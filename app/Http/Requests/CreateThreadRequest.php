@@ -27,7 +27,7 @@ class CreateThreadRequest extends FormRequest
      *
      * @var string
      */
-    protected $categoryErrorMessage = "Please enter a valid category";
+    protected $categoryErrorMessage = "Please enter a valid category.";
 
     /**
      * Determine if the user is authorized to make this request.
