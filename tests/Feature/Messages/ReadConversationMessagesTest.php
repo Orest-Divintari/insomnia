@@ -12,13 +12,6 @@ class ReadConversationMessagesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function guests_cannot_read_conversation_messages()
-    {
-        $this->get(route('api.messages.index', ['conversation' => 1]))
-            ->assertRedirect('login');
-    }
-
-    /** @test */
     public function authenticated_users_cannot_read_messages_of_conversations_that_they_are_not_participants()
     {
         $conversationStarter = $this->signIn();
