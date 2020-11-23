@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Activities;
 
 use App\Activity;
 use App\Like;
