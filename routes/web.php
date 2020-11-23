@@ -96,8 +96,12 @@ Route::group([
         ->name('api.followedBy.index');
 
     // latest activity
-    Route::get('/profiles/{user}/latestActivity/{postings?}', 'LatestActivityController@index')
+    Route::get('/profiles/{user}/latestActivity/', 'LatestActivityController@index')
         ->name('api.latest-activity.index');
+
+    // postings
+    Route::get('/profiles/{user}/postings/', 'PostingActivityController@index')
+        ->name('api.posting-activity.index');
 
     // about
     Route::get('/profiles/{user}/about', 'AboutController@show')

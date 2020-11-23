@@ -62,17 +62,28 @@ class Activity extends Model
     /**
      * Get the activity of all posts
      *
-     * @param  Builder
+     * @param  User $user
      * @return Builder
      */
-    public function scopeOfAllPosts($query)
+    public static function feedPosts($user)
     {
-        return $query->whereHasMorph(
-            'subject',
-            [
-                Thread::class,
-                ProfilePost::class,
-                Reply::class,
-            ]);
+        return static::where('user_id', $user->id)
+            ->whereIn('subject_type', [
+                'App\Thread',
+                'App\Reply',
+                'App\ProfilePost',
+            ])->latest()
+            ->with(['subject' => function ($morphTo) {
+                $morphTo->morphWith([
+                    Thread::class => ['poster', 'category'],
+                    Reply::class => ['repliable' => function (MorphTo $morphTo) {
+                        $morphTo->morphWith([
+                            Thread::class => ['category'],
+                            ProfilePost::class => ['profileOwner'],
+                        ]);
+                    }],
+                    ProfilePost::class => ['profileOwner'],
+                ]);
+            }]);
     }
 }

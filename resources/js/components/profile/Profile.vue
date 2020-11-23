@@ -100,7 +100,7 @@
         <latest-activity :profile-owner="profileOwner"></latest-activity>
       </tab>
       <tab name="Postings">
-        <profile-postings :profile-owner="profileOwner"></profile-postings>
+        <posting-activity :profile-owner="profileOwner"></posting-activity>
       </tab>
       <tab name="About">
         <about :profile-owner="profileOwner"></about>
@@ -112,7 +112,7 @@
 <script>
 import ProfilePosts from "./ProfilePosts";
 import LatestActivity from "./LatestActivity";
-import ProfilePostings from "./ProfilePostings";
+import PostingActivity from "./PostingActivity";
 import FollowButton from "./FollowButton";
 import About from "./About";
 import Tabs from "../Tabs";
@@ -124,7 +124,7 @@ export default {
     Tabs,
     Tab,
     LatestActivity,
-    ProfilePostings,
+    PostingActivity,
     About,
     FollowButton,
   },

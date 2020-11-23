@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/profiles/" + this.profileOwner.name + "/latestActivity/true";
+      return "/api/profiles/" + this.profileOwner.name + "/postings";
     },
     itemsExist() {
       return this.dataset.next_page_url != null;

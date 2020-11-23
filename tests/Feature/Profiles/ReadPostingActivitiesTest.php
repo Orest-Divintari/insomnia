@@ -7,13 +7,14 @@ use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ReadLatestActivityTest extends TestCase
+class ReadProfilePostingsTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function a_user_can_read_the_latest_activity_of_the_profile_owner()
+    public function a_user_can_read_the_posting_activities_of_the_profile_owner()
     {
+        $this->withExceptionHandling();
         $profileOwner = $this->signIn();
 
         $thread = create(Thread::class);
@@ -29,10 +30,10 @@ class ReadLatestActivityTest extends TestCase
         $replyLike = $threadReply->likedBy();
         $commentLike = $comment->likedBy();
 
-        $activities = $this->getJson(
-            route('api.latest-activity.index', $profileOwner)
+        $postings = $this->getJson(
+            route('api.posting-activity.index', $profileOwner)
         )->json()['data'];
 
-        $this->assertCount(6, $activities);
+        $this->assertCount(4, $postings);
     }
 }
