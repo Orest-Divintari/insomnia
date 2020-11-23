@@ -77,5 +77,4 @@ class LikeTest extends TestCase
         $like = $message->likedBy();
         $this->assertFalse($like->shouldBeRecordable());
     }
-
 }
