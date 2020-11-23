@@ -43,7 +43,7 @@ export default {
     fetchData() {
       axios
         .get(this.path)
-        .then((response) => this.refresh(response))
+        .then(({ data }) => this.refresh(data))
         .catch((error) => console.log(error));
     },
   },
