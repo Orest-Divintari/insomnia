@@ -66,6 +66,7 @@ class ReplyFactory
         }
         return $thread;
     }
+
     public function by($user)
     {
         $this->user = $user;
