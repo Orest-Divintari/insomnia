@@ -93,17 +93,4 @@ class AboutProfileUserTest extends TestCase
             $response['path']
         );
     }
-
-    /** @test */
-    public function tsek()
-    {
-        $user = create(User::class);
-        $otherUser = create(User::class);
-
-        $user->follow($otherUser);
-
-        $res = User::whereId($user->id)->withFollows()->first();
-
-        dd($res->toArray());
-    }
 }
