@@ -280,4 +280,14 @@ class Thread extends Model
     {
         return $query->with(['poster', 'category']);
     }
+
+    /**
+     * Determine if the activity for this model should be recorded
+     *
+     * @return boolean
+     */
+    public function shouldBeRecordable()
+    {
+        return true;
+    }
 }

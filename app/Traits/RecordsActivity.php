@@ -11,11 +11,12 @@ trait RecordsActivity
      */
     public static function bootRecordsActivity()
     {
-
-        $recordableEvents = self::recordableEvents();
-
-        foreach ($recordableEvents as $event) {
+        foreach (self::recordableEvents() as $event) {
             static::$event(function ($model) use ($event) {
+
+                if (!$model->shouldBeRecordable()) {
+                    return;
+                }
                 $model->recordActivity($event);
             });
         }
@@ -29,7 +30,7 @@ trait RecordsActivity
      */
     public function recordActivity($event)
     {
-        if (!auth()->check() || self::firstReply()) {
+        if (!auth()->check()) {
             return;
         }
 
@@ -37,20 +38,6 @@ trait RecordsActivity
             'user_id' => auth()->id(),
             'type' => $this->getActivityType($event),
         ]);
-    }
-
-    /**
-     * Determine if it is a reply
-     * If it is a reply, check if it is the first one
-     *
-     * The first reply consists the body of the thread (it is not an actual reply)
-     * Thus the activity should not be recorded
-     *
-     * @return boolean
-     */
-    public function firstReply()
-    {
-        return class_basename($this) == 'Reply' && $this->position == 1;
     }
 
     /**
@@ -112,5 +99,4 @@ trait RecordsActivity
     {
         return $this->morphMany(Activity::class, 'subject');
     }
-
 }

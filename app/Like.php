@@ -60,4 +60,17 @@ class Like extends Model
         return $this->morphMany(Activity::class, 'subject');
     }
 
+    /**
+     * Determine if the activity for this model should be recorded
+     *
+     * @return boolean
+     */
+    public function shouldBeRecordable()
+    {
+        if ($this->reply->repliable_type == 'App\Conversation') {
+            return false;
+        }
+        return true;
+    }
+
 }

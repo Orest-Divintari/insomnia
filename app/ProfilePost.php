@@ -139,4 +139,13 @@ class ProfilePost extends Model
         return $query->with(['poster', 'profileOwner']);
     }
 
+    /**
+     * Determine if the activity for this model should be recorded
+     *
+     * @return boolean
+     */
+    public function shouldBeRecordable()
+    {
+        return true;
+    }
 }

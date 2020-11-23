@@ -220,6 +220,8 @@ class Reply extends Model
             return 'thread-reply';
         } elseif ($this->repliable_type == 'App\ProfilePost') {
             return 'profile-post-comment';
+        } elseif ($this->repliable_type == 'App\Conversation') {
+            return 'conversation-message';
         }
     }
 
@@ -257,5 +259,18 @@ class Reply extends Model
                 ProfilePost::class => ['profileOwner'],
             ]);
         }]);
+    }
+
+    /**
+     * Determine if the activity for this model should be recorded
+     *
+     * @return boolean
+     */
+    public function shouldBeRecordable()
+    {
+        if ($this->repliable_type == 'App\Conversation' || $this->position == 1) {
+            return false;
+        }
+        return true;
     }
 }
