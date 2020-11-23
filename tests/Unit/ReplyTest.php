@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Filters\ReplyFilters;
 use App\Like;
-use App\ProfilePost;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -161,16 +160,7 @@ class ReplyTest extends TestCase
         }
 
         /** @test */
-        public function a_reply_knows_if_it_is_a_thread_reply_and_doesnt_consist_the_body_of_a_thread()
-    {
-        ReplyFactory::create();
-        CommentFactory::create();
-
-        $this->assertCount(1, Reply::onlyReplies()->get());
-    }
-
-    /** @test */
-    public function a_reply_can_eager_load_the_data_required_to_display_when_a_user_searches_a_reply()
+        public function a_reply_can_eager_load_the_data_required_to_display_when_a_user_searches_a_reply()
     {
         ReplyFactory::create();
         $reply = Reply::withSearchInfo()->first();
@@ -243,19 +233,4 @@ class ReplyTest extends TestCase
             $reply->repliable->id
         );
     }
-
-    /** @test */
-    public function get_only_profile_post_comments()
-    {
-        ReplyFactory::create();
-        CommentFactory::create();
-
-        $comments = Reply::onlyComments()->get();
-        $this->assertCount(1, $comments);
-        $this->assertEquals(
-            $comments->first()->repliable_type,
-            ProfilePost::class
-        );
-    }
-
 }

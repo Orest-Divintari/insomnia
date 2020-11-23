@@ -258,31 +258,4 @@ class Reply extends Model
             ]);
         }]);
     }
-
-    /**
-     * Get only the thread replies
-     * and exclude the replies that consist the body of a thread
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeOnlyReplies($query)
-    {
-        return $query->where([
-            ['repliable_type', '=', 'App\Thread'],
-            ['position', '>', '1'],
-        ]);
-    }
-
-    /**
-     * Get only the profile post comments
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeOnlyComments($query)
-    {
-        return $query->where('repliable_type', 'App\ProfilePost');
-    }
-
 }
