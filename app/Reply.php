@@ -132,8 +132,9 @@ class Reply extends Model
         $numberOfRepliesBefore = Reply::where(
             'repliable_type', get_class($this->repliable)
         )->where('repliable_id', $this->repliable->id)
+            ->where('id', '<', $this->id)
             ->count();
-
+        
         return (int) ceil($numberOfRepliesBefore / $this->repliable::REPLIES_PER_PAGE);
     }
 
