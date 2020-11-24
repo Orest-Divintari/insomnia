@@ -21,7 +21,7 @@ class Conversation extends Model
      *
      * @var int
      */
-    const REPLIES_PER_PAGE = 2;
+    const REPLIES_PER_PAGE = 15;
 
     /**
      * The accessors to append to the model's array form.
