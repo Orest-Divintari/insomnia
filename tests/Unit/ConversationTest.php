@@ -227,4 +227,20 @@ class ConversationTest extends TestCase
         $conversation->unhide();
         $this->assertCount(2, $user->fresh()->conversations);
     }
+
+    /** @test */
+    public function a_conversation_knows_which_participants_are_active()
+    {
+        $conversationStarter = $this->signIn();
+        $participantB = create(User::class);
+
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants(array($participantB->name))
+            ->create();
+        
+        $conversation->leftBy($participantB);
+
+        $this->assertCount(2, $conversation->participants);
+        $this->assertCount(1, $conversation->activeParticipants);
+    }
 }
