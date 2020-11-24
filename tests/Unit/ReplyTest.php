@@ -99,18 +99,37 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
-    public function a_reply_knows_in_which_page_it_belongs_to()
+    public function a_thread_reply_knows_in_which_page_it_belongs_to()
     {
-        $thread = create(Thread::class);
-
-        createMany(Reply::class, 30, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+        ReplyFactory::createMany(50);
 
         $reply = Reply::find(15);
-        $correctPageNumber = ceil(15 / Reply::REPLIES_PER_PAGE);
+        $correctPageNumber = ceil(15 / $reply->repliable::REPLIES_PER_PAGE);
+
         $this->assertEquals($correctPageNumber, $reply->pageNumber);
+    }
+
+    /** @test */
+    public function a_profile_post_comment_knows_in_which_page_it_belongs_to()
+    {
+        CommentFactory::createMany(50);
+
+        $comment = Reply::find(15);
+        $correctPageNumber = ceil(15 / $comment->repliable::REPLIES_PER_PAGE);
+
+        $this->assertEquals($correctPageNumber, $comment->pageNumber);
+    }
+
+    /** @test */
+    public function a_conversation_message_knows_in_which_page_it_belongs_to()
+    {
+        MessageFactory::createMany(50);
+
+        $message = Reply::find(15);
+
+        $correctPageNumber = ceil(15 / $message->repliable::REPLIES_PER_PAGE);
+
+        $this->assertEquals($correctPageNumber, $message->pageNumber);
     }
 
     /** @test */
