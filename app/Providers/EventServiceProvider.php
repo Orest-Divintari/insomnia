@@ -33,6 +33,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Profile\CommentWasLiked' => [
             'App\Listeners\Profile\NotifyCommentPoster',
         ],
+        'App\Events\Conversation\NewMessageWasAddedToConversation' => [
+            'App\Listeners\Profile\NotifyConversationParticipants',
+        ],
     ];
 
     /**

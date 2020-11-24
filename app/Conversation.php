@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\Conversation\NewMessageWasAddedToConversation;
 use App\Traits\FormatsDate;
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
@@ -122,6 +123,8 @@ class Conversation extends Model
                 'body' => $message,
                 'user_id' => $user ? $user->id : auth()->id(),
             ]);
+
+        event(new NewMessageWasAddedToConversation($this, $message));
 
         return $message;
     }
