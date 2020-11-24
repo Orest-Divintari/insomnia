@@ -49,7 +49,7 @@ class ThreadNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_subscribed_to_a_thread_can_disable_email_notifications_when_a_new_reply_is_posted_to_the_thread()
+    public function a_user_subscribed_to_a_thread_can_choose_to_not_receive_email_notifications_when_a_new_reply_is_posted_to_the_thread()
     {
 
         $this->put(
