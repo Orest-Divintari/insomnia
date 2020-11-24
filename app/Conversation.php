@@ -56,6 +56,22 @@ class Conversation extends Model
     }
 
     /**
+     * Get the participants that have not left the conversation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function activeParticipants()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'conversation_participants',
+            'conversation_id',
+            'user_id'
+        )->wherePivot('left', false)
+            ->withTimestamps();
+    }
+
+    /**
      * Add participants to converastion
      *
      * @param string[] $usernames
