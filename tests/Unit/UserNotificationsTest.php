@@ -2,8 +2,10 @@
 
 namespace Tests\Unit;
 
+use App\Conversation;
 use App\Like;
 use App\Notifications\CommentHasNewLike;
+use App\Notifications\ConversationHasNewMessage;
 use App\Notifications\ProfileHasNewPost;
 use App\Notifications\ProfilePostHasNewComment;
 use App\Notifications\ReplyHasNewLike;
@@ -252,6 +254,29 @@ class UserNotificationsTest extends TestCase
         $commentPoster->notify($notification);
 
         $this->assertEquals(['mail', 'database'], $notification->via($commentPoster));
+    }
+
+    /** @test */
+    public function the_participants_receive_an_email_notification_when_a_new_message_is_added_to_conversation()
+    {
+        Notification::fake();
+
+        $conversationStarter = $this->signIn();
+        $conversation = create(
+            Conversation::class,
+            ['user_id' => $conversationStarter->id]
+        );
+        $participant = create(User::class);
+        $conversation->addParticipants([$participant->name]);
+        $message = $conversation->addMessage('some messaage');
+
+        $notification = new ConversationHasNewMessage(
+            $conversation, $message
+        );
+
+        $participant->notify($notification);
+
+        $this->assertEquals(['mail'], $notification->via($participant));
     }
 
 }
