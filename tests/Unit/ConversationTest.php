@@ -243,10 +243,11 @@ class ConversationTest extends TestCase
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants(array($participantB->name))
             ->create();
-        
+
         $conversation->leftBy($participantB);
 
         $this->assertCount(2, $conversation->participants);
         $this->assertCount(1, $conversation->activeParticipants);
     }
+
 }
