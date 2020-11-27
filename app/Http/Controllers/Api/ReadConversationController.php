@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class ReadConversationController extends Controller
 {
     /**
-     * Store a new read record for the conversation
+     * Mark conversation as read
      *
      * @param Conversation $conversation
      * @return \Illuminate\Http\Response
@@ -21,10 +21,10 @@ class ReadConversationController extends Controller
     }
 
     /**
-     *
+     * Mark conversation as unread
      *
      * @param Conversation $conversation
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Conversation $conversation)
     {
