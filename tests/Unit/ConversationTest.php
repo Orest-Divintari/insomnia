@@ -151,15 +151,21 @@ class ConversationTest extends TestCase
     }
 
     /** @test */
-    public function a_conversation_can_be_read_by_many_participants()
+    public function a_conversation_can_be_marked_as_read_by_many_participants()
     {
         $user = $this->signIn();
         $conversation = create(Conversation::class);
+
         $user->readConversation($conversation);
 
+        $this->assertCount(1, $conversation->reads);
+
         $anotherUser = $this->signIn();
+        $conversation->addParticipants([$anotherUser->name]);
+
         $anotherUser->readConversation($conversation);
-        $this->assertCount(2, $conversation->reads);
+
+        $this->assertCount(2, $conversation->fresh()->reads);
     }
 
     /** @test */
