@@ -305,10 +305,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $conversation->reads()
             ->where('user_id', $this->id)
-            ->updateOrCreate([
-                'user_id' => $this->id,
-                'read_at' => Carbon::now(),
-            ]);
+            ->update(['read_at' => Carbon::now()]);
     }
 
     /**
