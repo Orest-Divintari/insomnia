@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners\Profile;
+namespace App\Listeners\Conversation;
 
 use App\Events\Conversation\MessageWasAdded;
 use App\Events\Conversation\NewMessageWasAddedToConversation;
