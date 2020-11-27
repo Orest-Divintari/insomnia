@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\Conversation\NewMessageWasAddedToConversation;
+use App\Events\Conversation\NewParticipantsWereAdded;
 use App\Traits\FormatsDate;
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
@@ -76,22 +77,27 @@ class Conversation extends Model
      * Add participants to converastion
      *
      * @param string[] $usernames
+     * @param bool $admin
      * @return void
      */
-    public function addParticipants(array $usernames)
+    public function addParticipants(array $usernames, $admin = false)
     {
-        $participantIds = $this
-            ->getParticipantIds($usernames);
+        $participantIds = $this->getParticipantIds($usernames);
 
-        $this->participants()
-            ->attach($participantIds);
+        foreach ($participantIds->toArray() as $participantId) {
+            $participants[$participantId] = ['admin' => $admin];
+        }
+
+        $this->participants()->attach($participants);
+        
+        event(new NewParticipantsWereAdded($this, $participantIds));
     }
 
     /**
      * Get the ids for the given username or usernames
      *
      * @param string[] $usernames
-     * @return int[]
+     * @return Collection
      */
     public function getParticipantIds(array $usernames)
     {

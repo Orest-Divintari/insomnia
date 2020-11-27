@@ -34,7 +34,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Profile\NotifyCommentPoster',
         ],
         'App\Events\Conversation\NewMessageWasAddedToConversation' => [
-            'App\Listeners\Profile\NotifyConversationParticipants',
+            'App\Listeners\Conversation\NotifyConversationParticipants',
+        ],
+        'App\Events\Conversation\NewParticipantsWereAdded' => [
+            'App\Listeners\Conversation\MarkConversationAsUnread',
         ],
     ];
 
