@@ -318,6 +318,24 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $conversation->reads()
             ->where('user_id', auth()->id())
-            ->delete();
+            ->update(['read_at' => null]);
+    }
+
+    /**
+     * Get the unread conversations
+     *
+     * @return
+     */
+    public function unreadConversations()
+    {
+        return $this->conversations()
+            ->whereHas('reads', function ($query) {
+                $query->where('reads.user_id', $this->id)
+                    ->where(function ($query) {
+                        $query
+                            ->whereColumn('reads.read_at', '<', 'conversations.updated_at')
+                            ->orWhereNull('reads.read_at');
+                    });
+            });
     }
 }
