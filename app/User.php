@@ -324,7 +324,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get the unread conversations
      *
-     * @return
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function unreadConversations()
     {
