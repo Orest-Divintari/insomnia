@@ -42,7 +42,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
 
         $this->assertTrue($conversation->hasBeenUpdated);
 
-        $this->delete(route('read-conversations.destroy', $conversation))
+        $this->patch(route('unread-conversations.update', $conversation))
             ->assertRedirect('login');
     }
 
@@ -55,7 +55,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
 
         $this->assertTrue($conversation->hasBeenUpdated);
 
-        $this->delete(route('read-conversations.destroy', $conversation))
+        $this->patch(route('unread-conversations.update', $conversation))
             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
@@ -72,7 +72,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
 
         $this->assertFalse($conversation->hasBeenUpdated);
 
-        $this->delete(route('read-conversations.destroy', $conversation))
+        $this->patch(route('unread-conversations.update', $conversation))
             ->assertOk();
 
         $this->assertTrue($conversation->hasBeenUpdated);
