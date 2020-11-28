@@ -18,10 +18,12 @@ class ConversationObserver
          * When a converastion is created
          * attach the authenticated user as participant and admin
          */
-        $conversation->addParticipants(
-            [auth()->user()->name],
-            $admin = true
-        );
+        if (auth()->check()) {
+            $conversation->addParticipants(
+                [auth()->user()->name],
+                $admin = true
+            );
+        }
 
     }
 
