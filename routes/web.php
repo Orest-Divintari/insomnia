@@ -120,8 +120,8 @@ Route::group([
         Route::patch('/conversations/{conversation}/read', 'ReadConversationController@update')
             ->name('read-conversations.update');
 
-        Route::delete('/conversations/{conversation}/read', 'ReadConversationController@destroy')
-            ->name('read-conversations.destroy');
+        Route::patch('/conversations/{conversation}/unread', 'UnreadConversationController@update')
+            ->name('unread-conversations.update');
 
         // hide conversation
         Route::patch('/conversations/{conversation}/hide', 'HideConversationController@update')

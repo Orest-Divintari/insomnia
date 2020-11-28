@@ -22,6 +22,9 @@ export default {
     readPath() {
       return this.path + "/read";
     },
+    unreadPath() {
+      return this.path + "/unread";
+    },
     data() {
       return { title: this.title };
     },
@@ -75,7 +78,7 @@ export default {
     },
     markUnread() {
       axios
-        .delete(this.readPath)
+        .delete(this.unreadPath)
         .then((response) => (this.isRead = false))
         .catch((error) => console.log(error));
     },
