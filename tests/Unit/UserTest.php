@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Conversation;
 use App\Like;
 use App\ProfilePost;
+use App\Read;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -238,6 +239,23 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function a_user_has_conversations()
+    {
+        $john = $this->signIn();
+        $orestis = create(User::class);
+        $conversationA = ConversationFactory::by($john)
+            ->withParticipants([$orestis->name])
+            ->create();
+
+        $this->signIn($orestis);
+        $conversationB = ConversationFactory::by($orestis)
+            ->withParticipants([$john->name])
+            ->create();
+
+        $this->assertCount(2, $orestis->conversations);
+    }
+
+    /** @test */
     public function a_user_can_mark_a_conversation_as_read()
     {
         $conversationStarter = $this->signIn();
@@ -267,5 +285,33 @@ class UserTest extends TestCase
         $conversationStarter->unreadConversation($conversation);
 
         $this->assertTrue($conversation->hasBeenUpdated);
+    }
+
+    /** @test */
+    public function get_the_unread_conversations()
+    {
+        $conversationStarter = $this->signIn();
+        $conversation = create(
+            Conversation::class,
+            ['user_id' => $conversationStarter->id]
+        );
+        $this->assertCount(1, $conversationStarter->fresh()->unreadConversations);
+
+        $conversationStarter->readConversation($conversation);
+        $this->assertCount(0, $conversationStarter->fresh()->unreadConversations);
+
+        $participant = create(User::class);
+        $this->assertCount(0, $participant->unreadConversations);
+
+        $conversation->addParticipants([$participant->name]);
+        $this->assertCount(1, $participant->fresh()->unreadConversations);
+
+        $participant->readConversation($conversation);
+        $this->assertCount(0, $participant->fresh()->unreadConversations);
+
+        Carbon::setTestNow(Carbon::now()->addDay());
+        $conversation->addMessage('random message', $participant);
+        $this->assertCount(1, $conversationStarter->fresh()->unreadConversations);
+        $this->assertCount(1, $participant->fresh()->unreadConversations);
     }
 }
