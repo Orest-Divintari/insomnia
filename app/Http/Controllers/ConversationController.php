@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Conversation;
+use App\Filters\FilterManager;
 use App\Http\Requests\CreateConversationRequest;
 use App\Reply;
 use Illuminate\Http\Request;
@@ -70,10 +71,13 @@ class ConversationController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(FilterManager $filterManager)
     {
+        $conversationFilters = $filterManager->withConversationFilters();
+
         $conversations = auth()->user()
             ->conversations()
+            ->filter($conversationFilters)
             ->with('starter')
             ->withRecentMessage()
             ->with('participants')

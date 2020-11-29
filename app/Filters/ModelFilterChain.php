@@ -34,6 +34,16 @@ class ModelFilterChain
     }
 
     /**
+     * Add ConversationFilters to the chain
+     *
+     * @return void
+     */
+    public function withConversationFilters()
+    {
+        $this->addFilter(ConversationFilters::class);
+    }
+
+    /**
      * Add ThreadFilters to the chain
      *
      * @return void

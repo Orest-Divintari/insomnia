@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\Conversation\NewMessageWasAddedToConversation;
 use App\Events\Conversation\NewParticipantsWereAdded;
+use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
-    use Sluggable, FormatsDate;
+    use Sluggable, FormatsDate, Filterable;
 
     /**
      * Number of conversations per page
@@ -89,7 +90,7 @@ class Conversation extends Model
         }
 
         $this->participants()->attach($participants);
-        
+
         event(new NewParticipantsWereAdded($this, $participantIds));
     }
 

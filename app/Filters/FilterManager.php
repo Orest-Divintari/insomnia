@@ -180,6 +180,17 @@ class FilterManager
     }
 
     /**
+     * Add ConversationFilters to the chain
+     *
+     * @return FilterManager
+     */
+    public function withConversationFilters()
+    {
+        $this->chain->withConversationFilters();
+        return $this;
+    }
+
+    /**
      * Add ThreadFilters to the chain
      *
      * @return FilterManager
