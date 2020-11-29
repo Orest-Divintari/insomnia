@@ -150,6 +150,23 @@ class CreateConversationTest extends TestCase
         $this->assertEquals($message->body, $this->messageBody);
     }
 
+    /** @test  */
+    public function the_converstation_starter_is_added_as_a_participant_to_the_newly_created_conversation()
+    {
+        $conversationStarter = $this->signIn();
+
+        $this->postConversation(
+            $this->title,
+            $this->messageBody,
+            $this->participantA->name
+        );
+
+        $conversation = $conversationStarter->conversations->first();
+
+        $this->assertTrue(
+            $conversation->participants->contains($conversationStarter->id)
+        );
+    }
     /** @test */
     public function to_start_a_new_conversation_a_title_is_required()
     {
