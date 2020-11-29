@@ -168,6 +168,27 @@ class CreateConversationTest extends TestCase
         );
     }
     /** @test */
+    public function when_a_conversation_participant_is_added_the_conversation_is_marked_as_unread_for_the_new_participant()
+    {
+        $conversationStarter = $this->signIn();
+
+        $this->postConversation(
+            $this->title,
+            $this->messageBody,
+            $this->participantA->name
+        );
+
+        $conversation = $this->participantA->conversations->first();
+
+        $this->assertDatabaseHas('reads', [
+            'user_id' => $this->participantA->id,
+            'readable_id' => $conversation->id,
+            'readable_type' => Conversation::class,
+            'read_at' => null,
+        ]);
+    }
+
+    /** @test */
     public function to_start_a_new_conversation_a_title_is_required()
     {
         $conversationStarter = $this->signIn();
