@@ -3,136 +3,63 @@
 namespace Tests\Unit;
 
 use App\Actions\CreateNamesArrayAction;
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CreateNamesArrayActionTest extends TestCase
 {
-    protected $request;
-    protected $attribute;
+    use RefreshDatabase;
 
-    public function setUp(): void
+    /** @test */
+    public function create_an_array_from_a_single_username()
     {
-        parent::setUp();
-        $this->request = app(Request::class);
-        $this->attribute = 'usernames';
+        $name = 'Orestis';
+
+        $action = new CreateNamesArrayAction($name);
+        $namesArray = $action->execute();
+
+        $this->assertCount(1, $namesArray);
+        $this->assertEquals($namesArray[0], $name);
     }
 
     /** @test */
-    public function create_an_array_of_names_from_a_single_name()
+    public function create_an_array_of_names_from_comma_separated_string_of_names()
     {
-        $name = 'George';
-        $this->request->merge([$this->attribute => $name]);
+        $names = "Orestis, John";
 
-        $action = new CreateNamesArrayAction(
-            $this->request,
-            $this->attribute,
-            $name
-        );
-        $action->execute();
+        $action = new CreateNamesArrayAction($names);
+        $namesArray = $action->execute();
 
-        $this->assertIsArray(
-            $this->request->input($this->attribute)
-        );
-        $this->assertEquals(
-            $name,
-            $this->request->input($this->attribute)[0]
-        );
+        $this->assertCount(2, $namesArray);
+        $this->assertContains('Orestis', $namesArray);
+        $this->assertContains('John', $namesArray);
     }
 
     /** @test */
     public function createn_an_array_of_names_from_a_single_name_with_white_space()
     {
+        $nameWithWhiteSpace = '      Orestis     ';
+        $nameWithoutWhiteSpace = "Orestis";
 
-        $name = '  George  ';
-        $this->request->merge([$this->attribute => $name]);
+        $action = new CreateNamesArrayAction($nameWithWhiteSpace);
+        $namesArray = $action->execute();
 
-        $action = new CreateNamesArrayAction(
-            $this->request,
-            $this->attribute,
-            $name
-        );
-        $action->execute();
-
-        $this->assertIsArray(request($this->attribute));
-        $this->assertEquals(
-            'George',
-            $this->request->input($this->attribute)[0]
-        );
-    }
-
-    /** @test */
-    public function create_an_array_of_names_from_a_comma_separated_string()
-    {
-        $george = 'George';
-        $john = 'John';
-        $names = "{$george},{$john}";
-
-        $this->request->merge([$this->attribute => $names]);
-
-        $action = new CreateNamesArrayAction(
-            $this->request,
-            $this->attribute,
-            $names
-        );
-        $action->execute();
-
-        $this->assertIsArray(request($this->attribute));
-        $this->assertEquals(
-            $george,
-            $this->request->input($this->attribute)[0]
-        );
-        $this->assertEquals(
-            $john,
-            $this->request->input($this->attribute)[1]
-        );
+        $this->assertCount(1, $namesArray);
+        $this->assertEquals($namesArray[0], $nameWithoutWhiteSpace);
     }
 
     /** @test */
     public function create_an_array_of_names_from_a_comma_separated_string_with_extra_white_space_around_names()
     {
-        $george = 'George';
+        $orestis = 'Orestis';
         $john = 'John';
-        $names = "   {$george},   {$john}    ";
+        $namesWithWhiteSpace = "   {$orestis}   ,    {$john}   ";
 
-        $this->request->merge([$this->attribute => $names]);
+        $action = new CreateNamesArrayAction($namesWithWhiteSpace);
+        $namesArray = $action->execute();
 
-        $action = new CreateNamesArrayAction(
-            $this->request,
-            $this->attribute,
-            $names
-        );
-        $action->execute();
-
-        $this->assertIsArray(request($this->attribute));
-        $this->assertEquals(
-            $george,
-            $this->request->input($this->attribute)[0]
-        );
-        $this->assertEquals(
-            $john,
-            $this->request->input($this->attribute)[1]
-        );
-    }
-
-    /** @test */
-    public function do_nothing_when_the_input_is_not_string()
-    {
-        $names = ["array"];
-
-        $this->request->merge([$this->attribute => $names]);
-
-        $action = new CreateNamesArrayAction(
-            $this->request,
-            $this->attribute,
-            $names
-        );
-        $action->execute();
-
-        $this->assertIsArray(request($this->attribute));
-        $this->assertEquals(
-            "array",
-            $this->request->input($this->attribute)[0]
-        );
+        $this->assertCount(2, $namesArray);
+        $this->assertContains($orestis, $namesArray);
+        $this->assertContains($john, $namesArray);
     }
 }
