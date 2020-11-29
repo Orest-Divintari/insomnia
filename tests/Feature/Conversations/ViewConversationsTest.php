@@ -186,4 +186,298 @@ class ViewConversationsTest extends TestCase
 
     }
 
+    /** @test */
+    public function get_the_unread_conversations()
+    {
+        $conversationStarter = $this->signIn();
+
+        $participant = create(User::class);
+
+        $readConversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$participant->name])
+            ->create();
+        $unreadConversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$participant->name])
+            ->create();
+
+        $this->signIn($participant);
+        $participant->readConversation($readConversation);
+
+        $conversations = $this->getJson(
+            route('conversations.index', ['unread' => true])
+        )->json()['data'];
+
+        $this->assertCount(1, $conversations);
+        $this->assertEquals($unreadConversation->id, $conversations[0]['id']);
+    }
+
+    /** @test */
+    public function get_the_conversations_started_by_a_given_username()
+    {
+        $john = $this->signIn();
+        $conversationByJohn = ConversationFactory::by($john)->create();
+
+        $orestis = $this->signIn();
+        $conversationByOrestis = ConversationFactory::by($orestis)->create();
+
+        $conversations = $this->getJson(
+            route('conversations.index', ['startedBy' => $orestis->name])
+        )->json()['data'];
+
+        $this->assertCount(1, $conversations);
+        $this->assertEquals($conversationByOrestis->id, $conversations[0]['id']);
+    }
+
+    /** @test */
+    public function get_the_conversations_started_by_multiple_usernames()
+    {
+        $john = $this->signIn();
+        $orestis = create(User::class);
+        $conversationByJohn = ConversationFactory::by($john)
+            ->withParticipants([$orestis->name])
+            ->create();
+
+        $this->signIn($orestis);
+        $conversationByOrestis = ConversationFactory::by($orestis)
+            ->withParticipants([$john->name])
+            ->create();
+
+        $randomUser = $this->signIn();
+        $conversationByRandomUser = ConversationFactory::by($randomUser)
+            ->withParticipants([$orestis->name, $john->name])
+            ->create();
+
+        $this->signIn($orestis);
+        $desiredUsernames = "{$orestis->name}, {$john->name}";
+        $conversations = $this->getJson(
+            route('conversations.index', ['startedBy' => $desiredUsernames])
+        )->json()['data'];
+
+        $conversations = collect($conversations);
+        $this->assertCount(2, $conversations);
+        $conversationIds = $conversations->pluck('id');
+        $this->assertContains($conversationByOrestis->id, $conversationIds);
+        $this->assertContains($conversationByJohn->id, $conversationIds);
+    }
+
+    /** @test */
+    public function get_the_conversations_that_are_received_by_a_single_username()
+    {
+        $conversationStarter = $this->signIn();
+        $conversationWithoutOrestis = create(Conversation::class);
+
+        $orestis = create(User::class);
+        $conversationWithOrestis = ConversationFactory::withParticipants([$orestis->name])->create();
+
+        $conversations = $this->getJson(
+            route('conversations.index', ['receivedBy' => $orestis->name])
+        )->json()['data'];
+
+        $this->assertCount(1, $conversations);
+        $this->assertEquals(
+            $conversations[0]['id'],
+            $conversationWithOrestis->id
+        );
+    }
+
+    /** @test */
+    public function get_the_conversations_that_are_received_by_multiple_usernames()
+    {
+        $conversationStarter = $this->signIn();
+        $conversationWithoutParticipants = create(Conversation::class);
+
+        $orestis = create(User::class);
+        $john = create(User::class);
+        $participantNames = "{$orestis->name},{$john->name}";
+        $conversationWithParticipants = ConversationFactory::withParticipants(
+            [$orestis->name, $john->name]
+        )->create();
+
+        $conversations = $this->getJson(
+            route('conversations.index', ['receivedBy' => $participantNames])
+        )->json()['data'];
+
+        $this->assertCount(1, $conversations);
+        $this->assertEquals(
+            $conversations[0]['id'],
+            $conversationWithParticipants->id
+        );
+    }
+
+    /** @test */
+    public function get_the_unread_conversations_that_are_started_by_a_given_username()
+    {
+        $participant = create(User::class);
+
+        $orestis = $this->signIn();
+        $readConversationByOrestis = ConversationFactory::by($orestis)
+            ->withParticipants([$participant->name])
+            ->create();
+        $unreadConversationByOrestis = ConversationFactory::by($orestis)
+            ->withParticipants([$participant->name])
+            ->create();
+
+        $john = $this->signIn();
+        $readConversationByJohn = ConversationFactory::by($john)
+            ->withParticipants([$participant->name])
+            ->create();
+        $unreadConversationByJohn = ConversationFactory::by($john)
+            ->withParticipants([$participant->name])
+            ->create();
+
+        $this->signIn($participant);
+        $participant->readConversation($readConversationByJohn);
+        $participant->readConversation($readConversationByOrestis);
+
+        $conversations = $this->getJson(
+            route(
+                'conversations.index',
+                ['unread' => true, 'startedBy' => $orestis->name]
+            ))->json()['data'];
+
+        $this->assertCount(1, $conversations);
+        $this->assertEquals($unreadConversationByOrestis->id, $conversations[0]['id']);
+    }
+
+    /** @test */
+    public function get_the_unread_conversations_that_are_started_by_multiple_usernames()
+    {
+        $participant = create(User::class);
+
+        $orestis = $this->signIn();
+        $readConversationByOrestis = ConversationFactory::by($orestis)
+            ->withParticipants([$participant->name])
+            ->create();
+        $unreadConversationByOrestis = ConversationFactory::by($orestis)
+            ->withParticipants([$participant->name])
+            ->create();
+
+        $john = $this->signIn();
+        $readConversationByJohn = ConversationFactory::by($john)
+            ->withParticipants([$participant->name])
+            ->create();
+        $unreadConversationByJohn = ConversationFactory::by($john)
+            ->withParticipants([$participant->name])
+            ->create();
+
+        $george = $this->signIn();
+        $readConversationByGeorge = ConversationFactory::by($george)
+            ->withParticipants([$participant->name])
+            ->create();
+        $unreadConversationByGeorge = ConversationFactory::by($george)
+            ->withParticipants([$participant->name])
+            ->create();
+
+        $this->signIn($participant);
+        $participant->readConversation($readConversationByJohn);
+        $participant->readConversation($readConversationByOrestis);
+        $participant->readConversation($readConversationByGeorge);
+
+        $desiredUsernames = "{$orestis->name},{$john->name}";
+        $conversations = $this->getJson(
+            route(
+                'conversations.index',
+                ['unread' => true, 'startedBy' => $desiredUsernames]
+            ))->json()['data'];
+
+        $this->assertCount(2, $conversations);
+        $conversationIds = collect($conversations)->pluck('id');
+        $this->assertContains($unreadConversationByJohn->id, $conversationIds);
+        $this->assertContains($unreadConversationByOrestis->id, $conversationIds);
+    }
+
+    /** @test */
+    public function get_the_unread_conversations_that_are_received_by_a_given_username()
+    {
+        $participant = create(User::class);
+        $john = create(User::class);
+        $george = create(User::class);
+        $orestis = $this->signIn();
+
+        $readConversationReceivedByGeorge = ConversationFactory::by($orestis)
+            ->withParticipants([$participant->name, $john->name, $george->name])
+            ->create();
+        $unreadConversationReceivedByGeorge = ConversationFactory::by($orestis)
+            ->withParticipants([$participant->name, $john->name, $george->name])
+            ->create();
+
+        $this->signIn($john);
+        $readConversationNotReceivedByGeorge = ConversationFactory::by($john)
+            ->withParticipants([$participant->name, $orestis->name])
+            ->create();
+        $unreadConversationNotReceivedByGeorge = ConversationFactory::by($john)
+            ->withParticipants([$participant->name, $orestis->name])
+            ->create();
+
+        $this->signIn($participant);
+
+        $participant->readConversation($readConversationReceivedByGeorge);
+        $participant->readConversation($readConversationNotReceivedByGeorge);
+
+        $conversations = $this->getJson(
+            route(
+                'conversations.index',
+                ['unread' => true, 'receivedBy' => $george->name]
+            ))->json()['data'];
+
+        $this->assertCount(1, $conversations);
+        $this->assertEquals($unreadConversationReceivedByGeorge->id, $conversations[0]['id']);
+    }
+
+    /** @test */
+    public function get_the_unread_conversations_that_are_received_by_multiple_usernames()
+    {
+        $participant = create(User::class);
+        $john = create(User::class);
+        $george = create(User::class);
+        $mike = create(User::class);
+
+        $orestis = $this->signIn();
+        $readConversationReceivedByGeorge = ConversationFactory::by($orestis)
+            ->withParticipants([$participant->name, $john->name, $george->name])
+            ->create();
+        $unreadConversationReceivedByGeorge = ConversationFactory::by($orestis)
+            ->withParticipants([$participant->name, $john->name, $george->name])
+            ->create();
+        $readConversationReceivedByMike = ConversationFactory::by($orestis)
+            ->withParticipants([$participant->name, $john->name, $mike->name])
+            ->create();
+        $unreadConversationReceivedByMike = ConversationFactory::by($orestis)
+            ->withParticipants([$participant->name, $john->name, $mike->name])
+            ->create();
+
+        $this->signIn($john);
+        $readConversationNotReceivedByGeorge = ConversationFactory::by($john)
+            ->withParticipants([$participant->name, $orestis->name])
+            ->create();
+        $unreadConversationNotReceivedByGeorge = ConversationFactory::by($john)
+            ->withParticipants([$participant->name, $orestis->name])
+            ->create();
+        $readConversationNotReceivedByMike = ConversationFactory::by($john)
+            ->withParticipants([$participant->name, $orestis->name])
+            ->create();
+        $unreadConversationNotReceivedByMike = ConversationFactory::by($john)
+            ->withParticipants([$participant->name, $orestis->name])
+            ->create();
+
+        $this->signIn($participant);
+        $participant->readConversation($readConversationReceivedByGeorge);
+        $participant->readConversation($readConversationReceivedByMike);
+        $participant->readConversation($readConversationNotReceivedByGeorge);
+        $participant->readConversation($readConversationNotReceivedByMike);
+
+        $participantNames = "{$george->name}, {$mike->name} ";
+
+        $conversations = $this->getJson(
+            route(
+                'conversations.index',
+                ['unread' => true, 'receivedBy' => $participantNames]
+            ))->json()['data'];
+
+        $this->assertCount(2, $conversations);
+        $conversationIds = collect($conversations)->pluck('id');
+        $this->assertContains($unreadConversationReceivedByGeorge->id, $conversationIds);
+        $this->assertContains($unreadConversationReceivedByMike->id, $conversationIds);
+    }
+
 }

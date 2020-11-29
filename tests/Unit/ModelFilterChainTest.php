@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Filters\ConversationFilters;
 use App\Filters\ModelFilterChain;
 use App\Filters\ProfilePostFilters;
 use App\Filters\ReplyFilters;
@@ -47,6 +48,13 @@ class ModelFilterChainTest extends TestCase
         $this->chain->withAllPostsFilters();
         $this->assertContains(ThreadFilters::class, $this->chain->getFilters());
         $this->assertContains(ProfilePostFilters::class, $this->chain->getFilters());
+    }
+
+    /** @test */
+    public function a_chain_may_have_conversation_filters()
+    {
+        $this->chain->withConversationFilters();
+        $this->assertContains(ConversationFilters::class, $this->chain->getFilters());
     }
 
     /** @test */
