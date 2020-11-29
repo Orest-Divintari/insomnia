@@ -2,124 +2,43 @@
 
 namespace App\Actions;
 
-use Illuminate\Http\Request;
+use App\Traits\CreatesNamesArray;
 
 class CreateNamesArrayAction
 {
+    use CreatesNamesArray;
 
     /**
-     * The name of the request parameter
+     * The usernames that will be used to create an array
      *
      * @var string
      */
-    protected $attribute;
-    /**
-     * The value of the request parameter
-     *
-     * @var string
-     */
-    protected $names;
-
-    /**
-     * @var Request
-     */
-    protected $request;
+    protected $usernames;
 
     /**
      * Create a new instance
      *
-     * @param Request $request
-     * @param String $attribute
-     * @param mixed $names
+     * @param string $usernames
+     * @param string $usernames
      */
-    public function __construct(
-        Request $request,
-        String $attribute,
-        $names
-    ) {
-        $this->request = $request;
-        $this->attribute = $attribute;
-        $this->names = $names;
+    public function __construct(string $usernames)
+    {
+        $this->usernames = $usernames;
     }
 
     /**
-     * Replace the value of the request attribute with an array of values
+     * Crate an array from the given usernames
      *
-     * @return void
+     * @param string $usernames
+     * @return array
      */
     public function execute()
     {
-        if (!is_string($this->names)) {
-            return;
-        }
-
-        if (str_contains($this->names, ',')) {
-            $this->request->merge(
-                [$this->attribute => $this->splitNames($this->names)]
-            );
+        if (str_contains($this->usernames, ',')) {
+            return $this->splitNames($this->usernames);
         } else {
-            $this->request->merge(
-                [$this->attribute => [$this->clean($this->names)]]
-            );
+            return array($this->clean($this->usernames));
         }
-
-        // set the new value of the attribute globally
-        // so that all requests now can have the new value
-        request()->merge(
-            [$this->attribute => $this->request->input($this->attribute)]
-        );
     }
 
-    /**
-     * Get an array of the names from the comma separated string
-     *
-     * @param string $commaSeparatedNames
-     * @return array
-     */
-    public function splitNames($commaSeparatedNames)
-    {
-        return $this->discardEmpty(
-            $this->createNamesArray($commaSeparatedNames)
-        );
-    }
-
-    /**
-     * Create an array of names from comma separated string
-     *
-     * @param string $commaSeparatedNames
-     * @return string[]
-     */
-    public function createNamesArray($commaSeparatedNames)
-    {
-        return array_map(
-            fn($name) => $this->clean($name),
-            explode(',', $commaSeparatedNames)
-        );
-    }
-    /**
-     * Filter out the empty names
-     *
-     * @param string[] $names
-     * @return string[]
-     */
-    public function discardEmpty($names)
-    {
-        return array_values(
-            array_filter(
-                $names,
-                fn($name) => !empty($name)
-            )
-        );
-    }
-
-    /**
-     * Remove all special characters and white space
-     *
-     * @param string $name
-     * @return string
-     */
-    public function clean($name)
-    {
-        return trim($name, ' ');
-    }
 }
