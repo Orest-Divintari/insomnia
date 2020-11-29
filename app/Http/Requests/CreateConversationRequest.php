@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Actions\CreateNamesArrayAction;
+use App\Actions\CreateNamesArrayForRequestAction;
 use App\Conversation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
@@ -42,7 +42,7 @@ class CreateConversationRequest extends FormRequest
      */
     public function prepareForValidation()
     {
-        $action = new CreateNamesArrayAction(
+        $action = new CreateNamesArrayForRequestAction(
             $request = $this,
             $attribute = 'participants',
             $value = $this->input('participants')
