@@ -32,11 +32,15 @@ class ConversationFiltersTest extends TestCase
     {
         $conversationStarter = $this->signIn();
 
-        $conversation = create(Conversation::class);
+        $readConversation = create(Conversation::class);
+        $unreadConversation = create(Conversation::class);
 
-        $unreadConversations = $this->conversationFilters->unread()->get();
+        $conversationStarter->readConversation($readConversation);
 
-        $this->assertEquals($conversation->id, $unreadConversations->first()->id);
+        $conversations = $this->conversationFilters->unread()->get();
+
+        $this->assertCount(1, $conversations);
+        $this->assertEquals($unreadConversation->id, $conversations->first()->id);
     }
 
     /** @test */
