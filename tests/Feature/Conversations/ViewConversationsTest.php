@@ -480,4 +480,55 @@ class ViewConversationsTest extends TestCase
         $this->assertContains($unreadConversationReceivedByMike->id, $conversationIds);
     }
 
+    /** @test  */
+    public function get_the_recent_and_unread_conversations()
+    {
+        $conversationStarter = $this->signIn();
+
+        $readAndLastMonthConversation = ConversationFactory::by($conversationStarter)->create();
+        $readAndLastMonthConversation->update(
+            ['created_at' => Carbon::now()->subMonth()]
+        );
+        $unreadLastWeekConversation = ConversationFactory::by($conversationStarter)->create();
+        $unreadLastWeekConversation->update(
+            ['created_at' => Carbon::now()->subWeek()]
+        );
+        $readAndLastWeekConversation = ConversationFactory::by($conversationStarter)->create();
+        $readAndLastWeekConversation->update(
+            ['created_at' => Carbon::now()->subWeek()]
+        );
+        $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
+        $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
+
+        $conversationStarter->readConversation($readAndLastMonthConversation);
+        $conversationStarter->readConversation($readAndLastWeekConversation);
+        $conversationStarter->readConversation($readTodayConversation);
+
+        $desiredConversations = $this->getJson(
+            route('api.conversations.index', ['recentAndUnread' => true])
+        )->json();
+
+        $this->assertCount(4, $desiredConversations);
+        $desiredConversationIds = collect($desiredConversations)->pluck('id');
+        $this->assertTrue(array_key_exists('starter', $desiredConversations[0]));
+        $this->assertEquals($desiredConversations[0]['starter']['name'], $conversationStarter->name);
+        $this->assertTrue(array_key_exists('participants', $desiredConversations[0]));
+        $this->assertEquals($desiredConversations[0]['participants'][0]['name'], $conversationStarter->name);
+        $this->assertContains(
+            $unreadLastWeekConversation->id,
+            $desiredConversationIds
+        );
+        $this->assertContains(
+            $readAndLastWeekConversation->id,
+            $desiredConversationIds
+        );
+        $this->assertContains(
+            $unreadTodayConversation->id,
+            $desiredConversationIds
+        );
+        $this->assertContains(
+            $readTodayConversation->id,
+            $desiredConversationIds
+        );
+    }
 }
