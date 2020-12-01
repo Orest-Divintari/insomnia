@@ -6,6 +6,7 @@ use App\Actions\CreateNamesArrayAction;
 use App\Conversation;
 use App\Filters\FilterInterface;
 use App\User;
+use Carbon\Carbon;
 
 class ConversationFilters implements FilterInterface
 {
@@ -26,6 +27,7 @@ class ConversationFilters implements FilterInterface
         'unread',
         'startedBy',
         'receivedBy',
+        'recentAndUnread',
     ];
 
     /**
@@ -98,5 +100,20 @@ class ConversationFilters implements FilterInterface
             ->whereHas('participants', function ($query) use ($userIds) {
                 $query->whereIn('user_id', $userIds);
             });
+    }
+
+    /**
+     * Get the unread and the last week conversations
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public function recentAndUnread()
+    {
+        return $this->unread()
+            ->orWhere(
+                'conversations.created_at',
+                '>=',
+                Carbon::now()->subWeek()->startOfDay()
+            );
     }
 }
