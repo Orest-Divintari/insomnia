@@ -4,16 +4,10 @@
       class="flex justify-between bg-white-catskill rounded-t py-2 pl-1 pr-3"
     >
       <div class="flex">
-        <thread-filter-tags
-          @removeFilter="
-            removeFilter(key);
-            apply();
-          "
-          v-for="(value, key) in filters"
-          :key="key"
-          :filter-key="key"
-          :filter-value="value"
-        ></thread-filter-tags>
+        <filter-labels
+          @removeFilter="removeFilter"
+          :filters="filters"
+        ></filter-labels>
       </div>
       <dropdown :styleClasses="'w-80'">
         <template v-slot:dropdown-trigger>
@@ -50,6 +44,7 @@
 
 <script>
 import ThreadFilterTags from "./ThreadFilterTags";
+import FilterLabels from "../filters/FilterLabels";
 import PostedByFilter from "./PostedByFilter";
 import UpdatedByFilter from "./UpdatedByFilter";
 import LastUpdatedFilter from "./LastUpdatedFilter";
@@ -58,7 +53,7 @@ import UnansweredFilter from "./UnansweredFilter";
 import WatchedFilter from "./WatchedFilter";
 export default {
   components: {
-    ThreadFilterTags,
+    FilterLabels,
     PostedByFilter,
     UpdatedByFilter,
     LastUpdatedFilter,
