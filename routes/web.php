@@ -134,6 +134,9 @@ Route::group([
         // conversations
         Route::patch('/conversations/{conversation}', 'ConversationController@update')
             ->name('api.conversations.update');
+
+        Route::get('/conversations', 'ConversationController@index')
+            ->name('api.conversations.index');
         // messages
 
         Route::get('/messages/{message}', 'MessageController@show')
