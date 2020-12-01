@@ -11,7 +11,8 @@
     </header>
 
     <main class="section">
-        <conversations :paginated-conversations="{{ $conversations }}"></conversations>
+        <conversations :conversation-filters="{{ json_encode($conversationFilters) }}"
+            :paginated-conversations="{{ $conversations }}"></conversations>
     </main>
 
 

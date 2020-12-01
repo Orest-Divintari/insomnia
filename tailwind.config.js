@@ -14,6 +14,10 @@ module.exports = {
                 "64": "16rem",
                 "32": "8rem"
             },
+            maxHeight: {
+                "64": "16rem",
+                "96": "24rem"
+            },
             flexGrow: {
                 "2": 2
             },
@@ -87,7 +91,10 @@ module.exports = {
         }
     },
     variants: {
-        textColor: ["responsive", "hover", "focus", "active", "group-hover"]
+        textColor: ["responsive", "hover", "focus", "active", "group-hover"],
+        textDecoration: ['group-hover'],
+        cursor: ['hover', 'group-hover']
+
     },
     plugins: []
 };

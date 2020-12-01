@@ -73,11 +73,11 @@ class ConversationController extends Controller
      */
     public function index(FilterManager $filterManager)
     {
-        $conversationFilters = $filterManager->withConversationFilters();
+        $filters = $filterManager->withConversationFilters();
 
         $conversations = auth()->user()
             ->conversations()
-            ->filter($conversationFilters)
+            ->filter($filters)
             ->with('starter')
             ->withRecentMessage()
             ->with('participants')
@@ -87,10 +87,15 @@ class ConversationController extends Controller
             ->paginate(Conversation::PER_PAGE)
             ->toJson();
 
+        $conversationFilters = $filters->getRequestedFilters();
+
         if (request()->expectsJson()) {
             return $conversations;
         }
 
-        return view('conversations.index', compact('conversations'));
+        return view(
+            'conversations.index',
+            compact('conversations', 'conversationFilters')
+        );
     }
 }

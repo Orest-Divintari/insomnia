@@ -15077,6 +15077,62 @@ html {
   cursor: not-allowed;
 }
 
+.hover\:cursor-auto:hover{
+  cursor: auto;
+}
+
+.hover\:cursor-default:hover{
+  cursor: default;
+}
+
+.hover\:cursor-pointer:hover{
+  cursor: pointer;
+}
+
+.hover\:cursor-wait:hover{
+  cursor: wait;
+}
+
+.hover\:cursor-text:hover{
+  cursor: text;
+}
+
+.hover\:cursor-move:hover{
+  cursor: move;
+}
+
+.hover\:cursor-not-allowed:hover{
+  cursor: not-allowed;
+}
+
+.group:hover .group-hover\:cursor-auto{
+  cursor: auto;
+}
+
+.group:hover .group-hover\:cursor-default{
+  cursor: default;
+}
+
+.group:hover .group-hover\:cursor-pointer{
+  cursor: pointer;
+}
+
+.group:hover .group-hover\:cursor-wait{
+  cursor: wait;
+}
+
+.group:hover .group-hover\:cursor-text{
+  cursor: text;
+}
+
+.group:hover .group-hover\:cursor-move{
+  cursor: move;
+}
+
+.group:hover .group-hover\:cursor-not-allowed{
+  cursor: not-allowed;
+}
+
 .block{
   display: block;
 }
@@ -17581,6 +17637,14 @@ html {
 
 .-ml-5\/2{
   margin-left: -0.625rem;
+}
+
+.max-h-64{
+  max-height: 16rem;
+}
+
+.max-h-96{
+  max-height: 24rem;
 }
 
 .max-h-full{
@@ -29278,27 +29342,15 @@ html {
   text-decoration: none;
 }
 
-.hover\:underline:hover{
+.group:hover .group-hover\:underline{
   text-decoration: underline;
 }
 
-.hover\:line-through:hover{
+.group:hover .group-hover\:line-through{
   text-decoration: line-through;
 }
 
-.hover\:no-underline:hover{
-  text-decoration: none;
-}
-
-.focus\:underline:focus{
-  text-decoration: underline;
-}
-
-.focus\:line-through:focus{
-  text-decoration: line-through;
-}
-
-.focus\:no-underline:focus{
+.group:hover .group-hover\:no-underline{
   text-decoration: none;
 }
 
@@ -39609,34 +39661,6 @@ html {
     box-sizing: content-box;
   }
 
-  .xs\:cursor-auto{
-    cursor: auto;
-  }
-
-  .xs\:cursor-default{
-    cursor: default;
-  }
-
-  .xs\:cursor-pointer{
-    cursor: pointer;
-  }
-
-  .xs\:cursor-wait{
-    cursor: wait;
-  }
-
-  .xs\:cursor-text{
-    cursor: text;
-  }
-
-  .xs\:cursor-move{
-    cursor: move;
-  }
-
-  .xs\:cursor-not-allowed{
-    cursor: not-allowed;
-  }
-
   .xs\:block{
     display: block;
   }
@@ -42141,6 +42165,14 @@ html {
 
   .xs\:-ml-5\/2{
     margin-left: -0.625rem;
+  }
+
+  .xs\:max-h-64{
+    max-height: 16rem;
+  }
+
+  .xs\:max-h-96{
+    max-height: 24rem;
   }
 
   .xs\:max-h-full{
@@ -53826,42 +53858,6 @@ html {
     text-transform: none;
   }
 
-  .xs\:underline{
-    text-decoration: underline;
-  }
-
-  .xs\:line-through{
-    text-decoration: line-through;
-  }
-
-  .xs\:no-underline{
-    text-decoration: none;
-  }
-
-  .xs\:hover\:underline:hover{
-    text-decoration: underline;
-  }
-
-  .xs\:hover\:line-through:hover{
-    text-decoration: line-through;
-  }
-
-  .xs\:hover\:no-underline:hover{
-    text-decoration: none;
-  }
-
-  .xs\:focus\:underline:focus{
-    text-decoration: underline;
-  }
-
-  .xs\:focus\:line-through:focus{
-    text-decoration: line-through;
-  }
-
-  .xs\:focus\:no-underline:focus{
-    text-decoration: none;
-  }
-
   .xs\:antialiased{
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -64170,34 +64166,6 @@ html {
     box-sizing: content-box;
   }
 
-  .smaller\:cursor-auto{
-    cursor: auto;
-  }
-
-  .smaller\:cursor-default{
-    cursor: default;
-  }
-
-  .smaller\:cursor-pointer{
-    cursor: pointer;
-  }
-
-  .smaller\:cursor-wait{
-    cursor: wait;
-  }
-
-  .smaller\:cursor-text{
-    cursor: text;
-  }
-
-  .smaller\:cursor-move{
-    cursor: move;
-  }
-
-  .smaller\:cursor-not-allowed{
-    cursor: not-allowed;
-  }
-
   .smaller\:block{
     display: block;
   }
@@ -66702,6 +66670,14 @@ html {
 
   .smaller\:-ml-5\/2{
     margin-left: -0.625rem;
+  }
+
+  .smaller\:max-h-64{
+    max-height: 16rem;
+  }
+
+  .smaller\:max-h-96{
+    max-height: 24rem;
   }
 
   .smaller\:max-h-full{
@@ -78387,42 +78363,6 @@ html {
     text-transform: none;
   }
 
-  .smaller\:underline{
-    text-decoration: underline;
-  }
-
-  .smaller\:line-through{
-    text-decoration: line-through;
-  }
-
-  .smaller\:no-underline{
-    text-decoration: none;
-  }
-
-  .smaller\:hover\:underline:hover{
-    text-decoration: underline;
-  }
-
-  .smaller\:hover\:line-through:hover{
-    text-decoration: line-through;
-  }
-
-  .smaller\:hover\:no-underline:hover{
-    text-decoration: none;
-  }
-
-  .smaller\:focus\:underline:focus{
-    text-decoration: underline;
-  }
-
-  .smaller\:focus\:line-through:focus{
-    text-decoration: line-through;
-  }
-
-  .smaller\:focus\:no-underline:focus{
-    text-decoration: none;
-  }
-
   .smaller\:antialiased{
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -88731,34 +88671,6 @@ html {
     box-sizing: content-box;
   }
 
-  .sm\:cursor-auto{
-    cursor: auto;
-  }
-
-  .sm\:cursor-default{
-    cursor: default;
-  }
-
-  .sm\:cursor-pointer{
-    cursor: pointer;
-  }
-
-  .sm\:cursor-wait{
-    cursor: wait;
-  }
-
-  .sm\:cursor-text{
-    cursor: text;
-  }
-
-  .sm\:cursor-move{
-    cursor: move;
-  }
-
-  .sm\:cursor-not-allowed{
-    cursor: not-allowed;
-  }
-
   .sm\:block{
     display: block;
   }
@@ -91263,6 +91175,14 @@ html {
 
   .sm\:-ml-5\/2{
     margin-left: -0.625rem;
+  }
+
+  .sm\:max-h-64{
+    max-height: 16rem;
+  }
+
+  .sm\:max-h-96{
+    max-height: 24rem;
   }
 
   .sm\:max-h-full{
@@ -102948,42 +102868,6 @@ html {
     text-transform: none;
   }
 
-  .sm\:underline{
-    text-decoration: underline;
-  }
-
-  .sm\:line-through{
-    text-decoration: line-through;
-  }
-
-  .sm\:no-underline{
-    text-decoration: none;
-  }
-
-  .sm\:hover\:underline:hover{
-    text-decoration: underline;
-  }
-
-  .sm\:hover\:line-through:hover{
-    text-decoration: line-through;
-  }
-
-  .sm\:hover\:no-underline:hover{
-    text-decoration: none;
-  }
-
-  .sm\:focus\:underline:focus{
-    text-decoration: underline;
-  }
-
-  .sm\:focus\:line-through:focus{
-    text-decoration: line-through;
-  }
-
-  .sm\:focus\:no-underline:focus{
-    text-decoration: none;
-  }
-
   .sm\:antialiased{
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -113292,34 +113176,6 @@ html {
     box-sizing: content-box;
   }
 
-  .md\:cursor-auto{
-    cursor: auto;
-  }
-
-  .md\:cursor-default{
-    cursor: default;
-  }
-
-  .md\:cursor-pointer{
-    cursor: pointer;
-  }
-
-  .md\:cursor-wait{
-    cursor: wait;
-  }
-
-  .md\:cursor-text{
-    cursor: text;
-  }
-
-  .md\:cursor-move{
-    cursor: move;
-  }
-
-  .md\:cursor-not-allowed{
-    cursor: not-allowed;
-  }
-
   .md\:block{
     display: block;
   }
@@ -115824,6 +115680,14 @@ html {
 
   .md\:-ml-5\/2{
     margin-left: -0.625rem;
+  }
+
+  .md\:max-h-64{
+    max-height: 16rem;
+  }
+
+  .md\:max-h-96{
+    max-height: 24rem;
   }
 
   .md\:max-h-full{
@@ -127509,42 +127373,6 @@ html {
     text-transform: none;
   }
 
-  .md\:underline{
-    text-decoration: underline;
-  }
-
-  .md\:line-through{
-    text-decoration: line-through;
-  }
-
-  .md\:no-underline{
-    text-decoration: none;
-  }
-
-  .md\:hover\:underline:hover{
-    text-decoration: underline;
-  }
-
-  .md\:hover\:line-through:hover{
-    text-decoration: line-through;
-  }
-
-  .md\:hover\:no-underline:hover{
-    text-decoration: none;
-  }
-
-  .md\:focus\:underline:focus{
-    text-decoration: underline;
-  }
-
-  .md\:focus\:line-through:focus{
-    text-decoration: line-through;
-  }
-
-  .md\:focus\:no-underline:focus{
-    text-decoration: none;
-  }
-
   .md\:antialiased{
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -137853,34 +137681,6 @@ html {
     box-sizing: content-box;
   }
 
-  .lg\:cursor-auto{
-    cursor: auto;
-  }
-
-  .lg\:cursor-default{
-    cursor: default;
-  }
-
-  .lg\:cursor-pointer{
-    cursor: pointer;
-  }
-
-  .lg\:cursor-wait{
-    cursor: wait;
-  }
-
-  .lg\:cursor-text{
-    cursor: text;
-  }
-
-  .lg\:cursor-move{
-    cursor: move;
-  }
-
-  .lg\:cursor-not-allowed{
-    cursor: not-allowed;
-  }
-
   .lg\:block{
     display: block;
   }
@@ -140385,6 +140185,14 @@ html {
 
   .lg\:-ml-5\/2{
     margin-left: -0.625rem;
+  }
+
+  .lg\:max-h-64{
+    max-height: 16rem;
+  }
+
+  .lg\:max-h-96{
+    max-height: 24rem;
   }
 
   .lg\:max-h-full{
@@ -152070,42 +151878,6 @@ html {
     text-transform: none;
   }
 
-  .lg\:underline{
-    text-decoration: underline;
-  }
-
-  .lg\:line-through{
-    text-decoration: line-through;
-  }
-
-  .lg\:no-underline{
-    text-decoration: none;
-  }
-
-  .lg\:hover\:underline:hover{
-    text-decoration: underline;
-  }
-
-  .lg\:hover\:line-through:hover{
-    text-decoration: line-through;
-  }
-
-  .lg\:hover\:no-underline:hover{
-    text-decoration: none;
-  }
-
-  .lg\:focus\:underline:focus{
-    text-decoration: underline;
-  }
-
-  .lg\:focus\:line-through:focus{
-    text-decoration: line-through;
-  }
-
-  .lg\:focus\:no-underline:focus{
-    text-decoration: none;
-  }
-
   .lg\:antialiased{
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -162414,34 +162186,6 @@ html {
     box-sizing: content-box;
   }
 
-  .xl\:cursor-auto{
-    cursor: auto;
-  }
-
-  .xl\:cursor-default{
-    cursor: default;
-  }
-
-  .xl\:cursor-pointer{
-    cursor: pointer;
-  }
-
-  .xl\:cursor-wait{
-    cursor: wait;
-  }
-
-  .xl\:cursor-text{
-    cursor: text;
-  }
-
-  .xl\:cursor-move{
-    cursor: move;
-  }
-
-  .xl\:cursor-not-allowed{
-    cursor: not-allowed;
-  }
-
   .xl\:block{
     display: block;
   }
@@ -164946,6 +164690,14 @@ html {
 
   .xl\:-ml-5\/2{
     margin-left: -0.625rem;
+  }
+
+  .xl\:max-h-64{
+    max-height: 16rem;
+  }
+
+  .xl\:max-h-96{
+    max-height: 24rem;
   }
 
   .xl\:max-h-full{
@@ -176629,42 +176381,6 @@ html {
 
   .xl\:normal-case{
     text-transform: none;
-  }
-
-  .xl\:underline{
-    text-decoration: underline;
-  }
-
-  .xl\:line-through{
-    text-decoration: line-through;
-  }
-
-  .xl\:no-underline{
-    text-decoration: none;
-  }
-
-  .xl\:hover\:underline:hover{
-    text-decoration: underline;
-  }
-
-  .xl\:hover\:line-through:hover{
-    text-decoration: line-through;
-  }
-
-  .xl\:hover\:no-underline:hover{
-    text-decoration: none;
-  }
-
-  .xl\:focus\:underline:focus{
-    text-decoration: underline;
-  }
-
-  .xl\:focus\:line-through:focus{
-    text-decoration: line-through;
-  }
-
-  .xl\:focus\:no-underline:focus{
-    text-decoration: none;
   }
 
   .xl\:antialiased{

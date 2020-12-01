@@ -1,5 +1,8 @@
 <template>
   <div>
+    <conversation-filters
+      :conversationFilters="conversationFilters"
+    ></conversation-filters>
     <div
       v-for="(conversation, conversationsIndex) in conversations"
       :key="conversation.id"
@@ -24,8 +27,9 @@
           <div class="flex items-center">
             <div
               class="flex items-center"
-              v-for="(participant,
-              participantsIndex) in conversation.participants"
+              v-for="(
+                participant, participantsIndex
+              ) in conversation.participants"
             >
               <a
                 @click="showProfile(participant)"
@@ -87,9 +91,11 @@
 <script>
 import paginator from "../Paginator";
 import views from "../../mixins/view";
+import ConversationFilters from "./ConversationFilters";
 export default {
   components: {
     paginator,
+    ConversationFilters,
   },
   props: {
     paginatedConversations: {
@@ -97,7 +103,6 @@ export default {
       required: false,
     },
     conversationFilters: {
-      type: Object,
       required: false,
     },
   },
