@@ -42,11 +42,6 @@ export default {
       default: {},
     },
   },
-  methods: {
-    pipa() {
-      console.log("pare mou muia pia");
-    },
-  },
 };
 </script>
 
