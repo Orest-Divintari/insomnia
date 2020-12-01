@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Conversation;
 use App\Filters\ConversationFilters;
 use App\User;
+use Carbon\Carbon;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -122,5 +123,54 @@ class ConversationFiltersTest extends TestCase
             $conversation->first()->id,
             $conversationWithParticipants->id
         );
+    }
+
+    /** @test  */
+    public function get_the_recent_and_unread_conversations()
+    {
+        $conversationStarter = $this->signIn();
+
+        $readAndLastMonthConversation = ConversationFactory::by($conversationStarter)->create();
+        $readAndLastMonthConversation->update(
+            ['created_at' => Carbon::now()->subMonth()]
+        );
+        $unreadLastWeekConversation = ConversationFactory::by($conversationStarter)->create();
+        $unreadLastWeekConversation->update(
+            ['created_at' => Carbon::now()->subWeek()]
+        );
+        $readAndLastWeekConversation = ConversationFactory::by($conversationStarter)->create();
+        $readAndLastWeekConversation->update(
+            ['created_at' => Carbon::now()->subWeek()]
+        );
+        $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
+        $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
+
+        $conversationStarter->readConversation($readAndLastMonthConversation);
+        $conversationStarter->readConversation($readAndLastWeekConversation);
+        $conversationStarter->readConversation($readTodayConversation);
+
+        $desiredConversations = $this->conversationFilters
+            ->recentAndUnread()
+            ->get();
+
+        $this->assertCount(4, $desiredConversations);
+        $desiredConversationIds = collect($desiredConversations)->pluck('id');
+        $this->assertContains(
+            $unreadLastWeekConversation->id,
+            $desiredConversationIds
+        );
+        $this->assertContains(
+            $readAndLastWeekConversation->id,
+            $desiredConversationIds
+        );
+        $this->assertContains(
+            $unreadTodayConversation->id,
+            $desiredConversationIds
+        );
+        $this->assertContains(
+            $readTodayConversation->id,
+            $desiredConversationIds
+        );
+
     }
 }
