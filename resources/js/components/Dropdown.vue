@@ -16,12 +16,12 @@ export default {
   props: {
     styleClasses: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
-      isOpen: false
+      isOpen: false,
     };
   },
   methods: {
@@ -30,8 +30,8 @@ export default {
     },
     hide() {
       this.isOpen = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
