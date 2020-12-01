@@ -15,7 +15,7 @@
           <a
             @click="showThread(thread)"
             class="text-sm hover:underline hover:text-blue-mid cursor-pointer"
-            :class="{ 'font-bold' : thread.has_been_updated }"
+            :class="{ 'font-bold': thread.has_been_updated }"
             v-text="thread.title"
           ></a>
           <div class="flex items-center">
@@ -33,7 +33,9 @@
               v-if="signedIn"
               @click="visit(thread)"
               class="text-xs text-gray-lightest ml-1 hover:underline cursor-pointer"
-            >- Mark Read</p>
+            >
+              - Mark Read
+            </p>
           </div>
         </div>
         <div class="p-2 text-gray-lightest w-32 mr-4">
@@ -54,12 +56,15 @@
           ></p>
           <p
             class="text-gray-lightest text-xs hover:underline cursor-pointer"
-            v-text="thread.recent_reply.poster.short_name "
+            v-text="thread.recent_reply.poster.short_name"
           ></p>
         </div>
         <div class="pl-1 py-5/2 pr-7">
           <a href>
-            <img :src="thread.recent_reply.poster.avatar_path" class="avatar w-6 h-6" />
+            <img
+              :src="thread.recent_reply.poster.avatar_path"
+              class="avatar w-6 h-6"
+            />
           </a>
         </div>
       </div>
@@ -108,7 +113,6 @@ export default {
     },
     visit(thread) {
       this.markAsRead(thread);
-      console.log(this.endpoint(thread.slug));
       axios
         .get(this.endpoint(thread.slug))
         .catch((error) => console.log(error.response));
