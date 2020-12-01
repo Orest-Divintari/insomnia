@@ -72,7 +72,6 @@ export default {
       for (var ref in this.$refs) {
         var element = this.$refs[ref];
         if (element.value == "") {
-          console.log(element);
           element.disabled = true;
         }
       }
