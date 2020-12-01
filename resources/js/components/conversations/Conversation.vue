@@ -78,7 +78,7 @@ export default {
     },
     markUnread() {
       axios
-        .delete(this.unreadPath)
+        .patch(this.unreadPath)
         .then((response) => (this.isRead = false))
         .catch((error) => console.log(error));
     },
