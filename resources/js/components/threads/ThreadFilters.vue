@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import ThreadFilterTags from "./ThreadFilterTags";
+import filters from "../../mixins/filters";
 import FilterLabels from "../filters/FilterLabels";
 import PostedByFilter from "./PostedByFilter";
 import UpdatedByFilter from "./UpdatedByFilter";
@@ -66,6 +66,7 @@ export default {
       default: {},
     },
   },
+  mixins: [filters],
   data() {
     return {
       filters: this.threadFilters,
@@ -83,39 +84,6 @@ export default {
     showUnanswered() {
       return !this.form.trending == true;
     },
-  },
-  methods: {
-    toggle(isChecked, filterType) {
-      if (this.filters[filterType] == true) {
-        this.removeFilter(filterType);
-      } else {
-        this.filters[filterType] = isChecked;
-      }
-    },
-    removeFilter(filterType) {
-      Vue.delete(this.filters, filterType);
-      delete this.form[filterType];
-    },
-    apply() {
-      this.updateFilters();
-      var path = window.location.pathname + "?";
-      for (const [key, value] of Object.entries(this.filters)) {
-        path = path + key + "=" + value + "&";
-      }
-      window.location.href = path;
-    },
-    updateFilters() {
-      for (var filter in this.form) {
-        if (this.form[filter] != "") {
-          this.filters[filter] = this.form[filter];
-        }
-      }
-    },
-  },
-  created() {
-    for (var filter in this.filters) {
-      this.form[filter] = this.filters[filter];
-    }
   },
 };
 </script>
