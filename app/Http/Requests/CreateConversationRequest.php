@@ -32,6 +32,7 @@ class CreateConversationRequest extends FormRequest
             'message' => ['required', 'string'],
             'participants' => ['required', "array", 'min:1'],
             'participants.*' => ['required', 'string', 'exists:users,name'],
+            'admin' => ['sometimes'],
         ];
     }
 

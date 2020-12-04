@@ -36,6 +36,7 @@ class Conversation extends Model
         'type',
         'has_been_updated',
     ];
+
     /**
      * Don't auto-apply mass assignment protection.
      *

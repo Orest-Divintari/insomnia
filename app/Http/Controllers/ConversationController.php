@@ -21,7 +21,8 @@ class ConversationController extends Controller
     {
         $conversation = $conversationRequest->persist();
         $conversation->addParticipants(
-            $request->input('participants')
+            $request->input('participants'),
+            $request->boolean('admin')
         );
         $conversation->addMessage(
             $request->input('message')

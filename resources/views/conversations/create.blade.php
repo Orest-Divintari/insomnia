@@ -32,6 +32,27 @@
                 <wysiwyg value="{{ old('message') }}" name="message" class="p-4" :style-attributes="'min-h-64'"
                     required>
                 </wysiwyg>
+                <div class="border-t border-white-catskill">
+                    <div class="form-row">
+                        <!-- LEFT -->
+                        <div class="form-left-col ">
+
+                        </div>
+                        <!-- RIGHT -->
+                        <div class="form-right-col">
+
+                            <div class="flex items-center">
+                                <input class="form-input mt-1/2 bg-semi-white-mid w-3 h-3" type="checkbox" id="admin"
+                                    name="admin">
+                                <p class="ml-2 form-input-description p-0 text-sm text-black-form-text">Allow anyone
+                                    in
+                                    the conversation to
+                                    invite
+                                    others.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <x-form._button class="text-xs" name="Start Conversation"></x-form._button>
 
             </form>
