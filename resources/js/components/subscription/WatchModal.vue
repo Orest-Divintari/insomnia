@@ -20,10 +20,9 @@
               <p class="form-label-phone">Watch this thread...:</p>
               <div>
                 <div class="flex flex-row-reverse items-center">
-                  <label
-                    for="enable_emails"
-                    class="form-label flex-1 ml-2"
-                  >and receive email notifications</label>
+                  <label for="enable_emails" class="form-label flex-1 ml-2"
+                    >and receive email notifications</label
+                  >
                   <input
                     type="radio"
                     id="enable_emails"
@@ -34,17 +33,23 @@
                   />
                 </div>
                 <div class="flex flex-row-reverse items-center">
-                  <label
-                    for="disable_email"
-                    class="form-label flex-1 ml-2"
-                  >without receiving email notifications</label>
-                  <input type="radio" id="disable_emails" name="email_notifications" value="false" />
+                  <label for="disable_email" class="form-label flex-1 ml-2"
+                    >without receiving email notifications</label
+                  >
+                  <input
+                    type="radio"
+                    id="disable_emails"
+                    name="email_notifications"
+                    value="false"
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div class="form-button-container justify-center">
-            <button @click="watch" type="submit" class="form-button">Watch</button>
+            <button @click="watch" type="submit" class="form-button">
+              Watch
+            </button>
           </div>
         </form>
       </div>
@@ -57,14 +62,14 @@ export default {
   props: {
     showWatchModal: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   watch: {
     showWatchModal() {
       this.showWatchModal ? this.showModal() : this.hideModal();
-    }
+    },
   },
   methods: {
     showModal() {
@@ -75,13 +80,13 @@ export default {
     },
     watch() {
       var mailNotifications = {
-        email_notifications: this.$refs.enable.checked
+        email_notifications: this.$refs.enable.checked,
       };
 
       this.$emit("watch", mailNotifications);
       this.hideModal();
-    }
-  }
+    },
+  },
 };
 </script>
 
