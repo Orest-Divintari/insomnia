@@ -125,44 +125,9 @@
                         <replies :repliable="conversation" :replies="{{ json_encode($messages) }}"></replies>
                     </div>
                     <div class="h-0 mt-12">
-                        <div class="sidebar-block w-80">
-                            <header class="sidebar-header">
-                                CONVERSATION INFO
-                            </header>
-                            <div class="text-smaller mt-1 pb-2">
-                                <div class="flex justify-between">
-                                    <p class="text-gray-lightest">Participants: </p>
-                                    <p>{{ $participants->count() }}</p>
-                                </div>
-                                <div class="flex justify-between">
-                                    <p class="text-gray-lightest">Replies: </p>
-                                    <p>{{ $messages->count() }}</p>
-                                </div>
-                                <div class="flex justify-between">
-                                    <p class="text-gray-lightest">Last reply date: </p>
-                                    <p>{{ $conversation->recentMessage->dateCreated }}</p>
-                                </div>
-                                <div class="flex justify-between">
-                                    <p class="text-gray-lightest">Last reply from: </p>
-                                    <p>{{ $conversation->recentMessage->poster->name }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sidebar-block w-80 mt-5">
-                            <header class="sidebar-header">
-                                CONVERSATION PARTICIPANTS
-                            </header>
-                            @foreach($participants as $participant)
-                            <div class="text-smaller mt-1 pb-2 flex">
-                                <img src="{{ $participant->avatarPath }}" class="avatar-md" alt="">
-                                <div class="ml-4">
-                                    <a class="blue-link "> {{ $participant->name }} </a>
-                                    <p class="text-gray-lightest ">macrumors newbie</p>
-                                </div>
-                            </div>
-                            @endforeach
+                        @include('conversations.info')
+                        @include('conversations.participants')
 
-                        </div>
                         @can('manage', $conversation)
                         <invite-participants-modal></invite-participants-modal>
                         @endcan
