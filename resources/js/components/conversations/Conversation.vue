@@ -1,5 +1,6 @@
 <script>
 import InviteParticipantsModal from "./InviteParticipantsModal";
+import view from "../../mixins/view";
 export default {
   components: {
     InviteParticipantsModal,
@@ -10,6 +11,7 @@ export default {
       default: {},
     },
   },
+  mixins: [view],
   data() {
     return {
       title: this.conversation.title,

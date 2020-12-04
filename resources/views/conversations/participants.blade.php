@@ -4,9 +4,9 @@
     </header>
     @foreach($participants as $participant)
     <div class="text-smaller mt-1 pb-2 flex">
-        <img src="{{ $participant->avatarPath }}" class="avatar-md" alt="">
+        <img @click="showProfile( {{ $participant }} )" src="{{ $participant->avatarPath }}" class="avatar-md" alt="">
         <div class="ml-4">
-            <a class="blue-link "> {{ $participant->name }} </a>
+            <a @click="showProfile( {{ $participant }} )" class="blue-link">{{ $participant->name }}</a>
             <p class="text-gray-lightest ">macrumors newbie</p>
         </div>
     </div>
