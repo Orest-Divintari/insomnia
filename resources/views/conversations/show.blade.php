@@ -32,103 +32,145 @@
                     </x-breadcrumb.leaf>
                 </x-breadcrumb.container>
 
-                <div class="mt-7 flex justify-end">
-                    @if(Gate::allows('update', $conversation))
-                    <button @click="showEditModal" class="btn-white-blue mr-1">Edit</button>
-                    <modal name="edit-conversation" height='auto'>
-                        <div class="form-container">
-                            <div
-                                class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
-                                <p> Edit Conversation </p>
-                                <button @click="hideEditModal" class="fas fa-times"></button>
-                            </div>
-                            <form>
-                                <!-- ROW -->
-                                <div class="form-row">
-                                    <!-- LEFT -->
-                                    <div class="form-left-col ">
-                                        <label class="form-label" for="title">Title:</label>
+                <div class="flex">
+                    <div>
+                        <div class="mt-7 flex justify-end">
+                            @if(Gate::allows('update', $conversation))
+                            <button @click="showEditModal" class="btn-white-blue mr-1">Edit</button>
+                            <modal name="edit-conversation" height='auto'>
+                                <div class="form-container">
+                                    <div
+                                        class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
+                                        <p> Edit Conversation </p>
+                                        <button @click="hideEditModal" class="fas fa-times"></button>
                                     </div>
-                                    <!-- RIGHT -->
-                                    <div class="form-right-col">
-                                        <p class="form-label-phone">Title:</p>
-                                        <div>
-                                            <input v-model="title" class="form-input" type="text" id="title"
-                                                name="title" autocomplete="title">
+                                    <form>
+                                        <!-- ROW -->
+                                        <div class="form-row">
+                                            <!-- LEFT -->
+                                            <div class="form-left-col ">
+                                                <label class="form-label" for="title">Title:</label>
+                                            </div>
+                                            <!-- RIGHT -->
+                                            <div class="form-right-col">
+                                                <p class="form-label-phone">Title:</p>
+                                                <div>
+                                                    <input v-model="title" class="form-input" type="text" id="title"
+                                                        name="title" autocomplete="title">
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="form-button-container justify-center">
-                                    <button @click="update" type="button" class="form-button ">Save</button>
-                                </div>
+                                        <div class="form-button-container justify-center">
+                                            <button @click="update" type="button" class="form-button ">Save</button>
+                                        </div>
 
-                            </form>
-                        </div>
-                    </modal>
-                    @endif
-                    <button class="btn-white-blue mr-1">Star</button>
-                    <button @click="toggleRead" v-if="isRead" class="btn-white-blue mr-1">Mark unread</button>
-                    <button @click="toggleRead" v-else class="btn-white-blue mr-1">Mark read</button>
-                    <button @click="showLeaveModal" class="btn-white-blue mr-1">Leave</button>
-                    <modal name="leave-conversation" width="48%" height='auto'>
-                        <div class="form-container">
-                            <div
-                                class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
-                                <p> Leave Conversation </p>
-                                <button @click="hideLeaveModal" class="fas fa-times"></button>
-                            </div>
-                            <p class="text-smaller text-black-semi p-4">
-                                Leaving a conversation will remove it from your conversation list.
-                            </p>
-                            <!-- ROW -->
-                            <div class="form-row">
-                                <!-- LEFT -->
-                                <div class="form-left-col">
-                                    <label class="form-label" for="leave">Future message handling:</label>
+                                    </form>
                                 </div>
-                                <!-- RIGHT -->
-                                <div class="form-right-col border-t border-white-catskill">
-                                    <p class="form-label-phone">Future message handling:</p>
-                                    <div class="flex flex-row-reverse items-center mt-5/2">
-                                        <div class="flex-1 flex flex-col">
-                                            <p class="text-sm text-black-semi flex-1">Allow future messages</p>
-                                        </div>
-                                        <input class="form-input w-3 mr-2 mt-1/2" type="radio" id="leave" name="leave"
-                                            ref="hide" checked>
+                            </modal>
+                            @endif
+                            <button class="btn-white-blue mr-1">Star</button>
+                            <button @click="toggleRead" v-if="isRead" class="btn-white-blue mr-1">Mark unread</button>
+                            <button @click="toggleRead" v-else class="btn-white-blue mr-1">Mark read</button>
+                            <button @click="showLeaveModal" class="btn-white-blue mr-1">Leave</button>
+                            <modal name="leave-conversation" width="48%" height='auto'>
+                                <div class="form-container">
+                                    <div
+                                        class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
+                                        <p> Leave Conversation </p>
+                                        <button @click="hideLeaveModal" class="fas fa-times"></button>
                                     </div>
-                                    <p class="ml-5 text-xs text-gray-lightest">Should this conversation receive
-                                        further responses in the future, this conversation will be restored
-                                        to your inbox.
+                                    <p class="text-smaller text-black-semi p-4">
+                                        Leaving a conversation will remove it from your conversation list.
                                     </p>
-                                    <div class="flex flex-row-reverse items-center mt-3">
-                                        <div class="flex-1 flex flex-col">
-                                            <p class="text-sm text-black-semi flex-1">Ignore future messages</p>
+                                    <!-- ROW -->
+                                    <div class="form-row">
+                                        <!-- LEFT -->
+                                        <div class="form-left-col">
+                                            <label class="form-label" for="leave">Future message handling:</label>
                                         </div>
-                                        <input class="form-input w-3 mr-2 mt-1/2" type="radio" id="leave" name="leave"
-                                            ref="leave">
+                                        <!-- RIGHT -->
+                                        <div class="form-right-col border-t border-white-catskill">
+                                            <p class="form-label-phone">Future message handling:</p>
+                                            <div class="flex flex-row-reverse items-center mt-5/2">
+                                                <div class="flex-1 flex flex-col">
+                                                    <p class="text-sm text-black-semi flex-1">Allow future messages</p>
+                                                </div>
+                                                <input class="form-input w-3 mr-2 mt-1/2" type="radio" id="leave"
+                                                    name="leave" ref="hide" checked>
+                                            </div>
+                                            <p class="ml-5 text-xs text-gray-lightest">Should this conversation receive
+                                                further responses in the future, this conversation will be restored
+                                                to your inbox.
+                                            </p>
+                                            <div class="flex flex-row-reverse items-center mt-3">
+                                                <div class="flex-1 flex flex-col">
+                                                    <p class="text-sm text-black-semi flex-1">Ignore future messages</p>
+                                                </div>
+                                                <input class="form-input w-3 mr-2 mt-1/2" type="radio" id="leave"
+                                                    name="leave" ref="leave">
+                                            </div>
+                                            <p class="ml-5 text-xs text-gray-lightest">You will not be notified of any
+                                                future responses and the conversation will remain deleted.
+                                            </p>
+                                        </div>
                                     </div>
-                                    <p class="ml-5 text-xs text-gray-lightest">You will not be notified of any
-                                        future responses and the conversation will remain deleted.
-                                    </p>
+                                    <div class="form-button-container justify-center">
+                                        <button @click="leave" type="button" class="form-button ">Leave</button>
+                                    </div>
+
+                                </div>
+                            </modal>
+                        </div>
+
+                        <replies :repliable="conversation" :replies="{{ json_encode($messages) }}"></replies>
+                    </div>
+                    <div class="h-0 mt-12">
+                        <div class="sidebar-block w-80">
+                            <header class="sidebar-header">
+                                CONVERSATION INFO
+                            </header>
+                            <div class="text-smaller mt-1 pb-2">
+                                <div class="flex justify-between">
+                                    <p class="text-gray-lightest">Participants: </p>
+                                    <p>{{ $participants->count() }}</p>
+                                </div>
+                                <div class="flex justify-between">
+                                    <p class="text-gray-lightest">Replies: </p>
+                                    <p>{{ $messages->count() }}</p>
+                                </div>
+                                <div class="flex justify-between">
+                                    <p class="text-gray-lightest">Last reply date: </p>
+                                    <p>{{ $conversation->recentMessage->dateCreated }}</p>
+                                </div>
+                                <div class="flex justify-between">
+                                    <p class="text-gray-lightest">Last reply from: </p>
+                                    <p>{{ $conversation->recentMessage->poster->name }}</p>
                                 </div>
                             </div>
-                            <div class="form-button-container justify-center">
-                                <button @click="leave" type="button" class="form-button ">Leave</button>
+                        </div>
+                        <div class="sidebar-block w-80 mt-5">
+                            <header class="sidebar-header">
+                                CONVERSATION PARTICIPANTS
+                            </header>
+                            @foreach($participants as $participant)
+                            <div class="text-smaller mt-1 pb-2 flex">
+                                <img src="{{ $participant->avatarPath }}" class="avatar-md" alt="">
+                                <div class="ml-4">
+                                    <a class="blue-link "> {{ $participant->name }} </a>
+                                    <p class="text-gray-lightest ">macrumors newbie</p>
+                                </div>
                             </div>
+                            @endforeach
 
                         </div>
-                    </modal>
-                </div>
-
-
-
                         @can('manage', $conversation)
                         <invite-participants-modal></invite-participants-modal>
                         @endcan
+                    </div>
 
-
-                <replies :repliable="conversation" :replies="{{ json_encode($messages) }}"></replies>
+                </div>
             </main>
+
         </div>
     </conversation>
 
