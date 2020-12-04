@@ -3,6 +3,7 @@
 namespace Tests\Feature\Conversations;
 
 use App\Conversation;
+use App\ConversationParticipant;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class CreateConversationTest extends TestCase
      * @param string $participants
      * @return \Illuminate\Http\Response
      */
-    public function postConversation($title = "", $message = "", $participants = "")
+    public function postConversation($title = "", $message = "", $participants = "", $admin = false)
     {
         return $this->post(
             route('conversations.store'),
@@ -43,6 +44,7 @@ class CreateConversationTest extends TestCase
                 'title' => $title,
                 'message' => $message,
                 'participants' => $participants,
+                'admin' => $admin,
             ]
         );
     }
@@ -148,6 +150,54 @@ class CreateConversationTest extends TestCase
 
         $message = $conversation->messages()->first();
         $this->assertEquals($message->body, $this->messageBody);
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_start_a_conversation_and_set_all_participants_as_admin()
+    {
+        $conversationStarter = $this->signIn();
+
+        $participants = "{$this->participantA->name}, {$this->participantB->name}";
+
+        $this->postConversation(
+            $this->title,
+            $this->messageBody,
+            $participants,
+            $admin = true
+        );
+
+        $conversation = $conversationStarter->conversations()->first();
+        $participantNames = collect([
+            $this->participantA->name,
+            $this->participantB->name,
+            $conversationStarter->name,
+        ]);
+
+        $this->assertTrue(
+            $conversation
+                ->participants
+                ->pluck('name')
+                ->every(function ($value, $key) use ($participantNames) {
+                    return $participantNames->contains($value);
+                })
+        );
+
+        $message = $conversation->messages()->first();
+        $this->assertEquals($message->body, $this->messageBody);
+
+        $this->assertTrue(
+            ConversationParticipant::where('user_id', $this->participantA->id)
+                ->where('conversation_id', $conversation->id)
+                ->first()
+                ->admin
+        );
+
+        $this->assertTrue(
+            ConversationParticipant::where('user_id', $this->participantB->id)
+                ->where('conversation_id', $conversation->id)
+                ->first()
+                ->admin
+        );
     }
 
     /** @test  */
