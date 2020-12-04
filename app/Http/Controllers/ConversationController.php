@@ -46,8 +46,12 @@ class ConversationController extends Controller
      * @param Conversation $conversation
      * @return Illuminate\View\View
      */
-    public function show(Conversation $conversation)
+    public function show($conversationSlug)
     {
+        $conversation = Conversation::withRecentMessage()
+            ->whereSlug($conversationSlug)
+            ->firstOrFail();
+
         $this->authorize('view', $conversation);
 
         $participants = $conversation->participants;
@@ -59,7 +63,6 @@ class ConversationController extends Controller
         if (request()->expectsJson()) {
             return compact('conversation', 'participants', 'messages');
         }
-
         return view(
             'conversations.show',
             compact('conversation', 'messages', 'participants')

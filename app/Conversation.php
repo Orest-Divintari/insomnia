@@ -89,7 +89,7 @@ class Conversation extends Model
             $participants[$participantId] = ['admin' => $admin];
         }
 
-        $this->participants()->attach($participants);
+        $this->participants()->syncWithoutDetaching($participants);
 
         event(new NewParticipantsWereAdded($this, $participantIds));
     }

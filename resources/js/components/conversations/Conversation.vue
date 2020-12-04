@@ -1,5 +1,9 @@
 <script>
+import InviteParticipantsModal from "./InviteParticipantsModal";
 export default {
+  components: {
+    InviteParticipantsModal,
+  },
   props: {
     conversation: {
       type: Object,

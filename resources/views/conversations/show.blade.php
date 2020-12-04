@@ -122,6 +122,9 @@
 
 
 
+                        @can('manage', $conversation)
+                        <invite-participants-modal></invite-participants-modal>
+                        @endcan
 
 
                 <replies :repliable="conversation" :replies="{{ json_encode($messages) }}"></replies>
