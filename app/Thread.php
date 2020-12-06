@@ -177,8 +177,15 @@ class Thread extends Model
         if (!auth()->check()) {
             return true;
         }
-        $key = auth()->user()->visitedThreadCacheKey($this);
-        return $this->updated_at > cache($key);
+
+        $read = $this->reads()
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (is_null($read)) {
+            return true;
+        }
+        return $this->updated_at > $read->read_at;
     }
 
     /**
