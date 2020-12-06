@@ -31,7 +31,7 @@
             ></a>
             <p
               v-if="signedIn"
-              @click="visit(thread)"
+              @click="read(thread)"
               class="text-xs text-gray-lightest ml-1 hover:underline cursor-pointer"
             >
               - Mark Read
@@ -77,6 +77,7 @@
 import paginator from "../Paginator";
 import replies from "../../mixins/replies";
 import ThreadFilters from "./ThreadFilters";
+import view from "../../mixins/view";
 export default {
   components: {
     paginator,
@@ -88,7 +89,7 @@ export default {
       default: {},
     },
   },
-  mixins: [replies],
+  mixins: [replies, view],
   data() {
     return {
       threads: this.paginatedThreads.data,
@@ -102,19 +103,16 @@ export default {
         index == 0 ? "" : "border-t-0",
       ];
     },
-    endpoint(slug) {
-      return "/threads/" + slug;
+    readPath(slug) {
+      return "/api/threads/" + slug + "/read";
     },
     markAsRead(thread) {
       thread.has_been_updated = false;
     },
-    showThread(thread) {
-      location.href = this.endpoint(thread.slug);
-    },
-    visit(thread) {
+    read(thread) {
       this.markAsRead(thread);
       axios
-        .get(this.endpoint(thread.slug))
+        .patch(this.readPath(thread.slug))
         .catch((error) => console.log(error.response));
     },
   },

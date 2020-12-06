@@ -117,9 +117,12 @@ Route::group([
     Route::group(['middleware' => 'auth'], function () {
 
         // invite member to conversation
-
         Route::post('/conversations/{conversation}/invite-participants', 'ConversationParticipantController@store')
             ->name('api.invite-conversation-participants.store');
+
+        // read threads
+        Route::patch('/threads/{thread}/read', 'ReadThreadController@update')
+            ->name('api.read-threads.update');
 
         // read conversations
         Route::patch('/conversations/{conversation}/read', 'ReadConversationController@update')
