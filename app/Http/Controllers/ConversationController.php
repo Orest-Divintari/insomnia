@@ -59,7 +59,7 @@ class ConversationController extends Controller
 
         $messages = Reply::forRepliable($conversation);
 
-        auth()->user()->readConversation($conversation);
+        auth()->user()->read($conversation);
 
         if (request()->expectsJson()) {
             return compact('conversation', 'participants', 'messages');

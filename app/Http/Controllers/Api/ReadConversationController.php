@@ -16,7 +16,7 @@ class ReadConversationController extends Controller
     public function update(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-        auth()->user()->readConversation($conversation);
+        auth()->user()->read($conversation);
         return response('Conversation has been marked as read', 200);
     }
 }

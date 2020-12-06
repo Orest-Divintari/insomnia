@@ -16,7 +16,7 @@ class UnreadConversationController extends Controller
     public function update(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-        auth()->user()->unreadConversation($conversation);
+        auth()->user()->unread($conversation);
         return response('Conversation has been marked as unread', 200);
     }
 }
