@@ -157,14 +157,14 @@ class ConversationTest extends TestCase
         $user = $this->signIn();
         $conversation = create(Conversation::class);
 
-        $user->readConversation($conversation);
+        $user->read($conversation);
 
         $this->assertCount(1, $conversation->reads);
 
         $anotherUser = $this->signIn();
         $conversation->addParticipants([$anotherUser->name]);
 
-        $anotherUser->readConversation($conversation);
+        $anotherUser->read($conversation);
 
         $this->assertCount(2, $conversation->fresh()->reads);
     }
@@ -260,7 +260,7 @@ class ConversationTest extends TestCase
 
         $readConversation = create(Conversation::class);
 
-        $conversationStarter->readConversation($readConversation);
+        $conversationStarter->read($readConversation);
 
         $conversation = Conversation::withRead()
             ->whereId($unreadConversation->id)
@@ -285,10 +285,10 @@ class ConversationTest extends TestCase
         $conversationStarter = $this->signIn();
 
         $readConversation = create(Conversation::class);
-        $conversationStarter->readConversation($readConversation);
+        $conversationStarter->read($readConversation);
         $unreadConversation = create(Conversation::class);
         $anotherReadConversation = create(Conversation::class);
-        $conversationStarter->readConversation($anotherReadConversation);
+        $conversationStarter->read($anotherReadConversation);
 
         $conversations = Conversation::orderByUnread()->get()->toArray();
 

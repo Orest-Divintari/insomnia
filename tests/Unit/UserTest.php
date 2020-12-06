@@ -15,7 +15,6 @@ use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -54,11 +53,6 @@ class UserTest extends TestCase
 
         $user->read($thread);
         $this->assertFalse($thread->hasBeenUpdated);
-
-        Cache::forever($user->visitedThreadCacheKey($thread), Carbon::now()->subDay());
-
-        $this->assertTrue($thread->hasBeenUpdated);
-
     }
 
     /** @test */
@@ -125,6 +119,7 @@ class UserTest extends TestCase
 
         $this->assertCount(1, $user->replies);
     }
+
     /** @test */
     public function a_user_has_messages_count_which_is_the_number_of_profile_posts_on_his_profile()
     {
@@ -258,13 +253,14 @@ class UserTest extends TestCase
     /** @test */
     public function a_user_can_mark_a_conversation_as_read()
     {
+        $this->withoutExceptionHandling();
         $conversationStarter = $this->signIn();
 
         $conversation = ConversationFactory::create();
 
         $this->assertTrue($conversation->hasBeenUpdated);
 
-        $conversationStarter->readConversation($conversation);
+        $conversationStarter->read($conversation);
 
         $this->assertFalse($conversation->hasBeenUpdated);
     }
@@ -278,11 +274,11 @@ class UserTest extends TestCase
 
         $this->assertTrue($conversation->hasBeenUpdated);
 
-        $conversationStarter->readConversation($conversation);
+        $conversationStarter->read($conversation);
 
         $this->assertFalse($conversation->hasBeenUpdated);
 
-        $conversationStarter->unreadConversation($conversation);
+        $conversationStarter->unread($conversation);
 
         $this->assertTrue($conversation->hasBeenUpdated);
     }
@@ -297,7 +293,7 @@ class UserTest extends TestCase
         );
         $this->assertCount(1, $conversationStarter->fresh()->unreadConversations);
 
-        $conversationStarter->readConversation($conversation);
+        $conversationStarter->read($conversation);
         $this->assertCount(0, $conversationStarter->fresh()->unreadConversations);
 
         $participant = create(User::class);
@@ -306,7 +302,7 @@ class UserTest extends TestCase
         $conversation->addParticipants([$participant->name]);
         $this->assertCount(1, $participant->fresh()->unreadConversations);
 
-        $participant->readConversation($conversation);
+        $participant->read($conversation);
         $this->assertCount(0, $participant->fresh()->unreadConversations);
 
         Carbon::setTestNow(Carbon::now()->addDay());

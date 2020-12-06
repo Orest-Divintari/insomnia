@@ -180,7 +180,7 @@ class ViewConversationsTest extends TestCase
 
         $this->assertTrue($conversation->hasBeenUpdated);
 
-        $participant->readConversation($conversation);
+        $participant->read($conversation);
 
         $this->assertFalse($conversation->hasBeenUpdated);
 
@@ -201,7 +201,7 @@ class ViewConversationsTest extends TestCase
             ->create();
 
         $this->signIn($participant);
-        $participant->readConversation($readConversation);
+        $participant->read($readConversation);
 
         $conversations = $this->getJson(
             route('conversations.index', ['unread' => true])
@@ -326,8 +326,8 @@ class ViewConversationsTest extends TestCase
             ->create();
 
         $this->signIn($participant);
-        $participant->readConversation($readConversationByJohn);
-        $participant->readConversation($readConversationByOrestis);
+        $participant->read($readConversationByJohn);
+        $participant->read($readConversationByOrestis);
 
         $conversations = $this->getJson(
             route(
@@ -369,9 +369,9 @@ class ViewConversationsTest extends TestCase
             ->create();
 
         $this->signIn($participant);
-        $participant->readConversation($readConversationByJohn);
-        $participant->readConversation($readConversationByOrestis);
-        $participant->readConversation($readConversationByGeorge);
+        $participant->read($readConversationByJohn);
+        $participant->read($readConversationByOrestis);
+        $participant->read($readConversationByGeorge);
 
         $desiredUsernames = "{$orestis->name},{$john->name}";
         $conversations = $this->getJson(
@@ -411,8 +411,8 @@ class ViewConversationsTest extends TestCase
 
         $this->signIn($participant);
 
-        $participant->readConversation($readConversationReceivedByGeorge);
-        $participant->readConversation($readConversationNotReceivedByGeorge);
+        $participant->read($readConversationReceivedByGeorge);
+        $participant->read($readConversationNotReceivedByGeorge);
 
         $conversations = $this->getJson(
             route(
@@ -461,10 +461,10 @@ class ViewConversationsTest extends TestCase
             ->create();
 
         $this->signIn($participant);
-        $participant->readConversation($readConversationReceivedByGeorge);
-        $participant->readConversation($readConversationReceivedByMike);
-        $participant->readConversation($readConversationNotReceivedByGeorge);
-        $participant->readConversation($readConversationNotReceivedByMike);
+        $participant->read($readConversationReceivedByGeorge);
+        $participant->read($readConversationReceivedByMike);
+        $participant->read($readConversationNotReceivedByGeorge);
+        $participant->read($readConversationNotReceivedByMike);
 
         $participantNames = "{$george->name}, {$mike->name} ";
 
@@ -500,9 +500,9 @@ class ViewConversationsTest extends TestCase
         $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
         $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
 
-        $conversationStarter->readConversation($readAndLastMonthConversation);
-        $conversationStarter->readConversation($readAndLastWeekConversation);
-        $conversationStarter->readConversation($readTodayConversation);
+        $conversationStarter->read($readAndLastMonthConversation);
+        $conversationStarter->read($readAndLastWeekConversation);
+        $conversationStarter->read($readTodayConversation);
 
         $desiredConversations = $this->getJson(
             route('api.conversations.index', ['recentAndUnread' => true])
@@ -535,18 +535,5 @@ class ViewConversationsTest extends TestCase
             $readTodayConversation->id,
             $desiredConversationIds
         );
-    }
-
-    /** @test */
-    public function tsek()
-    {
-        $conversationStarter = $this->signIn();
-
-        create(Conversation::class);
-
-        $readConversation = create(Conversation::class);
-        $conversationStarter->readConversation($readConversation);
-
-        dd(Conversation::withRead()->get()->toArray());
     }
 }
