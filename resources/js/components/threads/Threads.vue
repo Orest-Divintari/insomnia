@@ -30,7 +30,7 @@
               v-text="thread.date_created"
             ></a>
             <p
-              v-if="signedIn"
+              v-if="signedIn && thread.has_been_updated"
               @click="read(thread)"
               class="text-xs text-gray-lightest ml-1 hover:underline cursor-pointer"
             >
