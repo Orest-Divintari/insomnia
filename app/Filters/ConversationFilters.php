@@ -111,7 +111,7 @@ class ConversationFilters implements FilterInterface
     {
         return $this->unread()
             ->orWhere(
-                'conversations.created_at',
+                'conversations.updated_at',
                 '>=',
                 Carbon::now()->subWeek()->startOfDay()
             );
