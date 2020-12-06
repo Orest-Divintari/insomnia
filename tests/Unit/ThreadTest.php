@@ -191,13 +191,11 @@ class ThreadTest extends TestCase
     {
         $user = create(User::class);
 
-        $thread = create(Thread::class);
+        $this->assertFalse($this->thread->isSubscribedBy($user->id));
 
-        $this->assertFalse($thread->isSubscribedBy($user->id));
+        $this->thread->subscribe($user->id);
 
-        $thread->subscribe($user->id);
-
-        $this->assertTrue($thread->isSubscribedBy($user->id));
+        $this->assertTrue($this->thread->isSubscribedBy($user->id));
     }
 
     /** @test */
@@ -205,14 +203,35 @@ class ThreadTest extends TestCase
     {
         $user = $this->signIn();
 
-        $thread = create(Thread::class);
-        $user->read($thread);
+        $user->read($this->thread);
 
         $anotherUser = $this->signIn();
 
-        $anotherUser->read($thread);
+        $anotherUser->read($this->thread);
 
-        $this->assertCount(2, $thread->fresh()->reads);
+        $this->assertCount(2, $this->thread->fresh()->reads);
     }
+
+    /** @test */
+    public function a_thread_can_be_locked()
+    {
+        $this->assertFalse($this->thread->locked);
+
+        $this->thread->lock();
+
+        $this->assertTrue($this->thread->locked);
+    }
+
+      /** @test */
+      public function a_thread_can_be_unlocked()
+      {
+          $this->assertFalse($this->thread->locked);
+  
+          $this->thread->lock();
+          $this->assertTrue($this->thread->locked);
+
+          $this->thread->unlock();
+          $this->assertFalse($this->thread->locked);
+      }
 
 }

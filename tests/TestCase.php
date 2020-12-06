@@ -16,7 +16,7 @@ abstract class TestCase extends BaseTestCase
      * Otherwise, authenticates a newly created user
      *
      * @param User $user|null $user
-     * @return User $user
+     * @return User
      */
     protected function signIn($user = null)
     {
@@ -36,7 +36,9 @@ abstract class TestCase extends BaseTestCase
      */
     protected function signInAdmin($user = null)
     {
-        $user = $user ?: factory(User::class)->create(['email' => config('insomnia.administrators')[0]]);
+        $user = $user ?: factory(User::class)->create([
+            'email' => config('insomnia.administrators')[0],
+        ]);
 
         $this->actingAs($user);
         return $user;
