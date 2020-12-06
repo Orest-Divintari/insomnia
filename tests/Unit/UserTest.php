@@ -310,4 +310,15 @@ class UserTest extends TestCase
         $this->assertCount(1, $conversationStarter->fresh()->unreadConversations);
         $this->assertCount(1, $participant->fresh()->unreadConversations);
     }
+
+    /** @test */
+    public function a_user_knows_if_is_admin()
+    {
+        $notAdminUser = create(User::class);
+
+        $adminUser = create(User::class, ['name' => 'uric']);
+
+        $this->assertFalse($notAdminUser->isAdmin());
+        $this->assertTrue($adminUser->isAdmin());
+    }
 }

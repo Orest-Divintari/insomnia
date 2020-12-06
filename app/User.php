@@ -320,4 +320,14 @@ class User extends Authenticatable implements MustVerifyEmail
                     });
             });
     }
+
+    /**
+     * Determine if the user is admin
+     *
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return in_array($this->email, config('insomnia.administrators'));
+    }
 }
