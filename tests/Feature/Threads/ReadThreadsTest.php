@@ -246,4 +246,31 @@ class ReadThreadsTest extends TestCase
 
     }
 
+    /** @test */
+    public function an_authenticated_user_can_mark_a_thread_as_read()
+    {
+        $user = $this->signIn();
+        $thread = create(Thread::class);
+        $this->assertTrue($thread->hasBeenUpdated);
+
+        $this->patch(route('api.read-threads.update', $thread));
+
+        $this->assertFalse($thread->hasBeenUpdated);
+    }
+
+    /** @test */
+    public function guests_cannot_mark_a_thread_as_read()
+    {
+        $user = create(User::class);
+
+        $thread = create(Thread::class);
+        $this->assertTrue($thread->hasBeenUpdated);
+
+        $this->patch(route('api.read-threads.update', $thread))
+            ->assertRedirect('login');
+
+        $this->assertTrue($thread->hasBeenUpdated);
+
+    }
+
 }

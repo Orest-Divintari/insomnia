@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Category;
+use App\Read;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -197,6 +198,21 @@ class ThreadTest extends TestCase
         $thread->subscribe($user->id);
 
         $this->assertTrue($thread->isSubscribedBy($user->id));
+    }
+
+    /** @test */
+    public function a_thread_can_be_marked_as_read_by_many_users()
+    {
+        $user = $this->signIn();
+
+        $thread = create(Thread::class);
+        $user->read($thread);
+
+        $anotherUser = $this->signIn();
+
+        $anotherUser->read($thread);
+
+        $this->assertCount(2, $thread->fresh()->reads);
     }
 
 }
