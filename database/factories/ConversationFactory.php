@@ -14,5 +14,6 @@ $factory->define(Conversation::class, function (Faker $faker) {
         'user_id' => auth()->id() ?: factory(User::class),
         'title' => $title,
         'slug' => $slug,
+        'locked' => false,
     ];
 });

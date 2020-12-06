@@ -1,6 +1,7 @@
 <script>
 import InviteParticipantsModal from "./InviteParticipantsModal";
 import view from "../../mixins/view";
+import EventBus from "../../eventBus";
 export default {
   components: {
     InviteParticipantsModal,
@@ -16,6 +17,7 @@ export default {
     return {
       title: this.conversation.title,
       isRead: !this.conversation.has_been_updated,
+      locked: this.conversation.locked,
     };
   },
   computed: {
@@ -31,8 +33,8 @@ export default {
     unreadPath() {
       return this.path + "/unread";
     },
-    data() {
-      return { title: this.title };
+    form() {
+      return { title: this.title, locked: this.$refs.lock.checked };
     },
     hidePath() {
       return this.path + "/hide";
@@ -93,9 +95,14 @@ export default {
     },
     update() {
       axios
-        .patch(this.updatePath, this.data)
-        .then((response) => this.hideEditModal())
+        .patch(this.updatePath, this.form)
+        .then(() => this.onSuccess())
         .catch((error) => showErrorModal(error.response.data));
+    },
+    onSuccess() {
+      this.locked = !this.locked;
+      this.hideEditModal();
+      EventBus.$emit("lock-repliable", this.$refs.lock.checked);
     },
   },
 };

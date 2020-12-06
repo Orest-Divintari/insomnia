@@ -33,7 +33,7 @@
                 </x-breadcrumb.container>
 
                 <div class="flex">
-                    <div>
+                    <div class="flex-1">
                         <div class="mt-7 flex justify-end">
                             @if(Gate::allows('update', $conversation))
                             <button @click="showEditModal" class="btn-white-blue mr-1">Edit</button>
@@ -58,6 +58,22 @@
                                                     <input v-model="title" class="form-input" type="text" id="title"
                                                         name="title" autocomplete="title">
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-left-col"></div>
+                                            <div class="form-right-col">
+                                                <div class="flex flex-row-reverse items-center">
+
+                                                    <label for="enable_emails" class="form-label flex-1 ml-2">
+                                                        Lock conversation</label>
+
+                                                    <input :checked="locked" ref="lock" type="checkbox"
+                                                        id="lock_conversation" name="locked" />
+                                                </div>
+                                                <p class="text-gray-lightest text-xs">No responses will be
+                                                    allowed
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="form-button-container justify-center">

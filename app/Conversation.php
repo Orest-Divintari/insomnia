@@ -6,13 +6,14 @@ use App\Events\Conversation\NewMessageWasAddedToConversation;
 use App\Events\Conversation\NewParticipantsWereAdded;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
+use App\Traits\Lockable;
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
-    use Sluggable, FormatsDate, Filterable;
+    use Sluggable, FormatsDate, Filterable, Lockable;
 
     /**
      * Number of conversations per page
@@ -44,6 +45,15 @@ class Conversation extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'locked' => 'boolean',
+    ];
 
     /**
      * A conversation may have many participants

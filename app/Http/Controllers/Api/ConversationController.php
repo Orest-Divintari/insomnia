@@ -19,7 +19,11 @@ class ConversationController extends Controller
      */
     public function update(Conversation $conversation, UpdateConversationRequest $request)
     {
-        $conversation->update(['title' => request('title')]);
+        $conversation->update([
+            'title' => request('title'),
+            'locked' => request()->boolean('locked'),
+        ]);
+
         return response('The conversation has been updated', 200);
     }
 

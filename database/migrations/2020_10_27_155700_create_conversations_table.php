@@ -18,6 +18,7 @@ class CreateConversationsTable extends Migration
             $table->foreignId('user_id');
             $table->string('title');
             $table->string('slug');
+            $table->boolean('locked')->default(false);
             $table->timestamps();
         });
     }
