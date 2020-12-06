@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class LockThreadsTest extends TestCase
@@ -31,7 +32,8 @@ class LockThreadsTest extends TestCase
 
         $this->assertFalse($thread->locked);
 
-        $this->post(route('api.lock-threads.store', $thread));
+        $this->post(route('api.lock-threads.store', $thread))
+            ->assertStatus(Response::HTTP_FORBIDDEN);
 
         $this->assertFalse($thread->fresh()->locked);
     }
@@ -78,7 +80,8 @@ class LockThreadsTest extends TestCase
         $thread->lock();
         $this->assertTrue($thread->fresh()->locked);
 
-        $this->delete(route('api.lock-threads.destroy', $thread));
+        $this->delete(route('api.lock-threads.destroy', $thread))
+            ->assertStatus(Response::HTTP_FORBIDDEN);
 
         $this->assertTrue($thread->fresh()->locked);
     }
