@@ -31,12 +31,12 @@ class ConversationController extends Controller
     public function index(FilterManager $filterManager)
     {
         $conversationFilters = $filterManager->withConversationFilters();
+
         return Conversation::filter($conversationFilters)
             ->with('starter')
             ->with('participants:name')
-            ->get()
-            ->sortByDesc('has_been_updated')
-            ->values();
-
+            ->orderByUnread()
+            ->orderByUpdated()
+            ->get();
     }
 }

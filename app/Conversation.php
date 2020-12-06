@@ -33,6 +33,7 @@ class Conversation extends Model
      */
     protected $appends = [
         'date_created',
+        'date_updated',
         'type',
         'has_been_updated',
     ];
@@ -252,6 +253,51 @@ class Conversation extends Model
         ConversationParticipant::where('conversation_id', $this->id)
             ->whereIn('user_id', $userIds)
             ->update(['hid' => false]);
+    }
+
+    /**
+     * Add a column with the date the conversation was read
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithRead($query)
+    {
+        return $query->addSelect(['read_at' => Read::select('reads.read_at')
+                ->whereColumn('reads.readable_id', 'conversations.id')
+                ->where('reads.readable_type', '=', 'App\Conversation')
+                ->where('reads.user_id', '=', auth()->id()),
+        ]);
+    }
+
+    /**
+     * Sort converations by unread
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOrderByUnread($query)
+    {
+        return $query
+            ->withRead()
+            ->orderByRaw('
+                CASE
+                    WHEN read_at is NULL THEN 1
+                    WHEN conversations.updated_at > read_at THEN 1
+                    ELSE 0
+                END DESC'
+            );
+    }
+
+    /**
+     * Sort conversations by the date that it was updated
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeOrderByUpdated($query)
+    {
+        return $query->orderBy('conversations.updated_at', 'DESC');
     }
 
 }
