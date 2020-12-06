@@ -31,7 +31,7 @@
                     {{ participantNames(conversation.participants) }}
                   </p>
                   <p class="text-xs text-gray-mid">
-                    {{ conversation.date_created }}
+                    {{ conversation.date_updated }}
                   </p>
                 </div>
               </div>
