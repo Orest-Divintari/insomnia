@@ -76,6 +76,7 @@ export default {
   methods: {
     hideModal() {
       this.$modal.hide("invite-participants-modal");
+      this.participants = "";
     },
     showModal() {
       this.$modal.show("invite-participants-modal");
