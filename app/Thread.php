@@ -290,4 +290,14 @@ class Thread extends Model
     {
         return true;
     }
+
+    /**
+     * A thread can be read by many users
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\morphMany
+     */
+    public function reads()
+    {
+        return $this->morphMany(Read::class, 'readable');
+    }
 }

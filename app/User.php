@@ -87,31 +87,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Mark the given thread as read by the authenticated user
-     *
-     * @param Thread $thread
-     * @return void
-     */
-    public function read($thread)
-    {
-        cache()->forever(
-            $this->visitedThreadCacheKey($thread),
-            Carbon::now()
-        );
-    }
-
-    /**
-     * Generate a cache key to be used when a user reads a thread
-     *
-     * @param Thread $thread
-     * @return string
-     */
-    public function visitedThreadCacheKey($thread)
-    {
-        return sprintf("users.%s.visits.%s", $this->id, $thread->id);
-    }
-
-    /**
      * Fetch the posts that were liked by the user
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -296,27 +271,34 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Mark a conversation as read
+     * Mark a readable model as read
      *
-     * @param Conversation $conversation
+     * @param mixed $readable
      * @return void
      */
-    public function readConversation(Conversation $conversation)
+    public function read($readable)
     {
-        $conversation->reads()
-            ->where('user_id', $this->id)
-            ->update(['read_at' => Carbon::now()]);
+        $read = $readable->reads()->where('user_id', $this->id);
+
+        if ($read->exists()) {
+            $read->update(['read_at' => Carbon::now()]);
+        } else {
+            $readable->reads()->create([
+                'read_at' => Carbon::now(),
+                'user_id' => $this->id,
+            ]);
+        }
     }
 
     /**
      * Mark a conversation as unread
      *
-     * @param Conversation $conversation
+     * @param mixed $readable
      * @return void
      */
-    public function unreadConversation(Conversation $conversation)
+    public function unread($readable)
     {
-        $conversation->reads()
+        $readable->reads()
             ->where('user_id', auth()->id())
             ->update(['read_at' => null]);
     }
