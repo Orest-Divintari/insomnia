@@ -3,6 +3,7 @@
 namespace Tests\Feature\Conversations;
 
 use App\Conversation;
+use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
@@ -79,5 +80,44 @@ class ManageConversationsTest extends TestCase
         )->assertStatus(Response::HTTP_FORBIDDEN);
 
         $this->assertNotEquals($conversation->fresh()->title, $newTitle['title']);
+    }
+
+    /** @test */
+    public function an_authorized_user_can_lock_a_conversation()
+    {
+        $conversationStarter = $this->signIn();
+        $conversation = ConversationFactory::by($conversationStarter)->create();
+
+        $this->assertFalse($conversation->locked);
+
+        $this->patch(
+            route('api.conversations.update', $conversation),
+            ['title' => $conversation->title, 'locked' => true]
+        );
+
+        $this->assertTrue($conversation->fresh()->locked);
+    }
+
+    /** @test */
+    public function an_authorized_user_can_unlock_a_conversation()
+    {
+        $conversationStarter = $this->signIn();
+        $conversation = ConversationFactory::by($conversationStarter)->create();
+
+        $this->assertFalse($conversation->locked);
+
+        $this->patch(
+            route('api.conversations.update', $conversation),
+            ['title' => $conversation->title, 'locked' => true]
+        );
+
+        $this->assertTrue($conversation->fresh()->locked);
+
+        $this->patch(
+            route('api.conversations.update', $conversation),
+            ['title' => $conversation->title, 'locked' => false]
+        );
+
+        $this->assertFalse($conversation->fresh()->locked);
     }
 }

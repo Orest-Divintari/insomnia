@@ -310,4 +310,28 @@ class ConversationTest extends TestCase
         $this->assertEquals($conversations[1]['id'], $oldConversation->id);
     }
 
+    /** @test */
+    public function a_conversation_can_be_locked()
+    {
+        $conversation = create(Conversation::class);
+        $this->assertFalse($conversation->locked);
+
+        $conversation->lock();
+
+        $this->assertTrue($conversation->locked);
+    }
+
+    /** @test */
+    public function a_thread_can_be_unlocked()
+    {
+        $conversation = create(Conversation::class);
+        $this->assertFalse($conversation->locked);
+
+        $conversation->lock();
+        $this->assertTrue($conversation->locked);
+
+        $conversation->unlock();
+        $this->assertFalse($conversation->locked);
+    }
+
 }
