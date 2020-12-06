@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Conversation;
+use App\Read;
 use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ConversationFactory;
@@ -248,6 +249,65 @@ class ConversationTest extends TestCase
 
         $this->assertCount(2, $conversation->participants);
         $this->assertCount(1, $conversation->activeParticipants);
+    }
+
+    /** @test */
+    public function a_converation_knows_when_and_if_it_was_read_by_the_authenticated_user()
+    {
+        $conversationStarter = $this->signIn();
+
+        $unreadConversation = create(Conversation::class);
+
+        $readConversation = create(Conversation::class);
+
+        $conversationStarter->readConversation($readConversation);
+
+        $conversation = Conversation::withRead()
+            ->whereId($unreadConversation->id)
+            ->first();
+        $this->assertNull($conversation->read_at);
+
+        $conversation = Conversation::withRead()
+            ->whereId($readConversation->id)
+            ->first();
+        $timeConversationWasRead = Read::where('readable_id', $readConversation->id)
+            ->where('user_id', $conversationStarter->id)
+            ->first();
+        $this->assertEquals(
+            $conversation->read_at,
+            $timeConversationWasRead->read_at
+        );
+    }
+
+    /** @test */
+    public function a_conversation_can_be_ordered_by_unread()
+    {
+        $conversationStarter = $this->signIn();
+
+        $readConversation = create(Conversation::class);
+        $conversationStarter->readConversation($readConversation);
+        $unreadConversation = create(Conversation::class);
+        $anotherReadConversation = create(Conversation::class);
+        $conversationStarter->readConversation($anotherReadConversation);
+
+        $conversations = Conversation::orderByUnread()->get()->toArray();
+
+        $this->assertEquals($conversations[0]['id'], $unreadConversation->id);
+        $this->assertEquals($conversations[1]['id'], $readConversation->id);
+    }
+
+    /** @test */
+    public function a_conversation_can_be_orderd_by_updated_date()
+    {
+        $conversationStarter = $this->signIn();
+
+        $oldConversation = create(Conversation::class, ['updated_at' => Carbon::now()->subWeek()]);
+        $recentConversation = create(Conversation::class);
+
+        $conversations = Conversation::orderByUpdated()->get()->toArray();
+
+        $this->assertEquals($conversations[0]['id'], $recentConversation->id);
+        $this->assertEquals($conversations[1]['id'], $oldConversation->id);
     }
 
 }

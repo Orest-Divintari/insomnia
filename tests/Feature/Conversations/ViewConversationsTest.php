@@ -487,15 +487,15 @@ class ViewConversationsTest extends TestCase
 
         $readAndLastMonthConversation = ConversationFactory::by($conversationStarter)->create();
         $readAndLastMonthConversation->update(
-            ['created_at' => Carbon::now()->subMonth()]
+            ['updated_at' => Carbon::now()->subMonth()]
         );
         $unreadLastWeekConversation = ConversationFactory::by($conversationStarter)->create();
         $unreadLastWeekConversation->update(
-            ['created_at' => Carbon::now()->subWeek()]
+            ['updated_at' => Carbon::now()->subWeek()]
         );
         $readAndLastWeekConversation = ConversationFactory::by($conversationStarter)->create();
         $readAndLastWeekConversation->update(
-            ['created_at' => Carbon::now()->subWeek()]
+            ['updated_at' => Carbon::now()->subWeek()]
         );
         $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
         $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
@@ -507,6 +507,11 @@ class ViewConversationsTest extends TestCase
         $desiredConversations = $this->getJson(
             route('api.conversations.index', ['recentAndUnread' => true])
         )->json();
+
+        $this->assertEquals($desiredConversations[0]['id'], $unreadTodayConversation->id);
+        $this->assertEquals($desiredConversations[1]['id'], $unreadLastWeekConversation->id);
+        $this->assertEquals($desiredConversations[2]['id'], $readTodayConversation->id);
+        $this->assertEquals($desiredConversations[3]['id'], $readAndLastWeekConversation->id);
 
         $this->assertCount(4, $desiredConversations);
         $desiredConversationIds = collect($desiredConversations)->pluck('id');
@@ -530,5 +535,18 @@ class ViewConversationsTest extends TestCase
             $readTodayConversation->id,
             $desiredConversationIds
         );
+    }
+
+    /** @test */
+    public function tsek()
+    {
+        $conversationStarter = $this->signIn();
+
+        create(Conversation::class);
+
+        $readConversation = create(Conversation::class);
+        $conversationStarter->readConversation($readConversation);
+
+        dd(Conversation::withRead()->get()->toArray());
     }
 }
