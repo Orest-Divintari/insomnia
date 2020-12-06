@@ -21,4 +21,16 @@ class ThreadPolicy
     {
         return $thread->poster->is($user);
     }
+
+    /**
+     * Determine whether the user can lock the model
+     *
+     * @param User $user
+     * @param Thread $thread
+     * @return boolean
+     */
+    public function lock(User $user, Thread $thread)
+    {
+        return $user->isAdmin();
+    }
 }

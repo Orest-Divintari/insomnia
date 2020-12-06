@@ -116,6 +116,13 @@ Route::group([
 
     Route::group(['middleware' => 'auth'], function () {
 
+        // lock threads
+        Route::post('/threads/{thread}/lock', 'LockThreadController@store')
+            ->name('api.lock-threads.store');
+
+        Route::delete('/threads/{thread}/lock', 'LockThreadController@destroy')
+            ->name('api.lock-threads.destroy');
+
         // invite member to conversation
         Route::post('/conversations/{conversation}/invite-participants', 'ConversationParticipantController@store')
             ->name('api.invite-conversation-participants.store');

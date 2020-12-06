@@ -1,8 +1,10 @@
 <script>
 import SubscribeButton from "../subscription/SubscribeButton";
+import LockThreadButton from "./LockThreadButton";
 export default {
   components: {
     SubscribeButton,
+    LockThreadButton,
   },
   props: {
     thread: {

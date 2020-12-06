@@ -15,14 +15,21 @@
     <new-reply
       :repliable="repliable"
       @created="add"
-      v-if="signedIn"
+      v-if="signedIn && !locked"
     ></new-reply>
-    <p v-else class="text-xs mt-4 text-center">
+    <p v-if="!signedIn" class="text-xs mt-4 text-center">
       You must
       <a href="/login" class="text-blue-mid underline">sign in</a> or
       <a href="/register" class="text-blue-mid underline">register</a> to reply
       here.
     </p>
+    <div
+      v-if="locked"
+      class="flex items-center bg-blue-lighter rounded border-l-1 border-blue-mid p-3 text-smaller text-black-semi mt-4"
+    >
+      <i class="fas fa-lock mr-4 text-red-900"></i>
+      <p class="pt-1">Closed for new replies</p>
+    </div>
   </div>
 </template>
 
@@ -31,6 +38,7 @@ import Reply from "./Reply";
 import Paginator from "../Paginator";
 import NewReply from "./NewReply";
 import collection from "../../mixins/collection";
+import EventBus from "../../eventBus";
 export default {
   components: {
     Reply,
@@ -38,6 +46,10 @@ export default {
     NewReply,
   },
   props: {
+    titlle: {
+      type: String,
+      default: "",
+    },
     repliable: {
       type: Object,
       default: {},
@@ -53,7 +65,13 @@ export default {
       isPaginated: false,
       items: this.replies.data,
       dataset: this.replies,
+      locked: this.repliable.locked,
     };
+  },
+  created() {
+    EventBus.$on("lock-repliable", (locked) => {
+      this.locked = locked;
+    });
   },
 };
 </script>

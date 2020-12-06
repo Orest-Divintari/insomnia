@@ -6,6 +6,7 @@ use App\Events\Subscription\NewReplyWasPostedToThread;
 use App\Search\Threads;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
+use App\Traits\Lockable;
 use App\Traits\RecordsActivity;
 use App\Traits\Sluggable;
 use App\Traits\Subscribable;
@@ -23,7 +24,8 @@ class Thread extends Model
     Subscribable,
     RecordsActivity,
     Searchable,
-        Sluggable;
+    Sluggable,
+        Lockable;
 
     /**
      * Number of visible threads per page
@@ -70,6 +72,15 @@ class Thread extends Model
         'user_id',
         'category_id',
         'replies_count',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'locked' => 'boolean',
     ];
 
     /**
@@ -307,4 +318,5 @@ class Thread extends Model
     {
         return $this->morphMany(Read::class, 'readable');
     }
+
 }

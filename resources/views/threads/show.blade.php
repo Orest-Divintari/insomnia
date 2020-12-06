@@ -47,9 +47,9 @@
                     <subscribe-button thread-slug="{{ $thread->slug }}"
                         subscription-status="{{ json_encode($thread->subscribedByAuthUser)}}" class="mr-1">
                     </subscribe-button>
-
-
-                    <button class="btn-white-blue mr-1">Lock</button>
+                    @if(auth()->check() && Gate::allows('lock', $thread))
+                    <lock-thread-button :thread="{{ $thread }}"></lock-thread-button>
+                    @endif
                     <button class="btn-white-blue mr-1">Pin</button>
                     @if(Gate::allows('manage', $thread))
                     <dropdown>
