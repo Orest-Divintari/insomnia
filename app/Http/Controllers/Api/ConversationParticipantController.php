@@ -22,4 +22,17 @@ class ConversationParticipantController extends Controller
             ->addParticipants(request('participants'));
         return response('Participants have been added successfully', 200);
     }
+
+    /**
+     * Delete the participant from the conversation
+     *
+     * @param Conversation $conversation
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Conversation $conversation, $participantId)
+    {
+        $this->authorize('manage', $conversation);
+        $conversation->removeParticipant($participantId);
+        return response('The participant has been removed', 200);
+    }
 }

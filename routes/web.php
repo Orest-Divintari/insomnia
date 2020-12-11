@@ -123,9 +123,13 @@ Route::group([
         Route::delete('/threads/{thread}/lock', 'LockThreadController@destroy')
             ->name('api.lock-threads.destroy');
 
-        // invite member to conversation
-        Route::post('/conversations/{conversation}/invite-participants', 'ConversationParticipantController@store')
-            ->name('api.invite-conversation-participants.store');
+        // conversation participants
+        Route::post('/conversations/{conversation}/participants', 'ConversationParticipantController@store')
+            ->name('api.conversation-participants.store');
+
+        Route::delete('/conversations/{conversation}/participants/{participantId}', 'ConversationParticipantController@destroy')
+            ->name('api.conversation-participants.destroy');
+
         // conversation admin
         Route::post('/conversations/{conversation}/admins/{participantId}', 'ConversationAdminController@store')
             ->name('api.conversation-admins.store');

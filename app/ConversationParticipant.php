@@ -16,5 +16,4 @@ class ConversationParticipant extends Model
     protected $casts = [
         'admin' => 'boolean',
     ];
-
 }

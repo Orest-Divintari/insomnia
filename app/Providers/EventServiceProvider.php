@@ -39,6 +39,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Conversation\NewParticipantsWereAdded' => [
             'App\Listeners\Conversation\MarkConversationAsUnread',
         ],
+        'App\Events\Conversation\ParticipantWasRemoved' => [
+            'App\Listeners\Conversation\DeleteConversationReadRecord',
+        ],
     ];
 
     /**

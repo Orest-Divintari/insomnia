@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\Conversation\NewMessageWasAddedToConversation;
 use App\Events\Conversation\NewParticipantsWereAdded;
+use App\Events\Conversation\ParticipantWasRemoved;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Lockable;
@@ -67,7 +68,8 @@ class Conversation extends Model
             'conversation_participants',
             'conversation_id',
             'user_id'
-        )->withTimestamps();
+        )->isConversationAdmin($this)
+            ->withTimestamps();
     }
 
     /**
@@ -104,6 +106,18 @@ class Conversation extends Model
         $this->participants()->syncWithoutDetaching($participants);
 
         event(new NewParticipantsWereAdded($this, $participantIds));
+    }
+
+    /**
+     * Remove participant from conversation
+     *
+     * @return void
+     */
+    public function removeParticipant($participantId)
+    {
+        $this->participants()->detach($participantId);
+
+        event(new ParticipantWasRemoved($this, $participantId));
     }
 
     /**

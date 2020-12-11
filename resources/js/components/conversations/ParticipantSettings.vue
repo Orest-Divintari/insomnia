@@ -20,6 +20,13 @@
           <li @click="setAsAdmin" v-else class="p-2 hover:bg-blue-lighter">
             <i class="fas fa-users-cog pr-2"></i> Set as admin
           </li>
+          <li
+            v-if="!authorize('is', participant)"
+            @click="removeParticipant"
+            class="p-2 hover:bg-blue-lighter"
+          >
+            <i class="fas fa-user-times pr-2"></i> Remove
+          </li>
         </ul>
       </template>
     </dropdown>
@@ -45,6 +52,14 @@ export default {
     };
   },
   computed: {
+    participantPath() {
+      return (
+        "/api/conversations/" +
+        this.conversation.slug +
+        "/participants/" +
+        this.participant.id
+      );
+    },
     adminPath() {
       return (
         "/api/conversations/" +
@@ -66,6 +81,12 @@ export default {
         .post(this.adminPath)
         .then(() => this.onSuccess())
         .catch();
+    },
+    removeParticipant() {
+      axios
+        .delete(this.participantPath)
+        .then(() => location.reload())
+        .catch((error) => console.log(error));
     },
     toggleAdmin() {
       this.isAdmin = !this.isAdmin;
