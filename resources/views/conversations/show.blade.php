@@ -37,7 +37,7 @@
                         <div class="mt-7 flex justify-end">
                             @if(Gate::allows('update', $conversation))
                             <button @click="showEditModal" class="btn-white-blue mr-1">Edit</button>
-                            <modal name="edit-conversation" height='auto'>
+                            <modal name="edit-conversation" height='auto' width="50%">
                                 <div class="form-container">
                                     <div
                                         class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
@@ -64,8 +64,7 @@
                                             <div class="form-left-col"></div>
                                             <div class="form-right-col">
                                                 <div class="flex flex-row-reverse items-center">
-
-                                                    <label for="enable_emails" class="form-label flex-1 ml-2">
+                                                    <label for="locked" class="form-label flex-1 ml-2">
                                                         Lock conversation</label>
 
                                                     <input :checked="locked" ref="lock" type="checkbox"
