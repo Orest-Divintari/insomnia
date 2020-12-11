@@ -126,6 +126,12 @@ Route::group([
         // invite member to conversation
         Route::post('/conversations/{conversation}/invite-participants', 'ConversationParticipantController@store')
             ->name('api.invite-conversation-participants.store');
+        // conversation admin
+        Route::post('/conversations/{conversation}/admins/{participantId}', 'ConversationAdminController@store')
+            ->name('api.conversation-admins.store');
+
+        Route::delete('/conversations/{conversation}/admins/{participantId}', 'ConversationAdminController@destroy')
+            ->name('api.conversation-admins.destroy');
 
         // read threads
         Route::patch('/threads/{thread}/read', 'ReadThreadController@update')

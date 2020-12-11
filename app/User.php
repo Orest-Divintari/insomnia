@@ -53,6 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'conversation_admin' => 'boolean',
     ];
 
     /**
@@ -288,6 +289,27 @@ class User extends Authenticatable implements MustVerifyEmail
                 'user_id' => $this->id,
             ]);
         }
+    }
+
+    /**
+     * Add the column which determines whether the user is a conversation admin
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeIsConversationAdmin($query, $conversation)
+    {
+        return $query->addSelect(
+            ['conversation_admin' => ConversationParticipant::select('admin')
+                    ->where(
+                        'conversation_id',
+                        $conversation->id
+                    )->whereColumn(
+                    'conversation_participants.user_id',
+                    'users.id'
+                ),
+            ]
+        );
     }
 
     /**

@@ -310,4 +310,29 @@ class Conversation extends Model
         return $query->orderBy('conversations.updated_at', 'DESC');
     }
 
+    /**
+     * Set participant as admin
+     *
+     * @param int $participantId
+     * @param boolean $admin
+     * @return void
+     */
+    public function setAdmin($participantId, $admin = true)
+    {
+        ConversationParticipant::where('conversation_id', $this->id)
+            ->where('user_id', $participantId)
+            ->update(['admin' => $admin]);
+    }
+
+    /**
+     * Remove participant as admin
+     *
+     * @param int $participantId
+     * @return void
+     */
+    public function removeAdmin($participantId)
+    {
+        $this->setAdmin($participantId, $admin = false);
+    }
+
 }

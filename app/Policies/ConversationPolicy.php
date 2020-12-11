@@ -39,10 +39,10 @@ class ConversationPolicy
 
     public function manage(User $user, Conversation $conversation)
     {
-        return ConversationParticipant::where('user_id', $user->id)
+        $participant = ConversationParticipant::where('user_id', $user->id)
             ->where('conversation_id', $conversation->id)
-            ->firstOrFail()
-            ->admin;
+            ->first();
+        return $user->is($conversation->starter) || ($participant && $participant->admin);
     }
 
 }

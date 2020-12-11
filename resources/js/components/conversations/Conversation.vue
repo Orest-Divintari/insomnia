@@ -1,10 +1,12 @@
 <script>
 import InviteParticipantsModal from "./InviteParticipantsModal";
+import ParticipantSettings from "../conversations/ParticipantSettings";
 import view from "../../mixins/view";
 import EventBus from "../../eventBus";
 export default {
   components: {
     InviteParticipantsModal,
+    ParticipantSettings,
   },
   props: {
     conversation: {
