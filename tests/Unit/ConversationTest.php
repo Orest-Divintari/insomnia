@@ -25,6 +25,7 @@ class ConversationTest extends TestCase
             ->create();
 
         $this->assertCount(2, $conversation->participants);
+        $this->assertTrue($conversation->participants->first()->conversation_admin);
     }
 
     /** @test */
