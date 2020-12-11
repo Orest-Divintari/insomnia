@@ -65,9 +65,7 @@ export default {
   },
   computed: {
     path() {
-      return (
-        "/api/conversations/" + this.conversation.slug + "/invite-participants"
-      );
+      return "/api/conversations/" + this.conversation.slug + "/participants";
     },
     data() {
       return { participants: this.participants };
@@ -84,11 +82,11 @@ export default {
     invite() {
       axios
         .post(this.path, this.data)
-        .then((response) => this.onSuccess(response.data))
+        .then((response) => this.onSuccess())
         .catch((error) => showErrorModal(error.response.data));
     },
-    onSuccess(data) {
-      this.hideModal();
+    onSuccess() {
+      location.reload();
     },
   },
 };
