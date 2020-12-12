@@ -5,7 +5,7 @@
         <slot name="dropdown-trigger"></slot>
       </div>
       <div
-        @click="hide"
+        @click="hideOnClick ? hide() : null"
         v-if="isOpen"
         class="z-10 dropdown-menu"
         :class="styleClasses"
@@ -22,6 +22,10 @@ export default {
     styleClasses: {
       type: String,
       default: "",
+    },
+    hideOnClick: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
