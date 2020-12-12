@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dropdown>
+    <dropdown :hideOnClick="true">
       <template v-slot:dropdown-trigger>
         <button
           class="hover:bg-blue-lighter focus:outline-none focus:bg-blue-lighter focus:text-black focus:shadow-md text-gray-lightest hover:text-black rounded-full px-2 pt-1/2 pb-2"
