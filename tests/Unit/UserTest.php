@@ -171,8 +171,7 @@ class UserTest extends TestCase
 
         $post = ['body' => 'some body'];
 
-        $newPost = $user->postToProfile($post, $profileOwner);
-
+        $newPost = $user->postToProfile($post['body'], $profileOwner);
         $this->assertEquals($newPost['body'], $post['body']);
 
         $this->assertDatabaseHas('profile_posts', [
