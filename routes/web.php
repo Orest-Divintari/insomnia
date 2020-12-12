@@ -130,6 +130,12 @@ Route::group([
         Route::delete('/conversations/{conversation}/participants/{participantId}', 'ConversationParticipantController@destroy')
             ->name('api.conversation-participants.destroy');
 
+        // star conversation
+        Route::post('/conversations/{conversation}/star', 'StarConversationController@store')
+            ->name('api.star-conversations.store');
+        Route::delete('/conversations/{conversation}/star', 'StarConversationController@destroy')
+            ->name('api.star-conversations.destroy');
+
         // conversation admin
         Route::post('/conversations/{conversation}/admins/{participantId}', 'ConversationAdminController@store')
             ->name('api.conversation-admins.store');

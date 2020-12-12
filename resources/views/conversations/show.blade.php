@@ -83,7 +83,8 @@
                                 </div>
                             </modal>
                             @endif
-                            <button class="btn-white-blue mr-1">Star</button>
+                            <button v-if="starred" @click="toggleStar" class="btn-white-blue mr-1">Unstar</button>
+                            <button v-else @click="toggleStar" class="btn-white-blue mr-1">Star</button>
                             <button @click="toggleRead" v-if="isRead" class="btn-white-blue mr-1">Mark unread</button>
                             <button @click="toggleRead" v-else class="btn-white-blue mr-1">Mark read</button>
                             <button @click="showLeaveModal" class="btn-white-blue mr-1">Leave</button>

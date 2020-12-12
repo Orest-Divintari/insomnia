@@ -51,6 +51,7 @@ class ConversationController extends Controller
     {
         $conversation = Conversation::withRecentMessage()
             ->whereSlug($conversationSlug)
+            ->isStarred()
             ->firstOrFail();
 
         $this->authorize('view', $conversation);

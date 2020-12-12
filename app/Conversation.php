@@ -349,4 +349,58 @@ class Conversation extends Model
         $this->setAdmin($participantId, $admin = false);
     }
 
+    /**
+     * Star the conversation
+     *
+     * @param boolean $starred
+     * @return void
+     */
+    /** @test */
+    public function star($starred = true)
+    {
+        ConversationParticipant::where('conversation_id', $this->id)
+            ->where('user_id', auth()->id())
+            ->update(['starred' => $starred]);
+    }
+
+    /**
+     * Unstar the conversation
+     *
+     * @return void
+     */
+    public function unstar()
+    {
+        $this->star($starred = false);
+    }
+
+    /**
+     * Determine whether the authenticated user has starred the converastion
+     *
+     * @return boolean
+     */
+    public function getStarredAttribute()
+    {
+        return ConversationParticipant::where('conversation_id', $this->id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail()
+            ->starred;
+    }
+
+    /**
+     * Add a column which determines whether the conversation is starred
+     * by the current user
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeIsStarred($query)
+    {
+        return $query->addSelect(['starred' => ConversationParticipant::select('starred')
+                ->whereColumn('conversation_id', 'conversations.id')
+                ->where('user_id', auth()->id()),
+        ]
+        );
+
+    }
+
 }

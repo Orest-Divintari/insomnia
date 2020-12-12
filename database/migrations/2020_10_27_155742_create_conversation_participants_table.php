@@ -20,6 +20,7 @@ class CreateConversationParticipantsTable extends Migration
             $table->boolean('admin')->default(false);
             $table->boolean('left')->default(false);
             $table->boolean('hid')->default(false);
+            $table->boolean('starred')->default(false);
             $table->timestamps();
         });
     }

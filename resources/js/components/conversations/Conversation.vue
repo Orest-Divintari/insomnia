@@ -20,6 +20,7 @@ export default {
       title: this.conversation.title,
       isRead: !this.conversation.has_been_updated,
       locked: this.conversation.locked,
+      starred: this.conversation.starred,
     };
   },
   computed: {
@@ -34,6 +35,9 @@ export default {
     },
     unreadPath() {
       return this.path + "/unread";
+    },
+    starPath() {
+      return this.path + "/star";
     },
     form() {
       return { title: this.title, locked: this.$refs.lock.checked };
@@ -78,6 +82,25 @@ export default {
         this.markUnread();
       } else {
         this.markRead();
+      }
+    },
+    star() {
+      axios
+        .post(this.starPath)
+        .then(() => (this.starred = true))
+        .then((error) => console.log(error));
+    },
+    unstar() {
+      axios
+        .delete(this.starPath)
+        .then(() => (this.starred = false))
+        .then((error) => console.log(error));
+    },
+    toggleStar() {
+      if (this.starred) {
+        this.unstar();
+      } else {
+        this.star();
       }
     },
     markRead() {
