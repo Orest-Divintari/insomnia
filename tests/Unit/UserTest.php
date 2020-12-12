@@ -145,7 +145,7 @@ class UserTest extends TestCase
 
         $reply->likedBy($anotherUser);
 
-        $this->assertEquals(1, $user->fresh()->likes_score);
+        $this->assertEquals(1, $user->fresh()->like_score);
 
     }
 
