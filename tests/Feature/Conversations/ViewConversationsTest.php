@@ -508,17 +508,39 @@ class ViewConversationsTest extends TestCase
             route('api.conversations.index', ['recentAndUnread' => true])
         )->json();
 
-        $this->assertEquals($desiredConversations[0]['id'], $unreadTodayConversation->id);
-        $this->assertEquals($desiredConversations[1]['id'], $unreadLastWeekConversation->id);
-        $this->assertEquals($desiredConversations[2]['id'], $readTodayConversation->id);
-        $this->assertEquals($desiredConversations[3]['id'], $readAndLastWeekConversation->id);
+        $this->assertEquals(
+            $desiredConversations[0]['id'],
+            $unreadTodayConversation->id
+        );
+        $this->assertEquals(
+            $desiredConversations[1]['id'],
+            $unreadLastWeekConversation->id
+        );
+        $this->assertEquals(
+            $desiredConversations[2]['id'],
+            $readTodayConversation->id
+        );
+        $this->assertEquals(
+            $desiredConversations[3]['id'],
+            $readAndLastWeekConversation->id
+        );
 
         $this->assertCount(4, $desiredConversations);
         $desiredConversationIds = collect($desiredConversations)->pluck('id');
-        $this->assertTrue(array_key_exists('starter', $desiredConversations[0]));
-        $this->assertEquals($desiredConversations[0]['starter']['name'], $conversationStarter->name);
-        $this->assertTrue(array_key_exists('participants', $desiredConversations[0]));
-        $this->assertEquals($desiredConversations[0]['participants'][0]['name'], $conversationStarter->name);
+        $this->assertTrue(
+            array_key_exists('starter', $desiredConversations[0])
+        );
+        $this->assertEquals(
+            $desiredConversations[0]['starter']['name'],
+            $conversationStarter->name
+        );
+        $this->assertTrue(
+            array_key_exists('participants', $desiredConversations[0])
+        );
+        $this->assertEquals(
+            $desiredConversations[0]['participants'][0]['name'],
+            $conversationStarter->name
+        );
         $this->assertContains(
             $unreadLastWeekConversation->id,
             $desiredConversationIds
@@ -535,5 +557,26 @@ class ViewConversationsTest extends TestCase
             $readTodayConversation->id,
             $desiredConversationIds
         );
+    }
+
+    /** @test */
+    public function get_the_starred_conversations()
+    {
+        $conversationStarter = $this->signIn();
+        $conversationStarter = $this->signIn();
+        $unstarredConversation = create(Conversation::class);
+        $starredConversation = create(Conversation::class);
+        $starredConversation->star();
+
+        $desiredConversations = $this->getJson(
+            route('api.conversations.index', ['starred' => true])
+        )->json();
+
+        $this->assertCount(1, $desiredConversations);
+        $this->assertEquals(
+            $desiredConversations[0]['id'],
+            $starredConversation->id
+        );
+
     }
 }

@@ -171,6 +171,21 @@ class ConversationFiltersTest extends TestCase
             $readTodayConversation->id,
             $desiredConversationIds
         );
+    }
+
+    /** @test */
+    public function get_the_starred_conversations()
+    {
+        $conversationStarter = $this->signIn();
+        $unstarredConversation = create(Conversation::class);
+        $starredConversation = create(Conversation::class);
+
+        $starredConversation->star();
+
+        $conversations = $this->conversationFilters->starred()->get();
+        $this->assertCount(1, $conversations);
+        $this->assertEquals($conversations->first()->id, $starredConversation->id);
+        $this->assertTrue($conversations->first()->starred);
 
     }
 }
