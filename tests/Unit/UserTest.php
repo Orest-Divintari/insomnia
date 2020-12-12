@@ -315,7 +315,7 @@ class UserTest extends TestCase
     {
         $notAdminUser = create(User::class);
 
-        $adminUser = create(User::class, ['name' => 'uric']);
+        $adminUser = create(User::class, ['email' => 'uric@example.com']);
 
         $this->assertFalse($notAdminUser->isAdmin());
         $this->assertTrue($adminUser->isAdmin());
