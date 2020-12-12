@@ -222,16 +222,39 @@ class ThreadTest extends TestCase
         $this->assertTrue($this->thread->locked);
     }
 
-      /** @test */
-      public function a_thread_can_be_unlocked()
-      {
-          $this->assertFalse($this->thread->locked);
-  
-          $this->thread->lock();
-          $this->assertTrue($this->thread->locked);
+    /** @test */
+    public function a_thread_can_be_unlocked()
+    {
+        $this->assertFalse($this->thread->locked);
 
-          $this->thread->unlock();
-          $this->assertFalse($this->thread->locked);
-      }
+        $this->thread->lock();
+        $this->assertTrue($this->thread->locked);
+
+        $this->thread->unlock();
+        $this->assertFalse($this->thread->locked);
+    }
+
+    /** @test */
+    public function a_thread_can_be_pinned()
+    {
+        $thread = create(Thread::class);
+        $this->assertFalse($thread->pinned);
+
+        $thread->pin();
+
+        $this->assertTrue($thread->pinned);
+    }
+
+    /** @test */
+    public function a_thread_can_be_unpinned()
+    {
+        $thread = create(Thread::class);
+        $thread->pin();
+        $this->assertTrue($thread->pinned);
+
+        $thread->unpin();
+
+        $this->assertFalse($thread->pinned);
+    }
 
 }
