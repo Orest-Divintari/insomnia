@@ -28,6 +28,7 @@ class ConversationFilters implements FilterInterface
         'startedBy',
         'receivedBy',
         'recentAndUnread',
+        'starred',
     ];
 
     /**
@@ -115,5 +116,19 @@ class ConversationFilters implements FilterInterface
                 '>=',
                 Carbon::now()->subWeek()->startOfDay()
             );
+    }
+
+    /**
+     * Get the starred conversations
+     *
+     * @return Builder
+     */
+    public function starred()
+    {
+        return $this->builder->whereHas('participants', function ($query) {
+            $query->whereColumn('conversation_participants.conversation_id', 'conversations.id')
+                ->where('user_id', auth()->id())
+                ->where('starred', true);
+        });
     }
 }

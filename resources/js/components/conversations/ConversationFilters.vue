@@ -24,6 +24,10 @@
             :is-checked="form.unread"
             @checked="toggle"
           ></unread-filter>
+          <starred-filter
+            :is-checked="form.starred"
+            @checked="toggle"
+          ></starred-filter>
           <started-by-filter v-model="form.startedBy"></started-by-filter>
           <received-by-filter v-model="form.receivedBy"></received-by-filter>
           <div class="text-right dropdown-item">
@@ -41,6 +45,7 @@ import FilterLabels from "../filters/FilterLabels";
 import StartedByFilter from "./StartedByFilter";
 import ReceivedByFilter from "./ReceivedByFilter";
 import UnreadFilter from "./UnreadFilter";
+import StarredFilter from "./StarredFilter";
 
 export default {
   components: {
@@ -48,6 +53,7 @@ export default {
     StartedByFilter,
     ReceivedByFilter,
     UnreadFilter,
+    StarredFilter,
   },
   props: {
     conversationFilters: {
@@ -62,6 +68,7 @@ export default {
         startedBy: "",
         receivedBy: "",
         unread: false,
+        starred: false,
       },
     };
   },
