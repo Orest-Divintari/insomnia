@@ -218,7 +218,7 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_knows_if_it_is_a_conversation_message()
     {
-        $message = create(Reply::class, ['repliable_type' => 'App\Conversation']);
+        $message = MessageFactory::create();
         $this->assertEquals($message->type, 'conversation-message');
     }
 
