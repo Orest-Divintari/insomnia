@@ -82,6 +82,7 @@ class ConversationController extends Controller
 
         $conversations = auth()->user()
             ->conversations()
+            ->isStarred()
             ->filter($filters)
             ->with('starter')
             ->withRecentMessage()

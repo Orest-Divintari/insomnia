@@ -52,17 +52,20 @@
             ></a>
           </div>
         </div>
+        <div v-if="conversation.starred" class="pt-3/2 self-start pr-2">
+          <i class="fas fa-star text-2xs text-blue-mid"></i>
+        </div>
         <div class="p-2 text-gray-lightest w-40 mr-4">
-          <div class="flex flex-col justify-between items-end">
-            <div class="flex items-center">
-              <p class="text-sm">Replies:</p>
+          <div class="flex flex-col justify-between items-start">
+            <div class="flex items-center w-full">
+              <p class="text-sm flex-1">Replies:</p>
               <p
                 class="ml-6 text-black-semi text-smaller"
                 v-text="conversation.messages_count"
               ></p>
             </div>
-            <div class="flex items-center">
-              <p class="text-sm">Participants:</p>
+            <div class="flex items-center w-full">
+              <p class="flex-1 text-sm">Participants:</p>
               <p
                 class="ml-6 text-black-semi text-smaller"
                 v-text="conversation.participants_count"
