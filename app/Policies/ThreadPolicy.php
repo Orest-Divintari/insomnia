@@ -33,4 +33,16 @@ class ThreadPolicy
     {
         return $user->isAdmin();
     }
+
+    /**
+     * Determine whether the user can pin the thread
+     *
+     * @param User $user
+     * @param Thread $thread
+     * @return boolean
+     */
+    public function pin(User $user, Thread $thread)
+    {
+        return $user->isAdmin();
+    }
 }

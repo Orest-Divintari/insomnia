@@ -50,7 +50,10 @@
                     @if(auth()->check() && Gate::allows('lock', $thread))
                     <lock-thread-button :thread="{{ $thread }}"></lock-thread-button>
                     @endif
-                    <button class="btn-white-blue mr-1">Pin</button>
+                    @if(auth()->user()->isAdmin())
+                    <button @click="togglePin" v-if="pinned" class="btn-white-blue mr-1">Unpin</button>
+                    <button @click="togglePin" v-else class="btn-white-blue mr-1">Pin</button>
+                    @endif
                     @if(Gate::allows('manage', $thread))
                     <dropdown>
                         <template v-slot:dropdown-trigger>

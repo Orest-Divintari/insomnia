@@ -123,6 +123,13 @@ Route::group([
         Route::delete('/threads/{thread}/lock', 'LockThreadController@destroy')
             ->name('api.lock-threads.destroy');
 
+        // pin threads
+        Route::post('/threads/{thread}/pin', 'PinThreadController@store')
+            ->name('api.pin-threads.store');
+
+        Route::delete('/threads/{thread}/pin', 'PinThreadController@destroy')
+            ->name('api.pin-threads.destroy');
+
         // conversation participants
         Route::post('/conversations/{conversation}/participants', 'ConversationParticipantController@store')
             ->name('api.conversation-participants.store');

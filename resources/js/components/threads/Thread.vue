@@ -17,6 +17,7 @@ export default {
       title: this.thread.title,
       isSubscribed: this.thread.subscribed_by_auth_user,
       editing: false,
+      pinned: this.thread.pinned,
     };
   },
   computed: {
@@ -29,6 +30,9 @@ export default {
     sortedByLikes() {
       return window.location.href.includes("?sortByLikes=1");
     },
+    pinPath() {
+      return this.path + "/pin";
+    },
   },
   methods: {
     hideDropdown() {
@@ -40,12 +44,30 @@ export default {
     edit() {
       this.$modal.show("edit-thread");
     },
-
     update() {
       axios
         .patch(this.path, this.data)
         .then((response) => this.hideEditModal())
         .catch((error) => showErrorModal(error.response.data));
+    },
+    togglePin() {
+      if (this.thread.pinned) {
+        this.unpin();
+      } else {
+        this.pin();
+      }
+    },
+    pin() {
+      axios
+        .post(this.pinPath)
+        .then(() => (this.pinned = true))
+        .catch((error) => console.log(error));
+    },
+    unpin() {
+      axios
+        .delete(this.pinPath)
+        .then(() => (this.pinned = false))
+        .catch((error) => console.log(error));
     },
   },
 };

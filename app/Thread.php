@@ -81,6 +81,7 @@ class Thread extends Model
      */
     protected $casts = [
         'locked' => 'boolean',
+        'pinned' => 'boolean',
     ];
 
     /**
@@ -317,6 +318,28 @@ class Thread extends Model
     public function reads()
     {
         return $this->morphMany(Read::class, 'readable');
+    }
+
+    /**
+     * Mark thread as pinned
+     *
+     * @param boolean $pinned
+     * @return void
+     */
+    public function pin($pinned = true)
+    {
+        $this->pinned = $pinned;
+        $this->save();
+    }
+
+    /**
+     * Mark thread as unpinned
+     *
+     * @return void
+     */
+    public function unpin()
+    {
+        $this->pin($pinned = false);
     }
 
 }
