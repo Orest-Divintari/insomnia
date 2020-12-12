@@ -335,4 +335,52 @@ class ConversationTest extends TestCase
         $this->assertFalse($conversation->locked);
     }
 
+    /** @test */
+    public function a_participant_can_mark_a_conversation_as_starred()
+    {
+        $user = $this->signIn();
+        $conversation = create(Conversation::class);
+
+        $this->assertFalse($conversation->starred);
+
+        $conversation->star();
+        $this->assertTrue($conversation->starred);
+    }
+
+    /** @test */
+    public function a_participant_can_mark_a_conversation_as_unstarred()
+    {
+        $user = $this->signIn();
+        $conversation = create(Conversation::class);
+
+        $this->assertFalse($conversation->starred);
+        $conversation->star();
+        $this->assertTrue($conversation->starred);
+
+        $conversation->unstar();
+        $this->assertFalse($conversation->starred);
+    }
+
+    /** @test */
+    public function a_conversation_knows_if_the_authenticated_user_has_marked_it_as_starred()
+    {
+        $conversationStarter = $this->signIn();
+        $unstarredConversation = create(Conversation::class);
+        $starredConversation = create(Conversation::class);
+
+        $starredConversation->star();
+
+        $this->assertFalse(
+            Conversation::isStarred()
+                ->whereId($unstarredConversation->id)
+                ->first()
+                ->starred
+        );
+        $this->assertArrayHasKey(
+            'starred',
+            Conversation::isStarred()
+                ->whereId($starredConversation->id)
+                ->first()
+        );
+    }
 }
