@@ -132,15 +132,15 @@ class ConversationFiltersTest extends TestCase
 
         $readAndLastMonthConversation = ConversationFactory::by($conversationStarter)->create();
         $readAndLastMonthConversation->update(
-            ['created_at' => Carbon::now()->subMonth()]
+            ['updated_at' => Carbon::now()->subMonth()]
         );
         $unreadLastWeekConversation = ConversationFactory::by($conversationStarter)->create();
         $unreadLastWeekConversation->update(
-            ['created_at' => Carbon::now()->subWeek()]
+            ['updated_at' => Carbon::now()->subWeek()]
         );
         $readAndLastWeekConversation = ConversationFactory::by($conversationStarter)->create();
         $readAndLastWeekConversation->update(
-            ['created_at' => Carbon::now()->subWeek()]
+            ['updated_at' => Carbon::now()->subWeek()]
         );
         $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
         $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
