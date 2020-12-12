@@ -238,7 +238,7 @@ class ReplyTest extends TestCase
     {
         $thread = create(Thread::class);
         $replies = ReplyFactory::createMany(
-            Reply::REPLIES_PER_PAGE * 2,
+            Thread::REPLIES_PER_PAGE * 2,
             ['repliable_id' => $thread->id]
         );
 
@@ -248,7 +248,7 @@ class ReplyTest extends TestCase
 
         $replyFilters = app(ReplyFilters::class);
 
-        $paginatedReplies = Reply::forThread($thread, $replyFilters);
+        $paginatedReplies = Reply::forRepliable($thread, $replyFilters);
         $replyArray = $paginatedReplies->firstWhere('id', $reply->id);
 
         $this->assertEquals(
