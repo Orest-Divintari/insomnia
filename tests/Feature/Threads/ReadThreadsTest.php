@@ -270,7 +270,25 @@ class ReadThreadsTest extends TestCase
             ->assertRedirect('login');
 
         $this->assertTrue($thread->hasBeenUpdated);
-
     }
 
+    /** @test */
+    public function users_can_view_pinned_threads_if_exist()
+    {
+        createMany(Thread::class, 50);
+        $pinnedThread = create(
+            Thread::class,
+            [
+                'pinned' => true,
+                'created_at' => Carbon::now()->subYear(),
+                'updated_at' => Carbon::now()->subYear(),
+            ],
+            3,
+
+        );
+
+        $this->get(route('filtered-threads.index'))
+            ->assertSee($pinnedThread->title);
+
+    }
 }
