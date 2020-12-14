@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="flex justify-between bg-white-catskill rounded-t py-2 pl-1 pr-3"
+      class="flex justify-between bg-white-catskill rounded-t py-2 pl-1 pr-3 border-b-6 border-purple-muted"
     >
       <div class="flex">
         <filter-labels

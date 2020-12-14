@@ -53,6 +53,7 @@ module.exports = {
                 "black-form-text": "#2C2C2C",
                 "red-alert": "#FEE9E8",
                 "red-alert-text": "#C84347",
+                'red-dark': "#CA0003",
                 "semi-white": "#FCFCFC",
                 "semi-white-mid": "#FAFAFA",
                 "purple-muted": "#75587A",
@@ -78,7 +79,8 @@ module.exports = {
                 insomnia: "Verdana, Arial, sans-serif"
             },
             borderWidth: {
-                "6": "0.375rem"
+                "6": "0.375rem",
+                "3": "3px"
             },
 
             fontSize: {
@@ -91,10 +93,10 @@ module.exports = {
         }
     },
     variants: {
-        textColor: ["responsive", "hover", "focus", "active", "group-hover"],
-        textDecoration: ['group-hover'],
-        cursor: ['hover', 'group-hover']
-
+            
+            textColor: ["responsive", "hover", "focus", "active", "group-hover"],
+            textDecoration: ['hover','group-hover'],
+            cursor: ['hover', 'group-hover']
     },
     plugins: []
 };

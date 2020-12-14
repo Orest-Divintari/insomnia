@@ -19,7 +19,7 @@ class ReadsTable extends Migration
             $table->string('readable_type');
             $table->foreignId('user_id');
             $table->timestamp('read_at')->nullable();
-            $table->unique(['readable_id', 'user_id']);
+            $table->unique(['readable_id', 'readable_type', 'user_id']);
             $table->timestamps();
         });
     }

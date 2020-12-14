@@ -27,23 +27,25 @@ class ThreadController extends Controller
     public function index(Category $category)
     {
         $filters = $this->filterManager->withThreadFilters();
-        $threads = Thread::with('poster')
+        $threadsQuery = Thread::with('poster')
             ->filter($filters)
             ->withRecentReply()
-            ->latest();
+            ->latest('updated_at');
 
         if ($category->exists) {
-            $threads->where('category_id', $category->id);
+            $threadsQuery->where('category_id', $category->id);
         }
-        $threads = $threads->paginate(Thread::PER_PAGE);
+
+        $normalThreads = $threadsQuery->paginate(Thread::PER_PAGE);
+        $pinnedThreads = $threadsQuery->where('pinned', true)->get();
 
         $threadFilters = $filters->getRequestedFilters();
 
         if (request()->wantsJson()) {
-            return $threads;
+            return $normalThreads;
         }
 
-        return view('threads.index', compact('category', 'threads', 'threadFilters'));
+        return view('threads.index', compact('category', 'normalThreads', 'pinnedThreads', 'threadFilters'));
     }
 
     /**
