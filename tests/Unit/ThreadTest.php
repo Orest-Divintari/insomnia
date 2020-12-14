@@ -256,5 +256,4 @@ class ThreadTest extends TestCase
 
         $this->assertFalse($thread->pinned);
     }
-
 }
