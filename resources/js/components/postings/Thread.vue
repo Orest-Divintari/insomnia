@@ -16,6 +16,14 @@
       <p>Thread</p>
       <p class="dot"></p>
       <p>{{ posting.date_created }}</p>
+      <div v-if="posting.tags.length > 0" class="flex items-center">
+        <p class="dot"></p>
+        <div class="flex items-center">
+          <p v-for="(tag, index) in posting.tags" :key="index" class="tag ml-0">
+            {{ tag.name }}
+          </p>
+        </div>
+      </div>
       <p class="dot"></p>
       <p>
         Replies:
@@ -23,7 +31,7 @@
       </p>
       <p class="dot"></p>
       <p>
-        Category :
+        Category:
         <a
           @click="showCategory(posting.category)"
           class="cursor-pointer underline"
