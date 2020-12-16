@@ -173,7 +173,7 @@ class ConversationParticipantsTest extends TestCase
     }
 
     /** @test */
-    public function the_conversatio_starter_can_always_remove_a_member_from_a_conversation()
+    public function the_conversation_starter_can_always_remove_a_member_from_a_conversation()
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)->create();
