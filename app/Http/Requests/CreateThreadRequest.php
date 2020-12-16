@@ -62,13 +62,18 @@ class CreateThreadRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'body' => ['required', 'string'],
             'title' => ['required', 'string'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
-            'tags' => ['sometimes', 'required', 'array'],
-            'tags.*' => ['sometimes', 'required', 'string', 'exists:tags,name'],
         ];
+
+        if (request()->filled('tags')) {
+            $rules['tags'] = ['sometimes', 'required', 'array'];
+            $rules['tags.*'] = ['sometimes', 'required', 'string', 'exists:tags,name'];
+        }
+
+        return $rules;
     }
 
     /**
@@ -86,7 +91,10 @@ class CreateThreadRequest extends FormRequest
                 'replies_count' => 0,
             ]
         ));
-        $thread->addTags(request('tags'));
+
+        if (request()->filled('tags')) {
+            $thread->addTags(request('tags'));
+        }
 
         return $thread;
     }
