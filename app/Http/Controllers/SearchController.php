@@ -35,10 +35,10 @@ class SearchController extends Controller
     public function show(Search $search, SearchRequest $searchRequest)
     {
         $validator = $searchRequest
-            ->validate($this->request)
+            ->handle($this->request)
             ->getValidator();
 
-        $query = $this->request->input('q');
+        $query = $searchRequest->getSearchQuery();
 
         if ($validator->fails()) {
             return view('search.show', compact('query'))
