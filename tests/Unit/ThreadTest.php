@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Category;
 use App\Read;
 use App\Reply;
+use App\Tag;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
@@ -255,5 +256,19 @@ class ThreadTest extends TestCase
         $thread->unpin();
 
         $this->assertFalse($thread->pinned);
+    }
+
+    /** @test */
+    public function a_thread_can_have_many_tags()
+    {
+        $thread = create(Thread::class);
+        $tag = create(Tag::class);
+
+        $this->assertCount(0, $thread->tags);
+
+        $thread->addTags([$tag->name]);
+
+        $this->assertCount(1, $thread->fresh()->tags);
+        $this->assertEquals($tag->id, $thread->tags()->first()->id);
     }
 }

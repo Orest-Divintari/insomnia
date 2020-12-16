@@ -3,6 +3,7 @@
 namespace Tests\Feature\Threads;
 
 use App\Category;
+use App\Tag;
 use App\Thread;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,6 +18,7 @@ class CreateThreadsTest extends TestCase
     protected $bodyErrorMessage;
     protected $titleErrorMessage;
     protected $categoryErrorMessage;
+    protected $tagErrorMessage;
 
     public function setUp(): void
     {
@@ -25,6 +27,7 @@ class CreateThreadsTest extends TestCase
         $this->bodyErrorMessage = 'Please enter a valid message.';
         $this->titleErrorMessage = 'Please enter a valid title.';
         $this->categoryErrorMessage = 'Please enter a valid category.';
+        $this->tagErrorMessage = "You may not start a conversation with the following participant: ";
     }
 
     /** @test */
@@ -140,6 +143,128 @@ class CreateThreadsTest extends TestCase
     {
         $this->postThread(['category_id' => '12345'])
             ->assertSessionHasErrors(['category_id' => $this->categoryErrorMessage]);
+    }
+
+    /** @test */
+    public function authenticated_users_may_add_a_single_tag_when_creating_a_thread()
+    {
+        $this->signIn();
+        $tag = create(Tag::class);
+        $thread = raw(Thread::class);
+
+        $this->post(route('threads.store', array_merge($thread, ['tags' => $tag->name])));
+
+        $thread = Thread::whereSlug($thread['slug'])->first();
+
+        $this->assertCount(1, $thread->tags);
+        $this->assertEquals($tag->id, $thread->tags->first()->id);
+    }
+
+    /** @test */
+    public function authenticated_users_may_add_multiple_tags_when_creating_a_thread()
+    {
+        $this->signIn();
+        $tagApple = create(Tag::class, ['name' => 'apple']);
+        $tagSamsung = create(Tag::class, ['name' => 'samsung']);
+        $tags = "{$tagApple->name}, {$tagSamsung->name}";
+        $thread = raw(Thread::class);
+
+        $this->post(route('threads.store', array_merge($thread, ['tags' => $tags])));
+
+        $thread = Thread::whereSlug($thread['slug'])->first();
+
+        $this->assertCount(2, $thread->tags);
+        $this->assertContains($tagApple->id, $thread->tags->pluck('id'));
+        $this->assertContains($tagSamsung->id, $thread->tags->pluck('id'));
+    }
+
+    /** @test */
+    public function the_tag_that_is_added_to_a_thread_must_already_exist_in_the_database()
+    {
+        $this->signIn();
+        $nonExistingTag = 'randomTag';
+        $thread = raw(Thread::class);
+
+        $this->post(
+            route(
+                'threads.store',
+                array_merge($thread, ['tags' => $nonExistingTag]))
+        )->assertSessionHasErrors([
+            'tags.0' => $this->tagErrorMessage . $nonExistingTag],
+        );
+    }
+
+    /** @test */
+    public function when_multiple_tags_are_added_to_a_thread_they_must_exist_in_the_database()
+    {
+        $this->signIn();
+        $nonExistingTags = 'randomTag, randomTag2';
+
+        $thread = raw(Thread::class);
+
+        $this->post(
+            route(
+                'threads.store',
+                array_merge($thread, ['tags' => $nonExistingTags]))
+        )->assertSessionHasErrors([
+            'tags.0' => $this->tagErrorMessage . 'randomTag',
+            'tags.1' => $this->tagErrorMessage . 'randomTag2',
+        ]);
+    }
+
+    /** @test */
+    public function multiple_tags_can_be_entered_as_an_array()
+    {
+        $this->signIn();
+        $appleTag = create(Tag::class);
+        $samsungTag = create(Tag::class);
+
+        $arrayTags = [$appleTag->name, $samsungTag->name];
+
+        $thread = raw(Thread::class);
+
+        $this->post(
+            route(
+                'threads.store',
+                array_merge($thread, ['tags' => $arrayTags]))
+        );
+        $thread = Thread::whereSlug($thread['slug'])->first();
+        $this->assertCount(2, $thread->tags);
+    }
+
+    /** @test */
+    public function multiple_tags_can_be_entered_as_comma_separated_string_which_is_then_converted_to_an_array()
+    {
+        $this->signIn();
+        $appleTag = create(Tag::class);
+        $samsungTag = create(Tag::class);
+        $commaSeparatedStringTags = $appleTag->name . ',' . $samsungTag->name;
+
+        $thread = raw(Thread::class);
+
+        $this->post(
+            route(
+                'threads.store',
+                array_merge($thread, ['tags' => $commaSeparatedStringTags]))
+        );
+
+        $thread = Thread::whereSlug($thread['slug'])->first();
+        $this->assertCount(2, $thread->tags);
+    }
+
+    /** @test */
+    public function each_tag_must_be_of_type_string()
+    {
+        $this->signIn();
+        $nonStringTag = 5;
+
+        $thread = raw(Thread::class);
+
+        $this->post(
+            route(
+                'threads.store',
+                array_merge($thread, ['tags' => $nonStringTag]))
+        )->assertSessionHasErrors('tags.0');
     }
 
     protected function postThread($overrides)
