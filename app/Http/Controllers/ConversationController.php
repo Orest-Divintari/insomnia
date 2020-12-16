@@ -90,8 +90,7 @@ class ConversationController extends Controller
             ->withCount('participants')
             ->withCount('messages')
             ->latest()
-            ->paginate(Conversation::PER_PAGE)
-            ->toJson();
+            ->paginate(Conversation::PER_PAGE);
 
         $conversationFilters = $filters->getRequestedFilters();
 

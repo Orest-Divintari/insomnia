@@ -12,7 +12,8 @@
 
     <main class="section">
         <conversations :conversation-filters="{{ json_encode($conversationFilters) }}"
-            :paginated-conversations="{{ $conversations }}"></conversations>
+            :paginated-conversations="{{ json_encode($conversations) }}"></conversations>
+        @endif
     </main>
 
 
