@@ -134,7 +134,7 @@ class CreateThreadRequest extends FormRequest
 
         foreach (request('tags') as $index => $tag) {
             if (isset($tag) && is_string($tag)) {
-                $messages["tags." . $index . ".exists"] = "You may not start a conversation with the following participant: " . $tag;
+                $messages["tags." . $index . ".exists"] = "The following tag could not be found: " . $tag;
             }
         }
         return $messages;
