@@ -12,9 +12,18 @@
                         {{ $thread->poster->shortName }}</a>
                     <p class=" dot"></p>
                     <span class="mr-1 fas fa-clock"></span>
-                    <a href="{{route('threads.show', $thread->slug)}}" class="mr-1 hover:underline">
+                    <a href="{{route('threads.show', $thread->slug)}}" class="hover:underline">
                         {{ $thread->date_created }}</a>
                     <p class=" dot"></p>
+                    <i class="fas fa-tags text-xs "></i>
+                    <div class="flex">
+                        @foreach($thread->tags as $tag)
+                        <a href="{{ route('tags.show', $tag->name) }}" class="tag-link">
+                            {{ $tag->name }}
+                        </a>
+                        @endforeach
+                    </div>
+                    <p class="dot"></p>
                     <i class="fas fa-long-arrow-alt-down mr-1 "></i>
                     <a v-if="sortedByLikes" href="{{ route('threads.show', $thread )}}" class="hover:underline">Sort
                         (Post Date) </a>

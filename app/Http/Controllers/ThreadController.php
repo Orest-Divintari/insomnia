@@ -8,6 +8,7 @@ use App\Http\Requests\CreateThreadRequest;
 use App\Reply;
 use App\Thread;
 use DeepCopy\Filter\Filter;
+use Illuminate\Http\Request;
 
 class ThreadController extends Controller
 {
@@ -80,7 +81,7 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread)
     {
-        $thread->load('poster');
+        $thread->load(['poster', 'tags']);
         $filters = $this->filterManager->withReplyFilters();
 
         $replies = Reply::forRepliable($thread, $filters);
