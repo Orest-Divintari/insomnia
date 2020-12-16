@@ -297,7 +297,7 @@ class Thread extends Model
      */
     public function scopeWithSearchInfo($query)
     {
-        return $query->with(['poster', 'category']);
+        return $query->with(['poster', 'category', 'tags']);
     }
 
     /**
@@ -340,6 +340,27 @@ class Thread extends Model
     public function unpin()
     {
         $this->pin($pinned = false);
+    }
+
+    /**
+     * A thread has many tags
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'thread_tags');
+    }
+
+    /**
+     * Correlate tags to a thread
+     *
+     * @param array $tags
+     */
+    public function addTags(array $tags)
+    {
+        $tagIds = Tag::whereIn('name', $tags)->pluck('id');
+        $this->tags()->attach($tagIds);
     }
 
 }

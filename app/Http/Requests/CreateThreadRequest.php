@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Actions\StringToArrayForRequestAction;
 use App\Thread;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -40,6 +41,21 @@ class CreateThreadRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    public function prepareForValidation()
+    {
+        $action = new StringToArrayForRequestAction(
+            $request = $this,
+            $attribute = 'tags',
+            $value = $this->input('tags')
+        );
+        $action->execute();
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -50,6 +66,8 @@ class CreateThreadRequest extends FormRequest
             'body' => ['required', 'string'],
             'title' => ['required', 'string'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
+            'tags' => ['sometimes', 'required', 'array'],
+            'tags.*' => ['sometimes', 'required', 'string', 'exists:tags,name'],
         ];
     }
 
@@ -60,7 +78,7 @@ class CreateThreadRequest extends FormRequest
      */
     public function persist()
     {
-        return Thread::create(array_merge(
+        $thread = Thread::create(array_merge(
             $this->validated(),
             [
                 'user_id' => $this->user()->id,
@@ -68,6 +86,9 @@ class CreateThreadRequest extends FormRequest
                 'replies_count' => 0,
             ]
         ));
+        $thread->addTags(request('tags'));
+
+        return $thread;
     }
 
     /**
@@ -77,7 +98,7 @@ class CreateThreadRequest extends FormRequest
      */
     public function messages()
     {
-        return [
+        $messages = [
             'body.string' => $this->bodyErrorMessage,
             'body.required' => $this->bodyErrorMessage,
             'title.required' => $this->titleErrorMessage,
@@ -86,6 +107,29 @@ class CreateThreadRequest extends FormRequest
             'category_id.exists' => $this->categoryErrorMessage,
             'category_id.integer' => $this->categoryErrorMessage,
         ];
+
+        $messages = $this->addTagExistsMessage($messages);
+        return $messages;
+    }
+
+    /**
+     * Add the message for tags.*.exists rule
+     *
+     * @param array $messages
+     * @return array
+     */
+    public function addTagExistsMessage($messages)
+    {
+        if (is_null(request('tags'))) {
+            return $messages;
+        }
+
+        foreach (request('tags') as $index => $tag) {
+            if (isset($tag) && is_string($tag)) {
+                $messages["tags." . $index . ".exists"] = "You may not start a conversation with the following participant: " . $tag;
+            }
+        }
+        return $messages;
     }
 
 }
