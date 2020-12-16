@@ -1,0 +1,11 @@
+.tag-link {
+    @apply .bg-white-catskill .text-gray-lightest .text-smaller .border .rounded .border-gray-lighter .px-1 .ml-3/2;
+}
+
+.tag-link:hover {
+    @apply .bg-semi-white;
+}
+
+.tag {
+    @apply .bg-white-catskill .text-gray-lightest .text-smaller .border .rounded .border-gray-lighter .px-1 .ml-3/2;
+}

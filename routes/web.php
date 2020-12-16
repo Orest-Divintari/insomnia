@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// tags
+Route::get('/tags/{tag}', 'TagController@show')
+    ->name('tags.show');
+
 //search
 
 Route::get('/search', 'SearchController@show')
