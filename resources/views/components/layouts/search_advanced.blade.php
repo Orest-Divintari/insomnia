@@ -16,8 +16,8 @@
                 class="w-42 text-smaller  py-5/2 px-5 rounded-b-none {{ $type == 'profile_post' ? 'active' : 'not-active' }} rounded ">
                 Search profile posts
             </a>
-            <a href="/search/advanced?type=tags"
-                class="w-42 text-smaller  py-5/2 px-5  rounded-b-none {{ $type == 'tags' ? 'active' : 'not-active' }} rounded ">
+            <a href="/search/advanced?type=tag"
+                class="w-42 text-smaller  py-5/2 px-5  rounded-b-none {{ $type == 'tag' ? 'active' : 'not-active' }} rounded ">
                 Search tags
             </a>
         </div>
