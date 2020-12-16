@@ -75,7 +75,7 @@ class Activity extends Model
             ])->latest()
             ->with(['subject' => function ($morphTo) {
                 $morphTo->morphWith([
-                    Thread::class => ['poster', 'category'],
+                    Thread::class => ['poster', 'category', 'tags'],
                     Reply::class => ['repliable' => function (MorphTo $morphTo) {
                         $morphTo->morphWith([
                             Thread::class => ['category'],

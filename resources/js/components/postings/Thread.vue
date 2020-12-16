@@ -16,7 +16,10 @@
       <p>Thread</p>
       <p class="dot"></p>
       <p>{{ posting.date_created }}</p>
-      <div v-if="posting.tags.length > 0" class="flex items-center">
+      <div
+        v-if="posting.tags && posting.tags.length > 0"
+        class="flex items-center"
+      >
         <p class="dot"></p>
         <div class="flex items-center">
           <p v-for="(tag, index) in posting.tags" :key="index" class="tag ml-0">
