@@ -9,7 +9,7 @@ interface SearchIndexFactoryInterface
     /**
      * Create a new SeachIndexInterface object
      *
-     * @param string $searchQuery
+     * @param mixed $searchQuery
      * @param string $type
      * @param bool $onlyTitle
      * @return SearchIndexInterface

@@ -7,8 +7,8 @@ interface SearchIndexInterface
     /**
      * Search the index with the given searchQuery
      *
-     * @param string $searchqQuery
+     * @param $searchqQuery
      * @return Algolia\ScoutExtended\Builder
      */
-    public function search(string $searchqQuery);
+    public function search($searchqQuery);
 }

@@ -14,7 +14,7 @@ class SearchIndexFactory implements SearchIndexFactoryInterface
     /**
      * Create the requested search index instance
      *
-     * @param string $searchQuery
+     * @param mixed $searchQuery
      * @param string $type
      * @param bool $onlyTitle
      * @return SearchIndexInterface
@@ -29,6 +29,8 @@ class SearchIndexFactory implements SearchIndexFactoryInterface
             return new SearchAllPosts();
         } elseif (!empty($searchQuery) && $onlyTitle) {
             return new SearchThreadsTitle();
+        } elseif ($type == 'tag') {
+            return new SearchTags();
         }
     }
 

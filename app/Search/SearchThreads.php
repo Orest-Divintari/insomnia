@@ -10,10 +10,10 @@ class SearchThreads implements SearchIndexInterface
     /**
      * Search threads and replies for the given search query
      *
-     * @param string $searchQuery
+     * @param mixed $searchQuery
      * @return Algolia\ScoutExtended\Builder
      */
-    public function search(string $searchQuery)
+    public function search($searchQuery)
     {
         return Threads::search($searchQuery);
     }

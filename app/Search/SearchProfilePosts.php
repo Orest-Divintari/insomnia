@@ -11,10 +11,10 @@ class SearchProfilePosts implements SearchIndexInterface
     /**
      * Search profile posts for the given search query
      *
-     * @param string $searchQuery
+     * @param mixed $searchQuery
      * @return Algolia\ScoutExtended\Builder
      */
-    public function search(string $searchQuery)
+    public function search($searchQuery)
     {
         return ProfilePosts::search($searchQuery);
     }

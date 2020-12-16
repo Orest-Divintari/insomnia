@@ -62,6 +62,7 @@ class Search
             $type,
             $onlyTitle
         );
+
         $filters = $this->filtersFor($type);
 
         $builder = $index->search($searchQuery);
@@ -73,12 +74,12 @@ class Search
     /**
      * Get the search index instance
      *
-     * @param string $searchQuery
+     * @param mixed $searchQuery
      * @param string $type
      * @param bool $onlyTitle
      * @return SearchIndexInterface
      */
-    public function indexFor(string $searchQuery, string $type, bool $onlyTitle = false)
+    public function indexFor($searchQuery, string $type, bool $onlyTitle = false)
     {
         return $this->indexFactory
             ->create($searchQuery, $type, $onlyTitle);
