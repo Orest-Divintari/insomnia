@@ -46,7 +46,9 @@ class SearchController extends Controller
         }
 
         $results = $search->handle($this->request);
-
+        if (request()->expectsJson()) {
+            return $results;
+        }
         return view('search.show', compact('results', 'query'));
     }
 
