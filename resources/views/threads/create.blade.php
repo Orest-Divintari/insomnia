@@ -49,9 +49,8 @@
                             <p class="form-label-phone">Options</p>
                             <div class="flex items-center">
 
-                                <input class="form-input bg-semi-white-mid w-3 h-3" type="checkbox"
-                                    id="receive_email_notifications" name="receive_email_notifications"
-                                    autocomplete="receive_email_notifications">
+                                <input class="form-input bg-semi-white-mid w-3 h-3" type="checkbox" id="watch_thread"
+                                    name="watch_thread" autocomplete="watch_thread">
                                 <p class=" ml-2 form-input-description p-0">Watch this thread...</p>
                             </div>
                             <div class="flex items-center">
