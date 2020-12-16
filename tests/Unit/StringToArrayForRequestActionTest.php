@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use App\Actions\CreateNamesArrayForRequestAction;
+use App\Actions\StringToArrayForRequestAction;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 
-class CreateNamesArrayForRequestActionTest extends TestCase
+class StringToArrayForRequestActionTest extends TestCase
 {
     protected $request;
     protected $attribute;
@@ -24,7 +24,7 @@ class CreateNamesArrayForRequestActionTest extends TestCase
         $name = 'George';
         $this->request->merge([$this->attribute => $name]);
 
-        $action = new CreateNamesArrayForRequestAction(
+        $action = new StringToArrayForRequestAction(
             $this->request,
             $this->attribute,
             $name
@@ -47,7 +47,7 @@ class CreateNamesArrayForRequestActionTest extends TestCase
         $name = '  George  ';
         $this->request->merge([$this->attribute => $name]);
 
-        $action = new CreateNamesArrayForRequestAction(
+        $action = new StringToArrayForRequestAction(
             $this->request,
             $this->attribute,
             $name
@@ -70,7 +70,7 @@ class CreateNamesArrayForRequestActionTest extends TestCase
 
         $this->request->merge([$this->attribute => $names]);
 
-        $action = new CreateNamesArrayForRequestAction(
+        $action = new StringToArrayForRequestAction(
             $this->request,
             $this->attribute,
             $names
@@ -97,7 +97,7 @@ class CreateNamesArrayForRequestActionTest extends TestCase
 
         $this->request->merge([$this->attribute => $names]);
 
-        $action = new CreateNamesArrayForRequestAction(
+        $action = new StringToArrayForRequestAction(
             $this->request,
             $this->attribute,
             $names
@@ -122,7 +122,7 @@ class CreateNamesArrayForRequestActionTest extends TestCase
 
         $this->request->merge([$this->attribute => $names]);
 
-        $action = new CreateNamesArrayForRequestAction(
+        $action = new StringToArrayForRequestAction(
             $this->request,
             $this->attribute,
             $names
