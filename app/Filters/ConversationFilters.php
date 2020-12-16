@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-use App\Actions\CreateNamesArrayAction;
+use App\Actions\StringToArrayAction;
 use App\Conversation;
 use App\Filters\FilterInterface;
 use App\User;
@@ -78,7 +78,7 @@ class ConversationFilters implements FilterInterface
      */
     public function startedBy($usernames)
     {
-        $namesArray = (new CreateNamesArrayAction($usernames))->execute();
+        $namesArray = (new StringToArrayAction($usernames))->execute();
 
         $userIds = User::whereIn('name', $namesArray)->pluck('id');
 
@@ -93,7 +93,7 @@ class ConversationFilters implements FilterInterface
      */
     public function receivedBy($usernames)
     {
-        $namesArray = (new CreateNamesArrayAction($usernames))->execute();
+        $namesArray = (new StringToArrayAction($usernames))->execute();
 
         $userIds = User::whereIn('name', $namesArray)->pluck('id');
 
