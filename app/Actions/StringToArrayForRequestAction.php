@@ -2,12 +2,12 @@
 
 namespace App\Actions;
 
-use App\Traits\CreatesNamesArray;
+use App\Traits\CreatesArrayFromString;
 use Illuminate\Http\Request;
 
-class CreateNamesArrayForRequestAction
+class StringToArrayForRequestAction
 {
-    use CreatesNamesArray;
+    use CreatesArrayFromString;
 
     /**
      * The name of the request parameter
@@ -20,7 +20,7 @@ class CreateNamesArrayForRequestAction
      *
      * @var string
      */
-    protected $names;
+    protected $values;
 
     /**
      * @var Request
@@ -37,11 +37,11 @@ class CreateNamesArrayForRequestAction
     public function __construct(
         Request $request,
         String $attribute,
-        $names
+        $values
     ) {
         $this->request = $request;
         $this->attribute = $attribute;
-        $this->names = $names;
+        $this->values = $values;
     }
 
     /**
@@ -51,17 +51,17 @@ class CreateNamesArrayForRequestAction
      */
     public function execute()
     {
-        if (!is_string($this->names)) {
+        if (!is_string($this->values)) {
             return;
         }
 
-        if (str_contains($this->names, ',')) {
+        if (str_contains($this->values, ',')) {
             $this->request->merge(
-                [$this->attribute => $this->splitNames($this->names)]
+                [$this->attribute => $this->splitValues($this->values)]
             );
         } else {
             $this->request->merge(
-                [$this->attribute => [$this->clean($this->names)]]
+                [$this->attribute => [$this->clean($this->values)]]
             );
         }
 
