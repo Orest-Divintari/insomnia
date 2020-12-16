@@ -29,7 +29,7 @@ class ModelFilterFactory
      */
     public function create(string $type)
     {
-        if ($type == 'thread') {
+        if ($type == 'thread' || $type == 'tag') {
             return $this->filterManager->withThreadFilters();
         } elseif ($type == 'profile_post') {
             return $this->filterManager->withProfilePostFilters();
