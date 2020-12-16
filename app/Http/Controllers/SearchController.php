@@ -72,8 +72,8 @@ class SearchController extends Controller
             return view('search.advanced.threads', ['type' => 'thread']);
         } elseif ($type == 'profile_post') {
             return view('search.advanced.profile_posts', ['type' => 'profile_post']);
-        } elseif ($type == 'tags') {
-            return view('search.advanced.tags', ['type' => 'tags']);
+        } elseif ($type == 'tag') {
+            return view('search.advanced.tags', ['type' => 'tag']);
         }
         return view('search.advanced.all_posts', ['type' => '']);
     }
