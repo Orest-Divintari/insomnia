@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use App\Actions\CreateNamesArrayAction;
+use App\Actions\StringToArrayAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class CreateNamesArrayActionTest extends TestCase
+class StringToArrayActionTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -15,7 +15,7 @@ class CreateNamesArrayActionTest extends TestCase
     {
         $name = 'Orestis';
 
-        $action = new CreateNamesArrayAction($name);
+        $action = new StringToArrayAction($name);
         $namesArray = $action->execute();
 
         $this->assertCount(1, $namesArray);
@@ -27,7 +27,7 @@ class CreateNamesArrayActionTest extends TestCase
     {
         $names = "Orestis, John";
 
-        $action = new CreateNamesArrayAction($names);
+        $action = new StringToArrayAction($names);
         $namesArray = $action->execute();
 
         $this->assertCount(2, $namesArray);
@@ -41,7 +41,7 @@ class CreateNamesArrayActionTest extends TestCase
         $nameWithWhiteSpace = '      Orestis     ';
         $nameWithoutWhiteSpace = "Orestis";
 
-        $action = new CreateNamesArrayAction($nameWithWhiteSpace);
+        $action = new StringToArrayAction($nameWithWhiteSpace);
         $namesArray = $action->execute();
 
         $this->assertCount(1, $namesArray);
@@ -55,7 +55,7 @@ class CreateNamesArrayActionTest extends TestCase
         $john = 'John';
         $namesWithWhiteSpace = "   {$orestis}   ,    {$john}   ";
 
-        $action = new CreateNamesArrayAction($namesWithWhiteSpace);
+        $action = new StringToArrayAction($namesWithWhiteSpace);
         $namesArray = $action->execute();
 
         $this->assertCount(2, $namesArray);
