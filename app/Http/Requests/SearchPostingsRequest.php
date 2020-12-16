@@ -16,15 +16,22 @@ class SearchPostingsRequest implements SearchRequestInterface
         $this->request = $request;
     }
 
+    /**
+     * Apply validation
+     *
+     * @return void
+     */
     public function validate()
     {
-        return Validator::make(
+        $validator = Validator::make(
             $this->request->input(),
             $this->rules(),
             $this->messages()
         );
 
         $this->afterValidation($this->request);
+
+        return $validator;
     }
 
     /**
