@@ -11,6 +11,9 @@
     </header>
 
     <main class="section">
+        @if(empty($conversations->items()))
+        <p class="mt-5 bg-white text-sm text-black-semi p-4 shadow-lg rounded">You have no conversations yet.</p>
+        @else
         <conversations :conversation-filters="{{ json_encode($conversationFilters) }}"
             :paginated-conversations="{{ json_encode($conversations) }}"></conversations>
         @endif
