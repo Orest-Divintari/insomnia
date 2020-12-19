@@ -42,6 +42,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Conversation\ParticipantWasRemoved' => [
             'App\Listeners\Conversation\DeleteConversationReadRecord',
         ],
+        'App\Events\Follow\AUserStartedFollowingYou' => [
+            'App\Listeners\Follow\NotifyFollowingUser',
+        ],
     ];
 
     /**

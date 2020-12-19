@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Events\Follow\AUserStartedFollowingYou;
 use App\User;
 
 trait Followable
@@ -31,6 +32,7 @@ trait Followable
     {
         if (!$this->following($user)) {
             $this->follows()->save($user);
+            event(new AUserStartedFollowingYou($this, $user));
         }
     }
 

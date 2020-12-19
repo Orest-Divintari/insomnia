@@ -40,7 +40,7 @@ import ReplyLikeNotification from "./ReplyLikeNotification";
 import ProfilePostNotification from "./ProfilePostNotification";
 import PostCommentNotification from "./PostCommentNotification";
 import CommentLikeNotification from "./CommentLikeNotification";
-
+import FollowNotification from "./FollowNotification";
 import replies from "../../mixins/replies";
 import fetch from "../../mixins/fetch";
 export default {
@@ -50,6 +50,7 @@ export default {
     ProfilePostNotification,
     PostCommentNotification,
     CommentLikeNotification,
+    FollowNotification,
   },
   mixins: [replies, fetch],
   data() {
