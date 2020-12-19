@@ -20,8 +20,7 @@ class FollowTest extends TestCase
         $anotherUser = create(User::class);
 
         $this->post(
-            route('api.follow.store'),
-            ['username' => $anotherUser->name]
+            route('api.follow.store', $anotherUser),
         )->assertRedirect('login');
     }
 
@@ -31,50 +30,20 @@ class FollowTest extends TestCase
         $user = create(User::class);
         $anotherUser = create(User::class);
 
-        $this->post(
-            route('api.follow.destroy'),
-            ['username' => $anotherUser->name]
+        $this->delete(
+            route('api.follow.destroy', $anotherUser)
         )->assertRedirect('login');
-    }
-
-    /** @test */
-    public function a_user_cannnot_follow_a_user_that_does_not_exist()
-    {
-        $user = $this->signIn();
-
-        $nonExistingUser = ['username' => 'random name'];
-
-        $this->post(
-            route('api.follow.store'),
-            $nonExistingUser
-        )->assertSessionHasErrors('username');
-    }
-
-    /** @test */
-    public function a_user_cannot_unfollow_a_user_that_does_not_exist()
-    {
-        $user = $this->signIn();
-
-        $nonExistingUser = ['username' => 'random name'];
-
-        $this->post(
-            route('api.follow.destroy'),
-            $nonExistingUser
-        )->assertSessionHasErrors('username');
     }
 
     /** @test */
     public function an_authenticated_user_may_follow_another_user()
     {
         $user = $this->signIn();
-
         $this->assertCount(0, $user->follows);
-
         $anotherUser = create(User::class);
 
         $this->post(
-            route('api.follow.store'),
-            ['username' => $anotherUser->name]
+            route('api.follow.store', $anotherUser)
         );
 
         $this->assertCount(1, $user->fresh()->follows);
@@ -86,40 +55,34 @@ class FollowTest extends TestCase
     {
         $user = $this->signIn();
         $anotherUser = create(User::class);
-
         $this->post(
-            route('api.follow.store'),
-            ['username' => $anotherUser->name]
+            route('api.follow.store', $anotherUser)
         );
-        $this->assertTrue($user->following($anotherUser));
+        $this->assertTrue($user->fresh()->following($anotherUser));
 
-        $this->post(
-            route('api.follow.destroy'),
-            ['username' => $anotherUser->name]
+        $this->delete(
+            route('api.follow.destroy', $anotherUser)
         );
-        $this->assertFalse($user->following($anotherUser));
+
+        $this->assertFalse($user->fresh()->following($anotherUser));
     }
 
     /** @test */
     public function an_authenticated_user_can_follow_another_user_only_once()
     {
         $user = $this->signIn();
-
         $this->assertCount(0, $user->follows);
-
         $anotherUser = create(User::class);
 
         $this->post(
-            route('api.follow.store'),
-            ['username' => $anotherUser->name]
+            route('api.follow.store', $anotherUser)
         );
-
+        $this->assertCount(1, $user->refresh()->follows);
         $this->post(
-            route('api.follow.store'),
-            ['username' => $anotherUser->name]
+            route('api.follow.store', $anotherUser)
         );
 
-        $this->assertCount(1, $user->fresh()->follows);
+        $this->assertCount(1, $user->follows);
         $this->assertTrue($user->fresh()->following($anotherUser));
     }
 
@@ -149,7 +112,6 @@ class FollowTest extends TestCase
     /** @test */
     public function a_user_can_view_the_paginated_list_of_users_that_profile_user_follows()
     {
-        $this->withoutExceptionHandling();
         $profileOwner = create(User::class);
         $userA = create(User::class);
         $userB = create(User::class);
