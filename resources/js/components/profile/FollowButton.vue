@@ -1,7 +1,8 @@
 <template>
   <div>
     <button @click="toggleFollow" class="btn-white-blue flex items-center">
-      {{ follow }}
+      <p v-if="isFollowed">Unfollow</p>
+      <p v-else>Follow</p>
     </button>
   </div>
 </template>
@@ -20,17 +21,27 @@ export default {
     };
   },
   computed: {
-    follow() {
-      return this.isFollowed ? "unfollow" : "follow";
-    },
     path() {
-      return "/api/users/follow";
+      return "/api/users/follow/" + this.profileOwner.name;
     },
   },
   methods: {
     toggleFollow() {
+      if (this.isFollowed) {
+        this.unfollow();
+      } else {
+        this.follow();
+      }
+    },
+    follow() {
       axios
-        .post(this.path, { username: this.profileOwner.name })
+        .post(this.path)
+        .then(() => this.refreshFollow())
+        .catch((error) => console.log(error.response.error));
+    },
+    unfollow() {
+      axios
+        .delete(this.path)
         .then(() => this.refreshFollow())
         .catch((error) => console.log(error.response.error));
     },
