@@ -7,7 +7,7 @@
           v-for="(user, index) in followedByUsers"
           @click="showProfile(user)"
           :src="user.avatar_path"
-          class="avatar-lg mr-3"
+          class="cursor-pointer avatar-lg mr-3"
           alt
         />
       </div>
