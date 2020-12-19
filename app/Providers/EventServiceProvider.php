@@ -45,6 +45,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Follow\AUserStartedFollowingYou' => [
             'App\Listeners\Follow\NotifyFollowingUser',
         ],
+        'App\Events\Follow\AUserUnfollowedYou' => [
+            'App\Listeners\Follow\DeleteFollowNotification',
+        ],
+
     ];
 
     /**

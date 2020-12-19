@@ -3,7 +3,9 @@
 namespace App\Traits;
 
 use App\Events\Follow\AUserStartedFollowingYou;
+use App\Events\Follow\AUserUnfollowedYou;
 use App\User;
+use Illuminate\Console\Scheduling\Event;
 
 trait Followable
 {
@@ -44,8 +46,8 @@ trait Followable
      */
     public function unfollow(User $user)
     {
-        $this->follows()->detach($user);
         $this->follows()->detach($user->id);
+        event(new AUserUnfollowedYou($this, $user));
     }
 
     /**
