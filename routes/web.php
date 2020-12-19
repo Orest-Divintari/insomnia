@@ -191,10 +191,10 @@ Route::group([
             ->name('api.messages.update');
 
         // follows
-        Route::post('/users/follow/', 'FollowController@store')
+        Route::post('/users/follow/{user}', 'FollowController@store')
             ->name('api.follow.store');
 
-        Route::post('/users/unfollow/', 'FollowController@destroy')
+        Route::delete('/users/follow/{user}', 'FollowController@destroy')
             ->name('api.follow.destroy');
 
         // comments

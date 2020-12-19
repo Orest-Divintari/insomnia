@@ -3,47 +3,32 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FollowRequest;
 use App\User;
-use Illuminate\Http\Request;
 
 class FollowController extends Controller
 {
-
-    protected $request;
-    protected $followRequest;
-    /**
-     * Create a new instance
-     *
-     * @param Request $request
-     */
-    public function __construct(Request $request, FollowRequest $followRequest)
-    {
-        $this->request = $request;
-        $this->followRequest = $followRequest;
-    }
-
     /**
      * Store a new follow
      *
      * @param User $user
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(User $user)
     {
-        $this->request->user()
-            ->follow($this->followRequest->getUser());
+        auth()->user()->follow($user);
+        return response('Following user', 200);
     }
 
     /**
      * Remove an existing follow
      *
-     * @return void
+     * @param User $user
+     * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy(User $user)
     {
-        $this->request->user()
-            ->unfollow($this->followRequest->getUser());
+        auth()->user()->unfollow($user);
+        return response('Unfollowed user', 200);
     }
 
 }
