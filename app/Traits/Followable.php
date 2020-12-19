@@ -45,6 +45,7 @@ trait Followable
     public function unfollow(User $user)
     {
         $this->follows()->detach($user);
+        $this->follows()->detach($user->id);
     }
 
     /**
