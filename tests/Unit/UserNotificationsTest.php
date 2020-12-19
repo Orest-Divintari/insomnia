@@ -10,6 +10,7 @@ use App\Notifications\ProfileHasNewPost;
 use App\Notifications\ProfilePostHasNewComment;
 use App\Notifications\ReplyHasNewLike;
 use App\Notifications\ThreadHasNewReply;
+use App\Notifications\YouHaveANewFollower;
 use App\ProfilePost;
 use App\Reply;
 use App\Thread;
@@ -277,6 +278,22 @@ class UserNotificationsTest extends TestCase
         $participant->notify($notification);
 
         $this->assertEquals(['mail'], $notification->via($participant));
+    }
+
+    /** @test */
+    public function when_user_starts_following_another_user_then_a_notification_is_sent_to_the_following_user()
+    {
+        Notification::fake();
+
+        $follower = $this->signIn();
+        $followingUser = create(User::class);
+
+        $follower->follow($followingUser);
+        $notification = new YouHaveANewFollower($follower, $followingUser);
+        $followingUser->notify($notification);
+
+        $this->assertEquals(['database'], $notification->via($followingUser));
+
     }
 
 }
