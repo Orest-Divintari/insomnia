@@ -2,9 +2,8 @@
 
 namespace App\Traits;
 
-use App\Events\Profile\CommentWasLiked;
-use App\Events\Subscription\ReplyWasLiked;
 use App\Events\LikeEvent;
+use App\Events\Like\ReplyWasUnliked;
 use App\Like;
 use App\ProfilePost;
 use App\Thread;
@@ -73,11 +72,13 @@ trait Likeable
     {
         $currentUserId = $user->id ?: auth()->id();
 
-        $this->likes()
+        $like = $this->likes()
             ->where('user_id', $currentUserId)
-            ->get()
-            ->each
-            ->delete();
+            ->first();
+        $likeId = $like->id;
+        $like->delete();
+
+        event(new ReplyWasUnliked($this, $likeId));
     }
 
     /**

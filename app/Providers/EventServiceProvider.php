@@ -51,6 +51,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Follow\AUserUnfollowedYou' => [
             'App\Listeners\Follow\DeleteFollowNotification',
         ],
+        'App\Events\Like\ReplyWasUnliked' => [
+            'App\Listeners\Like\DeleteReplyLikeNotification',
+        ],
 
     ];
 
