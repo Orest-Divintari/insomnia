@@ -59,7 +59,7 @@
                 </div>
                 <div class="flex">
                   <follow-button
-                    v-if="!authorize('is', profileOwner)"
+                    v-if="!authorize('is', profileOwner) && signedIn"
                     :profileOwner="profileOwner"
                   ></follow-button>
                   <dropdown :styleClasses="'w-56'">
