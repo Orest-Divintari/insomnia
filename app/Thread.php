@@ -229,7 +229,10 @@ class Thread extends Model
         if (auth()->check()) {
             auth()->user()->read($this);
         }
-        $this->increment('views');
+        $this->update([
+            'views' => $this->views + 1,
+            'updated_at' => false,
+        ]);
     }
 
     /**
