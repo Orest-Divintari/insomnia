@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Events\Profile\CommentWasLiked;
 use App\Events\Subscription\ReplyWasLiked;
+use App\Events\LikeEvent;
 use App\Like;
 use App\ProfilePost;
 use App\Thread;
@@ -36,26 +37,8 @@ trait Likeable
             $like = $this->likes()->create([
                 'user_id' => $likerId,
             ]);
-
-            if ($this->isComment()) {
-                event(
-                    new CommentWasLiked(
-                        $liker,
-                        $like,
-                        $this,
-                        $this->poster,
-                        $this->profilePost,
-                        $this->profilePost->profileOwner
-                    ));
-            } elseif ($this->isThreadReply()) {
-                event(
-                    new ReplyWasLiked(
-                        $liker,
-                        $like,
-                        $this->thread,
-                        $this
-                    ));
-            }
+            
+            event((new LikeEvent($liker, $this, $like))->create());
             return $like;
         }
     }
