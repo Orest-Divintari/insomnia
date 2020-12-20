@@ -59,6 +59,7 @@
                 </div>
                 <div class="flex">
                   <follow-button
+                    class="mr-1"
                     v-if="!authorize('is', profileOwner) && signedIn"
                     :profileOwner="profileOwner"
                   ></follow-button>
