@@ -97,6 +97,9 @@ trait Followable
      */
     public function getFollowedByVisitorAttribute()
     {
+        if (!auth()->check()) {
+            return false;
+        }
         return auth()->user()->following($this);
     }
 
