@@ -4,6 +4,7 @@ namespace Tests\Feature\Notifications;
 
 use App\Conversation;
 use App\Notifications\ConversationHasNewMessage;
+use App\Notifications\MessageHasNewLike;
 use App\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -49,7 +50,6 @@ class ConversationNotificationsTest extends TestCase
         $conversationStarter = $this->signIn();
         $john = create(User::class);
         $orestis = create(User::class, ['name' => 'orestis']);
-
         $conversation = create(Conversation::class, ['user_id' => $conversationStarter->id]);
         $conversation->addParticipants([$john->name, $orestis->name]);
         $conversation->leftBy($orestis);
@@ -77,5 +77,32 @@ class ConversationNotificationsTest extends TestCase
         Notification::assertSentTo($john, ConversationHasNewMessage::class);
         Notification::assertSentTo($orestis, ConversationHasNewMessage::class);
         Notification::assertNotSentTo($conversationStarter, ConversationHasNewMessage::class);
+    }
+
+    /** @test */
+    public function when_a_conversation_message_is_liked_then_the_poster_of_the_message_receives_database_notification()
+    {
+        $conversationStarter = $this->signIn();
+        $liker = create(User::class);
+        $conversation = ConversationFactory::withParticipants([$liker->name])->create();
+        $message = $conversation->messages->first();
+        $this->signIn($liker);
+
+        $like = $message->likedBy($liker);
+
+        Notification::assertSentTo(
+            $conversationStarter,
+            MessageHasNewLike::class,
+            function ($notification, $channels) use (
+                $message,
+                $liker,
+                $like,
+                $conversation
+            ) {
+                return $notification->message->id == $message->id
+                && $notification->like->id == $like->id
+                && $notification->liker->id == $liker->id
+                && $notification->conversation->id == $conversation->id;
+            });
     }
 }

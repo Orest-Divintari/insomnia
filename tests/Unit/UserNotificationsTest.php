@@ -6,6 +6,7 @@ use App\Conversation;
 use App\Like;
 use App\Notifications\CommentHasNewLike;
 use App\Notifications\ConversationHasNewMessage;
+use App\Notifications\MessageHasNewLike;
 use App\Notifications\ProfileHasNewPost;
 use App\Notifications\ProfilePostHasNewComment;
 use App\Notifications\ReplyHasNewLike;
@@ -15,6 +16,7 @@ use App\ProfilePost;
 use App\Reply;
 use App\Thread;
 use App\User;
+use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -69,6 +71,35 @@ class UserNotificationsTest extends TestCase
         $replyPoster->notify($notification);
 
         $this->assertEquals(['mail', 'database'], $notification->via($replyPoster));
+
+    }
+
+    /** @test */
+    public function when_a_conversation_message_is_liked_then_a_database_notification_is_sent()
+    {
+        $conversationStarter = $this->signIn();
+        $liker = create(User::class);
+        $conversation = ConversationFactory::withParticipants([$liker->name])->create();
+        $message = $conversation->messages->first();
+        $this->signIn($liker);
+        $like = $message->likedBy($liker);
+        $notification = new MessageHasNewLike(
+            $like,
+            $liker,
+            $conversation,
+            $message
+        );
+
+        $conversationStarter->notify($notification);
+
+        $this->assertEquals(
+            ['database'],
+            $notification->via($conversationStarter)
+        );
+        $this->assertNotEquals(
+            ['email'],
+            $notification->via($conversationStarter)
+        );
 
     }
 
