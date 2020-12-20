@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
 
-class AUserUnfollowedYouTest extends TestCase
+class AUserUnfollowedYouEventTest extends TestCase
 {
     use RefreshDatabase;
 
