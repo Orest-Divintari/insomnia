@@ -23,7 +23,7 @@ export default {
             window.location.href = "/threads/" + thread.slug;
         },
         showMessage(message){
-            window.location.href="/api/messages/" + message.id;
+            window.location.href="/messages/" + message.id;
         }
     }
 };

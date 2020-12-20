@@ -59,6 +59,9 @@ Route::get('/profiles/{user}', 'ProfileController@show')
 
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::get('/messages/{messageId}', 'MessageController@show')
+        ->name('messages.show');
+
     Route::get('/threads/create/{categorySlug}', 'ThreadController@create')
         ->name('threads.create');
 
