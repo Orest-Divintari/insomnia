@@ -33,7 +33,9 @@ class FollowNotificationsTest extends TestCase
     /** @test */
     public function delete_the_follow_notification_when_the_user_is_unfollowed()
     {
-        // need to set db connection to mysql in order for this test to work
+        config(['database.default' => 'mysql']);
+        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+
         $follower = $this->signIn();
         $user = create(User::class);
         $follower->follow($user);

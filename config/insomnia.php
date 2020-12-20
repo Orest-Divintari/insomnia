@@ -8,4 +8,7 @@ return [
     'administrators' => [
         'uric@example.com',
     ],
+    'database' => [
+        'name' => 'insomnia',
+    ],
 ];
