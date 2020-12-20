@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="relative" v-click-outside="hide">
-      <div @click="toggle">
+      <div @click="toggle" class="cursor-pointer">
         <slot name="dropdown-trigger"></slot>
       </div>
       <div
