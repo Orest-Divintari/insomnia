@@ -385,11 +385,11 @@ class Conversation extends Model
      */
     public function scopeIsStarred($query)
     {
-        return $query->addSelect(['starred' => ConversationParticipant::select('starred')
+        return $query->addSelect([
+            'starred' => ConversationParticipant::select('starred')
                 ->whereColumn('conversation_id', 'conversations.id')
                 ->where('user_id', auth()->id()),
-        ]
-        );
+        ]);
 
     }
 
