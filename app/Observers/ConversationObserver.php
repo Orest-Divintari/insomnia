@@ -24,7 +24,17 @@ class ConversationObserver
                 $admin = true
             );
         }
+    }
 
+    /**
+     * Handle the conversatio "deleting" event
+     *
+     * @param Conversation $conversation
+     * @return void
+     */
+    public function deleting(Conversation $conversation)
+    {
+        $conversation->reads->each->delete();
     }
 
 }
