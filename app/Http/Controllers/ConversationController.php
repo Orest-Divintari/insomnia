@@ -47,21 +47,18 @@ class ConversationController extends Controller
      * @param Conversation $conversation
      * @return Illuminate\View\View
      */
-    public function show($conversationSlug)
+    public function show(Conversation $conversation)
     {
+        $this->authorize('view', $conversation);
+        auth()->user()->read($conversation);
         $conversation = Conversation::withRecentMessage()
-            ->whereSlug($conversationSlug)
+            ->whereSlug($conversation->slug)
             ->withHasBeenUpdated()
+            ->with('participants')
             ->isStarred()
             ->firstOrFail();
-
-        $this->authorize('view', $conversation);
-
         $participants = $conversation->participants;
-
         $messages = Reply::forRepliable($conversation);
-
-        auth()->user()->read($conversation);
 
         if (request()->expectsJson()) {
             return compact('conversation', 'participants', 'messages');
