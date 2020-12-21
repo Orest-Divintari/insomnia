@@ -54,6 +54,7 @@ class Conversation extends Model
     protected $casts = [
         'locked' => 'boolean',
         'has_been_updated' => 'boolean',
+        'starred' => 'boolean',
     ];
 
     /**
@@ -373,19 +374,6 @@ class Conversation extends Model
     public function unstar()
     {
         $this->star($starred = false);
-    }
-
-    /**
-     * Determine whether the authenticated user has starred the converastion
-     *
-     * @return boolean
-     */
-    public function getStarredAttribute()
-    {
-        return ConversationParticipant::where('conversation_id', $this->id)
-            ->where('user_id', auth()->id())
-            ->firstOrFail()
-            ->starred;
     }
 
     /**
