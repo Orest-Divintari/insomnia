@@ -37,6 +37,14 @@ class ConversationPolicy
         return $user->is($conversation->starter);
     }
 
+    /**
+     * Determine whether the user can set another participant as admin
+     * Determine thether the user can invite/remove another participant to/from the conversation
+     *
+     * @param User $user
+     * @param Conversation $conversation
+     * @return void
+     */
     public function manage(User $user, Conversation $conversation)
     {
         $participant = ConversationParticipant::where('user_id', $user->id)
