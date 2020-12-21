@@ -37,7 +37,6 @@ class Conversation extends Model
         'date_created',
         'date_updated',
         'type',
-        'has_been_updated',
     ];
 
     /**
@@ -54,6 +53,7 @@ class Conversation extends Model
      */
     protected $casts = [
         'locked' => 'boolean',
+        'has_been_updated' => 'boolean',
     ];
 
     /**
@@ -213,18 +213,20 @@ class Conversation extends Model
      * Determine whether the conversation has been updated
      * since the last time that was read by the authenticated user
      *
-     * @return boolean
+     * @param Builder $query
+     * @return Builder
      */
-    public function getHasBeenUpdatedAttribute()
+    public function scopeWithHasBeenUpdated($query)
     {
-        $conversationRead = $this->reads()
-            ->where('user_id', auth()->id())
-            ->first();
-
-        if (is_null($conversationRead)) {
-            return true;
-        }
-        return $this->updated_at > $conversationRead->read_at;
+        return $query->addSelect([
+            'has_been_updated' => Read::selectRaw('
+                    CASE
+                        WHEN reads.read_at > conversations.updated_at THEN 0
+                        ELSE 1
+                    END')->where('user_id', auth()->id())
+                ->whereColumn('reads.readable_id', 'conversations.id')
+                ->where('reads.readable_type', 'App\Conversation'),
+        ]);
     }
 
     /**

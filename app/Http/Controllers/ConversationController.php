@@ -51,6 +51,7 @@ class ConversationController extends Controller
     {
         $conversation = Conversation::withRecentMessage()
             ->whereSlug($conversationSlug)
+            ->withHasBeenUpdated()
             ->isStarred()
             ->firstOrFail();
 
@@ -82,6 +83,7 @@ class ConversationController extends Controller
 
         $conversations = auth()->user()
             ->conversations()
+            ->withHasBeenUpdated()
             ->isStarred()
             ->filter($filters)
             ->with('starter')
