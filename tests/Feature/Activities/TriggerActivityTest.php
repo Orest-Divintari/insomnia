@@ -27,6 +27,7 @@ class TriggerActivityTest extends TestCase
     public function creating_a_thread_records_activty()
     {
         $thread = create(Thread::class);
+
         $this->assertCount(1, $thread->activity);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $thread->id,
@@ -38,6 +39,7 @@ class TriggerActivityTest extends TestCase
     public function creating_a_thread_reply_records_activity()
     {
         $threadReply = ReplyFactory::create();
+
         $this->assertCount(1, $threadReply->activity);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $threadReply->id,
@@ -50,6 +52,7 @@ class TriggerActivityTest extends TestCase
     {
         $thread = create(Thread::class);
         $firstReply = $thread->replies()->first();
+
         $this->assertCount(0, $firstReply->activity);
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $firstReply->id,
@@ -61,6 +64,7 @@ class TriggerActivityTest extends TestCase
     public function creating_a_conversation_message_should_no_record_activity()
     {
         $message = MessageFactory::create();
+
         $this->assertCount(0, $message->activity);
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $message->id,
@@ -72,6 +76,7 @@ class TriggerActivityTest extends TestCase
     public function creating_a_profile_post_records_activity()
     {
         $profilePost = create(ProfilePost::class);
+
         $this->assertCount(1, $profilePost->activity);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $profilePost->id,
@@ -83,6 +88,7 @@ class TriggerActivityTest extends TestCase
     public function creating_a_profile_post_comment_records_activity()
     {
         $comment = CommentFactory::create();
+
         $this->assertCount(1, $comment->activity);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $comment->id,
@@ -94,8 +100,10 @@ class TriggerActivityTest extends TestCase
     public function liking_a_thread_reply_records_activity()
     {
         $threadReply = ReplyFactory::create();
+
         $threadReply->likedBy();
         $like = $threadReply->likes()->first();
+
         $this->assertCount(1, $like->activity);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,
@@ -107,7 +115,9 @@ class TriggerActivityTest extends TestCase
     public function liking_a_conversation_message_should_not_record_activity()
     {
         $message = MessageFactory::create();
+
         $like = $message->likedBy();
+
         $this->assertCount(0, $like->activity);
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $like->id,
