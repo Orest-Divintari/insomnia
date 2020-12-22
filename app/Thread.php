@@ -56,7 +56,6 @@ class Thread extends Model
         'short_title',
         'date_created',
         'date_updated',
-        'has_been_updated',
         'type',
     ];
 
