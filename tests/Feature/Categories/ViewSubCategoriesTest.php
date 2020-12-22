@@ -35,7 +35,6 @@ class ViewSubCategoriesTest extends TestCase
         $recentThread = create(Thread::class, [
             'category_id' => $this->subCategory->id,
         ]);
-
         $oldThread = create(Thread::class, [
             'category_id' => $this->subCategory->id,
             'updated_at' => Carbon::now()->subMonth(),
@@ -53,6 +52,7 @@ class ViewSubCategoriesTest extends TestCase
         createMany(Thread::class, $threadsCount, [
             'category_id' => $this->subCategory->id,
         ]);
+
         $this->get(route('categories.show', $this->category))
             ->assertSee($threadsCount);
     }
@@ -63,11 +63,11 @@ class ViewSubCategoriesTest extends TestCase
         $threadsCount = 5;
         $repliesCount = 3;
         $repliesTotalCount = $repliesCount * $threadsCount;
-
         createMany(Thread::class, $threadsCount, [
             'category_id' => $this->subCategory->id,
             'replies_count' => $repliesCount,
         ]);
+
         $this->get(route('categories.show', $this->category))
             ->assertSee($repliesTotalCount);
     }
@@ -79,7 +79,6 @@ class ViewSubCategoriesTest extends TestCase
             'category_id' => $this->subCategory->id,
             'updated_at' => Carbon::now()->subMonth(),
         ]);
-
         create(Reply::class, [
             'repliable_id' => $thread->id,
             'repliable_type' => Thread::class,
@@ -87,7 +86,6 @@ class ViewSubCategoriesTest extends TestCase
 
         $this->get(route('categories.show', $this->category))
             ->assertSee($thread->replies->first()->poster->shortName);
-
     }
 
     /** @test */
@@ -96,7 +94,6 @@ class ViewSubCategoriesTest extends TestCase
         $recentThread = create(Thread::class, [
             'category_id' => $this->subCategory->id,
         ]);
-
         $oldThread = create(Thread::class, [
             'category_id' => $this->subCategory->id,
             'updated_at' => Carbon::now()->subMonth(),

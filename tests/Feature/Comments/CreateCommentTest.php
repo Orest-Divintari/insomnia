@@ -28,9 +28,7 @@ class CreateCommentTest extends TestCase
         $user = create(User::class, [
             'email_verified_at' => null,
         ]);
-
         $this->signIn($user);
-
         $post = create(ProfilePost::class);
 
         $this->post(route('api.comments.store', $post), [])
@@ -41,9 +39,7 @@ class CreateCommentTest extends TestCase
     public function authenticated_users_that_have_verified_the_email_can_post_comments()
     {
         $user = $this->signIn();
-
         $post = create(ProfilePost::class);
-
         $comment = ['body' => 'some body'];
 
         $this->post(route('api.comments.store', $post), $comment);
@@ -54,16 +50,13 @@ class CreateCommentTest extends TestCase
             'body' => $comment['body'],
             'user_id' => $user->id,
         ]);
-
     }
 
     /** @test */
     public function a_comment_requires_a_body()
     {
         $user = $this->signIn();
-
         $post = create(ProfilePost::class);
-
         $comment = ['body' => ''];
 
         $this->post(route('api.comments.store', $post), $comment)
@@ -81,9 +74,7 @@ class CreateCommentTest extends TestCase
     public function a_comment_must_be_of_type_string()
     {
         $user = $this->signIn();
-
         $post = create(ProfilePost::class);
-
         $notStringBody = array(5);
         $comment = ['body' => $notStringBody];
 

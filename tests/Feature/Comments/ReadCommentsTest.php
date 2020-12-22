@@ -15,12 +15,12 @@ class ReadCommentsTest extends TestCase
     public function a_user_can_read_all_the_comments_associated_with_a_post()
     {
         $comment = CommentFactory::create();
-
         $this->signIn();
 
-        $response = $this->get(route('api.comments.index', $comment->profilePost))->json();
+        $response = $this->get(
+            route('api.comments.index', $comment->profilePost)
+        )->json();
 
         $this->assertCount(1, ($response['data']));
-
     }
 }
