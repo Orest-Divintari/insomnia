@@ -57,6 +57,8 @@ class ViewConversationsTest extends TestCase
         $this->assertEquals($message['body'], $messages['body']);
         $this->assertTrue(array_key_exists('likes_count', $messages));
         $this->assertTrue(array_key_exists('is_liked', $messages));
+        $this->assertTrue($returnedConversation['has_been_updated']);
+        $this->assertFalse($returnedConversation['starred']);
         $this->assertEquals($conversationStarter->id, $messages['poster']['id']);
         $this->assertEquals($conversation->id, $returnedConversation['id']);
 
@@ -87,6 +89,8 @@ class ViewConversationsTest extends TestCase
         $this->assertEquals($conversationStarter->id, $conversations[0]['starter']['id']);
         $this->assertEquals($newMessage->poster->id, $conversations[0]['recent_message']['poster']['id']);
 
+        $this->assertTrue($conversations[0]['has_been_updated']);
+        $this->assertFalse($conversations[0]['starred']);
         $this->assertTrue(
             collect($conversations[0]['participants'])->pluck('id')
                 ->every(function ($value, $key) use ($conversation) {
@@ -183,7 +187,9 @@ class ViewConversationsTest extends TestCase
         $participant->read($conversation);
 
         $this->assertFalse($conversation->hasBeenUpdated);
+        )->json()['conversation'];
 
+        $this->assertTrue($conversation['has_been_updated']);
     }
 
     /** @test */
