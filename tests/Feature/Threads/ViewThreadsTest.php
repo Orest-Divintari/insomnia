@@ -28,6 +28,46 @@ class ViewThreadsTest extends TestCase
     }
 
     /** @test */
+    public function when_an_authenticated_user_visits_a_thread_then_the_thread_is_marked_as_read()
+    {
+        $category = create(Category::class);
+        $threads = createMany(Thread::class, 2, ['category_id' => $category->id]);
+        $readThread = $threads->first();
+        $user = $this->signIn();
+
+        $this->get(route('threads.show', $readThread));
+        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
+
+        $threads = collect($threads);
+        $this->assertTrue(
+            $threads->every(function ($thread, $key) use ($readThread) {
+                if ($thread['id'] == $readThread->id) {
+                    return $thread['has_been_updated'] == false;
+                }
+                return $thread['has_been_updated'] == true;
+            })
+        );
+    }
+
+    /** @test */
+    public function when_a_guest_visits_a_thread_it_is_not_marked_as_read()
+    {
+        $category = create(Category::class);
+        $threads = createMany(Thread::class, 2, ['category_id' => $category->id]);
+        $visitedThread = $threads->first();
+
+        $this->get(route('threads.show', $visitedThread));
+        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
+
+        $threads = collect($threads);
+        $this->assertTrue(
+            $threads->every(function ($thread, $key) use ($visitedThread) {
+                return $thread['has_been_updated'] == true;
+            })
+        );
+    }
+
+    /** @test */
     public function a_user_can_view_the_threads_associated_with_a_category()
     {
         $category = create(Category::class);

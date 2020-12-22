@@ -271,4 +271,18 @@ class ThreadTest extends TestCase
         $this->assertCount(1, $thread->fresh()->tags);
         $this->assertEquals($tag->id, $thread->tags()->first()->id);
     }
+
+    /** @test */
+    public function a_thread_knows_if_it_has_been_updated()
+    {
+        $threads = createMany(Thread::class, 5);
+        $readThread = $threads->first();
+        $user = $this->signIn();
+
+        $user->read($readThread);
+        $threads = Thread::withHasBeenUpdated()->get();
+        $this->assertFalse(
+            $threads->firstWhere('id', $readThread->id)->has_been_updated
+        );
+    }
 }
