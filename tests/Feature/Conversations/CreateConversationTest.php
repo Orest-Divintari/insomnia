@@ -52,8 +52,9 @@ class CreateConversationTest extends TestCase
     /** @test */
     public function guests_cannot_see_the_conversation_form()
     {
-        $this->get(route('conversations.create'))
-            ->assertRedirect('login');
+        $response = $this->get(route('conversations.create'));
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
@@ -62,8 +63,9 @@ class CreateConversationTest extends TestCase
         $user = create(User::class, ['email_verified_at' => null]);
         $this->signIn($user);
 
-        $this->postConversation($title = "", $message = "", $participant = "")
-            ->assertRedirect(route('verification.notice'));
+        $response = $this->postConversation($title = "", $message = "", $participant = "");
+
+        $response->assertRedirect(route('verification.notice'));
     }
 
     /** @test */
@@ -71,18 +73,21 @@ class CreateConversationTest extends TestCase
     {
         $this->signIn();
 
-        $this->get(route('conversations.create'))
-            ->assertOk();
+        $response = $this->get(route('conversations.create'));
+
+        $response->assertOk();
     }
 
     /** @test */
     public function guests_cannot_start_a_new_conversation()
     {
-        $this->postConversation(
+        $response = $this->postConversation(
             $this->title,
             $this->messageBody,
             $this->participantA->name
-        )->assertRedirect('login');
+        );
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
@@ -91,8 +96,9 @@ class CreateConversationTest extends TestCase
         $user = create(User::class, ['email_verified_at' => null]);
         $this->signIn($user);
 
-        $this->postConversation()
-            ->assertRedirect(route('verification.notice'));
+        $response = $this->postConversation();
+
+        $response->assertRedirect(route('verification.notice'));
     }
 
     /** @test */
@@ -123,7 +129,6 @@ class CreateConversationTest extends TestCase
     public function an_authenticated_and_verified_user_can_start_a_new_conversation_with_multiple_participants()
     {
         $conversationStarter = $this->signIn();
-
         $participants = "{$this->participantA->name}, {$this->participantB->name}";
 
         $this->postConversation(
@@ -138,7 +143,6 @@ class CreateConversationTest extends TestCase
             $this->participantB->name,
             $conversationStarter->name,
         ]);
-
         $this->assertTrue(
             $conversation
                 ->participants
@@ -147,7 +151,6 @@ class CreateConversationTest extends TestCase
                     return $participantNames->contains($value);
                 })
         );
-
         $message = $conversation->messages()->first();
         $this->assertEquals($message->body, $this->messageBody);
     }
@@ -156,7 +159,6 @@ class CreateConversationTest extends TestCase
     public function an_authenticated_user_can_start_a_conversation_and_set_all_participants_as_admin()
     {
         $conversationStarter = $this->signIn();
-
         $participants = "{$this->participantA->name}, {$this->participantB->name}";
 
         $this->postConversation(
@@ -172,7 +174,6 @@ class CreateConversationTest extends TestCase
             $this->participantB->name,
             $conversationStarter->name,
         ]);
-
         $this->assertTrue(
             $conversation
                 ->participants
@@ -181,17 +182,14 @@ class CreateConversationTest extends TestCase
                     return $participantNames->contains($value);
                 })
         );
-
         $message = $conversation->messages()->first();
         $this->assertEquals($message->body, $this->messageBody);
-
         $this->assertTrue(
             ConversationParticipant::where('user_id', $this->participantA->id)
                 ->where('conversation_id', $conversation->id)
                 ->first()
                 ->admin
         );
-
         $this->assertTrue(
             ConversationParticipant::where('user_id', $this->participantB->id)
                 ->where('conversation_id', $conversation->id)
@@ -212,7 +210,6 @@ class CreateConversationTest extends TestCase
         );
 
         $conversation = $conversationStarter->conversations->first();
-
         $this->assertTrue(
             $conversation->participants->contains($conversationStarter->id)
         );
@@ -229,7 +226,6 @@ class CreateConversationTest extends TestCase
         );
 
         $conversation = $this->participantA->conversations->first();
-
         $this->assertDatabaseHas('reads', [
             'user_id' => $this->participantA->id,
             'readable_id' => $conversation->id,
@@ -243,11 +239,13 @@ class CreateConversationTest extends TestCase
     {
         $conversationStarter = $this->signIn();
 
-        $this->postConversation(
+        $response = $this->postConversation(
             $title = "",
             $this->messageBody,
             $this->participantA->name
-        )->assertSessionHasErrors('title');
+        );
+
+        $response->assertSessionHasErrors('title');
     }
 
     /** @test */
@@ -256,11 +254,13 @@ class CreateConversationTest extends TestCase
         $conversationStarter = $this->signIn();
         $title = [1, 2, 3, 4];
 
-        $this->postConversation(
+        $response = $this->postConversation(
             $title,
             $this->messageBody,
             $this->participantA->name
-        )->assertSessionHasErrors('title');
+        );
+
+        $response->assertSessionHasErrors('title');
     }
 
     /** @test */
@@ -268,11 +268,13 @@ class CreateConversationTest extends TestCase
     {
         $conversationStarter = $this->signIn();
 
-        $this->postConversation(
+        $response = $this->postConversation(
             $this->title,
             $message = "",
             $this->participantA->name
-        )->assertSessionHasErrors('message');
+        );
+
+        $response->assertSessionHasErrors('message');
     }
 
     /** @test */
@@ -281,11 +283,13 @@ class CreateConversationTest extends TestCase
         $conversationStarter = $this->signIn();
         $messageBody = ['one message', 'another message'];
 
-        $this->postConversation(
+        $response = $this->postConversation(
             $this->title,
             $messageBody,
             $this->participantA->name
-        )->assertSessionHasErrors('message');
+        );
+
+        $response->assertSessionHasErrors('message');
     }
 
     /** @test */
@@ -293,11 +297,13 @@ class CreateConversationTest extends TestCase
     {
         $conversationStarter = $this->signIn();
 
-        $this->postConversation(
+        $response = $this->postConversation(
             $this->title,
             $this->messageBody,
             $participant = ''
-        )->assertSessionHasErrors('participants');
+        );
+
+        $response->assertSessionHasErrors('participants');
     }
 
     /** @test */
@@ -306,11 +312,15 @@ class CreateConversationTest extends TestCase
         $conversationStarter = $this->signIn();
         $nonExistingUser = 'john';
 
-        $this->postConversation(
+        $response = $this->postConversation(
             $this->title,
             $this->messageBody,
             $nonExistingUser
-        )->assertSessionHasErrors(['participants.*' => ['The following participant could not be found: ' . $nonExistingUser]]);
+        );
+
+        $response->assertSessionHasErrors(
+            ['participants.*' => ['The following participant could not be found: ' . $nonExistingUser]]
+        );
     }
 
     /** @test */
@@ -325,12 +335,13 @@ class CreateConversationTest extends TestCase
             $this->title,
             $this->messageBody,
             $participants
-        )->assertSessionHasErrors(
+        );
+
+        $response->assertSessionHasErrors(
             ['participants.*' =>
                 ['The following participant could not be found: ' . $anotherNonExistingUser],
             ],
         );
-
         $response->assertSessionHasErrors(
             ['participants.*' =>
                 ['The following participant could not be found: ' . $anotherNonExistingUser],
