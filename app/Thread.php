@@ -379,3 +379,19 @@ class Thread extends Model
         return $query->where('pinned', true);
     }
 
+    /**
+     * Filter threads for the given category
+     *
+     * @param Builder $query
+     * @param Categorry $category
+     * @return Builder
+     */
+    public function scopeForCategory($query, $category)
+    {
+        if ($category->exists()) {
+            return $query->where('category_id', $category->id);
+        }
+        return $query;
+    }
+
+}

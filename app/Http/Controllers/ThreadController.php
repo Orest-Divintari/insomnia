@@ -31,12 +31,9 @@ class ThreadController extends Controller
         $threadsQuery = Thread::with('poster')
             ->withHasBeenUpdated()
             ->filter($filters)
+            ->forCategory($category)
             ->withRecentReply()
             ->latest('updated_at');
-
-        if ($category->exists) {
-            $threadsQuery->where('category_id', $category->id);
-        }
 
         $normalThreads = $threadsQuery->paginate(Thread::PER_PAGE);
         $pinnedThreads = $threadsQuery->pinned()->get();
