@@ -383,4 +383,15 @@ class ConversationTest extends TestCase
                 ->first()
         );
     }
+
+    /** @test */
+    public function a_conversation_knows_if_a_user_is_admin_of_the_conversation()
+    {
+        $conversationStarter = $this->signIn();
+        $user = create(User::class);
+        $conversation = ConversationFactory::withParticipants([$user->name])->create();
+        $conversation->setAdmin($user->id);
+
+        $this->assertTrue($conversation->isAdmin($user));
+    }
 }
