@@ -285,4 +285,18 @@ class ThreadTest extends TestCase
             $threads->firstWhere('id', $readThread->id)->has_been_updated
         );
     }
+
+    /** @test */
+    public function get_the_pinned_threads()
+    {
+        $threads = createMany(Thread::class, 5);
+        $thread = $threads->first();
+        $thread->pin();
+
+        $pinnedThread = Thread::pinned()->get();
+
+        $this->assertCount(1, $pinnedThread);
+        $this->assertEquals($pinnedThread->first()->id, $thread->id);
+    }
+
 }
