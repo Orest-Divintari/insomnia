@@ -7,12 +7,12 @@ use Facades\Tests\Setup\CommentFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ReadCommentsTest extends TestCase
+class ViewCommentsTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function a_user_can_read_all_the_comments_associated_with_a_post()
+    public function a_user_can_view_all_the_comments_associated_with_a_post()
     {
         $comment = CommentFactory::create();
         $this->signIn();
