@@ -39,8 +39,7 @@ class ThreadController extends Controller
         }
 
         $normalThreads = $threadsQuery->paginate(Thread::PER_PAGE);
-        $pinnedThreads = $threadsQuery->where('pinned', true)->get();
-
+        $pinnedThreads = $threadsQuery->pinned()->get();
         $threadFilters = $filters->getRequestedFilters();
 
         if (request()->wantsJson()) {

@@ -368,3 +368,14 @@ class Thread extends Model
         );
     }
 
+    /**
+     * Get the pinned threads
+     *
+     * @param Builder $query
+     * @return void
+     */
+    public function scopePinned($query)
+    {
+        return $query->where('pinned', true);
+    }
+
