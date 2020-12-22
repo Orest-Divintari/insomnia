@@ -72,7 +72,6 @@ class ConversationParticipantsTest extends TestCase
             $conversation->id,
             $john->conversations->first()->id
         );
-
         $this->assertEquals(
             $conversation->id,
             $doe->conversations->first()->id
@@ -103,7 +102,6 @@ class ConversationParticipantsTest extends TestCase
             $conversation->id,
             $john->conversations->first()->id
         );
-
         $this->assertEquals(
             $conversation->id,
             $doe->conversations->first()->id
@@ -116,13 +114,14 @@ class ConversationParticipantsTest extends TestCase
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)->create();
 
-        $this->postJson(
+        $response = $this->postJson(
             route('api.conversation-participants.store', $conversation),
             ['participants' => []]
-        )->assertJson(
-            ['participants' => ['Please enter at least one username.']]
         );
 
+        $response->assertJson(
+            ['participants' => ['Please enter at least one username.']]
+        );
     }
 
     /** @test */
@@ -132,10 +131,12 @@ class ConversationParticipantsTest extends TestCase
         $conversation = create(Conversation::class);
         $newMember = create(User::class);
 
-        $this->post(
+        $response = $this->post(
             route('api.conversation-participants.store', $conversation),
             ['participants' => $newMember->name]
-        )->assertRedirect('login');
+        );
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
@@ -148,10 +149,11 @@ class ConversationParticipantsTest extends TestCase
         $response = $this->postJson(
             route('api.conversation-participants.store', $conversation),
             ['participants' => $nonExistingMember]
-        )->assertJson(
-            ['participants.0' => ["You may not start a conversation with the following participant: " . $nonExistingMember]]
         );
 
+        $response->assertJson(
+            ['participants.0' => ["You may not start a conversation with the following participant: " . $nonExistingMember]]
+        );
     }
 
     /** @test */
@@ -166,10 +168,12 @@ class ConversationParticipantsTest extends TestCase
 
         $this->signIn($unathorizedUser);
 
-        $this->post(
+        $response = $this->post(
             route('api.conversation-participants.store', $conversation),
             ['participants' => $newMember->name]
-        )->assertStatus(Response::HTTP_FORBIDDEN);
+        );
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
@@ -188,7 +192,6 @@ class ConversationParticipantsTest extends TestCase
             $conversation->id,
             $newMember->conversations->first()->id
         );
-
         $this->deleteJson(
             route('api.conversation-participants.destroy', [$conversation, $newMember->id]),
         );
@@ -208,8 +211,8 @@ class ConversationParticipantsTest extends TestCase
             ->create();
         $conversation->setAdmin($participant->id);
         $newMember = create(User::class);
-
         $this->signIn($participant);
+
         $this->postJson(
             route('api.conversation-participants.store', $conversation),
             ['participants' => $newMember->name]
@@ -219,7 +222,6 @@ class ConversationParticipantsTest extends TestCase
             $conversation->id,
             $newMember->conversations->first()->id
         );
-
         $this->deleteJson(
             route('api.conversation-participants.destroy', [$conversation, $newMember->id]),
         );
@@ -236,11 +238,9 @@ class ConversationParticipantsTest extends TestCase
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
         $unathorizedUser = create(User::class);
-
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
-
         $this->signIn($unathorizedUser);
 
         $this->delete(
