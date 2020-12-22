@@ -29,6 +29,7 @@ class ConversationNotificationsTest extends TestCase
 
         ConversationFactory::withParticipants([$participant->name])
             ->create();
+
         Notification::assertSentTo($participant, ConversationHasNewMessage::class);
     }
 
@@ -40,6 +41,7 @@ class ConversationNotificationsTest extends TestCase
 
         ConversationFactory::withParticipants([$participant->name])
             ->create();
+
         Notification::assertSentTo($participant, ConversationHasNewMessage::class);
         Notification::assertNotSentTo($conversationStarter, ConversationHasNewMessage::class);
     }
@@ -67,7 +69,6 @@ class ConversationNotificationsTest extends TestCase
         $conversationStarter = $this->signIn();
         $john = create(User::class);
         $orestis = create(User::class, ['name' => 'orestis']);
-
         $conversation = create(Conversation::class, ['user_id' => $conversationStarter->id]);
         $conversation->addParticipants([$john->name, $orestis->name]);
         $conversation->hideFrom($orestis);
