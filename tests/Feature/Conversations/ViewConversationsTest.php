@@ -3,6 +3,7 @@
 namespace Tests\Feature\Conversations;
 
 use App\Conversation;
+use App\Read;
 use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ConversationFactory;
@@ -18,6 +19,7 @@ class ViewConversationsTest extends TestCase
     public function guests_cannot_view_a_conversation()
     {
         $someRandomConversationSlug = 'asdf';
+
         $this->get(route('conversations.show', $someRandomConversationSlug))
             ->assertRedirect('login');
     }
@@ -32,7 +34,6 @@ class ViewConversationsTest extends TestCase
 
         $this->get(route('conversations.show', $conversation))
             ->assertStatus(Response::HTTP_FORBIDDEN);
-
     }
 
     /** @test */
@@ -41,17 +42,16 @@ class ViewConversationsTest extends TestCase
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
         $message = ['body' => 'some message'];
-
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->withMessage($message['body'])
             ->create();
 
         $response = $this->getJson(route('conversations.show', $conversation))->json();
+
         $participants = $response['participants'];
         $messages = $response['messages']['data'][0];
         $returnedConversation = $response['conversation'];
-
         $this->assertEquals($conversationStarter->id, $participants[0]['id']);
         $this->assertEquals($participant->id, $participants[1]['id']);
         $this->assertEquals($message['body'], $messages['body']);
@@ -61,14 +61,12 @@ class ViewConversationsTest extends TestCase
         $this->assertFalse($returnedConversation['starred']);
         $this->assertEquals($conversationStarter->id, $messages['poster']['id']);
         $this->assertEquals($conversation->id, $returnedConversation['id']);
-
     }
 
     /** @test */
     public function a_user_can_view_his_own_visible_conversations()
     {
         $conversationStarter = $this->signIn();
-
         $conversation = ConversationFactory::create();
         $conversation->
             messages()
@@ -85,10 +83,18 @@ class ViewConversationsTest extends TestCase
         $this->assertEquals(2, $conversations[0]['messages_count']);
         $this->assertEquals(2, $conversations[0]['participants_count']);
         $this->assertEquals($conversation->type, $conversations[0]['type']);
-        $this->assertEquals($newMessage->id, $conversations[0]['recent_message']['id']);
-        $this->assertEquals($conversationStarter->id, $conversations[0]['starter']['id']);
-        $this->assertEquals($newMessage->poster->id, $conversations[0]['recent_message']['poster']['id']);
-
+        $this->assertEquals(
+            $newMessage->id,
+            $conversations[0]['recent_message']['id']
+        );
+        $this->assertEquals(
+            $conversationStarter->id,
+            $conversations[0]['starter']['id']
+        );
+        $this->assertEquals(
+            $newMessage->poster->id,
+            $conversations[0]['recent_message']['poster']['id']
+        );
         $this->assertTrue($conversations[0]['has_been_updated']);
         $this->assertFalse($conversations[0]['starred']);
         $this->assertTrue(
@@ -106,17 +112,13 @@ class ViewConversationsTest extends TestCase
     public function a_user_will_not_see_the_hidden_conversations()
     {
         $user = $this->signIn();
-
         $participant = create(User::class);
-
         $hiddenConversation = ConversationFactory::by($user)
             ->withParticipants(array($participant->name))
             ->create();
-
         $visibleConversation = ConversationFactory::by($user)
             ->withParticipants(array($participant->name))
             ->create();
-
         $hiddenConversation->hideFrom($participant);
 
         $this->signIn($participant);
@@ -135,21 +137,16 @@ class ViewConversationsTest extends TestCase
     public function a_user_will_not_see_the_conversations_that_has_left()
     {
         $user = $this->signIn();
-
         $participant = create(User::class);
-
         $leftConversation = ConversationFactory::by($user)
             ->withParticipants(array($participant->name))
             ->create();
-
         $visibleConversation = ConversationFactory::by($user)
             ->withParticipants(array($participant->name))
             ->create();
-
         $leftConversation->leftBy($participant);
 
         $this->signIn($participant);
-
         $conversations = $this->getJson(
             route('conversations.index')
         )->json()['data'];
@@ -162,31 +159,13 @@ class ViewConversationsTest extends TestCase
     }
 
     /** @test */
-    public function a_conversation_is_marked_as_read_when_a_user_visits_the_conversation()
+    public function a_conversation_is_marked_as_read_when_the_conversation_is_visited()
     {
         $conversationStarter = $this->signIn();
-
         $conversation = ConversationFactory::create();
 
-        $this->assertTrue($conversation->hasBeenUpdated);
-
-        $this->get(
+        $conversation = $this->getJson(
             route('conversations.show', $conversation)
-        );
-
-        $this->assertFalse($conversation->hasBeenUpdated);
-
-        $participant = create(User::class);
-
-        $conversation->addParticipants(array($participant->name));
-
-        $this->signIn($participant);
-
-        $this->assertTrue($conversation->hasBeenUpdated);
-
-        $participant->read($conversation);
-
-        $this->assertFalse($conversation->hasBeenUpdated);
         )->json()['conversation'];
 
         $this->assertTrue($conversation['has_been_updated']);
@@ -196,16 +175,13 @@ class ViewConversationsTest extends TestCase
     public function get_the_unread_conversations()
     {
         $conversationStarter = $this->signIn();
-
         $participant = create(User::class);
-
         $readConversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
         $unreadConversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
-
         $this->signIn($participant);
         $participant->read($readConversation);
 
@@ -222,7 +198,6 @@ class ViewConversationsTest extends TestCase
     {
         $john = $this->signIn();
         $conversationByJohn = ConversationFactory::by($john)->create();
-
         $orestis = $this->signIn();
         $conversationByOrestis = ConversationFactory::by($orestis)->create();
 
@@ -242,12 +217,10 @@ class ViewConversationsTest extends TestCase
         $conversationByJohn = ConversationFactory::by($john)
             ->withParticipants([$orestis->name])
             ->create();
-
         $this->signIn($orestis);
         $conversationByOrestis = ConversationFactory::by($orestis)
             ->withParticipants([$john->name])
             ->create();
-
         $randomUser = $this->signIn();
         $conversationByRandomUser = ConversationFactory::by($randomUser)
             ->withParticipants([$orestis->name, $john->name])
@@ -271,7 +244,6 @@ class ViewConversationsTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversationWithoutOrestis = create(Conversation::class);
-
         $orestis = create(User::class);
         $conversationWithOrestis = ConversationFactory::withParticipants([$orestis->name])->create();
 
@@ -291,7 +263,6 @@ class ViewConversationsTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversationWithoutParticipants = create(Conversation::class);
-
         $orestis = create(User::class);
         $john = create(User::class);
         $participantNames = "{$orestis->name},{$john->name}";
@@ -314,7 +285,6 @@ class ViewConversationsTest extends TestCase
     public function get_the_unread_conversations_that_are_started_by_a_given_username()
     {
         $participant = create(User::class);
-
         $orestis = $this->signIn();
         $readConversationByOrestis = ConversationFactory::by($orestis)
             ->withParticipants([$participant->name])
@@ -322,7 +292,6 @@ class ViewConversationsTest extends TestCase
         $unreadConversationByOrestis = ConversationFactory::by($orestis)
             ->withParticipants([$participant->name])
             ->create();
-
         $john = $this->signIn();
         $readConversationByJohn = ConversationFactory::by($john)
             ->withParticipants([$participant->name])
@@ -330,7 +299,6 @@ class ViewConversationsTest extends TestCase
         $unreadConversationByJohn = ConversationFactory::by($john)
             ->withParticipants([$participant->name])
             ->create();
-
         $this->signIn($participant);
         $participant->read($readConversationByJohn);
         $participant->read($readConversationByOrestis);
@@ -349,7 +317,6 @@ class ViewConversationsTest extends TestCase
     public function get_the_unread_conversations_that_are_started_by_multiple_usernames()
     {
         $participant = create(User::class);
-
         $orestis = $this->signIn();
         $readConversationByOrestis = ConversationFactory::by($orestis)
             ->withParticipants([$participant->name])
@@ -365,7 +332,6 @@ class ViewConversationsTest extends TestCase
         $unreadConversationByJohn = ConversationFactory::by($john)
             ->withParticipants([$participant->name])
             ->create();
-
         $george = $this->signIn();
         $readConversationByGeorge = ConversationFactory::by($george)
             ->withParticipants([$participant->name])
@@ -373,13 +339,12 @@ class ViewConversationsTest extends TestCase
         $unreadConversationByGeorge = ConversationFactory::by($george)
             ->withParticipants([$participant->name])
             ->create();
-
         $this->signIn($participant);
         $participant->read($readConversationByJohn);
         $participant->read($readConversationByOrestis);
         $participant->read($readConversationByGeorge);
-
         $desiredUsernames = "{$orestis->name},{$john->name}";
+
         $conversations = $this->getJson(
             route(
                 'conversations.index',
@@ -399,14 +364,12 @@ class ViewConversationsTest extends TestCase
         $john = create(User::class);
         $george = create(User::class);
         $orestis = $this->signIn();
-
         $readConversationReceivedByGeorge = ConversationFactory::by($orestis)
             ->withParticipants([$participant->name, $john->name, $george->name])
             ->create();
         $unreadConversationReceivedByGeorge = ConversationFactory::by($orestis)
             ->withParticipants([$participant->name, $john->name, $george->name])
             ->create();
-
         $this->signIn($john);
         $readConversationNotReceivedByGeorge = ConversationFactory::by($john)
             ->withParticipants([$participant->name, $orestis->name])
@@ -414,9 +377,7 @@ class ViewConversationsTest extends TestCase
         $unreadConversationNotReceivedByGeorge = ConversationFactory::by($john)
             ->withParticipants([$participant->name, $orestis->name])
             ->create();
-
         $this->signIn($participant);
-
         $participant->read($readConversationReceivedByGeorge);
         $participant->read($readConversationNotReceivedByGeorge);
 
@@ -437,7 +398,6 @@ class ViewConversationsTest extends TestCase
         $john = create(User::class);
         $george = create(User::class);
         $mike = create(User::class);
-
         $orestis = $this->signIn();
         $readConversationReceivedByGeorge = ConversationFactory::by($orestis)
             ->withParticipants([$participant->name, $john->name, $george->name])
@@ -451,7 +411,6 @@ class ViewConversationsTest extends TestCase
         $unreadConversationReceivedByMike = ConversationFactory::by($orestis)
             ->withParticipants([$participant->name, $john->name, $mike->name])
             ->create();
-
         $this->signIn($john);
         $readConversationNotReceivedByGeorge = ConversationFactory::by($john)
             ->withParticipants([$participant->name, $orestis->name])
@@ -465,13 +424,11 @@ class ViewConversationsTest extends TestCase
         $unreadConversationNotReceivedByMike = ConversationFactory::by($john)
             ->withParticipants([$participant->name, $orestis->name])
             ->create();
-
         $this->signIn($participant);
         $participant->read($readConversationReceivedByGeorge);
         $participant->read($readConversationReceivedByMike);
         $participant->read($readConversationNotReceivedByGeorge);
         $participant->read($readConversationNotReceivedByMike);
-
         $participantNames = "{$george->name}, {$mike->name} ";
 
         $conversations = $this->getJson(
@@ -490,7 +447,6 @@ class ViewConversationsTest extends TestCase
     public function get_the_recent_and_unread_conversations()
     {
         $conversationStarter = $this->signIn();
-
         $readAndLastMonthConversation = ConversationFactory::by($conversationStarter)->create();
         $readAndLastMonthConversation->update(
             ['updated_at' => Carbon::now()->subMonth()]
@@ -505,7 +461,6 @@ class ViewConversationsTest extends TestCase
         );
         $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
         $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
-
         $conversationStarter->read($readAndLastMonthConversation);
         $conversationStarter->read($readAndLastWeekConversation);
         $conversationStarter->read($readTodayConversation);
@@ -530,7 +485,6 @@ class ViewConversationsTest extends TestCase
             $desiredConversations[3]['id'],
             $readAndLastWeekConversation->id
         );
-
         $this->assertCount(4, $desiredConversations);
         $desiredConversationIds = collect($desiredConversations)->pluck('id');
         $this->assertTrue(
@@ -583,6 +537,5 @@ class ViewConversationsTest extends TestCase
             $desiredConversations[0]['id'],
             $starredConversation->id
         );
-
     }
 }
