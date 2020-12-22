@@ -42,8 +42,15 @@ class ThreadController extends Controller
         if (request()->wantsJson()) {
             return $normalThreads;
         }
-
-        return view('threads.index', compact('category', 'normalThreads', 'pinnedThreads', 'threadFilters'));
+        return view(
+            'threads.index',
+            compact(
+                'category',
+                'normalThreads',
+                'pinnedThreads',
+                'threadFilters'
+            )
+        );
     }
 
     /**
@@ -80,17 +87,14 @@ class ThreadController extends Controller
     {
         $thread->load(['poster', 'tags']);
         $filters = $this->filterManager->withReplyFilters();
-
         $replies = Reply::forRepliable($thread, $filters);
+        $thread->recordVisit();
 
         if (request()->wantsJson()) {
             return $replies;
         };
 
-        $thread->recordVisit();
-
         return view('threads.show', compact('thread', 'replies'));
-
     }
 
 }
