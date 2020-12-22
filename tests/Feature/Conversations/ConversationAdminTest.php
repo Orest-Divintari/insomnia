@@ -18,31 +18,19 @@ class ConversationAdminTest extends TestCase
         $conversationStarter = $this->signIn();
         $participantA = create(User::class);
         $participantB = create(User::class);
-
         $conversation = ConversationFactory::withParticipants(
             [$participantA->name, $participantB->name]
         )->create();
         $conversation->setAdmin($participantA->id);
-
         $this->signIn($participantA);
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participantB->id,
-            'admin' => false,
-        ]);
+        $this->assertFalse($conversation->isAdmin($participantB));
 
-        $this->post(
-            route(
-                'api.conversation-admins.store',
-                [$conversation, $participantB->id]
-            )
-        );
+        $this->post(route(
+            'api.conversation-admins.store',
+            [$conversation, $participantB->id]
+        ));
 
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participantB->id,
-            'admin' => true,
-        ]);
+        $this->assertTrue($conversation->isAdmin($participantB));
     }
 
     /** @test */
@@ -50,29 +38,17 @@ class ConversationAdminTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
-
         $conversation = ConversationFactory::withParticipants(
             [$participant->name]
         )->create();
+        $this->assertFalse($conversation->isAdmin($participant));
 
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participant->id,
-            'admin' => false,
-        ]);
+        $this->post(route(
+            'api.conversation-admins.store',
+            [$conversation, $participant->id]
+        ));
 
-        $this->post(
-            route(
-                'api.conversation-admins.store',
-                [$conversation, $participant->id]
-            )
-        );
-
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participant->id,
-            'admin' => true,
-        ]);
+        $this->assertTrue($conversation->isAdmin($participant));
     }
 
     /** @test */
@@ -84,115 +60,53 @@ class ConversationAdminTest extends TestCase
         $conversation = ConversationFactory::withParticipants(
             [$participantA->name, $participantB->name]
         )->create();
-
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participantB->id,
-            'admin' => false,
-        ]);
-
+        $this->assertFalse($conversation->isAdmin($participantB));
         $this->signIn($participantB);
-        $this->post(
-            route(
-                'api.conversation-admins.store',
-                [$conversation, $participantA->id]
-            )
-        )->assertStatus(Response::HTTP_FORBIDDEN);
 
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participantA->id,
-            'admin' => false,
-        ]);
+        $response = $this->post(route(
+            'api.conversation-admins.store',
+            [$conversation, $participantA->id]
+        ));
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $this->assertFalse($conversation->isAdmin($participantB));
     }
 
     /** @test */
-    public function the_conversation_starater_caan_always_remove_as_admin_another_conversation_member()
+    public function the_conversation_starter_can_always_remove_as_admin_another_conversation_member()
     {
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
+        $conversation = ConversationFactory::withParticipants([$participant->name])->create();
+        $conversation->setAdmin($participant->id);
 
-        $conversation = ConversationFactory::withParticipants(
-            [$participant->name]
-        )->create();
+        $this->delete(route(
+            'api.conversation-admins.destroy',
+            [$conversation, $participant->id]
+        ));
 
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participant->id,
-            'admin' => false,
-        ]);
-
-        $this->post(
-            route(
-                'api.conversation-admins.store',
-                [$conversation, $participant->id]
-            )
-        );
-
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participant->id,
-            'admin' => true,
-        ]);
-
-        $this->delete(
-            route(
-                'api.conversation-admins.destroy',
-                [$conversation, $participant->id]
-            )
-        );
-
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participant->id,
-            'admin' => false,
-        ]);
+        $this->assertFalse($conversation->isAdmin($participant));
     }
 
     /** @test */
-    public function an_conversation_admin_can_remove_as_admin_another_conversation_member()
+    public function a_conversation_admin_can_remove_as_admin_another_conversation_member()
     {
         $conversationStarter = $this->signIn();
         $participantA = create(User::class);
         $participantB = create(User::class);
-
         $conversation = ConversationFactory::withParticipants(
             [$participantA->name, $participantB->name]
         )->create();
-
         $conversation->setAdmin($participantA->id);
-        $this->signIn($participantA);
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participantB->id,
-            'admin' => false,
-        ]);
+        $conversation->setAdmin($participantB->id);
+        $this->assertTrue($conversation->isAdmin($participantB));
 
-        $this->post(
-            route(
-                'api.conversation-admins.store',
-                [$conversation, $participantB->id]
-            )
-        );
+        $this->delete(route(
+            'api.conversation-admins.destroy',
+            [$conversation, $participantB->id]
+        ));
 
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participantB->id,
-            'admin' => true,
-        ]);
-
-        $this->delete(
-            route(
-                'api.conversation-admins.destroy',
-                [$conversation, $participantB->id]
-            )
-        );
-
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participantB->id,
-            'admin' => false,
-        ]);
+        $this->assertFalse($conversation->isAdmin($participantB));
     }
 
     /** @test */
@@ -201,40 +115,19 @@ class ConversationAdminTest extends TestCase
         $conversationStarter = $this->signIn();
         $participantA = create(User::class);
         $participantB = create(User::class);
-
         $conversation = ConversationFactory::withParticipants(
             [$participantA->name, $participantB->name]
         )->create();
-
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participantA->id,
-            'admin' => false,
-        ]);
-
-        $this->post(
-            route(
-                'api.conversation-admins.store',
-                [$conversation, $participantA->id]
-            )
-        );
-
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participantA->id,
-            'admin' => true,
-        ]);
-
+        $conversation->setAdmin($participantA->id);
+        $this->assertTrue($conversation->isAdmin($participantA));
         $this->signIn($participantB);
+
         $this->delete(
             route('api.conversation-admins.destroy',
                 [$conversation, $participantA->id]
-            ))->assertStatus(Response::HTTP_FORBIDDEN);
+            )
+        )->assertStatus(Response::HTTP_FORBIDDEN);
 
-        $this->assertDatabaseHas('conversation_participants', [
-            'conversation_id' => $conversation->id,
-            'user_id' => $participantA->id,
-            'admin' => true,
-        ]);
+        $this->assertTrue($conversation->isAdmin($participantA));
     }
 }
