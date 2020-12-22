@@ -342,6 +342,20 @@ class Conversation extends Model
     }
 
     /**
+     * Determine whether the given user is a admin of the conversation
+     *
+     * @param User $participant
+     * @return boolean
+     */
+    public function isAdmin($participant)
+    {
+        return ConversationParticipant::where('conversation_id', $this->id)
+            ->where('user_id', $participant->id)
+            ->first()
+            ->admin;
+    }
+
+    /**
      * Remove participant as admin
      *
      * @param int $participantId
