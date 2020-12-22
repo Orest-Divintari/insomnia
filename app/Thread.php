@@ -82,6 +82,7 @@ class Thread extends Model
     protected $casts = [
         'locked' => 'boolean',
         'pinned' => 'boolean',
+        'has_been_updated' => 'boolean',
     ];
 
     /**
@@ -177,27 +178,6 @@ class Thread extends Model
     public function getShortTitleAttribute()
     {
         return Str::limit($this->title, static::TITLE_LENGTH, '');
-    }
-
-    /**
-     * Determine whether the thread has been updated since last read
-     *
-     * @return boolean
-     */
-    public function getHasBeenUpdatedAttribute()
-    {
-        if (!auth()->check()) {
-            return true;
-        }
-
-        $read = $this->reads()
-            ->where('user_id', auth()->id())
-            ->first();
-
-        if (is_null($read)) {
-            return true;
-        }
-        return $this->updated_at > $read->read_at;
     }
 
     /**
@@ -366,4 +346,25 @@ class Thread extends Model
         $this->tags()->attach($tagIds);
     }
 
-}
+    /**
+     * Determine whether the thread has been updated
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithHasBeenUpdated($query)
+    {
+        return $query->select('threads.*', 'reads.read_at')
+            ->leftJoin('reads', function ($join) {
+                $join->on('reads.readable_id', '=', 'threads.id')
+                    ->where('reads.readable_type', '=', Thread::class)
+                    ->where('reads.user_id', auth()->id());
+            })->selectRaw(
+            'CASE
+                WHEN read_at >= threads.updated_at THEN 0
+                WHEN read_at IS NULL THEN 1
+                ELSE 1
+            END as has_been_updated'
+        );
+    }
+

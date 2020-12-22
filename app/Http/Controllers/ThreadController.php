@@ -29,6 +29,7 @@ class ThreadController extends Controller
     {
         $filters = $this->filterManager->withThreadFilters();
         $threadsQuery = Thread::with('poster')
+            ->withHasBeenUpdated()
             ->filter($filters)
             ->withRecentReply()
             ->latest('updated_at');
