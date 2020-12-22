@@ -299,4 +299,15 @@ class ThreadTest extends TestCase
         $this->assertEquals($pinnedThread->first()->id, $thread->id);
     }
 
+    /** @test */
+    public function get_the_threads_for_a_given_category()
+    {
+        $category = create(Category::class);
+        $thread = create(Thread::class, ['category_id' => $category->id]);
+        createMany(Thread::class, 5);
+
+        $desiredThreads = Thread::forCategory($category)->get();
+        $this->assertCount(1, $desiredThreads);
+        $this->assertEquals($thread->id, $desiredThreads->first()->id);
+    }
 }
