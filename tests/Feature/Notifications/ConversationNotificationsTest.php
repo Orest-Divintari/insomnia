@@ -27,10 +27,21 @@ class ConversationNotificationsTest extends TestCase
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
 
-        ConversationFactory::withParticipants([$participant->name])
+        $conversation = ConversationFactory::withParticipants([$participant->name])
             ->create();
 
-        Notification::assertSentTo($participant, ConversationHasNewMessage::class);
+        $message = $conversation->messages()->first();
+        Notification::assertSentTo(
+            $participant,
+            function (ConversationHasNewMessage $notification, $channels)
+             use (
+                $conversation,
+                $message
+            ) {
+                return $notification->conversation->id == $conversation->id
+                && $notification->message->id == $message->id;
+            }
+        );
     }
 
     /** @test */
@@ -39,10 +50,21 @@ class ConversationNotificationsTest extends TestCase
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
 
-        ConversationFactory::withParticipants([$participant->name])
+        $conversation = ConversationFactory::withParticipants([$participant->name])
             ->create();
 
-        Notification::assertSentTo($participant, ConversationHasNewMessage::class);
+        $message = $conversation->messages()->first();
+        Notification::assertSentTo(
+            $participant,
+            function (ConversationHasNewMessage $notification, $channels)
+             use (
+                $conversation,
+                $message
+            ) {
+                return $notification->conversation->id == $conversation->id
+                && $notification->message->id == $message->id;
+            }
+        );
         Notification::assertNotSentTo($conversationStarter, ConversationHasNewMessage::class);
     }
 
@@ -52,13 +74,31 @@ class ConversationNotificationsTest extends TestCase
         $conversationStarter = $this->signIn();
         $john = create(User::class);
         $orestis = create(User::class, ['name' => 'orestis']);
-        $conversation = create(Conversation::class, ['user_id' => $conversationStarter->id]);
-        $conversation->addParticipants([$john->name, $orestis->name]);
+        $conversation = create(
+            Conversation::class,
+            ['user_id' => $conversationStarter->id]
+        );
+        $conversation->addParticipants([
+            $john->name,
+            $orestis->name,
+        ]);
         $conversation->leftBy($orestis);
+        $message = $conversation->addMessage(
+            'some message',
+            $conversationStarter
+        );
 
-        $conversation->addMessage('some message', $conversationStarter);
-
-        Notification::assertSentTo($john, ConversationHasNewMessage::class);
+        Notification::assertSentTo(
+            $john,
+            function (ConversationHasNewMessage $notification, $channels)
+             use (
+                $conversation,
+                $message
+            ) {
+                return $notification->conversation->id == $conversation->id
+                && $notification->message->id == $message->id;
+            }
+        );
         Notification::assertNotSentTo($conversationStarter, ConversationHasNewMessage::class);
         Notification::assertNotSentTo($orestis, ConversationHasNewMessage::class);
     }
@@ -69,11 +109,19 @@ class ConversationNotificationsTest extends TestCase
         $conversationStarter = $this->signIn();
         $john = create(User::class);
         $orestis = create(User::class, ['name' => 'orestis']);
-        $conversation = create(Conversation::class, ['user_id' => $conversationStarter->id]);
-        $conversation->addParticipants([$john->name, $orestis->name]);
+        $conversation = create(
+            Conversation::class,
+            ['user_id' => $conversationStarter->id]
+        );
+        $conversation->addParticipants([
+            $john->name,
+            $orestis->name,
+        ]);
         $conversation->hideFrom($orestis);
-
-        $conversation->addMessage('some message', $conversationStarter);
+        $message = $conversation->addMessage(
+            'some message',
+            $conversationStarter
+        );
 
         Notification::assertSentTo($john, ConversationHasNewMessage::class);
         Notification::assertSentTo($orestis, ConversationHasNewMessage::class);

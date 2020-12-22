@@ -12,8 +12,8 @@ class ConversationHasNewMessage extends Notification
 {
     use Queueable;
 
-    protected $conversation;
-    protected $meessage;
+    public $conversation;
+    public $message;
 
     /**
      * Create a new notification instance.
