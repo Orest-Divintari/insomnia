@@ -1,31 +1,30 @@
 <?php
 
-namespace Tests\Feature\Activities;
+namespace Tests\Unit;
 
 use App\Like;
 use App\ProfilePost;
 use App\Reply;
 use App\Thread;
-use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ActivityTest extends TestCase
+class RecordActivitiesTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function when_an_authenticated_user_creates_a_thread_the_activity_is_recorded()
+    public function when_a_user_creates_a_thread_the_activity_is_recorded()
     {
         $user = $this->signIn();
-        $threadAttributes = raw(Thread::class, ['user_id' => $user->id]);
 
-        $this->post(route('threads.store'), $threadAttributes);
+        $thread = create(Thread::class, [
+            'user_id' => $user->id,
+        ]);
 
-        $thread = Thread::first();
         $this->assertCount(1, $thread->activities);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $thread->id,
@@ -36,18 +35,12 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_an_authenticated_user_posts_a_thread_reply_the_activity_is_recorded()
+    public function when_a_user_posts_a_thread_reply_the_activity_is_recorded()
     {
         $user = $this->signIn();
-        $thread = create(Thread::class);
-        $threadReplyAttributes = raw(Reply::class, ['repliable_type' => Thread::class]);
 
-        $this->post(
-            route('api.replies.store', $thread),
-            $threadReplyAttributes
-        );
+        $reply = ReplyFactory::by($user)->create();
 
-        $reply = Reply::whereBody($threadReplyAttributes['body'])->first();
         $this->assertCount(1, $reply->activities);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $reply->id,
@@ -58,21 +51,12 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_an_authenticated_user_posts_a_comment_the_activity_is_recorded()
+    public function when_a_user_posts_a_comment_the_activity_is_recorded()
     {
         $user = $this->signIn();
-        $profilePost = create(ProfilePost::class);
-        $commentAttributes = raw(
-            Reply::class,
-            ['repliable_type' => ProfilePost::class]
-        );
 
-        $this->post(
-            route('api.comments.store', $profilePost),
-            $commentAttributes
-        );
+        $comment = CommentFactory::by($user)->create();
 
-        $comment = Reply::whereBody($commentAttributes['body'])->first();
         $this->assertCount(1, $comment->activities);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $comment->id,
@@ -83,24 +67,14 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_an_authenticated_user_creates_a_profile_post_the_activity_is_recorded()
+    public function when_a_user_creates_a_profile_post_the_activity_is_recorded()
     {
         $user = $this->signIn();
-        $profileOwner = create(User::class);
-        $profilePostAttributes = raw(
-            ProfilePost::class,
-            [
-                'user_id' => $user->id,
-                'profile_owner_id' => $profileOwner->id,
-            ]
-        );
 
-        $this->post(
-            route('api.profile-posts.store', $profileOwner),
-            $profilePostAttributes
-        );
+        $profilePost = create(ProfilePost::class, [
+            'user_id' => $user->id,
+        ]);
 
-        $profilePost = ProfilePost::whereBody($profilePostAttributes['body'])->first();
         $this->assertCount(1, $profilePost->activities);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $profilePost->id,
@@ -111,14 +85,13 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_an_authenticated_user_likes_a_thread_reply_the_activity_is_recorded()
+    public function when_a_user_likes_a_thread_reply_the_activity_is_recorded()
     {
         $user = $this->signIn();
         $reply = ReplyFactory::create();
 
-        $this->post(route('api.likes.store', $reply));
+        $like = $reply->likedBy($user);
 
-        $like = $reply->likes->first();
         $this->assertCount(1, $like->activities);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,
@@ -129,14 +102,13 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_an_authenticated_user_likes_a_comment_the_activity_is_recorded()
+    public function when_a_user_likes_a_comment_the_activity_is_recorded()
     {
         $user = $this->signIn();
         $comment = CommentFactory::create();
 
-        $this->post(route('api.likes.store', $comment));
+        $like = $comment->likedBy($user);
 
-        $like = $comment->likes()->first();
         $this->assertCount(1, $comment->activities);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,
@@ -147,7 +119,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_a_reply_is_deleted_the_associated_activity_is_deleted()
+    public function when_the_user_deletes_a_reply_the_activity_is_deleted()
     {
         $user = $this->signIn();
         $reply = ReplyFactory::by($user)->create();
@@ -159,7 +131,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('api.replies.destroy', $reply));
+        $reply->delete();
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $reply->id,
@@ -170,7 +142,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_a_profile_post_comment_is_deleted_the_associated_activity_is_deleted()
+    public function when_the_user_deletes_a_comment_the_activity_is_deleted()
     {
         $user = $this->signIn();
         $comment = CommentFactory::by($user)->create();
@@ -182,7 +154,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('api.comments.destroy', $comment));
+        $comment->delete();
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $comment->id,
@@ -193,7 +165,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_an_authenticated_user_unlikes_a_reply_the_activity_is_deleted()
+    public function when_a_user_unlikes_a_reply_the_activity_is_deleted()
     {
         $user = $this->signIn();
         $reply = ReplyFactory::create();
@@ -206,7 +178,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('api.likes.destroy', $reply));
+        $reply->unlikedBy($user);
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $like->id,
@@ -217,7 +189,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_an_authenticated_user_unlikes_a_comment_the_activity_is_deleted()
+    public function when_a_user_unlikes_a_comment_the_activity_is_deleted()
     {
         $user = $this->signIn();
         $comment = CommentFactory::create();
@@ -230,7 +202,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('api.likes.destroy', $comment));
+        $comment->unlikedBy($user);
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $like->id,
@@ -241,7 +213,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_a_profile_post_is_deleted_the_associated_activity_is_deleted()
+    public function when_a_user_deletes_a_profile_post_the_activity_is_deleted()
     {
         $user = $this->signIn();
         $profilePost = create(ProfilePost::class, [
@@ -255,7 +227,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('api.profile-posts.destroy', $profilePost));
+        $profilePost->delete();
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $profilePost->id,
@@ -272,8 +244,9 @@ class ActivityTest extends TestCase
         $conversation = ConversationFactory::by($user)->create();
         $messageBody = 'new message';
 
-        $message = $conversation->addMessage($messageBody);
-        
+        $this->post(route('api.messages.store', $conversation), ['body' => $messageBody]);
+
+        $message = Reply::whereBody($messageBody)->first();
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $message->id,
             'subject_type' => Reply::class,
@@ -289,9 +262,8 @@ class ActivityTest extends TestCase
         $message = $conversation->messages()->first();
         $liker = $this->signIn();
 
-        $this->post(route('api.likes.store', $message));
+        $like = $message->likedBy($liker);
 
-        $like = $message->likes()->first();
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $like->id,
             'subject_type' => Like::class,
