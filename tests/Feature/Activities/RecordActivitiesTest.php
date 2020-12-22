@@ -16,7 +16,7 @@ class ActivityTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function when_a_user_creates_a_thread_the_activity_is_recorded()
+    public function when_an_authenticated_user_creates_a_thread_the_activity_is_recorded()
     {
         $user = $this->signIn();
 
@@ -25,25 +25,22 @@ class ActivityTest extends TestCase
         ]);
 
         $this->assertCount(1, $thread->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $thread->id,
             'subject_type' => Thread::class,
             'type' => 'created-thread',
             'user_id' => $user->id,
         ]);
-
     }
 
     /** @test */
-    public function when_a_user_posts_a_thread_reply_the_activity_is_recorded()
+    public function when_an_authenticated_user_posts_a_thread_reply_the_activity_is_recorded()
     {
         $user = $this->signIn();
 
         $reply = ReplyFactory::by($user)->create();
 
         $this->assertCount(1, $reply->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $reply->id,
             'subject_type' => Reply::class,
@@ -53,14 +50,15 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_a_user_posts_a_comment_the_activity_is_recorded()
+    public function when_an_authenticated_user_posts_a_comment_the_activity_is_recorded()
     {
         $user = $this->signIn();
 
         $comment = CommentFactory::by($user)->create();
 
+        // one activity for creating the post
+        // one activity for creating the comment
         $this->assertCount(2, $user->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $comment->id,
             'subject_type' => Reply::class,
@@ -70,7 +68,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_a_user_creates_a_profile_post_the_activity_is_recorded()
+    public function when_an_authenticated_user_creates_a_profile_post_the_activity_is_recorded()
     {
         $user = $this->signIn();
 
@@ -79,7 +77,6 @@ class ActivityTest extends TestCase
         ]);
 
         $this->assertCount(1, $profilePost->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $profilePost->id,
             'subject_type' => ProfilePost::class,
@@ -89,36 +86,31 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_a_user_likes_a_thread_reply_the_activity_is_recorded()
+    public function when_an_authenticated_user_likes_a_thread_reply_the_activity_is_recorded()
     {
         $user = $this->signIn();
-
         $reply = ReplyFactory::create();
 
         $like = $reply->likedBy($user);
 
         $this->assertCount(1, $like->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,
             'subject_type' => Like::class,
             'type' => 'created-reply-like',
             'user_id' => $user->id,
         ]);
-
     }
 
     /** @test */
-    public function when_a_user_likes_a_comment_the_activity_is_recorded()
+    public function when_an_authenticated_user_likes_a_comment_the_activity_is_recorded()
     {
         $user = $this->signIn();
-
         $comment = CommentFactory::create();
 
         $like = $comment->likedBy($user);
 
         $this->assertCount(1, $comment->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,
             'subject_type' => Like::class,
@@ -128,14 +120,12 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_the_user_deletes_a_reply_the_activity_is_deleted()
+    public function when_a_reply_is_deleted_the_associated_activity_is_deleted()
     {
         $user = $this->signIn();
-
         $reply = ReplyFactory::by($user)->create();
 
         $this->assertCount(1, $reply->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $reply->id,
             'subject_type' => Reply::class,
@@ -154,14 +144,12 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_the_user_deletes_a_comment_the_activity_is_deleted()
+    public function when_a_profile_post_comment_is_deleted_the_associated_activity_is_deleted()
     {
         $user = $this->signIn();
-
         $comment = CommentFactory::by($user)->create();
 
         $this->assertCount(1, $comment->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $comment->id,
             'subject_type' => Reply::class,
@@ -180,16 +168,13 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_a_user_unlikes_a_reply_the_activity_is_deleted()
+    public function when_an_authenticated_user_unlikes_a_reply_the_activity_is_deleted()
     {
         $user = $this->signIn();
-
         $reply = ReplyFactory::create();
-
         $like = $reply->likedBy($user);
 
         $this->assertCount(1, $like->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,
             'subject_type' => Like::class,
@@ -208,16 +193,13 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_a_user_unlikes_a_comment_the_activity_is_deleted()
+    public function when_an_authenticated_user_unlikes_a_comment_the_activity_is_deleted()
     {
         $user = $this->signIn();
-
         $comment = CommentFactory::create();
-
         $like = $comment->likedBy($user);
 
         $this->assertCount(1, $like->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,
             'subject_type' => Like::class,
@@ -236,16 +218,14 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_a_user_deletes_a_profile_post_the_activity_is_deleted()
+    public function when_a_profile_post_is_deleted_the_associated_activity_is_deleted()
     {
         $user = $this->signIn();
-
         $profilePost = create(ProfilePost::class, [
             'user_id' => $user->id,
         ]);
 
         $this->assertCount(1, $profilePost->activities);
-
         $this->assertDatabaseHas('activities', [
             'subject_id' => $profilePost->id,
             'subject_type' => ProfilePost::class,
@@ -261,7 +241,6 @@ class ActivityTest extends TestCase
             'type' => 'created-profile-post',
             'user_id' => $user->id,
         ]);
-
     }
 
 }
