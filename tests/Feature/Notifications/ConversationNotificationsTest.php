@@ -4,7 +4,6 @@ namespace Tests\Feature\Notifications;
 
 use App\Conversation;
 use App\Notifications\ConversationHasNewMessage;
-use App\Notifications\MessageHasNewLike;
 use App\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -143,32 +142,5 @@ class ConversationNotificationsTest extends TestCase
             $conversationStarter,
             ConversationHasNewMessage::class
         );
-    }
-
-    /** @test */
-    public function when_a_conversation_message_is_liked_then_the_poster_of_the_message_receives_database_notification()
-    {
-        $conversationStarter = $this->signIn();
-        $liker = create(User::class);
-        $conversation = ConversationFactory::withParticipants([$liker->name])->create();
-        $message = $conversation->messages->first();
-        $this->signIn($liker);
-
-        $like = $message->likedBy($liker);
-
-        Notification::assertSentTo(
-            $conversationStarter,
-            MessageHasNewLike::class,
-            function ($notification, $channels) use (
-                $message,
-                $liker,
-                $like,
-                $conversation
-            ) {
-                return $notification->message->id == $message->id
-                && $notification->like->id == $like->id
-                && $notification->liker->id == $liker->id
-                && $notification->conversation->id == $conversation->id;
-            });
     }
 }

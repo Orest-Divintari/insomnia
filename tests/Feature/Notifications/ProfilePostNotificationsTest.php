@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Notifications;
 
-use App\Notifications\CommentHasNewLike;
 use App\Notifications\ProfileHasNewPost;
 use App\Notifications\ProfilePostHasNewComment;
 use App\ProfilePost;
@@ -126,46 +125,4 @@ class ProfilePostNotificationsTest extends TestCase
             ProfilePostHasNewComment::class
         );
     }
-
-    /** @test */
-    public function the_owner_of_a_comment_should_receive_notification_when_the_comment_is_liked_by_another_user()
-    {
-        Notification::fake();
-        $this->signIn();
-        $commentPoster = create(User::class);
-        $profilePost = create(ProfilePost::class);
-        $comment = create(Reply::class, [
-            'user_id' => $commentPoster->id,
-            'repliable_id' => $profilePost->id,
-            'repliable_type' => ProfilePost::class,
-        ]);
-
-        $this->post(route('api.likes.store', $comment));
-
-        Notification::assertSentTo(
-            $commentPoster,
-            CommentHasNewLike::class
-        );
-    }
-
-    /** @test */
-    public function the_owner_of_the_comment_should_not_receive_notifications_when_he_likes_his_own_comments()
-    {
-        Notification::fake();
-        $commentPoster = $this->signIn();
-        $profilePost = create(ProfilePost::class);
-        $comment = create(Reply::class, [
-            'user_id' => $commentPoster->id,
-            'repliable_id' => $profilePost->id,
-            'repliable_type' => ProfilePost::class,
-        ]);
-
-        $this->post(route('api.likes.store', $comment));
-
-        Notification::assertNotSentTo(
-            $commentPoster,
-            CommentHasNewLike::class
-        );
-    }
-
 }

@@ -11,8 +11,8 @@ class ThreadHasNewReply extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $thread;
-    protected $reply;
+    public $thread;
+    public $reply;
     /**
      * Create a new notification instance.
      *

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Notifications;
 
-use App\Notifications\ReplyHasNewLike;
 use App\Notifications\ThreadHasNewReply;
 use App\Reply;
 use App\Thread;
@@ -31,80 +30,86 @@ class ThreadNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_subscribed_to_a_thread_receives_a_notification_when_a_new_reply_is_posted_by_another_user()
+    public function a_thread_subscriber_receives_a_mail_and_database_notifications_when_new_reply_is_posted_to_thread()
     {
-        $this->put(
-            route('api.thread-subscriptions.update', $this->thread),
-            ['email_notifications' => true]
+        $thread = create(Thread::class);
+        $subscriber = create(User::class);
+        $thread->subscribe($subscriber->id);
+        $replyPoster = $this->signIn();
+        $newReply = 'new reply';
+        $desiredChannels = ['mail', 'database'];
+
+        $this->post(
+            route('api.replies.store', $thread),
+            ['body' => $newReply]
         );
 
-        $this->thread->addReply(raw(Reply::class));
-
+        $reply = $thread->replies->firstWhere('body', $newReply);
         Notification::assertSentTo(
             $this->user,
             ThreadHasNewReply::class,
-            function ($notification, $channels) {
-                return array_intersect(['mail', 'database'], $channels);
+            function ($notification, $channels)
+             use (
+                $reply,
+                $thread,
+                $desiredChannels
+            ) {
+                return collect($channels)->every(function ($channel) use ($desiredChannels) {
+                    return collect($desiredChannels)->contains($channel);
+                })
+                && $notification->reply->id == $reply->id
+                && $notification->thread->id == $thread->id;
             });
     }
 
     /** @test */
-    public function a_user_subscribed_to_a_thread_can_choose_to_not_receive_email_notifications_when_a_new_reply_is_posted_to_the_thread()
+    public function a_thread_subsriber_can_choose_to_receive_only_database_notifications_when_a_new_reply_is_posted_to_thread()
     {
-        $this->put(
-            route('api.thread-subscriptions.update', $this->thread),
-            ['email_notifications' => false]
+        $thread = create(Thread::class);
+        $subscriber = create(User::class);
+        $thread->subscribe($subscriber->id, $prefersEmail = false);
+        $replyPoster = $this->signIn();
+        $newReply = 'new reply';
+        $desiredChannels = ['database'];
+        $undesiredChannels = ['mail'];
+
+        $this->post(
+            route('api.replies.store', $thread),
+            ['body' => $newReply]
         );
 
-        $this->thread->addReply(raw(Reply::class));
-
+        $reply = $thread->replies->firstWhere('body', $newReply);
         Notification::assertSentTo(
             $this->user,
             ThreadHasNewReply::class,
-            function ($notification, $channels) {
-                return in_array('database', $channels) && !in_array('mail', $channels);
+            function ($notification, $channels)
+             use (
+                $thread,
+                $reply,
+                $desiredChannels,
+                $undesiredChannels
+            ) {
+                return in_array($desiredChannels, $channels)
+                && !in_array($undesiredChannels, $channels)
+                && $notification->thread->id == $thread->id
+                && $notification->reply->id == $reply->id;
             });
     }
 
     /** @test */
-    public function a_user_subscribed_to_a_thread_must_not_receive_notifications_about_his_own_replies()
+    public function a_thread_subscriber_should_not_receive_any_notifications_when_posts_replies_to_thread()
     {
-        $this->put(route('api.thread-subscriptions.update', $this->thread));
+        $thread = create(Thread::class);
+        $subscriber = create(User::class);
+        $thread->subscribe($subscriber->id);
+        $this->signIn($subscriber);
+        $newReply = 'new reply';
 
-        $this->thread->addReply(raw(Reply::class, [
-            'user_id' => $this->user->id,
-        ]));
+        $this->post(
+            route('api.replies.store', $thread),
+            ['body' => $newReply]
+        );
 
-        Notification::assertNotSentTo($this->user, ThreadHasNewReply::class);
+        Notification::assertNotSentTo($subscriber, ThreadHasNewReply::class);
     }
-
-    /** @test */
-    public function the_poster_of_a_reply_receives_notification_when_his_post_is_liked_by_another_user()
-    {
-
-        $replyPoster = create(User::class);
-
-        $reply = $this->thread->addReply(
-            raw(Reply::class, ['user_id' => $replyPoster->id]
-            ));
-
-        $this->post(route('api.likes.store', $reply));
-
-        Notification::assertSentTo($replyPoster, ReplyHasNewLike::class);
-
-    }
-
-    /** @test */
-    public function the_poster_of_the_reply_must_not_receive_a_notification_when_he_likes_his_own_reply()
-    {
-
-        $reply = $this->thread->addReply(
-            raw(Reply::class, ['user_id' => $this->user->id]
-            ));
-
-        $this->post(route('api.likes.store', $reply));
-
-        Notification::assertNotSentTo($this->user, ReplyHasNewLike::class);
-    }
-
 }
