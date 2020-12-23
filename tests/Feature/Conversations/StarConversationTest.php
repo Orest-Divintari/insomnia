@@ -15,12 +15,11 @@ class StarConversationTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)->create();
-
-        $this->assertFalse($conversation->starred);
+        $this->assertFalse($conversation->starred());
 
         $this->post(route('api.star-conversations.store', $conversation));
 
-        $this->assertTrue($conversation->starred);
+        $this->assertTrue($conversation->starred());
     }
 
     /** @test */
@@ -28,13 +27,12 @@ class StarConversationTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)->create();
-
-        $this->assertFalse($conversation->starred);
-        $this->post(route('api.star-conversations.store', $conversation));
-        $this->assertTrue($conversation->starred);
+        $conversation->star();
+        $this->assertTrue($conversation->starred());
 
         $this->delete(route('api.star-conversations.destroy', $conversation));
-        $this->assertFalse($conversation->starred);
+
+        $this->assertFalse($conversation->starred());
     }
 
 }

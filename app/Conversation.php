@@ -426,7 +426,19 @@ class Conversation extends Model
                 ->whereColumn('conversation_id', 'conversations.id')
                 ->where('user_id', auth()->id()),
         ]);
+    }
 
+    /**
+     * Determine whether the authenticated has starred the conversation
+     *
+     * @return boolean
+     */
+    public function starred()
+    {
+        return ConversationParticipant::where('conversation_id', $this->id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail()
+            ->starred;
     }
 
 }
