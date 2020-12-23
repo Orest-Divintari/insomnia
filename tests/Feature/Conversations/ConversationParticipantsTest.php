@@ -237,7 +237,7 @@ class ConversationParticipantsTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
-        $unathorizedUser = create(User::class);
+        $unathorizedUser = create(User::class);$response
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
