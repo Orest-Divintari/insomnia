@@ -211,7 +211,7 @@ class Conversation extends Model
     }
 
     /**
-     * Determine whether the conversation has been updated
+     * Add a coliumn which determines whether the conversation has been updated
      * since the last time that was read by the authenticated user
      *
      * @param Builder $query
@@ -228,6 +228,28 @@ class Conversation extends Model
                 ->whereColumn('reads.readable_id', 'conversations.id')
                 ->where('reads.readable_type', 'App\Conversation'),
         ]);
+    }
+
+    /**
+     * Determine whether the converastion has been updated
+     *
+     * @return boolean
+     */
+    public function hasBeenUpdated()
+    {
+        if (!auth()->check()) {
+            return true;
+        }
+
+        $conversationRead = $this->reads()
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (is_null($conversationRead)) {
+            return true;
+        }
+
+        return $this->updated_at > $conversationRead->read_at;
     }
 
     /**

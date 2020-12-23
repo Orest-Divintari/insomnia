@@ -394,4 +394,17 @@ class ConversationTest extends TestCase
 
         $this->assertTrue($conversation->isAdmin($user));
     }
+
+    /** @test */
+    public function a_conversation_knows_if_the_authenticated_user_has_read_it()
+    {
+        $conversationStarter = $this->signIn();
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->create();
+        $this->assertTrue($conversation->hasBeenUpdated());
+
+        $conversationStarter->read($conversation);
+
+        $this->assertFalse($conversation->hasBeenUpdated());
+    }
 }

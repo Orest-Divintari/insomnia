@@ -16,23 +16,27 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
     public function guests_cannot_mark_a_conversation_as_read()
     {
         $conversation = create(Conversation::class);
-        $this->patch(route('read-conversations.update', $conversation))
-            ->assertRedirect('login');
+
+        $response = $this->post(
+            route('read-conversations.store', $conversation)
+        );
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
     public function unathorized_users_cannot_mark_a_conversation_as_read()
     {
         $conversationStarter = $this->signIn();
-
-        $conversation = ConversationFactory::create();
-
-        $this->assertTrue($conversation->hasBeenUpdated);
-
+        $conversation = ConversationFactory::by($conversationStarter)->create();
+        $this->assertTrue($conversation->hasBeenUpdated());
         $nonParticipant = $this->signIn();
 
-        $this->patch(route('read-conversations.update', $conversation))
-            ->assertStatus(Response::HTTP_FORBIDDEN);
+        $response = $this->post(
+            route('read-conversations.store', $conversation)
+        );
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
@@ -40,63 +44,52 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
     {
         $conversation = create(Conversation::class);
 
-        $this->assertTrue($conversation->hasBeenUpdated);
+        $response = $this->delete(
+            route('read-conversations.destroy', $conversation)
+        );
 
-        $this->patch(route('unread-conversations.update', $conversation))
-            ->assertRedirect('login');
+        $response->assertRedirect('login');
     }
 
     /** @test */
     public function unathorized_users_cannot_mark_a_conversation_as_unread()
     {
         $conversation = create(Conversation::class);
-
         $nonParticipant = $this->signIn();
 
-        $this->assertTrue($conversation->hasBeenUpdated);
+        $response = $this->delete(
+            route('read-conversations.destroy', $conversation)
+        );
 
-        $this->patch(route('unread-conversations.update', $conversation))
-            ->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
-    public function authorized_users_can_mark_a_conversation_as_unread()
+    public function converastion_participants_mark_a_conversation_as_unread()
     {
         $conversationStarter = $this->signIn();
+        $conversation = ConversationFactory::by($conversationStarter)->create();
+        $conversationStarter->read($conversation);
+        $this->assertFalse($conversation->hasBeenUpdated());
 
-        $conversation = create(Conversation::class);
+        $this->delete(
+            route('read-conversations.destroy', $conversation)
+        );
 
-        $this->assertTrue($conversation->hasBeenUpdated);
-
-        $this->patch(route('read-conversations.update', $conversation));
-
-        $this->assertFalse($conversation->hasBeenUpdated);
-
-        $this->patch(route('unread-conversations.update', $conversation))
-            ->assertOk();
-
-        $this->assertTrue($conversation->hasBeenUpdated);
+        $this->assertTrue($conversation->hasBeenUpdated());
     }
 
     /** @test */
-    public function an_authorized_user_can_mark_a_conversation_as_read()
+    public function a_conversation_participant_can_mark_a_conversation_as_read()
     {
         $conversationStarter = $this->signIn();
+        $conversation = ConversationFactory::by($conversationStarter)->create();
+        $this->assertTrue($conversation->hasBeenUpdated());
 
-        $conversation = ConversationFactory::create();
+        $this->post(
+            route('read-conversations.store', $conversation)
+        );
 
-        $this->assertTrue($conversation->hasBeenUpdated);
-
-        $this->patch(route('read-conversations.update', $conversation))
-            ->assertOk();
-
-        $this->assertDatabaseHas('reads', [
-            'readable_id' => $conversation->id,
-            'readable_type' => 'App\Conversation',
-            'user_id' => $conversationStarter->id,
-            'read_at' => $conversation->reads()->latest()->first()->read_at,
-        ]);
-
-        $this->assertFalse($conversation->fresh()->hasBeenUpdated);
+        $this->assertFalse($conversation->hasBeenUpdated());
     }
 }
