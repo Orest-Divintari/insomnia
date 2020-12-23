@@ -20,20 +20,23 @@ class ViewConversationsTest extends TestCase
     {
         $someRandomConversationSlug = 'asdf';
 
-        $this->get(route('conversations.show', $someRandomConversationSlug))
-            ->assertRedirect('login');
+        $response = $this->get(
+            route('conversationsshow', $someRandomConversationSlug)
+        );
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
     public function unathorized_users_cannot_view_a_conversation()
     {
         $conversationStarter = $this->signIn();
-        $conversation = ConversationFactory::create();
-
+        $conversation = ConversationFactory::by($conversationStarter)->create();
         $notParticipant = $this->signIn();
 
-        $this->get(route('conversations.show', $conversation))
-            ->assertStatus(Response::HTTP_FORBIDDEN);
+        $response = $this->get(route('conversations.show', $conversation));
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
@@ -76,9 +79,8 @@ class ViewConversationsTest extends TestCase
             );
         $newMessage = $conversation->addMessage('new message');
 
-        $conversations = $this->getJson(
-            route('conversations.index')
-        )->json()['data'];
+        $conversations = $this->getJson(route('conversations.index'))
+            ->json()['data'];
 
         $this->assertEquals(2, $conversations[0]['messages_count']);
         $this->assertEquals(2, $conversations[0]['participants_count']);
@@ -120,11 +122,10 @@ class ViewConversationsTest extends TestCase
             ->withParticipants(array($participant->name))
             ->create();
         $hiddenConversation->hideFrom($participant);
-
         $this->signIn($participant);
-        $conversations = $this->getJson(
-            route('conversations.index')
-        )->json()['data'];
+
+        $conversations = $this->getJson(route('conversations.index'))
+            ->json()['data'];
 
         $this->assertCount(1, $conversations);
         $this->assertEquals(
@@ -145,11 +146,10 @@ class ViewConversationsTest extends TestCase
             ->withParticipants(array($participant->name))
             ->create();
         $leftConversation->leftBy($participant);
-
         $this->signIn($participant);
-        $conversations = $this->getJson(
-            route('conversations.index')
-        )->json()['data'];
+
+        $conversations = $this->getJson(route('conversations.index'))
+            ->json()['data'];
 
         $this->assertCount(1, $conversations);
         $this->assertEquals(
@@ -225,9 +225,9 @@ class ViewConversationsTest extends TestCase
         $conversationByRandomUser = ConversationFactory::by($randomUser)
             ->withParticipants([$orestis->name, $john->name])
             ->create();
-
         $this->signIn($orestis);
         $desiredUsernames = "{$orestis->name}, {$john->name}";
+
         $conversations = $this->getJson(
             route('conversations.index', ['startedBy' => $desiredUsernames])
         )->json()['data'];
@@ -324,7 +324,6 @@ class ViewConversationsTest extends TestCase
         $unreadConversationByOrestis = ConversationFactory::by($orestis)
             ->withParticipants([$participant->name])
             ->create();
-
         $john = $this->signIn();
         $readConversationByJohn = ConversationFactory::by($john)
             ->withParticipants([$participant->name])

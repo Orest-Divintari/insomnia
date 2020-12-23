@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Messages;
 
+use App\Conversation;
 use App\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,21 +19,28 @@ class CreateConversationMessageTest extends TestCase
     public function guests_cannot_add_a_message_to_a_conversation()
     {
         $conversationSlug = 'randomSlug';
-        $this->post(route('api.messages.store', $conversationSlug), ['body' => 'some message'])
-            ->assertRedirect('login');
+
+        $response = $this->post(
+            route('api.messages.store', $conversationSlug),
+            ['body' => 'some message']
+        );
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
     public function unathorized_users_cannot_add_messages_to_conversation()
     {
-        $this->signIn();
-        $conversation = ConversationFactory::create();
+        $conversation = create(Conversation::class);
         $message = ['body' => 'some message'];
         $unathorizedUser = $this->signIn();
-        $this->post(
+
+        $response = $this->post(
             route('api.messages.store', $conversation),
             $message
-        )->assertStatus(Response::HTTP_FORBIDDEN);
+        );
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
@@ -42,10 +50,12 @@ class CreateConversationMessageTest extends TestCase
         $conversation = ConversationFactory::create();
         $message = ['body' => ''];
 
-        $this->postJson(
+        $response = $this->postJson(
             route('api.messages.store', $conversation),
             $message
-        )->assertStatus(422)
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 
@@ -57,23 +67,23 @@ class CreateConversationMessageTest extends TestCase
         $nonStringMessage = array(15);
         $message = ['body' => $nonStringMessage];
 
-        $this->postJson(
+        $response = $this->postJson(
             route('api.messages.store', $conversation),
             $message
-        )->assertStatus(422)
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 
     /** @test */
-    public function participants_of_a_conversation_can_add_messages_to_conversation()
+    public function the_conversation_starter_can_add_a_new_message_to_the_conversation()
     {
         $conversationStarter = $this->signIn();
-        $conversation = ConversationFactory::create();
-
+        $conversation = ConversationFactory::by($conversationStarter)->create();
         $message = ['body' => 'some message'];
 
-        $unathorizedUser = $this->signIn();
-        $newMessage = $this->post(
+        $this->post(
             route('api.messages.store', $conversation),
             $message
         );
@@ -84,10 +94,16 @@ class CreateConversationMessageTest extends TestCase
             'user_id' => $conversationStarter->id,
             'body' => $message['body'],
         ]);
+    }
 
+    /** @test */
+    public function a_conversation_participant_can_add_a_new_message_to_the_conversation()
+    {
+        $conversationStarter = $this->signIn();
         $participant = create(User::class);
-
-        $conversation->addParticipants([$participant->name]);
+        $conversation = ConversationFactory::withParticipants([$participant->name])
+            ->by($conversationStarter)->create();
+        $message = ['body' => 'some message'];
         $this->signIn($participant);
 
         $this->post(

@@ -35,7 +35,6 @@ class FollowNotificationsTest extends TestCase
     {
         config(['database.default' => 'mysql']);
         config(['database.connections.mysql.database' => config('insomnia.database.name')]);
-
         $follower = $this->signIn();
         $user = create(User::class);
         $follower->follow($user);

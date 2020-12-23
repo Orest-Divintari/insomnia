@@ -19,10 +19,12 @@ class ManageConversationMessagesTest extends TestCase
     {
         $randomMessageId = 1;
 
-        $this->patch(
+        $response = $this->patch(
             route('api.messages.update', $randomMessageId),
             ['body' => 'new body']
-        )->assertRedirect('login');
+        );
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
@@ -30,23 +32,22 @@ class ManageConversationMessagesTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::create();
-
         $message = $conversation->messages()->first();
-
         $unathorizedUser = $this->signIn();
 
-        $this->patch(
+        $response = $this->patch(
             route('api.messages.update', $message),
             ['body' => 'new body']
-        )->assertStatus(Response::HTTP_FORBIDDEN);
+        );
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
-    public function a_message_can_be_updated_only_by_the_owner()
+    public function a_message_can_be_updated_only_by_the_creator()
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::create();
-
         $message = $conversation->messages()->first();
 
         $this->patch(
@@ -65,13 +66,14 @@ class ManageConversationMessagesTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::create();
-
         $message = $conversation->messages()->first();
 
-        $this->patchJson(
+        $response = $this->patchJson(
             route('api.messages.update', $message),
             $updatedMessage = ['body' => '']
-        )->assertStatus(422)
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 
@@ -80,14 +82,15 @@ class ManageConversationMessagesTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::create();
-
         $message = $conversation->messages()->first();
-
         $nonStringMessage = array(15);
-        $this->patchJson(
+
+        $response = $this->patchJson(
             route('api.messages.update', $message),
             $updatedMessage = ['body' => $nonStringMessage]
-        )->assertStatus(422)
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 

@@ -12,32 +12,30 @@ class ReadConversationMessagesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function authenticated_users_cannot_read_messages_of_conversations_that_they_are_not_participants()
+    public function unauthorised_users_cannot_read_messages_of_conversations_that_they_are_not_participants()
     {
         $conversationStarter = $this->signIn();
-
-        $conversation = ConversationFactory::create();
-
+        $conversation = ConversationFactory::by($conversationStarter)->create();
         $message = $conversation->messages()->first();
-
         $nonParticipant = $this->signIn();
 
-        $this->get(route('api.messages.show', $message))
-            ->assertStatus(Response::HTTP_FORBIDDEN);
+        $response = $this->get(route('api.messages.show', $message));
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
-    public function authenticated_participants_of_a_conversation_can_view_the_messages()
+    public function conversation_participants_can_read_their_messages()
     {
         $conversationStarter = $this->signIn();
-
-        $conversation = ConversationFactory::create();
-
+        $conversation = ConversationFactory::by($conversationStarter)->create();
         $message = $conversation->messages()->first();
 
-        $this->get(
+        $response = $this->get(
             route('api.messages.show', $message)
-        )->assertRedirect(
+        );
+
+        $response->assertRedirect(
             route('conversations.show', $message->repliable) .
             '?page=' . $message->pageNumber .
             '#convMessage-' . $message->id

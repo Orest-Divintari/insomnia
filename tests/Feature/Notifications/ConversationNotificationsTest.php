@@ -22,15 +22,14 @@ class ConversationNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function when_a_new_message_is_added_to_conversaation_the_participants_should_receive_email_notification()
+    public function when_a_new_message_is_added_to_conversation_the_participants_should_receive_email_notification()
     {
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
-
         $conversation = ConversationFactory::withParticipants([$participant->name])
             ->create();
-
         $message = $conversation->messages()->first();
+
         Notification::assertSentTo(
             $participant,
             function (ConversationHasNewMessage $notification, $channels)
@@ -49,11 +48,10 @@ class ConversationNotificationsTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
-
         $conversation = ConversationFactory::withParticipants([$participant->name])
             ->create();
-
         $message = $conversation->messages()->first();
+
         Notification::assertSentTo(
             $participant,
             function (ConversationHasNewMessage $notification, $channels)
@@ -65,7 +63,10 @@ class ConversationNotificationsTest extends TestCase
                 && $notification->message->id == $message->id;
             }
         );
-        Notification::assertNotSentTo($conversationStarter, ConversationHasNewMessage::class);
+        Notification::assertNotSentTo(
+            $conversationStarter,
+            ConversationHasNewMessage::class
+        );
     }
 
     /** @test */
@@ -83,6 +84,7 @@ class ConversationNotificationsTest extends TestCase
             $orestis->name,
         ]);
         $conversation->leftBy($orestis);
+
         $message = $conversation->addMessage(
             'some message',
             $conversationStarter
@@ -99,8 +101,14 @@ class ConversationNotificationsTest extends TestCase
                 && $notification->message->id == $message->id;
             }
         );
-        Notification::assertNotSentTo($conversationStarter, ConversationHasNewMessage::class);
-        Notification::assertNotSentTo($orestis, ConversationHasNewMessage::class);
+        Notification::assertNotSentTo(
+            $conversationStarter,
+            ConversationHasNewMessage::class
+        );
+        Notification::assertNotSentTo(
+            $orestis,
+            ConversationHasNewMessage::class
+        );
     }
 
     /** @test */
@@ -123,9 +131,18 @@ class ConversationNotificationsTest extends TestCase
             $conversationStarter
         );
 
-        Notification::assertSentTo($john, ConversationHasNewMessage::class);
-        Notification::assertSentTo($orestis, ConversationHasNewMessage::class);
-        Notification::assertNotSentTo($conversationStarter, ConversationHasNewMessage::class);
+        Notification::assertSentTo(
+            $john,
+            ConversationHasNewMessage::class
+        );
+        Notification::assertSentTo(
+            $orestis,
+            ConversationHasNewMessage::class
+        );
+        Notification::assertNotSentTo(
+            $conversationStarter,
+            ConversationHasNewMessage::class
+        );
     }
 
     /** @test */

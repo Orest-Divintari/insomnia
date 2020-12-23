@@ -51,7 +51,6 @@ class ThreadNotificationsTest extends TestCase
     /** @test */
     public function a_user_subscribed_to_a_thread_can_choose_to_not_receive_email_notifications_when_a_new_reply_is_posted_to_the_thread()
     {
-
         $this->put(
             route('api.thread-subscriptions.update', $this->thread),
             ['email_notifications' => false]
@@ -70,7 +69,6 @@ class ThreadNotificationsTest extends TestCase
     /** @test */
     public function a_user_subscribed_to_a_thread_must_not_receive_notifications_about_his_own_replies()
     {
-
         $this->put(route('api.thread-subscriptions.update', $this->thread));
 
         $this->thread->addReply(raw(Reply::class, [
