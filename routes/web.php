@@ -162,11 +162,11 @@ Route::group([
             ->name('api.read-threads.update');
 
         // read conversations
-        Route::patch('/conversations/{conversation}/read', 'ReadConversationController@update')
-            ->name('read-conversations.update');
+        Route::post('/conversations/{conversation}/read', 'ReadConversationController@store')
+            ->name('read-conversations.store');
 
-        Route::patch('/conversations/{conversation}/unread', 'UnreadConversationController@update')
-            ->name('unread-conversations.update');
+        Route::delete('/conversations/{conversation}/read', 'ReadConversationController@destroy')
+            ->name('read-conversations.destroy');
 
         // hide conversation
         Route::patch('/conversations/{conversation}/hide', 'HideConversationController@update')

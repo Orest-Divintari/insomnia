@@ -33,9 +33,6 @@ export default {
     readPath() {
       return this.path + "/read";
     },
-    unreadPath() {
-      return this.path + "/unread";
-    },
     starPath() {
       return this.path + "/star";
     },
@@ -105,13 +102,13 @@ export default {
     },
     markRead() {
       axios
-        .patch(this.readPath)
+        .post(this.readPath)
         .then((response) => (this.isRead = true))
         .catch((error) => console.log(error));
     },
     markUnread() {
       axios
-        .patch(this.unreadPath)
+        .delete(this.readPath)
         .then((response) => (this.isRead = false))
         .catch((error) => console.log(error));
     },
