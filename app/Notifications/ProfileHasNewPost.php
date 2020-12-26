@@ -11,9 +11,9 @@ class ProfileHasNewPost extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $postPoster;
-    protected $profilePost;
-    protected $profileOwner;
+    public $postPoster;
+    public $profilePost;
+    public $profileOwner;
     /**
      * Create a new notification instance.
      *
