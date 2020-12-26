@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Like;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -80,21 +79,4 @@ class LikesTest extends TestCase
         $this->assertCount(0, $reply->fresh()->likes);
 
     }
-
-    /** @test */
-    public function when_a_reply_is_deleted_all_the_associated_likes_are_deleted()
-    {
-        $user = $this->signIn();
-
-        $reply = ReplyFactory::create();
-
-        $reply->likedBy($user);
-
-        $this->assertCount(1, $reply->likes);
-
-        $reply->delete();
-
-        $this->assertEquals(0, Like::all()->count());
-    }
-
 }
