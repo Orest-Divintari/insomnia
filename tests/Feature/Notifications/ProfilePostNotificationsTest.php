@@ -15,26 +15,39 @@ class ProfilePostNotificationsTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        Notification::fake();
+    }
     /** @test */
     public function the_owner_of_a_profile_receives_notification_when_a_new_post_is_added_to_profile()
     {
-        Notification::fake();
-        $this->signIn();
+        $poster = $this->signIn();
         $profileOwner = create(User::class);
         $post = ['body' => 'some body'];
 
         $this->post(route('api.profile-posts.store', $profileOwner), $post);
 
+        $profilePost = ProfilePost::whereBody($post['body'])->first();
         Notification::assertSentTo(
             $profileOwner,
-            ProfileHasNewPost::class
+            ProfileHasNewPost::class,
+            function ($notificiation) use (
+                $poster,
+                $profileOwner,
+                $profilePost
+            ) {
+                return $notificiation->postPoster->id == $poster->id
+                && $notificiation->profileOwner->id == $profileOwner->id
+                && $notificiation->profilePost->id == $profilePost->id;
+            }
         );
     }
 
     /** @test */
-    public function participants_in_a_post_receive_notifications_when_a_new_comment_is_added_to_the_post()
+    public function participants_in_a_profile_post_receive_notifications_when_a_new_comment_is_added_to_the_post()
     {
-        Notification::fake();
         $commentPoster = create(User::class, [
             'name' => 'azem',
         ]);
@@ -54,17 +67,28 @@ class ProfilePostNotificationsTest extends TestCase
 
         $this->post(route('api.comments.store', $profilePost), $comment);
 
+        $comment = Reply::whereBody($comment['body'])->first();
         Notification::assertSentTo(
             $postParticipant,
-            ProfilePostHasNewComment::class
+            ProfilePostHasNewComment::class,
+            function ($notificiation) use (
+                $commentPoster,
+                $comment,
+                $profilePost,
+                $profileOwner
+            ) {
+                return $notificiation->commentPoster->id == $commentPoster->id
+                && $notificiation->comment->id == $comment->id
+                && $notificiation->profilePost->id == $profilePost->id
+                && $notificiation->profileOwner->id == $profileOwner->id;
+            }
         );
 
     }
 
     /** @test */
-    public function the_user_who_added_the_comment_should_not_receive_notifications_of_his_own_comments()
+    public function the_user_who_added_the_comment_should_not_receive_notifications_of_their_own_comments()
     {
-        Notification::fake();
         $commentPoster = $this->signIn();
         $profileOwner = create(User::class);
         $profilePost = create(ProfilePost::class);
@@ -84,7 +108,6 @@ class ProfilePostNotificationsTest extends TestCase
     /** @test */
     public function the_owner_of_the_profile_should_receive_notifications_of_new_comments_added_on_profile_posts_on_his_profile()
     {
-        Notification::fake();
         $this->signIn();
         $profileOwner = create(User::class, [
             'name' => 'profile owner',
@@ -108,7 +131,6 @@ class ProfilePostNotificationsTest extends TestCase
     /** @test */
     public function the_owner_of_the_profile_should_not_receive_notifications_of_his_own_comments_on_posts_on_his_profile()
     {
-        Notification::fake();
         $profileOwner = $this->signIn();
         $profilePost = create(ProfilePost::class, [
             'profile_owner_id' => $profileOwner->id,
