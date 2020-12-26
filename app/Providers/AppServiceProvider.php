@@ -2,9 +2,7 @@
 
 namespace App\Providers;
 
-use App\Conversation;
 use App\Notifications\ThreadHasNewReply;
-use App\Observers\ConversationObserver;
 use App\Reply;
 use App\Search\AllPosts;
 use App\Search\ProfilePosts;
@@ -54,8 +52,6 @@ class AppServiceProvider extends ServiceProvider
         Threads::bootSearchable();
         ProfilePosts::bootSearchable();
         AllPosts::bootSearchable();
-
-        Conversation::observe(ConversationObserver::class);
 
         Blade::if('verified', function () {
             if (auth()->check()) {

@@ -12,9 +12,10 @@ class ProfilePostObserver
      * @param  \App\ProfilePost  $profilePost
      * @return void
      */
-    public function deleted(ProfilePost $profilePost)
+    public function deleting(ProfilePost $profilePost)
     {
-        $profilePost->comments->each->delete();
+        $profilePost->activities->each->delete;
+        $profilePost->comments->each->delete;
     }
 
 }
