@@ -37,13 +37,11 @@ class UserNotificationsTest extends TestCase
     public function a_user_can_mark_a_database_notification_as_read()
     {
         $this->assertCount(2, $this->response);
-
         $firstNotification = $this->user->unreadNotifications->first();
 
         $this->delete(route('api.user-notifications.destroy', $firstNotification->id));
 
         $response = $this->get(route('api.user-notifications.index'))->json();
-
         $this->assertCount(1, $response);
 
     }

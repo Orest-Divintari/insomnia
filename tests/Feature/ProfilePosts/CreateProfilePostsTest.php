@@ -15,40 +15,39 @@ class CreateProfilePostsTest extends TestCase
     public function guests_cannot_create_a_profile_post()
     {
         $profileOwner = create(User::class);
+        $post = ['body' => 'some news'];
 
-        $post = [
-            'body' => 'some news',
-        ];
+        $response = $this->post(
+            route('api.profile-posts.store', $profileOwner),
+            $post
+        );
 
-        $this->post(route('api.profile-posts.store', $profileOwner), $post)
-            ->assertRedirect('login');
+        $response->assertRedirect('login');
     }
 
     /** @test */
-    public function an_authenticated_user_has_to_verify_the_email_before_creating_a_profile_post()
+    public function unferified_users_must_not_add_profile_posts()
     {
         $profileOwner = create(User::class);
-
         $poster = create(User::class, [
             'email_verified_at' => null,
         ]);
-
         $this->signIn($poster);
 
-        $this->post(route('api.profile-posts.store', $profileOwner), [])
-            ->assertRedirect(route('verification.notice'));
+        $response = $this->post(
+            route('api.profile-posts.store', $profileOwner),
+            []
+        );
+
+        $response->assertRedirect(route('verification.notice'));
     }
 
     /** @test */
     public function authenticated_users_that_have_verified_the_email_can_create_a_profile_post()
     {
         $poster = $this->signIn();
-
         $profileOwner = create(User::class);
-
-        $post = [
-            'body' => 'some news',
-        ];
+        $post = ['body' => 'some news'];
 
         $this->post(
             route('api.profile-posts.store', $profileOwner),
@@ -63,16 +62,17 @@ class CreateProfilePostsTest extends TestCase
     }
 
     /** @test */
-    public function a_post_requires_a_body()
+    public function a_profile_post_requires_a_body()
     {
         $profileOwner = create(User::class);
-
         $this->signIn();
 
-        $this->postJson(
+        $response = $this->postJson(
             route('api.profile-posts.store', $profileOwner),
             ['body' => '']
-        )->assertStatus(422)
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 
@@ -80,15 +80,15 @@ class CreateProfilePostsTest extends TestCase
     public function a_post_body_must_be_of_type_string()
     {
         $profileOwner = create(User::class);
-
         $this->signIn();
-
         $nonStringBody = array(15);
 
-        $this->postJson(
+        $response = $this->postJson(
             route('api.profile-posts.store', $profileOwner),
             ['body' => $nonStringBody]
-        )->assertStatus(422)
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 
