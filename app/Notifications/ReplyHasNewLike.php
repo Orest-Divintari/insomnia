@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class ReplyHasNewLike extends Notification implements ShouldQueue
@@ -41,24 +40,10 @@ class ReplyHasNewLike extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['database'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-            ->view('emails.subscription.notify_reply_poster', [
-                'reply' => $this->reply,
-            ]);
-    }
-
-    /**
+    /**b
      * Get the array representation of the notification.
      *
      * @param  mixed  $notifiable
