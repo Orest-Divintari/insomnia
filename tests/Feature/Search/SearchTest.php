@@ -49,11 +49,13 @@ class SearchTest extends TestCase
             'created_at' => Carbon::now()->subDays(10),
         ]);
 
-        $results = $this->get(route('search.show', [
+        $response = $this->get(route('search.show', [
             'type' => 'thread',
             'q' => $this->searchTerm,
             'lastCreated' => 1,
-        ]))->assertSee($this->noResultsMessage);
+        ]));
+
+        $response->assertSee($this->noResultsMessage);
 
         $oldThread->delete();
     }
@@ -67,11 +69,13 @@ class SearchTest extends TestCase
         $name = 'benz';
         create(User::class, ['name' => $name]);
 
-        $results = $this->get(route('search.show', [
+        $response = $this->get(route('search.show', [
             'type' => 'thread',
             'q' => $this->searchTerm,
             'postedBy' => $name,
-        ]))->assertSee($this->noResultsMessage);
+        ]));
+
+        $response->assertSee($this->noResultsMessage);
 
         $thread->delete();
     }

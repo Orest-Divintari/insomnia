@@ -23,9 +23,11 @@ class ProfileTest extends TestCase
     public function when_visiting_a_profile_all_the_necessary_information_to_display_the_profile_are_returned()
     {
         $profileOwner = create(User::class);
-
         $this->signIn();
-        $response = $this->getJson(route('profiles.show', $profileOwner))->json();
+
+        $response = $this->getJson(
+            route('profiles.show', $profileOwner)
+        )->json();
 
         $this->assertContains('messages_count', $response);
         $this->assertContains('likes_score', $response);

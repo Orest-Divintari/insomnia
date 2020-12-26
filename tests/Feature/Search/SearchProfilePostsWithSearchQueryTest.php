@@ -20,7 +20,6 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
         $undesiredComment = CommentFactory::create([
             'repliable_id' => $undesiredProfilePost->id,
         ]);
-
         $desiredProfilePost = create(
             ProfilePost::class,
             ['body' => $this->searchTerm]
@@ -42,11 +41,9 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
             $this->totalNumberOfDesiredItems,
             $results
         );
-
         $results = collect($results);
         $resultedProfilePost = $results->firstWhere('type', 'profile-post');
         $resultedComment = $results->firstWhere('type', 'profile-post-comment');
-
         $this->assertComment($resultedComment, $desiredComment, $desiredProfilePost);
         $this->assertProfilePost($resultedProfilePost, $desiredProfilePost);
 

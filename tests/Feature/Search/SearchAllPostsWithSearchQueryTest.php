@@ -22,7 +22,6 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
         $undesiredReply = ReplyFactory::create([
             'repliable_id' => $undesiredThread->id,
         ]);
-
         $desiredThread = create(
             Thread::class,
             ['body' => $this->searchTerm]
@@ -31,7 +30,6 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
             'body' => $this->searchTerm,
             'repliable_id' => $desiredThread->id,
         ]);
-
         $desiredProfilePost = create(
             ProfilePost::class,
             ['body' => $this->searchTerm]

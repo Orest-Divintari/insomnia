@@ -35,15 +35,17 @@ class CreateThreadsTest extends TestCase
     {
         $category = create(Category::class);
 
-        $this->get(route('threads.create', $category))
-            ->assertRedirect('login');
+        $response = $this->get(route('threads.create', $category));
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
     public function guests_may_not_post_new_threads()
     {
-        $this->post(route('threads.store'), [])
-            ->assertRedirect('login');
+        $response = $this->post(route('threads.store'), []);
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
@@ -52,28 +54,23 @@ class CreateThreadsTest extends TestCase
         $user = create(User::class, [
             'email_verified_at' => null,
         ]);
-
         $this->signIn($user);
 
-        $this->post(route('threads.store'), [])
-            ->assertRedirect(route('verification.notice'));
+        $response = $this->post(route('threads.store'), []);
+
+        $response->assertRedirect(route('verification.notice'));
     }
 
     /** @test */
     public function authenticated_users_that_have_confirmed_their_email_may_postThreads()
     {
         $this->signIn();
-
         $thread = raw(Thread::class);
-
         $title = ['title' => $thread['title']];
 
-        $response = $this->post(route('threads.store'), $thread);
+        $this->post(route('threads.store'), $thread);
 
         $this->assertDatabaseHas('threads', $title);
-
-        $this->get($response->headers->get('location'))
-            ->assertSee($title['title']);
 
     }
 
@@ -81,7 +78,6 @@ class CreateThreadsTest extends TestCase
     public function a_reply_is_created_when_a_new_thread_is_created_as_the_body_of_the_thread()
     {
         $user = $this->signIn();
-
         $thread = raw(Thread::class, [
             'user_id' => $user->id,
         ]);
@@ -93,56 +89,62 @@ class CreateThreadsTest extends TestCase
             'user_id' => $thread['user_id'],
             'position' => 1,
         ]);
-
     }
 
     /** @test */
     public function a_thread_requires_a_body()
     {
-        $this->postThread(['body' => ''])
-            ->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
+        $response = $this->postThread(['body' => '']);
+
+        $response->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
     }
 
     /** @test */
     public function the_body_of_a_thread_must_be_of_stype_string()
     {
-        $this->postThread(['body' => 15])
-            ->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
+        $response = $this->postThread(['body' => 15]);
+
+        $response->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
     }
 
     /** @test */
     public function a_thread_requires_a_title()
     {
-        $this->postThread(['title' => ''])
-            ->assertSessionHasErrors(['title' => $this->titleErrorMessage]);
+        $response = $this->postThread(['title' => '']);
+
+        $response->assertSessionHasErrors(['title' => $this->titleErrorMessage]);
     }
 
     /** @test */
     public function a_thread_title_must_be_of_type_string()
     {
-        $this->postThread(['title' => 15])
-            ->assertSessionHasErrors(['title' => $this->titleErrorMessage]);
+        $response = $this->postThread(['title' => 15]);
+
+        $response->assertSessionHasErrors(['title' => $this->titleErrorMessage]);
     }
 
     /** @test */
     public function a_thread_requires_a_category()
     {
-        $this->postThread(['category_id' => ''])
-            ->assertSessionHasErrors(['category_id' => $this->categoryErrorMessage]);
+        $response = $this->postThread(['category_id' => '']);
+
+        $response->assertSessionHasErrors(['category_id' => $this->categoryErrorMessage]);
     }
 
     /** @test */
     public function a_thread_requires_a_category_that_already_exists_in_the_database()
     {
-        $this->postThread(['category_id' => 12345])
-            ->assertSessionHasErrors(['category_id' => $this->categoryErrorMessage]);
+        $response = $this->postThread(['category_id' => 12345]);
+
+        $response->assertSessionHasErrors(['category_id' => $this->categoryErrorMessage]);
     }
 
     /** @test */
     public function the_category_value_must_be_of_type_integer()
     {
-        $this->postThread(['category_id' => '12345'])
-            ->assertSessionHasErrors(['category_id' => $this->categoryErrorMessage]);
+        $response = $this->postThread(['category_id' => '12345']);
+
+        $response->assertSessionHasErrors(['category_id' => $this->categoryErrorMessage]);
     }
 
     /** @test */
@@ -152,10 +154,14 @@ class CreateThreadsTest extends TestCase
         $tag = create(Tag::class);
         $thread = raw(Thread::class);
 
-        $this->post(route('threads.store', array_merge($thread, ['tags' => $tag->name])));
+        $this->post(
+            route(
+                'threads.store',
+                array_merge($thread, ['tags' => $tag->name])
+            )
+        );
 
         $thread = Thread::whereSlug($thread['slug'])->first();
-
         $this->assertCount(1, $thread->tags);
         $this->assertEquals($tag->id, $thread->tags->first()->id);
     }
@@ -169,10 +175,14 @@ class CreateThreadsTest extends TestCase
         $tags = "{$tagApple->name}, {$tagSamsung->name}";
         $thread = raw(Thread::class);
 
-        $this->post(route('threads.store', array_merge($thread, ['tags' => $tags])));
+        $this->post(
+            route(
+                'threads.store',
+                array_merge($thread, ['tags' => $tags])
+            )
+        );
 
         $thread = Thread::whereSlug($thread['slug'])->first();
-
         $this->assertCount(2, $thread->tags);
         $this->assertContains($tagApple->id, $thread->tags->pluck('id'));
         $this->assertContains($tagSamsung->id, $thread->tags->pluck('id'));
@@ -185,11 +195,13 @@ class CreateThreadsTest extends TestCase
         $nonExistingTag = 'randomTag';
         $thread = raw(Thread::class);
 
-        $this->post(
+        $response = $this->post(
             route(
                 'threads.store',
                 array_merge($thread, ['tags' => $nonExistingTag]))
-        )->assertSessionHasErrors([
+        );
+
+        $response->assertSessionHasErrors([
             'tags.0' => $this->tagErrorMessage . $nonExistingTag],
         );
     }
@@ -199,14 +211,15 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
         $nonExistingTags = 'randomTag, randomTag2';
-
         $thread = raw(Thread::class);
 
-        $this->post(
+        $response = $this->post(
             route(
                 'threads.store',
                 array_merge($thread, ['tags' => $nonExistingTags]))
-        )->assertSessionHasErrors([
+        );
+
+        $response->assertSessionHasErrors([
             'tags.0' => $this->tagErrorMessage . 'randomTag',
             'tags.1' => $this->tagErrorMessage . 'randomTag2',
         ]);
@@ -218,9 +231,7 @@ class CreateThreadsTest extends TestCase
         $this->signIn();
         $appleTag = create(Tag::class);
         $samsungTag = create(Tag::class);
-
         $arrayTags = [$appleTag->name, $samsungTag->name];
-
         $thread = raw(Thread::class);
 
         $this->post(
@@ -228,6 +239,7 @@ class CreateThreadsTest extends TestCase
                 'threads.store',
                 array_merge($thread, ['tags' => $arrayTags]))
         );
+
         $thread = Thread::whereSlug($thread['slug'])->first();
         $this->assertCount(2, $thread->tags);
     }
@@ -239,7 +251,6 @@ class CreateThreadsTest extends TestCase
         $appleTag = create(Tag::class);
         $samsungTag = create(Tag::class);
         $commaSeparatedStringTags = $appleTag->name . ',' . $samsungTag->name;
-
         $thread = raw(Thread::class);
 
         $this->post(
@@ -257,14 +268,15 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
         $nonStringTag = 5;
-
         $thread = raw(Thread::class);
 
-        $this->post(
+        $response = $this->post(
             route(
                 'threads.store',
                 array_merge($thread, ['tags' => $nonStringTag]))
-        )->assertSessionHasErrors('tags.0');
+        );
+
+        $response->assertSessionHasErrors('tags.0');
     }
 
     protected function postThread($overrides)

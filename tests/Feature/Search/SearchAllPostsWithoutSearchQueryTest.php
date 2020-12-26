@@ -23,7 +23,6 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
         $undesiredComment = CommentFactory::create([
             'repliable_id' => $undesiredProfilePost->id,
         ]);
-
         $user = $this->signIn();
         $desiredThread = create(
             Thread::class,

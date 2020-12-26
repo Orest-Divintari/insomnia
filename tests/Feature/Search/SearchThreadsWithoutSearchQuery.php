@@ -20,7 +20,6 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
             Thread::class,
             ['user_id' => $user->id]
         );
-
         $anotherUser = $this->signIn();
         $undesiredThread = create(Thread::class);
 
@@ -49,7 +48,6 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         ReplyFactory::create([
             'repliable_id' => $undesiredThread->id,
         ]);
-
         $desiredThread = create(Thread::class);
         $user = $this->signIn();
         $desiredReply = ReplyFactory::create([
@@ -85,7 +83,6 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $undesiredReply = ReplyFactory::create([
             'repliable_id' => $undesiredThread->id,
         ]);
-
         $user = $this->signIn();
         $desiredThread = create(
             Thread::class,
@@ -121,12 +118,11 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
         $desiredThread = create(Thread::class);
-
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $undesiredThread = create(Thread::class);
-
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+
         $results = $this->search([
             'type' => 'thread',
             'lastCreated' => $daysAgo,
@@ -153,15 +149,14 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $desiredReply = ReplyFactory::create([
             'repliable_id' => $desiredThread->id,
         ]);
-
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $undesiredThread = create(Thread::class);
         $undesiredReply = ReplyFactory::create([
             'repliable_id' => $undesiredThread->id,
         ]);
-
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+
         $results = $this->search([
             'type' => 'thread',
             'lastCreated' => $daysAgo,
@@ -196,13 +191,11 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
             'repliable_id' => $desiredThread->id,
             'user_id' => $user->id,
         ]);
-
         $anotherUser = $this->signIn();
         $undesiredThread = create(Thread::class);
         $undesiredReply = ReplyFactory::create([
             'repliable_id' => $undesiredThread->id,
         ]);
-
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $this->signIn($user);
@@ -214,8 +207,8 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
             'repliable_id' => $anotherUndesiredThread->id,
             'user_id' => $user->id,
         ]);
-
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+
         $results = $this->search([
             'type' => 'thread',
             'lastCreated' => $daysAgo,
@@ -227,11 +220,9 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $this->assertCount(
             $this->totalNumberOfDesiredItems, $results
         );
-
         $results = collect($results);
         $resultedReply = $results->firstWhere('type', 'thread-reply');
         $resultedThread = $results->firstWhere('type', 'thread');
-
         $this->assertThread($resultedThread, $desiredThread);
         $this->assertReply($resultedReply, $desiredReply, $desiredThread);
 

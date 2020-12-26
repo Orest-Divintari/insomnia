@@ -18,84 +18,87 @@ class ManageThreadsTest extends TestCase
         $thread = create(Thread::class, [
             'title' => 'old title',
         ]);
-
         $this->signIn();
 
-        $this->patch(route('api.threads.update', $thread), ['title' => 'new title'])
-            ->assertStatus(Response::HTTP_FORBIDDEN);
+        $response = $this->patch(
+            route('api.threads.update', $thread),
+            ['title' => 'new title']
+        );
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
     public function an_authorized_user_may_update_the_title_of_a_thread()
     {
         $user = $this->signIn();
-
         $thread = create(Thread::class, [
             'title' => 'old title',
             'user_id' => $user->id,
         ]);
-
         $newTitle = [
             'title' => 'new title',
         ];
-
         $this->assertDatabaseHas('threads', [
             'id' => $thread->id,
             'title' => 'old title',
         ]);
 
-        $this->patch(route('api.threads.update', $thread), $newTitle);
+        $this->patch(
+            route('api.threads.update', $thread),
+            $newTitle
+        );
 
         $this->assertDatabaseHas('threads', $newTitle);
-
     }
 
     /** @test */
     public function when_updating_a_thread_a_title_is_required()
     {
         $user = $this->signIn();
-
         $thread = create(Thread::class, [
             'title' => 'old title',
             'user_id' => $user->id,
         ]);
-
         $emptyTitle = [
             'title' => '',
         ];
-
         $this->assertDatabaseHas('threads', [
             'id' => $thread->id,
             'title' => 'old title',
         ]);
 
-        $this->patchJson(route('api.threads.update', $thread), $emptyTitle)
-            ->assertStatus(422)
+        $response = $this->patchJson(
+            route('api.threads.update', $thread),
+            $emptyTitle
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['title' => [$this->errorMessage]]);
     }
 
     /** @test */
     public function when_updating_a_thread_the_title_must_be_of_type_string()
     {
-
         $user = $this->signIn();
-
         $thread = create(Thread::class, [
             'title' => 'old title',
             'user_id' => $user->id,
         ]);
-
         $nonStringTitle = [
             'title' => array(15),
         ];
-
         $this->assertDatabaseHas('threads', [
             'id' => $thread->id,
             'title' => 'old title',
         ]);
 
-        $this->patchJson(route('api.threads.update', $thread), $nonStringTitle)
-            ->assertStatus(422)
+        $response = $this->patchJson(
+            route('api.threads.update', $thread),
+            $nonStringTitle
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['title' => [$this->errorMessage]]);
     }
 

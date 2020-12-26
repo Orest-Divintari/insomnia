@@ -21,7 +21,6 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             ProfilePost::class,
             ['user_id' => $user->id]
         );
-
         $anotherUser = $this->signIn();
         $undesiredProfilePost = create(ProfilePost::class);
 
@@ -31,6 +30,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         ],
             $this->numberOfDesiredProfilePosts
         );
+
         $this->assertCount(
             $this->numberOfDesiredProfilePosts, $results
         );

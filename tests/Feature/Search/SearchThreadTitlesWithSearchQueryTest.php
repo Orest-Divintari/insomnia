@@ -17,7 +17,6 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
             Thread::class,
             ['body' => $this->searchTerm]
         );
-
         $user = $this->signIn();
         $desiredThread = create(Thread::class, [
             'user_id' => $user->id,
@@ -34,7 +33,6 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $this->assertCount(
             $this->numberOfDesiredThreads, $results
         );
-
         $first = $this->numberOfDesiredThreads - 1;
         $this->assertThread($results[$first], $desiredThread);
 
@@ -53,7 +51,6 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
             Thread::class,
             ['title' => $this->searchTerm]
         );
-
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $undesiredThread = create(
@@ -64,8 +61,8 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
             Thread::class,
             ['title' => $this->searchTerm]
         );
-
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+
         $results = $this->search([
             'q' => $this->searchTerm,
             'onlyTitle' => true,
@@ -77,7 +74,6 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $this->assertCount(
             $this->numberOfDesiredThreads, $results
         );
-
         $first = $this->numberOfDesiredThreads - 1;
         $this->assertThread($results[$first], $desiredThread);
 
@@ -117,8 +113,8 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
                 'user_id' => $user->id,
             ]
         );
-
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+
         $results = $this->search([
             'q' => $this->searchTerm,
             'onlyTitle' => true,
@@ -131,7 +127,6 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $this->assertCount(
             $this->numberOfDesiredThreads, $results
         );
-
         $first = $this->numberOfDesiredThreads - 1;
         $this->assertThread($results[$first], $desiredThread);
 

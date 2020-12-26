@@ -34,10 +34,12 @@ class SearchTagsTest extends SearchTest
     {
         $nonExistingTag = 'randomTag';
 
-        $this->get(route(
+        $response = $this->get(route(
             'search.show',
             ['type' => 'tag', 'q' => $nonExistingTag]
         ),
-        )->assertSee('The following tag could not be found: ' . $nonExistingTag);
+        );
+
+        $response->assertSee('The following tag could not be found: ' . $nonExistingTag);
     }
 }

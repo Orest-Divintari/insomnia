@@ -23,8 +23,9 @@ class ViewThreadsTest extends TestCase
     /** @test */
     public function a_user_can_view_a_single_thread()
     {
-        $this->get(route('threads.show', $this->thread))
-            ->assertSee($this->thread->title);
+        $response = $this->get(route('threads.show', $this->thread));
+
+        $response->assertSee($this->thread->title);
     }
 
     /** @test */
@@ -36,8 +37,8 @@ class ViewThreadsTest extends TestCase
         $user = $this->signIn();
 
         $this->get(route('threads.show', $readThread));
-        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
 
+        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
         $threads = collect($threads);
         $this->assertTrue(
             $threads->every(function ($thread, $key) use ($readThread) {

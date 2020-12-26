@@ -23,18 +23,20 @@ class ParticipateInForumTest extends TestCase
     public function guests_may_not_post_replies_to_a_thread()
     {
         $thread = create(Thread::class);
-
         $reply = raw(Reply::class);
 
-        $this->post(route('api.replies.store', $thread), $reply)
-            ->assertRedirect('login');
+        $response = $this->post(
+            route('api.replies.store', $thread),
+            $reply
+        );
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
     public function authorized_users_may_post_replies_to_a_thread()
     {
         $user = $this->signIn();
-
         $thread = create(Thread::class);
 
         $this->post(route('api.replies.store', $thread), ['body' => 'some body']);
@@ -43,7 +45,6 @@ class ParticipateInForumTest extends TestCase
             'body' => 'some body',
             'user_id' => $user->id,
         ]);
-
         // first reply == body of thread
         $this->assertCount(2, $thread->replies);
 
@@ -56,8 +57,9 @@ class ParticipateInForumTest extends TestCase
         $replyPoster = $this->signIn();
         $emptyReply = ['body' => ''];
 
-        $this->postJson(route('api.replies.store', $thread), $emptyReply)
-            ->assertStatus(422)
+        $response = $this->postJson(route('api.replies.store', $thread), $emptyReply);
+
+        $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 
@@ -68,8 +70,12 @@ class ParticipateInForumTest extends TestCase
         $replyPoster = $this->signIn();
         $incorrectReply = ['body' => 15];
 
-        $this->postJson(route('api.replies.store', $thread), $incorrectReply)
-            ->assertStatus(422)
+        $response = $this->postJson(
+            route('api.replies.store', $thread),
+            $incorrectReply
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 }

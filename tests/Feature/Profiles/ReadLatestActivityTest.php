@@ -15,7 +15,6 @@ class ReadLatestActivityTest extends TestCase
     public function a_user_can_read_the_latest_activity_of_the_profile_owner()
     {
         $profileOwner = $this->signIn();
-
         $thread = create(Thread::class);
         $profilePost = create(ProfilePost::class);
         $threadReply = $thread->addReply(
@@ -25,7 +24,6 @@ class ReadLatestActivityTest extends TestCase
             ['body' => 'some body', 'user_id' => $profileOwner->id],
             $profileOwner
         );
-
         $replyLike = $threadReply->likedBy();
         $commentLike = $comment->likedBy();
 

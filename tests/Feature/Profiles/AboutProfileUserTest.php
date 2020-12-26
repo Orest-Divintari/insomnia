@@ -14,7 +14,6 @@ class AboutProfileUserTest extends TestCase
     public function a_user_can_view_the_about_tab_of_another_profile_user()
     {
         $profileOwner = create(User::class);
-
         $visitor = $this->signIn();
 
         $response = $this->getJson(
@@ -35,10 +34,8 @@ class AboutProfileUserTest extends TestCase
         $profileOwner = create(User::class);
         $followerA = create(User::class);
         $followerB = create(User::class);
-
         $followerA->follow($profileOwner);
         $followerB->follow($profileOwner);
-
         $visitor = $this->signIn();
 
         $response = $this->getJson(
@@ -46,7 +43,6 @@ class AboutProfileUserTest extends TestCase
         )->json()['followedBy'];
 
         $data = $response['data'];
-
         $this->assertEquals(
             $data[0]['id'],
             $followerA->id
@@ -55,7 +51,6 @@ class AboutProfileUserTest extends TestCase
             $data[1]['id'],
             $followerB->id
         );
-
         $this->assertEquals(
             '/api/users/' . $profileOwner->name . '/followedBy',
             $response['path']
@@ -68,10 +63,8 @@ class AboutProfileUserTest extends TestCase
         $profileOwner = create(User::class);
         $followerA = create(User::class);
         $followerB = create(User::class);
-
         $profileOwner->follow($followerA);
         $profileOwner->follow($followerB);
-
         $visitor = $this->signIn();
 
         $response = $this->getJson(
@@ -87,7 +80,6 @@ class AboutProfileUserTest extends TestCase
             $data[1]['id'],
             $followerB->id
         );
-
         $this->assertEquals(
             '/api/users/' . $profileOwner->name . '/follows',
             $response['path']
