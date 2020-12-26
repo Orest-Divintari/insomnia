@@ -49,37 +49,6 @@ class Reply extends Model
     protected $touches = ['repliable'];
 
     /**
-     * Boot the Model
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::deleting(function ($reply) {
-
-            if ($reply->repliable_type == 'App\Thread') {
-                $reply->repliable->decrement('replies_count');
-            }
-
-            $reply->likes->each->delete();
-
-            $reply->activities->each->delete();
-        });
-
-        /**
-         * Unhide a conversation for all users who hid it
-         * when a new message is added
-         */
-        static::created(function ($reply) {
-            if ($reply->repliable_type == 'App\Conversation') {
-                $reply->repliable->unhide();
-            }
-        });
-    }
-
-    /**
      * A reply belongs to a repliable model
      *
      * @return Illuminate\Database\Eloquent\Relations\MorphTo
@@ -134,7 +103,7 @@ class Reply extends Model
         )->where('repliable_id', $this->repliable->id)
             ->where('id', '<', $this->id)
             ->count();
-        
+
         return (int) ceil($numberOfRepliesBefore / $this->repliable::REPLIES_PER_PAGE);
     }
 
