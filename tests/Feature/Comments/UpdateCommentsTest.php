@@ -3,13 +3,12 @@
 namespace Tests\Feature\Comments;
 
 use App\ProfilePost;
-use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 use \Facades\Tests\Setup\CommentFactory;
 
-class ManageCommentsTest extends TestCase
+class UpdateCommentsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -56,53 +55,6 @@ class ManageCommentsTest extends TestCase
             'repliable_type' => ProfilePost::class,
             'user_id' => $commentPoster->id,
             'body' => $updatedComment['body'],
-        ]);
-    }
-
-    /** @test */
-    public function unathorized_users_cannot_delete_a_comment()
-    {
-        $comment = CommentFactory::create();
-        $unauthorizedUser = $this->signIn();
-
-        $this->delete(route('api.comments.destroy', $comment))
-            ->assertStatus(Response::HTTP_FORBIDDEN);
-    }
-
-    /** @test */
-    public function the_user_who_posted_the_comment_can_delete_it()
-    {
-        $commentPoster = $this->signIn();
-        $comment = CommentFactory::by($commentPoster)->create();
-
-        $this->delete(route('api.comments.destroy', $comment));
-
-        $this->assertDatabaseMissing('replies', [
-            'repliable_id' => $comment->id,
-            'repliable_type' => ProfilePost::class,
-            'user_id' => $commentPoster->id,
-            'body' => $comment->body,
-        ]);
-    }
-
-    /** @test */
-    public function the_owner_of_the_profile_can_delete_any_comment()
-    {
-        $profileOwner = create(User::class);
-        $post = create(ProfilePost::class, [
-            'profile_owner_id' => $profileOwner->id,
-        ]);
-        $commentPoster = $this->signIn();
-        $comment = CommentFactory::by($commentPoster)->create();
-        $this->signIn($profileOwner);
-
-        $this->delete(route('api.comments.destroy', $comment));
-
-        $this->assertDatabaseMissing('replies', [
-            'repliable_id' => $comment->id,
-            'repliable_type' => ProfilePost::class,
-            'user_id' => $commentPoster->id,
-            'body' => $comment->body,
         ]);
     }
 
