@@ -3,6 +3,7 @@
 namespace Tests\Feature\Conversations;
 
 use App\Conversation;
+use App\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
@@ -46,6 +47,23 @@ class HideConversationTest extends TestCase
 
         $response->assertOk();
         $this->assertCount(0, $user->fresh()->conversations);
+    }
+
+    /** @test */
+    public function when_a_new_message_is_addded_to_a_hidden_conversation_then_the_conversation_is_unhidden()
+    {
+        $conversationStarter = $this->signIn();
+        $participant = create(User::class);
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$participant->name])
+            ->create();
+
+        $conversation->hideFrom($participant);
+        $this->assertCount(0, $participant->conversations);
+
+        $conversation->addMessage('new message', $conversationStarter);
+
+        $this->assertCount(1, $participant->fresh()->conversations);
     }
 
 }
