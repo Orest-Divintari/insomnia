@@ -21,7 +21,7 @@ class ViewConversationsTest extends TestCase
         $someRandomConversationSlug = 'asdf';
 
         $response = $this->get(
-            route('conversationsshow', $someRandomConversationSlug)
+            route('conversations.show', $someRandomConversationSlug)
         );
 
         $response->assertRedirect('login');
