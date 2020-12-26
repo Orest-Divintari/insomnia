@@ -14,8 +14,8 @@ class ProfilePostObserver
      */
     public function deleting(ProfilePost $profilePost)
     {
-        $profilePost->activities->each->delete;
-        $profilePost->comments->each->delete;
+        $profilePost->activities->each->delete();
+        $profilePost->comments->each->delete();
     }
 
 }
