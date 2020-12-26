@@ -43,7 +43,8 @@ class ReplyPolicy
      */
     public function deleteComment(User $user, Reply $comment)
     {
-        return $comment->poster->is($user) || $comment->repliable->profileOwner->is($user);
+        return $comment->poster->is($user)
+        || $comment->repliable->profileOwner->is($user);
     }
 
     /**
