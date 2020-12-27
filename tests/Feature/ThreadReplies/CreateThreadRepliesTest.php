@@ -7,7 +7,7 @@ use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ParticipateInForumTest extends TestCase
+class CreateThreadRepliesTest extends TestCase
 {
     use RefreshDatabase;
 
