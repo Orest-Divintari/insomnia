@@ -196,6 +196,36 @@ class Reply extends Model
     }
 
     /**
+     * Determine if it is a thread reply
+     *
+     * @return boolean
+     */
+    public function isThreadReply()
+    {
+        return $this->repliable_type === Thread::class;
+    }
+
+    /**
+     * Determine if the reply is a profile post comment
+     *
+     * @return boolean
+     */
+    public function isComment()
+    {
+        return $this->repliable_type === ProfilePost::class;
+    }
+
+    /**
+     * Determine if the reply is a conversation message
+     *
+     * @return boolean
+     */
+    public function isMessage()
+    {
+        return $this->repliable_type === Conversation::class;
+    }
+
+    /**
      * The first thread reply consists the body of the thread
      * therefore it should not be searchable
      *

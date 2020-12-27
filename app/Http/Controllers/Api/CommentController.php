@@ -54,7 +54,7 @@ class CommentController extends Controller
      */
     public function destroy(Reply $comment)
     {
-        $this->authorize('deleteComment', $comment);
+        $this->authorize('delete', $comment);
         $comment->delete();
         return response('Comment has been deleted', 200);
     }
