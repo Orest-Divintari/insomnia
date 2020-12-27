@@ -9,6 +9,7 @@ use App\Reply;
 use App\Thread;
 use App\User;
 use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\MessageFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -296,4 +297,31 @@ class ReplyTest extends TestCase
         $message = MessageFactory::create();
         $this->assertFalse($message->shouldBeRecordable());
     }
+
+    /** @test */
+    public function a_reply_knows_if_it_is_for_thread()
+    {
+        $reply = ReplyFactory::create();
+
+        $this->assertTrue($reply->isThreadReply());
+    }
+
+    /** @test */
+    public function a_reply_knows_if_it_is_for_profile_post()
+    {
+        $comment = CommentFactory::create();
+
+        $this->assertTrue($comment->isComment());
+    }
+
+    /** @test */
+    public function a_reply_knows_if_it_is_for_conversation_message()
+    {
+        $this->signIn();
+        $conversation = ConversationFactory::create();
+        $message = $conversation->messages->first();
+        
+        $this->assertTrue($message->isMessage());
+    }
+
 }
