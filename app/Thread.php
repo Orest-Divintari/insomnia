@@ -387,7 +387,7 @@ class Thread extends Model
      */
     public function scopeForCategory($query, $category)
     {
-        if ($category->exists()) {
+        if (isset($category->id)) {
             return $query->where('category_id', $category->id);
         }
         return $query;
