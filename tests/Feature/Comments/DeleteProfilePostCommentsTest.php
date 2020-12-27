@@ -4,6 +4,7 @@ namespace Tests\Feature\Comments;
 
 use App\ProfilePost;
 use App\Reply;
+use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
