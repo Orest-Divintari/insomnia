@@ -27,7 +27,7 @@ class CreateThreadsTest extends TestCase
         $this->bodyErrorMessage = 'Please enter a valid message.';
         $this->titleErrorMessage = 'Please enter a valid title.';
         $this->categoryErrorMessage = 'Please enter a valid category.';
-        $this->tagErrorMessage = "You may not start a conversation with the following participant: ";
+        $this->tagErrorMessage = "The following tag could not be found: ";
     }
 
     /** @test */
