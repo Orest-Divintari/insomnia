@@ -48,11 +48,10 @@ class UserTest extends TestCase
     {
         $user = $this->signIn();
         $thread = create(Thread::class);
-
-        $this->assertTrue($thread->hasBeenUpdated);
+        $this->assertTrue($thread->hasBeenUpdated());
 
         $user->read($thread);
-        $this->assertFalse($thread->hasBeenUpdated);
+        $this->assertFalse($thread->hasBeenUpdated());
     }
 
     /** @test */
@@ -252,34 +251,27 @@ class UserTest extends TestCase
     /** @test */
     public function a_user_can_mark_a_conversation_as_read()
     {
-        $this->withoutExceptionHandling();
         $conversationStarter = $this->signIn();
-
         $conversation = ConversationFactory::create();
-
-        $this->assertTrue($conversation->hasBeenUpdated);
+        $this->assertTrue($conversation->hasBeenUpdated());
 
         $conversationStarter->read($conversation);
 
-        $this->assertFalse($conversation->hasBeenUpdated);
+        $this->assertFalse($conversation->hasBeenUpdated());
     }
 
     /** @test */
     public function a_user_can_mark_a_conversation_as_unread()
     {
         $conversationStarter = $this->signIn();
-
         $conversation = ConversationFactory::create();
-
-        $this->assertTrue($conversation->hasBeenUpdated);
-
+        $this->assertTrue($conversation->hasBeenUpdated());
         $conversationStarter->read($conversation);
-
-        $this->assertFalse($conversation->hasBeenUpdated);
+        $this->assertFalse($conversation->hasBeenUpdated());
 
         $conversationStarter->unread($conversation);
 
-        $this->assertTrue($conversation->hasBeenUpdated);
+        $this->assertTrue($conversation->hasBeenUpdated());
     }
 
     /** @test */
