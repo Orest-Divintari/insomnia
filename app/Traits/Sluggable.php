@@ -37,14 +37,4 @@ trait Sluggable
 
         return $slug;
     }
-
-    /**
-     * Get the route key name
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
 }
