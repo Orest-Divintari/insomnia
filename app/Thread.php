@@ -7,6 +7,7 @@ use App\Search\Threads;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Lockable;
+use App\Traits\Readable;
 use App\Traits\RecordsActivity;
 use App\Traits\Sluggable;
 use App\Traits\Subscribable;
@@ -25,8 +26,8 @@ class Thread extends Model
     RecordsActivity,
     Searchable,
     Sluggable,
-        Lockable;
-
+    Lockable,
+        Readable;
     /**
      * Number of visible threads per page
      *
@@ -99,6 +100,16 @@ class Thread extends Model
             $thread->replies->each->delete();
             $thread->subscriptions->each->delete();
         });
+    }
+
+    /**
+     * Get the route key name
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
     /**
@@ -345,27 +356,38 @@ class Thread extends Model
         $this->tags()->attach($tagIds);
     }
 
-    /**
-     * Determine whether the thread has been updated
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeWithHasBeenUpdated($query)
-    {
-        return $query->select('threads.*', 'reads.read_at')
-            ->leftJoin('reads', function ($join) {
-                $join->on('reads.readable_id', '=', 'threads.id')
-                    ->where('reads.readable_type', '=', Thread::class)
-                    ->where('reads.user_id', auth()->id());
-            })->selectRaw(
-            'CASE
-                WHEN read_at >= threads.updated_at THEN 0
-                WHEN read_at IS NULL THEN 1
-                ELSE 1
-            END as has_been_updated'
-        );
-    }
+    // return $query->addSelect(
+    //     ['has_been_updated' => Read::select(DB::raw(
+    //         'CASE
+    //             WHEN reads.read_at >= threads.updated_at then 0
+    //             ELSE 1
+    //         END'))->whereColumn('reads.readable_id', 'threads.id')
+    //             ->where('reads.readable_type', Thread::class)
+    //             ->where('user_id', '=', auth()->id()),
+    //     ]);
+
+    // return $query->select('threads.*', 'reads.read_at')
+    //     ->leftJoin('reads', function ($join) {
+    //         $join->on('reads.readable_id', '=', 'threads.id')
+    //             ->where('reads.readable_type', '=', Thread::class)
+    //             ->where('reads.user_id', auth()->id());
+    //     })->selectRaw(
+    //     'CASE
+    //         WHEN read_at >= threads.updated_at THEN 0
+    //         WHEN read_at IS NULL THEN 1
+    //         ELSE 1
+    //     END as has_been_updated'
+    // );
+
+    // public function getHasBeenUpdatedAttribute($value)
+    // {
+    //     if (is_null($value) || $value == "1") {
+    //         return true;
+    //     } else if ($value == "0") {
+    //         return false;
+    //     }
+    //     return $value;
+    // }
 
     /**
      * Get the pinned threads
@@ -378,7 +400,7 @@ class Thread extends Model
         return $query->where('pinned', true);
     }
 
-    /**
+    /*
      * Filter threads for the given category
      *
      * @param Builder $query

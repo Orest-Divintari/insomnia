@@ -8,13 +8,18 @@ use App\Events\Conversation\ParticipantWasRemoved;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Lockable;
+use App\Traits\Readable;
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
-    use Sluggable, FormatsDate, Filterable, Lockable;
+    use Sluggable,
+    FormatsDate,
+    Filterable,
+    Lockable,
+        Readable;
 
     /**
      * Number of conversations per page
@@ -56,6 +61,16 @@ class Conversation extends Model
         'has_been_updated' => 'boolean',
         'starred' => 'boolean',
     ];
+
+    /**
+     * Get the route key name
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     /**
      * A conversation may have many participants
@@ -208,48 +223,6 @@ class Conversation extends Model
     public function getTypeAttribute()
     {
         return 'conversation';
-    }
-
-    /**
-     * Add a coliumn which determines whether the conversation has been updated
-     * since the last time that was read by the authenticated user
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeWithHasBeenUpdated($query)
-    {
-        return $query->addSelect([
-            'has_been_updated' => Read::selectRaw('
-                    CASE
-                        WHEN reads.read_at > conversations.updated_at THEN 0
-                        ELSE 1
-                    END')->where('user_id', auth()->id())
-                ->whereColumn('reads.readable_id', 'conversations.id')
-                ->where('reads.readable_type', 'App\Conversation'),
-        ]);
-    }
-
-    /**
-     * Determine whether the converastion has been updated
-     *
-     * @return boolean
-     */
-    public function hasBeenUpdated()
-    {
-        if (!auth()->check()) {
-            return true;
-        }
-
-        $conversationRead = $this->reads()
-            ->where('user_id', auth()->id())
-            ->first();
-
-        if (is_null($conversationRead)) {
-            return true;
-        }
-
-        return $this->updated_at > $conversationRead->read_at;
     }
 
     /**
