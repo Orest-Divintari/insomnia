@@ -166,11 +166,11 @@ class ViewThreadsTest extends TestCase
     {
         $recentlyActiveThread = $this->thread;
         $recentlyActiveThread->addReply(raw(Reply::class));
-        $inactiveThread = create(Thread::class, [
-            'updated_at' => Carbon::now()->subDay(),
-        ]);
+        Carbon::setTestNow(Carbon::now()->subDay());
+        $inactiveThread = create(Thread::class);
         $inactiveThread->addReply(raw(Reply::class));
-
+        Carbon::setTestNow(Carbon::now()->addDay());
+        
         $threads = $this->getJson(
             route('filtered-threads.index') . "?newPosts=1"
         )->json()['data'];
@@ -184,13 +184,13 @@ class ViewThreadsTest extends TestCase
     public function user_can_fetch_the_threads_of_a_category_with_the_most_recent_replies()
     {
         $category = create(Category::class);
-        $recentlyActiveThread = create(Thread::class, ['category_id' => $category->id]);
+        $this->thread->update(['category_id' => $category->id]);
+        $recentlyActiveThread = $this->thread;
         $recentlyActiveThread->addReply(raw(Reply::class));
-        $inactiveThread = create(Thread::class, [
-            'updated_at' => Carbon::now()->subDay(),
-            'category_id' => $category->id,
-        ]);
+        Carbon::setTestNow(Carbon::now()->subDay());
+        $inactiveThread = create(Thread::class, ['category_id' => $category->id]);
         $inactiveThread->addReply(raw(Reply::class));
+        Carbon::setTestNow(Carbon::now()->addDay());
 
         $threads = $this->getJson(
             route('threads.index', $category) . "?newPosts=1"
