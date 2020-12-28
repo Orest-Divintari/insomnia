@@ -31,8 +31,9 @@ class CreateCommentTest extends TestCase
         $this->signIn($user);
         $post = create(ProfilePost::class);
 
-        $this->post(route('api.comments.store', $post), [])
-            ->assertRedirect(route('verification.notice'));
+        $response = $this->post(route('api.comments.store', $post), []);
+
+        $response->assertRedirect(route('verification.notice'));
     }
 
     /** @test */
@@ -59,9 +60,9 @@ class CreateCommentTest extends TestCase
         $post = create(ProfilePost::class);
         $comment = ['body' => ''];
 
-        $this->post(route('api.comments.store', $post), $comment)
-            ->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
+        $response = $this->post(route('api.comments.store', $post), $comment);
 
+        $response->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
         $this->assertDatabaseMissing('replies', [
             'repliable_id' => $post->id,
             'repliable_type' => ProfilePost::class,
@@ -78,7 +79,8 @@ class CreateCommentTest extends TestCase
         $notStringBody = array(5);
         $comment = ['body' => $notStringBody];
 
-        $this->post(route('api.comments.store', $post), $comment)
-            ->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
+        $response = $this->post(route('api.comments.store', $post), $comment);
+
+        $response->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
     }
 }

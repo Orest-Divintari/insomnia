@@ -26,8 +26,9 @@ class UpdateCommentsTest extends TestCase
         $comment = CommentFactory::create();
         $poster = $this->signIn();
 
-        $this->patch(route('api.comments.update', $comment))
-            ->assertStatus(Response::HTTP_FORBIDDEN);
+        $response = $this->patch(route('api.comments.update', $comment));
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
@@ -62,12 +63,15 @@ class UpdateCommentsTest extends TestCase
     public function when_updating_a_comment_a_body_is_required()
     {
         $commentPoster = $this->signIn();
-
         $comment = CommentFactory::by($commentPoster)->create();
         $emptyComment = ['body' => ''];
 
-        $this->patchJson(route('api.comments.update', $comment), $emptyComment)
-            ->assertStatus(422)
+        $response = $this->patchJson(
+            route('api.comments.update', $comment),
+            $emptyComment
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 
@@ -78,8 +82,12 @@ class UpdateCommentsTest extends TestCase
         $comment = CommentFactory::by($commentPoster)->create();
         $nonStringComment = ['body' => array(15)];
 
-        $this->patchJson(route('api.comments.update', $comment), $nonStringComment)
-            ->assertStatus(422)
+        $response = $this->patchJson(
+            route('api.comments.update', $comment),
+            $nonStringComment
+        );
+
+        $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
     }
 
