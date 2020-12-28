@@ -30,9 +30,9 @@ class ThreadController extends Controller
         $filters = $this->filterManager->withThreadFilters();
         $threadsQuery = Thread::with('poster')
             ->withHasBeenUpdated()
-            ->filter($filters)
-            ->forCategory($category)
             ->withRecentReply()
+            ->forCategory($category)
+            ->filter($filters)
             ->latest('updated_at');
 
         $normalThreads = $threadsQuery->paginate(Thread::PER_PAGE);
