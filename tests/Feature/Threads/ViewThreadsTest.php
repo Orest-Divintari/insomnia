@@ -21,7 +21,7 @@ class ViewThreadsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_a_single_thread()
+    public function a_user_can_view_a_thread()
     {
         $response = $this->get(route('threads.show', $this->thread));
 
@@ -29,53 +29,15 @@ class ViewThreadsTest extends TestCase
     }
 
     /** @test */
-    public function when_an_authenticated_user_visits_a_thread_then_the_thread_is_marked_as_read()
-    {
-        $category = create(Category::class);
-        $threads = createMany(Thread::class, 2, ['category_id' => $category->id]);
-        $readThread = $threads->first();
-        $user = $this->signIn();
-
-        $this->get(route('threads.show', $readThread));
-
-        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
-        $threads = collect($threads);
-        $this->assertTrue(
-            $threads->every(function ($thread, $key) use ($readThread) {
-                if ($thread['id'] == $readThread->id) {
-                    return $thread['has_been_updated'] == false;
-                }
-                return $thread['has_been_updated'] == true;
-            })
-        );
-    }
-
-    /** @test */
-    public function when_a_guest_visits_a_thread_it_is_not_marked_as_read()
-    {
-        $category = create(Category::class);
-        $threads = createMany(Thread::class, 2, ['category_id' => $category->id]);
-        $visitedThread = $threads->first();
-
-        $this->get(route('threads.show', $visitedThread));
-        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
-
-        $threads = collect($threads);
-        $this->assertTrue(
-            $threads->every(function ($thread, $key) use ($visitedThread) {
-                return $thread['has_been_updated'] == true;
-            })
-        );
-    }
-
-    /** @test */
     public function a_user_can_view_the_threads_associated_with_a_category()
     {
+        $this->withoutExceptionHandling();
         $category = create(Category::class);
         $thread = create(Thread::class, ['category_id' => $category->id]);
 
-        $this->get(route('threads.index', $category))
-            ->assertSee($thread->title);
+        $response = $this->get(route('threads.index', $category));
+
+        $response->assertSee($thread->title);
     }
 
     /** @test */
@@ -107,8 +69,9 @@ class ViewThreadsTest extends TestCase
         $numberOfRepliesBefore = $thread->replies()->where('id', '<=', $reply->id)->count();
         $pageNumber = (int) ceil($numberOfRepliesBefore / Thread::REPLIES_PER_PAGE);
 
-        $this->get(route('api.replies.show', $reply))
-            ->assertSee($reply->title);
+        $response = $this->get(route('api.replies.show', $reply));
+
+        $response->assertSee($reply->title);
     }
 
     /** @test */
@@ -130,8 +93,40 @@ class ViewThreadsTest extends TestCase
             ['user_id' => $anotherUser->id]
         );
 
-        $this->get(route('filtered-threads.index') . "?postedBy={$uric->name}")
-            ->assertSee($threadByUric->title)
+        $response = $this->get(route('filtered-threads.index') . "?postedBy={$uric->name}");
+
+        $response->assertSee($threadByUric->title)
+            ->assertDontSee($threadByAnotherUser->title);
+    }
+
+    /** @test */
+    public function a_user_can_filter_the_threads_of_a_category_by_username()
+    {
+        $uric = create(
+            User::class,
+            [
+                'name' => 'uric',
+            ]
+        );
+        $category = create(Category::class);
+        $this->signIn($uric);
+        $threadByUric = create(Thread::class, [
+            'user_id' => $uric->id,
+            'category_id' => $category->id,
+        ]);
+        $anotherUser = create(User::class);
+        $threadByAnotherUser = create(
+            Thread::class,
+            [
+                'user_id' => $anotherUser->id,
+                'category_id' => $category->id,
+
+            ]
+        );
+
+        $response = $this->get(route('threads.index', $category) . "?postedBy={$uric->name}");
+
+        $response->assertSee($threadByUric->title)
             ->assertDontSee($threadByAnotherUser->title);
     }
 
@@ -144,6 +139,23 @@ class ViewThreadsTest extends TestCase
         ]);
 
         $response = $this->getJson(route('filtered-threads.index') . '?newThreads=1');
+
+        $this->assertEquals($this->thread->id, $response['data'][0]['id']);
+        $this->assertEquals($oldThread->id, $response['data'][1]['id']);
+    }
+
+    /** @test */
+    public function user_can_view_the_threads_of_a_category_ordered_by_date_of_creation_in_descending_order()
+    {
+        $category = create(Category::class);
+        $this->thread->update(['category_id' => $category->id]);
+        $oldThread = create(Thread::class, [
+            'created_at' => Carbon::now()->subDay(),
+            'id' => 10,
+            'category_id' => $category->id,
+        ]);
+
+        $response = $this->getJson(route('threads.index', $category) . '?newThreads=1');
 
         $this->assertEquals($this->thread->id, $response['data'][0]['id']);
         $this->assertEquals($oldThread->id, $response['data'][1]['id']);
@@ -169,6 +181,27 @@ class ViewThreadsTest extends TestCase
     }
 
     /** @test */
+    public function user_can_fetch_the_threads_of_a_category_with_the_most_recent_replies()
+    {
+        $category = create(Category::class);
+        $recentlyActiveThread = create(Thread::class, ['category_id' => $category->id]);
+        $recentlyActiveThread->addReply(raw(Reply::class));
+        $inactiveThread = create(Thread::class, [
+            'updated_at' => Carbon::now()->subDay(),
+            'category_id' => $category->id,
+        ]);
+        $inactiveThread->addReply(raw(Reply::class));
+
+        $threads = $this->getJson(
+            route('threads.index', $category) . "?newPosts=1"
+        )->json()['data'];
+
+        $this->assertCount(2, $threads);
+        $this->assertEquals($recentlyActiveThread->id, $threads[0]['id']);
+        $this->assertEquals($inactiveThread->id, $threads[1]['id']);
+    }
+
+    /** @test */
     public function a_user_can_view_the_threads_that_has_replied_to()
     {
         $anotherUser = $this->signIn();
@@ -182,6 +215,37 @@ class ViewThreadsTest extends TestCase
         $user = create(User::class, ['name' => 'orestis']);
         $this->signIn($user);
         $thread = create(Thread::class);
+        $thread->addReply(
+            raw(Reply::class, [
+                'user_id' => $user->id,
+                'created_at' => Carbon::now()->addMinute(),
+            ]));
+
+        $response = $this->getJson(
+            route('filtered-threads.index') . "?contributed=" . $user->name
+        )->json();
+
+        $this->assertEquals(
+            $user->id,
+            $response['data'][0]['recent_reply']['poster']['id']
+        );
+    }
+
+    /** @test */
+    public function a_user_can_view_the_threads_of_a_category_that_has_replied_to()
+    {
+        $anotherUser = $this->signIn();
+        $category = create(Category::class);
+        $threadWithoutParticipation = create(Thread::class, ['category_id' => $category->id]);
+        $threadWithoutParticipation->addReply(
+            raw(Reply::class, [
+                'user_id' => $anotherUser,
+            ])
+        );
+        $threadWithoutReplies = create(Thread::class, ['category_id' => $category->id]);
+        $user = create(User::class, ['name' => 'orestis']);
+        $this->signIn($user);
+        $thread = create(Thread::class, ['category_id' => $category->id]);
         $thread->addReply(
             raw(Reply::class, [
                 'user_id' => $user->id,
@@ -224,13 +288,54 @@ class ViewThreadsTest extends TestCase
     }
 
     /** @test */
+    public function user_can_view_the_trending_threads_of_a_category()
+    {
+        $category = create(Category::class);
+        $this->thread->addReply(raw(Reply::class));
+        $this->thread->addReply(raw(Reply::class));
+        $this->thread->addReply(raw(Reply::class));
+        $this->thread->update(['views' => 50, 'category_id' => $category->id]);
+        $lessTrendingThread = create(Thread::class, ['category_id' => $category->id]);
+        $lessTrendingThread->addReply(raw(Reply::class));
+        $lessTrendingThread->update(['views' => 100]);
+
+        $response = $this->getJson(
+            route('threads.index', $category) . "?trending=1"
+        );
+
+        $this->assertEquals(
+            $this->thread->id,
+            $response['data'][0]['id']
+        );
+        $this->assertEquals(
+            $lessTrendingThread->id,
+            $response['data'][1]['id']
+        );
+    }
+
+    /** @test */
     public function user_can_view_the_unanswered_threads()
     {
         $threadWithReplies = create(Thread::class);
         $threadWithReplies->addReply(raw(Reply::class));
 
-        $this->get(route('filtered-threads.index') . "?unanswered=1")
-            ->assertSee($this->thread->title)
+        $response = $this->get(route('filtered-threads.index') . "?unanswered=1");
+
+        $response->assertSee($this->thread->title)
+            ->assertDontSee($threadWithReplies->title);
+    }
+
+    /** @test */
+    public function user_can_view_the_unanswered_threads_of_a_category()
+    {
+        $category = create(Category::class);
+        $threadWithReplies = create(Thread::class, ['category_id' => $category->id]);
+        $threadWithReplies->addReply(raw(Reply::class));
+        $this->thread->update(['category_id' => $category->id]);
+
+        $response = $this->get(route('threads.index', $category) . "?unanswered=1");
+
+        $response->assertSee($this->thread->title)
             ->assertDontSee($threadWithReplies->title);
     }
 
@@ -244,8 +349,27 @@ class ViewThreadsTest extends TestCase
         $this->signIn($user);
         $this->thread->subscribe($user->id);
 
-        $this->get(route('filtered-threads.index') . "?watched=1")
-            ->assertSee($this->thread->title)
+        $response = $this->get(route('filtered-threads.index') . "?watched=1");
+
+        $response->assertSee($this->thread->title)
+            ->assertDontSee($threadThatHasntSubscribedTo->title);
+    }
+
+    /** @test */
+    public function a_user_can_view_the_threads_of_a_category_tha_has_subscribred_to()
+    {
+        $category = create(Category::class);
+        $threadThatHasntSubscribedTo = create(Thread::class, ['category_id' => $category->id]);
+        $user = create(User::class, [
+            'name' => 'jorgo',
+        ]);
+        $this->signIn($user);
+        $this->thread->subscribe($user->id);
+        $this->thread->update(['category_id' => $category->id]);
+
+        $response = $this->get(route('threads.index', $category) . "?watched=1");
+
+        $response->assertSee($this->thread->title)
             ->assertDontSee($threadThatHasntSubscribedTo->title);
     }
 
@@ -259,11 +383,32 @@ class ViewThreadsTest extends TestCase
         $daysAgo = 3;
         $lastUpdated = Carbon::now()->subDays($daysAgo);
 
-        $this->get(
+        $response = $this->get(
             route('filtered-threads.index') . "?lastUpdated=" . $daysAgo
-        )->assertSee($todaysThread->title)
-            ->assertDontSee($oldThread->title);
+        );
 
+        $response->assertSee($todaysThread->title)
+            ->assertDontSee($oldThread->title);
+    }
+
+    /** @test */
+    public function user_can_view_the_threads_of_a_category_that_have_been_last_updated_X_days_ago()
+    {
+        $category = create(Category::class);
+        $todaysThread = create(Thread::class, ['category_id' => $category->id]);
+        $oldThread = create(Thread::class, [
+            'updated_at' => Carbon::now()->subMonth(),
+            'category_id' => $category->id,
+        ]);
+        $daysAgo = 3;
+        $lastUpdated = Carbon::now()->subDays($daysAgo);
+
+        $response = $this->get(
+            route('threads.index', $category) . "?lastUpdated=" . $daysAgo
+        );
+
+        $response->assertSee($todaysThread->title)
+            ->assertDontSee($oldThread->title);
     }
 
     /** @test */
@@ -276,36 +421,33 @@ class ViewThreadsTest extends TestCase
         $daysAgo = 3;
         $lastUpdated = Carbon::now()->subDays($daysAgo);
 
-        $this->get(
+        $response = $this->get(
             route('filtered-threads.index') . "?lastCreated=" . $daysAgo
-        )->assertSee($todaysThread->title)
+        );
+
+        $response->assertSee($todaysThread->title)
+            ->assertDontSee($oldThread->title);
+    }
+
+    /** @test */
+    public function user_can_view_the_threads_of_a_category_that_have_been_last_created_X_days_ago()
+    {
+        $category = create(Category::class);
+        $todaysThread = create(Thread::class, ['category_id' => $category->id]);
+        $oldThread = create(Thread::class, [
+            'created_at' => Carbon::now()->subMonth(),
+            'category_id' => $category->id,
+        ]);
+        $daysAgo = 3;
+        $lastUpdated = Carbon::now()->subDays($daysAgo);
+
+        $response = $this->get(
+            route('threads.index', $category) . "?lastCreated=" . $daysAgo
+        );
+
+        $response->assertSee($todaysThread->title)
             ->assertDontSee($oldThread->title);
 
-    }
-
-    /** @test */
-    public function an_authenticated_user_can_mark_a_thread_as_read()
-    {
-        $user = $this->signIn();
-        $thread = create(Thread::class);
-        $this->assertTrue($thread->hasBeenUpdated);
-
-        $this->patch(route('api.read-threads.update', $thread));
-
-        $this->assertFalse($thread->hasBeenUpdated);
-    }
-
-    /** @test */
-    public function guests_cannot_mark_a_thread_as_read()
-    {
-        $user = create(User::class);
-        $thread = create(Thread::class);
-        $this->assertTrue($thread->hasBeenUpdated);
-
-        $this->patch(route('api.read-threads.update', $thread))
-            ->assertRedirect('login');
-
-        $this->assertTrue($thread->hasBeenUpdated);
     }
 
     /** @test */
@@ -324,6 +466,27 @@ class ViewThreadsTest extends TestCase
         );
 
         $this->get(route('filtered-threads.index'))
+            ->assertSee($pinnedThread->title);
+    }
+
+    /** @test */
+    public function users_can_view_pinned_threads_of_a_category_if_exist()
+    {
+        $category = create(Category::class);
+        createMany(Thread::class, 50, ['category_id' => $category->id]);
+        $pinnedThread = create(
+            Thread::class,
+            [
+                'pinned' => true,
+                'created_at' => Carbon::now()->subYear(),
+                'updated_at' => Carbon::now()->subYear(),
+                'category_id' => $category->id,
+            ],
+            3,
+
+        );
+
+        $this->get(route('threads.index', $category))
             ->assertSee($pinnedThread->title);
     }
 }
