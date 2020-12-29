@@ -13,12 +13,12 @@
         </div>
         <div class="flex justify-between ">
             <p class="text-gray-lightest">Last reply date: </p>
-            <p>{{ $conversation->recentMessage->dateCreated }}</p>
+            <p>{{ $messages->last()->dateCreated }}</p>
         </div>
         <div class="flex justify-between ">
             <p class="text-gray-lightest">Last reply from: </p>
             <a class="blue-link"
-                @click="showProfile( {{ $conversation->recentMessage->poster }} )">{{ $conversation->recentMessage->poster->name }}</a>
+                @click="showProfile( {{ $messages->last()->poster }} )">{{ $messages->last()->poster->name }}</a>
         </div>
     </div>
 </div>

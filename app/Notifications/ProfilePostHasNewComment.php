@@ -11,10 +11,10 @@ class ProfilePostHasNewComment extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $profilePost;
-    protected $comment;
-    protected $commentPoster;
-    protected $profileOwner;
+    public $profilePost;
+    public $comment;
+    public $commentPoster;
+    public $profileOwner;
 
     /**
      * Create a new notification instance.
