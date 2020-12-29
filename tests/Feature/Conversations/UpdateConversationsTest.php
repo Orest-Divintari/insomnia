@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 
-class ManageConversationsTest extends TestCase
+class UpdateConversationsTest extends TestCase
 {
 
     use RefreshDatabase;
@@ -62,12 +62,12 @@ class ManageConversationsTest extends TestCase
     }
 
     /** @test */
-    public function unathorized_users_cannot_update_a_conversation()
+    public function unauthorized_users_cannot_update_a_conversation()
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)->create();
         $unauthorizedUser = $this->signIn();
-        $newTitle = ['title' => 'some title'];
+        $newTitle = ['title' => 'new title'];
 
         $response = $this->patch(
             route('api.conversations.update', $conversation),
