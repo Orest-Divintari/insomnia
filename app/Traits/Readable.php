@@ -13,17 +13,18 @@ trait Readable
     public function scopeWithHasBeenUpdated($query)
     {
         $readable = get_class($this);
+        $readableTable = $this->getTable();
         $read = '(
             SELECT reads.read_at
             FROM   `reads`
-            WHERE  reads.readable_id = threads.id
+            WHERE  reads.readable_id = ' . $readableTable . '.id
                 AND reads.readable_type = ?
                 AND reads.user_id = ?
         )';
 
         return $query->select()->selectRaw(
             'CASE
-                WHEN ' . $read . ' >= threads.updated_at THEN 0
+                WHEN ' . $read . ' >= ' . $readableTable . '.updated_at THEN 0
                 WHEN ' . $read . ' IS NULL THEN 1
                 ELSE 1
             END as has_been_updated',
