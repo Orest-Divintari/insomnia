@@ -7,7 +7,6 @@ use App\Notifications\MessageHasNewLike;
 use App\Notifications\ReplyHasNewLike;
 use App\ProfilePost;
 use App\Reply;
-use App\Thread;
 use App\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ReplyFactory;
@@ -37,7 +36,7 @@ class LikeNotificationsTest extends TestCase
         $like = $reply->likes()->first();
         Notification::assertSentTo(
             $replyPoster,
-            MessageHasNewLike::class,
+            ReplyHasNewLike::class,
             function ($notification, $channels)
              use (
                 $liker,
