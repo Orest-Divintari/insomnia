@@ -51,8 +51,7 @@ class ConversationController extends Controller
     {
         $this->authorize('view', $conversation);
         auth()->user()->read($conversation);
-        $conversation = Conversation::withRecentMessage()
-            ->whereSlug($conversation->slug)
+        $conversation = Conversation::whereSlug($conversation->slug)
             ->withHasBeenUpdated()
             ->with('participants')
             ->isStarred()
@@ -88,7 +87,7 @@ class ConversationController extends Controller
             ->with('participants')
             ->withCount('participants')
             ->withCount('messages')
-            ->latest()
+            ->latest('conversations.created_at')
             ->paginate(Conversation::PER_PAGE);
 
         $conversationFilters = $filters->getRequestedFilters();
