@@ -341,10 +341,10 @@ class ConversationTest extends TestCase
         $user = $this->signIn();
         $conversation = create(Conversation::class);
 
-        $this->assertFalse($conversation->starred);
+        $this->assertFalse($conversation->starred());
 
         $conversation->star();
-        $this->assertTrue($conversation->starred);
+        $this->assertTrue($conversation->starred());
     }
 
     /** @test */
@@ -353,12 +353,12 @@ class ConversationTest extends TestCase
         $user = $this->signIn();
         $conversation = create(Conversation::class);
 
-        $this->assertFalse($conversation->starred);
+        $this->assertFalse($conversation->starred());
         $conversation->star();
-        $this->assertTrue($conversation->starred);
+        $this->assertTrue($conversation->starred());
 
         $conversation->unstar();
-        $this->assertFalse($conversation->starred);
+        $this->assertFalse($conversation->starred());
     }
 
     /** @test */
@@ -401,6 +401,7 @@ class ConversationTest extends TestCase
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)
             ->create();
+        $conversationStarter->unread($conversation);
         $this->assertTrue($conversation->hasBeenUpdated());
 
         $conversationStarter->read($conversation);
