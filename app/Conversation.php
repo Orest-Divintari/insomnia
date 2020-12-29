@@ -208,9 +208,9 @@ class Conversation extends Model
     {
         return $query->addSelect([
             'recent_message_id' => Reply::select('id')
-                ->whereColumn('repliable_id', 'conversations.id')
-                ->where('repliable_type', 'App\Conversation')
-                ->latest('created_at')
+                ->whereColumn('replies.repliable_id', 'conversations.id')
+                ->where('replies.repliable_type', Conversation::class)
+                ->latest()
                 ->take(1),
         ])->with('recentMessage.poster');
     }
