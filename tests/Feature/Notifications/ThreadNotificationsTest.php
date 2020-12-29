@@ -63,7 +63,7 @@ class ThreadNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_subsriber_can_choose_to_receive_only_database_notifications_when_a_new_reply_is_posted_to_thread()
+    public function a_thread_subscriber_can_choose_to_receive_only_database_notifications_when_a_new_reply_is_posted_to_thread()
     {
         $thread = create(Thread::class);
         $subscriber = create(User::class);
@@ -80,7 +80,7 @@ class ThreadNotificationsTest extends TestCase
 
         $reply = $thread->replies->firstWhere('body', $newReply);
         Notification::assertSentTo(
-            $this->user,
+            $subscriber,
             ThreadHasNewReply::class,
             function ($notification, $channels)
              use (
@@ -89,8 +89,8 @@ class ThreadNotificationsTest extends TestCase
                 $desiredChannels,
                 $undesiredChannels
             ) {
-                return in_array($desiredChannels, $channels)
-                && !in_array($undesiredChannels, $channels)
+                return in_array($desiredChannels[0], $channels)
+                && !in_array($undesiredChannels[0], $channels)
                 && $notification->thread->id == $thread->id
                 && $notification->reply->id == $reply->id;
             });
