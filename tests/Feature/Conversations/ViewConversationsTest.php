@@ -50,7 +50,9 @@ class ViewConversationsTest extends TestCase
             ->withMessage($message['body'])
             ->create();
 
-        $response = $this->getJson(route('conversations.show', $conversation))->json();
+        $response = $this->getJson(
+            route('conversations.show', $conversation)
+        )->json();
 
         $participants = $response['participants'];
         $messages = $response['messages']['data'][0];
@@ -60,7 +62,7 @@ class ViewConversationsTest extends TestCase
         $this->assertEquals($message['body'], $messages['body']);
         $this->assertTrue(array_key_exists('likes_count', $messages));
         $this->assertTrue(array_key_exists('is_liked', $messages));
-        $this->assertTrue($returnedConversation['has_been_updated']);
+        $this->assertFalse($returnedConversation['has_been_updated']);
         $this->assertFalse($returnedConversation['starred']);
         $this->assertEquals($conversationStarter->id, $messages['poster']['id']);
         $this->assertEquals($conversation->id, $returnedConversation['id']);
@@ -97,7 +99,7 @@ class ViewConversationsTest extends TestCase
             $newMessage->poster->id,
             $conversations[0]['recent_message']['poster']['id']
         );
-        $this->assertTrue($conversations[0]['has_been_updated']);
+        $this->assertFalse($conversations[0]['has_been_updated']);
         $this->assertFalse($conversations[0]['starred']);
         $this->assertTrue(
             collect($conversations[0]['participants'])->pluck('id')
@@ -441,11 +443,14 @@ class ViewConversationsTest extends TestCase
         $unreadLastWeekConversation->update(
             ['updated_at' => Carbon::now()->subWeek()]
         );
+        $conversationStarter->unread($unreadLastWeekConversation);
         $readAndLastWeekConversation = ConversationFactory::by($conversationStarter)->create();
         $readAndLastWeekConversation->update(
             ['updated_at' => Carbon::now()->subWeek()]
         );
+        
         $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
+        $conversationStarter->unread($unreadTodayConversation);
         $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
         $conversationStarter->read($readAndLastMonthConversation);
         $conversationStarter->read($readAndLastWeekConversation);
