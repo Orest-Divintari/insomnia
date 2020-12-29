@@ -57,11 +57,13 @@ class HideConversationTest extends TestCase
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
-
         $conversation->hideFrom($participant);
         $this->assertCount(0, $participant->conversations);
 
-        $conversation->addMessage('new message', $conversationStarter);
+        $this->post(
+            route('api.messages.store', $conversation),
+            ['body' => 'new message']
+        );
 
         $this->assertCount(1, $participant->fresh()->conversations);
     }
