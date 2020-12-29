@@ -22,6 +22,7 @@ class UpdatesProfilePostsTest extends TestCase
             'user_id' => $poster->id,
             'profile_owner_id' => $profileOwner->id,
         ]);
+        $unathorizedUser = $this->signIn();
 
         $response = $this->patch(
             route('api.profile-posts.update', $profilePost->id),
