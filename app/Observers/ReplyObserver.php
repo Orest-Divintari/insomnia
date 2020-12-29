@@ -31,8 +31,9 @@ class ReplyObserver
      */
     public function created(Reply $reply)
     {
-        if ($reply->repliable_type == 'App\Conversation') {
+        if ($reply->isMessage()) {
             $reply->repliable->unhide();
+            $reply->poster->read($reply->repliable);
         }
     }
 
