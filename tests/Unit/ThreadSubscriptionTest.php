@@ -55,7 +55,6 @@ class ThreadSubscriptionTest extends TestCase
     public function enable_email_notifications_for_a_specific_subscription()
     {
         $this->subscription->disableEmails();
-
         $this->assertFalse($this->subscription->prefers_email);
 
         $this->subscription->enableEmails();

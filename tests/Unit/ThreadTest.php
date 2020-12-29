@@ -52,6 +52,7 @@ class ThreadTest extends TestCase
     {
         $user = create('App\User');
         $thread = create('App\Thread', ['user_id' => $user->id]);
+
         $this->assertInstanceOf(User::class, $thread->poster);
     }
 
@@ -66,13 +67,13 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_a_most_recent_reply()
     {
-
         $newReply = $this->thread->replies()->first();
         $oldReply = create(Reply::class, [
             'repliable_type' => Thread::class,
             'repliable_id' => $this->thread->id,
             'updated_at' => Carbon::now()->subDay(),
         ]);
+
         $thread = Thread::where('id', $this->thread->id)->withRecentReply()->first();
 
         $this->assertEquals($thread->recentReply->id, $newReply->id);
@@ -125,9 +126,7 @@ class ThreadTest extends TestCase
     public function a_thread_can_have_many_subscriptions()
     {
         $user = create(User::class);
-
         $thread = create(Thread::class);
-
         $this->assertCount(0, $thread->subscriptions);
 
         $thread->subscribe($user->id);
@@ -139,9 +138,7 @@ class ThreadTest extends TestCase
     public function a_user_can_subscribe_to_a_thread()
     {
         $user = create(User::class);
-
         $thread = create(Thread::class);
-
         $this->assertCount(0, $thread->subscriptions);
 
         $thread->subscribe($user->id);
@@ -154,13 +151,9 @@ class ThreadTest extends TestCase
     public function a_user_can_unsubscribe_from_a_thread()
     {
         $user = create(User::class);
-
         $thread = create(Thread::class);
-
         $this->assertCount(0, $thread->subscriptions);
-
         $thread->subscribe($user->id);
-
         $this->assertCount(1, $thread->fresh()->subscriptions);
 
         $thread->unsubscribe($user->id);
@@ -170,16 +163,11 @@ class ThreadTest extends TestCase
 
     /** @test */
     public function a_thread_can_determine_whether_a_the_autneticated_user_has_subscribed_to_it()
-    {
-
+    
         $thread = create(Thread::class);
-
         $user = $this->signIn();
-
         $this->assertCount(0, $thread->subscriptions);
-
         $thread->subscribe($user->id);
-
         $this->assertTrue($thread->fresh()->subscribedByAuthUser);
 
         $thread->unsubscribe($user->id);
@@ -191,7 +179,6 @@ class ThreadTest extends TestCase
     public function determine_whether_a_given_user_is_subscribed_to_a_thread()
     {
         $user = create(User::class);
-
         $this->assertFalse($this->thread->isSubscribedBy($user->id));
 
         $this->thread->subscribe($user->id);
@@ -203,9 +190,7 @@ class ThreadTest extends TestCase
     public function a_thread_can_be_marked_as_read_by_many_users()
     {
         $user = $this->signIn();
-
         $user->read($this->thread);
-
         $anotherUser = $this->signIn();
 
         $anotherUser->read($this->thread);
@@ -227,11 +212,11 @@ class ThreadTest extends TestCase
     public function a_thread_can_be_unlocked()
     {
         $this->assertFalse($this->thread->locked);
-
         $this->thread->lock();
         $this->assertTrue($this->thread->locked);
 
         $this->thread->unlock();
+        
         $this->assertFalse($this->thread->locked);
     }
 
@@ -263,7 +248,6 @@ class ThreadTest extends TestCase
     {
         $thread = create(Thread::class);
         $tag = create(Tag::class);
-
         $this->assertCount(0, $thread->tags);
 
         $thread->addTags([$tag->name]);
@@ -281,6 +265,7 @@ class ThreadTest extends TestCase
 
         $user->read($readThread);
         $threads = Thread::withHasBeenUpdated()->get();
+        
         $this->assertFalse(
             $threads->firstWhere('id', $readThread->id)->has_been_updated
         );
@@ -307,6 +292,7 @@ class ThreadTest extends TestCase
         createMany(Thread::class, 5);
 
         $desiredThreads = Thread::forCategory($category)->get();
+        
         $this->assertCount(1, $desiredThreads);
         $this->assertEquals($thread->id, $desiredThreads->first()->id);
     }

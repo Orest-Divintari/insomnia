@@ -37,9 +37,7 @@ class LikeTest extends TestCase
     public function a_like_has_activity()
     {
         $user = $this->signIn();
-
         $thread = create(Thread::class);
-
         $reply = $thread->addReply(
             raw(Reply::class, [
                 'user_id' => $user->id,
@@ -48,7 +46,6 @@ class LikeTest extends TestCase
         $like = $reply->likedBy($user);
 
         $this->assertCount(1, $like->activities);
-
     }
 
     /** @test */
@@ -56,7 +53,9 @@ class LikeTest extends TestCase
     {
         $this->signIn();
         $threadReply = ReplyFactory::create();
+
         $like = $threadReply->likedBy();
+
         $this->assertTrue($like->shouldBeRecordable());
     }
 
@@ -65,7 +64,9 @@ class LikeTest extends TestCase
     {
         $this->signIn();
         $comment = CommentFactory::create();
+
         $like = $comment->likedBy();
+
         $this->assertTrue($like->shouldBeRecordable());
     }
 
@@ -74,7 +75,9 @@ class LikeTest extends TestCase
     {
         $this->signIn();
         $message = MessageFactory::create();
+
         $like = $message->likedBy();
+
         $this->assertFalse($like->shouldBeRecordable());
     }
 }

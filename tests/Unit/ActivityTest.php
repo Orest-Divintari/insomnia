@@ -16,7 +16,6 @@ class ActivityTest extends TestCase
     public function fetch_the_feed_for_a_user()
     {
         $user = $this->signIn();
-
         $thread = create(Thread::class);
         $profilePost = create(ProfilePost::class);
         $threadReply = $thread->addReply(
@@ -32,13 +31,12 @@ class ActivityTest extends TestCase
         $activities = Activity::feed($user)->get();
 
         $this->assertCount(6, $activities);
-
     }
+
     /** @test */
     public function fetch_only_the_feed_posts()
     {
         $user = $this->signIn();
-
         $thread = create(Thread::class);
         $profilePost = create(ProfilePost::class);
         $threadReply = $thread->addReply(
@@ -48,7 +46,6 @@ class ActivityTest extends TestCase
             ['body' => 'some body', 'user_id' => $user->id],
             $user
         );
-
         $replyLike = $threadReply->likedBy();
         $commentLike = $comment->likedBy();
 

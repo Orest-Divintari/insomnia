@@ -48,7 +48,6 @@ class ProfilePostFiltersTest extends TestCase
             ProfilePost::class,
             ['created_at' => Carbon::now()->subDays(10)]
         );
-
         $daysAgo = 5;
         $numberOfDesiredProfilePosts = 2;
         $desiredProfilePosts = createMany(

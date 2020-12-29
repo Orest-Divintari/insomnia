@@ -17,7 +17,9 @@ class PostFiltersTest extends TestCase
     {
         $filter = app(PostFilters::class);
         $filter->setBuilder(Thread::query());
+
         $this->expectException(ModelNotFoundException::class);
+
         $filter->postedBy('random name');
     }
 }

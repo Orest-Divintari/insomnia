@@ -32,10 +32,8 @@ class ConversationFiltersTest extends TestCase
     public function get_the_unread_conversations()
     {
         $conversationStarter = $this->signIn();
-
         $readConversation = create(Conversation::class);
         $unreadConversation = create(Conversation::class);
-
         $conversationStarter->read($readConversation);
 
         $conversations = $this->conversationFilters->unread()->get();
@@ -52,7 +50,9 @@ class ConversationFiltersTest extends TestCase
         $orestis = $this->signIn();
         $conversationByOrestis = ConversationFactory::by($orestis)->create();
 
-        $conversation = $this->conversationFilters->startedBy($orestis->name)->get();
+        $conversation = $this->conversationFilters
+            ->startedBy($orestis->name)
+            ->get();
 
         $this->assertCount(1, $conversation);
         $this->assertEquals(
@@ -70,9 +70,11 @@ class ConversationFiltersTest extends TestCase
         $conversationByOrestis = ConversationFactory::by($orestis)->create();
         $randomUser = $this->signIn();
         $conversationByRandomUser = ConversationFactory::by($randomUser)->create();
-
         $desiredUsernames = "{$orestis->name}, {$john->name}";
-        $conversations = $this->conversationFilters->startedBy($desiredUsernames)->get();
+
+        $conversations = $this->conversationFilters
+            ->startedBy($desiredUsernames)
+            ->get();
 
         $this->assertCount(2, $conversations);
         $conversationIds = $conversations->pluck('id');
@@ -85,7 +87,6 @@ class ConversationFiltersTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversationWithoutOrestis = create(Conversation::class);
-
         $orestis = create(User::class);
         $conversationWithOrestis = ConversationFactory::withParticipants([$orestis->name])->create();
 
@@ -105,7 +106,6 @@ class ConversationFiltersTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversationWithoutParticipants = create(Conversation::class);
-
         $orestis = create(User::class);
         $john = create(User::class);
         $participantNames = "{$orestis->name},{$john->name}";
@@ -118,7 +118,6 @@ class ConversationFiltersTest extends TestCase
             ->get();
 
         $this->assertCount(1, $conversation);
-
         $this->assertEquals(
             $conversation->first()->id,
             $conversationWithParticipants->id
@@ -129,7 +128,6 @@ class ConversationFiltersTest extends TestCase
     public function get_the_recent_and_unread_conversations()
     {
         $conversationStarter = $this->signIn();
-
         $readAndLastMonthConversation = ConversationFactory::by($conversationStarter)->create();
         $readAndLastMonthConversation->update(
             ['updated_at' => Carbon::now()->subMonth()]
@@ -144,7 +142,6 @@ class ConversationFiltersTest extends TestCase
         );
         $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
         $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
-
         $conversationStarter->read($readAndLastMonthConversation);
         $conversationStarter->read($readAndLastWeekConversation);
         $conversationStarter->read($readTodayConversation);

@@ -32,7 +32,6 @@ class ConversationTest extends TestCase
     public function a_single_participant_might_be_added_to_conversation()
     {
         $conversationStarter = $this->signIn();
-
         $participant = create(User::class);
         $conversation = create(Conversation::class);
 
@@ -51,13 +50,12 @@ class ConversationTest extends TestCase
         $participantA = create(User::class);
         $participantB = create(User::class);
         $participantNames = [$participantA->name, $participantB->name];
-
         $conversation = create(Conversation::class);
+
         $conversation->addParticipants($participantNames);
 
         $participantNames = collect($participantNames)
             ->merge(auth()->user()->name);
-
         $this->assertTrue(
             $conversation
                 ->participants
@@ -72,14 +70,13 @@ class ConversationTest extends TestCase
     public function a_conversation_has_messages()
     {
         $conversationStarter = $this->signIn();
-
         $message = ['body' => 'some message'];
+
         $conversation = ConversationFactory::by($conversationStarter)
             ->withMessage($message['body'])
             ->create();
 
         $this->assertCount(1, $conversation->messages);
-
         $this->assertDatabaseHas('replies', [
             'repliable_id' => $conversation->id,
             'repliable_type' => Conversation::class,
@@ -92,9 +89,9 @@ class ConversationTest extends TestCase
     public function a_conversation_can_find_the_ids_of_participants_given_the_usernames()
     {
         $conversationStarter = $this->signIn();
-
         $conversation = ConversationFactory::by($conversationStarter)
             ->create();
+
         $particiapntIds = $conversation
             ->getParticipantIds(array($conversationStarter->name));
 
@@ -118,7 +115,6 @@ class ConversationTest extends TestCase
     public function a_conversation_knows_which_one_is_the_most_recent_message()
     {
         $conversationStarter = $this->signIn();
-
         $conversation = ConversationFactory::create();
         $conversation->
             messages()
@@ -126,7 +122,6 @@ class ConversationTest extends TestCase
             ->update(
                 ['created_at' => Carbon::now()->subHour()]
             );
-
         $newMessage = $conversation->addMessage('new message');
 
         $conversation = Conversation::whereSlug($conversation->slug)
@@ -174,7 +169,6 @@ class ConversationTest extends TestCase
     public function a_conversation_is_updated_when_a_new_message_is_added()
     {
         $this->signIn();
-
         $conversationDate = Carbon::now()->subDay();
         $conversation = create(
             Conversation::class,
@@ -185,6 +179,7 @@ class ConversationTest extends TestCase
         );
 
         $conversation->addMessage('some message');
+
         $this->assertTrue(
             $conversation->fresh()->updated_at > $conversationDate
         );
@@ -196,9 +191,10 @@ class ConversationTest extends TestCase
         $user = $this->signIn();
         createMany(Conversation::class, 2);
         $this->assertCount(2, $user->conversations);
-
         $conversation = Conversation::first();
+
         $conversation->hideFrom($user);
+
         $this->assertCount(1, $user->fresh()->conversations);
     }
 
@@ -208,9 +204,10 @@ class ConversationTest extends TestCase
         $user = $this->signIn();
         createMany(Conversation::class, 2);
         $this->assertCount(2, $user->conversations);
-
         $conversation = Conversation::first();
+
         $conversation->leftBy($user);
+
         $this->assertCount(1, $user->fresh()->conversations);
     }
 
@@ -219,20 +216,13 @@ class ConversationTest extends TestCase
     {
         $user = $this->signIn();
         createMany(Conversation::class, 2);
-
         $this->assertCount(2, $user->conversations);
-
         $conversation = Conversation::first();
         $conversation->hideFrom($user);
         $this->assertCount(1, $user->fresh()->conversations);
 
         $conversation->addMessage('some message');
-        $this->assertCount(2, $user->fresh()->conversations);
 
-        $conversation->hideFrom($user);
-        $this->assertCount(1, $user->fresh()->conversations);
-
-        $conversation->unhide();
         $this->assertCount(2, $user->fresh()->conversations);
     }
 
@@ -241,7 +231,6 @@ class ConversationTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $participantB = create(User::class);
-
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants(array($participantB->name))
             ->create();
@@ -256,9 +245,7 @@ class ConversationTest extends TestCase
     public function a_converation_knows_when_and_if_it_was_read_by_the_authenticated_user()
     {
         $conversationStarter = $this->signIn();
-
         $unreadConversation = create(Conversation::class);
-
         $readConversation = create(Conversation::class);
 
         $conversationStarter->read($readConversation);
@@ -284,7 +271,6 @@ class ConversationTest extends TestCase
     public function a_conversation_can_be_ordered_by_unread()
     {
         $conversationStarter = $this->signIn();
-
         $readConversation = create(Conversation::class);
         $conversationStarter->read($readConversation);
         $unreadConversation = create(Conversation::class);
@@ -301,7 +287,6 @@ class ConversationTest extends TestCase
     public function a_conversation_can_be_orderd_by_updated_date()
     {
         $conversationStarter = $this->signIn();
-
         $oldConversation = create(Conversation::class, ['updated_at' => Carbon::now()->subWeek()]);
         $recentConversation = create(Conversation::class);
 
@@ -327,11 +312,11 @@ class ConversationTest extends TestCase
     {
         $conversation = create(Conversation::class);
         $this->assertFalse($conversation->locked);
-
         $conversation->lock();
         $this->assertTrue($conversation->locked);
 
         $conversation->unlock();
+
         $this->assertFalse($conversation->locked);
     }
 
@@ -340,10 +325,10 @@ class ConversationTest extends TestCase
     {
         $user = $this->signIn();
         $conversation = create(Conversation::class);
-
         $this->assertFalse($conversation->starred());
 
         $conversation->star();
+
         $this->assertTrue($conversation->starred());
     }
 
@@ -352,12 +337,12 @@ class ConversationTest extends TestCase
     {
         $user = $this->signIn();
         $conversation = create(Conversation::class);
-
         $this->assertFalse($conversation->starred());
         $conversation->star();
         $this->assertTrue($conversation->starred());
 
         $conversation->unstar();
+
         $this->assertFalse($conversation->starred());
     }
 
@@ -390,6 +375,7 @@ class ConversationTest extends TestCase
         $conversationStarter = $this->signIn();
         $user = create(User::class);
         $conversation = ConversationFactory::withParticipants([$user->name])->create();
+
         $conversation->setAdmin($user->id);
 
         $this->assertTrue($conversation->isAdmin($user));

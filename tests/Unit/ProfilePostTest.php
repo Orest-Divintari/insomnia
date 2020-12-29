@@ -18,10 +18,8 @@ class ProfilePostTest extends TestCase
     {
         $user = create(User::class);
 
-        $profilePost = create(ProfilePost::class, [
-            'user_id' => $user->id,
+        $profilePost = create(ProfilePost::class, ['user_id' => $user->id]);
 
-        ]);
         $this->assertEquals($user->id, $profilePost->poster->id);
     }
 
@@ -30,11 +28,12 @@ class ProfilePostTest extends TestCase
     {
         $user = create(User::class);
 
-        $profilePost = create(ProfilePost::class, [
-            'user_id' => $user->id,
-        ]);
+        $profilePost = create(ProfilePost::class, ['user_id' => $user->id]);
 
-        $this->assertEquals(Carbon::now()->calendar(), $profilePost->date_created);
+        $this->assertEquals(
+            Carbon::now()->calendar(),
+            $profilePost->date_created
+        );
     }
 
     /** @test */
@@ -54,8 +53,8 @@ class ProfilePostTest extends TestCase
     public function a_post_can_add_a_new_comment()
     {
         $post = create(ProfilePost::class);
-
         $poster = $this->signIn();
+
         $post->addComment(
             [
                 'body' => 'some body',
@@ -72,9 +71,7 @@ class ProfilePostTest extends TestCase
     {
         $profileOwner = create(User::class);
 
-        $post = create(ProfilePost::class, [
-            'profile_owner_id' => $profileOwner->id,
-        ]);
+        $post = create(ProfilePost::class, ['profile_owner_id' => $profileOwner->id]);
 
         $this->assertEquals($profileOwner->id, $post->profileOwner->id);
     }
@@ -95,6 +92,7 @@ class ProfilePostTest extends TestCase
         create(ProfilePost::class);
 
         $profilePost = ProfilePost::withSearchInfo()->get()->toArray()[0];
+
         $this->assertArrayHasKey('poster', $profilePost);
         $this->assertArrayHasKey('profile_owner', $profilePost);
     }

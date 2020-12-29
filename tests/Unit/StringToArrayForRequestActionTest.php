@@ -94,7 +94,6 @@ class StringToArrayForRequestActionTest extends TestCase
         $george = 'George';
         $john = 'John';
         $names = "   {$george},   {$john}    ";
-
         $this->request->merge([$this->attribute => $names]);
 
         $action = new StringToArrayForRequestAction(
@@ -119,7 +118,6 @@ class StringToArrayForRequestActionTest extends TestCase
     public function do_nothing_when_the_input_is_not_string()
     {
         $names = ["array"];
-
         $this->request->merge([$this->attribute => $names]);
 
         $action = new StringToArrayForRequestAction(

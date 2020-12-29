@@ -56,7 +56,6 @@ class ThreadFiltersTest extends TestCase
                 'repliable_id' => $inactiveThread->id,
             ]);
         Carbon::setTestNow(Carbon::now()->addDay());
-
         $recentlyActiveThread = create(Thread::class);
         ReplyFactory::create(['repliable_id' => $recentlyActiveThread->id]);
 
@@ -116,7 +115,6 @@ class ThreadFiltersTest extends TestCase
     {
         $threads = createMany(Thread::class, 5);
         $subscribedThread = create(Thread::class);
-
         $user = $this->signIn();
         $subscribedThread->subscribe($user->id);
 
@@ -140,7 +138,7 @@ class ThreadFiltersTest extends TestCase
             3,
             ['updated_at' => Carbon::now()->subDays(5)]
         );
-        
+
         $this->threadFilters->lastUpdated($daysAgo);
         $threads = $this->threadFilters->builder()->get();
 

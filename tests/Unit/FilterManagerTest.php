@@ -18,17 +18,12 @@ class FilterManagerTest extends TestCase
     {
         $modelFilterClassA = ThreadFilters::class;
         $modelFilterClassB = ProfilePostFilters::class;
-
         $chain = new ModelFilterChain();
-
         $chain->addFilter($modelFilterClassA);
         $chain->addFilter($modelFilterClassB);
-
         $filter = 'postedBy';
-
         $filterManager = new FilterManager($chain);
         $filterManager->appliedFilters = [];
-
         $this->assertTrue(
             $filterManager->canBeApplied($modelFilterClassA, $filter)
         );
@@ -38,10 +33,8 @@ class FilterManagerTest extends TestCase
         $this->assertTrue(
             $filterManager->canBeApplied($modelFilterClassA, $filter)
         );
-
         $this->assertFalse(
             $filterManager->canBeApplied($modelFilterClassB, $filter)
         );
-
     }
 }

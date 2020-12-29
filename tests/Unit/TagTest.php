@@ -16,7 +16,6 @@ class TagTest extends TestCase
     {
         $tag = create(Tag::class);
         $this->assertCount(0, $tag->threads);
-
         $thread = create(Thread::class);
 
         $thread->addTags([$tag->name]);
