@@ -159,19 +159,6 @@ class ViewConversationsTest extends TestCase
     }
 
     /** @test */
-    public function a_conversation_is_marked_as_read_when_the_conversation_is_visited()
-    {
-        $conversationStarter = $this->signIn();
-        $conversation = ConversationFactory::create();
-
-        $conversation = $this->getJson(
-            route('conversations.show', $conversation)
-        )->json()['conversation'];
-
-        $this->assertTrue($conversation['has_been_updated']);
-    }
-
-    /** @test */
     public function get_the_unread_conversations()
     {
         $conversationStarter = $this->signIn();

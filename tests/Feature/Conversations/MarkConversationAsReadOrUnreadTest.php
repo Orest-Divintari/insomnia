@@ -3,6 +3,8 @@
 namespace Tests\Feature\Conversations;
 
 use App\Conversation;
+use App\User;
+use Carbon\Carbon;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
@@ -29,7 +31,6 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)->create();
-        $this->assertTrue($conversation->hasBeenUpdated());
         $nonParticipant = $this->signIn();
 
         $response = $this->post(
@@ -65,11 +66,10 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
     }
 
     /** @test */
-    public function converastion_participants_mark_a_conversation_as_unread()
+    public function conversation_participants_can_mark_a_conversation_as_unread()
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)->create();
-        $conversationStarter->read($conversation);
         $this->assertFalse($conversation->hasBeenUpdated());
 
         $this->delete(
@@ -84,6 +84,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)->create();
+        $conversationStarter->unread($conversation);
         $this->assertTrue($conversation->hasBeenUpdated());
 
         $this->post(
@@ -92,4 +93,78 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
 
         $this->assertFalse($conversation->hasBeenUpdated());
     }
+
+    /** @test */
+    public function when_the_conversation_starter_creates_a_new_conversation_it_is_marked_as_read_for_the_conversation_starter()
+    {
+        $conversationStarter = $this->signIn();
+        $participant = create(User::class);
+
+        $this->post(
+            route('conversations.store'),
+            [
+                'title' => 'some title',
+                'message' => 'some message',
+                'participants' => $participant->name,
+            ]
+        );
+
+        $conversation = $conversationStarter->conversations()->first();
+        $this->assertFalse($conversation->fresh()->hasBeenUpdated());
+    }
+
+    /** @test */
+    public function when_a_participant_adds_a_new_message_to_the_conversation_the_conversation_is_marked_as_read_for_the_user_itself()
+    {
+        $conversationStarter = $this->signIn();
+        $participant = create(User::class);
+        $conversation = ConversationFactory::withParticipants([$participant->name])
+            ->by($conversationStarter)
+            ->create();
+        $this->signIn($participant);
+
+        $this->post(
+            route('api.messages.store', $conversation),
+            ['body' => 'new message']
+        );
+
+        $this->assertFalse($conversation->fresh()->hasBeenUpdated());
+    }
+
+    /** @test */
+    public function it_is_marked_as_unread_when_another_participant_adds_a_new_message_to_the_conversation()
+    {
+        $conversationStarter = $this->signIn();
+        $participant = create(User::class);
+        $conversation = ConversationFactory::withParticipants([$participant->name])
+            ->by($conversationStarter)
+            ->create();
+        $participant->read($conversation);
+        $this->signIn($participant);
+        $this->assertFalse($conversation->fresh()->hasBeenUpdated());
+        $this->signIn($conversationStarter);
+        Carbon::setTestNow(Carbon::now()->addMinute());
+
+        $this->post(
+            route('api.messages.store', $conversation),
+            ['body' => 'new message']
+        );
+
+        $this->signIn($participant);
+        $this->assertTrue($conversation->fresh()->hasBeenUpdated());
+    }
+
+    /** @test */
+    public function a_conversation_is_marked_as_read_when_the_conversation_is_visited()
+    {
+        $conversationStarter = $this->signIn();
+        $conversation = ConversationFactory::create();
+
+        $conversation = $this->getJson(
+            route('conversations.show', $conversation)
+        )->json()['conversation'];
+
+        $this->assertFalse($conversation['has_been_updated']);
+    }
+
 }
