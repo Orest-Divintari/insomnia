@@ -53,7 +53,10 @@ class ProfilePostNotificationsTest extends TestCase
         ]);
         $this->signIn($commentPoster);
         $profileOwner = create(User::class);
-        $profilePost = create(ProfilePost::class);
+        $profilePost = create(
+            ProfilePost::class,
+            ['profile_owner_id' => $profileOwner->id]
+        );
         $postParticipant = create(User::class, [
             'name' => 'john',
         ]);

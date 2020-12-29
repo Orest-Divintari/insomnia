@@ -20,10 +20,7 @@ class UserStartedFollowinYouEventTest extends TestCase
         app()->instance(NotifyFollowingUser::class, $listener);
         $followingUser = create(User::class);
 
-        $this->post(
-            route('api.follow.store'),
-            ['username' => $followingUser->name]
-        );
+        $this->post(route('api.follow.store', $followingUser));
 
         $this->assertCount(1, $followerUser->fresh()->follows);
         $this->assertTrue($followerUser->fresh()->following($followingUser));

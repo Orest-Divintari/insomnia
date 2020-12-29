@@ -15,10 +15,9 @@ class PinThreadTest extends TestCase
     public function admins_can_mark_a_thread_as_pinned()
     {
         $thread = create(Thread::class);
-
         $this->assertFalse($thread->pinned);
-
         $admin = $this->signInAdmin();
+
         $this->post(route('api.pin-threads.store', $thread));
 
         $this->assertTrue($thread->fresh()->pinned);
@@ -28,13 +27,12 @@ class PinThreadTest extends TestCase
     public function unathorized_users_cannot_mark_a_thread_as_pinned()
     {
         $thread = create(Thread::class);
-
         $this->assertFalse($thread->pinned);
-
         $unathorizedUser = $this->signIn();
-        $this->post(route('api.pin-threads.store', $thread))
-            ->assertStatus(Response::HTTP_FORBIDDEN);
 
+        $response = $this->post(route('api.pin-threads.store', $thread));
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertFalse($thread->fresh()->pinned);
     }
 
@@ -44,8 +42,8 @@ class PinThreadTest extends TestCase
         $thread = create(Thread::class);
         $thread->pin();
         $this->assertTrue($thread->pinned);
-
         $admin = $this->signInAdmin();
+
         $this->delete(route('api.pin-threads.destroy', $thread));
 
         $this->assertFalse($thread->fresh()->pinned);
@@ -57,11 +55,11 @@ class PinThreadTest extends TestCase
         $thread = create(Thread::class);
         $thread->pin();
         $this->assertTrue($thread->pinned);
-
         $unathorizedUser = $this->signIn();
-        $this->delete(route('api.pin-threads.destroy', $thread))
-            ->assertStatus(Response::HTTP_FORBIDDEN);
 
+        $response = $this->delete(route('api.pin-threads.destroy', $thread));
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertTrue($thread->fresh()->pinned);
     }
 }

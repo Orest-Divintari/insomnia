@@ -122,12 +122,13 @@ class ConversationAdminTest extends TestCase
         $this->assertTrue($conversation->isAdmin($participantA));
         $this->signIn($participantB);
 
-        $this->delete(
+        $response = $this->delete(
             route('api.conversation-admins.destroy',
                 [$conversation, $participantA->id]
             )
-        )->assertStatus(Response::HTTP_FORBIDDEN);
+        );
 
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertTrue($conversation->isAdmin($participantA));
     }
 }

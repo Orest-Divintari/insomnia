@@ -90,7 +90,6 @@ class ConversationParticipantsTest extends TestCase
         $john = create(User::class);
         $doe = create(User::class);
         $newMembersNames = "{$john->name}, {$doe->name}";
-
         $this->signIn($participant);
 
         $this->postJson(
@@ -165,7 +164,6 @@ class ConversationParticipantsTest extends TestCase
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$unathorizedUser->name])
             ->create();
-
         $this->signIn($unathorizedUser);
 
         $response = $this->post(
@@ -180,21 +178,19 @@ class ConversationParticipantsTest extends TestCase
     public function the_conversation_starter_can_always_remove_a_member_from_a_conversation()
     {
         $conversationStarter = $this->signIn();
-        $conversation = ConversationFactory::by($conversationStarter)->create();
         $newMember = create(User::class);
-
-        $this->postJson(
-            route('api.conversation-participants.store', $conversation),
-            ['participants' => $newMember->name]
-        );
-
+        $conversation = ConversationFactory::withParticipants([$newMember->name])
+            ->by($conversationStarter)
+            ->create();
         $this->assertEquals(
             $conversation->id,
             $newMember->conversations->first()->id
         );
-        $this->deleteJson(
-            route('api.conversation-participants.destroy', [$conversation, $newMember->id]),
-        );
+
+        $this->deleteJson(route(
+            'api.conversation-participants.destroy',
+            [$conversation, $newMember->id]
+        ));
 
         $this->assertDatabaseMissing('conversation_participants', [
             'conversation_id' => $conversation->id,
@@ -202,29 +198,26 @@ class ConversationParticipantsTest extends TestCase
         ]);
     }
     /** @test */
-    public function a_conversation_admin_may_remove_a_member_from_the_conversation_conversation()
+    public function a_conversation_admin_may_remove_a_member_from_the_conversation()
     {
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
-        $conversation = ConversationFactory::withParticipants([$participant->name])
-            ->by($conversationStarter)
+        $newMember = create(User::class);
+        $conversation = ConversationFactory::withParticipants(
+            [$participant->name, $newMember->name]
+        )->by($conversationStarter)
             ->create();
         $conversation->setAdmin($participant->id);
-        $newMember = create(User::class);
         $this->signIn($participant);
-
-        $this->postJson(
-            route('api.conversation-participants.store', $conversation),
-            ['participants' => $newMember->name]
-        );
-
         $this->assertEquals(
             $conversation->id,
             $newMember->conversations->first()->id
         );
-        $this->deleteJson(
-            route('api.conversation-participants.destroy', [$conversation, $newMember->id]),
-        );
+
+        $this->deleteJson(route(
+            'api.conversation-participants.destroy',
+            [$conversation, $newMember->id]
+        ));
 
         $this->assertDatabaseMissing('conversation_participants', [
             'conversation_id' => $conversation->id,
@@ -237,16 +230,18 @@ class ConversationParticipantsTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
-        $unathorizedUser = create(User::class);$response
+        $unathorizedUser = create(User::class);
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
         $this->signIn($unathorizedUser);
 
-        $this->delete(
-            route('api.conversation-participants.destroy', [$conversation, $participant->id]),
-        )->assertStatus(Response::HTTP_FORBIDDEN);
+        $response = $this->delete(route(
+            'api.conversation-participants.destroy',
+            [$conversation, $participant->id]
+        ));
 
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertDatabaseHas('conversation_participants', [
             'conversation_id' => $conversation->id,
             'user_id' => $participant->id,

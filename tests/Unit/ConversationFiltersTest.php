@@ -185,7 +185,6 @@ class ConversationFiltersTest extends TestCase
         $conversations = $this->conversationFilters->starred()->get();
         $this->assertCount(1, $conversations);
         $this->assertEquals($conversations->first()->id, $starredConversation->id);
-        $this->assertTrue($conversations->first()->starred);
-
+        $this->assertTrue($conversations->first()->starred());
     }
 }

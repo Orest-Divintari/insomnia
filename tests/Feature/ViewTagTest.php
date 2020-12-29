@@ -17,16 +17,15 @@ class ViewTagTest extends TestCase
         $this->withoutExceptionHandling();
         $threads = createMany(Thread::class, 2);
         $tag = create(Tag::class);
-
         foreach ($threads as $thread) {
             $thread->addTags([$tag->name]);
         }
-
         $this->assertCount(2, $tag->fresh()->threads);
         $threads = $threads->toArray();
 
-        $this->get(route('tags.show', $tag))
-            ->assertSee($threads[0]['title'])
+        $response = $this->get(route('tags.show', $tag));
+
+        $response->assertSee($threads[0]['title'])
             ->assertSee($threads[1]['title']);
 
     }

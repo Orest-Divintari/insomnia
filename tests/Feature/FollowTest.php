@@ -19,9 +19,11 @@ class FollowTest extends TestCase
         $user = create(User::class);
         $anotherUser = create(User::class);
 
-        $this->post(
+        $response = $this->post(
             route('api.follow.store', $anotherUser),
-        )->assertRedirect('login');
+        );
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
@@ -30,9 +32,11 @@ class FollowTest extends TestCase
         $user = create(User::class);
         $anotherUser = create(User::class);
 
-        $this->delete(
+        $respons = $this->delete(
             route('api.follow.destroy', $anotherUser)
-        )->assertRedirect('login');
+        );
+
+        $response->assertRedirect('login');
     }
 
     /** @test */
@@ -42,9 +46,7 @@ class FollowTest extends TestCase
         $this->assertCount(0, $user->follows);
         $anotherUser = create(User::class);
 
-        $this->post(
-            route('api.follow.store', $anotherUser)
-        );
+        $this->post(route('api.follow.store', $anotherUser));
 
         $this->assertCount(1, $user->fresh()->follows);
         $this->assertTrue($user->fresh()->following($anotherUser));
@@ -60,9 +62,7 @@ class FollowTest extends TestCase
         );
         $this->assertTrue($user->fresh()->following($anotherUser));
 
-        $this->delete(
-            route('api.follow.destroy', $anotherUser)
-        );
+        $this->delete(route('api.follow.destroy', $anotherUser));
 
         $this->assertFalse($user->fresh()->following($anotherUser));
     }
@@ -74,13 +74,9 @@ class FollowTest extends TestCase
         $this->assertCount(0, $user->follows);
         $anotherUser = create(User::class);
 
-        $this->post(
-            route('api.follow.store', $anotherUser)
-        );
+        $this->post(route('api.follow.store', $anotherUser));
         $this->assertCount(1, $user->refresh()->follows);
-        $this->post(
-            route('api.follow.store', $anotherUser)
-        );
+        $this->post(route('api.follow.store', $anotherUser));
 
         $this->assertCount(1, $user->follows);
         $this->assertTrue($user->fresh()->following($anotherUser));
