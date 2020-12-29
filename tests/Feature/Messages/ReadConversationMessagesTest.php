@@ -19,7 +19,7 @@ class ReadConversationMessagesTest extends TestCase
         $message = $conversation->messages()->first();
         $nonParticipant = $this->signIn();
 
-        $response = $this->get(route('api.messages.show', $message));
+        $response = $this->get(route('messages.show', $message));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
@@ -32,7 +32,7 @@ class ReadConversationMessagesTest extends TestCase
         $message = $conversation->messages()->first();
 
         $response = $this->get(
-            route('api.messages.show', $message)
+            route('messages.show', $message)
         );
 
         $response->assertRedirect(
