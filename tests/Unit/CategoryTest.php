@@ -29,7 +29,6 @@ class CategoryTest extends TestCase
     /** @test */
     public function a_category_has_a_path()
     {
-
         $this->assertEquals(
             "/forum/categories/{$this->category->slug}",
             $this->category->path());
@@ -39,19 +38,32 @@ class CategoryTest extends TestCase
     public function a_sub_category_belongs_to_a_category()
     {
         $subCategory = create(
-            Category::class, [
-                'parent_id' => $this->category->id,
-            ]);
+            Category::class,
+            ['parent_id' => $this->category->id]
+        );
 
-        $this->assertInstanceOf(Category::class, $subCategory->category);
-        $this->assertEquals($this->category->id, $subCategory->category->id);
+        $this->assertInstanceOf(
+            Category::class,
+            $subCategory->category
+        );
+        $this->assertEquals(
+            $this->category->id,
+            $subCategory->category->id
+        );
     }
 
     /** @test */
     public function a_category_may_have_a_sub_category()
     {
-        create(Category::class, ['parent_id' => $this->category->id]);
+        $subCategory = create(
+            Category::class,
+            ['parent_id' => $this->category->id]
+        );
 
+        $this->assertEquals(
+            $subCategory->id,
+            $this->category->subCategories->first()->id
+        );
         $this->assertCount(1, $this->category->subCategories);
     }
 
@@ -61,24 +73,44 @@ class CategoryTest extends TestCase
         $group = create(GroupCategory::class);
         $this->category->update(['group_category_id' => $group->id]);
 
-        $this->assertInstanceOf(GroupCategory::class, $this->category->group);
+        $this->assertEquals(
+            $group->id,
+            $this->category->group->id
+        );
+        $this->assertInstanceOf(
+            GroupCategory::class,
+            $this->category->group
+        );
     }
 
     /** @test */
     public function a_non_parent_category_has_threads()
     {
-        createMany(Thread::class, 2, ['category_id' => $this->category->id]);
+        $this->assertCount(0, $this->category->fresh()->threads);
 
-        $this->assertCount(2, $this->category->threads);
+        createMany(
+            Thread::class,
+            2,
+            ['category_id' => $this->category->id]
+        );
+
+        $this->assertCount(2, $this->category->fresh()->threads);
     }
 
     /** @test */
     public function a_parent_category_has_threads_through_subcategories()
     {
-        $subCategory = create(Category::class, ['parent_id' => $this->category->id]);
-        createMany(Thread::class, 2, [
-            'category_id' => $subCategory->id,
-        ]);
+        $subCategory = create(
+            Category::class,
+            ['parent_id' => $this->category->id]
+        );
+        dd($this->category->isRoot());
+        // $this->category->parentCategoryThreads
+        createMany(
+            Thread::class,
+            2,
+            ['category_id' => $subCategory->id]
+        );
 
         $this->assertCount(2, $this->category->parentCategoryThreads);
     }
@@ -105,27 +137,37 @@ class CategoryTest extends TestCase
             'category_id' => $this->category->id,
             'updated_at' => Carbon::now()->subMinute(),
         ]);
-        $category = Category::where('id', $this->category->id)->recentActiveThread()->first();
+        $category = Category::where('id', $this->category->id)
+            ->withRecentActiveThread()
+            ->first();
 
-        $this->assertEquals($recentThread->id, $category
-                ->recently_active_thread_id
+        $this->assertEquals(
+            $recentThread->id,
+            $category->recently_active_thread_id
         );
     }
 
     /** @test */
     public function a_parent_category_has_a_recently_active_thread()
     {
-        $subCategory = create(Category::class, [
-            'parent_id' => $this->category->id,
-        ]);
-        $recentThread = create(Thread::class, [
-            'category_id' => $subCategory->id,
-        ]);
-        $oldThread = create(Thread::class, [
-            'category_id' => $subCategory->id,
-            'updated_at' => Carbon::now()->subMinute(),
-        ]);
-        $parentCategory = Category::where('id', $this->category->id)->parentRecentActiveThread()->first();
+        $subCategory = create(
+            Category::class,
+            ['parent_id' => $this->category->id]
+        );
+        $recentThread = create(
+            Thread::class,
+            ['category_id' => $subCategory->id]
+        );
+        $oldThread = create(
+            Thread::class,
+            [
+                'category_id' => $subCategory->id,
+                'updated_at' => Carbon::now()->subMinute(),
+            ]
+        );
+        $parentCategory = Category::where('id', $this->category->id)
+            ->withParentRecentActiveThread()
+            ->first();
 
         $this->assertEquals(
             $recentThread->id,
@@ -137,9 +179,10 @@ class CategoryTest extends TestCase
     public function check_whether_a_category_has_subcategories()
     {
         $this->assertFalse($this->category->hasSubCategories());
-        create(Category::class, [
-            'parent_id' => $this->category->id,
-        ]);
+        create(
+            Category::class,
+            ['parent_id' => $this->category->id]
+        );
 
         $this->assertTrue($this->category->fresh()->hasSubCategories());
     }
@@ -156,9 +199,13 @@ class CategoryTest extends TestCase
     public function a_category_knows_if_it_has_threads()
     {
         $this->assertFalse($this->category->hasThreads());
-        createMany(Thread::class, 10, [
-            'category_id' => $this->category->id,
-        ]);
+        createMany(
+            Thread::class,
+            10,
+            [
+                'category_id' => $this->category->id,
+            ]
+        );
 
         $this->assertTrue($this->category->fresh()->hasThreads());
     }
