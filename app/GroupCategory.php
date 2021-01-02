@@ -33,9 +33,9 @@ class GroupCategory extends Model
             'categories.subCategories',
             'categories' => function ($query) {
 
-                $query->recentActiveThread();
+                $query->withRecentActiveThread();
 
-                $query->parentRecentActiveThread();
+                $query->withParentRecentActiveThread();
 
                 $query->withCount(['threads', 'parentCategoryThreads']);
 

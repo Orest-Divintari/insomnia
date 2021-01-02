@@ -28,7 +28,7 @@ class CategoryController extends Controller
     {
         if ($category->hasSubCategories()) {
             $subCategories = $category->subCategories()
-                ->withActivity()
+                ->withRecentActiveThread()
                 ->withStatistics()
                 ->get();
 

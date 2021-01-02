@@ -138,7 +138,7 @@ class Category extends Model
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeRecentActiveThread(Builder $query)
+    public function scopeWithRecentActiveThread(Builder $query)
     {
         return $query->addSelect([
             'recently_active_thread_id' => Thread::select('id')
@@ -156,7 +156,7 @@ class Category extends Model
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeParentRecentActiveThread(Builder $query)
+    public function scopeWithParentRecentActiveThread(Builder $query)
     {
         return $query->addSelect(DB::raw('(
             SELECT
@@ -187,17 +187,6 @@ class Category extends Model
     public function getAvatarPathAttribute($avatar)
     {
         return asset($avatar ?: '/avatars/categories/apple_logo.png');
-    }
-
-    /**
-     * Fetch the most recently active thread for the category
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeWithActivity(Builder $query)
-    {
-        return $query->recentActiveThread();
     }
 
     /**
