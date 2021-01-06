@@ -115,7 +115,7 @@ class Category extends Model
     }
 
     /**
-     * A non-parent category is associated with the most recently active thread
+     * A category has a most recently active thread
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
