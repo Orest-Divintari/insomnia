@@ -15,7 +15,9 @@ class ReplyObserver
      */
     public function deleting(Reply $reply)
     {
-        if ($reply->repliable_type == 'App\Thread') {
+        if ($reply->isThreadReply()
+            && $reply->repliable->hasReplies()
+        ) {
             $reply->repliable->decrement('replies_count');
         }
 

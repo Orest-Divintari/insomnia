@@ -53,4 +53,15 @@ class ActivityTest extends TestCase
 
         $this->assertCount(4, $activities);
     }
+
+    /** @test */
+    public function it_has_a_subject()
+    {
+        $this->signIn();
+        $thread = create(Thread::class);
+        $threadActivity = $thread->activities->first();
+
+        $this->assertInstanceOf(Thread::class, $threadActivity->subject);
+    }
+
 }

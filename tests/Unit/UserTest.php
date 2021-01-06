@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Activity;
 use App\Conversation;
 use App\ProfilePost;
 use App\Read;
@@ -290,5 +291,29 @@ class UserTest extends TestCase
 
         $this->assertFalse($notAdminUser->isAdmin());
         $this->assertTrue($adminUser->isAdmin());
+    }
+
+    /** @test */
+    public function when_a_user_is_deleted_the_associated_activities_are_deleted()
+    {
+        $user = $this->signIn();
+        $userId = $user->id;
+        $thread = create(Thread::class, ['user_id' => $user->id]);
+
+        $user->delete();
+
+        $this->assertCount(0, Activity::where('user_id', $userId)->get());
+    }
+
+    /** @test */
+    public function when_a_user_is_deleted_the_associated_threads_are_deleted()
+    {
+        $user = create(User::class);
+        $thread = create(Thread::class, ['user_id' => $user->id]);
+        $this->assertEquals(1, Thread::count());
+
+        $user->delete();
+
+        $this->assertEquals(0, Thread::count());
     }
 }

@@ -20,6 +20,7 @@
         "laravel/scout": "^8.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "staudenmeir/laravel-cte": "^1.0",
         "stevebauman/purify": "^3.0"
     },
     "require-dev": {

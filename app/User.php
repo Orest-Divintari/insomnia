@@ -352,4 +352,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return in_array($this->email, config('insomnia.administrators'));
     }
+
+    /**
+     * Get the user's thread
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function threads()
+    {
+        return $this->hasMany(Thread::class);
+    }
 }

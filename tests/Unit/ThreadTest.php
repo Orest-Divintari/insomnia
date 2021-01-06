@@ -163,7 +163,7 @@ class ThreadTest extends TestCase
 
     /** @test */
     public function a_thread_can_determine_whether_a_the_autneticated_user_has_subscribed_to_it()
-    
+    {
         $thread = create(Thread::class);
         $user = $this->signIn();
         $this->assertCount(0, $thread->subscriptions);
@@ -216,7 +216,7 @@ class ThreadTest extends TestCase
         $this->assertTrue($this->thread->locked);
 
         $this->thread->unlock();
-        
+
         $this->assertFalse($this->thread->locked);
     }
 
@@ -265,7 +265,7 @@ class ThreadTest extends TestCase
 
         $user->read($readThread);
         $threads = Thread::withHasBeenUpdated()->get();
-        
+
         $this->assertFalse(
             $threads->firstWhere('id', $readThread->id)->has_been_updated
         );
@@ -292,8 +292,20 @@ class ThreadTest extends TestCase
         createMany(Thread::class, 5);
 
         $desiredThreads = Thread::forCategory($category)->get();
-        
+
         $this->assertCount(1, $desiredThreads);
         $this->assertEquals($thread->id, $desiredThreads->first()->id);
+    }
+
+    /** @test */
+    public function a_thread_knows_if_it_has_replies()
+    {
+        $thread = create(Thread::class);
+
+        $this->assertFalse($thread->hasReplies());
+
+        $thread->increment('replies_count');
+
+        $this->assertTrue($thread->hasReplies());
     }
 }

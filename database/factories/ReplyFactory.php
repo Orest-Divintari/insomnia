@@ -11,7 +11,7 @@ $factory->define(Reply::class, function (Faker $faker) {
         'body' => $faker->paragraph(),
         'repliable_id' => null,
         'repliable_type' => 'App\Thread',
-        'user_id' => factory(User::class),
+        'user_id' => auth()->id() ?: factory(User::class),
     ];
 
 });

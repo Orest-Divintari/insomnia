@@ -133,6 +133,16 @@ class Thread extends Model
     }
 
     /**
+     * Determine whether the thread has replies
+     *
+     * @return boolean
+     */
+    public function hasReplies()
+    {
+        return $this->replies_count > 0;
+    }
+
+    /**
      * Get the most recent reply of a thread
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

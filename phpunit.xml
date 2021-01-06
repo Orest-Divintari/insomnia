@@ -17,8 +17,14 @@
          <testsuite name="Threads">
             <directory suffix="Test.php">./tests/Feature/Threads</directory>
         </testsuite>
+        <testsuite name="Follows">
+            <directory suffix="Test.php">./tests/Feature/Follows</directory>
+        </testsuite>
          <testsuite name="Categories">
             <directory suffix="Test.php">./tests/Feature/Categories</directory>
+        </testsuite>
+         <testsuite name="Likes">
+            <directory suffix="Test.php">./tests/Feature/Likes</directory>
         </testsuite>
          <testsuite name="Profiles">
             <directory suffix="Test.php">./tests/Feature/Profiles</directory>

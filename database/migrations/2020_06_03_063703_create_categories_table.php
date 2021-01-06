@@ -19,7 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->text('excerpt');
             $table->string('slug')->unique();
             $table->foreignId('parent_id')->nullable();
-            $table->foreignId('group_category_id');
+            $table->foreignId('group_category_id')->nullable();
             $table->string('avatar_path')->nullable();
             $table->timestamps();
         });

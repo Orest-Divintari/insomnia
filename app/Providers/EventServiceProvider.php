@@ -2,12 +2,18 @@
 
 namespace App\Providers;
 
+use App\Category;
 use App\Conversation;
+use App\GroupCategory;
+use App\Observers\CategoryObserver;
 use App\Observers\ConversationObserver;
+use App\Observers\GroupCategoryObserver;
 use App\Observers\ProfilePostObserver;
 use App\Observers\ReplyObserver;
+use App\Observers\UserObserver;
 use App\ProfilePost;
 use App\Reply;
+use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -73,6 +79,9 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
         ProfilePost::observe(ProfilePostObserver::class);
         Conversation::observe(ConversationObserver::class);
+        Category::observe(CategoryObserver::class);
+        GroupCategory::observe(GroupCategoryObserver::class);
+        User::observe(UserObserver::class);
         Reply::observe(ReplyObserver::class);
 
     }
