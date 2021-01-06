@@ -54,7 +54,7 @@
                     <button class="btn-white-blue mr-1">Ignore</button>
 
                     <subscribe-button thread-slug="{{ $thread->slug }}"
-                        subscription-status="{{ json_encode($thread->subscribedByAuthUser)}}" class="mr-1">
+                        subscription-status="{{ json_encode($thread->subscribedByAuthUser)}}">
                     </subscribe-button>
                     @if(auth()->check() && Gate::allows('lock', $thread))
                     <lock-thread-button :thread="{{ $thread }}"></lock-thread-button>
