@@ -15,6 +15,9 @@ class CategoryController extends Controller
     public function index()
     {
         $groups = GroupCategory::withCategories()->get();
+        if (request()->expectsJson()) {
+            return $groups;
+        }
         return view('categories.index', compact('groups'));
     }
 
@@ -28,8 +31,9 @@ class CategoryController extends Controller
     {
         if ($category->hasSubCategories()) {
             $subCategories = $category->subCategories()
-                ->withRecentActiveThread()
-                ->withStatistics()
+                ->withThreadsCount()
+                ->withRepliesCount()
+                ->withRecentlyActiveThread()
                 ->get();
 
             return view('sub_categories.index', compact('category', 'subCategories'));

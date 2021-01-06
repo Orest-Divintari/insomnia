@@ -3,13 +3,13 @@
 
 <div class="ml-2">
     <a href="{{route('threads.show', $thread->slug) }}" class=" text-smaller font-extrabold tracking-wide">
-        {{ $thread->shortTitle }}
+        {{ $thread->shortTitle ?: '' }}
         <span class="text-xs text-gray-lightest font-hairline">...</span>
     </a>
     <div class="flex items-center justify-start text-smaller text-gray-lightest font-hairline">
-        <p class="">{{ $thread->date_updated }}
+        <p class="">{{ $thread->date_updated ?: '' }}
         </p>
         <p class="dot"></p>
-        <p>{{ $thread->recentReply->poster->shortName }}</p>
+        <p>{{ $thread->recentReply->poster->shortName ?: '' }}</p>
     </div>
 </div>
