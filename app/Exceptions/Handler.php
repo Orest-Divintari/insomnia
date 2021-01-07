@@ -6,6 +6,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -67,9 +68,13 @@ class Handler extends ExceptionHandler
             }
         }
 
-        if ($exception instanceof ThrottlePostsException) {
-            return response($exception->message(), 429);
         if ($exception instanceof PostThrottlingException) {
+            if ($request->expectsJson()) {
+                return response($exception->message(), 429);
+            }
+            return back()
+                ->withInput()
+                ->withErrors([$exception->error() => $exception->message()]);
         }
 
         return parent::render($request, $exception);

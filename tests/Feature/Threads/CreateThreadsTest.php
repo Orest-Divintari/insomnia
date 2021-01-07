@@ -3,7 +3,6 @@
 namespace Tests\Feature\Threads;
 
 use App\Category;
-use App\Exceptions\ThrottlePostsException;
 use App\Tag;
 use App\Thread;
 use App\User;
@@ -78,10 +77,8 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function a_user_that_has_exceeded_the_post_rate_limit_cannot_create_a_thread()
     {
-        $this->withoutExceptionHandling();
         $this->signIn();
-        $errorMessage = 'You have to wait';
-        $this->expectException(ThrottlePostsException::class);
+        $error = "post_throttled";
 
         $this->post(
             route('threads.store'),
@@ -92,10 +89,7 @@ class CreateThreadsTest extends TestCase
             raw(Thread::class)
         );
 
-        $this->assertTrue(str_contains(
-            $response->getContent(),
-            $errorMessage
-        ));
+        $response->assertSessionHasErrors($error);
     }
 
     /** @test */
