@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\ProfilePost;
-use App\Reply;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -18,13 +17,7 @@ class CommentTest extends TestCase
         $post = create(ProfilePost::class);
         $poster = $this->signIn();
 
-        $comment = $post->addComment(
-            [
-                'body' => 'some body',
-                'user_id' => $poster->id,
-            ],
-            $poster
-        );
+        $comment = $post->addComment('some body', $poster);
 
         $this->assertInstanceOf(User::class, $comment->poster);
     }
@@ -35,13 +28,7 @@ class CommentTest extends TestCase
         $poster = $this->signIn();
         $post = create(ProfilePost::class);
 
-        $comment = $post->addComment(
-            [
-                'body' => 'some body',
-                'user_id' => $poster->id,
-            ],
-            $poster
-        );
+        $comment = $post->addComment('some body', $poster);
 
         $this->assertInstanceOf(ProfilePost::class, $comment->profilePost);
     }
@@ -52,11 +39,7 @@ class CommentTest extends TestCase
         $user = $this->signIn();
         $thread = create(ProfilePost::class);
 
-        $comment = $thread->addComment(
-            raw(Reply::class, [
-                'user_id' => $user->id,
-            ]),
-            $user);
+        $comment = $thread->addComment('some comment', $user);
 
         $this->assertCount(1, $comment->activities);
     }

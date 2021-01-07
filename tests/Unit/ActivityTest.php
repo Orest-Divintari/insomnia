@@ -21,10 +21,7 @@ class ActivityTest extends TestCase
         $threadReply = $thread->addReply(
             ['body' => 'some body', 'user_id' => $user->id]
         );
-        $comment = $profilePost->addComment(
-            ['body' => 'some body', 'user_id' => $user->id],
-            $user
-        );
+        $comment = $profilePost->addComment('some body', $user);
         $replyLike = $threadReply->likedBy();
         $commentLike = $comment->likedBy();
 
@@ -42,10 +39,7 @@ class ActivityTest extends TestCase
         $threadReply = $thread->addReply(
             ['body' => 'some body', 'user_id' => $user->id]
         );
-        $comment = $profilePost->addComment(
-            ['body' => 'some body', 'user_id' => $user->id],
-            $user
-        );
+        $comment = $profilePost->addComment('some body', $user);
         $replyLike = $threadReply->likedBy();
         $commentLike = $comment->likedBy();
 

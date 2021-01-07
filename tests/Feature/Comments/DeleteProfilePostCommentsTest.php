@@ -55,12 +55,7 @@ class DeleteProfilePostCommentsTest extends TestCase
     {
         $poster = $this->signIn();
         $profilePost = create(ProfilePost::class, ['user_id' => $poster->id]);
-        $profilePost->addComment(
-            raw(Reply::class, [
-                'repliable_type' => ProfilePost::class,
-            ]),
-            $poster
-        );
+        $profilePost->addComment('some comment', $poster);
         $this->assertCount(1, $profilePost->comments);
 
         $this->delete(route('api.profile-posts.destroy', $profilePost->id));

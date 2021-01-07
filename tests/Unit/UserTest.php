@@ -326,8 +326,7 @@ class UserTest extends TestCase
         $thread->addReply(raw(Reply::class));
         $profilePost = create(ProfilePost::class);
         Carbon::setTestNow();
-        $commentRaw = array_merge(['user_id' => $user->id], raw(Reply::class));
-        $comment = $profilePost->addComment($commentRaw, $user);
+        $comment = $profilePost->addComment('new comment', $user);
 
         $lastPostActivity = $user->lastPostActivity();
 

@@ -22,13 +22,9 @@ class CommentController extends Controller
      */
     public function store(ProfilePost $post, PostCommentRequest $request)
     {
-        $poster = auth()->user();
         return $post->addComment(
-            [
-                'user_id' => $poster->id,
-                'body' => request('body'),
-            ],
-            $poster
+            request('body'),
+            auth()->user()
         )->load('poster')
             ->loadCount('likes');
     }

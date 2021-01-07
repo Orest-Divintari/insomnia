@@ -55,13 +55,7 @@ class ProfilePostTest extends TestCase
         $post = create(ProfilePost::class);
         $poster = $this->signIn();
 
-        $post->addComment(
-            [
-                'body' => 'some body',
-                'user_id' => $poster->id,
-            ],
-            $poster
-        );
+        $post->addComment('new comment', $poster);
 
         $this->assertCount(1, $post->comments);
     }

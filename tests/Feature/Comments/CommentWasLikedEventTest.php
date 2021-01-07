@@ -20,14 +20,12 @@ class CommentWasLikedEventTest extends TestCase
         $listener = Mockery::spy(NotifyCommentPoster::class);
         app()->instance(NotifyCommentPoster::class, $listener);
         $profileOwner = create(User::class);
-        $profilePost = create(ProfilePost::class, ['profile_owner_id' => $profileOwner->id]);
-        $commentPoster = create(User::class);
-        $comment = $profilePost->addComment([
-            'body' => 'some comment',
-            'user_id' => $commentPoster->id,
-        ],
-            $commentPoster
+        $profilePost = create(
+            ProfilePost::class,
+            ['profile_owner_id' => $profileOwner->id]
         );
+        $commentPoster = create(User::class);
+        $comment = $profilePost->addComment('some comment', $commentPoster);
         $liker = $this->signIn();
 
         $this->post(route('api.likes.store', $comment));

@@ -20,10 +20,7 @@ class ReadLatestActivityTest extends TestCase
         $threadReply = $thread->addReply(
             ['body' => 'some body', 'user_id' => $profileOwner->id]
         );
-        $comment = $profilePost->addComment(
-            ['body' => 'some body', 'user_id' => $profileOwner->id],
-            $profileOwner
-        );
+        $comment = $profilePost->addComment('some comment', $profileOwner);
         $replyLike = $threadReply->likedBy();
         $commentLike = $comment->likedBy();
 
