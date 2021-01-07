@@ -362,4 +362,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Thread::class);
     }
+
+    /**
+     * Get the last post activity
+     *
+     * @return Activity
+     */
+    public function lastPostActivity()
+    {
+        return Activity::where('user_id', $this->id)
+            ->whereIn('subject_type', [
+                'App\Thread',
+                'App\Reply',
+                'App\ProfilePost',
+            ])->latest('created_at')
+            ->first();
+    }
 }

@@ -5,7 +5,13 @@
         <p class="text-lg text-black-semi">Ops! we ran into some problems.</p>
         <button @click="hide" class="fas fa-times text-lg"></button>
       </div>
-      <div v-for="(error, indexError) in errors">
+      <div v-if="isString(errors)">
+        <p
+          class="block p-3 text-black-semi text-sm list-disc"
+          v-text="errors"
+        ></p>
+      </div>
+      <div v-else v-for="(error, indexError) in errors">
         <div v-for="(message, indexMessage) in error">
           <li
             class="block p-3 text-black-semi text-sm list-disc"
@@ -35,6 +41,9 @@ export default {
     },
     hide() {
       this.$modal.hide("error-modal");
+    },
+    isString() {
+      return typeof this.errors === "string";
     },
   },
   created() {

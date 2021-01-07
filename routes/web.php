@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('threads.create');
 
     Route::post('/threads', 'ThreadController@store')
-        ->middleware('verified')
+        ->middleware('verified', 'throttle.posts')
         ->name('threads.store');
 
     // conversation
@@ -203,7 +203,7 @@ Route::group([
         // comments
         Route::post('/posts/{post}/comments', 'CommentController@store')
             ->name('api.comments.store')
-            ->middleware('verified');
+            ->middleware('verified', 'throttle.posts');
 
         Route::patch('/comments/{comment}', 'CommentController@update')
             ->name('api.comments.update');
@@ -216,7 +216,7 @@ Route::group([
 
         // profile posts
         Route::post('/profiles/{user}/posts', 'ProfilePostController@store')
-            ->middleware('verified')
+            ->middleware('verified', 'throttle.posts')
             ->name('api.profile-posts.store');
 
         Route::patch('/profile/posts/{post}', 'ProfilePostController@update')
@@ -230,7 +230,8 @@ Route::group([
             ->name('api.replies.show');
 
         Route::post('/threads/{thread}/replies', 'ReplyController@store')
-            ->name('api.replies.store');
+            ->name('api.replies.store')
+            ->middleware('throttle.posts');
 
         Route::patch('/replies/{reply}', 'ReplyController@update')
             ->name('api.replies.update');
