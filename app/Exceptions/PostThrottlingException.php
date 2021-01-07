@@ -40,6 +40,6 @@ class PostThrottlingException extends Exception
      */
     public function error()
     {
-        return 'post_throttled';
+        return ['post_throttled' => $this->message()];
     }
 }

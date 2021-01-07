@@ -74,7 +74,7 @@ class Handler extends ExceptionHandler
             }
             return back()
                 ->withInput()
-                ->withErrors([$exception->error() => $exception->message()]);
+                ->withErrors($exception->error());
         }
 
         return parent::render($request, $exception);
