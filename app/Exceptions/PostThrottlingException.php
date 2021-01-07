@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class ThrottlePostsException extends Exception
+class PostThrottlingException extends Exception
 {
     /**
      * The seconds left before next post
@@ -31,5 +31,15 @@ class ThrottlePostsException extends Exception
     public function message()
     {
         return "You must wait at least {$this->getSecondsLeftBeforePosting()} seconds before performing this action.";
+    }
+
+    /**
+     * Get the error name
+     *
+     * @return string
+     */
+    public function error()
+    {
+        return 'post_throttled';
     }
 }

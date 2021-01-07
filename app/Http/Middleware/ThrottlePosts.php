@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Exceptions\ThrottlePostsException;
+use App\Exceptions\PostThrottlingException;
 use Carbon\Carbon;
 use Closure;
 
@@ -28,7 +28,7 @@ class ThrottlePosts
         $lastPostActivity = auth()->user()->lastPostActivity();
 
         if ($lastPostActivity && $this->tooSoonToPost($lastPostActivity)) {
-            throw new ThrottlePostsException(
+            throw new PostThrottlingException(
                 $this->secondsLeftBeforePosting($lastPostActivity)
             );
         }

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Comments;
 
-use App\Exceptions\ThrottlePostsException;
+use App\Exceptions\PostThrottlingException;
 use App\ProfilePost;
 use App\Reply;
 use App\User;
@@ -93,7 +93,7 @@ class CreateCommentTest extends TestCase
         $profilePost = create(ProfilePost::class);
         $user = $this->signIn();
         $errorMessage = 'You must wait';
-        $this->expectException(ThrottlePostsException::class);
+        $this->expectException(PostThrottlingException::class);
 
         $this->post(
             route('api.comments.store', $profilePost),

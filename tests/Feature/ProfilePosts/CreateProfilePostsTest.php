@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\ProfilePosts;
 
-use App\Exceptions\ThrottlePostsException;
+use App\Exceptions\PostThrottlingException;
 use App\ProfilePost;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -101,7 +101,7 @@ class CreateProfilePostsTest extends TestCase
         $profileOwner = create(User::class);
         $user = $this->signIn();
         $errorMessage = 'You must wait';
-        $this->expectException(ThrottlePostsException::class);
+        $this->expectException(PostThrottlingException::class);
 
         $this->post(
             route('api.profile-posts.store', $profileOwner),

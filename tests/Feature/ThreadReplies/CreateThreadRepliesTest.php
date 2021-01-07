@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\ThreadReplies;
 
-use App\Exceptions\ThrottlePostsException;
+use App\Exceptions\PostThrottlingException;
 use App\Reply;
 use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -86,7 +86,7 @@ class CreateThreadRepliesTest extends TestCase
         $this->withoutExceptionHandling();
         $this->signIn();
         $errorMessage = 'You must wait';
-        $this->expectException(ThrottlePostsException::class);
+        $this->expectException(PostThrottlingException::class);
 
         $this->post(
             route('threads.store'),
