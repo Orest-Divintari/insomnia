@@ -366,7 +366,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get the last post activity
      *
-     * @return Activity
+     * @return Activity 
      */
     public function lastPostActivity()
     {
