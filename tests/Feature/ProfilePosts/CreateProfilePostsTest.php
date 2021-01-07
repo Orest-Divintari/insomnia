@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\ProfilePosts;
 
+use App\Exceptions\ThrottlePostsException;
+use App\ProfilePost;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -90,6 +92,30 @@ class CreateProfilePostsTest extends TestCase
 
         $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
+    }
+
+    /** @test */
+    public function a_user_cannot_create_a_profile_post_if_has_exceeded_the_post_rate_limit()
+    {
+        $this->withoutExceptionHandling();
+        $profileOwner = create(User::class);
+        $user = $this->signIn();
+        $errorMessage = 'You must wait';
+        $this->expectException(ThrottlePostsException::class);
+
+        $this->post(
+            route('api.profile-posts.store', $profileOwner),
+            raw(ProfilePost::class)
+        );
+        $response = $this->post(
+            route('api.profile-posts.store', $profileOwner),
+            raw(ProfilePost::class)
+        );
+
+        $this->assertTrue(str_contains(
+            $response->getContent(),
+            $errorMessage
+        ));
     }
 
 }

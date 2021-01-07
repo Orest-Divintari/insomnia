@@ -316,4 +316,21 @@ class UserTest extends TestCase
 
         $this->assertEquals(0, Thread::count());
     }
+
+    /** @test */
+    public function a_user_knows_which_is_the_last_post_activity()
+    {
+        $user = $this->signIn();
+        Carbon::setTestNow(Carbon::now()->subDay());
+        $thread = create(Thread::class);
+        $thread->addReply(raw(Reply::class));
+        $profilePost = create(ProfilePost::class);
+        Carbon::setTestNow();
+        $commentRaw = array_merge(['user_id' => $user->id], raw(Reply::class));
+        $comment = $profilePost->addComment($commentRaw, $user);
+
+        $lastPostActivity = $user->lastPostActivity();
+
+        $this->assertEquals($comment->id, $lastPostActivity->subject->id);
+    }
 }

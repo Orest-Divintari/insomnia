@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\ThreadReplies;
 
+use App\Exceptions\ThrottlePostsException;
 use App\Reply;
 use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -77,5 +78,29 @@ class CreateThreadRepliesTest extends TestCase
 
         $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
+    }
+
+    /** @test */
+    public function a_user_cannot_add_a_reply_if_has_exceeded_the_post_rate_limit()
+    {
+        $this->withoutExceptionHandling();
+        $this->signIn();
+        $errorMessage = 'You must wait';
+        $this->expectException(ThrottlePostsException::class);
+
+        $this->post(
+            route('threads.store'),
+            raw(Thread::class)
+        );
+        $thread = Thread::first();
+        $response = $this->post(
+            route('api.replies.store', $thread),
+            raw(Reply::class)
+        );
+
+        $this->assertTrue(str_contains(
+            $response->getContent(),
+            $errorMessage
+        ));
     }
 }

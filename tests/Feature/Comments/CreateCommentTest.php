@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Comments;
 
+use App\Exceptions\ThrottlePostsException;
 use App\ProfilePost;
+use App\Reply;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -82,5 +84,30 @@ class CreateCommentTest extends TestCase
         $response = $this->post(route('api.comments.store', $post), $comment);
 
         $response->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
+    }
+
+    /** @test */
+    public function a_user_cannot_add_a_profile_post_comment_if_has_exceed_the_post_rate_limit()
+    {
+        $this->withoutExceptionHandling();
+        $profilePost = create(ProfilePost::class);
+        $user = $this->signIn();
+        $errorMessage = 'You must wait';
+        $this->expectException(ThrottlePostsException::class);
+
+        $this->post(
+            route('api.comments.store', $profilePost),
+            raw(Reply::class)
+        );
+        $response = $this->post(
+            route('api.comments.store', $profilePost),
+            raw(Reply::class)
+        );
+
+        $this->assertTrue(str_contains(
+            $response->getContent(),
+            $errorMessage
+        ));
+
     }
 }
