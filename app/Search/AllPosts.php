@@ -19,9 +19,16 @@ class AllPosts extends Aggregator
 
     public function shouldBeSearchable()
     {
-        if (($this->model->repliable_type == 'App\Thread')) {
-            return $this->model->position > 1;
+        // The first thread-reply consists the body of the thread
+        // therefore it should not be searchable
+        if ($this->model->isThreadReply()) {
+            return !$this->model->isThreadBody();
         }
+
+        if ($this->model->isMessage()) {
+            return false;
+        }
+
         return true;
     }
 
