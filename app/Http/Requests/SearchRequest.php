@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class SearchRequest
 {
+
     /**
      * The resulting validation instance
      *
@@ -57,6 +58,9 @@ class SearchRequest
      */
     public function getSearchQuery()
     {
+        if (is_null(request('q'))) {
+            return "";
+        }
         if (is_string(request('q'))) {
             return request('q');
         }
