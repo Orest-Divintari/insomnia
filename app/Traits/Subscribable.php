@@ -22,6 +22,14 @@ trait Subscribable
         ]);
     }
 
+    public function subscribeWithoutEmails()
+    {
+        $this->subscriptions()->updateOrcreate([
+            'user_id' => $userId ?? auth()->id(),
+            'prefers_email' => false,
+        ]);
+    }
+
     /**
      * Unsubscribe a user from the current thread
      *
