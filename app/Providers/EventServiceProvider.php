@@ -83,6 +83,8 @@ class EventServiceProvider extends ServiceProvider
         GroupCategory::observe(GroupCategoryObserver::class);
         User::observe(UserObserver::class);
         Reply::observe(ReplyObserver::class);
+        Reply::observe(ThreadReplyObserver::class);
+        Reply::observe(MessageObserver::class);
 
     }
 }
