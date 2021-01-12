@@ -93,7 +93,7 @@ class Thread extends Model
         parent::boot();
 
         static::created(function ($thread) {
-            $thread->createReply();
+            $thread->createReplyForThreadBody();
         });
 
         static::deleting(function ($thread) {
@@ -247,7 +247,7 @@ class Thread extends Model
      *
      * @return void
      */
-    public function createReply()
+    public function createReplyForThreadBody()
     {
         $reply = new Reply();
         $reply->setTouchedRelations([]);
