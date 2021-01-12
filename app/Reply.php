@@ -13,7 +13,11 @@ use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
 {
-    use Filterable, Likeable, FormatsDate, RecordsActivity, Searchable;
+    use Filterable,
+    Likeable,
+    FormatsDate,
+    RecordsActivity,
+        Searchable;
 
     /**
      * The accessors to append to the model's array form.
