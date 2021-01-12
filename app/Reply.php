@@ -59,7 +59,7 @@ class Reply extends Model
     }
 
     /**
-     * A thread reply belongs to a user
+     * A reply belongs to a user
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -236,8 +236,7 @@ class Reply extends Model
     }
 
     /**
-     * The first thread reply consists the body of the thread
-     * therefore it should not be searchable
+     * Determine what should be serchable for algolia
      *
      * @return boolean
      */
