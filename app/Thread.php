@@ -241,9 +241,7 @@ class Thread extends Model
     }
 
     /**
-     *
      * Create a reply which is the body of the thread
-     * Subscribe the creator to the thread
      * Do not sync this reply with algolia
      *
      * @return void
