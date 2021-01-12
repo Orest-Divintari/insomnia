@@ -31,12 +31,7 @@ class UserNotificationsTest extends TestCase
         Notification::fake();
         $user = $this->signIn();
         $thread = create(Thread::class);
-
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
-        $thread->addReply(raw(Reply::class));
+        $reply = $thread->addReply($this->faker->sentence);
         $notification = new ThreadHasNewReply($thread, $reply);
 
         $user->notify($notification);

@@ -22,8 +22,8 @@ class UserNotificationsTest extends TestCase
         $this->user = $this->signIn();
         $this->thread = create(Thread::class);
         $this->thread->subscribe($this->user->id);
-        $this->thread->addReply(raw(Reply::class));
-        $this->thread->addReply(raw(Reply::class));
+        $this->thread->addReply($this->faker->sentence, $john);
+        $this->thread->addReply($this->faker->sentence, $john);
         $this->response = $this->get(route('api.user-notifications.index'))->json();
     }
 

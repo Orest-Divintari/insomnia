@@ -116,7 +116,7 @@ class ThreadTest extends TestCase
             'repliable_type' => Thread::class,
         ]);
 
-        $thread->addReply($reply);
+        $thread->addReply($this->faker->sentence, $user);
 
         $this->assertEquals($thread->fresh()->replies_count, 1);
 
