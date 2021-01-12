@@ -49,6 +49,15 @@ class Reply extends Model
     protected $touches = ['repliable'];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'position' => 'int',
+    ];
+
+    /**
      * A reply belongs to a repliable model
      *
      * @return Illuminate\Database\Eloquent\Relations\MorphTo
