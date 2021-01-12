@@ -94,6 +94,9 @@ class Thread extends Model
 
         static::created(function ($thread) {
             $thread->createReplyForThreadBody();
+            if (auth()->check()) {
+                $thread->subscribe(auth()->id());
+            }
         });
 
         static::deleting(function ($thread) {
@@ -259,10 +262,6 @@ class Thread extends Model
         $reply->position = 1;
         $reply->repliable_type = 'App\Thread';
         $reply->save();
-
-        if (auth()->check()) {
-            $this->subscribe();
-        }
     }
 
     /**
