@@ -90,10 +90,7 @@ class ForumSeeder extends Seeder
                 factory('App\Reply')->create([
                     'repliable_id' => $thread->id,
                     'repliable_type' => 'App\Thread',
-                    'position' => $thread->fresh()->replies_count + 1,
                 ]);
-
-                $thread->increment('replies_count');
             }
 
         }
