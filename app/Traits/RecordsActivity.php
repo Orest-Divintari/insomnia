@@ -99,4 +99,14 @@ trait RecordsActivity
     {
         return $this->morphMany(Activity::class, 'subject');
     }
+
+    /**
+     * Determine if the model should be recordable
+     *
+     * @return boolean
+     */
+    public function shouldBeRecordable()
+    {
+        return true;
+    }
 }
