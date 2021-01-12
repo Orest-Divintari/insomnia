@@ -67,7 +67,6 @@ class Search
 
         $builder = $index->search($searchQuery);
         $results = $filters->apply($builder);
-
         return $this->fetch($results);
     }
 

@@ -26,7 +26,7 @@ class ThrottlePosts
     public function handle($request, Closure $next)
     {
         $lastPostActivity = auth()->user()->lastPostActivity();
-
+        
         if ($lastPostActivity && $this->tooSoonToPost($lastPostActivity)) {
             throw new PostThrottlingException(
                 $this->secondsLeftBeforePosting($lastPostActivity)
