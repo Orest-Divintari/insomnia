@@ -5,6 +5,7 @@ namespace Tests\Feature\Threads;
 use App\Category;
 use App\Thread;
 use App\User;
+use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,7 +17,7 @@ class MarkThreadsAsReadTest extends TestCase
     public function when_an_authenticated_user_visits_a_thread_then_the_thread_is_marked_as_read()
     {
         $category = create(Category::class);
-        $threads = createMany(Thread::class, 2, ['category_id' => $category->id]);
+        $threads = ThreadFactory::inCategory($category)->createMany(2);
         $readThread = $threads->first();
         $user = $this->signIn();
 
@@ -38,7 +39,7 @@ class MarkThreadsAsReadTest extends TestCase
     public function when_a_guest_visits_a_thread_it_is_not_marked_as_read()
     {
         $category = create(Category::class);
-        $threads = createMany(Thread::class, 2, ['category_id' => $category->id]);
+        $threads = ThreadFactory::inCategory($category)->createMany(2);
         $visitedThread = $threads->first();
 
         $this->get(route('threads.show', $visitedThread));

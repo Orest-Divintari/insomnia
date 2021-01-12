@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\ProfilePost;
 use App\User;
+use Facades\Tests\Setup\CommentFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,34 +13,31 @@ class CommentTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_comment_belongs_to_a_user()
+    public function a_comment_belongs_has_a_poster()
     {
-        $post = create(ProfilePost::class);
-        $poster = $this->signIn();
-
-        $comment = $post->addComment('some body', $poster);
+        $user = create(User::class);
+        $comment = CommentFactory::by($user)->create();
 
         $this->assertInstanceOf(User::class, $comment->poster);
+        $this->assertEquals($user->id, $comment->poster->id);
     }
 
     /** @test */
     public function a_comment_belongs_to_a_profile_post()
     {
-        $poster = $this->signIn();
-        $post = create(ProfilePost::class);
-
-        $comment = $post->addComment('some body', $poster);
+        $profilePost = create(ProfilePost::class);
+        $comment = CommentFactory::toProfilePost($profilePost)->create();
 
         $this->assertInstanceOf(ProfilePost::class, $comment->repliable);
+        $this->assertEquals($profilePost->id, $comment->repliable->id);
     }
 
     /** @test */
     public function a_comment_has_activities()
     {
         $user = $this->signIn();
-        $thread = create(ProfilePost::class);
 
-        $comment = $thread->addComment('some comment', $user);
+        $comment = CommentFactory::by($user)->create();
 
         $this->assertCount(1, $comment->activities);
     }

@@ -6,6 +6,7 @@ use App\ProfilePost;
 use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Feature\Search\SearchProfilePostsTest;
 
@@ -16,12 +17,8 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     /** @test */
     public function get_the_profile_posts_that_are_created_by_a_given_username()
     {
-        $user = $this->signIn();
-        $desiredProfilePost = create(
-            ProfilePost::class,
-            ['user_id' => $user->id]
-        );
-        $anotherUser = $this->signIn();
+        $user = create(User::class);
+        $desiredProfilePost = ProfilePostFactory::by($user)->create();
         $undesiredProfilePost = create(ProfilePost::class);
 
         $results = $this->search([
@@ -45,16 +42,12 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     public function get_the_comments_that_a_given_username_has_posted()
     {
         $undesiredProfilePost = create(ProfilePost::class);
-        CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
-
+        CommentFactory::toProfilePost($undesiredProfilePost)->create();
         $desiredProfilePost = create(ProfilePost::class);
-        $user = $this->signIn();
-        $desiredComment = CommentFactory::create([
-            'repliable_id' => $desiredProfilePost->id,
-            'user_id' => $user->id,
-        ]);
+        $user = create(User::class);
+        $desiredComment = CommentFactory::by($user)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
 
         $results = $this->search([
             'type' => 'profile_post',
@@ -82,19 +75,12 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     public function get_the_profile_posts_and_comments_that_are_posted_by_a_given_username()
     {
         $undesiredProfilePost = create(ProfilePost::class);
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
-
-        $user = $this->signIn();
-        $desiredProfilePost = create(
-            ProfilePost::class,
-            ['user_id' => $user->id]
-        );
-        $desiredComment = CommentFactory::create([
-            'user_id' => $user->id,
-            'repliable_id' => $desiredProfilePost->id,
-        ]);
+        CommentFactory::toProfilePost($undesiredProfilePost)->create();
+        $user = create(User::class);
+        $desiredProfilePost = ProfilePostFactory::by($user)->create();
+        $desiredComment = CommentFactory::by($user)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
 
         $results = $this->search([
             'type' => 'profile_post',
@@ -129,23 +115,14 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     public function get_the_profile_posts_and_comments_that_are_posted_on_a_user_profile_given_a_search_query()
     {
         $undesiredProfilePost = create(ProfilePost::class);
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
-
-        $user = $this->signIn();
+        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
         $profileOwner = create(User::class);
-        $desiredProfilePost = create(
-            ProfilePost::class,
-            [
-                'profile_owner_id' => $profileOwner->id,
-                'body' => $this->searchTerm,
-            ]
-        );
-        $desiredComment = CommentFactory::create([
-            'repliable_id' => $desiredProfilePost->id,
-            'body' => $this->searchTerm,
-        ]);
+        $desiredProfilePost = ProfilePostFactory::toProfile($profileOwner)
+            ->withBody($this->searchTerm)
+            ->create();
+        $desiredComment = CommentFactory::withBody($this->searchTerm)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
 
         $results = $this->search([
             'type' => 'profile_post',
@@ -173,23 +150,15 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     public function get_the_profile_posts_and_comments_that_are_posted_on_a_user_profile_by_a_given_member()
     {
         $undesiredProfilePost = create(ProfilePost::class);
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
-
-        $user = $this->signIn();
+        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
+        $user = create(User::class);
         $profileOwner = create(User::class);
-        $desiredProfilePost = create(
-            ProfilePost::class,
-            [
-                'profile_owner_id' => $profileOwner->id,
-                'user_id' => $user->id,
-            ]
-        );
-        $desiredComment = CommentFactory::create([
-            'repliable_id' => $desiredProfilePost->id,
-            'user_id' => $user->id,
-        ]);
+        $desiredProfilePost = ProfilePostFactory::by($user)
+            ->toProfile($profileOwner)
+            ->create();
+        $desiredComment = CommentFactory::by($user)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
 
         $results = $this->search([
             'type' => 'profile_post',
@@ -216,23 +185,18 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     /** @test */
     public function get_the_profile_posts_and_comments_that_were_created_the_last_given_number_of_days_by_a_given_user()
     {
-        $user = $this->signIn();
+        $user = create(User::class);
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-        $desiredProfilePost = create(ProfilePost::class, ['user_id' => $user->id]);
-        $desiredComment = CommentFactory::create([
-            'repliable_id' => $desiredProfilePost->id,
-            'user_id' => $user->id,
-        ]);
-
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        $desiredProfilePost = ProfilePostFactory::by($user)->create();
+        $desiredComment = CommentFactory::by($user)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $undesiredProfilePost = create(ProfilePost::class);
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
+        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
+        Carbon::setTestNow();
 
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
         $results = $this->search([
             'type' => 'profile_post',
             'postedBy' => $user->name,
@@ -258,37 +222,22 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     /** @test */
     public function get_the_profile_posts_and_comments_that_were_created_the_last_given_number_of_days_by_a_given_user_name()
     {
-        $user = $this->signIn();
+        $user = create(User::class);
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-        $desiredProfilePost = create(
-            ProfilePost::class,
-            ['user_id' => $user->id]
-        );
-        $desiredComment = CommentFactory::create([
-            'repliable_id' => $desiredProfilePost->id,
-            'user_id' => $user->id,
-        ]);
-
-        $anotherUser = $this->signIn();
+        $desiredProfilePost = ProfilePostFactory::by($user)->create();
+        $desiredComment = CommentFactory::by($user)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
         $undesiredProfilePost = create(ProfilePost::class);
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
-
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $this->signIn($user);
-        $anotherUndesiredProfilePost = create(
-            ProfilePost::class,
-            ['user_id' => $user->id]
-        );
-        $anotherUndesiredComment = CommentFactory::create([
-            'repliable_id' => $anotherUndesiredProfilePost->id,
-            'user_id' => $user->id,
-        ]);
+        $anotherUndesiredProfilePost = ProfilePostFactory::by($user)->create();
+        $anotherUndesiredComment = CommentFactory::by($user)
+            ->toProfilePost($anotherUndesiredProfilePost)
+            ->create();
+        Carbon::setTestNow();
 
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
         $results = $this->search([
             'type' => 'profile_post',
             'lastCreated' => $daysAgo,
@@ -321,38 +270,23 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     /** @test */
     public function get_the_profile_posts_and_comments_that_were_created_the_last_given_number_of_days_on_a_given_user_profile_by_a_given_user()
     {
-        $user = $this->signIn();
+        $user = create(User::class);
         $profileOwner = create(User::class);
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-        $desiredProfilePost = create(
-            ProfilePost::class,
-            [
-                'profile_owner_id' => $profileOwner->id,
-                "user_id" => $user->id,
-            ]
-        );
-
-        $desiredComment = CommentFactory::create([
-            'repliable_id' => $desiredProfilePost->id,
-            'user_id' => $user->id,
-        ]);
+        $desiredProfilePost = ProfilePostFactory::by($user)
+            ->toProfile($profileOwner)
+            ->create();
+        $desiredComment = CommentFactory::by($user)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
         $undesiredProfilePost = create(ProfilePost::class);
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
-
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $anotherUndesiredProfilePost = create(
-            ProfilePost::class,
-            ['profile_owner_id' => $profileOwner->id]
-        );
-        $anotherUndesiredComment = CommentFactory::create([
-            'repliable_id' => $anotherUndesiredProfilePost->id,
-        ]);
+        $anotherUndesiredProfilePost = ProfilePostFactory::toProfile($profileOwner)->create();
+        $anotherUndesiredComment = CommentFactory::toProfilePost($anotherUndesiredProfilePost)->create();
+        Carbon::setTestNow();
 
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
         $results = $this->search([
             'type' => 'profile_post',
             'postedBy' => $user->name,
@@ -385,47 +319,28 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     /** @test */
     public function get_the_profile_posts_and_comments_that_were_created_the_last_given_number_of_days_by_a_given_username_on_a_given_user_profile()
     {
-        $user = $this->signIn();
+        $user = create(User::class);
         $profileOwner = create(User::class);
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-        $desiredProfilePost = create(
-            ProfilePost::class,
-            [
-                'user_id' => $user->id,
-                'profile_owner_id' => $profileOwner->id,
-            ]
-        );
-        $desiredComment = CommentFactory::create([
-            'repliable_id' => $desiredProfilePost->id,
-            'user_id' => $user->id,
-        ]);
-
-        $anotherUser = $this->signIn();
-        $undesiredProfilePost = create(
-            ProfilePost::class,
-            ['profile_owner_id' => $profileOwner->id]
-        );
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
-
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        $desiredProfilePost = ProfilePostFactory::by($user)
+            ->toProfile($profileOwner)
+            ->create();
+        $desiredComment = CommentFactory::by($user)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
+        $anotherUser = create(User::class);
+        $undesiredProfilePost = ProfilePostFactory::toProfile($profileOwner)->create();
+        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $this->signIn($user);
-        $anotherUndesiredProfilePost = create(
-            ProfilePost::class,
-            [
-                'user_id' => $user->id,
-                'profile_owner_id' => $profileOwner->id,
-            ]
-        );
-        $anotherUndesiredComment = CommentFactory::create([
-            'repliable_id' => $anotherUndesiredProfilePost->id,
-            'user_id' => $user->id,
-        ]);
+        $anotherUndesiredProfilePost = ProfilePostFactory::by($user)
+            ->toProfile($profileOwner)
+            ->create();
+        $anotherUndesiredComment = CommentFactory::by($user)
+            ->toProfilePost($anotherUndesiredProfilePost)
+            ->create();
+        Carbon::setTestNow();
 
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
         $results = $this->search([
             'type' => 'profile_post',
             'lastCreated' => $daysAgo,

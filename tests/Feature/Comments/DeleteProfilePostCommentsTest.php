@@ -6,12 +6,14 @@ use App\ProfilePost;
 use App\Reply;
 use App\User;
 use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class DeleteProfilePostCommentsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     /** @test */
     public function the_user_who_posted_the_comment_can_delete_it()
@@ -33,11 +35,11 @@ class DeleteProfilePostCommentsTest extends TestCase
     public function the_owner_of_the_profile_can_delete_any_comment()
     {
         $profileOwner = create(User::class);
-        $post = create(ProfilePost::class, [
-            'profile_owner_id' => $profileOwner->id,
-        ]);
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
         $commentPoster = $this->signIn();
-        $comment = CommentFactory::by($commentPoster)->create();
+        $comment = CommentFactory::by($commentPoster)
+            ->toProfilePost($profilePost)
+            ->create();
         $this->signIn($profileOwner);
 
         $this->delete(route('api.comments.destroy', $comment));
@@ -54,8 +56,8 @@ class DeleteProfilePostCommentsTest extends TestCase
     public function when_a_profile_post_is_deleted_then_all_the_associated_comments_are_deleted()
     {
         $poster = $this->signIn();
-        $profilePost = create(ProfilePost::class, ['user_id' => $poster->id]);
-        $profilePost->addComment('some comment', $poster);
+        $profilePost = ProfilePostFactory::by($poster)->create();
+        $profilePost->addComment($this->faker->sentence, $poster);
         $this->assertCount(1, $profilePost->comments);
 
         $this->delete(route('api.profile-posts.destroy', $profilePost->id));

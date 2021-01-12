@@ -4,64 +4,56 @@ namespace Tests\Setup;
 
 use App\Conversation;
 use App\Reply;
-use App\User;
 
-class MessageFactory
+class MessageFactory extends PostFactory
 {
-
-    protected $user;
+    private $conversation;
 
     public function create($attributes = [])
     {
-        $this->user = $this->user ?: factory(User::class)->create();
-
-        $conversation = $this->createConversation($attributes);
-
+        $this->attributes = $attributes;
         $message = factory(Reply::class)->create(
             array_merge(
                 [
-                    'user_id' => $this->user->id,
-                    'repliable_id' => $conversation->id,
+                    'user_id' => $this->userId(),
+                    'repliable_id' => $this->conversationId(),
                     'repliable_type' => Conversation::class,
+                    'body' => $this->getBody(),
                 ],
                 $attributes
             ));
-
+        $this->resetAttributes();
         return $message;
     }
 
     public function createMany($count = 1, $attributes = [])
     {
-        $this->user = $this->user ?: factory(User::class)->create();
-
-        $conversation = factory(Conversation::class)->create();
-
+        $this->attributes = $attributes;
         $messages = factory(Reply::class, $count)->create(
             array_merge(
                 [
-                    'user_id' => $this->user->id,
-                    'repliable_id' => $conversation->id,
+                    'user_id' => $this->userId(),
+                    'repliable_id' => $this->conversationId(),
                     'repliable_type' => Conversation::class,
+                    'body' => $this->getBody(),
                 ],
                 $attributes
             ));
-
+        $this->resetAttributes();
         return $messages;
     }
 
-    public function createConversation($attributes)
+    private function conversationId()
     {
-        if (array_key_exists('repliable_id', $attributes)) {
-            $conversation = Conversation::find($attributes['repliable_id']);
-        } else {
-            $conversation = create(Conversation::class);
+        if ($this->repliableIdInAttributes()) {
+            return;
         }
-        return $conversation;
+        return $this->conversation->id ?? factory(Conversation::class)->create()->id;
     }
 
-    public function by($user)
+    public function toConversation($conversation)
     {
-        $this->user = $user;
+        $this->conversation = $conversation;
         return $this;
     }
 

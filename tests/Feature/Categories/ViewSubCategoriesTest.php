@@ -3,6 +3,7 @@
 namespace Tests\Feature\Categories;
 
 use App\Category;
+use App\GroupCategory;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;

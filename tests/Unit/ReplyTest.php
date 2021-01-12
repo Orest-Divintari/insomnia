@@ -3,8 +3,9 @@
 namespace Tests\Unit;
 
 use App\Activity;
+use App\Conversation;
 use App\Filters\ReplyFilters;
-use App\Like;
+use App\ProfilePost;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -23,7 +24,7 @@ class ReplyTest extends TestCase
     public function a_reply_belongs_to_a_thread()
     {
         $thread = create('App\Thread');
-        $reply = create('App\Reply', ['repliable_id' => $thread->id, 'repliable_type' => Thread::class]);
+        $reply = ReplyFactory::toThread($thread)->create();
 
         $this->assertInstanceOf(Thread::class, $reply->repliable);
     }
@@ -31,13 +32,10 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_belongs_to_the_user_who_posted_it()
     {
-        $thread = create(Thread::class);
         $user = create(User::class);
-        $reply = create(Reply::class, [
-            'user_id' => $user->id,
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+
+        $reply = ReplyFactory::by($user)->create();
+
         $this->assertInstanceOf(User::class, $reply->fresh()->poster);
         $this->assertEquals($user->id, $reply->poster->id);
 
@@ -46,63 +44,34 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_may_have_likes()
     {
-        $thread = create(Thread::class);
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+        $reply = ReplyFactory::create();
+        $user = create(User::class);
 
-        Like::create([
-            'reply_id' => $reply->id,
-            'user_id' => 1,
-        ]);
+        $reply->likedBy($user);
 
         $this->assertCount(1, $reply->likes);
     }
 
     /** @test */
-    public function a_reply_can_be_liked_by_a_user()
-    {
-        $user = $this->signIn();
-        $thread = create(Thread::class);
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
-
-        $reply->likedBy($user);
-
-        $this->assertCount(1, $reply->fresh()->likes);
-
-    }
-
-    /** @test */
     public function a_reply_can_be_unliked_by_a_user()
     {
-        // config(['database.default' => 'mysql']);
-        // config(['database.connections.mysql.database' => config('insomnia.database.name')]);
-        // $user = $this->signIn();
+        config(['database.default' => 'mysql']);
+        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $reply = ReplyFactory::create();
+        $user = create(User::class);
+        $reply->likedBy($user);
+        $this->assertCount(1, $reply->likes);
 
-        // $thread = create(Thread::class);
-        // $reply = create(Reply::class, [
-        //     'repliable_id' => $thread->id,
-        //     'repliable_type' => Thread::class,
-        // ]);
+        $reply->unlikedBy($user);
 
-        // $reply->likedBy($user);
-
-        // $this->assertCount(1, $reply->fresh()->likes);
-
-        // $reply->unlikedBy($user);
-
-        // $this->assertCount(0, $reply->fresh()->likes);
-
+        $this->assertCount(0, $reply->fresh()->likes);
     }
 
     /** @test */
-    public function a_thread_reply_knows_in_which_page_it_belongs_to()
+    public function a_thread_reply_knows_on_which_page_it_belongs_to()
     {
-        ReplyFactory::createMany(50);
+        $thread = create(Thread::class);
+        ReplyFactory::toThread($thread)->createMany(50);
         $reply = Reply::find(15);
 
         $correctPageNumber = ceil(15 / $reply->repliable::REPLIES_PER_PAGE);
@@ -111,9 +80,10 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
-    public function a_profile_post_comment_knows_in_which_page_it_belongs_to()
+    public function a_profile_post_comment_knows_on_which_page_it_belongs_to()
     {
-        CommentFactory::createMany(50);
+        $profilePost = create(ProfilePost::class);
+        CommentFactory::toProfilePost($profilePost)->createMany(50);
 
         $comment = Reply::find(15);
         $correctPageNumber = ceil(15 / $comment->repliable::REPLIES_PER_PAGE);
@@ -122,9 +92,10 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
-    public function a_conversation_message_knows_in_which_page_it_belongs_to()
+    public function a_conversation_message_knows_on_which_page_it_belongs_to()
     {
-        MessageFactory::createMany(50);
+        $conversation = create(Conversation::class);
+        MessageFactory::toConversation($conversation)->createMany(50);
 
         $message = Reply::find(15);
         $correctPageNumber = ceil(15 / $message->repliable::REPLIES_PER_PAGE);
@@ -133,50 +104,106 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
-    public function a_like_knows_if_it_is_liked_by_the_authenticated_user()
+    public function a_thread_reply_knows_if_it_is_liked_by_the_authenticated_user()
     {
         $user = $this->signIn();
-        $thread = create(Thread::class);
-        $reply = $thread->addReply(raw(Reply::class));
-        $this->assertFalse($reply->fresh()->is_liked);
+        $threadReply = ReplyFactory::create();
+        $this->assertFalse($threadReply->isLiked);
 
-        $reply->likedBy($user);
+        $threadReply->likedBy($user);
 
-        $this->assertTrue($reply->fresh()->is_liked);
+        $this->assertTrue($threadReply->fresh()->isLiked);
     }
 
     /** @test */
-    public function every_reply_that_belongs_to_a_thread_has_a_position_in_ascending_order()
+    public function every_reply_that_belongs_to_a_thread_has_an_incrementing_position()
     {
         $thread = create(Thread::class);
-        $firstReply = $thread->addReply(raw(Reply::class));
-        $secondReply = $thread->addReply(raw(Reply::class));
-        $anotherThread = create(Thread::class);
-        $replyOnAnotherThread = $anotherThread->addReply(raw(Reply::class));
+        $firstReply = ReplyFactory::toThread($thread)->create();
+        $secondReply = ReplyFactory::toThread($thread)->create();
 
         $this->assertEquals(2, $firstReply->fresh()->position);
         $this->assertEquals(3, $secondReply->fresh()->position);
-        $this->assertEquals(2, $replyOnAnotherThread->fresh()->position);
+    }
+
+    /** @test */
+    public function when_a_thread_reply_is_created_the_replies_count_of_a_the_thread_increments()
+    {
+        $thread = create(Thread::class);
+        $this->assertEquals(0, $thread->replies_count);
+
+        $firstReply = ReplyFactory::toThread($thread)->create();
+
+        $this->assertEquals(1, $thread->fresh()->replies_count);
+    }
+
+    /** @test */
+    public function a_reply_knows_if_it_is_the_body_of_a_thread()
+    {
+        $thread = create(Thread::class);
+        $reply = $thread->replies()->first();
+
+        $this->assertTrue($reply->isThreadBody());
+    }
+    /** @test */
+    public function the_reply_that_consists_as_a_body_of_the_thread_does_not_count_as_a_reply()
+    {
+        $thread = create(Thread::class);
+
+        $this->assertCount(1, Reply::all());
+
+        $this->assertFalse($thread->hasReplies());
     }
 
     /** @test */
     public function a_reply_has_activities()
     {
         $user = $this->signIn();
-        $thread = create(Thread::class);
+        $threadReply = ReplyFactory::by($user)->create();
 
-        $reply = $thread->addReply(raw(Reply::class, ['user_id' => $user->id]));
-
-        $this->assertCount(1, $reply->activities);
+        $this->assertCount(1, $threadReply->activities);
         $this->assertEquals(
-            $reply->id,
-            $reply->activities->first()
+            $threadReply->id,
+            $threadReply->activities->first()
                 ->subject->id
         );
     }
 
     /** @test */
-    public function a_reply_can_eager_load_the_data_required_to_display_when_a_user_searches_a_reply()
+    public function the_thread_reply_that_consists_of_the_body_of_the_thread_should_not_be_searchable()
+    {
+        $thread = create(Thread::class);
+        $reply = $thread->replies()->first();
+
+        $this->assertFalse($reply->shouldBeSearchable());
+    }
+
+    /** @test */
+    public function a_thread_reply_should_be_searchable()
+    {
+        $threadReply = ReplyFactory::create();
+
+        $this->assertTrue($threadReply->shouldBeSearchable());
+    }
+
+    /** @test */
+    public function a_comment_should_be_searchable()
+    {
+        $comment = CommentFactory::create();
+
+        $this->assertTrue($comment->shouldBeSearchable());
+    }
+
+    /** @test */
+    public function a_conversation_message_should_not_be_searchable()
+    {
+        $message = MessageFactory::create();
+
+        $this->assertFalse($message->shouldBeSearchable());
+    }
+
+    /** @test */
+    public function a_reply_can_eager_load_the_data_required_data_when_it_is_searched()
     {
         ReplyFactory::create();
 
@@ -220,10 +247,7 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_is_sanitized_automatically()
     {
-        $reply = ReplyFactory::create([
-            'body' =>
-            '<script>alert("bad")</script><p>This is okay.</p>',
-        ]);
+        $reply = ReplyFactory::withBody('<script>alert("bad")</script><p>This is okay.</p>')->create();
 
         $this->assertEquals("<p>This is okay.</p>", $reply->body);
     }
@@ -232,10 +256,8 @@ class ReplyTest extends TestCase
     public function get_the_paginated_replies_with_likes_and_filtered_for_a_specific_thread()
     {
         $thread = create(Thread::class);
-        $replies = ReplyFactory::createMany(
-            Thread::REPLIES_PER_PAGE * 2,
-            ['repliable_id' => $thread->id]
-        );
+        $replies = ReplyFactory::toThread($thread)
+            ->createMany(Thread::REPLIES_PER_PAGE * 2);
         $reply = $replies->first();
         $user = $this->signIn();
         $reply->likedBy($user);

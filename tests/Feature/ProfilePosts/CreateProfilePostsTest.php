@@ -7,11 +7,12 @@ use App\Http\Middleware\ThrottlePosts;
 use App\ProfilePost;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CreateProfilePostsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     protected $errorMessage = 'Please enter a valid message.';
 

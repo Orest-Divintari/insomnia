@@ -7,7 +7,9 @@ use App\Listeners\Profile\NotifyPostParticipants;
 use App\ProfilePost;
 use App\Reply;
 use App\User;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Mockery;
 use Tests\TestCase;
 
@@ -26,17 +28,14 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
     {
         $profileOwner = create(User::class);
         $poster = $this->signIn();
-        $profilePost = create(
-            ProfilePost::class,
-            ['profile_owner_id' => $profileOwner->id]
-        );
-        $comment = ['body' => 'some comment'];
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
+        $comment = ['body' => $this->faker->sentence];
         $listener = Mockery::spy(NotifyPostParticipants::class);
         app()->instance(NotifyPostParticipants::class, $listener);
 
         $this->post(
             route('api.comments.store', $profilePost),
-            ['body' => $comment['body']]
+            $comment
         );
 
         $comment = Reply::whereBody($comment['body'])->first();

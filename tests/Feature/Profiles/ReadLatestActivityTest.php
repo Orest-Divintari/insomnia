@@ -2,27 +2,32 @@
 
 namespace Tests\Feature\Profiles;
 
-use App\ProfilePost;
-use App\Thread;
+use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
+use Facades\Tests\Setup\ReplyFactory;
+use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ReadLatestActivityTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     /** @test */
     public function a_user_can_read_the_latest_activity_of_the_profile_owner()
     {
         $profileOwner = $this->signIn();
-        $thread = create(Thread::class);
-        $profilePost = create(ProfilePost::class);
-        $threadReply = $thread->addReply(
-            ['body' => 'some body', 'user_id' => $profileOwner->id]
-        );
-        $comment = $profilePost->addComment('some comment', $profileOwner);
-        $replyLike = $threadReply->likedBy();
-        $commentLike = $comment->likedBy();
+        $thread = ThreadFactory::by($profileOwner)->create();
+        $profilePost = ProfilePostFactory::by($profileOwner)->create();
+        $threadReply = ReplyFactory::by($profileOwner)
+            ->toThread($thread)
+            ->create();
+        $comment = CommentFactory::by($profileOwner)
+            ->toProfilePost($profilePost)
+            ->create();
+        $threadReply->likedBy($profileOwner);
+        $comment->likedBy($profileOwner);
 
         $activities = $this->getJson(
             route('api.latest-activity.index', $profileOwner)

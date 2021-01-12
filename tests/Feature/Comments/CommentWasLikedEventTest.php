@@ -6,6 +6,8 @@ use App\Like;
 use App\Listeners\Profile\NotifyCommentPoster;
 use App\ProfilePost;
 use App\User;
+use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
@@ -20,12 +22,11 @@ class CommentWasLikedEventTest extends TestCase
         $listener = Mockery::spy(NotifyCommentPoster::class);
         app()->instance(NotifyCommentPoster::class, $listener);
         $profileOwner = create(User::class);
-        $profilePost = create(
-            ProfilePost::class,
-            ['profile_owner_id' => $profileOwner->id]
-        );
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
         $commentPoster = create(User::class);
-        $comment = $profilePost->addComment('some comment', $commentPoster);
+        $comment = CommentFactory::by($commentPoster)
+            ->toProfilePost($profilePost)
+            ->create();
         $liker = $this->signIn();
 
         $this->post(route('api.likes.store', $comment));

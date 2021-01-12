@@ -3,7 +3,9 @@
 namespace Tests\Feature\Search;
 
 use App\Thread;
+use App\User;
 use Carbon\Carbon;
+use Facades\Tests\Setup\ThreadFactory;
 use Tests\Feature\Search\SearchThreadsTest;
 
 class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
@@ -13,15 +15,11 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
     public function search_threads_title_given_a_search_term()
     {
         $undesiredThread = create(Thread::class);
-        $anotherUndesiredThread = create(
-            Thread::class,
-            ['body' => $this->searchTerm]
-        );
-        $user = $this->signIn();
-        $desiredThread = create(Thread::class, [
-            'user_id' => $user->id,
-            'title' => $this->searchTerm,
-        ]);
+        $anotherUndesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $user = create(User::class);
+        $desiredThread = ThreadFactory::by($user)
+            ->withTitle($this->searchTerm)
+            ->create();
 
         $results = $this->search([
             'onlyTitle' => true,
@@ -44,24 +42,15 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
     /** @test */
     public function search_threads_title_that_were_created_a_given_number_of_days_ago_given_a_search_term_()
     {
-        $this->signIn();
+        $user = create(User::class);
         $daysAgo = 5;
-        Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-        $desiredThread = create(
-            Thread::class,
-            ['title' => $this->searchTerm]
-        );
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        $desiredThread = ThreadFactory::by($user)
+            ->withTitle($this->searchTerm)
+            ->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $undesiredThread = create(
-            Thread::class,
-            ['body' => $this->searchTerm]
-        );
-        $anotherUndesiredThread = create(
-            Thread::class,
-            ['title' => $this->searchTerm]
-        );
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+        $undesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $anotherUndesiredThread = ThreadFactory::withTitle($this->searchTerm)->create();
+        Carbon::setTestNow();
 
         $results = $this->search([
             'q' => $this->searchTerm,
@@ -85,35 +74,18 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
     /** @test */
     public function a_user_can_search_threads_title_given_a_search_term_and_username_that_where_created_the_last_given_number_of_days()
     {
-        $user = $this->signIn();
+        $user = create(User::class);
         $daysAgo = 5;
-        Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-        $desiredThread = create(
-            Thread::class,
-            [
-                'title' => $this->searchTerm,
-                'user_id' => $user->id,
-            ]
-        );
-
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
+        $desiredThread = ThreadFactory::by($user)
+            ->withTitle($this->searchTerm)
+            ->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $undesiredThread = create(
-            Thread::class,
-            ['body' => $this->searchTerm]
-        );
-        $anotherUndesiredThread = create(
-            Thread::class,
-            ['title' => $this->searchTerm]
-        );
-        $thirdUndesiredThread = create(
-            Thread::class,
-            [
-                'title' => $this->searchTerm,
-                'user_id' => $user->id,
-            ]
-        );
-        Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
+        $undesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $anotherUndesiredThread = ThreadFactory::withTitle($this->searchTerm)->create();
+        $thirdUndesiredThread = ThreadFactory::by($user)
+            ->withTitle($this->searchTerm)
+            ->create();
+        Carbon::setTestNow();
 
         $results = $this->search([
             'q' => $this->searchTerm,

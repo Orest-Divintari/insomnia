@@ -8,12 +8,13 @@ use App\ProfilePost;
 use App\Reply;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CreateCommentTest extends TestCase
 {
 
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     protected $bodyErrorMessage = 'Please enter a valid message.';
 
@@ -51,7 +52,7 @@ class CreateCommentTest extends TestCase
     {
         $user = $this->signIn();
         $post = create(ProfilePost::class);
-        $comment = ['body' => 'some body'];
+        $comment = ['body' => $this->faker->sentence];
 
         $this->post(route('api.comments.store', $post), $comment);
 
@@ -117,6 +118,5 @@ class CreateCommentTest extends TestCase
             $response->getContent(),
             $errorMessage
         ));
-
     }
 }

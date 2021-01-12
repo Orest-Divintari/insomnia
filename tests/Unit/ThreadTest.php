@@ -4,18 +4,20 @@ namespace Tests\Unit;
 
 use App\Category;
 use App\Read;
-use App\Reply;
 use App\Tag;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
+use Facades\Tests\Setup\ReplyFactory;
+use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -50,8 +52,8 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_is_posted_by_a_user()
     {
-        $user = create('App\User');
-        $thread = create('App\Thread', ['user_id' => $user->id]);
+        $user = create(User::class);
+        $thread = ThreadFactory::by($user)->create();
 
         $this->assertInstanceOf(User::class, $thread->poster);
     }
@@ -60,7 +62,7 @@ class ThreadTest extends TestCase
     public function a_thread_belongs_to_a_category()
     {
         $category = create(Category::class);
-        $thread = create(Thread::class, ['category_id' => $category->id]);
+        $thread = ThreadFactory::inCategory($category)->create();
         $this->assertInstanceOf(Category::class, $thread->category);
     }
 
@@ -68,11 +70,9 @@ class ThreadTest extends TestCase
     public function a_thread_has_a_most_recent_reply()
     {
         $newReply = $this->thread->replies()->first();
-        $oldReply = create(Reply::class, [
-            'repliable_type' => Thread::class,
-            'repliable_id' => $this->thread->id,
-            'updated_at' => Carbon::now()->subDay(),
-        ]);
+        Carbon::setTestNow(Carbon::now()->subDay());
+        $oldReply = ReplyFactory::toThread($this->thread)->create();
+        Carbon::setTestNow();
 
         $thread = Thread::where('id', $this->thread->id)->withRecentReply()->first();
 
@@ -92,14 +92,8 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_is_updated_when_a_new_reply_is_published()
     {
-        $thread = create(Thread::class, [
-            'updated_at' => Carbon::now()->subMonth(),
-        ]);
-
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+        $thread = ThreadFactory::updatedAt(Carbon::now()->subMonth())->create();
+        $reply = ReplyFactory::toThread($thread)->create();
 
         $this->assertEquals(
             $thread->fresh()->updated_at,
@@ -111,15 +105,11 @@ class ThreadTest extends TestCase
     public function a_thread_can_add_a_reply()
     {
         $thread = create(Thread::class);
-        $reply = raw(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+        $user = create(User::class);
 
         $thread->addReply($this->faker->sentence, $user);
 
         $this->assertEquals($thread->fresh()->replies_count, 1);
-
     }
 
     /** @test */
@@ -288,7 +278,7 @@ class ThreadTest extends TestCase
     public function get_the_threads_for_a_given_category()
     {
         $category = create(Category::class);
-        $thread = create(Thread::class, ['category_id' => $category->id]);
+        $thread = ThreadFactory::inCategory($category)->create();
         createMany(Thread::class, 5);
 
         $desiredThreads = Thread::forCategory($category)->get();

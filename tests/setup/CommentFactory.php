@@ -4,65 +4,58 @@ namespace Tests\Setup;
 
 use App\ProfilePost;
 use App\Reply;
-use App\User;
+use Tests\Setup\PostFactory;
 
-class CommentFactory
+class CommentFactory extends PostFactory
 {
 
+    private $profilePost;
     protected $user;
-
     public function create($attributes = [])
     {
-        $this->user = $this->user ?: factory(User::class)->create();
-
-        $profilePost = $this->createProfilePost($attributes);
-
+        $this->attributes = $attributes;
         $comment = factory(Reply::class)->create(
             array_merge(
                 [
-                    'user_id' => $this->user->id,
-                    'repliable_id' => $profilePost->id,
+                    'user_id' => $this->userId(),
+                    'repliable_id' => $this->profilePostId(),
                     'repliable_type' => ProfilePost::class,
+                    'body' => $this->getBody(),
                 ],
                 $attributes
             ));
-
+        $this->resetAttributes();
         return $comment;
     }
 
     public function createMany($count = 1, $attributes = [])
     {
-        $this->user = $this->user ?: factory(User::class)->create();
-
-        $profilePost = factory(ProfilePost::class)->create();
-
+        $this->attributes = $attributes;
         $comments = factory(Reply::class, $count)->create(
             array_merge(
                 [
-                    'user_id' => $this->user->id,
-                    'repliable_id' => $profilePost->id,
+                    'user_id' => $this->userId(),
+                    'repliable_id' => $this->profilePostId(),
                     'repliable_type' => ProfilePost::class,
+                    'body' => $this->getBody(),
                 ],
                 $attributes
             ));
-
+        $this->resetAttributes();
         return $comments;
     }
 
-    public function createProfilePost($attributes)
+    private function profilePostId()
     {
-        if (array_key_exists('repliable_id', $attributes)) {
-            $profilePost = ProfilePost::find($attributes['repliable_id']);
-        } else {
-            $profilePost = create(ProfilePost::class);
+        if ($this->repliableIdInAttributes()) {
+            return;
         }
-        return $profilePost;
+        return $this->profilePost->id ?? factory(ProfilePost::class)->create()->id;
     }
 
-    public function by($user)
+    public function toProfilePost($profilePost)
     {
-        $this->user = $user;
+        $this->profilePost = $profilePost;
         return $this;
     }
-
 }

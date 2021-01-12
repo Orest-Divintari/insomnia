@@ -8,13 +8,16 @@ use App\Notifications\ProfilePostHasNewComment;
 use App\ProfilePost;
 use App\Reply;
 use App\User;
+use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ProfilePostNotificationsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -22,14 +25,18 @@ class ProfilePostNotificationsTest extends TestCase
         Notification::fake();
         $this->withoutMiddleware([ThrottlePosts::class]);
     }
+
     /** @test */
     public function the_owner_of_a_profile_receives_notification_when_a_new_post_is_added_to_profile()
     {
         $poster = $this->signIn();
         $profileOwner = create(User::class);
-        $post = ['body' => 'some body'];
+        $post = ['body' => $this->faker->sentence];
 
-        $this->post(route('api.profile-posts.store', $profileOwner), $post);
+        $this->post(
+            route('api.profile-posts.store', $profileOwner),
+            $post
+        );
 
         $profilePost = ProfilePost::whereBody($post['body'])->first();
         Notification::assertSentTo(
@@ -50,25 +57,14 @@ class ProfilePostNotificationsTest extends TestCase
     /** @test */
     public function participants_in_a_profile_post_receive_notifications_when_a_new_comment_is_added_to_the_post()
     {
-        $commentPoster = create(User::class, [
-            'name' => 'azem',
-        ]);
-        $this->signIn($commentPoster);
+        $commentPoster = $this->signIn();
         $profileOwner = create(User::class);
-        $profilePost = create(
-            ProfilePost::class,
-            ['profile_owner_id' => $profileOwner->id]
-        );
-        $postParticipant = create(User::class, [
-            'name' => 'john',
-        ]);
-        $participantsComment = create(Reply::class, [
-            'body' => 'first comment',
-            'repliable_type' => ProfilePost::class,
-            'repliable_id' => $profilePost->id,
-            'user_id' => $postParticipant->id,
-        ]);
-        $comment = ['body' => 'some comment'];
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
+        $postParticipant = create(User::class);
+        CommentFactory::by($postParticipant)
+            ->toProfilePost($profilePost)
+            ->create();
+        $comment = ['body' => $this->faker->sentence];
 
         $this->post(route('api.comments.store', $profilePost), $comment);
 

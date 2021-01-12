@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Http\Middleware\ThrottlePosts;
 use App\Thread;
 use Carbon\Carbon;
+use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -21,7 +22,7 @@ class ThrottlePostsTest extends TestCase
 
         $this->assertTrue($throttlePosts->tooSoonToPost($recentPost));
 
-        $oldPost = create(Thread::class, ['created_at' => Carbon::now()->subDay()]);
+        $oldPost = ThreadFactory::createdAt(Carbon::now()->subDay())->create();
 
         $this->assertFalse($throttlePosts->tooSoonToPost($oldPost));
     }

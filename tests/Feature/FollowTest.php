@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Follows;
 use App\ProfilePost;
 use App\User;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -32,7 +33,7 @@ class FollowTest extends TestCase
         $user = create(User::class);
         $anotherUser = create(User::class);
 
-        $respons = $this->delete(
+        $response = $this->delete(
             route('api.follow.destroy', $anotherUser)
         );
 
@@ -134,7 +135,7 @@ class FollowTest extends TestCase
         $profileOwner = create(User::class);
 
         $followingUser = create(User::class);
-        $reply = ReplyFactory::create(['user_id' => $followingUser->id]);
+        $reply = ReplyFactory::by($followingUser)->create();
         $anotherUser = $this->signIn();
         $reply->likedBy($anotherUser);
 
@@ -153,7 +154,7 @@ class FollowTest extends TestCase
         $profileOwner = create(User::class);
 
         $follower = create(User::class);
-        $reply = ReplyFactory::create(['user_id' => $follower->id]);
+        $reply = ReplyFactory::by($follower)->create();
         $anotherUser = $this->signIn();
         $reply->likedBy($anotherUser);
 
@@ -170,13 +171,8 @@ class FollowTest extends TestCase
     public function a_profile_visitor_can_view_the_number_of_messages_of_users_that_profile_owner_follows()
     {
         $profileOwner = create(User::class);
-
         $followingUser = create(User::class);
-        $profilePost = create(
-            ProfilePost::class,
-            ['profile_owner_id' => $followingUser->id]
-        );
-
+        $profilePost = ProfilePostFactory::toProfile($followingUser)->create();
         $profileOwner->follow($followingUser);
 
         $response = $this->getJson(
@@ -190,13 +186,8 @@ class FollowTest extends TestCase
     public function a_profile_visitor_can_view_the_number_of_messags_of_profile_owner_followers()
     {
         $profileOwner = create(User::class);
-
         $follower = create(User::class);
-        $profilePost = create(
-            ProfilePost::class,
-            ['profile_owner_id' => $follower->id]
-        );
-
+        $profilePost = ProfilePostFactory::toProfile($follower)->create();
         $follower->follow($profileOwner);
 
         $response = $this->getJson(

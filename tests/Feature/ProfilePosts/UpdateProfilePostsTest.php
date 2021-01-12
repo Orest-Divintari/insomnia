@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\ProfilePosts;
 
-use App\ProfilePost;
 use App\User;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
@@ -18,10 +18,9 @@ class UpdatesProfilePostsTest extends TestCase
     {
         $profileOwner = create(User::class);
         $poster = $this->signIn();
-        $profilePost = create(ProfilePost::class, [
-            'user_id' => $poster->id,
-            'profile_owner_id' => $profileOwner->id,
-        ]);
+        $profilePost = ProfilePostFactory::by($poster)
+            ->toProfile($profileOwner)
+            ->create();
         $unathorizedUser = $this->signIn();
 
         $response = $this->patch(
@@ -38,10 +37,9 @@ class UpdatesProfilePostsTest extends TestCase
     {
         $profileOwner = create(User::class);
         $poster = $this->signIn();
-        $profilePost = create(ProfilePost::class, [
-            'profile_owner_id' => $profileOwner->id,
-            'user_id' => $poster->id,
-        ]);
+        $profilePost = ProfilePostFactory::by($poster)
+            ->toProfile($profileOwner)
+            ->create();
 
         $this->patch(
             route('api.profile-posts.update', $profilePost->id),
@@ -65,10 +63,9 @@ class UpdatesProfilePostsTest extends TestCase
     {
         $profileOwner = create(User::class);
         $poster = $this->signIn();
-        $profilePost = create(ProfilePost::class, [
-            'profile_owner_id' => $profileOwner->id,
-            'user_id' => $poster->id,
-        ]);
+        $profilePost = ProfilePostFactory::by($poster)
+            ->toProfile($profileOwner)
+            ->create();
 
         $response = $this->patchJson(
             route('api.profile-posts.update', $profilePost->id),
@@ -85,10 +82,10 @@ class UpdatesProfilePostsTest extends TestCase
     {
         $profileOwner = create(User::class);
         $poster = $this->signIn();
-        $profilePost = create(ProfilePost::class, [
-            'profile_owner_id' => $profileOwner->id,
-            'user_id' => $poster->id,
-        ]);
+        $profilePost = ProfilePostFactory::by($poster)
+            ->toProfile($profileOwner)
+            ->create();
+
         $nonStringBody = array(15);
 
         $response = $this->patchJson(

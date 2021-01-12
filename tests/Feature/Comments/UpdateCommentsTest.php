@@ -4,13 +4,14 @@ namespace Tests\Feature\Comments;
 
 use App\ProfilePost;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 use \Facades\Tests\Setup\CommentFactory;
 
 class UpdateCommentsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     protected $errorMessage;
 
@@ -36,9 +37,7 @@ class UpdateCommentsTest extends TestCase
     {
         $commentPoster = $this->signIn();
         $comment = CommentFactory::by($commentPoster)->create();
-        $updatedComment = [
-            'body' => 'updated body',
-        ];
+        $updatedComment = ['body' => $this->faker->sentence];
 
         $this->patch(
             route('api.comments.update', $comment),

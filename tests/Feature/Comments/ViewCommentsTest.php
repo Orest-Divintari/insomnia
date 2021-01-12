@@ -14,11 +14,13 @@ class ViewCommentsTest extends TestCase
     /** @test */
     public function a_user_can_view_all_the_comments_associated_with_a_post()
     {
-        $comment = CommentFactory::create();
+        $profilePost = create(ProfilePost::class);
+        $comment = CommentFactory::toProfilePost($profilePost)->create();
+
         $this->signIn();
 
         $response = $this->get(
-            route('api.comments.index', $comment->profilePost)
+            route('api.comments.index', $profilePost)
         )->json();
 
         $this->assertCount(1, ($response['data']));

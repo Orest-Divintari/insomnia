@@ -3,22 +3,24 @@
 namespace Tests\Unit;
 
 use App\ProfilePost;
-use App\Reply;
 use App\User;
 use Carbon\Carbon;
+use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProfilePostTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     /** @test */
     public function a_profile_post_has_an_poster()
     {
         $user = create(User::class);
 
-        $profilePost = create(ProfilePost::class, ['user_id' => $user->id]);
+        $profilePost = ProfilePostFactory::by($user)->create();
 
         $this->assertEquals($user->id, $profilePost->poster->id);
     }
@@ -28,7 +30,7 @@ class ProfilePostTest extends TestCase
     {
         $user = create(User::class);
 
-        $profilePost = create(ProfilePost::class, ['user_id' => $user->id]);
+        $profilePost = ProfilePostFactory::by($user)->create();
 
         $this->assertEquals(
             Carbon::now()->calendar(),
@@ -41,10 +43,7 @@ class ProfilePostTest extends TestCase
     {
         $post = create(ProfilePost::class);
 
-        $comment = create(Reply::class, [
-            'repliable_type' => ProfilePost::class,
-            'repliable_id' => $post->id,
-        ]);
+        $comment = CommentFactory::toProfilePost($post)->create();
 
         $this->assertCount(1, $post->comments);
     }
@@ -55,7 +54,7 @@ class ProfilePostTest extends TestCase
         $post = create(ProfilePost::class);
         $poster = $this->signIn();
 
-        $post->addComment('new comment', $poster);
+        $post->addComment($this->faker->sentence, $poster);
 
         $this->assertCount(1, $post->comments);
     }
@@ -65,7 +64,7 @@ class ProfilePostTest extends TestCase
     {
         $profileOwner = create(User::class);
 
-        $post = create(ProfilePost::class, ['profile_owner_id' => $profileOwner->id]);
+        $post = ProfilePostFactory::toProfile($profileOwner)->create();
 
         $this->assertEquals($profileOwner->id, $post->profileOwner->id);
     }
@@ -75,7 +74,7 @@ class ProfilePostTest extends TestCase
     {
         $user = $this->signIn();
 
-        $profilePost = create(ProfilePost::class, ['user_id' => $user->id]);
+        $profilePost = ProfilePostFactory::by($user)->create();
 
         $this->assertCount(1, $profilePost->activities);
     }

@@ -4,72 +4,66 @@ namespace Tests\Setup;
 
 use App\Reply;
 use App\Thread;
-use App\User;
+use Tests\Setup\PostFactory;
 
-class ReplyFactory
+class ReplyFactory extends PostFactory
 {
-    protected $user;
+    private $thread;
+    private $replies = [];
 
     public function create($attributes = [])
     {
-
-        $this->user = $this->user ?: factory(User::class)->create();
-
-        $thread = $this->createThread($attributes);
-
+        $this->attributes = $attributes;
         $reply = factory(Reply::class)->create(
             array_merge(
                 [
-                    'user_id' => $this->user->id,
-                    'repliable_id' => $thread->id,
+                    'user_id' => $this->userId(),
+                    'repliable_id' => $this->threadId(),
+                    'created_at' => $this->getCreatedAt(),
+                    'updated_at' => $this->getUpdatedAt(),
                     'repliable_type' => Thread::class,
-                    'position' => 2,
+                    'body' => $this->getBody(),
                 ],
                 $attributes
             ));
-
+        $this->resetAttributes();
         return $reply;
     }
 
     public function createMany($count = 1, $attributes = [])
     {
-
-        $this->user = $this->user ?: factory(User::class)->create();
-
-        $thread = $this->createThread($attributes);
-
+        $this->attributes = $attributes;
+        $replies = [];
         for ($repliesCounter = 1; $repliesCounter <= $count; $repliesCounter++) {
 
-            $replies[] = factory(Reply::class)->create(
+            $reply = factory(Reply::class)->create(
                 array_merge(
                     [
-                        'user_id' => $this->user->id,
-                        'repliable_id' => $thread->id,
+                        'user_id' => $this->userId(),
+                        'repliable_id' => $this->threadId(),
                         'repliable_type' => Thread::class,
-                        'position' => $repliesCounter + 1,
+                        'body' => $this->getBody(),
                     ],
                     $attributes
                 ));
-            $thread->increment('replies_count');
-
+            $replies[] = $reply;
         }
         return collect($replies);
-
     }
 
-    public function createThread($attributes)
+    private function threadId()
     {
-        if (array_key_exists('repliable_id', $attributes)) {
-            $thread = Thread::find($attributes['repliable_id']);
-        } else {
-            $thread = create(Thread::class);
+        if ($this->thread) {
+            return $this->thread->id;
+        } elseif ($this->repliableIdInAttributes()) {
+            return $this->getRepliableId();
         }
-        return $thread;
+        return factory(Thread::class)->create()->id;
     }
 
-    public function by($user)
+    public function toThread($thread)
     {
-        $this->user = $user;
+        $this->thread = $thread;
         return $this;
     }
 

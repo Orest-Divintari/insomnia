@@ -7,6 +7,7 @@ use App\Like;
 use App\ProfilePost;
 use App\Reply;
 use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -19,8 +20,7 @@ class DeleteActivitiesTest extends TestCase
     public function when_a_profile_post_is_deleted_the_associated_activities_are_deleted()
     {
         $poster = $this->signIn();
-        $profilePost = create(ProfilePost::class, ['user_id' => $poster->id]);
-
+        $profilePost = ProfilePostFactory::by($poster)->create();
         $this->assertCount(1, $profilePost->activities);
 
         $this->delete(route('api.profile-posts.destroy', $profilePost->id));

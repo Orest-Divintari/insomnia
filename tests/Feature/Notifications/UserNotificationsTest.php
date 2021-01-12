@@ -2,14 +2,15 @@
 
 namespace Tests\Feature\Notifications;
 
-use App\Reply;
 use App\Thread;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserNotificationsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     protected $thread;
     protected $user;
@@ -22,6 +23,7 @@ class UserNotificationsTest extends TestCase
         $this->user = $this->signIn();
         $this->thread = create(Thread::class);
         $this->thread->subscribe($this->user->id);
+        $john = create(User::class);
         $this->thread->addReply($this->faker->sentence, $john);
         $this->thread->addReply($this->faker->sentence, $john);
         $this->response = $this->get(route('api.user-notifications.index'))->json();

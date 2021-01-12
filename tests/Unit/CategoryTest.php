@@ -6,6 +6,7 @@ use App\Category;
 use App\GroupCategory;
 use App\Thread;
 use Carbon\Carbon;
+use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -105,17 +106,15 @@ class CategoryTest extends TestCase
     /** @test */
     public function get_the_recently_active_thread_for_a_non_parent_category()
     {
+        $this->withoutExceptionHandling();
         config(['database.default' => 'mysql']);
         config(['database.connections.mysql.database' => config('insomnia.database.name')]);
         $user = $this->signIn();
         $category = create(Category::class);
-        $recentThread = create(Thread::class, [
-            'category_id' => $category->id,
-        ]);
-        $oldThread = create(Thread::class, [
-            'category_id' => $category->id,
-            'updated_at' => Carbon::now()->subMinute(),
-        ]);
+        $recentThread = ThreadFactory::inCategory($category)->create();
+        $oldThread = ThreadFactory::inCategory($category)
+            ->updatedAt(Carbon::now()->subMinute())
+            ->create();
         $category = Category::where('id', $category->id)
             ->withRecentlyActiveThread()
             ->first();
@@ -144,13 +143,10 @@ class CategoryTest extends TestCase
             Thread::class,
             ['category_id' => $subCategory->id]
         );
-        $oldThread = create(
-            Thread::class,
-            [
-                'category_id' => $subCategory->id,
-                'updated_at' => Carbon::now()->subMinute(),
-            ]
-        );
+        $oldThread = ThreadFactory::inCategory($subCategory)
+            ->updatedAt(Carbon::now()->subMinute())
+            ->create();
+
         $parentCategory = Category::where('id', $category->id)
             ->withRecentlyActiveThread()
             ->first();

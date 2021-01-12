@@ -17,6 +17,7 @@ class ConversationFactory
 
     public function create($title = null)
     {
+
         $conversation = create(
             Conversation::class,
             ['title' => $title ?: 'some title']
@@ -56,9 +57,6 @@ class ConversationFactory
     public function by($user)
     {
         $this->user = $user;
-        // $username = $username ?: 'George';
-        // $user = create(User::class, ['name' => $username]);
-        // $this->user = $this->signIn($user);
         return $this;
     }
 

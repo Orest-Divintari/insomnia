@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Threads;
 
-use App\Thread;
+use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
@@ -15,10 +15,8 @@ class ManageThreadsTest extends TestCase
     /** @test */
     public function non_authorized_users_may_not_update_the_title_of_a_thread()
     {
-        $thread = create(Thread::class, [
-            'title' => 'old title',
-        ]);
         $this->signIn();
+        $thread = ThreadFactory::withTitle('old title')->create();
 
         $response = $this->patch(
             route('api.threads.update', $thread),
@@ -32,10 +30,9 @@ class ManageThreadsTest extends TestCase
     public function an_authorized_user_may_update_the_title_of_a_thread()
     {
         $user = $this->signIn();
-        $thread = create(Thread::class, [
-            'title' => 'old title',
-            'user_id' => $user->id,
-        ]);
+        $thread = ThreadFactory::by($user)
+            ->withTitle('old title')
+            ->create();
         $newTitle = [
             'title' => 'new title',
         ];
@@ -56,10 +53,9 @@ class ManageThreadsTest extends TestCase
     public function when_updating_a_thread_a_title_is_required()
     {
         $user = $this->signIn();
-        $thread = create(Thread::class, [
-            'title' => 'old title',
-            'user_id' => $user->id,
-        ]);
+        $thread = ThreadFactory::by($user)
+            ->withTitle('old title')
+            ->create();
         $emptyTitle = [
             'title' => '',
         ];
@@ -81,10 +77,9 @@ class ManageThreadsTest extends TestCase
     public function when_updating_a_thread_the_title_must_be_of_type_string()
     {
         $user = $this->signIn();
-        $thread = create(Thread::class, [
-            'title' => 'old title',
-            'user_id' => $user->id,
-        ]);
+        $thread = ThreadFactory::by($user)
+            ->withTitle('old title')
+            ->create();
         $nonStringTitle = [
             'title' => array(15),
         ];

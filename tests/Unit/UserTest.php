@@ -4,15 +4,15 @@ namespace Tests\Unit;
 
 use App\Activity;
 use App\Conversation;
-use App\ProfilePost;
 use App\Read;
-use App\Reply;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
+use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
@@ -59,10 +59,7 @@ class UserTest extends TestCase
     {
         $user = create(User::class);
         $thread = create(Thread::class);
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+        $reply = ReplyFactory::toThread($thread)->create();
 
         $reply->likedBy($user);
 
@@ -103,11 +100,7 @@ class UserTest extends TestCase
     public function a_user_has_replies()
     {
         $user = create(User::class);
-        $thread = create(Thread::class);
-
-        $thread->addReply(raw(Reply::class, [
-            'user_id' => $user->id,
-        ]));
+        ReplyFactory::by($user)->create();
 
         $this->assertCount(1, $user->replies);
     }
@@ -117,7 +110,7 @@ class UserTest extends TestCase
     {
         $user = create(User::class);
 
-        create(ProfilePost::class, ['profile_owner_id' => $user->id]);
+        ProfilePostFactory::toProfile($user)->create();
 
         $this->assertEquals(1, $user->fresh()->message_count);
     }
@@ -127,9 +120,7 @@ class UserTest extends TestCase
     {
         $user = create(User::class);
         $thread = create(Thread::class);
-        $reply = $thread->addReply(raw(Reply::class, [
-            'user_id' => $user->id,
-        ]));
+        $reply = ReplyFactory::by($user)->create();
         $anotherUser = create(User::class);
 
         $reply->likedBy($anotherUser);
@@ -142,10 +133,9 @@ class UserTest extends TestCase
     {
         $user = create(User::class);
 
-        create(ProfilePost::class, [
-            'user_id' => $user->id,
-            'profile_owner_id' => $user->id,
-        ]);
+        ProfilePostFactory::by($user)
+            ->toProfile($user)
+            ->create();
 
         $this->assertCount(1, $user->profilePosts);
     }
@@ -171,10 +161,7 @@ class UserTest extends TestCase
     public function a_user_knows_the_message_count_which_is_the_number_of_posts_on_his_profile()
     {
         $profileOwner = create(User::class);
-        create(
-            ProfilePost::class,
-            ['profile_owner_id' => $profileOwner->id]
-        );
+        ProfilePostFactory::toProfile($profileOwner)->create();
 
         $profileOwner = User::withMessageCount()
             ->whereId($profileOwner->id)
@@ -187,8 +174,8 @@ class UserTest extends TestCase
     public function a_user_knows_the_like_score_which_is_how_many_times_his_replies_are_liked()
     {
         $user = create(User::class);
-        $reply = ReplyFactory::create(['user_id' => $user->id]);
-        $comment = CommentFactory::create(['user_id' => $user->id]);
+        $reply = ReplyFactory::by($user)->create();
+        $comment = CommentFactory::by($user)->create();
         $liker = $this->signIn();
 
         $comment->likedBy($liker);
@@ -236,6 +223,7 @@ class UserTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::create();
+        $conversationStarter->unread($conversation);
         $this->assertTrue($conversation->hasBeenUpdated());
 
         $conversationStarter->read($conversation);
@@ -248,7 +236,6 @@ class UserTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::create();
-        $this->assertTrue($conversation->hasBeenUpdated());
         $conversationStarter->read($conversation);
         $this->assertFalse($conversation->hasBeenUpdated());
 
@@ -265,21 +252,8 @@ class UserTest extends TestCase
             Conversation::class,
             ['user_id' => $conversationStarter->id]
         );
-        $this->assertCount(1, $conversationStarter->fresh()->unreadConversations);
-        $conversationStarter->read($conversation);
-        $this->assertCount(0, $conversationStarter->fresh()->unreadConversations);
-        $participant = create(User::class);
-        $this->assertCount(0, $participant->unreadConversations);
-        $conversation->addParticipants([$participant->name]);
-        $this->assertCount(1, $participant->fresh()->unreadConversations);
-        $participant->read($conversation);
-        $this->assertCount(0, $participant->fresh()->unreadConversations);
 
-        Carbon::setTestNow(Carbon::now()->addDay());
-        $conversation->addMessage('random message', $participant);
-
-        $this->assertCount(1, $conversationStarter->fresh()->unreadConversations);
-        $this->assertCount(1, $participant->fresh()->unreadConversations);
+        $this->assertCount(1, $conversationStarter->unreadConversations);
     }
 
     /** @test */
@@ -298,7 +272,7 @@ class UserTest extends TestCase
     {
         $user = $this->signIn();
         $userId = $user->id;
-        $thread = create(Thread::class, ['user_id' => $user->id]);
+        $thread = ThreadFactory::by($user)->create();
 
         $user->delete();
 
@@ -322,11 +296,12 @@ class UserTest extends TestCase
     {
         $user = $this->signIn();
         Carbon::setTestNow(Carbon::now()->subDay());
-        $thread = create(Thread::class);
-        $thread->addReply(raw(Reply::class));
-        $profilePost = create(ProfilePost::class);
+        ReplyFactory::by($user)->create();
+        $profilePost = ProfilePostFactory::by($user)->create();
         Carbon::setTestNow();
-        $comment = $profilePost->addComment('new comment', $user);
+        $comment = CommentFactory::by($user)
+            ->toProfilePost($profilePost)
+            ->create();
 
         $lastPostActivity = $user->lastPostActivity();
 

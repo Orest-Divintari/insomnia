@@ -7,6 +7,7 @@ use App\Thread;
 use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ReplyFactory;
+use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -31,10 +32,7 @@ class ThreadFiltersTest extends TestCase
     /** @test */
     public function sort_threads_by_creation_date()
     {
-        $oldThread = create(
-            Thread::class,
-            ['created_at' => Carbon::now()->subDays(5)]
-        );
+        $oldThread = ThreadFactory::createdAt(Carbon::now()->subDays(5))->create();
         $newThread = create(Thread::class);
 
         $this->threadFilters->newThreads();
@@ -51,13 +49,10 @@ class ThreadFiltersTest extends TestCase
     {
         Carbon::setTestNow(Carbon::now()->subDay());
         $inactiveThread = create(Thread::class);
-        ReplyFactory::create(
-            [
-                'repliable_id' => $inactiveThread->id,
-            ]);
-        Carbon::setTestNow(Carbon::now()->addDay());
+        ReplyFactory::toThread($inactiveThread)->create();
+        Carbon::setTestNow();
         $recentlyActiveThread = create(Thread::class);
-        ReplyFactory::create(['repliable_id' => $recentlyActiveThread->id]);
+        ReplyFactory::toThread($recentlyActiveThread)->create();
 
         $this->threadFilters->newPosts();
         $newPosts = $this->threadFilters->builder()->get();
@@ -72,7 +67,7 @@ class ThreadFiltersTest extends TestCase
     public function get_the_threads_that_a_user_has_contributed_to()
     {
         $user = create(User::class);
-        $reply = ReplyFactory::create(['user_id' => $user->id]);
+        $reply = ReplyFactory::by($user)->create();
         ReplyFactory::create();
 
         $this->threadFilters->contributed($user->name);
@@ -181,11 +176,8 @@ class ThreadFiltersTest extends TestCase
         );
         $numberOfDesiredThreads = 2;
         $daysAgo = 5;
-        $desiredThreads = createMany(
-            Thread::class,
-            2,
-            ['created_at' => Carbon::now()->subDays($daysAgo)]
-        );
+        $desiredThreads = ThreadFactory::createdAt(Carbon::now()->subDays($daysAgo))
+            ->createMany(2);
 
         $this->threadFilters->lastCreated($daysAgo);
         $threads = $this->threadFilters->builder()->get();

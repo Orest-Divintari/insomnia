@@ -4,9 +4,12 @@ namespace Tests\Feature\Search;
 
 use App\ProfilePost;
 use App\Thread;
+use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
+use Facades\Tests\Setup\ThreadFactory;
 use Tests\Feature\Search\SearchAllPostsTest;
 
 class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
@@ -15,29 +18,17 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
     public function search_all_posts_given_a_search_term()
     {
         $undesiredProfilePost = create(ProfilePost::class);
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
+        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
         $undesiredThread = create(Thread::class);
-        $undesiredReply = ReplyFactory::create([
-            'repliable_id' => $undesiredThread->id,
-        ]);
-        $desiredThread = create(
-            Thread::class,
-            ['body' => $this->searchTerm]
-        );
-        $desiredReply = ReplyFactory::create([
-            'body' => $this->searchTerm,
-            'repliable_id' => $desiredThread->id,
-        ]);
-        $desiredProfilePost = create(
-            ProfilePost::class,
-            ['body' => $this->searchTerm]
-        );
-        $desiredComment = CommentFactory::create([
-            'body' => $this->searchTerm,
-            'repliable_id' => $desiredProfilePost->id,
-        ]);
+        $undesiredReply = ReplyFactory::toThread($undesiredThread)->create();
+        $desiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $desiredReply = ReplyFactory::toThread($desiredThread)
+            ->withBody($this->searchTerm)
+            ->create();
+        $desiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)->create();
+        $desiredComment = CommentFactory::withBody($this->searchTerm)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
 
         $results = $this->search(
             [
@@ -63,57 +54,36 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
     /** @test */
     public function search_all_posts_that_were_created_by_a_given_username_given_a_search_term()
     {
-        $user = $this->signIn();
+        $user = create(User::class);
+        $desiredThread = ThreadFactory::by($user)
+            ->withBody($this->searchTerm)
+            ->create();
+        $desiredReply = ReplyFactory::by($user)
+            ->withBody($this->searchTerm)
+            ->toThread($desiredThread)
+            ->create();
 
-        $desiredThread = create(
-            Thread::class,
-            [
-                'body' => $this->searchTerm,
-                'user_id' => $user->id,
-            ]
-        );
+        $desiredProfilePost = ProfilePostFactory::by($user)
+            ->withBody($this->searchTerm)
+            ->create();
 
-        $desiredReply = ReplyFactory::create([
-            'body' => $this->searchTerm,
-            'repliable_id' => $desiredThread->id,
-            'user_id' => $user->id,
-        ]);
-
-        $desiredProfilePost = create(
-            ProfilePost::class,
-            [
-                'user_id' => $user->id,
-                'body' => $this->searchTerm,
-            ]
-        );
-        $desiredComment = CommentFactory::create([
-            'repliable_id' => $desiredProfilePost->id,
-            'user_id' => $user->id,
-            'body' => $this->searchTerm,
-        ]);
-
-        $anotherUser = $this->signIn();
-        $undesiredProfilePost = create(
-            ProfilePost::class,
-            [
-                'user_id' => $anotherUser->id,
-                'body' => $this->searchTerm,
-            ]
-        );
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-            'body' => $this->searchTerm,
-        ]);
-        $undesiredThread = create(
-            Thread::class,
-            [
-                'body' => $this->searchTerm,
-                'user_id' => $anotherUser->id,
-            ]
-        );
-        $undesiredReply = ReplyFactory::create([
-            'repliable_id' => $undesiredThread->id,
-        ]);
+        $desiredComment = CommentFactory::by($user)
+            ->withBody($this->searchTerm)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
+        $undesiredComment = CommentFactory::withBody($this->searchTerm)->create();
+        $anotherUser = create(User::class);
+        $undesiredProfilePost = ProfilePostFactory::by($anotherUser)
+            ->withBody($this->searchTerm)
+            ->create();
+        $undesiredComment = CommentFactory::withBody($this->searchTerm)
+            ->toProfilePost($undesiredProfilePost)
+            ->create();
+        $undesiredThread = ThreadFactory::by($anotherUser)
+            ->withBody($this->searchTerm)
+            ->create();
+        $undesiredReply = ReplyFactory::toThread($undesiredThread)
+            ->create();
 
         $results = $this->search([
             'q' => $this->searchTerm,
@@ -142,74 +112,43 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
         $user = $this->signIn();
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-        $desiredThread = create(
-            Thread::class,
-            [
-                'body' => $this->searchTerm,
-                'user_id' => $user->id,
-            ]
-        );
-        $desiredReply = ReplyFactory::create([
-            'body' => $this->searchTerm,
-            'repliable_id' => $desiredThread->id,
-            'user_id' => $user->id,
-        ]);
-        $desiredProfilePost = create(
-            ProfilePost::class,
-            [
-                'user_id' => $user->id,
-                'body' => $this->searchTerm,
-            ]
-        );
-        $desiredComment = CommentFactory::create([
-            'repliable_id' => $desiredProfilePost->id,
-            'user_id' => $user->id,
-            'body' => $this->searchTerm,
-        ]);
-
+        $desiredThread = ThreadFactory::by($user)
+            ->withBody($this->searchTerm)
+            ->create();
+        $desiredReply = ReplyFactory::by($user)
+            ->withBody($this->searchTerm)
+            ->toThread($desiredThread)
+            ->create();
+        $desiredProfilePost = ProfilePostFactory::by($user)
+            ->withBody($this->searchTerm)
+            ->create();
+        $desiredComment = CommentFactory::by($user)
+            ->withBody($this->searchTerm)
+            ->toProfilePost($desiredProfilePost)
+            ->create();
         $anotherUser = $this->signIn();
-        $undesiredProfilePost = create(
-            ProfilePost::class,
-            [
-                'user_id' => $anotherUser->id,
-                'body' => $this->searchTerm,
-            ]
-        );
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-            'user_id' => $anotherUser->id,
-            'body' => $this->searchTerm,
-        ]);
-        $undesiredThread = create(
-            Thread::class,
-            [
-                'user_id' => $anotherUser->id,
-                'body' => $this->searchTerm,
-            ]
-        );
-        $undesiredReply = ReplyFactory::create([
-            'repliable_id' => $undesiredThread->id,
-            'user_id' => $anotherUser->id,
-            'body' => $this->searchTerm,
-        ]);
-
+        $undesiredProfilePost = ProfilePostFactory::by($anotherUser)
+            ->withBody($this->searchTerm)
+            ->create();
+        $undesiredComment = CommentFactory::by($anotherUser)
+            ->withBody($this->searchTerm)
+            ->toProfilePost($undesiredProfilePost)
+            ->create();
+        $undesiredThread = ThreadFactory::by($anotherUser)
+            ->withBody($this->searchTerm)
+            ->create();
+        $undesiredReply = ReplyFactory::by($anotherUser)
+            ->withBody($this->searchTerm)
+            ->toThread($undesiredThread)
+            ->create();
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $anotherUndesiredProfilePost = create(
-            ProfilePost::class,
-            ['body' => $this->searchTerm]
-        );
-        $undesiredComment = CommentFactory::create([
-            'repliable_id' => $undesiredProfilePost->id,
-        ]);
-        $anotherUndesiredThread = create(
-            Thread::class,
-            ['body' => $this->searchTerm]
-        );
-        $anotherUndesiredReply = ReplyFactory::create([
-            'repliable_id' => $anotherUndesiredThread->id,
-            'body' => $this->searchTerm,
-        ]);
+        $anotherUndesiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)->create();
+        $undesiredComment = CommentFactory::toProfilePost($anotherUndesiredProfilePost)->create();
+        $anotherUndesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $anotherUndesiredReply = ReplyFactory::withBody($this->searchTerm)
+            ->toThread($anotherUndesiredThread)
+            ->create();
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
         $results = $this->search([

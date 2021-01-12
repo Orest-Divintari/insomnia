@@ -331,5 +331,4 @@ class CreateThreadsTest extends TestCase
         $this->assertEquals(Thread::latest('id')->first()->slug, $slug);
 
     }
-
 }

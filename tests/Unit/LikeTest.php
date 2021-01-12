@@ -19,10 +19,7 @@ class LikeTest extends TestCase
     public function a_like_belongs_to_a_reply()
     {
         $thread = create(Thread::class);
-        $reply = create(Reply::class, [
-            'repliable_id' => $thread->id,
-            'repliable_type' => Thread::class,
-        ]);
+        $reply = ReplyFactory::toThread($thread)->create();
 
         $like = Like::create([
             'user_id' => 1,
@@ -37,13 +34,9 @@ class LikeTest extends TestCase
     public function a_like_has_activity()
     {
         $user = $this->signIn();
-        $thread = create(Thread::class);
-        $reply = $thread->addReply(
-            raw(Reply::class, [
-                'user_id' => $user->id,
-            ]));
+        $threadReply = ReplyFactory::create();
 
-        $like = $reply->likedBy($user);
+        $like = $threadReply->likedBy($user);
 
         $this->assertCount(1, $like->activities);
     }

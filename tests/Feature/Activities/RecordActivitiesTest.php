@@ -10,8 +10,10 @@ use App\Thread;
 use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ActivityTest extends TestCase
@@ -45,9 +47,12 @@ class ActivityTest extends TestCase
     /** @test */
     public function when_an_authenticated_user_posts_a_thread_reply_the_activity_is_recorded()
     {
-        $user = $this->signIn();
         $thread = create(Thread::class);
-        $threadReplyAttributes = raw(Reply::class, ['repliable_type' => Thread::class]);
+        $user = $this->signIn();
+        $threadReplyAttributes = raw(
+            Reply::class,
+            ['repliable_type' => Thread::class]
+        );
 
         $this->post(
             route('api.replies.store', $thread),
@@ -251,9 +256,7 @@ class ActivityTest extends TestCase
     public function when_a_profile_post_is_deleted_the_associated_activity_is_deleted()
     {
         $user = $this->signIn();
-        $profilePost = create(ProfilePost::class, [
-            'user_id' => $user->id,
-        ]);
+        $profilePost = ProfilePostFactory::by($user)->create();
         $this->assertCount(1, $profilePost->activities);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $profilePost->id,
@@ -277,10 +280,14 @@ class ActivityTest extends TestCase
     {
         $user = $this->signIn();
         $conversation = ConversationFactory::by($user)->create();
-        $messageBody = 'new message';
+        $message = ['body' => $this->faker->sentence];
 
-        $message = $conversation->addMessage($messageBody);
-        
+        $this->post(
+            route('api.messages.store', $conversation),
+            $message
+        );
+
+        $message = Reply::whereBody($message['body'])->first();
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $message->id,
             'subject_type' => Reply::class,
