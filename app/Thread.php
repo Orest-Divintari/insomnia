@@ -58,6 +58,7 @@ class Thread extends Model
         'date_created',
         'date_updated',
         'type',
+        'last_pages',
     ];
 
     /**
@@ -83,6 +84,7 @@ class Thread extends Model
         'locked' => 'boolean',
         'pinned' => 'boolean',
         'has_been_updated' => 'boolean',
+        'replies_count' => 'int',
     ];
 
     /**
@@ -234,10 +236,7 @@ class Thread extends Model
         if (auth()->check()) {
             auth()->user()->read($this);
         }
-        $this->update([
-            'views' => $this->views + 1,
-            'updated_at' => false,
-        ]);
+        $this->increment('views');
     }
 
     /**
@@ -422,6 +421,43 @@ class Thread extends Model
             return $query->where('category_id', $category->id);
         }
         return $query;
+    }
+
+    /**
+     * Get the last pages of replies for the thread
+     *
+     * @return array
+     */
+    public function getLastPagesAttribute()
+    {
+        $numberOfLastPages = 3;
+        $pages = (int) ceil(($this->replies_count + 1) / static::REPLIES_PER_PAGE);
+        $link = "/threads/{$this->slug}?page=";
+        $lastPages = [];
+        if ($pages < 2) {
+            return [];
+        }
+        if ($pages == 2) {
+            return [2 => $this->linkToPage(2)];
+        }
+        if ($pages == 3) {
+            return [2 => $this->linkToPage(2), 3 => $this->linkToPage(3)];
+        }
+        for ($pageCount = $pages; $pageCount > $pages - $numberOfLastPages; $pageCount--) {
+            array_unshift($lastPages, [$pageCount => $this->linkToPage($pageCount)]);
+        }
+        return $lastPages;
+    }
+
+    /**
+     * Get the link to the given page
+     *
+     * @param int $page
+     * @return string
+     */
+    public function linkToPage($page)
+    {
+        return "/threads/{$this->slug}?page={$page}";
     }
 
 }

@@ -409,4 +409,51 @@ class ViewThreadsTest extends TestCase
 
         $response->assertSee($pinnedThread->title);
     }
+
+    /** @test */
+    public function view_the_last_pages_of_replies_for_a_thread_of_a_given_category()
+    {
+        $thread = create(Thread::class);
+        $category = $thread->category;
+        $pages = 10;
+        $thread->increment('replies_count', Thread::REPLIES_PER_PAGE * $pages);
+
+        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
+        
+        $this->assertEquals(
+            [8 => "/threads/{$thread->slug}?page=8"],
+            $threads[0]['last_pages'][0]
+        );
+        $this->assertEquals(
+            [9 => "/threads/{$thread->slug}?page=9"],
+            $threads[0]['last_pages'][1]
+        );
+        $this->assertEquals(
+            [10 => "/threads/{$thread->slug}?page=10"],
+            $threads[0]['last_pages'][2]
+        );
+    }
+
+     /** @test */
+     public function view_the_last_pages_of_replies_for_a_thread()
+     {
+         $thread = create(Thread::class);
+         $pages = 10;
+         $thread->increment('replies_count', Thread::REPLIES_PER_PAGE * $pages);
+ 
+         $threads = $this->getJson(route('filtered-threads.index'))->json()['data'];
+         
+         $this->assertEquals(
+             [8 => "/threads/{$thread->slug}?page=8"],
+             $threads[0]['last_pages'][0]
+         );
+         $this->assertEquals(
+             [9 => "/threads/{$thread->slug}?page=9"],
+             $threads[0]['last_pages'][1]
+         );
+         $this->assertEquals(
+             [10 => "/threads/{$thread->slug}?page=10"],
+             $threads[0]['last_pages'][2]
+         );
+     }
 }

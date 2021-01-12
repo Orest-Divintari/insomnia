@@ -291,11 +291,46 @@ class ThreadTest extends TestCase
     public function a_thread_knows_if_it_has_replies()
     {
         $thread = create(Thread::class);
-
         $this->assertFalse($thread->hasReplies());
 
         $thread->increment('replies_count');
 
         $this->assertTrue($thread->hasReplies());
+    }
+
+    /** @test */
+    public function a_thread_knows_the_number_of_last_pages_of_replies()
+    {
+        $this->thread->increment('replies_count', 100);
+        dd(Thread::first()->toArray());
+        $numberOfRepliesForOnePage = Thread::REPLIES_PER_PAGE;
+        $this->thread->update(['replies_count' => $numberOfRepliesForOnePage]);
+
+        $this->assertEmpty(Thread::first()->lastPages);
+
+        $numberOfRepliesForTwoPages = Thread::REPLIES_PER_PAGE * 2;
+        $this->thread->update(['replies_count' => $numberOfRepliesForTwoPages]);
+
+        $this->assertEquals(2, Thread::first()->lastPages[0]);
+
+        $numberOfRepliesForTwoPages = Thread::REPLIES_PER_PAGE * 3;
+        $this->thread->update(['replies_count' => $numberOfRepliesForTwoPages]);
+
+        $this->assertEquals(2, Thread::first()->lastPages[0]);
+        $this->assertEquals(3, Thread::first()->lastPages[1]);
+
+        $numberOfRepliesFor4Pages = Thread::REPLIES_PER_PAGE * 4;
+        $this->thread->update(['replies_count' => $numberOfRepliesFor4Pages]);
+
+        $this->assertEquals(2, Thread::first()->lastPages[0]);
+        $this->assertEquals(3, Thread::first()->lastPages[1]);
+        $this->assertEquals(4, Thread::first()->lastPages[2]);
+
+        $numberOfRepliesFor10pages = Thread::REPLIES_PER_PAGE * 10;
+        $this->thread->update(['replies_count' => $numberOfRepliesFor10pages]);
+
+        $this->assertEquals(8, Thread::first()->lastPages[0]);
+        $this->assertEquals(9, Thread::first()->lastPages[1]);
+        $this->assertEquals(10, Thread::first()->lastPages[2]);
     }
 }
