@@ -213,9 +213,6 @@ class Thread extends Model
     {
         $poster = $poster ?? auth()->user();
 
-        $this->increment('replies_count');
-
-        $reply->update(['position' => $this->replies_count + 1]);
         $reply = $this->replies()->create([
             'body' => $reply,
             'user_id' => $poster->id,
