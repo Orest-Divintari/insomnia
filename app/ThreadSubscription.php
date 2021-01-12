@@ -85,16 +85,14 @@ class ThreadSubscription extends Model
         ]);
     }
 
-    // /**
-    //  * Send notification to the related user
-    //  *
-    //  * @param \Illuminate\Notifications\Notification $notificationType
-    //  * @param \App\Thread $thread
-    //  * @param \App\Reply $reply
-    //  * @return void
-    //  */
-    // public function notify($notification)
-    // {
-    //     $this->user->notify($notification);
-    // }
+    /**
+     * Determine whether the user prefers to receive email notifications
+     *
+     * @return bool
+     */
+    public function prefersEmails()
+    {
+        return $this->prefers_email;
+    }
+
 }

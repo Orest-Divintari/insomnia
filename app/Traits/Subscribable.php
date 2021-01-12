@@ -6,23 +6,30 @@ use App\ThreadSubscription;
 
 trait Subscribable
 {
-/**
- * Subscribe a user to the current thread
- * Enable or disable email notifications for the thread
- *
- * @param int|null $userId
- * @param boolean $prefersEmail
- * @return void
- */
-    public function subscribe($userId = null, $prefersEmail = true)
+
+    /**
+     * Subscribe a user to the thread
+     * Enable email notifications by default
+     *
+     * @param int|null $userId
+     * @return void
+     */
+    public function subscribe($userId = null)
     {
         $this->subscriptions()->updateOrcreate([
             'user_id' => $userId ?? auth()->id(),
-            'prefers_email' => $prefersEmail,
+            'prefers_email' => true,
         ]);
     }
 
-    public function subscribeWithoutEmails()
+    /**
+     * Subscribe a user to the thread
+     * Disable email notifications by default
+     *
+     * @param int $userId
+     * @return void
+     */
+    public function subscribeWithoutEmails($userId = null)
     {
         $this->subscriptions()->updateOrcreate([
             'user_id' => $userId ?? auth()->id(),

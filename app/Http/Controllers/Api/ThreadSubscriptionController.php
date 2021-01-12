@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Thread;
+use App\User;
 
 class ThreadSubscriptionController extends Controller
 {
@@ -21,7 +22,8 @@ class ThreadSubscriptionController extends Controller
         request()->validate([
             'email_notifications' => 'required|boolean',
         ]);
-        $thread->subscribe(auth()->id(), request('email_notifications'));
+
+        $this->subscribe($thread, auth()->id());
 
         return response()->noContent();
 
@@ -38,5 +40,21 @@ class ThreadSubscriptionController extends Controller
         $thread->unsubscribe();
 
         return response()->noContent();
+    }
+
+    /**
+     * Update thread subscription for the given thread and user
+     *
+     * @param Thread $thread
+     * @param int $userId
+     * @return void
+     */
+    public function subscribe($thread, $userId)
+    {
+        if (request()->boolean('email_notifications')) {
+            $thread->subscribe($userId);
+
+        }
+        $thread->subscribeWithoutEmails($userId);
     }
 }

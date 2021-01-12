@@ -35,41 +35,63 @@ class SubscribeToThreadsTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_can_subscribe_to_existing_thread()
+    public function authenticated_users_can_subscribe_to_existing_thread_and_enable_email_notifications()
     {
         $thread = create(Thread::class);
-
         $user = $this->signIn();
-
         $this->assertCount(0, $user->subscriptions);
-
         $this->assertCount(0, $thread->subscriptions);
-
         $prefersEmail = [
             'email_notifications' => true,
         ];
 
-        $this->put(route('api.thread-subscriptions.update', $thread), $prefersEmail);
+        $this->put(
+            route('api.thread-subscriptions.update', $thread),
+            $prefersEmail)
+        ;
 
-        $this->assertCount(1, $user->fresh()->subscriptions);
+        tap($user->fresh(), function ($user) {
+            $this->assertCount(1, $user->subscriptions);
+            $this->assertTrue($user->subscriptions->first()->prefersEmails);
+        });
+    }
 
-        $this->assertCount(1, $thread->fresh()->subscriptions);
+    /** @test */
+    public function authenticated_users_can_subscribe_to_existing_thread_and_disable_email_notifications()
+    {
+        $thread = create(Thread::class);
+        $user = $this->signIn();
+        $this->assertCount(0, $user->subscriptions);
+        $this->assertCount(0, $thread->subscriptions);
+        $prefersEmail = [
+            'email_notifications' => false,
+        ];
 
+        $this->put(
+            route('api.thread-subscriptions.update', $thread),
+            $prefersEmail
+        );
+
+        tap($user->fresh(), function ($user) {
+            $this->assertCount(1, $user->subscriptions);
+            $this->assertFalse($user->subscriptions->first()->prefersEmails());
+        });
     }
 
     /** @test */
     public function thread_subscription_requiress_email_notification_preference()
     {
         $thread = create(Thread::class);
-
         $user = $this->signIn();
-
         $this->assertCount(0, $user->subscriptions);
-
         $this->assertCount(0, $thread->subscriptions);
 
-        $this->put(route('api.thread-subscriptions.update', $thread), [])
-            ->assertSessionHasErrors('email_notifications');
+        $response = $this->put(
+            route('api.thread-subscriptions.update', $thread),
+            []
+        );
+
+        $response->assertSessionHasErrors('email_notifications');
     }
 
     /** @test */

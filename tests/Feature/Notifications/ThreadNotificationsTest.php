@@ -67,7 +67,7 @@ class ThreadNotificationsTest extends TestCase
     {
         $thread = create(Thread::class);
         $subscriber = create(User::class);
-        $thread->subscribe($subscriber->id, $prefersEmail = false);
+        $thread->subscribeWithoutEmails($subscriber->id);
         $replyPoster = $this->signIn();
         $newReply = 'new reply';
         $desiredChannels = ['database'];
