@@ -6,7 +6,6 @@ use App\Reply;
 
 class ReplyObserver
 {
-
     /**
      * Handle the reply "deleted" event.
      *
@@ -15,12 +14,6 @@ class ReplyObserver
      */
     public function deleting(Reply $reply)
     {
-        if ($reply->isThreadReply()
-            && $reply->repliable->hasReplies()
-        ) {
-            $reply->repliable->decrement('replies_count');
-        }
-
         $reply->likes->each->delete();
         $reply->activities->each->delete();
     }
