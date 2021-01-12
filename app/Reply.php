@@ -173,7 +173,7 @@ class Reply extends Model
     public function toSearchableArray()
     {
         $array = $this->withoutRelations()->toArray();
-        if ($this->repliable_type == 'App\ProfilePost') {
+        if ($this->isComment()) {
             $array['profile_owner_id'] = $this->repliable->profile_owner_id;
         }
         return $array;
@@ -206,6 +206,16 @@ class Reply extends Model
     }
 
     /**
+     * Determine whether the reply consists the body of the thread
+     *
+     * @return boolean
+     */
+    public function isThreadBody()
+    {
+        return $this->position === 1;
+    }
+
+    /**
      * Determine if the reply is a profile post comment
      *
      * @return boolean
@@ -233,11 +243,13 @@ class Reply extends Model
      */
     public function shouldBeSearchable()
     {
-        if ($this->repliable_type == 'App\Thread') {
-            return $this->position > 1;
+        // The first thread-reply consists the body of the thread
+        // therefore it should not be searchable
+        if ($this->isThreadReply()) {
+            return !$this->isThreadBody();
         }
 
-        if ($this->repliable_type == 'App\Conversation') {
+        if ($this->isMessage()) {
             return false;
         }
 
@@ -262,13 +274,13 @@ class Reply extends Model
     }
 
     /**
-     * Determine if the activity for this model should be recorded
+     * Determine if the model should be recordable
      *
      * @return boolean
      */
     public function shouldBeRecordable()
     {
-        if ($this->repliable_type == 'App\Conversation' || $this->position == 1) {
+        if ($this->isMessage() || $this->isThreadBody()) {
             return false;
         }
         return true;
