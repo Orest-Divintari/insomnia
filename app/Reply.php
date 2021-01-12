@@ -83,16 +83,6 @@ class Reply extends Model
     }
 
     /**
-     * A comment belongs to a profile post
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function profilePost()
-    {
-        return $this->belongsTo(ProfilePost::class, 'repliable_id');
-    }
-
-    /**
      * Sanitize the body from malicious context
      *
      * @param string $body

@@ -30,7 +30,7 @@ class CommentTest extends TestCase
 
         $comment = $post->addComment('some body', $poster);
 
-        $this->assertInstanceOf(ProfilePost::class, $comment->profilePost);
+        $this->assertInstanceOf(ProfilePost::class, $comment->repliable);
     }
 
     /** @test */
