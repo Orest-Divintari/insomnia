@@ -167,7 +167,8 @@ class Thread extends Model
             'recent_reply_id' => Reply::select('id')
                 ->whereColumn('repliable_id', 'threads.id')
                 ->where('repliable_type', 'App\Thread')
-                ->latest('created_at')
+                ->orderBy('created_at', 'DESC')
+                ->orderBy('id', 'DESC')
                 ->take(1),
         ])->with('recentReply.poster');
 
