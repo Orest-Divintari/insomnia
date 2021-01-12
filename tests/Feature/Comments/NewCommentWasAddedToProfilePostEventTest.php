@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Comments;
 
+use App\Http\Middleware\ThrottlePosts;
 use App\Listeners\Profile\NotifyPostParticipants;
 use App\ProfilePost;
 use App\Reply;
@@ -12,7 +13,13 @@ use Tests\TestCase;
 
 class NewCommentWasAddedToProfilePostEventTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutMiddleware([ThrottlePosts::class]);
+    }
 
     /** @test */
     public function when_a_user_posts_a_comment_to_profile_post_then_an_event_is_fired()

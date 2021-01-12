@@ -3,6 +3,7 @@
 namespace Tests\Feature\Comments;
 
 use App\Exceptions\PostThrottlingException;
+use App\Http\Middleware\ThrottlePosts;
 use App\ProfilePost;
 use App\Reply;
 use App\User;
@@ -15,6 +16,13 @@ class CreateCommentTest extends TestCase
     use RefreshDatabase;
 
     protected $bodyErrorMessage = 'Please enter a valid message.';
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutMiddleware([ThrottlePosts::class]);
+    }
+
     /** @test */
     public function guests_cannot_post_a_comment()
     {
@@ -89,6 +97,7 @@ class CreateCommentTest extends TestCase
     /** @test */
     public function a_user_cannot_add_a_profile_post_comment_if_has_exceed_the_post_rate_limit()
     {
+        $this->withMiddleware([ThrottlePosts::class]);
         $this->withoutExceptionHandling();
         $profilePost = create(ProfilePost::class);
         $user = $this->signIn();

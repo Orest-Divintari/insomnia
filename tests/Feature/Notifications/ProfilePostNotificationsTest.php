@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Notifications;
 
+use App\Http\Middleware\ThrottlePosts;
 use App\Notifications\ProfileHasNewPost;
 use App\Notifications\ProfilePostHasNewComment;
 use App\ProfilePost;
@@ -19,6 +20,7 @@ class ProfilePostNotificationsTest extends TestCase
     {
         parent::setUp();
         Notification::fake();
+        $this->withoutMiddleware([ThrottlePosts::class]);
     }
     /** @test */
     public function the_owner_of_a_profile_receives_notification_when_a_new_post_is_added_to_profile()

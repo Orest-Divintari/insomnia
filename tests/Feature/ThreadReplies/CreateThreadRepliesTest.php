@@ -3,6 +3,7 @@
 namespace Tests\Feature\ThreadReplies;
 
 use App\Exceptions\PostThrottlingException;
+use App\Http\Middleware\ThrottlePosts;
 use App\Reply;
 use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,6 +18,7 @@ class CreateThreadRepliesTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware([ThrottlePosts::class]);
         $this->errorMessage = 'Please enter a valid message.';
     }
 
@@ -83,6 +85,7 @@ class CreateThreadRepliesTest extends TestCase
     /** @test */
     public function a_user_cannot_add_a_reply_if_has_exceeded_the_post_rate_limit()
     {
+        $this->withMiddleware([ThrottlePosts::class]);
         $this->withoutExceptionHandling();
         $this->signIn();
         $errorMessage = 'You must wait';

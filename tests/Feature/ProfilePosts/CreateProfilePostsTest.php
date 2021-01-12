@@ -3,6 +3,7 @@
 namespace Tests\Feature\ProfilePosts;
 
 use App\Exceptions\PostThrottlingException;
+use App\Http\Middleware\ThrottlePosts;
 use App\ProfilePost;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,6 +14,13 @@ class CreateProfilePostsTest extends TestCase
     use RefreshDatabase;
 
     protected $errorMessage = 'Please enter a valid message.';
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutMiddleware([ThrottlePosts::class]);
+    }
+
     /** @test */
     public function guests_cannot_create_a_profile_post()
     {
@@ -97,6 +105,7 @@ class CreateProfilePostsTest extends TestCase
     /** @test */
     public function a_user_cannot_create_a_profile_post_if_has_exceeded_the_post_rate_limit()
     {
+        $this->withMiddleware([ThrottlePosts::class]);
         $this->withoutExceptionHandling();
         $profileOwner = create(User::class);
         $user = $this->signIn();

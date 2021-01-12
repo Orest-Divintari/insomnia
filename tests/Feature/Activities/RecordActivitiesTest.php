@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Activities;
 
+use App\Http\Middleware\ThrottlePosts;
 use App\Like;
 use App\ProfilePost;
 use App\Reply;
@@ -15,7 +16,13 @@ use Tests\TestCase;
 
 class ActivityTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutMiddleware([ThrottlePosts::class]);
+    }
 
     /** @test */
     public function when_an_authenticated_user_creates_a_thread_the_activity_is_recorded()

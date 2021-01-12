@@ -3,6 +3,7 @@
 namespace Tests\Feature\Threads;
 
 use App\Category;
+use App\Http\Middleware\ThrottlePosts;
 use App\Tag;
 use App\Thread;
 use App\User;
@@ -23,6 +24,7 @@ class CreateThreadsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware([ThrottlePosts::class]);
 
         $this->bodyErrorMessage = 'Please enter a valid message.';
         $this->titleErrorMessage = 'Please enter a valid title.';
@@ -77,6 +79,7 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function a_user_that_has_exceeded_the_post_rate_limit_cannot_create_a_thread()
     {
+        $this->withMiddleware([ThrottlePosts::class]);
         $this->signIn();
         $error = "post_throttled";
 
