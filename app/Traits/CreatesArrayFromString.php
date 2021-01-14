@@ -54,6 +54,6 @@ trait CreatesArrayFromString
      */
     public function clean($value)
     {
-        return trim($value, ' ');
+        return preg_replace('/[^A-Za-z0-9. -]+|\s+/', '', $value);
     }
 }
