@@ -27,15 +27,10 @@
             <div class="form-right-col">
               <p class="form-label-phone">Invite members:</p>
               <div>
-                <input
-                  v-focus
-                  v-model="participants"
-                  class="form-input"
-                  type="text"
-                  id="invite-members"
+                <names-autocomplete
                   name="invite-members"
-                  required
-                />
+                  v-model="participants"
+                ></names-autocomplete>
                 <p class="text-gray-lightest text-xs mt-2">
                   You may enter multiple names here separated by comma. Invited
                   members will be able to see the entire conversation from the
