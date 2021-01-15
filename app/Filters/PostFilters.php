@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use App\Actions\StringToArrayAction;
 use App\User;
 use Carbon\Carbon;
 
@@ -28,10 +29,13 @@ class PostFilters
      * @param String $username
      * @return void
      */
-    public function postedBy($username)
+    public function postedBy($usernames)
     {
-        $userId = User::whereName($username)->firstOrFail()->id;
-        $this->builder->where('user_id', $userId);
+        if (is_string($usernames)) {
+            $usernames = (new StringToArrayAction($usernames))->execute();
+        }
+        $userIds = User::whereIn('name', $usernames)->pluck('id')->toArray();
+        $this->builder->whereIn('user_id', $userIds);
     }
 
     /**
