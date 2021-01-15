@@ -31,8 +31,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $this->assertCount(
             $this->numberOfDesiredThreads, $results
         );
-        $first = $this->numberOfDesiredThreads - 1;
-        $this->assertThread($results[$first], $desiredThread);
+        $this->assertContainsThread($results, $desiredThread);
 
         $desiredThread->delete();
         $undesiredThread->delete();
@@ -63,8 +62,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $this->assertCount(
             $this->numberOfDesiredThreads, $results
         );
-        $first = $this->numberOfDesiredThreads - 1;
-        $this->assertThread($results[$first], $desiredThread);
+        $this->assertContainsThread($results, $desiredThread);
 
         $desiredThread->delete();
         $undesiredThread->delete();
@@ -99,8 +97,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $this->assertCount(
             $this->numberOfDesiredThreads, $results
         );
-        $first = $this->numberOfDesiredThreads - 1;
-        $this->assertThread($results[$first], $desiredThread);
+        $this->assertContainsThread($results, $desiredThread);
 
         $desiredThread->delete();
         $undesiredThread->delete();

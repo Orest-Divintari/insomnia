@@ -31,8 +31,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $this->assertCount(
             $this->numberOfDesiredProfilePosts, $results
         );
-        $first = $this->numberOfDesiredProfilePosts - 1;
-        $this->assertProfilePost($results[$first], $desiredProfilePost);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $desiredProfilePost->delete();
         $undesiredProfilePost->delete();
@@ -60,12 +59,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             $this->numberOfDesiredComments,
             $results
         );
-        $first = $this->numberOfDesiredComments - 1;
-        $this->assertComment(
-            $results[$first],
-            $desiredComment,
-            $desiredProfilePost
-        );
+        $this->assertContainsComment($results, $desiredComment);
 
         $desiredProfilePost->delete();
         $undesiredProfilePost->delete();
@@ -93,19 +87,8 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             $this->totalNumberOfDesiredItems,
             $results
         );
-        $results = collect($results);
-        $resultedComment = $results->firstWhere('type', 'profile-post-comment');
-        $resultedProfilePost = $results->firstWhere('type', 'profile-post');
-
-        $this->assertProfilePost(
-            $resultedProfilePost,
-            $desiredProfilePost
-        );
-        $this->assertComment(
-            $resultedComment,
-            $desiredComment,
-            $desiredProfilePost
-        );
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
+        // $this->assertContainsComment($results, $desiredComment);
 
         $undesiredProfilePost->delete();
         $desiredProfilePost->delete();
@@ -135,12 +118,8 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $this->assertCount(
             $this->totalNumberOfDesiredItems, $results
         );
-        $results = collect($results);
-        $resultedComment = $results->firstWhere('type', 'profile-post-comment');
-        $resultedProfilePost = $results->firstWhere('type', 'profile-post');
-
-        $this->assertProfilePost($resultedProfilePost, $desiredProfilePost);
-        $this->assertComment($resultedComment, $desiredComment, $desiredProfilePost);
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $desiredProfilePost->delete();
         $undesiredProfilePost->delete();
@@ -171,12 +150,8 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $this->assertCount(
             $this->totalNumberOfDesiredItems, $results
         );
-        $results = collect($results);
-        $resultedComment = $results->firstWhere('type', 'profile-post-comment');
-        $resultedProfilePost = $results->firstWhere('type', 'profile-post');
-
-        $this->assertProfilePost($resultedProfilePost, $desiredProfilePost);
-        $this->assertComment($resultedComment, $desiredComment, $desiredProfilePost);
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $desiredProfilePost->delete();
         $undesiredProfilePost->delete();
@@ -209,11 +184,8 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             $this->numberOfDesiredItems,
             $results
         );
-        $results = collect($results);
-        $resultedComment = $results->firstWhere('type', 'profile-post-comment');
-        $resultedProfilePost = $results->firstWhere('type', 'profile-post');
-        $this->assertProfilePost($resultedProfilePost, $desiredProfilePost);
-        $this->assertComment($resultedComment, $desiredComment, $desiredProfilePost);
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $desiredProfilePost->delete();
         $undesiredProfilePost->delete();
@@ -250,17 +222,8 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             $this->totalNumberOfDesiredItems,
             $results
         );
-
-        $results = collect($results);
-        $resultedComment = $results->firstWhere('type', 'profile-post-comment');
-        $resultedProfilePost = $results->firstWhere('type', 'profile-post');
-
-        $this->assertProfilePost($resultedProfilePost, $desiredProfilePost);
-        $this->assertComment(
-            $resultedComment,
-            $desiredComment,
-            $desiredProfilePost
-        );
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $desiredProfilePost->delete();
         $undesiredProfilePost->delete();
@@ -299,17 +262,8 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $this->assertCount(
             $this->totalNumberOfDesiredItems, $results
         );
-
-        $results = collect($results);
-        $resultedComment = $results->firstWhere('type', 'profile-post-comment');
-        $resultedProfilePost = $results->firstWhere('type', 'profile-post');
-
-        $this->assertProfilePost($resultedProfilePost, $desiredProfilePost);
-        $this->assertComment(
-            $resultedComment,
-            $desiredComment,
-            $desiredProfilePost
-        );
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $desiredProfilePost->delete();
         $undesiredProfilePost->delete();
@@ -354,17 +308,8 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             $this->totalNumberOfDesiredItems,
             $results
         );
-
-        $results = collect($results);
-        $resultedComment = $results->firstWhere('type', 'profile-post-comment');
-        $resultedProfilePost = $results->firstWhere('type', 'profile-post');
-
-        $this->assertProfilePost($resultedProfilePost, $desiredProfilePost);
-        $this->assertComment(
-            $resultedComment,
-            $desiredComment,
-            $desiredProfilePost
-        );
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $desiredProfilePost->delete();
         $undesiredProfilePost->delete();

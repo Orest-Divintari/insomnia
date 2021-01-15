@@ -366,102 +366,6 @@ class SearchTest extends TestCase
         return $results->json()['data'];
     }
 
-    /**
-     * Assert that the reply is correct and the required relationships are loaded
-     *
-     * @param array $resultedReply
-     * @param Reply $desiredReply
-     * @param Thread $desiredThread
-     * @return void
-     */
-    public function assertReply($resultedReply, $desiredReply, $desiredThread)
-    {
-        $this->assertEquals(
-            $resultedReply['id'], $desiredReply->id
-        );
-        $this->assertEquals(
-            $resultedReply['poster']['id'], $desiredReply->poster->id
-        );
-        $this->assertEquals(
-            $resultedReply['repliable']['id'], $desiredThread->id
-        );
-        $this->assertEquals(
-            $resultedReply['repliable']['poster']['id'], $desiredThread->poster->id
-        );
-        $this->assertEquals(
-            $resultedReply['repliable']['category']['id'], $desiredThread->category->id,
-        );
-    }
-
-    /**
-     * Assert that thread is correct and the required relationships are loaded
-     *
-     * @param array $resultedThread
-     * @param Thread $desiredThread
-     * @return void
-     */
-    public function assertThread($resultedThread, $desiredThread)
-    {
-        $this->assertEquals(
-            $resultedThread['id'], $desiredThread->id
-        );
-        $this->assertEquals(
-            $resultedThread['poster']['id'], $desiredThread->poster->id
-        );
-        $this->assertEquals(
-            $resultedThread['category']['id'], $desiredThread->category->id,
-        );
-    }
-
-    /**
-     * Assert that the resulted profile post is correct
-     * and the required relations are loaded
-     *
-     * @param array $resultedProfilePost
-     * @param ProfilePost $desiredProfilePost
-     * @return void
-     */
-    public function assertProfilePost($resultedProfilePost, $desiredProfilePost)
-    {
-        $this->assertEquals(
-            $resultedProfilePost['id'], $desiredProfilePost->id
-        );
-        $this->assertEquals(
-            $resultedProfilePost['poster']['id'], $desiredProfilePost->poster->id
-        );
-        $this->assertEquals(
-            $resultedProfilePost['profile_owner']['id'], $desiredProfilePost->profileOwner->id
-        );
-    }
-
-    /**
-     * Assert that the resulted comment is correct
-     * and the required relations are loaded
-     *
-     * @param array $resultedComment
-     * @param Reply $desiredComment
-     * @param ProfilePost $desiredProfilePost
-     * @return void
-     */
-    public function assertComment($resultedComment, $desiredComment, $desiredProfilePost)
-    {
-        $this->assertEquals(
-            $resultedComment['id'], $desiredComment->id
-        );
-        $this->assertEquals(
-            $resultedComment['poster']['id'], $desiredComment->poster->id
-        );
-        $this->assertEquals(
-            $resultedComment['repliable']['id'], $desiredProfilePost->id
-        );
-        $this->assertEquals(
-            $resultedComment['repliable']['poster']['id'], $desiredProfilePost->poster->id
-        );
-        $this->assertEquals(
-            $resultedComment['repliable']['profile_owner']['id'], $desiredProfilePost->profileOwner->id,
-        );
-    }
-
     /** @test */
     public function when_searching_a_query_or_a_username_must_be_specified()
     {
@@ -490,4 +394,91 @@ class SearchTest extends TestCase
             'The following search type could not be found: ' . request('type')
         );
     }
+
+    /**
+     * Determine whether the results contain the given thread
+     *
+     * @param array $results
+     * @param Thread $thread
+     * @return boolean
+     */
+    public function assertContainsThread($results, $thread)
+    {
+        $results = collect($results);
+
+        $this->assertTrue(
+            $results->contains(function ($result) use ($thread) {
+                $categoryKeyExists = array_key_exists('category', $result) ? true : false;
+
+                return $result['id'] == $thread->id
+                && $result['poster']['id'] == $thread->poster->id
+                && $categoryKeyExists
+                && $result['category']['id'] == $thread->category->id;
+            }));
+    }
+
+    /**
+     * Determine whether the results contain the given threadReply
+     *
+     * @param array $results
+     * @param Reply $threadReply
+     * @return boolean
+     */
+    public function assertContainsThreadReply($results, $threadReply)
+    {
+        $results = collect($results);
+        $this->assertTrue(
+            $results->contains(function ($result) use ($threadReply) {
+                return $result['id'] == $threadReply->id
+                && $result['poster']['id'] == $threadReply->poster->id
+                && $result['repliable']['id'] == $threadReply->repliable->id
+                && $result['repliable']['poster']['id'] == $threadReply->repliable->poster->id
+                && $result['repliable']['category']['id'] == $threadReply->repliable->category->id;
+            }));
+    }
+
+    /**
+     * Determine whether the results contain the given profilePost
+     *
+     * @param array $results
+     * @param ProfilePost $profilePost
+     * @return bool
+     */
+    public function assertContainsProfilePost($results, $profilePost)
+    {
+        $results = collect($results);
+        $this->assertTrue(
+            $results->contains(function ($result) use ($profilePost) {
+                $profileOwnerKeyExists = array_key_exists('profile_owner_id', $result) ? true : false;
+
+                return $result['id'] == $profilePost->id
+                && $profileOwnerKeyExists
+                && $result['profile_owner_id'] == $profilePost->profileOwner->id
+                && $result['poster']['id'] == $profilePost->poster->id;
+            }));
+    }
+
+    /**
+     * Determine whether the results contain the given comment
+     *
+     * @param array $results
+     * @param Reply $comment
+     * @return bool
+     */
+    public function assertContainsComment($results, $comment)
+    {
+        $results = collect($results);
+        $this->assertTrue(
+            $results->contains(function ($result) use ($comment) {
+                $repliableKeyExists = array_key_exists('repliable', $result) ? true : false;
+
+                return $result['id'] == $comment->id
+                && $result['poster']['id'] == $comment->poster->id
+                && $repliableKeyExists
+                && $result['repliable']['id'] == $comment->repliable->id
+                && $result['repliable']['poster']['id'] == $comment->repliable->poster->id
+                && $result['repliable']['profile_owner_id'] == $comment->repliable->profileOwner->id;
+            }));
+    }
+
 }

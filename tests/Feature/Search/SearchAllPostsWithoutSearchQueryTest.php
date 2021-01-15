@@ -37,13 +37,11 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
             $this->totalNumberOfDesiredItems
         );
 
-        $this->makeAssertions(
-            $results,
-            $desiredThread,
-            $desiredReply,
-            $desiredProfilePost,
-            $desiredComment
-        );
+        $this->assertCount($this->totalNumberOfDesiredItems, $results);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
+        $this->assertContainsThread($results, $desiredThread);
+        $this->assertContainsThreadReply($results, $desiredReply);
+        $this->assertContainsComment($results, $desiredComment);
 
         $undesiredThread->delete();
         $undesiredProfilePost->delete();
@@ -91,13 +89,11 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
             $this->totalNumberOfDesiredItems
         );
 
-        $this->makeAssertions(
-            $results,
-            $desiredThread,
-            $desiredReply,
-            $desiredProfilePost,
-            $desiredComment
-        );
+        $this->assertCount($this->totalNumberOfDesiredItems, $results);
+        $this->assertContainsThreadReply($results, $desiredReply);
+        $this->assertContainsThread($results, $desiredThread);
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $undesiredThread->delete();
         $undesiredProfilePost->delete();

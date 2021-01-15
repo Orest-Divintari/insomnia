@@ -37,13 +37,11 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
             $this->totalNumberOfDesiredItems
         );
 
-        $this->makeAssertions(
-            $results,
-            $desiredThread,
-            $desiredReply,
-            $desiredProfilePost,
-            $desiredComment
-        );
+        $this->assertCount($this->totalNumberOfDesiredItems, $results);
+        $this->assertContainsThreadReply($results, $desiredReply);
+        $this->assertContainsThread($results, $desiredThread);
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $undesiredThread->delete();
         $undesiredProfilePost->delete();
@@ -92,13 +90,11 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
             $this->totalNumberOfDesiredItems
         );
 
-        $this->makeAssertions(
-            $results,
-            $desiredThread,
-            $desiredReply,
-            $desiredProfilePost,
-            $desiredComment
-        );
+        $this->assertCount($this->totalNumberOfDesiredItems, $results);
+        $this->assertContainsThreadReply($results, $desiredReply);
+        $this->assertContainsThread($results, $desiredThread);
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $desiredThread->delete();
         $undesiredThread->delete();
@@ -159,13 +155,11 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
             $this->totalNumberOfDesiredItems
         );
 
-        $this->makeAssertions(
-            $results,
-            $desiredThread,
-            $desiredReply,
-            $desiredProfilePost,
-            $desiredComment
-        );
+        $this->assertCount($this->totalNumberOfDesiredItems, $results);
+        $this->assertContainsThreadReply($results, $desiredReply);
+        $this->assertContainsThread($results, $desiredThread);
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
 
         $desiredThread->delete();
         $undesiredThread->delete();

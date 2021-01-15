@@ -34,8 +34,7 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $this->assertCount(
             $this->numberOfDesiredThreads, $results
         );
-        $first = $this->numberOfDesiredThreads - 1;
-        $this->assertThread($results[$first], $desiredThread);
+        $this->assertContainsThread($results, $desiredThread);
 
         $desiredThread->delete();
         $undesiredThread->delete();
@@ -60,11 +59,8 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
             $this->numberOfDesiredReplies
         );
 
-        $this->assertCount(
-            $this->numberOfDesiredReplies, $results
-        );
-        $first = $this->numberOfUndesiredReplies - 1;
-        $this->assertReply($results[$first], $desiredReply, $desiredThread);
+        $this->assertCount($this->numberOfDesiredReplies, $results);
+        $this->assertContainsThreadReply($results, $desiredReply);
 
         $desiredThread->delete();
         $undesiredThread->delete();
@@ -90,18 +86,15 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $this->assertCount(
             $this->totalNumberOfDesiredItems, $results
         );
-        $results = collect($results);
-        $resultedThread = $results->firstWhere('type', 'thread');
-        $resultedReply = $results->firstWhere('type', 'thread-reply');
-        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
-        $this->assertThread($resultedThread, $desiredThread);
+        $this->assertContainsThreadReply($results, $desiredReply);
+        $this->assertContainsThread($results, $desiredThread);
 
         $desiredThread->delete();
         $undesiredThread->delete();
     }
 
     /** @test */
-    public function a_user_can_search_threads_and_replies_that_were_created_the_last_given_number_of_days_given_a_search_term()
+    public function search_threads_and_replies_that_were_created_the_last_given_number_of_days_given_a_search_term()
     {
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
@@ -129,11 +122,8 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $this->assertCount(
             $this->totalNumberOfDesiredItems, $results
         );
-        $results = collect($results);
-        $resultedReply = $results->firstWhere('type', 'thread-reply');
-        $resultedThread = $results->firstWhere('type', 'thread');
-        $this->assertThread($resultedThread, $desiredThread);
-        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
+        $this->assertContainsThreadReply($results, $desiredReply);
+        $this->assertContainsThread($results, $desiredThread);
 
         $desiredThread->delete();
         $undesiredThread->delete();
@@ -180,13 +170,8 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $this->assertCount(
             $this->totalNumberOfDesiredItems, $results
         );
-
-        $results = collect($results);
-        $resultedReply = $results->firstWhere('type', 'thread-reply');
-        $resultedThread = $results->firstWhere('type', 'thread');
-
-        $this->assertThread($resultedThread, $desiredThread);
-        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
+        $this->assertContainsThreadReply($results, $desiredReply);
+        $this->assertContainsThread($results, $desiredThread);
 
         $desiredThread->delete();
         $undesiredThread->delete();

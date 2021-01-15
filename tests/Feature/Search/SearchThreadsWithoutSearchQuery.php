@@ -131,11 +131,8 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $this->assertCount(
             $this->totalNumberOfDesiredItems, $results
         );
-        $results = collect($results);
-        $resultedReply = $results->firstWhere('type', 'thread-reply');
-        $resultedThread = $results->firstWhere('type', 'thread');
-        $this->assertThread($resultedThread, $desiredThread);
-        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
+        $this->assertContainsThread($results, $desiredThread);
+        $this->assertContainsThreadReply($results, $desiredReply);
 
         $desiredThread->delete();
         $undesiredThread->delete();
