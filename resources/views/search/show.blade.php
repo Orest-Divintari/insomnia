@@ -2,7 +2,9 @@
     @if($errors->any())
     <h1 class="text-3xl font-bold">Oops! We ran into some problems.<span class="text-blue-mid italic"> {{ $query }}
         </span></h1>
-    <p class="mt-5 bg-white text-sm text-black-semi p-4 shadow-lg rounded"> {{ $errors->first() }} </p>
+    @foreach($errors->all() as $error)
+    <p class="mt-5 bg-white text-sm text-black-semi p-4 shadow-lg rounded"> {{ $error }} </p>
+    @endforeach
     @elseif(is_string($results))
     <h1 class="text-3xl font-bold">Insomnia Forum</h1>
     <p class="mt-5 bg-white text-sm text-black-semi p-4 shadow-lg rounded">{{ $results }}</p>
