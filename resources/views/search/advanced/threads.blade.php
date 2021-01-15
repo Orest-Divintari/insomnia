@@ -42,8 +42,8 @@
                     <div class="form-right-col">
                         <p class="form-label-phone">Posted by:</p>
                         <div>
-                            <input class="form-input" type="text" id="postedBy" name="postedBy" autocomplete="postedBy"
-                                value="">
+                            <names-autocomplete name="postedBy">
+                            </names-autocomplete>
                         </div>
                     </div>
                 </div>

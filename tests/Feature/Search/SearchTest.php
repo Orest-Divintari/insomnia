@@ -6,11 +6,12 @@ use App\Thread;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SearchTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     protected $threadsToDelete;
     protected $numberOfUndesiredItems;
@@ -78,6 +79,51 @@ class SearchTest extends TestCase
         $response->assertSee($this->noResultsMessage);
 
         $thread->delete();
+    }
+
+    /** @test */
+    public function when_the_given_username_is_not_found_an_error_must_be_thrown()
+    {
+        $username = $this->faker->userName();
+        $error = 'The following member could not be found: ' . $username;
+
+        $response = $this->get(route('search.show', [
+            'postedBy' => $username,
+        ]));
+
+        $response->assertSee($error);
+    }
+
+    /** @test */
+    public function when_one_of_the_given_usernames_is_not_found_an_error_must_be_thrown()
+    {
+        $user = create(User::class);
+        $fakeUserName = $this->faker->userName();
+        $usernames = $user->name . ',' . $fakeUserName;
+        $error = 'The following member could not be found: ' . $fakeUserName;
+
+        $response = $this->get(route('search.show', [
+            'postedBy' => $fakeUserName,
+        ]));
+
+        $response->assertSee($error);
+    }
+
+    /** @test */
+    public function when_none_of_the_give_usernames_are_found_an_error_must_be_thrown_for_each()
+    {
+        $johnFake = $this->faker->userName();
+        $doeFake = $this->faker->userName();
+        $usernames = $johnFake . ',' . $doeFake;
+        $errorForJohn = 'The following member could not be found: ' . $johnFake;
+        $errorForDoe = 'The following member could not be found: ' . $doeFake;
+
+        $response = $this->get(route('search.show', [
+            'postedBy' => $usernames,
+        ]));
+
+        $response->assertSee($errorForJohn);
+        $response->assertSee($errorForDoe);
     }
 
     // /** @test */
@@ -361,7 +407,7 @@ class SearchTest extends TestCase
             );
             $counter++;
 
-        } while ($this->validate($results, $numberOfItems) && $counter <= 50);
+        } while ($this->validate($results, $numberOfItems) && $counter <= 500);
 
         return $results->json()['data'];
     }

@@ -10,11 +10,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
 
-    use Notifiable, Followable;
+    use Notifiable, Followable, Searchable;
 
     /**
      * Set the maximum length for a username
@@ -366,7 +367,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get the last post activity
      *
-     * @return Activity 
+     * @return Activity
      */
     public function lastPostActivity()
     {

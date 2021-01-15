@@ -39,6 +39,40 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
     }
 
     /** @test */
+    public function search_thread_titles_given_multiple_usernames_and_a_search_term()
+    {
+        $undesiredThread = ThreadFactory::withTitle($this->searchTerm)->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $threadByJohn = ThreadFactory::by($john)
+            ->withTitle($this->searchTerm)
+            ->create();
+        $threadByDoe = ThreadFactory::by($doe)
+            ->withTitle($this->searchTerm)
+            ->create();
+        $usernames = "{$john->name},{$doe->name}";
+        $numberOfDesiredItems = 2;
+
+        $results = $this->search([
+            'q' => $this->searchTerm,
+            'onlyTitle' => true,
+            'postedBy' => $usernames,
+        ],
+            $numberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $numberOfDesiredItems, $results
+        );
+        $this->assertContainsThread($results, $threadByDoe);
+        $this->assertContainsThread($results, $threadByJohn);
+
+        $undesiredThread->delete();
+        $threadByDoe->delete();
+        $threadByJohn->delete();
+    }
+
+    /** @test */
     public function search_threads_title_that_were_created_a_given_number_of_days_ago_given_a_search_term_()
     {
         $user = create(User::class);

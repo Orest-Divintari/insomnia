@@ -32,72 +32,113 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
             $this->numberOfDesiredThreads,
             $results
         );
-        $first = $this->numberOfDesiredThreads - 1;
-        $this->assertThread($results[$first], $desiredThread);
+        $this->assertContainsThread($results, $desiredThread);
 
         $desiredThread->delete();
         $undesiredThread->delete();
     }
 
     /** @test */
-    public function get_the_replies_that_a_given_username_has_posted()
+    public function get_the_threads_that_are_created_by_multiple_users()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+        $threadByJohn = ThreadFactory::by($john)->create();
+        $threadByDoe = ThreadFactory::by($doe)->create();
+        $numberOfDesiredThreads = 2;
+        $undesiredThread = create(Thread::class);
+        $usernames = "{$john->name}, {$doe->name}";
+
+        $results = $this->search([
+            'type' => 'thread',
+            'postedBy' => $usernames,
+        ],
+            $numberOfDesiredThreads
+        );
+
+        $this->assertCount($numberOfDesiredThreads, $results);
+        $this->assertContainsThread($results, $threadByDoe);
+        $this->assertContainsThread($results, $threadByJohn);
+
+        $threadByDoe->delete();
+        $threadByJohn->delete();
+        $undesiredThread->delete();
+        $john->delete();
+        $doe->delete();
+    }
+
+    /** @test */
+    public function search_the_thread_replies_that_multiple_users_have_posted()
     {
         $undesiredThread = create(Thread::class);
         ReplyFactory::toThread($undesiredThread)->create();
-        $desiredThread = create(Thread::class);
-        $user = create(User::class);
-        $desiredReply = ReplyFactory::by($user)
-            ->toThread($desiredThread)
+        $john = create(User::class);
+        $doe = create(User::class);
+        $thread = create(Thread::class);
+        $threadReplyByJohn = ReplyFactory::by($john)
+            ->toThread($thread)
             ->create();
+        $threadReplyByDoe = ReplyFactory::by($doe)
+            ->toThread($thread)
+            ->create();
+        $usernames = "{$john->name}, {$doe->name}";
+        $numberOfDesiredReplies = 2;
 
         $results = $this->search([
             'type' => 'thread',
-            'postedBy' => $user->name,
+            'postedBy' => $usernames,
         ],
-            $this->numberOfDesiredReplies
+            $numberOfDesiredReplies
         );
 
-        $this->assertCount(
-            $this->numberOfDesiredReplies, $results
-        );
-        $first = $this->numberOfDesiredReplies - 1;
-        $this->assertReply(
-            $results[$first],
-            $desiredReply,
-            $desiredThread
-        );
+        $this->assertCount($numberOfDesiredReplies, $results);
+        $this->assertContainsThreadReply($results, $threadReplyByDoe);
+        $this->assertContainsThreadReply($results, $threadReplyByJohn);
 
-        $desiredThread->delete();
+        $thread->delete();
         $undesiredThread->delete();
+        $john->delete();
+        $doe->delete();
     }
 
     /** @test */
-    public function get_the_threads_and_replies_that_are_posted_by_a_given_username()
+    public function get_the_threads_and_replies_that_are_posted_by_multiple_users()
     {
         $undesiredThread = create(Thread::class);
-        $undesiredReply = ReplyFactory::toThread($undesiredThread)->cr();
-        $user = create(User::class);
-        $desiredThread = ThreadFactory::by($user)->create();
-        $desiredReply = ReplyFactory::by($user)
-            ->toThread($desiredThread)
+        $undesiredReply = ReplyFactory::toThread($undesiredThread)->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $threadByJohn = ThreadFactory::by($john)->create();
+        $threadReplyByJohn = ReplyFactory::by($john)
+            ->toThread($threadByJohn)
             ->create();
+        $threadByDoe = ThreadFactory::by($doe)->create();
+        $threadReplyByDoe = ReplyFactory::by($doe)
+            ->toThread($threadByDoe)
+            ->create();
+        $usernames = "{$john->name},{$doe->name}";
+        $numberOfDesiredItems = 4;
 
         $results = $this->search([
             'type' => 'thread',
-            'postedBy' => $user->name,
+            'postedBy' => $usernames,
         ],
-            $this->totalNumberOfDesiredItems
+            $numberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems, $results
+            $numberOfDesiredItems, $results
         );
-        $results = collect($results);
-        $resultedReply = $results->firstWhere('type', 'thread-reply');
-        $resultedThread = $results->firstWhere('type', 'thread');
+        $this->assertContainsThread($results, $threadByJohn);
+        $this->assertContainsThreadReply($results, $threadReplyByJohn);
+        $this->assertContainsThread($results, $threadByDoe);
+        $this->assertContainsThreadReply($results, $threadReplyByDoe);
 
-        $this->assertThread($resultedThread, $desiredThread);
-        $this->assertReply($resultedReply, $desiredReply, $desiredThread);
+        $undesiredThread->delete();
+        $threadByDoe->delete();
+        $threadByJohn->delete();
+        $john->delete();
+        $doe->delete();
     }
 
     /** @test */

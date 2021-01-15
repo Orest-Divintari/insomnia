@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Actions\StringToArrayForRequestAction;
 use App\Http\Requests\SearchRequestInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -23,6 +24,8 @@ class SearchPostingsRequest implements SearchRequestInterface
      */
     public function validate()
     {
+        $this->beforeValidation();
+
         $validator = Validator::make(
             $this->request->input(),
             $this->rules(),
@@ -32,6 +35,17 @@ class SearchPostingsRequest implements SearchRequestInterface
         $this->afterValidation($this->request);
 
         return $validator;
+    }
+
+    public function beforeValidation()
+    {
+
+        $action = new StringToArrayForRequestAction(
+            $request = $this->request,
+            $attribute = 'postedBy',
+            $value = $this->request->input('postedBy')
+        );
+        $action->execute();
     }
 
     /**
@@ -64,7 +78,8 @@ class SearchPostingsRequest implements SearchRequestInterface
         }
 
         if (!$this->request->filled('q')) {
-            $rules['postedBy'] = ['required', 'exists:users,name'];
+            $rules['postedBy'] = ['required', "array", 'min:1'];
+            $rules['postedBy.*'] = ['required', 'string', 'exists:users,name'];
         }
 
         $rules['type'] = [
@@ -84,10 +99,32 @@ class SearchPostingsRequest implements SearchRequestInterface
      */
     public function messages()
     {
-        return [
-            'postedBy.exists' => 'The following members could not be found: ' . request('postedBy'),
+        $messages = [
             'q.required' => 'Please specify a search query or the name of a member.',
             'type.in' => 'The following search type could not be found: ' . request('type'),
         ];
+
+        $messages = $this->addPostedByExistsMessage($messages);
+        return $messages;
+
+    }
+
+    /**
+     * Add the message for postedBy.*.exists rule
+     *
+     * @param string[] $messages
+     * @return string[]
+     */
+    public function addPostedByExistsMessage($messages)
+    {
+        if (is_null(request('postedBy'))) {
+            return $messages;
+        }
+        foreach (request('postedBy') as $index => $username) {
+            if (isset($username) && is_string($username)) {
+                $messages["postedBy." . $index . ".exists"] = "The following member could not be found: " . $username;
+            }
+        }
+        return $messages;
     }
 }

@@ -130,7 +130,130 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
     }
 
     /** @test */
-    public function a_user_can_search_threads_and_replies_given_a_search_term_and_username_that_where_created_the_last_given_number_of_days()
+    public function search_threads_given_multiple_usernames_and_a_search_term()
+    {
+        $undesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $threadByJohn = ThreadFactory::by($john)
+            ->withBody($this->searchTerm)
+            ->create();
+        $threadByDoe = ThreadFactory::by($doe)
+            ->withBody($this->searchTerm)
+            ->create();
+        $numberOfDesiredItems = 2;
+        $usernames = "{$john->name}, {$doe->name}";
+
+        $results = $this->search([
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+            'postedBy' => $usernames,
+        ],
+            $numberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $numberOfDesiredItems, $results
+        );
+        $this->assertContainsThread($results, $threadByJohn);
+        $this->assertContainsThread($results, $threadByDoe);
+
+        $undesiredThread->delete();
+        $threadByDoe->delete();
+        $threadByJohn->delete();
+        $john->delete();
+        $doe->delete();
+    }
+
+    /** @test */
+    public function search_thread_replies_given_multiple_usernames_and_a_search_term()
+    {
+        $thread = create(Thread::class);
+        $undesiredThreadReply = ReplyFactory::withBody($this->searchTerm)
+            ->toThread($thread)
+            ->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $thread = create(Thread::class);
+        $threadReplyByJohn = ReplyFactory::by($john)
+            ->withBody($this->searchTerm)
+            ->toThread($thread)
+            ->create();
+        $threadReplyByDoe = ReplyFactory::by($doe)
+            ->withBody($this->searchTerm)
+            ->toThread($thread)
+            ->create();
+        $numberOfDesiredItems = 2;
+        $usernames = "{$john->name}, {$doe->name}";
+
+        $results = $this->search([
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+            'postedBy' => $usernames,
+        ],
+            $numberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $numberOfDesiredItems, $results
+        );
+        $this->assertContainsThreadReply($results, $threadReplyByJohn);
+        $this->assertContainsThreadReply($results, $threadReplyByDoe);
+
+        $thread->delete();
+        $john->delete();
+        $doe->delete();
+    }
+
+    /** @test */
+    public function search_threads_and_replies_given_multiple_usernames_and_search_term()
+    {
+        $undesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $undesiredThreadReply = ReplyFactory::withBody($this->searchTerm)->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $threadByJohn = ThreadFactory::by($john)
+            ->withBody($this->searchTerm)
+            ->create();
+        $threadReplyByJohn = ReplyFactory::by($john)
+            ->withBody($this->searchTerm)
+            ->toThread($threadByJohn)
+            ->create();
+        $threadByDoe = ThreadFactory::by($doe)
+            ->withBody($this->searchTerm)
+            ->create();
+        $threadReplyByDoe = ReplyFactory::by($doe)
+            ->withBody($this->searchTerm)
+            ->toThread($threadByDoe)
+            ->create();
+        $numberOfDesiredItems = 4;
+        $usernames = "{$john->name}, {$doe->name}";
+
+        $results = $this->search([
+            'type' => 'thread',
+            'q' => $this->searchTerm,
+            'postedBy' => $usernames,
+        ],
+            $numberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $numberOfDesiredItems, $results
+        );
+        $this->assertContainsThread($results, $threadByJohn);
+        $this->assertContainsThreadReply($results, $threadReplyByJohn);
+        $this->assertContainsThread($results, $threadByDoe);
+        $this->assertContainsThreadReply($results, $threadReplyByDoe);
+
+        $undesiredThread->delete();
+        $threadByDoe->delete();
+        $threadByJohn->delete();
+        $john->delete();
+        $doe->delete();
+    }
+
+    /** @test */
+    public function search_threads_and_replies_given_a_search_term_and_username_that_where_created_the_last_given_number_of_days()
     {
         $user = create(User::class);
         $daysAgo = 5;

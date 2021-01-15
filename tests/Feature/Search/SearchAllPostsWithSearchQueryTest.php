@@ -103,6 +103,77 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
     }
 
     /** @test */
+    public function search_all_posts_that_were_created_by_multiple_users_given_a_search_term()
+    {
+        $undesiredComment = CommentFactory::withBody($this->searchTerm)->create();
+        $undesiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)
+            ->create();
+        $undesiredComment = CommentFactory::withBody($this->searchTerm)
+            ->toProfilePost($undesiredProfilePost)
+            ->create();
+        $undesiredThread = ThreadFactory::withBody($this->searchTerm)
+            ->create();
+        $undesiredReply = ReplyFactory::toThread($undesiredThread)
+            ->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $threadByJohn = ThreadFactory::by($john)
+            ->withBody($this->searchTerm)
+            ->create();
+        $threadReplyByJohn = ReplyFactory::by($john)
+            ->withBody($this->searchTerm)
+            ->toThread($threadByJohn)
+            ->create();
+        $threadByDoe = ThreadFactory::by($doe)
+            ->withBody($this->searchTerm)
+            ->create();
+        $threadReplyByDoe = ReplyFactory::by($doe)
+            ->withBody($this->searchTerm)
+            ->toThread($threadByDoe)
+            ->create();
+        $profilePostByDoe = ProfilePostFactory::by($doe)
+            ->withBody($this->searchTerm)
+            ->create();
+        $commentByDoe = CommentFactory::by($doe)
+            ->withBody($this->searchTerm)
+            ->toProfilePost($profilePostByDoe)
+            ->create();
+        $profilePostByJohn = ProfilePostFactory::by($john)
+            ->withBody($this->searchTerm)
+            ->create();
+        $commentByJohn = CommentFactory::by($john)
+            ->withBody($this->searchTerm)
+            ->toProfilePost($profilePostByJohn)
+            ->create();
+        $usernames = $john->name . ',' . $doe->name;
+        // the number of desired posts
+        $numberOfDesiredItems = 8;
+
+        $results = $this->search([
+            'q' => $this->searchTerm,
+            'postedBy' => $usernames,
+        ],
+            $numberOfDesiredItems
+        );
+
+        $this->assertContainsComment($results, $commentByDoe);
+        $this->assertContainsComment($results, $commentByJohn);
+        $this->assertContainsProfilePost($results, $profilePostByDoe);
+        $this->assertContainsProfilePost($results, $profilePostByJohn);
+        $this->assertContainsThread($results, $threadByDoe);
+        $this->assertContainsThread($results, $threadByJohn);
+        $this->assertContainsThreadReply($results, $threadReplyByDoe);
+        $this->assertContainsThreadReply($results, $threadReplyByJohn);
+
+        $undesiredThread->delete();
+        $undesiredProfilePost->delete();
+        $threadByJohn->delete();
+        $threadByDoe->delete();
+        $profilePostByDoe->delete();
+        $profilePostByJohn->delete();
+    }
+
+    /** @test */
     public function search_all_posts_given_a_search_term_and_username_that_were_created_the_last_given_number_of_days()
     {
         $user = $this->signIn();

@@ -33,14 +33,14 @@
               </div>
               <div class="flex text-black-semi items-center mt-3 mb-2">
                 <label class="text-xs mr-3" for="by_member">By:</label>
-                <input
-                  type="text"
-                  class="text-smaller rounded p-1 w-full focus:outline-none"
-                  id="by_member"
-                  name="postedBy"
+                <names-autocomplete
+                  class="w-full"
+                  inputPlaceholder="Member"
+                  styleClasses="text-smaller rounded p-1 w-full focus:outline-none"
                   ref="postedBy"
-                  placeholder="Member"
-                />
+                  value=""
+                  name="postedBy"
+                ></names-autocomplete>
               </div>
             </div>
             <hr />
@@ -63,6 +63,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      currentInput: "",
+    };
+  },
   methods: {
     requestTitle() {
       var onlyTitle = this.$refs.onlyTitle;

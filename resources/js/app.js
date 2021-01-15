@@ -5,9 +5,13 @@
  */
 
 require("./bootstrap");
-
 window.Vue = require("vue");
 
+// ------------ ALGOLIA INSTANT-VUE SEARCH -------------
+import InstantSearch from 'vue-instantsearch';
+Vue.use(InstantSearch);
+
+// ----------------- VUE COMPONENTS -------------------
 Vue.component("hamburger", require("./components/Hamburger.vue").default);
 Vue.component("Threads", require("./components/threads/Threads.vue").default);
 Vue.component("Thread", require("./components/threads/Thread.vue").default);
@@ -48,6 +52,10 @@ Vue.component(
 Vue.component(
     "ErrorModal",
     require("./components/ErrorModal.vue").default
+);
+Vue.component(
+    "NamesAutocomplete",
+    require("./components/search/NamesAutocomplete.vue").default
 );
 
 /**

@@ -4,6 +4,7 @@ namespace Tests\Feature\Search;
 
 use App\ProfilePost;
 use App\Thread;
+use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
@@ -47,6 +48,58 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
         $undesiredProfilePost->delete();
         $desiredThread->delete();
         $desiredProfilePost->delete();
+    }
+
+    /** @test */
+    public function get_all_posts_given_multiple_usernames()
+    {
+        $undesiredThread = create(Thread::class);
+        $undesiredReply = ReplyFactory::toThread($undesiredThread)->create();
+        $undesiredProfilePost = create(ProfilePost::class);
+        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $threadByJohn = ThreadFactory::by($john)->create();
+        $threadReplyByJohn = ReplyFactory::by($john)
+            ->toThread($threadByJohn)
+            ->create();
+        $threadByDoe = ThreadFactory::by($doe)->create();
+        $threadReplyByDoe = ReplyFactory::by($doe)
+            ->toThread($threadByDoe)
+            ->create();
+        $profilePostByDoe = ProfilePostFactory::by($doe)->create();
+        $commentByDoe = CommentFactory::by($doe)
+            ->toProfilePost($profilePostByDoe)
+            ->create();
+        $profilePostByJohn = ProfilePostFactory::by($john)->create();
+        $commentByJohn = CommentFactory::by($john)
+            ->toProfilePost($profilePostByJohn)
+            ->create();
+        $usernames = $john->name . ',' . $doe->name;
+        // the number of desired posts
+
+        $numberOfDesiredItems = 8;
+        $results = $this->search([
+            'postedBy' => $usernames,
+        ],
+            $numberOfDesiredItems
+        );
+
+        $this->assertContainsComment($results, $commentByDoe);
+        $this->assertContainsComment($results, $commentByJohn);
+        $this->assertContainsProfilePost($results, $profilePostByDoe);
+        $this->assertContainsProfilePost($results, $profilePostByJohn);
+        $this->assertContainsThread($results, $threadByDoe);
+        $this->assertContainsThread($results, $threadByJohn);
+        $this->assertContainsThreadReply($results, $threadReplyByDoe);
+        $this->assertContainsThreadReply($results, $threadReplyByJohn);
+
+        $undesiredThread->delete();
+        $undesiredProfilePost->delete();
+        $threadByJohn->delete();
+        $threadByDoe->delete();
+        $profilePostByDoe->delete();
+        $profilePostByJohn->delete();
     }
 
     /** @test */

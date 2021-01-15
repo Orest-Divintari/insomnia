@@ -12,7 +12,7 @@
                     </div>
                     <!-- RIGHT -->
                     <div class="form-right-col">
-                        <p class="form-label-phone">Posted by:</p>
+                        <p class="form-label-phone">Keywords:</p>
                         <div>
                             <input class="form-input" type="text" id="started_by" name="q" value=""
                                 autocomplete="keywords">
@@ -30,8 +30,8 @@
                     <div class="form-right-col">
                         <p class="form-label-phone">Posted by:</p>
                         <div>
-                            <input class="form-input" type="text" id="postedBy" name="postedBy" autocomplete="postedBy"
-                                value="">
+                            <names-autocomplete name="postedBy">
+                            </names-autocomplete>
                         </div>
                     </div>
                 </div>
@@ -45,8 +45,8 @@
                     <div class="form-right-col">
                         <p class="form-label-phone">Posted on the profile of member: </p>
                         <div>
-                            <input class="form-input" type="text" id="profileOwner" name="profileOwner"
-                                autocomplete="profileOwner" value="">
+                            <names-autocomplete name="profileOwner">
+                            </names-autocomplete>
                         </div>
                     </div>
                 </div>

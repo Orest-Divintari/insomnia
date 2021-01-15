@@ -66,6 +66,107 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     }
 
     /** @test */
+    public function search_profile_posts_given_multiple_usernames()
+    {
+        $undesiredProfilePost = create(ProfilePost::class);
+        $john = create(User::class);
+        $doe = create(User::class);
+        $profilePostByJohn = ProfilePostFactory::by($john)->create();
+        $profilePostByDoe = ProfilePostFactory::by($doe)->create();
+        $usernames = "{$john->name}, {$doe->name}";
+        $numberOfDesiredItems = 2;
+        $results = $this->search([
+            'type' => 'profile_post',
+            'postedBy' => $usernames,
+        ],
+            $numberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $numberOfDesiredItems,
+            $results
+        );
+        $this->assertContainsProfilePost($results, $profilePostByJohn);
+        $this->assertContainsProfilePost($results, $profilePostByDoe);
+
+        $undesiredProfilePost->delete();
+        $profilePostByJohn->delete();
+        $profilePostByDoe->delete();
+    }
+
+    /** @test */
+    public function search_comments_given_multiple_usernames()
+    {
+        $profilePost = create(ProfilePost::class);
+        $undesiredComment = CommentFactory::toProfilePost($profilePost)->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $commentByJohn = CommentFactory::by($john)
+            ->toProfilePost($profilePost)
+            ->create();
+        $commentByDoe = CommentFactory::by($doe)
+            ->toProfilePost($profilePost)
+            ->create();
+        $usernames = "{$john->name}, {$doe->name}";
+        $numberOfDesiredItems = 2;
+
+        $results = $this->search([
+            'type' => 'profile_post',
+            'postedBy' => $usernames,
+        ],
+            $numberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $numberOfDesiredItems,
+            $results
+        );
+        $this->assertContainsComment($results, $commentByJohn);
+        $this->assertContainsComment($results, $commentByDoe);
+
+        $profilePost->delete();
+    }
+
+    /** @test */
+    public function search_profile_posts_and_comments_given_multiple_usernames()
+    {
+        $undesiredProfilePost = create(ProfilePost::class);
+        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $profilePostByJohn = ProfilePostFactory::by($john)->create();
+        $commentByJohn = CommentFactory::by($john)
+            ->toProfilePost($profilePostByJohn)
+            ->create();
+            $profilePostByDoe = ProfilePostFactory::by($doe)->create();
+        $commentByDoe = CommentFactory::by($doe)
+            ->toProfilePost($profilePostByDoe)
+            ->create();
+        $usernames = "{$john->name}, {$doe->name}";
+        $numberOfDesiredItems = 4;
+
+        $results = $this->search([
+            'type' => 'profile_post',
+            'postedBy' => $usernames,
+        ],
+            $numberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $numberOfDesiredItems,
+            $results
+        );
+        $this->assertContainsProfilePost($results, $profilePostByDoe);
+        $this->assertContainsProfilePost($results, $profilePostByJohn);
+        $this->assertContainsComment($results, $commentByJohn);
+        $this->assertContainsComment($results, $commentByDoe);
+
+        $undesiredProfilePost->delete();
+        $profilePostByDoe->delete();
+        $profilePostByJohn->delete();
+    }
+
+    /** @test */
     public function get_the_profile_posts_and_comments_that_are_posted_by_a_given_username()
     {
         $undesiredProfilePost = create(ProfilePost::class);
