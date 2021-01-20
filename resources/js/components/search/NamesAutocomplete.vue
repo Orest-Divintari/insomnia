@@ -101,8 +101,8 @@ export default {
       currentlySearching: false,
       searchQuery: "",
       searchClient: algoliasearch(
-        "36P64UEAXM",
-        "48f7aca568648f3256bceb00cb66f29d"
+        "1LXOIX8OXI",
+        "98af466cb49a56ef06819bf9b1736ed8"
       ),
       commaSeparatedValues: "",
       currentSearchTerm: "",
