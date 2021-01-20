@@ -26,7 +26,11 @@ class NotifyFollowingUser
     public function handle(AUserStartedFollowingYou $event)
     {
         $event->following->notify(
-            new YouHaveANewFollower($event->follower, $event->following)
+            new YouHaveANewFollower(
+                $event->follower,
+                $event->following,
+                $event->followDate
+            )
         );
     }
 }

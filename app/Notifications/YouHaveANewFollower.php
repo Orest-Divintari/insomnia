@@ -10,7 +10,7 @@ class YouHaveANewFollower extends Notification
     use Queueable;
 
     /**
-     * The user who started following another user
+     * The user who started following
      *
      * @var User
      */
@@ -24,14 +24,22 @@ class YouHaveANewFollower extends Notification
     public $following;
 
     /**
+     * The date of the follow
+     *
+     * @param Carbon $followDate
+     */
+    public $followDate;
+
+    /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($follower, $following)
+    public function __construct($follower, $following, $followDate)
     {
         $this->follower = $follower;
         $this->following = $following;
+        $this->followDate = $followDate;
     }
 
     /**
@@ -57,6 +65,7 @@ class YouHaveANewFollower extends Notification
             'follower' => $this->follower,
             'followingUser' => $this->following,
             'type' => 'follow-notification',
+            'follow_date_created' => $this->followDate->calendar(),
             'follower_id' => $this->follower->id,
         ];
     }
