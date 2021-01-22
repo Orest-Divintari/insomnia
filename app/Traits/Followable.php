@@ -4,7 +4,9 @@ namespace App\Traits;
 
 use App\Events\Follow\AUserStartedFollowingYou;
 use App\Events\Follow\AUserUnfollowedYou;
+use App\Follow;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Event;
 
 trait Followable
@@ -33,8 +35,8 @@ trait Followable
     public function follow(User $user)
     {
         if (!$this->following($user)) {
-            event(new AUserStartedFollowingYou($this, $user));
             $this->follows()->attach($user->id);
+            event(new AUserStartedFollowingYou($this, $user, Carbon::now()));
         }
     }
 
@@ -102,5 +104,4 @@ trait Followable
         }
         return auth()->user()->following($this);
     }
-
 }
