@@ -36,7 +36,7 @@ trait Likeable
             $like = $this->likes()->create([
                 'user_id' => $likerId,
             ]);
-            
+
             event((new LikeEvent($liker, $this, $like))->create());
             return $like;
         }

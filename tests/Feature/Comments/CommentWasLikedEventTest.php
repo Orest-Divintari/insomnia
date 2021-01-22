@@ -47,6 +47,5 @@ class CommentWasLikedEventTest extends TestCase
             && $event->profilePost->id == $profilePost->id
             && $event->profileOwner->id == $profileOwner->id;
         });
-
     }
 }
