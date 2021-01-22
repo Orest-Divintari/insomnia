@@ -1,11 +1,25 @@
 <template>
-  <div class="flex items-center" @click="showProfile(follower)">
-    <img :src="follower.avatar_path" class="avatar-sm mr-2" alt="" />
+  <div class="flex">
+    <profile-popover
+      class="mr-2"
+      :user="follower"
+      trigger="avatar"
+      triggerClasses="avatar-sm"
+    >
+    </profile-popover>
+
     <div>
-      <p>
-        <a class="blue-link"> {{ follower.name }} </a> is now following you.
+      <p class="flex space-x-1 items-center">
+        <profile-popover
+          :user="follower"
+          triggerClasses="text-blue-link text-smaller"
+        >
+        </profile-popover>
+        <span> is now following you.</span>
+        <p class="block text-xs text-gray-lightest">
+          {{ notificationData.follow_date_created }}
+        </p>
       </p>
-      <p class="gray-lightest">{{ notificationData.date_created }}</p>
     </div>
   </div>
 </template>

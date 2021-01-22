@@ -3,7 +3,11 @@
     <div v-if="signedIn">
       <div class="comment-container border-b">
         <div class="comment-avatar">
-          <img :src="user.avatar_path" class="avatar-sm" alt />
+          <profile-popover
+            :user="user"
+            trigger="avatar"
+            triggerClasses="avatar-sm"
+          ></profile-popover>
         </div>
         <div class="w-full p-3">
           <profile-post-input

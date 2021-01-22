@@ -6,13 +6,17 @@
         @forelse($latestPosts as $latestPost)
 
         <div class="flex p-5/2 items-start">
-            <img class="avatar-sm mt-1" src="{{ $latestPost->recentReply->poster->avatar_path }}" alt="">
-            <div class="pl-5/2">
+            <profile-popover :user=" {{ $latestPost->recentReply->poster }} " trigger="avatar"
+                trigger-classes="avatar-sm mt-1">
+            </profile-popover>
+
+            <div class="pl-5/2 flex-1">
                 <a class="text-sm tacking-wide leading-normal font-bold text-blue-mid-dark hover:underline"
                     href="{{ route('threads.show', $latestPost) }}">{{ $latestPost->title }}</a>
                 <div class="flex text-smaller text-gray-lightest items-center">
                     <p class="mr-1">Latest:</p>
-                    <p>{{ $latestPost->recentReply->poster->shortName }}</p>
+                    <profile-popover :user="{{ $latestPost->recentReply->poster }}"
+                        trigger-classes="tet-smaller text-gray-lightest pt-1"></profile-popover>
                     <p class="dot"></p>
                     <p> {{ $latestPost->date_updated }} </p>
                 </div>

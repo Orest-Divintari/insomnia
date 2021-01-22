@@ -2,15 +2,18 @@
   <div>
     <div class="comment-container">
       <div class="comment-avatar">
-        <img :src="comment.poster.avatar_path" class="avatar-sm" alt />
+        <profile-popover
+          :user="comment.poster"
+          trigger="avatar"
+          triggerClasses="avatar-sm"
+        ></profile-popover>
       </div>
       <div class="post-right-col">
         <div class="post-header mb-0 text-smaller">
-          <a
-            :href="'/profiles/' + comment.poster.name"
-            class="post-username"
-            v-text="comment.poster.name"
-          ></a>
+          <profile-popover
+            :user="comment.poster"
+            triggerClasses="post-username"
+          ></profile-popover>
         </div>
         <div v-if="editing">
           <wysiwyg v-model="body" name="body"></wysiwyg>
@@ -111,7 +114,7 @@ export default {
     hideEdit() {
       this.editing = false;
     },
-  cancel() {
+    cancel() {
       this.hideEdit();
       this.body = this.comment.body;
     },

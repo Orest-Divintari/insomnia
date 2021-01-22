@@ -4,9 +4,9 @@
     </header>
     @foreach($participants as $participant)
     <div class="text-smaller mt-1 pb-2 flex items-center">
-        <img @click="showProfile( {{ $participant }} )" src="{{ $participant->avatarPath }}" class="avatar-md" alt="">
+        <profile-popover :user="{{ $participant }}" trigger="avatar" trigger-classes="avatar-md"></profile-popover>
         <div class="ml-4 flex-1">
-            <a @click="showProfile( {{ $participant }} )" class="blue-link">{{ $participant->name }}</a>
+            <profile-popover :user="{{ $participant }}" trigger-classes="blue-link"></profile-popover>
             <p class="text-gray-lightest ">macrumors newbie</p>
         </div>
         @if($participant->id != $conversation->starter->id)

@@ -2,9 +2,12 @@
   <div>
     <div class="text-md flex">
       <p>
-        <a @click="showProfile(profileOwner)" class="blue-link">{{
-          profileOwner.name
-        }}</a>
+        <profile-popover
+          :user="profileOwner"
+          class="inline"
+          popover-classes="inline"
+          triggerClasses="blue-link text-md mr-1/2"
+        ></profile-popover>
         <span v-if="ownsPost(activity.subject)">
           updated their
           <a @click="showPost(profileOwner, activity.subject)" class="blue-link"

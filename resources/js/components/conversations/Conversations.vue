@@ -11,11 +11,12 @@
     >
       <div class="flex items-center">
         <div class="py-5/2 px-5">
-          <img
-            @click="showProfile(conversation.starter)"
-            :src="conversation.starter.avatar_path"
-            class="cursor-pointer w-9 h-9 avatar"
-          />
+          <profile-popover
+            :user="conversation.starter"
+            trigger="avatar"
+            triggerClasses="avatar-md"
+          >
+          </profile-popover>
         </div>
         <div class="p-2 flex-1">
           <a
@@ -31,17 +32,17 @@
                 participant, participantsIndex
               ) in conversation.participants"
             >
-              <a
-                @click="showProfile(participant)"
-                class="mr-1 text-xs text-gray-lightest leading-none hover:underline cursor-pointer"
-                v-text="
+              <profile-popover
+                triggerClasses="mr-1 leading-none text-xs text-gray-lightest"
+                :user="participant"
+                :triggerText="
                   participantNames(
                     participant,
                     participantsIndex,
                     conversation.participants.length
                   )
                 "
-              ></a>
+              ></profile-popover>
             </div>
 
             <p class="dot"></p>
@@ -79,11 +80,10 @@
             class="text-gray-lightest text-xs hover:underline cursor-pointer"
             v-text="conversation.recent_message.date_updated"
           ></p>
-          <a
-            @click="showProfile(conversation.recent_message.poster)"
-            class="text-gray-lightest text-xs hover:underline cursor-pointer"
-            v-text="conversation.recent_message.poster.short_name"
-          ></a>
+          <profile-popover
+            :user="conversation.recent_message.poster"
+            triggerClasses="leading-relaxed text-gray-lightest text-xs"
+          ></profile-popover>
         </div>
       </div>
     </div>

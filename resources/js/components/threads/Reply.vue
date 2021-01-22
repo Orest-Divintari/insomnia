@@ -2,15 +2,19 @@
   <div>
     <div :id="typeId" class="reply-container">
       <div class="reply-left-col">
-        <img :src="reply.poster.avatar_path" class="avatar-xl" alt />
-        <a
-          href
-          class="mt-1 text-blue-mid text-sm hover:underline font-bold"
-          v-text="reply.poster.name"
-        ></a>
+        <profile-popover
+          :user="reply.poster"
+          trigger="avatar"
+          triggerClasses="avatar-xl"
+        ></profile-popover>
+        <profile-popover
+          :user="reply.poster"
+          triggerClasses="mt-1 text-blue-mid text-sm font-bold"
+        ></profile-popover>
+
         <p
           v-if="isThreadReply && isOriginalPoster"
-          class="bg-green-mid rounded text-white border border-green-900 px-7 text-xs font-hairline"
+          class="bg-green-mid rounded text-white border border-green-900 px-7 text-xs font-hairline mt-1"
         >
           Original Poster
         </p>

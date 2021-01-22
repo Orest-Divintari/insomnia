@@ -57,6 +57,14 @@ Vue.component(
     "NamesAutocomplete",
     require("./components/search/NamesAutocomplete.vue").default
 );
+Vue.component(
+    "ProfilePopover",
+    require("./components/profile/ProfilePopover.vue").default
+);
+Vue.component(
+    "StartConversationButton",
+    require("./components/conversations/StartConversationButton.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -7,7 +7,11 @@
       :key="posting.id"
     >
       <div class="flex">
-        <img :src="poster.avatar_path" class="avatar-lg" alt />
+        <profile-popover
+          :user="profileOwner"
+          trigger="avatar"
+          triggerClasses="avatar-lg"
+        ></profile-popover>
         <component
           @getPoster="setPoster"
           :posting="posting.subject"

@@ -19,7 +19,7 @@
 }
 
 .post-username {
-    @apply text-blue-mid font-bold;
+    @apply text-blue-mid font-bold text-sm;
 }
 
 .post-username:hover {

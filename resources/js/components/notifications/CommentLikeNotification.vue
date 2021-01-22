@@ -1,20 +1,42 @@
 <template>
-  <div>
-    <a
-      @click="showProfile(notificationData.liker)"
-      class="blue-link notification-profile"
-    >{{ notificationData.liker.name }}</a>
-    <div
-      @click="showPost(notificationData.profileOwner, notificationData.profilePost)"
-      class="text-black inline notification-content"
+  <div class="flex">
+    <profile-popover
+      class="mr-2"
+      :user="notificationData.liker"
+      trigger="avatar"
+      triggerClasses="avatar-sm"
     >
-      <span>liked</span>
-      <a v-if="ownsComment(notificationData.comment)" class="blue-link">your comment</a>
-      <a v-else class="blue-link">{{ notificationData.commentPoster }}'s comment</a>
-      on
-      <span v-if="ownsProfile(notificationData.profileOwner)">your profile</span>
-      <span v-else>{{ notificationData.profileOwner.name }}'s profile</span>.
-      <p class="text-xs text-gray-lightest">{{ notificationData.like.date_created }}</p>
+    </profile-popover>
+    <div class="flex-1">
+      <profile-popover
+        class="inline"
+        popover-classes="inline"
+        :user="notificationData.liker"
+        triggerClasses="blue-link notification-profile text-smaller"
+      ></profile-popover>
+
+      <div
+        @click="
+          showPost(notificationData.profileOwner, notificationData.profilePost)
+        "
+        class="text-black inline notification-content"
+      >
+        <span>liked</span>
+        <a v-if="ownsComment(notificationData.comment)" class="blue-link"
+          >your comment</a
+        >
+        <a v-else class="blue-link"
+          >{{ notificationData.commentPoster }}'s comment</a
+        >
+        on
+        <span v-if="ownsProfile(notificationData.profileOwner)"
+          >your profile</span
+        >
+        <span v-else>{{ notificationData.profileOwner.name }}'s profile</span>.
+        <p class="text-xs text-gray-lightest">
+          {{ notificationData.like.date_created }}
+        </p>
+      </div>
     </div>
   </div>
 </template>

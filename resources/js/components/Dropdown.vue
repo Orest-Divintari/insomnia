@@ -6,7 +6,7 @@
       </div>
       <div
         @click="hideOnClick ? hide() : null"
-        v-if="isOpen"
+        v-show="isOpen"
         class="z-10 dropdown-menu"
         :class="styleClasses"
       >
@@ -38,7 +38,9 @@ export default {
       this.isOpen = !this.isOpen;
     },
     hide() {
-      this.isOpen = false;
+      window.setTimeout(() => {
+        this.isOpen = false;
+      }, 200);
     },
   },
 };

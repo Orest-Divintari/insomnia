@@ -7,11 +7,11 @@
       <highlight :content="body"></highlight>
     </p>
     <div class="flex items-center text-xs text-gray-lightest">
-      <a
-        @click="showProfile(posting.poster)"
-        class="cursor-pointer underline"
-        >{{ posting.poster.name }}</a
-      >
+      <profile-popover
+        class="pb-1/2"
+        :user="posting.poster"
+        triggerClasses="text-xs text-gray-lightest underline"
+      ></profile-popover>
       <p class="dot"></p>
       <p>Thread</p>
       <p class="dot"></p>

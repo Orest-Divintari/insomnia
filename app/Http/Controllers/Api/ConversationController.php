@@ -38,7 +38,7 @@ class ConversationController extends Controller
 
         return Conversation::filter($conversationFilters)
             ->with('starter')
-            ->with('participants:name')
+            ->with('participants')
             ->orderByUnread()
             ->orderByUpdated()
             ->get();

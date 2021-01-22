@@ -7,7 +7,11 @@
       :key="activity.id"
     >
       <div class="flex">
-        <img :src="profileOwner.avatar_path" class="avatar-lg" alt />
+        <profile-popover
+          :user="profileOwner"
+          trigger="avatar"
+          triggerClasses="avatar-lg"
+        ></profile-popover>
         <component
           :activity="activity"
           class="pl-4"

@@ -17,10 +17,11 @@
                 class="p-2 flex group hover:bg-white-catskill cursor-pointer border-t border-gray-lighter"
                 :class="containerClasses(index)"
               >
-                <img
-                  :src="conversation.starter.avatar_path"
-                  class="avatar-sm mr-2"
-                />
+                <profile-popover
+                  :user="conversation.starter"
+                  trigger="avatar"
+                  triggerClasses="avatar-sm mr-2"
+                ></profile-popover>
                 <div class="text-xs">
                   <p
                     class="text-blue-link group-hover:underline group-hover:text-blue-link-hover"

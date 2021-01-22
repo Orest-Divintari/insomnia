@@ -1,32 +1,71 @@
 <template>
-  <div>
-    <a
-      class="blue-link notification-profile"
-      @click="showProfile(notificationData.commentPoster)"
-    >{{ notificationData.commentPoster.name}}</a>
-
-    <div
-      @click="showPost(notificationData.profileOwner, notificationData.profilePost)"
-      class="inline notification-content"
+  <div class="flex">
+    <profile-popover
+      class="mr-2"
+      :user="notificationData.commentPoster"
+      trigger="avatar"
+      triggerClasses="avatar-sm"
     >
-      <span class="no-underline hover:no-underline">commented on</span>
-      <a
-        v-if="ownsProfile(notificationData.profileOwner) && ownsPost(notificationData.profileOwner, notificationData.profilePost)"
-        class="blue-link"
-      >your status</a>
-      <a
-        v-if="!ownsProfile(notificationData.profileOwner) && ownsPost(notificationData.profileOwner, notificationData.profilePost)"
-        class="blue-link"
-      >your post</a>
-      <a
-        v-if="!ownsProfile(notificationData.profileOwner) && !ownsPost(notificationData.profileOwner, notificationData.profilePost)"
-        class="blue-link"
-      >{{ notificationData.postPoster.name }}'s post</a>
-      <div class="inline">
-        <span v-if="ownsProfile(notificationData.profileOwner)">on your profile</span>
-        <span v-else>on {{ notificationData.profileOwner.name }}'s profile</span>
+    </profile-popover>
+    <div class="flex-1">
+      <profile-popover
+        :user="notificationData.commentPoster"
+        popover-classes="inline"
+        triggerClasses="blue-link text-smaller notification-profile mr-1/2"
+        class="inline"
+      ></profile-popover>
+      <div
+        @click="
+          showPost(notificationData.profileOwner, notificationData.profilePost)
+        "
+        class="inline notification-content"
+      >
+        <span class="no-underline hover:no-underline">commented on</span>
+        <a
+          v-if="
+            ownsProfile(notificationData.profileOwner) &&
+            ownsPost(
+              notificationData.profileOwner,
+              notificationData.profilePost
+            )
+          "
+          class="blue-link"
+          >your status</a
+        >
+        <a
+          v-if="
+            !ownsProfile(notificationData.profileOwner) &&
+            ownsPost(
+              notificationData.profileOwner,
+              notificationData.profilePost
+            )
+          "
+          class="blue-link"
+          >your post</a
+        >
+        <a
+          v-if="
+            !ownsProfile(notificationData.profileOwner) &&
+            !ownsPost(
+              notificationData.profileOwner,
+              notificationData.profilePost
+            )
+          "
+          class="blue-link"
+          >{{ notificationData.postPoster.name }}'s post</a
+        >
+        <div class="inline">
+          <span v-if="ownsProfile(notificationData.profileOwner)"
+            >on your profile</span
+          >
+          <span v-else
+            >on {{ notificationData.profileOwner.name }}'s profile</span
+          >
+        </div>
+        <p class="text-xs text-gray-lightest">
+          {{ notificationData.profilePost.date_created }}
+        </p>
       </div>
-      <p class="text-xs text-gray-lightest">{{ notificationData.profilePost.date_updated }}</p>
     </div>
   </div>
 </template>

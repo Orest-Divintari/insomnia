@@ -8,6 +8,9 @@ export default {
         },
         ownsComment(comment) {
             return this.authorize("owns", comment);
+        },
+        isAuthUser(user){
+            return this.authorize('is', user);
         }
         
     }

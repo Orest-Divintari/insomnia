@@ -1,15 +1,16 @@
-<x-categories._poster_avatar :avatarPath="$thread->recentReply->poster->avatar_path">
-</x-categories._poster_avatar>
-
-<div class="ml-2">
-    <a href="{{route('threads.show', $thread->slug) }}" class=" text-smaller font-extrabold tracking-wide">
+<profile-popover :user="{{ $thread->recentReply->poster }}" trigger="avatar" trigger-classes="avatar-md">
+</profile-popover>
+<div class="ml-2 leading-snug flex-1">
+    <p href="{{route('threads.show', $thread->slug) }}" class=" text-smaller font-extrabold tracking-wide">
         {{ $thread->shortTitle ?: '' }}
         <span class="text-xs text-gray-lightest font-hairline">...</span>
-    </a>
-    <div class="flex items-center justify-start text-smaller text-gray-lightest font-hairline">
-        <p class="">{{ $thread->date_updated ?: '' }}
+    </p>
+    <div class="flex items-center justify-around text-smaller text-gray-lightest font-hairline">
+        <p>{{ $thread->date_updated ?: '' }}
         </p>
         <p class="dot"></p>
-        <p>{{ $thread->recentReply->poster->shortName ?: '' }}</p>
+        <profile-popover :user="{{ $thread->recentReply->poster }}" trigger-classes="text-smaller text-gray-lightest">
+        </profile-popover>
+
     </div>
 </div>

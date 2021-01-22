@@ -17,6 +17,7 @@ export default {
             window.location.href = "/forum/categories/" + category.slug;
         },
         showConversation(conversation){
+            
             window.location.href="/conversations/" + conversation.slug;
         },
         showThread(thread) {

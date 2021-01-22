@@ -1,16 +1,35 @@
 <template>
-  <div>
-    <a
-      class="blue-link notification-profile"
-      @click="showProfile(notificationData.postPoster)"
-    >{{ notificationData.postPoster.name}}</a>
-    <div @click="showPost()" class="text-black inline notification-content">
-      <span>wrote a message on</span>
-      <a
-        @click="showProfile(notificationData.profileOwner, notificationData.profilePost)"
-        class="blue-link"
-      >your profile</a>.
-      <p class="text-xs text-gray-lightest">{{ notificationData.profilePost.date_created }}</p>
+  <div class="flex">
+    <profile-popover
+      class="mr-2"
+      :user="notificationData.postPoster"
+      trigger="avatar"
+      triggerClasses="avatar-sm"
+    >
+    </profile-popover>
+    <div class="flex-1">
+      <profile-popover
+        :user="notificationData.postPoster"
+        popover-classes="inline"
+        triggerClasses="blue-link text-smaller notification-profile mr-1/2"
+        class="inline"
+      ></profile-popover>
+      <div @click="showPost()" class="text-black inline notification-content">
+        <span>wrote a message on</span>
+        <a
+          @click="
+            showProfile(
+              notificationData.profileOwner,
+              notificationData.profilePost
+            )
+          "
+          class="blue-link"
+          >your profile</a
+        >.
+        <p class="text-xs text-gray-lightest">
+          {{ notificationData.profilePost.date_created }}
+        </p>
+      </div>
     </div>
   </div>
 </template>

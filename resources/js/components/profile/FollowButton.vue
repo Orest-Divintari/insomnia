@@ -10,6 +10,9 @@
 <script>
 export default {
   props: {
+    isFollowedByAuthUser: {
+      required: true,
+    },
     profileOwner: {
       type: Object,
       default: {},
@@ -17,12 +20,17 @@ export default {
   },
   data() {
     return {
-      isFollowed: this.profileOwner.followed_by_visitor,
+      isFollowed: this.isFollowedByAuthUser,
     };
   },
   computed: {
     path() {
       return "/api/users/follow/" + this.profileOwner.name;
+    },
+  },
+  watch: {
+    isFollowedByAuthUser(newValue, oldValue) {
+      this.isFollowed = newValue;
     },
   },
   methods: {
@@ -47,6 +55,7 @@ export default {
     },
     refreshFollow() {
       this.isFollowed = !this.isFollowed;
+      this.$emit("follow", this.isFollowed);
     },
   },
 };

@@ -62,6 +62,7 @@
                     class="mr-1"
                     v-if="!authorize('is', profileOwner) && signedIn"
                     :profileOwner="profileOwner"
+                    :is-followed-by-auth-user="profileOwner.followed_by_visitor"
                   ></follow-button>
                   <dropdown :styleClasses="'w-56'">
                     <template v-slot:dropdown-trigger>

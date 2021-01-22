@@ -2,7 +2,11 @@
   <div class="mt-6">
     <div class="reply-container">
       <div class="reply-left-col">
-        <img :src="user.avatar_path" class="avatar-xl" alt />
+        <profile-popover
+          :user="user"
+          trigger="avatar"
+          triggerClasses="avatar-xl"
+        ></profile-popover>
       </div>
       <div class="w-full p-3">
         <form @submit.prevent="post">

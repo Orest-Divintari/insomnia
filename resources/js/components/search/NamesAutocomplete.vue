@@ -68,6 +68,11 @@ export default {
     VueAutosuggest,
   },
   props: {
+    initialParticipant: {
+      type: String,
+      default: "",
+      required: false,
+    },
     inputPlaceholder: {
       type: String,
       default: "",
@@ -99,10 +104,10 @@ export default {
       minimumCharacters: 2,
       typeMore: false,
       currentlySearching: false,
-      searchQuery: "",
+      searchQuery: this.initialParticipant,
       searchClient: algoliasearch(
         "1LXOIX8OXI",
-        "98af466cb49a56ef06819bf9b1736ed8"
+        "0680fc9151f6497f00f8423b3f370c35"
       ),
       commaSeparatedValues: "",
       currentSearchTerm: "",
@@ -151,8 +156,12 @@ export default {
       this.$refs["searchInput"].focus();
       this.currentlySearching = false;
       this.charactersLeft = this.minimumCharacters;
-      // this.$refs["autocomplete"].state.indices = [];
     },
+  },
+  created() {
+    if (this.initialParticipant !== "") {
+      this.searchQuery = this.initialParticipant + ", ";
+    }
   },
 };
 </script>

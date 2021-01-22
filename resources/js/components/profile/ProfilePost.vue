@@ -2,15 +2,18 @@
   <div :id="'#profile-post-' + post.id">
     <div class="reply-container">
       <div class="reply-left-col w-24">
-        <img :src="post.poster.avatar_path" class="avatar-lg" alt />
+        <profile-popover
+          :user="post.poster"
+          trigger="avatar"
+          triggerClasses="avatar-lg"
+        ></profile-popover>
       </div>
       <div class="post-right-col">
         <div class="post-header">
-          <a
-            :href="'/profiles/' + post.poster.name"
-            class="post-username"
-            v-text="post.poster.name"
-          ></a>
+          <profile-popover
+            :user="post.poster"
+            triggerClasses="post-username"
+          ></profile-popover>
           <p class="dot"></p>
           <p class="text-sm text-gray-lightest" v-text="post.date_created"></p>
         </div>

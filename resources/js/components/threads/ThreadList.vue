@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="leading-snug">
     <div
       v-for="(thread, index) in threads"
       :key="thread.id"
@@ -7,21 +7,26 @@
       :class="containerClasses(index)"
     >
       <div class="flex items-center">
-        <div class="py-5/2 px-5">
-          <img :src="thread.poster.avatar_path" class="w-9 h-9 avatar" />
+        <div class="pb-3 pt-2 pl-5">
+          <profile-popover
+            :user="thread.poster"
+            trigger="avatar"
+            triggerClasses="avatar-md"
+          ></profile-popover>
         </div>
-        <div class="p-2 flex-1">
-          <a
+        <div class="p-5/2 flex-1">
+          <p
             @click="showThread(thread)"
             class="text-sm hover:underline hover:text-blue-mid cursor-pointer"
             :class="{ 'font-bold': thread.has_been_updated }"
             v-text="thread.title"
-          ></a>
+          ></p>
           <div class="flex items-center">
-            <a
-              class="text-xs text-gray-lightest leading-none hover:unerline"
-              v-text="thread.poster.short_name"
-            ></a>
+            <profile-popover
+              :user="thread.poster"
+              triggerClasses="text-xs text-gray-lightest"
+            >
+            </profile-popover>
             <p class="dot"></p>
             <a
               @click="showThread(thread)"
@@ -51,13 +56,13 @@
           v-if="thread.pinned"
           class="fas fa-thumbtack text-2xs text-gray-lightest self-baseline mb-5 mr-2"
         ></i>
-        <div class="p-2 text-gray-lightest w-32 mr-4">
+        <div class="p-5/2 text-gray-lightest w-32 mr-4">
           <div class="flex justify-between items-end">
             <p class="text-sm flex-1">Replies:</p>
             <p class="text-xs text-black" v-text="thread.replies_count"></p>
           </div>
           <div class="flex justify-between items-end">
-            <p class="text-sm">Views:</p>
+            <p class="text-smaller">Views:</p>
             <p class="text-xs" v-text="thread.views"></p>
           </div>
         </div>
@@ -67,18 +72,17 @@
             class="text-gray-lightest text-xs hover:underline cursor-pointer"
             v-text="thread.date_updated"
           ></p>
-          <p
-            class="text-gray-lightest text-xs hover:underline cursor-pointer"
-            v-text="thread.recent_reply.poster.short_name"
-          ></p>
+          <profile-popover
+            triggerClasses="leading-relaxed text-gray-lightest text-xs"
+            :user="thread.recent_reply.poster"
+          ></profile-popover>
         </div>
         <div class="pl-1 py-5/2 pr-7">
-          <a href>
-            <img
-              :src="thread.recent_reply.poster.avatar_path"
-              class="avatar w-6 h-6"
-            />
-          </a>
+          <profile-popover
+            :user="thread.recent_reply.poster"
+            trigger="avatar"
+            triggerClasses="avatar-sm"
+          ></profile-popover>
         </div>
       </div>
     </div>
@@ -88,6 +92,7 @@
 <script>
 import view from "../../mixins/view";
 export default {
+  components: {},
   props: {
     threads: {
       type: Array,
@@ -111,4 +116,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tooltip-arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  margin: 5px;
+  border-color: black;
+  z-index: 1;
+}
 </style>

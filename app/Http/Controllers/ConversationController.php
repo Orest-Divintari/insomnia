@@ -38,7 +38,10 @@ class ConversationController extends Controller
      */
     public function create()
     {
-        return view('conversations.create');
+        return view(
+            'conversations.create',
+            ['participant' => request('add_participant')]
+        );
     }
 
     /**

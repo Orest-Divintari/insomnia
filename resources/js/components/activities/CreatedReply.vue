@@ -9,9 +9,12 @@
       <p class="dot"></p>
       <div class>
         reply by
-        <a @click="showProfile(activity.subject.poster)" class="blue-link">{{
-          activity.subject.poster.name
-        }}</a>
+        <profile-popover
+          :user="activity.subject.poster"
+          class="inline"
+          popover-classes="inline"
+          triggerClasses="blue-link mr-1/2"
+        ></profile-popover>
       </div>
       <p class="dot"></p>
       <a

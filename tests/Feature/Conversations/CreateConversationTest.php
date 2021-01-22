@@ -79,6 +79,21 @@ class CreateConversationTest extends TestCase
     }
 
     /** @test */
+    public function an_authenticated_and_verified_user_can_pass_a_participant_name_to_convrersation_form()
+    {
+        $this->signIn();
+        $participant = create(User::class);
+
+        $response = $this->get(
+            route('conversations.create')
+            . '?add_participant='
+            . $participant->name
+        );
+
+        $response->assertSee($participant->name);
+    }
+
+    /** @test */
     public function guests_cannot_start_a_new_conversation()
     {
         $response = $this->postConversation(
@@ -214,7 +229,6 @@ class CreateConversationTest extends TestCase
             $conversation->participants->contains($conversationStarter->id)
         );
     }
-   
 
     /** @test */
     public function to_start_a_new_conversation_a_title_is_required()

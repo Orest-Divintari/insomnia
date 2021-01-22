@@ -3,13 +3,14 @@
     <div class="border border-gray-lighter p-4 rounded">
       <h1 class="text-md text-black-semi mb-2">Followers</h1>
       <div class="flex flex-row">
-        <img
+        <profile-popover
+          class="mr-3"
+          :user="user"
           v-for="(user, index) in followedByUsers"
-          @click="showProfile(user)"
-          :src="user.avatar_path"
-          class="cursor-pointer avatar-lg mr-3"
-          alt
-        />
+          trigger="avatar"
+          triggerClasses="avatar-lg"
+          :key="index"
+        ></profile-popover>
       </div>
       <follow-list-modal
         name="followedBy-modal"

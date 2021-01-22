@@ -2,7 +2,11 @@
   <div v-if="signedIn">
     <div class="reply-container">
       <div class="reply-left-col w-24">
-        <img :src="profileOwner.avatar_path" class="avatar-lg" alt />
+        <profile-popover
+          :user="profileOwner"
+          trigger="avatar"
+          triggerClasses="avatar-lg"
+        ></profile-popover>
       </div>
       <div class="w-full p-3">
         <profile-post-input
