@@ -33,8 +33,8 @@ trait Followable
     public function follow(User $user)
     {
         if (!$this->following($user)) {
-            $this->follows()->save($user);
             event(new AUserStartedFollowingYou($this, $user));
+            $this->follows()->attach($user->id);
         }
     }
 
