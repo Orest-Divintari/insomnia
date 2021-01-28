@@ -180,11 +180,11 @@ class UserTest extends TestCase
 
         $comment->likedBy($liker);
         $reply->likedBy($liker);
-        $user = User::withLikeScore()
+        $user = User::withLikesCount()
             ->whereId($user->id)
             ->first();
 
-        $this->assertEquals(2, $user->like_score);
+        $this->assertEquals(2, $user->likes_count);
     }
 
     /** @test */

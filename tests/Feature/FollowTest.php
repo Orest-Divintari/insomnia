@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Follows;
-use App\ProfilePost;
 use App\User;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
@@ -145,7 +144,7 @@ class FollowTest extends TestCase
             route('api.follows.index', $profileOwner)
         )->json()['data'];
 
-        $this->assertEquals(1, $response[0]['like_score']);
+        $this->assertEquals(1, $response[0]['likes_count']);
     }
 
     /** @test */
@@ -164,7 +163,7 @@ class FollowTest extends TestCase
             route('api.followedBy.index', $profileOwner)
         )->json()['data'];
 
-        $this->assertEquals(1, $response[0]['like_score']);
+        $this->assertEquals(1, $response[0]['likes_count']);
     }
 
     /** @test */
@@ -179,7 +178,7 @@ class FollowTest extends TestCase
             route('api.follows.index', $profileOwner)
         )->json()['data'];
 
-        $this->assertEquals(1, $response[0]['message_count']);
+        $this->assertEquals(1, $response[0]['messages_count']);
     }
 
     /** @test */
@@ -194,7 +193,7 @@ class FollowTest extends TestCase
             route('api.followedBy.index', $profileOwner)
         )->json()['data'];
 
-        $this->assertEquals(1, $response[0]['message_count']);
+        $this->assertEquals(1, $response[0]['messages_count']);
     }
 
 }

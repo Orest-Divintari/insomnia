@@ -38,9 +38,9 @@
             ></a>
             <p class="text-smaller text-black-semi">macrumors member</p>
             <div class="flex items-center text-xs text-gray-lightest">
-              <p>Messages: {{ member.message_count }}</p>
+              <p>Messages: {{ member.messages_count }}</p>
               <p class="dot"></p>
-              <p>Like score: {{ member.like_score }}</p>
+              <p>Like score: {{ member.likes_count }}</p>
               <p class="dot"></p>
               <p>Points: 0</p>
             </div>

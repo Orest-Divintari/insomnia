@@ -29,7 +29,7 @@
               <p class="text-xs text-gray-lightest">Likes Score</p>
               <p
                 class="text-md text-center"
-                v-text="profileOwner.like_score"
+                v-text="profileOwner.likes_count"
               ></p>
             </div>
             <div>
