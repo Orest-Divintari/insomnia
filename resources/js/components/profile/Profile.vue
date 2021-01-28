@@ -22,7 +22,7 @@
               <p class="text-xs text-gray-lightest">Messages</p>
               <p
                 class="text-md text-center"
-                v-text="profileOwner.message_count"
+                v-text="profileOwner.messages_count"
               ></p>
             </div>
             <div>
@@ -62,7 +62,7 @@
                     class="mr-1"
                     v-if="!authorize('is', profileOwner) && signedIn"
                     :profileOwner="profileOwner"
-                    :is-followed-by-auth-user="profileOwner.followed_by_visitor"
+                    :followed="profileOwner.followed_by_visitor"
                   ></follow-button>
                   <dropdown :styleClasses="'w-56'">
                     <template v-slot:dropdown-trigger>

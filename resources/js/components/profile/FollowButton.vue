@@ -10,7 +10,7 @@
 <script>
 export default {
   props: {
-    isFollowedByAuthUser: {
+    followed: {
       required: true,
     },
     profileOwner: {
@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      isFollowed: this.isFollowedByAuthUser,
+      isFollowed: this.followed,
     };
   },
   computed: {
@@ -29,7 +29,7 @@ export default {
     },
   },
   watch: {
-    isFollowedByAuthUser(newValue, oldValue) {
+    followed(newValue, oldValue) {
       this.isFollowed = newValue;
     },
   },
