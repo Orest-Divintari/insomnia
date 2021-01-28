@@ -109,23 +109,27 @@ class UserTest extends TestCase
     public function a_user_has_messages_count_which_is_the_number_of_profile_posts_on_his_profile()
     {
         $user = create(User::class);
-
         ProfilePostFactory::toProfile($user)->create();
 
-        $this->assertEquals(1, $user->fresh()->message_count);
+        $user = User::withMessagesCount()
+            ->whereId($user->id)
+            ->first();
+
+        $this->assertEquals(1, $user->messages_count);
     }
 
     /** @test */
-    public function a_user_has_a_likes_score()
+    public function it_knows_the_number_of_likes_of_posts()
     {
         $user = create(User::class);
         $thread = create(Thread::class);
         $reply = ReplyFactory::by($user)->create();
         $anotherUser = create(User::class);
-
         $reply->likedBy($anotherUser);
 
-        $this->assertEquals(1, $user->fresh()->like_score);
+        $user = User::withLikesCount()->whereId($user->id)->first();
+
+        $this->assertEquals(1, $user->likes_count);
     }
 
     /** @test */
@@ -163,11 +167,11 @@ class UserTest extends TestCase
         $profileOwner = create(User::class);
         ProfilePostFactory::toProfile($profileOwner)->create();
 
-        $profileOwner = User::withMessageCount()
+        $profileOwner = User::withMessagesCount()
             ->whereId($profileOwner->id)
             ->first();
 
-        $this->assertEquals(1, $profileOwner->message_count);
+        $this->assertEquals(1, $profileOwner->messages_count);
     }
 
     /** @test */
@@ -306,5 +310,30 @@ class UserTest extends TestCase
         $lastPostActivity = $user->lastPostActivity();
 
         $this->assertEquals($comment->id, $lastPostActivity->subject->id);
+    }
+
+    /** @test */
+    public function it_knows_if_is_followed_by_profile_visitor()
+    {
+        $profileOwner = create(User::class);
+        $visitor = create(User::class);
+        $visitor->follow($profileOwner);
+        $this->signIn($visitor);
+
+        $user = User::withFollowedByVisitor()->whereName($profileOwner->name)->first();
+
+        $this->assertTrue($user->followed_by_visitor);
+    }
+
+    /** @test */
+    public function it_knows_the_profile_info()
+    {
+        $profileOwner = create(User::class);
+
+        $user = User::select()->withProfileInfo()->whereName($profileOwner->name)->first()->toArray();
+
+        $this->assertArrayHasKey('messages_count', $user);
+        $this->assertArrayHasKey('likes_count', $user);
+        $this->assertArrayHasKey('followed_by_visitor', $user);
     }
 }

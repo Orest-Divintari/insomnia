@@ -25,13 +25,27 @@ class ProfileTest extends TestCase
         $profileOwner = create(User::class);
         $this->signIn();
 
-        $response = $this->getJson(
+        $response = $this->get(
             route('profiles.show', $profileOwner)
-        )->json();
+        );
 
-        $this->assertContains('messages_count', $response);
-        $this->assertContains('likes_score', $response);
-        $this->assertContains('join_date', $response);
-        $this->assertContains('followed_by_visitor', $response);
+        $response->assertSee('messages_count');
+        $response->assertSee('followed_by_visitor');
+        $response->assertSee('likes_count');
+        $response->assertSee('join_date');
+    }
+
+    /** @test */
+    public function get_the_profile_information_of_a_user()
+    {
+        $profileOwner = create(User::class);
+        $this->signIn();
+
+        $response = $this->get(route('api.profiles.show', $profileOwner))->json();
+
+        $this->assertArrayHasKey('messages_count', $response);
+        $this->assertArrayHasKey('likes_count', $response);
+        $this->assertArrayHasKey('join_date', $response);
+        $this->assertArrayHasKey('followed_by_visitor', $response);
     }
 }

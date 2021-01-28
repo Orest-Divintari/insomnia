@@ -94,6 +94,10 @@ Route::group([
     'name' => 'api',
 ], function () {
 
+    // profile
+    Route::get('/profiles/{user}', 'ProfileController@show')
+        ->name('api.profiles.show');
+
     // is following
     Route::get('/users/{user}/isFollowedByAuthUser', 'IsFollowedByAuthUserController@show')
         ->name('api.is-followed-by-auth-user.show');

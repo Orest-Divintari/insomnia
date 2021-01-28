@@ -1,19 +1,20 @@
 // the methods and variables are named from the point of view of the authenticated user
-// the authenticated user has a followsList
-// the authenticated user can follow/unfollow a given user
+// for example, the authenticated isFollowing a given user
 export const store = {
     state: {
-        followsList: {}
+        profiles: {},
     },
-    // determine whether the authenticated user is following the given user
-    isFollowing(user){
-            return this.state.followsList[user.id];
+    addOrUpdateProfile(user){
+        this.state.profiles[user.id] = user;
     },
     updateFollow(user, isFollowing){
-        this.state.followsList[user.id] = isFollowing;
+        this.state.profiles[user.id].followed_by_visitor = isFollowing;
     },
-    // determine if the user exists in the followsList
-    followExists(user){
-        return user.id in this.state.followsList;
+    // determine if the user exists in the profiles object
+    profileExists(user){
+        return user.id in this.state.profiles;
+    },
+    getProfile(user){
+        return this.state.profiles[user.id];
     }
   };

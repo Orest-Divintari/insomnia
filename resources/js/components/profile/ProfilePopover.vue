@@ -10,14 +10,14 @@
       delay="0"
     >
       <div
-        @click="showProfile(user)"
+        @click="showProfile(profileOwner)"
         class="cursor-pointer"
         @mouseover="show"
         @mouseout="hide"
       >
         <img
           v-if="trigger == 'avatar'"
-          :src="user.avatar_path"
+          :src="profileOwner.avatar_path"
           :class="triggerClasses"
         />
         <a
@@ -32,38 +32,38 @@
       <template slot="popover">
         <div
           class="border border-gray-lighter -m-6 shadow-2xl"
-          @mouseover="show"
+          @mouseover="keepOpen"
           @mouseout="hide"
         >
           <div class="flex text-black-semi p-2 bg-white-catskill">
             <img
-              @click="showProfile(user)"
-              :src="user.avatar_path"
+              @click="showProfile(profileOwner)"
+              :src="profileOwner.avatar_path"
               class="avatar-xl cursor-pointer"
               alt=""
             />
             <div class="pl-2 w-72 flex flex-col space-y-1">
               <h1
-                @click="showProfile(user)"
+                @click="showProfile(profileOwner)"
                 class="text-lg hover:underline cursor-pointer"
               >
-                {{ user.name }}
+                {{ profileOwner.name }}
               </h1>
               <p class="text-smaller">macrumors newbie</p>
               <p class="text-smaller">
                 <span class="text-gray-lightest mr-1"> Joined: </span
-                >{{ user.join_date }}
+                >{{ profileOwner.join_date }}
               </p>
             </div>
           </div>
           <div class="flex justify-between text-smaller bg-white p-2">
             <div>
               <p class="text-gray-lightest">Messages</p>
-              <p class="text-center">{{ user.message_count }}</p>
+              <p class="text-center">{{ profileOwner.messages_count }}</p>
             </div>
             <div>
               <p class="text-gray-lightest">Like Score</p>
-              <p class="text-center">{{ user.like_score }}</p>
+              <p class="text-center">{{ profileOwner.likes_count }}</p>
             </div>
             <div>
               <p class="text-gray-lightest">Points</p>
@@ -71,16 +71,21 @@
             </div>
           </div>
           <hr class="text-gray-lighter" />
-          <div v-if="!isAuthUser(this.user)" class="flex bg-white p-2">
+          <div
+            v-if="signedIn && !isAuthUser(this.profileOwner)"
+            class="flex bg-white p-2"
+          >
             <follow-button
+              class="mr-2"
+              v-if="signedIn"
               @follow="updateFollow"
-              :is-followed-by-auth-user="isFollowed"
-              :profileOwner="user"
+              :followed="isFollowed"
+              :profileOwner="profileOwner"
             ></follow-button>
-            <p class="ml-2 btn-white-blue">Ignore</p>
+            <p class="btn-white-blue">Ignore</p>
             <start-conversation-button
               class="ml-2"
-              :user="user"
+              :user="profileOwner"
             ></start-conversation-button>
           </div>
         </div>
@@ -129,70 +134,88 @@ export default {
   mixins: [view, authorization],
   computed: {
     username() {
-      return this.triggerText !== "" ? this.triggerText : this.user.name;
+      return this.triggerText !== ""
+        ? this.triggerText
+        : this.profileOwner.name;
+    },
+    isFollowed() {
+      return this.profileOwner.followed_by_visitor;
     },
   },
   data() {
     return {
+      profileOwner: this.user,
       isOpen: false,
-      isFollowed: false,
-      isHovered: false,
+      isHovering: false,
     };
   },
+  watch: {
+    profileOwner(newValue, oldValue) {
+      store.addOrUpdateProfile(newValue);
+    },
+  },
   methods: {
+    getProfile() {
+      return store.getProfile(this.user) ?? this.user;
+    },
     updateFollow(isFollowed) {
-      store.updateFollow(this.user, isFollowed);
-      this.isFollowed = isFollowed;
+      store.updateFollow(this.profileOwner, isFollowed);
+      this.profileOwner.followed_by_visitor = isFollowed;
+    },
+    hovering() {
+      this.isHovering = true;
+    },
+    stopHovering() {
+      this.isHovering = false;
     },
     show() {
-      this.isHovered = true;
-      window.setTimeout(() => {
-        if (this.isHovered) {
+      this.hovering();
+      window.setTimeout(async () => {
+        if (this.isHovering) {
+          this.stopHovering();
+          await this.getData();
           this.openPopover();
         }
       }, 1000);
     },
-    async openPopover() {
-      await this.getIsFollowed();
-      this.isOpen = true;
-    },
-    closePopover() {
-      this.isOpen = false;
-    },
-    hide() {
-      this.isHovered = false;
-      window.setTimeout(() => {
-        if (!this.isHovered) {
-          this.closePopover();
-        }
-      }, 300);
-    },
-    async getIsFollowed() {
-      if (this.isOpen) {
+    async getData() {
+      if (store.profileExists(this.user)) {
+        this.updateProfile(store.getProfile(this.user));
         return;
       }
-      if (this.isFollowInStore()) {
-        this.isFollowed = store.isFollowing(this.user);
-        return;
-      }
-      await this.isFollowedByAuthUser();
+      await this.fetchProfile();
     },
-    isFollowInStore() {
-      return store.followExists(this.user);
-    },
-    async isFollowedByAuthUser() {
+    async fetchProfile() {
       try {
-        let response = await axios.get(
-          "/api/users/" + this.user.name + "/isFollowedByAuthUser"
-        );
+        let response = await axios.get("/api/profiles/" + this.user.name);
         this.onSuccess(response.data);
       } catch (error) {
         console.log(error);
       }
     },
-    onSuccess(data) {
-      this.isFollowed = data.is_followed;
-      store.updateFollow(this.user, data.is_followed);
+    updateProfile(user) {
+      this.profileOwner = user;
+    },
+    openPopover() {
+      this.isOpen = true;
+    },
+    keepOpen() {
+      this.hovering();
+      this.openPopover();
+    },
+    closePopover() {
+      this.isOpen = false;
+    },
+    hide() {
+      this.stopHovering();
+      window.setTimeout(() => {
+        if (!this.isHovering) {
+          this.closePopover();
+        }
+      }, 300);
+    },
+    onSuccess(profileOwner) {
+      this.updateProfile(profileOwner);
     },
   },
 };
