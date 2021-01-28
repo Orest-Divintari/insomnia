@@ -5,8 +5,7 @@ namespace App\Traits;
 use App\Events\LikeEvent;
 use App\Events\Like\ReplyWasUnliked;
 use App\Like;
-use App\ProfilePost;
-use App\Thread;
+use App\Reply;
 use Illuminate\Database\Eloquent\Builder;
 
 trait Likeable
@@ -40,26 +39,6 @@ trait Likeable
             event((new LikeEvent($liker, $this, $like))->create());
             return $like;
         }
-    }
-
-    /**
-     * Determine whether it is a comment of a profile post
-     *
-     * @return boolean
-     */
-    public function isComment()
-    {
-        return $this->repliable_type == ProfilePost::class;
-    }
-
-    /**
-     * Determine whether it is a thread reply
-     *
-     * @return boolean
-     */
-    public function isThreadReply()
-    {
-        return $this->repliable_type == Thread::class;
     }
 
     /**
