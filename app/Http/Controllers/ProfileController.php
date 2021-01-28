@@ -11,13 +11,12 @@ class ProfileController extends Controller
      *
      * @return void
      */
-    public function show(User $user)
+    public function show($username)
     {
-        $user->append('message_count', 'like_score', 'join_date', 'followed_by_visitor');
-
-        if (request()->expectsJson()) {
-            return $user;
-        }
+        $user = User::withProfileInfo()
+            ->whereName($username)
+            ->first()
+            ->append('join_date');
 
         return view('profiles.show', compact('user'));
     }

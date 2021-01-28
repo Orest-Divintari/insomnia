@@ -92,16 +92,20 @@ trait Followable
     }
 
     /**
-     * Determine whether the user is followed
-     *  by the authenticated/visitor user
+     * Add a column that determines whether the user is followed by the visitor
      *
-     * @return bool
+     * @param Builder $query
+     * @return void
      */
-    public function getFollowedByVisitorAttribute()
+    public function scopeWithFollowedByVisitor($query)
     {
-        if (!auth()->check()) {
-            return false;
-        }
-        return auth()->user()->following($this);
+        return $query
+            ->selectRaw('EXISTS
+                (
+                    SELECT *
+                    FROM   follows
+                    WHERE  follows.user_id=?
+                    AND    follows.following_user_id=users.id
+                ) AS followed_by_visitor', [auth()->id()]);
     }
 }

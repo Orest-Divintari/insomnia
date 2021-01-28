@@ -99,6 +99,22 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the total number of likes of user's posts
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithLikesCount($query)
+    {
+        return $query->addSelect([
+            'likes_count' => Reply::select(DB::raw('count(*)'))
+                ->whereColumn('replies.user_id', 'users.id')
+                ->whereIn('repliable_type', [Thread::class, ProfilePost::class])
+                ->join('likes', 'replies.id', '=', 'likes.reply_id'),
+        ]);
+    }
+
+    /**
      * A user has replies
      *
      * @return void
@@ -127,28 +143,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subscription($threadId)
     {
         return ThreadSubscription::Of($threadId, $this->id);
-    }
-
-    /**
-     * Get the number of replies the user has made
-     *
-     * @return int
-     */
-    public function getMessageCountAttribute()
-    {
-        return $this->profilePosts()->count();
-    }
-
-    /**
-     * Get the number of likes the user has received
-     *
-     * @return int
-     */
-    public function getLikeScoreAttribute()
-    {
-        return Reply::where('replies.user_id', $this->id)
-            ->join('likes', 'replies.id', '=', 'likes.reply_id')
-            ->count();
     }
 
     /**
@@ -204,32 +198,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get the number of posts on user's profile
+     * Get the number of profile posts
      *
      * @param Builder $query
      * @return Builder
      */
-    public function scopeWithMessageCount($query)
+    public function scopeWithMessagesCount($query)
     {
-        return $query->addSelect([
-            'message_count' => ProfilePost::select(DB::raw('count(*)'))
-                ->whereColumn('profile_owner_id', 'users.id'),
-        ]);
-    }
-
-    /**
-     * Get the total number of likes for user's posts
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeWithLikeScore($query)
-    {
-        return $query->addSelect([
-            'like_score' => Reply::select(DB::raw('count(*)'))
-                ->whereColumn('replies.user_id', 'users.id')
-                ->join('likes', 'replies.id', '=', 'likes.reply_id'),
-        ]);
+        return $query->withCount('profilePosts as messages_count');
     }
 
     /**
@@ -240,9 +216,9 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function scopeWithProfileInfo($query)
     {
-        return $query
-            ->withMessageCount()
-            ->withLikeScore();
+        $query->withMessagesCount()
+            ->withLikesCount()
+            ->withFollowedByVisitor();
     }
 
     /**
