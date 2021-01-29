@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dropdown styleClasses="w-74">
+    <dropdown styleClasses="w-80">
       <template v-slot:dropdown-trigger>
         <div class="relative hover:bg-blue-mid h-14 text-center pt-4 px-2">
           <i class="fas fa-bell"></i>
