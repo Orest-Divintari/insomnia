@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <profile-popover
-      class="mr-2"
+      class="mr-2 inline"
       :user="follower"
       trigger="avatar"
       triggerClasses="avatar-sm"
