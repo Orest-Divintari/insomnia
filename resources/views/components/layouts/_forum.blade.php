@@ -15,6 +15,7 @@
                     <p> {{ auth()->user()->name  }} </p>
                 </a>
                 @verified
+                <notification></notification>
                 <conversations-button></conversations-button>
                 @endverified
 
