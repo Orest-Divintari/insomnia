@@ -3,11 +3,10 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProfilePostHasNewComment extends Notification implements ShouldQueue
+class ProfilePostHasNewComment extends Notification
 {
     use Queueable;
 
