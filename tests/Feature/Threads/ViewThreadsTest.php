@@ -416,44 +416,45 @@ class ViewThreadsTest extends TestCase
         $thread = create(Thread::class);
         $category = $thread->category;
         $pages = 10;
-        $thread->increment('replies_count', Thread::REPLIES_PER_PAGE * $pages);
+        $threadBody = 1;
+        $thread->increment('replies_count', Thread::REPLIES_PER_PAGE * $pages - $threadBody);
 
         $threads = $this->getJson(route('threads.index', $category))->json()['data'];
-        
         $this->assertEquals(
-            [8 => "/threads/{$thread->slug}?page=8"],
-            $threads[0]['last_pages'][0]
+            $thread->linkToPage(8),
+            $threads[0]['last_pages'][8]
         );
         $this->assertEquals(
-            [9 => "/threads/{$thread->slug}?page=9"],
-            $threads[0]['last_pages'][1]
+            $thread->linkToPage(9),
+            $threads[0]['last_pages'][9]
         );
         $this->assertEquals(
-            [10 => "/threads/{$thread->slug}?page=10"],
-            $threads[0]['last_pages'][2]
+            $thread->linkToPage(10),
+            $threads[0]['last_pages'][10]
         );
     }
 
-     /** @test */
-     public function view_the_last_pages_of_replies_for_a_thread()
-     {
-         $thread = create(Thread::class);
-         $pages = 10;
-         $thread->increment('replies_count', Thread::REPLIES_PER_PAGE * $pages);
- 
-         $threads = $this->getJson(route('filtered-threads.index'))->json()['data'];
-         
-         $this->assertEquals(
-             [8 => "/threads/{$thread->slug}?page=8"],
-             $threads[0]['last_pages'][0]
-         );
-         $this->assertEquals(
-             [9 => "/threads/{$thread->slug}?page=9"],
-             $threads[0]['last_pages'][1]
-         );
-         $this->assertEquals(
-             [10 => "/threads/{$thread->slug}?page=10"],
-             $threads[0]['last_pages'][2]
-         );
-     }
+    /** @test */
+    public function view_the_last_pages_of_replies_for_a_thread()
+    {
+        $thread = create(Thread::class);
+        $pages = 10;
+        $threadBody = 1;
+        $thread->increment('replies_count', Thread::REPLIES_PER_PAGE * $pages - $threadBody);
+
+        $threads = $this->getJson(route('filtered-threads.index'))->json()['data'];
+
+        $this->assertEquals(
+            $thread->linkToPage(8),
+            $threads[0]['last_pages'][8]
+        );
+        $this->assertEquals(
+            $thread->linkToPage(9),
+            $threads[0]['last_pages'][9]
+        );
+        $this->assertEquals(
+            $thread->linkToPage(10),
+            $threads[0]['last_pages'][10]
+        );
+    }
 }
