@@ -5,6 +5,7 @@ namespace App;
 use App\Thread;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
@@ -132,29 +133,29 @@ class Category extends Model
      */
     public function scopeWithThreadsCount($query)
     {
-        // DB::unprepared('
-        // DROP FUNCTION IF EXISTS count_threads;
-        //       CREATE FUNCTION `count_threads`(category_id INT) RETURNS int
-        // BEGIN
-        // DECLARE threadsCount INT;
-        // SELECT count(id)
-        // INTO threadsCount
-        // FROM   threads
-        // WHERE  threads.category_id IN ( WITH recursive recursive_categories AS
-        //                                (
-        //                                       SELECT initial_categories.id
-        //                                       FROM   categories AS initial_categories
-        //                                       WHERE  initial_categories.id=category_id
-        //                                       UNION ALL
-        //                                       SELECT remaining_categories.id
-        //                                       FROM   recursive_categories
-        //                                       JOIN   categories AS remaining_categories
-        //                                       ON     recursive_categories.id=remaining_categories.parent_id )
-        //                         SELECT   id
-        //                         FROM     recursive_categories );
-        // return threadsCount;
-        // end
-        //                 ');
+        DB::unprepared('
+        DROP FUNCTION IF EXISTS count_threads;
+              CREATE FUNCTION `count_threads`(category_id INT) RETURNS int
+        BEGIN
+        DECLARE threadsCount INT;
+        SELECT count(id)
+        INTO threadsCount
+        FROM   threads
+        WHERE  threads.category_id IN ( WITH recursive recursive_categories AS
+                                       (
+                                              SELECT initial_categories.id
+                                              FROM   categories AS initial_categories
+                                              WHERE  initial_categories.id=category_id
+                                              UNION ALL
+                                              SELECT remaining_categories.id
+                                              FROM   recursive_categories
+                                              JOIN   categories AS remaining_categories
+                                              ON     recursive_categories.id=remaining_categories.parent_id )
+                                SELECT   id
+                                FROM     recursive_categories );
+        return threadsCount;
+        end
+                        ');
         if (is_null($query->getQuery()->columns)) {
             $query->addSelect('*');
         }
@@ -169,29 +170,30 @@ class Category extends Model
      */
     public function scopeWithRecentlyActiveThread($query)
     {
-        // DB::unprepared('
-        // CREATE FUNCTION `recently_active_thread`(category_id INT) RETURNS int
-        // BEGIN
-        //   DECLARE recentlyActiveThreadId INT;
-        //   SELECT id
-        //   INTO recentlyActiveThreadId
-        //   FROM   threads
-        //   WHERE  threads.category_id IN ( WITH recursive recursive_categories AS
-        //                                  (
-        //                                         SELECT initial_categories.id
-        //                                         FROM   categories AS initial_categories
-        //                                         WHERE  initial_categories.id=category_id
-        //                                         UNION ALL
-        //                                         SELECT remaining_categories.id
-        //                                         FROM   recursive_categories
-        //                                         JOIN   categories AS remaining_categories
-        //                                         ON     recursive_categories.id=remaining_categories.parent_id )
-        //                           SELECT   id
-        //                           FROM     recursive_categories )
-        // ORDER BY updated_at DESC limit 1;
-        // return recentlyActiveThreadId;
-        // end
-        //         ');
+        DB::unprepared('
+        DROP FUNCTION IF EXISTS recently_active_thread;
+        CREATE FUNCTION `recently_active_thread`(category_id INT) RETURNS int
+        BEGIN
+          DECLARE recentlyActiveThreadId INT;
+          SELECT id
+          INTO recentlyActiveThreadId
+          FROM   threads
+          WHERE  threads.category_id IN ( WITH recursive recursive_categories AS
+                                         (
+                                                SELECT initial_categories.id
+                                                FROM   categories AS initial_categories
+                                                WHERE  initial_categories.id=category_id
+                                                UNION ALL
+                                                SELECT remaining_categories.id
+                                                FROM   recursive_categories
+                                                JOIN   categories AS remaining_categories
+                                                ON     recursive_categories.id=remaining_categories.parent_id )
+                                  SELECT   id
+                                  FROM     recursive_categories )
+        ORDER BY updated_at DESC limit 1;
+        return recentlyActiveThreadId;
+        end
+                ');
         if (is_null($query->getQuery()->columns)) {
             $query->addSelect('*');
         }
@@ -210,29 +212,29 @@ class Category extends Model
      */
     public function scopeWithRepliesCount($query)
     {
-//         DB::unprepared('
-        // DROP FUNCTION IF EXISTS count_replies;
-        //         CREATE FUNCTION `count_replies`(category_id INT) RETURNS int
-        // BEGIN
-        //                   DECLARE repliesCount INT;
-        //                   SELECT sum(replies_count)
-        //                   INTO repliesCount
-        //                   FROM   threads
-        //                   WHERE  threads.category_id IN ( WITH recursive recursive_categories AS
-        //                                                  (
-        //                                                         SELECT initial_categories.id
-        //                                                         FROM   categories AS initial_categories
-        //                                                         WHERE  initial_categories.id=category_id
-        //                                                         UNION ALL
-        //                                                         SELECT remaining_categories.id
-        //                                                         FROM   recursive_categories
-        //                                                         JOIN   categories AS remaining_categories
-        //                                                         ON     recursive_categories.id=remaining_categories.parent_id )
-        //                                           SELECT   id
-        //                                           FROM     recursive_categories );
-        //                 return repliesCount;
-        // end
-        //         ');
+        DB::unprepared('
+        DROP FUNCTION IF EXISTS count_replies;
+                CREATE FUNCTION `count_replies`(category_id INT) RETURNS int
+        BEGIN
+                          DECLARE repliesCount INT;
+                          SELECT sum(replies_count)
+                          INTO repliesCount
+                          FROM   threads
+                          WHERE  threads.category_id IN ( WITH recursive recursive_categories AS
+                                                         (
+                                                                SELECT initial_categories.id
+                                                                FROM   categories AS initial_categories
+                                                                WHERE  initial_categories.id=category_id
+                                                                UNION ALL
+                                                                SELECT remaining_categories.id
+                                                                FROM   recursive_categories
+                                                                JOIN   categories AS remaining_categories
+                                                                ON     recursive_categories.id=remaining_categories.parent_id )
+                                                  SELECT   id
+                                                  FROM     recursive_categories );
+                        return repliesCount;
+        end
+                ');
 
         if (is_null($query->getQuery()->columns)) {
             $query->addSelect('*');
