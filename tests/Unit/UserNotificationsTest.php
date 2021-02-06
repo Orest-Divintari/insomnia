@@ -13,6 +13,7 @@ use App\Notifications\YouHaveANewFollower;
 use App\ProfilePost;
 use App\Thread;
 use App\User;
+use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
@@ -266,7 +267,8 @@ class UserNotificationsTest extends TestCase
         $follower = $this->signIn();
         $followingUser = create(User::class);
         $follower->follow($followingUser);
-        $notification = new YouHaveANewFollower($follower, $followingUser);
+        $followDate = Carbon::now();
+        $notification = new YouHaveANewFollower($follower, $followingUser, $followDate);
 
         $followingUser->notify($notification);
 
