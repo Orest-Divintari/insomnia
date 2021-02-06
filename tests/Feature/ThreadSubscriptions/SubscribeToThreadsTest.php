@@ -52,7 +52,7 @@ class SubscribeToThreadsTest extends TestCase
 
         tap($user->fresh(), function ($user) {
             $this->assertCount(1, $user->subscriptions);
-            $this->assertTrue($user->subscriptions->first()->prefersEmails);
+            $this->assertTrue($user->subscriptions->first()->prefers_email);
         });
     }
 
