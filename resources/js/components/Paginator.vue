@@ -14,13 +14,19 @@
 
           <template v-for="(page, key) in pages">
             <div v-if="page == '...'">
-              <v-popover offset="10">
+              <v-popover
+                offset="10"
+                popoverArrowClass="''"
+                popoverInnerClass="''"
+              >
                 <button class="btn-paginator cursor-pointer">...</button>
                 <template slot="popover">
                   <div
                     class="absolute -ml-4 bg-blue-lighter shadow-2xl border border-blue-light rounded"
                   >
-                    <p class="p-2 bg-white border-b border-blue-light rounded">Go to page</p>
+                    <p class="p-2 bg-white border-b border-blue-light rounded">
+                      Go to page
+                    </p>
                     <div class="flex items-center p-2">
                       <input
                         type="text"
@@ -31,7 +37,9 @@
                       <button
                         @click="changePage(goToPage)"
                         class="text-blue-mid p-1 focus:outline-none"
-                      >Go</button>
+                      >
+                        Go
+                      </button>
                     </div>
                   </div>
                 </template>
@@ -41,11 +49,17 @@
               v-else
               @click.prevent="changePage(page)"
               class="btn-paginator cursor-pointer"
-              :class="{'bg-blue-mid text-white': page == currentPage}"
-            >{{ page }}</div>
+              :class="{ 'bg-blue-mid text-white': page == currentPage }"
+            >
+              {{ page }}
+            </div>
           </template>
 
-          <button @click="changePage(++currentPage)" class="btn-paginator" v-show="nextPageUrl">
+          <button
+            @click="changePage(++currentPage)"
+            class="btn-paginator"
+            v-show="nextPageUrl"
+          >
             Next
             <span class="fas fa-caret-right text-xs"></span>
           </button>
