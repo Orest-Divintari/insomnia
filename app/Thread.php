@@ -430,8 +430,9 @@ class Thread extends Model
      */
     public function getLastPagesAttribute()
     {
+        $threadBodyReply = 1;
         $numberOfLastPages = 3;
-        $pages = (int) ceil(($this->replies_count + 1) / static::REPLIES_PER_PAGE);
+        $pages = (int) ceil(($this->replies_count + $threadBodyReply) / static::REPLIES_PER_PAGE);
         $link = "/threads/{$this->slug}?page=";
         $lastPages = [];
         if ($pages < 2) {
@@ -444,8 +445,9 @@ class Thread extends Model
             return [2 => $this->linkToPage(2), 3 => $this->linkToPage(3)];
         }
         for ($pageCount = $pages; $pageCount > $pages - $numberOfLastPages; $pageCount--) {
-            array_unshift($lastPages, [$pageCount => $this->linkToPage($pageCount)]);
+            $lastPages[$pageCount] = $this->linkToPage($pageCount);
         }
+        ksort($lastPages);
         return $lastPages;
     }
 

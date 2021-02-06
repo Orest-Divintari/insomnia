@@ -301,36 +301,62 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_knows_the_number_of_last_pages_of_replies()
     {
-        $this->thread->increment('replies_count', 100);
-        dd(Thread::first()->toArray());
-        $numberOfRepliesForOnePage = Thread::REPLIES_PER_PAGE;
+        $threadBody = 1;
+        $numberOfRepliesForOnePage = Thread::REPLIES_PER_PAGE - $threadBody;
         $this->thread->update(['replies_count' => $numberOfRepliesForOnePage]);
-
         $this->assertEmpty(Thread::first()->lastPages);
 
-        $numberOfRepliesForTwoPages = Thread::REPLIES_PER_PAGE * 2;
+        $pageNumberTwo = 2;
+        $numberOfRepliesForTwoPages = Thread::REPLIES_PER_PAGE * 2 - $threadBody;
         $this->thread->update(['replies_count' => $numberOfRepliesForTwoPages]);
+        $this->assertEquals(
+            $this->thread->linkToPage($pageNumberTwo),
+            Thread::first()->lastPages[$pageNumberTwo]
+        );
 
-        $this->assertEquals(2, Thread::first()->lastPages[0]);
-
-        $numberOfRepliesForTwoPages = Thread::REPLIES_PER_PAGE * 3;
+        $pageNumberThree = 3;
+        $numberOfRepliesForTwoPages = Thread::REPLIES_PER_PAGE * 3 - $threadBody;
         $this->thread->update(['replies_count' => $numberOfRepliesForTwoPages]);
+        $this->assertEquals(
+            $this->thread->linkToPage($pageNumberTwo),
+            Thread::first()->lastPages[$pageNumberTwo]
+        );
+        $this->assertEquals(
+            $this->thread->linkToPage($pageNumberThree),
+            Thread::first()->lastPages[$pageNumberThree]
+        );
 
-        $this->assertEquals(2, Thread::first()->lastPages[0]);
-        $this->assertEquals(3, Thread::first()->lastPages[1]);
-
-        $numberOfRepliesFor4Pages = Thread::REPLIES_PER_PAGE * 4;
+        $pageNumberFour = 4;
+        $numberOfRepliesFor4Pages = Thread::REPLIES_PER_PAGE * 4 - $threadBody;
         $this->thread->update(['replies_count' => $numberOfRepliesFor4Pages]);
+        $this->assertEquals(
+            $this->thread->linkToPage($pageNumberTwo),
+            Thread::first()->lastPages[$pageNumberTwo]
+        );
+        $this->assertEquals(
+            $this->thread->linkToPage($pageNumberThree),
+            Thread::first()->lastPages[$pageNumberThree]
+        );
+        $this->assertEquals(
+            $this->thread->linkToPage($pageNumberFour),
+            Thread::first()->lastPages[$pageNumberFour]
+        );
 
-        $this->assertEquals(2, Thread::first()->lastPages[0]);
-        $this->assertEquals(3, Thread::first()->lastPages[1]);
-        $this->assertEquals(4, Thread::first()->lastPages[2]);
-
-        $numberOfRepliesFor10pages = Thread::REPLIES_PER_PAGE * 10;
+        $pageTen = 10;
+        $numberOfRepliesFor10pages = Thread::REPLIES_PER_PAGE * 10 - $threadBody;
         $this->thread->update(['replies_count' => $numberOfRepliesFor10pages]);
 
-        $this->assertEquals(8, Thread::first()->lastPages[0]);
-        $this->assertEquals(9, Thread::first()->lastPages[1]);
-        $this->assertEquals(10, Thread::first()->lastPages[2]);
+        $this->assertEquals(
+            $this->thread->linkToPage(8),
+            Thread::first()->lastPages[8]
+        );
+        $this->assertEquals(
+            $this->thread->linkToPage(9),
+            Thread::first()->lastPages[9]
+        );
+        $this->assertEquals(
+            $this->thread->linkToPage($pageTen),
+            Thread::first()->lastPages[$pageTen]
+        );
     }
 }
