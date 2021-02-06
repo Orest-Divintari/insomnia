@@ -59,24 +59,15 @@ class SearchController extends Controller
      */
     public function create()
     {
-        return $this->viewSearchForm();
+        $searchForm = [
+            'thread' => 'search.advanced.threads',
+            'profile_post' => 'search.advanced.profile_posts',
+            'tag' => 'search.advanced.tags',
+            '' => 'search.advanced.all_posts',
+        ];
+        $type = $this->request->input('type') ?? '';
+
+        return view($searchForm[$type], compact('type'));
     }
 
-    /**
-     * Determine the search type
-     *
-     * @return View
-     */
-    public function viewSearchForm()
-    {
-        $type = $this->request->input('type');
-        if ($type == 'thread') {
-            return view('search.advanced.threads', ['type' => 'thread']);
-        } elseif ($type == 'profile_post') {
-            return view('search.advanced.profile_posts', ['type' => 'profile_post']);
-        } elseif ($type == 'tag') {
-            return view('search.advanced.tags', ['type' => 'tag']);
-        }
-        return view('search.advanced.all_posts', ['type' => '']);
-    }
 }
