@@ -126,6 +126,40 @@ class SearchTest extends TestCase
         $response->assertSee($errorForDoe);
     }
 
+    /** @test */
+    public function display_the_advanced_search_for_all_posts()
+    {
+        $response = $this->get(route('search.advanced'), ['type' => '']);
+
+        $response->assertOk();
+    }
+
+    /** @test */
+    public function display_the_advanced_search_for_threads()
+    {
+        $response = $this->get(route('search.advanced'), ['type' => 'thread']);
+
+        $response->assertOk();
+        $response->assertSee('thread');
+    }
+
+    /** @test */
+    public function display_the_advanced_search_for_profile_posts()
+    {
+        $response = $this->get(route('search.advanced'), ['type' => 'profile_post']);
+
+        $response->assertOk();
+        $response->assertSee('profile_post');
+    }
+
+    /** @test */
+    public function display_the_advanced_search_for_tags()
+    {
+        $response = $this->get(route('search.advanced'), ['type' => 'tag']);
+
+        $response->assertOk();
+        $response->assertSee('tag');
+    }
     // /** @test */
     // public function a_user_can_use_the_advance_search()
     // {
