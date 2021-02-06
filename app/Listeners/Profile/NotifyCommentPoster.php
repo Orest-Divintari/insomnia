@@ -27,7 +27,6 @@ class NotifyCommentPoster
      */
     public function handle(CommentWasLiked $event)
     {
-
         $this->event = $event;
         if ($this->isOwnerOfComment()) {
             return;

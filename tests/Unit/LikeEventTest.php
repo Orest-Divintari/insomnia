@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Events\Converstion\MessageWasLiked;
+use App\Events\Conversation\MessageWasLiked;
 use App\Events\LikeEvent;
 use App\Events\Profile\CommentWasLiked;
 use App\Events\Subscription\ReplyWasLiked;

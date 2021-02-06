@@ -2,12 +2,11 @@
 
 namespace App\Listeners\Conversation;
 
-use App\Events\Converstion\MessageWasLiked;
+use App\Events\Conversation\MessageWasLiked;
 use App\Notifications\MessageHasNewLike;
 
 class NotifyMessagePoster
 {
-
     /**
      * Handle the event.
      *

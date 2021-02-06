@@ -2,12 +2,10 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
 class MessageHasNewLike extends Notification
 {
-    use Queueable;
 
     public $like;
     public $liker;

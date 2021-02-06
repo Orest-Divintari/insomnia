@@ -3,7 +3,7 @@
 namespace App\Events;
 
 use App\Conversation;
-use App\Events\Converstion\MessageWasLiked;
+use App\Events\Conversation\MessageWasLiked;
 use App\Events\Profile\CommentWasLiked;
 use App\Events\Subscription\ReplyWasLiked;
 use App\ProfilePost;
