@@ -40,9 +40,9 @@ class Activity extends Model
      * @param User $user
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public static function feed($user)
+    public function scopeFeed($query, $user)
     {
-        return static::where('user_id', '=', $user->id)
+        return $query->where('user_id', '=', $user->id)
             ->latest()
             ->with(['subject' => function ($morphTo) {
                 $morphTo->morphWith([
@@ -65,9 +65,9 @@ class Activity extends Model
      * @param  User $user
      * @return Builder
      */
-    public static function feedPosts($user)
+    public function scopeFeedPosts($query, $user)
     {
-        return static::where('user_id', $user->id)
+        return $query->where('user_id', $user->id)
             ->whereIn('subject_type', [
                 'App\Thread',
                 'App\Reply',
