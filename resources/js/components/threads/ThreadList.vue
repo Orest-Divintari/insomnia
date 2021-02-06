@@ -43,7 +43,6 @@
             <div class="ml-1 flex items-center leading-0">
               <a
                 v-for="(link, page) in thread.last_pages"
-                :key="index"
                 :href="link"
                 class="btn-paginator cursor-pointer px-1 mx-1/2 text-xs"
               >
