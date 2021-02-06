@@ -66,25 +66,6 @@ class FollowTest extends TestCase
     }
 
     /** @test */
-    public function a_user_may_unfollow_a_user_that_is_already_following()
-    {
-        // config(['database.default' => 'mysql']);
-        // config(['database.connections.mysql.database' => config('insomnia.database.name')]);
-
-        // $this->user->follow($this->anotherUser);
-        // $this->assertTrue(
-        //     $this->user->following($this->anotherUser)
-        // );
-        // $this->assertCount(1, $this->user->fresh()->follows);
-
-        // $this->user->unfollow($this->anotherUser);
-        // $this->assertCount(0, $this->user->follows);
-        // $this->assertFalse(
-        //     $this->user->following($this->anotherUser)
-        // );
-    }
-
-    /** @test */
     public function a_user_may_toggle_the_follow_to_another_user()
     {
         $this->user->follow($this->anotherUser);
