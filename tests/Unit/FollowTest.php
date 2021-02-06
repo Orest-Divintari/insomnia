@@ -109,7 +109,10 @@ class FollowTest extends TestCase
 
         $visitor->follow($profileOwner);
 
-        $this->assertTrue($profileOwner->followedByVisitor);
+        $profileOwner = User::whereId($profileOwner->id)
+            ->withFollowedByVisitor()
+            ->first();
+        $this->assertTrue($profileOwner->followed_by_visitor);
     }
 
     /** @test */
