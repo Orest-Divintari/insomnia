@@ -55,6 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'conversation_admin' => 'boolean',
+        'followed_by_visitor' => 'boolean',
     ];
 
     /**
