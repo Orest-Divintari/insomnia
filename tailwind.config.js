@@ -71,7 +71,10 @@ module.exports = {
                 "17": "4.25rem",
                 "28": "7rem",
                 "72": "18rem",
-                "80": "20rem"
+                "80": "20rem",
+            },
+            width:{
+                "180": "45rem"
             },
             padding: {
                 input: "0.375rem"

@@ -22,7 +22,10 @@ trait Readable
                 AND reads.user_id = ?
         )';
 
-        return $query->select()->selectRaw(
+        if (is_null($query->getQuery()->columns)) {
+            $query->addSelect('*');
+        }
+        return $query->selectRaw(
             'CASE
                 WHEN ' . $read . ' >= ' . $readableTable . '.updated_at THEN 0
                 WHEN ' . $read . ' IS NULL THEN 1

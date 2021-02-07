@@ -12,6 +12,7 @@ use App\Traits\RecordsActivity;
 use App\Traits\Sluggable;
 use App\Traits\Subscribable;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -460,6 +461,55 @@ class Thread extends Model
     public function linkToPage($page)
     {
         return "/threads/{$this->slug}?page={$page}";
+    }
+
+    /**
+     * Fetch the threads that were read recently by the givne user
+     *
+     * @param Builder $query
+     * @param User $user
+     * @return Builder
+     */
+    public function scopeRecentlyViewedBy($query, $user)
+    {
+        $days = 30;
+        $daysAgo = Carbon::now()->subDays($days)->startOfDay();
+
+        return $query->select()->whereHas('reads', function ($query) use (
+            $user,
+            $daysAgo
+        ) {
+            $query->where('read_at', '>=', $daysAgo)
+                ->where('user_id', $user->id);
+        });
+    }
+
+    /**
+     * Get the date that the authenticated user read a thread
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithReadAt($query)
+    {
+        return $query->addSelect(['read_at' => Read::select('read_at')
+                ->whereColumn('readable_id', 'threads.id')
+                ->where('readable_type', Thread::class)
+                ->when(auth()->check(), function ($query) {
+                    return $query->where('user_id', auth()->id());
+                }),
+        ]);
+    }
+
+    /**
+     * Format the date that the thread was read
+     *
+     * @param string $value
+     * @return string
+     */
+    public function getReadAtAttribute($value)
+    {
+        return Carbon::parse($value)->diffForHumans();
     }
 
 }

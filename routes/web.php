@@ -59,6 +59,10 @@ Route::get('/profiles/{user}', 'ProfileController@show')
 
 Route::group(['middleware' => 'auth'], function () {
 
+    // recently viewed threads
+    Route::get('/history', 'RecentlyViewedThreadsController@index')
+        ->name('recently-viewed-threads.index');
+
     Route::get('/messages/{messageId}', 'MessageController@show')
         ->name('messages.show');
 

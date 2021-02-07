@@ -50,6 +50,7 @@
                             class="dropdown-item">Threads you replied to</a>
                         <a href="{{ route('filtered-threads.index') . '?watched=true'}}"
                             class="dropdown-item">Watched</a>
+                        <a href="{{ route('recently-viewed-threads.index') }}" class="dropdown-item">History</a>
                     </template>
                 </dropdown>
                 @endauth

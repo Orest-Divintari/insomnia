@@ -359,4 +359,19 @@ class ThreadTest extends TestCase
             Thread::first()->lastPages[$pageTen]
         );
     }
+
+    /** @test */
+    public function a_thread_knows_when_the_authenticated_user_read_it()
+    {
+        $user = $this->signIn();
+        $thread = create(Thread::class);
+        $user->read($thread);
+
+        $thread = Thread::withReadAt()->find($thread->id);
+
+        $this->assertEquals(
+            $thread->read_at,
+            Carbon::parse($thread->reads->first()->read_at)->diffForHumans()
+        );
+    }
 }
