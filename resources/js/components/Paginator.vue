@@ -74,6 +74,10 @@ import EventBus from "../eventBus";
 export default {
   props: {
     dataset: Object,
+    withQueryString: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -97,7 +101,7 @@ export default {
       this.previousPageUrl = this.dataset.prev_page_url;
       this.lastPage = this.dataset.last_page;
     },
-    validatePageNumber(page) {
+    normalizePageNumber(page) {
       let pageNumber = parseInt(page);
       if (Number.isInteger(pageNumber)) {
         if (pageNumber < this.firstPage) {
@@ -117,11 +121,31 @@ export default {
     },
     changePage(page) {
       this.clearInput();
-      var pageNumber = this.validatePageNumber(page);
-      if (pageNumber) {
-        var path = window.location.pathname + "?page=" + page;
-        window.location.href = path;
+      var pageNumber = this.normalizePageNumber(page);
+      if (!pageNumber) {
+        return;
       }
+      if (this.withQueryString) {
+        var path = window.location.href;
+        if (path.includes("page=")) {
+          path = this.updatePageParameter(path, pageNumber);
+        } else {
+          if (this.queryParametersExist(path)) {
+            path = path + "&page=" + pageNumber;
+          } else {
+            path = path + "?page=" + pageNumber;
+          }
+        }
+      } else {
+        var path = window.location.pathname + "?page=" + pageNumber;
+      }
+      window.location.href = path;
+    },
+    updatePageParameter(path, pageNumber) {
+      return path.replace(/(\page=\d)/i, "page=" + pageNumber);
+    },
+    queryParametersExist(path) {
+      return path.match(/(\?\w)/i);
     },
     startFromPage() {
       var from = 0;
