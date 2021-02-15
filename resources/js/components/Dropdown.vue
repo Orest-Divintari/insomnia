@@ -38,9 +38,7 @@ export default {
       this.isOpen = !this.isOpen;
     },
     hide() {
-      window.setTimeout(() => {
-        this.isOpen = false;
-      }, 200);
+      this.isOpen = false;
     },
   },
 };
