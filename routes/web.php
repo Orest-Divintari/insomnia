@@ -21,6 +21,10 @@ Route::get('/', function () {
 Route::get('/tags/{tag}', 'TagController@show')
     ->name('tags.show');
 
+// online user activity
+Route::get('/online/users-activity', 'OnlineUserActivityController@index')
+    ->name('online-users-activity.index');
+
 //search
 
 Route::get('/search', 'SearchController@show')

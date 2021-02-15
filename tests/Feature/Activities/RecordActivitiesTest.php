@@ -2,6 +2,10 @@
 
 namespace Tests\Feature\Activities;
 
+use App\Category;
+use App\Conversation;
+use App\Events\Activity\UserActivity;
+use App\Events\Activity\UserViewedPage;
 use App\Http\Middleware\ThrottlePosts;
 use App\Like;
 use App\ProfilePost;
@@ -310,6 +314,181 @@ class ActivityTest extends TestCase
             'subject_id' => $like->id,
             'subject_type' => Like::class,
             'user_id' => $user->id,
+        ]);
+    }
+
+    /** @test */
+    public function when_a_guest_visits_a_thread_the_activity_is_recorded()
+    {
+        $thread = create(Thread::class);
+
+        $this->get(route('threads.show', $thread));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => null,
+            'guest_id' => csrf_token(),
+            'subject_id' => $thread->id,
+            'subject_type' => Thread::class,
+            'type' => 'viewed-thread',
+            'description' => UserViewedPage::THREAD,
+        ]);
+    }
+
+    /** @test */
+    public function when_an_authenticated_user_visits_a_thread_the_activity_is_recorded()
+    {
+        $this->signIn();
+        $thread = create(Thread::class);
+
+        $this->get(route('threads.show', $thread));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => auth()->id(),
+            'guest_id' => null,
+            'subject_id' => $thread->id,
+            'subject_type' => Thread::class,
+            'type' => 'viewed-thread',
+            'description' => UserViewedPage::THREAD,
+        ]);
+    }
+
+    /** @test */
+    public function when_a_guest_visits_a_category_the_activity_is_recorded()
+    {
+        $category = create(Category::class);
+
+        $this->get(route('categories.show', $category));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => null,
+            'guest_id' => csrf_token(),
+            'subject_id' => $category->id,
+            'subject_type' => Category::class,
+            'type' => 'viewed-category',
+            'description' => UserViewedPage::CATEGORY,
+        ]);
+    }
+
+    /** @test */
+    public function when_an_authenticated_user_visits_a_category_the_activity_is_recorded()
+    {
+        $this->signIn();
+        $category = create(Category::class);
+
+        $this->get(route('categories.show', $category));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => auth()->id(),
+            'guest_id' => null,
+            'subject_id' => $category->id,
+            'subject_type' => Category::class,
+            'type' => 'viewed-category',
+            'description' => UserViewedPage::CATEGORY,
+        ]);
+    }
+
+    /** @test */
+    public function when_an_authenticated_user_opens_a_conversation_the_activity_is_recorded()
+    {
+        $john = $this->signIn();
+        $peter = create(User::class);
+        $conversation = ConversationFactory::by($john)
+            ->withParticipants([$peter->name])
+            ->create();
+
+        $this->get(route('conversations.show', $conversation));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => $john->id,
+            'guest_id' => null,
+            'subject_id' => null,
+            'subject_type' => null,
+            'type' => 'viewed-page',
+            'description' => UserViewedPage::CONVERSATION,
+        ]);
+    }
+
+    /** @test */
+    public function when_a_guest_visits_the_forum_the_activity_is_recorded()
+    {
+        $this->get(route('forum'));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => null,
+            'guest_id' => csrf_token(),
+            'subject_id' => null,
+            'subject_type' => null,
+            'type' => 'viewed-page',
+            'description' => UserViewedPage::FORUM,
+        ]);
+    }
+
+    /** @test */
+    public function when_an_authenticated_user_visits_the_forum_the_activity_is_recorded()
+    {
+        $this->signIn();
+        $this->get(route('forum'));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => auth()->id(),
+            'guest_id' => null,
+            'subject_id' => null,
+            'subject_type' => null,
+            'type' => 'viewed-page',
+            'description' => UserViewedPage::FORUM,
+        ]);
+    }
+
+    /** @test */
+    public function when_a_user_visits_the_profile_of_another_member_the_activity_is_recorded()
+    {
+        $john = create(User::class);
+        $peter = create(User::class);
+
+        $this->get(route('profiles.show', $john));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => null,
+            'guest_id' => csrf_token(),
+            'subject_id' => $john->id,
+            'subject_type' => User::class,
+            'type' => 'viewed-user',
+            'description' => UserViewedPage::PROFILE,
+        ]);
+    }
+
+    /** @test */
+    public function when_an_authenticated_user_visits_the_profile_of_another_member_the_activity_is_recorded()
+    {
+        $peter = $this->signIn();
+        $john = create(User::class);
+
+        $this->get(route('profiles.show', $john));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => auth()->id(),
+            'guest_id' => null,
+            'subject_id' => $john->id,
+            'subject_type' => User::class,
+            'type' => 'viewed-user',
+            'description' => UserViewedPage::PROFILE,
+        ]);
+    }
+
+    /** @test */
+    public function when_an_authenticated_user_views_the_list_of_conversations()
+    {
+        $user = $this->signIn();
+
+        $this->get(route('conversations.index'));
+
+        $this->assertDatabaseHas('activities', [
+            'user_id' => $user->id,
+            'guest_id' => null,
+            'subject_id' => null,
+            'subject_type' => null,
+            'type' => 'viewed-page',
+            'description' => UserActivity::VIEWED_CONVERSATION,
         ]);
     }
 }

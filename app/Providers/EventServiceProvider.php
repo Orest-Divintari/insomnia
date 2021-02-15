@@ -68,6 +68,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Like\ReplyWasUnliked' => [
             'App\Listeners\Like\DeleteReplyLikeNotification',
         ],
+        'App\Events\Activity\UserViewedPage' => [
+            'App\Listeners\Activity\LogUserActivity',
+        ],
+        'Illuminate\Auth\Events\Logout' => [
+            'App\Listeners\Activity\DeleteUserViewedActivity',
+        ],
 
     ];
 

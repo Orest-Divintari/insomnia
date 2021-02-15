@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Events\Activity\UserViewedPage;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateThreadRequest;
 use App\Reply;
@@ -89,6 +90,8 @@ class ThreadController extends Controller
         $filters = $this->filterManager->withReplyFilters();
         $replies = Reply::forRepliable($thread, $filters);
         $thread->recordVisit();
+
+        event(new UserViewedPage(UserViewedPage::THREAD, $thread));
 
         if (request()->wantsJson()) {
             return $replies;

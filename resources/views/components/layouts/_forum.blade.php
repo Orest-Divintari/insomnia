@@ -66,6 +66,22 @@
                 <x-sub_head_tab_item name="Trending"
                     destination="{{ route('filtered-threads.index') . '?trending=true' }}">
                 </x-sub_head_tab_item>
+                @auth
+                <dropdown>
+                    <template v-slot:dropdown-trigger>
+                        <div class="sub-head-tab-container">
+                            <div class="px-5 border-r border-gray-400 flex">
+                                <div href="" class="cursor-pointer mr-3/2">Members</div>
+                                <i class="pt-1 fas fa-sort-down"></i>
+                            </div>
+                        </div>
+                    </template>
+                    <template v-slot:dropdown-items>
+                        <a href="{{ route('online-users-activity.index') }}"
+                            class=" dropdown-item hover:bg-white-catskill">Current visitors</a>
+                    </template>
+                </dropdown>
+                @endauth
 
             </div>
             <div class=" px-5">

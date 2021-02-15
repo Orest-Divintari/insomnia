@@ -6,10 +6,12 @@ use App\Activity;
 use App\Like;
 use App\ProfilePost;
 use App\Reply;
+use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class DeleteActivitiesTest extends TestCase
@@ -88,5 +90,33 @@ class DeleteActivitiesTest extends TestCase
                 'subject_id' => $like->id,
             ])->count()
         );
+    }
+
+    /** @test */
+    public function when_a_user_logs_out_the_activities_of_type_viewed_are_deleted()
+    {
+        $user = $this->signIn();
+        $this->get(route('forum'));
+        $this->assertCount(1, Activity::typeViewed()->get());
+
+        Auth::logout();
+
+        $this->assertCount(0, Activity::typeViewed()->get());
+    }
+
+    /** @test */
+    public function activities_of_type_viewed_that_are_more_than_15_minutes_old_will_be_deleted_daily()
+    {
+        Carbon::setTestNow(Carbon::now()->subMinutes(20));
+        $user = $this->signIn();
+        $this->get(route('forum'));
+        $this->assertCount(1, Activity::typeViewed()->get());
+        Carbon::setTestNow();
+        $this->get(route('forum'));
+        $this->assertCount(2, Activity::typeViewed()->get());
+
+        $this->artisan('schedule:run');
+
+        $this->assertCount(1, Activity::typeViewed()->get());
     }
 }

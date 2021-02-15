@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Conversation;
+use App\Events\Activity\UserViewedPage;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateConversationRequest;
 use App\Reply;
@@ -53,12 +54,17 @@ class ConversationController extends Controller
     public function show(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
+
+        event(new UserViewedPage(UserViewedPage::CONVERSATION));
+
         auth()->user()->read($conversation);
+
         $conversation = Conversation::whereSlug($conversation->slug)
             ->withHasBeenUpdated()
             ->with('participants')
             ->isStarred()
             ->firstOrFail();
+
         $participants = $conversation->participants;
         $messages = Reply::forRepliable($conversation);
 
@@ -78,6 +84,8 @@ class ConversationController extends Controller
      */
     public function index(FilterManager $filterManager)
     {
+        event(new UserViewedPage(UserViewedPage::CONVERSATION));
+
         $filters = $filterManager->withConversationFilters();
 
         $conversations = auth()->user()
