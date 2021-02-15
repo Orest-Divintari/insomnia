@@ -20,19 +20,16 @@
       Normal Threads
     </div>
     <thread-list @read="read" :threads="threads"></thread-list>
-    <paginator :dataset="dataset"></paginator>
   </div>
 </template>
 
 <script>
-import paginator from "../Paginator";
 import replies from "../../mixins/replies";
 import ThreadList from "./ThreadList";
 import ThreadFilters from "./ThreadFilters";
 import view from "../../mixins/view";
 export default {
   components: {
-    paginator,
     ThreadFilters,
     ThreadList,
   },

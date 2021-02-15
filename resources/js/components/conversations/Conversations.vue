@@ -92,12 +92,10 @@
 </template>
 
 <script>
-import paginator from "../Paginator";
 import views from "../../mixins/view";
 import ConversationFilters from "./ConversationFilters";
 export default {
   components: {
-    paginator,
     ConversationFilters,
   },
   props: {

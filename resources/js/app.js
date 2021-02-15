@@ -65,6 +65,10 @@ Vue.component(
     "StartConversationButton",
     require("./components/conversations/StartConversationButton.vue").default
 );
+Vue.component(
+    "Paginator",
+    require("./components/Paginator.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

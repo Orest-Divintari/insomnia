@@ -35,14 +35,12 @@
 
 <script>
 import Reply from "./Reply";
-import Paginator from "../Paginator";
 import NewReply from "./NewReply";
 import collection from "../../mixins/collection";
 import EventBus from "../../eventBus";
 export default {
   components: {
     Reply,
-    Paginator,
     NewReply,
   },
   props: {
