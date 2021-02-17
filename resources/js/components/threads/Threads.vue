@@ -20,6 +20,7 @@
       Normal Threads
     </div>
     <thread-list @read="read" :threads="threads"></thread-list>
+    <paginator :dataset="dataset"></paginator>
   </div>
 </template>
 
