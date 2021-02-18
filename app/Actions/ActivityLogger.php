@@ -42,6 +42,7 @@ class ActivityLogger
 
     public function by($user = null)
     {
+        $this->resetCauser();
         if ($user) {
             $this->userId = $user->id;
         }
@@ -50,6 +51,7 @@ class ActivityLogger
 
     public function byGuest()
     {
+        $this->resetCauser();
         $this->guestId = $this->generateGuestId();
         return $this;
     }
@@ -96,6 +98,12 @@ class ActivityLogger
     private function generateGuestId()
     {
         return csrf_token() ?? bcrypt(md5(uniqid(time(), true)));
+    }
+
+    private function resetCauser()
+    {
+        $this->guestId = null;
+        $this->userId = null;
     }
 
 }
