@@ -4,7 +4,6 @@ namespace Tests\Feature\Activities;
 
 use App\Category;
 use App\Conversation;
-use App\Events\Activity\UserActivity;
 use App\Events\Activity\UserViewedPage;
 use App\Http\Middleware\ThrottlePosts;
 use App\Like;
@@ -488,7 +487,7 @@ class ActivityTest extends TestCase
             'subject_id' => null,
             'subject_type' => null,
             'type' => 'viewed-page',
-            'description' => UserActivity::VIEWED_CONVERSATION,
+            'description' => UserViewedPage::CONVERSATION,
         ]);
     }
 }
