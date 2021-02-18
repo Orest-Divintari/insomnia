@@ -19,10 +19,11 @@ class UserViewedPageEventTest extends TestCase
     /** @test */
     public function when_a_user_visits_a_thread_an_event_is_fired()
     {
-        $this->withoutExceptionHandling();
         $listener = Mockery::spy(LogUserActivity::class);
         app()->instance(LogUserActivity::class, $listener);
         $thread = create(Thread::class);
+
+        $this->get(route('threads.show', $thread));
 
         $listener->shouldHaveReceived('handle', function ($event) use ($thread) {
             return $event->subject->id == $thread->id
