@@ -50,6 +50,7 @@ class OnlineRepositoryTest extends TestCase
             ->description('something')
             ->byGuest()
             ->log();
+
         $user = $this->signIn();
         $this->logger
             ->type('viewed')
@@ -125,9 +126,9 @@ class OnlineRepositoryTest extends TestCase
             ->byGuest()
             ->log();
         $user = $this->signIn();
-        Carbon::setTestNow();
+        $logger = (new ActivityLogger);
         $user = $this->signIn();
-        $this->logger
+        $logger
             ->type('viewed')
             ->description('something')
             ->log();
