@@ -454,14 +454,14 @@ class SearchTest extends TestCase
     }
 
     /** @test */
-    public function when_searcing_without_entering_a_search_query_then_an_existing_username_must_be_specified()
+    public function when_searching_without_entering_a_search_query_then_an_existing_username_must_be_specified()
     {
         $user = create(User::class, ['name' => 'george']);
         $nonExistingUsername = 'uric';
 
         $this->get(route('search.show', [
             'postedBy' => $nonExistingUsername,
-        ]))->assertSee('The following members could not be found: ' . $nonExistingUsername);
+        ]))->assertSee('The following member could not be found: ' . $nonExistingUsername);
     }
 
     /** @test */
