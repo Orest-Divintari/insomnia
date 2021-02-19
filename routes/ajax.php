@@ -26,9 +26,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // ************ THREAD REPLIES ************
 
-    Route::get('/replies/{reply}', 'ReplyController@show')
-        ->name('replies.show');
-
     Route::post('/threads/{thread}/replies', 'ReplyController@store')
         ->name('replies.store')
         ->middleware('throttle.posts');

@@ -62,7 +62,7 @@ class ViewThreadsTest extends TestCase
             ->count();
         $pageNumber = (int) ceil($numberOfPreviousReplies / Thread::REPLIES_PER_PAGE);
 
-        $response = $this->get(route('ajax.replies.show', $desiredReply));
+        $response = $this->get(route('replies.show', $desiredReply));
 
         $response->assertSee($desiredReply->title);
     }

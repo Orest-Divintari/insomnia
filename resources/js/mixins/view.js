@@ -11,7 +11,7 @@ export default {
                 "/profiles/" + user.name + "#profile-post-" + post.id;
         },
         showReply(reply) {
-            window.location.href = "/api/replies/" + reply.id;
+            window.location.href = "/replies/" + reply.id;
         },
         showCategory(category) {
             window.location.href = "/forum/categories/" + category.slug;
