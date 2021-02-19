@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| contains the "wWEeb" middleware group. Now create something great!
 |
  */
 Auth::routes(['verify' => true]);
@@ -17,15 +17,15 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-// tags
+/* ************ TAGS ************ */
 Route::get('/tags/{tag}', 'TagController@show')
     ->name('tags.show');
 
-// online user activity
+/* ************ ONLINE ************ */
 Route::get('/online/user-activities', 'OnlineUserActivityController@index')
     ->name('online-user-activities.index');
 
-//search
+/* ************ SEARCH ************ */
 
 Route::get('/search', 'SearchController@show')
     ->name('search.show');
@@ -33,14 +33,15 @@ Route::get('/search', 'SearchController@show')
 Route::get('/search/advanced', 'SearchController@create')
     ->name('search.advanced');
 
-// categories
+/* ************ CATEGORIES ************ */
+
 Route::get('/forum', 'CategoryController@index')
     ->name('forum');
 
 Route::get('/forum/categories/{category}', 'CategoryController@show')
     ->name('categories.show');
 
-//threads
+/* ************ THREADS ************ */
 
 Route::get('/threads', 'ThreadController@index')
     ->name('threads.index');
@@ -54,21 +55,22 @@ Route::get('/threads/{thread}', 'ThreadController@show')
 Route::delete('/threads/thread', 'ThreadController@destroy')
     ->name('threads.destroy');
 
-//profile
+/* ************ PROFILE ************ */
 
 Route::get('/profiles/{user}', 'ProfileController@show')
     ->name('profiles.show');
 
-// ------- WEB AUTH -------
-
 Route::group(['middleware' => 'auth'], function () {
 
-    // recently viewed threads
+    /* ************ RECENTLY VIEWED THREADS ************ */
+
     Route::get('/history', 'RecentlyViewedThreadsController@index')
         ->name('recently-viewed-threads.index');
 
     Route::get('/messages/{messageId}', 'MessageController@show')
         ->name('messages.show');
+
+    /* ************ THREADS ************ */
 
     Route::get('/threads/create/{categorySlug}', 'ThreadController@create')
         ->name('threads.create');
@@ -77,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware('verified', 'throttle.posts')
         ->name('threads.store');
 
-    // conversation
+    /* ************ CONVERSATIONS ************ */
 
     Route::post('/conversations', 'ConversationController@store')
         ->middleware('verified')
