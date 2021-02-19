@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Ajax;
 
 use App\Comment;
 use App\Http\Controllers\Controller;

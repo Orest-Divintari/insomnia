@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Ajax;
 
 use App\Activity;
 use App\Http\Controllers\Controller;

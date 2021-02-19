@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Ajax;
 
 use App\Conversation;
 use App\Http\Controllers\Controller;
 
-class StarConversationController extends Controller
+class ReadConversationController extends Controller
 {
     /**
-     * Mark the conversation as starred for the authenticated user
+     * Mark conversation as read
      *
      * @param Conversation $conversation
      * @return \Illuminate\Http\Response
      */
-    public function store(Conversation $conversation)
+    public function update(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-        $conversation->star();
-        return response('Conversation starred', 200);
+        auth()->user()->read($conversation);
+        return response('Conversation has been marked as read', 200);
     }
 
     /**
-     * Mark the conversation as unstarred for the authenticated user
+     * Mark conversation as unread
      *
      * @param Conversation $conversation
      * @return \Illuminate\Http\Response
@@ -29,7 +29,7 @@ class StarConversationController extends Controller
     public function destroy(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-        $conversation->unstar();
-        return response('Conversation unstarred', 200);
+        auth()->user()->unread($conversation);
+        return response('Conversation has been marked as unread', 200);
     }
 }

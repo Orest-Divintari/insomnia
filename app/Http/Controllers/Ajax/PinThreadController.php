@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
 use App\Thread;
@@ -13,7 +13,7 @@ class PinThreadController extends Controller
      * @param Thread $thread
      * @return \Illuminate\Http\Response
      */
-    public function store(Thread $thread)
+    public function update(Thread $thread)
     {
         $this->authorize('pin', $thread);
         $thread->pin();

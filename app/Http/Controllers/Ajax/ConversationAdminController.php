@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Ajax;
 
 use App\Conversation;
 use App\Http\Controllers\Controller;
@@ -13,7 +13,7 @@ class ConversationAdminController extends Controller
      * @param Conversation $conversation
      * @return void
      */
-    public function store(Conversation $conversation, $participantId)
+    public function update(Conversation $conversation, $participantId)
     {
         $this->authorize('manage', $conversation);
         $conversation->setAdmin($participantId);

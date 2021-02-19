@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Ajax;
 
 use App\Conversation;
 use App\Http\Controllers\Controller;
 
-class HideConversationController extends Controller
+class LeaveConversationController extends Controller
 {
     /**
-     * Hide the conversation from the authenticated user
+     * Authenticated user leaves the conversation
      *
      * @param Conversation $conversation
      * @return \Illuminate\Http\Response
@@ -16,7 +16,7 @@ class HideConversationController extends Controller
     public function update(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-        $conversation->hideFrom(auth()->user());
-        return response('The conversation has been hidden successfully', 200);
+        $conversation->leftBy(auth()->user());
+        return response('The conversation has been left successfully', 200);
     }
 }
