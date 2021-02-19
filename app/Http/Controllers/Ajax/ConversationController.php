@@ -6,7 +6,6 @@ use App\Conversation;
 use App\Filters\FilterManager;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateConversationRequest;
-use Illuminate\Http\Request;
 
 class ConversationController extends Controller
 {
@@ -19,10 +18,7 @@ class ConversationController extends Controller
      */
     public function update(Conversation $conversation, UpdateConversationRequest $request)
     {
-        $conversation->update([
-            'title' => request('title'),
-            'locked' => request()->boolean('locked'),
-        ]);
+        $request->update($conversation);
 
         return response('The conversation has been updated', 200);
     }

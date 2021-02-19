@@ -41,4 +41,18 @@ class UpdateConversationRequest extends FormRequest
             'title.string' => 'Please enter a valid title.',
         ];
     }
+
+    /**
+     * Update resource
+     *
+     * @param Conversation $conversation
+     * @return void
+     */
+    protected function update($conversation)
+    {
+        $conversation->update([
+            'title' => request('title'),
+            'locked' => request()->boolean('locked'),
+        ]);
+    }
 }
