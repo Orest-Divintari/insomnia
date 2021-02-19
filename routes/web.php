@@ -35,7 +35,7 @@ Route::get('/search/advanced', 'SearchController@create')
 
 /* ************ CATEGORIES ************ */
 
-Route::get('/forum', 'CategoryController@index')
+Route::get('/forum', 'ForumController@index')
     ->name('forum');
 
 Route::get('/forum/categories/{category}', 'CategoryController@show')
