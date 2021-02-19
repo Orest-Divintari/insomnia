@@ -18,16 +18,9 @@ class ConversationController extends Controller
      * @param CreateConversationRequest $request
      * @return void
      */
-    public function store(Request $request, CreateConversationRequest $conversationRequest)
+    public function store(CreateConversationRequest $conversationRequest)
     {
         $conversation = $conversationRequest->persist();
-        $conversation->addParticipants(
-            $request->input('participants'),
-            $request->boolean('admin')
-        );
-        $conversation->addMessage(
-            $request->input('message')
-        );
 
         return redirect(route('conversations.show', $conversation));
     }

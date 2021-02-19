@@ -60,12 +60,21 @@ class CreateConversationRequest extends FormRequest
     {
         $title = $this->input('title');
         $slug = Str::slug($title);
-        return Conversation::create(
+
+        $conversation = Conversation::create(
             [
                 'user_id' => $this->user()->id,
                 'title' => $title,
                 "slug" => $slug,
             ]
+        );
+
+        $conversation->addParticipants(
+            $this->input('participants'),
+            $this->boolean('admin')
+        );
+        $conversation->addMessage(
+            $this->input('message')
         );
     }
 
