@@ -64,8 +64,9 @@ export default {
       return (
         "/api/conversations/" +
         this.conversation.slug +
-        "/admins/" +
-        this.participant.id
+        "participants/" +
+        this.participant.id +
+        "/admin"
       );
     },
   },
@@ -78,7 +79,7 @@ export default {
     },
     setAsAdmin() {
       axios
-        .post(this.adminPath)
+        .patch(this.adminPath)
         .then(() => this.onSuccess())
         .catch();
     },

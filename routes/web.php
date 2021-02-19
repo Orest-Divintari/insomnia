@@ -22,8 +22,8 @@ Route::get('/tags/{tag}', 'TagController@show')
     ->name('tags.show');
 
 // online user activity
-Route::get('/online/users-activity', 'OnlineUserActivityController@index')
-    ->name('online-users-activity.index');
+Route::get('/online/user-activities', 'OnlineUserActivityController@index')
+    ->name('online-user-activities.index');
 
 //search
 
@@ -43,10 +43,10 @@ Route::get('/forum/categories/{category}', 'CategoryController@show')
 //threads
 
 Route::get('/threads', 'ThreadController@index')
-    ->name('filtered-threads.index');
+    ->name('threads.index');
 
 Route::get('/categories/{category}/threads/', 'ThreadController@index')
-    ->name('threads.index');
+    ->name('category-threads.index');
 
 Route::get('/threads/{thread}', 'ThreadController@show')
     ->name('threads.show');

@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/users/follow/" + this.profileOwner.name;
+      return "/api/users/" + this.profileOwner.name + "/follow";
     },
   },
   watch: {

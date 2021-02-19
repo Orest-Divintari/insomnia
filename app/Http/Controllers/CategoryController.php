@@ -52,7 +52,7 @@ class CategoryController extends Controller
 
             return view('sub_categories.index', compact('category', 'subCategories'));
         }
-        return redirect(route('threads.index', $category->slug));
+        return redirect(route('category-threads.index', $category->slug));
     }
 
 }

@@ -8,11 +8,11 @@
             <div class="border rounded border-white-catskill">
                 <div class="flex border-b-6 border-white-catskill">
                     <a class="tab text-smaller py-3 px-4  {{ ( $type != 'member' && $type != 'guest') ? 'is-active' : 'text-gray-lightest'}} "
-                        href="{{ route('online-users-activity.index') }}">Everyone</a>
+                        href="{{ route('online-user-activities.index') }}">Everyone</a>
                     <a class="tab text-smaller py-3 px-4  {{ $type == 'member' ? 'is-active' : 'text-gray-lightest' }} "
-                        href="{{ route('online-users-activity.index', [ 'type' => 'member'] ) }}">Members</a>
+                        href="{{ route('online-user-activities.index', [ 'type' => 'member'] ) }}">Members</a>
                     <a class="tab text-smaller py-3 px-4  {{ $type == 'guest' ? 'is-active' : 'text-gray-lightest' }} "
-                        href="{{ route('online-users-activity.index', [ 'type' => 'guest'] ) }}">Guests</a>
+                        href="{{ route('online-user-activities.index', [ 'type' => 'guest'] ) }}">Guests</a>
                 </div>
                 @forelse($activities as $activity)
                 <div class="flex items-start p-7/2 {{ $loop->last ? '' : 'border-b' }}">

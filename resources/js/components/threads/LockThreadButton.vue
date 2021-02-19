@@ -33,7 +33,7 @@ export default {
   methods: {
     lock() {
       axios
-        .post(this.path)
+        .patch(this.path)
         .then((response) => this.onSuccess(true))
         .catch((error) => console.log(error));
     },

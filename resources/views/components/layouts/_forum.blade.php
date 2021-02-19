@@ -44,27 +44,27 @@
                         </div>
                     </template>
                     <template v-slot:dropdown-items>
-                        <a href="{{ route('filtered-threads.index') . '?postedBy=' . auth()->user()->name }}"
+                        <a href="{{ route('threads.index') . '?postedBy=' . auth()->user()->name }}"
                             class=" dropdown-item hover:bg-white-catskill">Threads you started</a>
-                        <a href="{{ route('filtered-threads.index') . '?contributed=' . auth()->user()->name }}"
+                        <a href="{{ route('threads.index') . '?contributed=' . auth()->user()->name }}"
                             class="dropdown-item">Threads you replied to</a>
-                        <a href="{{ route('filtered-threads.index') . '?watched=true'}}"
+                        <a href="{{ route('threads.index') . '?watched=true'}}"
                             class="dropdown-item">Watched</a>
                         <a href="{{ route('recently-viewed-threads.index') }}" class="dropdown-item">History</a>
                     </template>
                 </dropdown>
                 @endauth
                 <x-sub_head_tab_item name="New Threads"
-                    destination="{{ route('filtered-threads.index') . '?newThreads=true'}}"></x-sub_head_tab_item>
+                    destination="{{ route('threads.index') . '?newThreads=true'}}"></x-sub_head_tab_item>
                 <x-sub_head_tab_item name="New Posts"
-                    destination="{{ route('filtered-threads.index') . '?newPosts=true'}}">
+                    destination="{{ route('threads.index') . '?newPosts=true'}}">
                 </x-sub_head_tab_item>
                 <x-sub_head_tab_item name="Unanswered"
-                    destination="{{ route('filtered-threads.index') . '?unanswered=true'}}">
+                    destination="{{ route('threads.index') . '?unanswered=true'}}">
                 </x-sub_head_tab_item>
 
                 <x-sub_head_tab_item name="Trending"
-                    destination="{{ route('filtered-threads.index') . '?trending=true' }}">
+                    destination="{{ route('threads.index') . '?trending=true' }}">
                 </x-sub_head_tab_item>
                 @auth
                 <dropdown>
@@ -77,7 +77,7 @@
                         </div>
                     </template>
                     <template v-slot:dropdown-items>
-                        <a href="{{ route('online-users-activity.index') }}"
+                        <a href="{{ route('online-user-activities.index') }}"
                             class=" dropdown-item hover:bg-white-catskill">Current visitors</a>
                     </template>
                 </dropdown>
