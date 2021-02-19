@@ -18,10 +18,12 @@ Route::get('/', function () {
 })->name('home');
 
 /* ************ TAGS ************ */
+
 Route::get('/tags/{tag}', 'TagController@show')
     ->name('tags.show');
 
 /* ************ ONLINE ************ */
+
 Route::get('/online/user-activities', 'OnlineUserActivityController@index')
     ->name('online-user-activities.index');
 
@@ -51,6 +53,11 @@ Route::get('/categories/{category}/threads/', 'ThreadController@index')
 
 Route::get('/threads/{thread}', 'ThreadController@show')
     ->name('threads.show');
+
+/* ************ THREADS REPLIES ************ */
+
+Route::get('/replies/{reply}', 'ReplyController@show')
+    ->name('replies.show');
 
 /* ************ PROFILE ************ */
 
