@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Events\Activity\UserViewedPage;
 use App\GroupCategory;
-use Illuminate\Http\Request;
 
 class ForumController extends Controller
 {
@@ -18,9 +17,6 @@ class ForumController extends Controller
         event(new UserViewedPage(UserViewedPage::FORUM));
 
         $groups = GroupCategory::withCategories()->get();
-        if (request()->expectsJson()) {
-            return $groups;
-        }
 
         return view('categories.index', compact('groups'));
     }
