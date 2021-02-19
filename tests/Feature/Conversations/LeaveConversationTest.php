@@ -18,7 +18,7 @@ class LeaveConversationTest extends TestCase
         $conversation = create(Conversation::class);
 
         $response = $this->patch(
-            route('leave-conversations.update', $conversation)
+            route('ajax.leave-conversations.update', $conversation)
         );
 
         $response->assertRedirect('login');
@@ -31,7 +31,7 @@ class LeaveConversationTest extends TestCase
         $user = $this->signIn();
 
         $response = $this->patch(
-            route('leave-conversations.update', $conversation)
+            route('ajax.leave-conversations.update', $conversation)
         );
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
@@ -45,7 +45,7 @@ class LeaveConversationTest extends TestCase
         $this->assertCount(1, $user->conversations);
 
         $response = $this->patch(
-            route('leave-conversations.update', $conversation)
+            route('ajax.leave-conversations.update', $conversation)
         );
 
         $response->assertOk();

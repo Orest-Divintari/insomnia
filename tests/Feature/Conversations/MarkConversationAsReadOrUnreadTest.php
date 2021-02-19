@@ -20,7 +20,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $conversation = create(Conversation::class);
 
         $response = $this->patch(
-            route('read-conversations.update', $conversation)
+            route('ajax.read-conversations.update', $conversation)
         );
 
         $response->assertRedirect('login');
@@ -34,7 +34,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $nonParticipant = $this->signIn();
 
         $response = $this->patch(
-            route('read-conversations.update', $conversation)
+            route('ajax.read-conversations.update', $conversation)
         );
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
@@ -46,7 +46,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $conversation = create(Conversation::class);
 
         $response = $this->delete(
-            route('read-conversations.destroy', $conversation)
+            route('ajax.read-conversations.destroy', $conversation)
         );
 
         $response->assertRedirect('login');
@@ -59,7 +59,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $nonParticipant = $this->signIn();
 
         $response = $this->delete(
-            route('read-conversations.destroy', $conversation)
+            route('ajax.read-conversations.destroy', $conversation)
         );
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
@@ -73,7 +73,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $this->assertFalse($conversation->hasBeenUpdated());
 
         $this->delete(
-            route('read-conversations.destroy', $conversation)
+            route('ajax.read-conversations.destroy', $conversation)
         );
 
         $this->assertTrue($conversation->hasBeenUpdated());
@@ -88,7 +88,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $this->assertTrue($conversation->hasBeenUpdated());
 
         $this->patch(
-            route('read-conversations.update', $conversation)
+            route('ajax.read-conversations.update', $conversation)
         );
 
         $this->assertFalse($conversation->hasBeenUpdated());

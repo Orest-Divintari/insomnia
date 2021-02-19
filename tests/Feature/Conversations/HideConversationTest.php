@@ -29,7 +29,7 @@ class HideConversationTest extends TestCase
         $conversation = create(Conversation::class);
         $this->signIn();
 
-        $response = $this->patch(route('hide-conversations.update', $conversation));
+        $response = $this->patch(route('ajax.hide-conversations.update', $conversation));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
@@ -42,7 +42,7 @@ class HideConversationTest extends TestCase
         $this->assertCount(1, $user->conversations);
 
         $response = $this->patch(
-            route('hide-conversations.update', $conversation)
+            route('ajax.hide-conversations.update', $conversation)
         );
 
         $response->assertOk();
