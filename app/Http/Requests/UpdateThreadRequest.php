@@ -38,9 +38,7 @@ class UpdateThreadRequest extends FormRequest
      */
     public function update(Thread $thread)
     {
-        $thread->update(
-            $this->validated()
-        );
+        $thread->update($this->validated());
     }
 
     /**
