@@ -52,9 +52,6 @@ Route::get('/categories/{category}/threads/', 'ThreadController@index')
 Route::get('/threads/{thread}', 'ThreadController@show')
     ->name('threads.show');
 
-Route::delete('/threads/thread', 'ThreadController@destroy')
-    ->name('threads.destroy');
-
 /* ************ PROFILE ************ */
 
 Route::get('/profiles/{user}', 'ProfileController@show')
