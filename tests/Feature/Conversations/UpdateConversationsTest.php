@@ -81,34 +81,4 @@ class UpdateConversationsTest extends TestCase
         );
     }
 
-    /** @test */
-    public function an_authorized_user_can_lock_a_conversation()
-    {
-        $conversationStarter = $this->signIn();
-        $conversation = ConversationFactory::by($conversationStarter)->create();
-        $this->assertFalse($conversation->locked);
-
-        $this->patch(
-            route('ajax.conversations.update', $conversation),
-            ['title' => $conversation->title, 'locked' => true]
-        );
-
-        $this->assertTrue($conversation->fresh()->locked);
-    }
-
-    /** @test */
-    public function an_authorized_user_can_unlock_a_conversation()
-    {
-        $conversationStarter = $this->signIn();
-        $conversation = ConversationFactory::by($conversationStarter)->create();
-        $conversation->lock();
-        $this->assertTrue($conversation->fresh()->locked);
-
-        $this->patch(
-            route('ajax.conversations.update', $conversation),
-            ['title' => $conversation->title, 'locked' => false]
-        );
-
-        $this->assertFalse($conversation->fresh()->locked);
-    }
 }
