@@ -49,7 +49,7 @@ class ThreadSubscriptionController extends Controller
      * @param int $userId
      * @return void
      */
-    public function subscribe($thread, $userId)
+    private function subscribe($thread, $userId)
     {
         if (request()->boolean('email_notifications')) {
             $thread->subscribe($userId);
