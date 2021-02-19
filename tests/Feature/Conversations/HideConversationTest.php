@@ -18,7 +18,7 @@ class HideConversationTest extends TestCase
     {
         $conversation = create(Conversation::class);
 
-        $response = $this->patch(route('hide-conversations.update', $conversation));
+        $response = $this->patch(route('ajax.hide-conversations.update', $conversation));
 
         $response->assertRedirect('login');
     }
