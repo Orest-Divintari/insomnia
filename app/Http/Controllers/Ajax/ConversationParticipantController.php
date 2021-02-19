@@ -18,8 +18,8 @@ class ConversationParticipantController extends Controller
      */
     public function store(InviteConversationParticipant $request)
     {
-        $request->conversation
-            ->addParticipants(request('participants'));
+        $request->addParticipants();
+
         return response('Participants have been added successfully', 200);
     }
 
@@ -32,7 +32,9 @@ class ConversationParticipantController extends Controller
     public function destroy(Conversation $conversation, $participantId)
     {
         $this->authorize('manage', $conversation);
+
         $conversation->removeParticipant($participantId);
+
         return response('The participant has been removed', 200);
     }
 }

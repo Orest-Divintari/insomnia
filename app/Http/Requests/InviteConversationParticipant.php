@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class InviteConversationParticipant extends FormRequest
 {
-    public $conversation;
+    private $conversation;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -17,8 +17,7 @@ class InviteConversationParticipant extends FormRequest
      */
     public function authorize()
     {
-        $this->conversation = Conversation::whereSlug($this->route('conversation'))
-            ->first();
+        $this->conversation = $this->getConversation();
 
         return $this->conversation && $this->user()->can('manage', $this->conversation);
     }
@@ -72,7 +71,7 @@ class InviteConversationParticipant extends FormRequest
      * @param array $messages
      * @return array
      */
-    public function addParticipantExistsMessage($messages)
+    private function addParticipantExistsMessage($messages)
     {
         if (is_null(request('participants'))) {
             return $messages;
@@ -84,6 +83,30 @@ class InviteConversationParticipant extends FormRequest
             }
         }
         return $messages;
+    }
+
+    /**
+     * Add participants to conversation
+     *
+     * @return void
+     */
+    public function addParticipants()
+    {
+        $this->getConversation()->addParticipants($this->input('participants'));
+    }
+
+    /**
+     * Get the conversation using the route parameter
+     *
+     * @return Conversation
+     */
+    private function getConversation()
+    {
+        if (!$this->conversation) {
+            $this->conversation = Conversation::whereSlug($this->route('conversation'))
+                ->first();
+        }
+        return $this->conversation;
     }
 
 }
