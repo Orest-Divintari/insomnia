@@ -19,8 +19,8 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
     {
         $conversation = create(Conversation::class);
 
-        $response = $this->post(
-            route('read-conversations.store', $conversation)
+        $response = $this->patch(
+            route('read-conversations.update', $conversation)
         );
 
         $response->assertRedirect('login');
@@ -33,8 +33,8 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $conversation = ConversationFactory::by($conversationStarter)->create();
         $nonParticipant = $this->signIn();
 
-        $response = $this->post(
-            route('read-conversations.store', $conversation)
+        $response = $this->patch(
+            route('read-conversations.update', $conversation)
         );
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
@@ -87,8 +87,8 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $conversationStarter->unread($conversation);
         $this->assertTrue($conversation->hasBeenUpdated());
 
-        $this->post(
-            route('read-conversations.store', $conversation)
+        $this->patch(
+            route('read-conversations.update', $conversation)
         );
 
         $this->assertFalse($conversation->hasBeenUpdated());
@@ -124,7 +124,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $this->signIn($participant);
 
         $this->post(
-            route('api.messages.store', $conversation),
+            route('ajax.messages.store', $conversation),
             ['body' => 'new message']
         );
 
@@ -134,6 +134,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
     /** @test */
     public function it_is_marked_as_unread_when_another_participant_adds_a_new_message_to_the_conversation()
     {
+        $this->withoutExceptionHandling();
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
         $conversation = ConversationFactory::withParticipants([$participant->name])
@@ -146,7 +147,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         Carbon::setTestNow(Carbon::now()->addMinute());
 
         $this->post(
-            route('api.messages.store', $conversation),
+            route('ajax.messages.store', $conversation),
             ['body' => 'new message']
         );
 

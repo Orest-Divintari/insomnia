@@ -27,7 +27,7 @@ class UpdateCommentsTest extends TestCase
         $comment = CommentFactory::create();
         $poster = $this->signIn();
 
-        $response = $this->patch(route('api.comments.update', $comment));
+        $response = $this->patch(route('ajax.comments.update', $comment));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
@@ -35,12 +35,13 @@ class UpdateCommentsTest extends TestCase
     /** @test */
     public function the_user_who_posted_the_comment_may_edit_the_comment()
     {
+        $this->withoutExceptionHandling();
         $commentPoster = $this->signIn();
         $comment = CommentFactory::by($commentPoster)->create();
         $updatedComment = ['body' => $this->faker->sentence];
 
         $this->patch(
-            route('api.comments.update', $comment),
+            route('ajax.comments.update', $comment),
             $updatedComment
         );
 
@@ -66,7 +67,7 @@ class UpdateCommentsTest extends TestCase
         $emptyComment = ['body' => ''];
 
         $response = $this->patchJson(
-            route('api.comments.update', $comment),
+            route('ajax.comments.update', $comment),
             $emptyComment
         );
 
@@ -82,7 +83,7 @@ class UpdateCommentsTest extends TestCase
         $nonStringComment = ['body' => array(15)];
 
         $response = $this->patchJson(
-            route('api.comments.update', $comment),
+            route('ajax.comments.update', $comment),
             $nonStringComment
         );
 

@@ -248,7 +248,7 @@ class RecordActivitiesTest extends TestCase
         $conversation = ConversationFactory::by($user)->create();
         $messageBody = 'new message';
 
-        $this->post(route('api.messages.store', $conversation), ['body' => $messageBody]);
+        $this->post(route('ajax.messages.store', $conversation), ['body' => $messageBody]);
 
         $message = Reply::whereBody($messageBody)->first();
         $this->assertDatabaseMissing('activities', [

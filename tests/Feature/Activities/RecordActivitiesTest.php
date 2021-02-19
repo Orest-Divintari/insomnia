@@ -58,7 +58,7 @@ class ActivityTest extends TestCase
         );
 
         $this->post(
-            route('api.replies.store', $thread),
+            route('ajax.replies.store', $thread),
             $threadReplyAttributes
         );
 
@@ -83,7 +83,7 @@ class ActivityTest extends TestCase
         );
 
         $this->post(
-            route('api.comments.store', $profilePost),
+            route('ajax.comments.store', $profilePost),
             $commentAttributes
         );
 
@@ -111,7 +111,7 @@ class ActivityTest extends TestCase
         );
 
         $this->post(
-            route('api.profile-posts.store', $profileOwner),
+            route('ajax.profile-posts.store', $profileOwner),
             $profilePostAttributes
         );
 
@@ -131,7 +131,7 @@ class ActivityTest extends TestCase
         $user = $this->signIn();
         $reply = ReplyFactory::create();
 
-        $this->post(route('api.likes.store', $reply));
+        $this->post(route('ajax.likes.store', $reply));
 
         $like = $reply->likes->first();
         $this->assertCount(1, $like->activities);
@@ -149,7 +149,7 @@ class ActivityTest extends TestCase
         $user = $this->signIn();
         $comment = CommentFactory::create();
 
-        $this->post(route('api.likes.store', $comment));
+        $this->post(route('ajax.likes.store', $comment));
 
         $like = $comment->likes()->first();
         $this->assertCount(1, $comment->activities);
@@ -174,7 +174,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('api.replies.destroy', $reply));
+        $this->delete(route('ajax.replies.destroy', $reply));
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $reply->id,
@@ -197,7 +197,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('api.comments.destroy', $comment));
+        $this->delete(route('ajax.comments.destroy', $comment));
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $comment->id,
@@ -221,7 +221,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('api.likes.destroy', $reply));
+        $this->delete(route('ajax.likes.destroy', $reply));
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $like->id,
@@ -245,7 +245,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('api.likes.destroy', $comment));
+        $this->delete(route('ajax.likes.destroy', $comment));
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $like->id,
@@ -268,7 +268,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('api.profile-posts.destroy', $profilePost));
+        $this->delete(route('ajax.profile-posts.destroy', $profilePost));
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $profilePost->id,
@@ -286,7 +286,7 @@ class ActivityTest extends TestCase
         $message = ['body' => $this->faker->sentence];
 
         $this->post(
-            route('api.messages.store', $conversation),
+            route('ajax.messages.store', $conversation),
             $message
         );
 
@@ -306,7 +306,7 @@ class ActivityTest extends TestCase
         $message = $conversation->messages()->first();
         $liker = $this->signIn();
 
-        $this->post(route('api.likes.store', $message));
+        $this->post(route('ajax.likes.store', $message));
 
         $like = $message->likes()->first();
         $this->assertDatabaseMissing('activities', [

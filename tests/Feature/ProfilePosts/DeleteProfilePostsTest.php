@@ -22,7 +22,7 @@ class DeleteProfilePostsTest extends TestCase
             ->toProfile($profileOwner)
             ->create();
 
-        $this->delete(route('api.profile-posts.destroy', $profilePost->id));
+        $this->delete(route('ajax.profile-posts.destroy', $profilePost->id));
 
         $this->assertDatabaseMissing('profile_posts', [
             'body' => $profilePost->body,
@@ -40,7 +40,7 @@ class DeleteProfilePostsTest extends TestCase
             ->toProfile($profileOwner)
             ->create();
 
-        $this->delete(route('api.profile-posts.destroy', $profilePost->id));
+        $this->delete(route('ajax.profile-posts.destroy', $profilePost->id));
 
         $this->assertDatabaseMissing('profile_posts', [
             'body' => $profilePost->body,
@@ -57,7 +57,7 @@ class DeleteProfilePostsTest extends TestCase
         $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
 
         $response = $this->delete(
-            route('api.profile-posts.destroy', $profilePost->id)
+            route('ajax.profile-posts.destroy', $profilePost->id)
         );
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);

@@ -34,7 +34,7 @@ class ProfilePostNotificationsTest extends TestCase
         $post = ['body' => $this->faker->sentence];
 
         $this->post(
-            route('api.profile-posts.store', $profileOwner),
+            route('ajax.profile-posts.store', $profileOwner),
             $post
         );
 
@@ -66,7 +66,7 @@ class ProfilePostNotificationsTest extends TestCase
             ->create();
         $comment = ['body' => $this->faker->sentence];
 
-        $this->post(route('api.comments.store', $profilePost), $comment);
+        $this->post(route('ajax.comments.store', $profilePost), $comment);
 
         $comment = Reply::whereBody($comment['body'])->first();
         Notification::assertSentTo(
@@ -96,7 +96,7 @@ class ProfilePostNotificationsTest extends TestCase
         $comment = ['body' => 'some comment'];
 
         $this->post(
-            route('api.comments.store', $profilePost),
+            route('ajax.comments.store', $profilePost),
             $comment
         );
 
@@ -119,7 +119,7 @@ class ProfilePostNotificationsTest extends TestCase
         $comment = ['body' => 'some comment'];
 
         $this->post(
-            route('api.comments.store', $profilePost),
+            route('ajax.comments.store', $profilePost),
             $comment
         );
 
@@ -139,7 +139,7 @@ class ProfilePostNotificationsTest extends TestCase
         $comment = ['body' => 'some comment'];
 
         $this->post(
-            route('api.comments.store', $profilePost),
+            route('ajax.comments.store', $profilePost),
             $comment
         );
 

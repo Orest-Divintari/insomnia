@@ -448,7 +448,7 @@ class ViewConversationsTest extends TestCase
         $readAndLastWeekConversation->update(
             ['updated_at' => Carbon::now()->subWeek()]
         );
-        
+
         $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
         $conversationStarter->unread($unreadTodayConversation);
         $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
@@ -457,7 +457,7 @@ class ViewConversationsTest extends TestCase
         $conversationStarter->read($readTodayConversation);
 
         $desiredConversations = $this->getJson(
-            route('api.conversations.index', ['recentAndUnread' => true])
+            route('ajax.conversations.index', ['recentAndUnread' => true])
         )->json();
 
         $this->assertEquals(
@@ -520,7 +520,7 @@ class ViewConversationsTest extends TestCase
         $starredConversation->star();
 
         $desiredConversations = $this->getJson(
-            route('api.conversations.index', ['starred' => true])
+            route('ajax.conversations.index', ['starred' => true])
         )->json();
 
         $this->assertCount(1, $desiredConversations);

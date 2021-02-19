@@ -26,7 +26,7 @@ class UserNotificationsTest extends TestCase
         $john = create(User::class);
         $this->thread->addReply($this->faker->sentence, $john);
         $this->thread->addReply($this->faker->sentence, $john);
-        $this->response = $this->get(route('api.user-notifications.index'))->json();
+        $this->response = $this->get(route('ajax.user-notifications.index'))->json();
     }
 
     /** @test */
@@ -41,9 +41,9 @@ class UserNotificationsTest extends TestCase
         $this->assertCount(2, $this->response);
         $firstNotification = $this->user->unreadNotifications->first();
 
-        $this->delete(route('api.user-notifications.destroy', $firstNotification->id));
+        $this->delete(route('ajax.user-notifications.destroy', $firstNotification->id));
 
-        $response = $this->get(route('api.user-notifications.index'))->json();
+        $response = $this->get(route('ajax.user-notifications.index'))->json();
         $this->assertCount(1, $response);
 
     }

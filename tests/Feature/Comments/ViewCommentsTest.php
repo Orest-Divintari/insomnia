@@ -20,7 +20,7 @@ class ViewCommentsTest extends TestCase
         $this->signIn();
 
         $response = $this->get(
-            route('api.comments.index', $profilePost)
+            route('ajax.comments.index', $profilePost)
         )->json();
 
         $this->assertCount(1, ($response['data']));

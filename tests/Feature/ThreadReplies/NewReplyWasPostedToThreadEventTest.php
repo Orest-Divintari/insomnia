@@ -30,7 +30,7 @@ class NewReplyWasPostedToThreadEventTest extends TestCase
         $reply = ['body' => 'some reply'];
 
         $this->post(
-            route('api.replies.store', $thread),
+            route('ajax.replies.store', $thread),
             ['body' => $reply['body']]
         );
 

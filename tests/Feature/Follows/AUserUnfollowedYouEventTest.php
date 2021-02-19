@@ -22,7 +22,7 @@ class AUserUnfollowedYouEventTest extends TestCase
         $followerUser->follow($followingUser);
         $this->assertCount(1, $followingUser->notifications);
 
-        $this->delete(route('api.follow.destroy', $followingUser));
+        $this->delete(route('ajax.follow.destroy', $followingUser));
 
         $listener->shouldHaveReceived('handle')
             ->with(Mockery::on(function ($event) use ($followingUser, $followerUser) {

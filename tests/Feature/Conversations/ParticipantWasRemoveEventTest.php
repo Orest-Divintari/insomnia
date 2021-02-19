@@ -25,7 +25,7 @@ class ParticipantWasRemoveEventTest extends TestCase
             ->create();
 
         $this->delete(route(
-            'api.conversation-participants.destroy',
+            'ajax.conversation-participants.destroy',
             [
                 'conversation' => $conversation->slug,
                 'participantId' => $participant->id,

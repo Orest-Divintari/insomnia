@@ -24,7 +24,7 @@ class UpdatesProfilePostsTest extends TestCase
         $unathorizedUser = $this->signIn();
 
         $response = $this->patch(
-            route('api.profile-posts.update', $profilePost->id),
+            route('ajax.profile-posts.update', $profilePost->id),
             ['body' => 'new body']
         );
 
@@ -42,7 +42,7 @@ class UpdatesProfilePostsTest extends TestCase
             ->create();
 
         $this->patch(
-            route('api.profile-posts.update', $profilePost->id),
+            route('ajax.profile-posts.update', $profilePost->id),
             ['body' => 'new body']
         );
 
@@ -68,7 +68,7 @@ class UpdatesProfilePostsTest extends TestCase
             ->create();
 
         $response = $this->patchJson(
-            route('api.profile-posts.update', $profilePost->id),
+            route('ajax.profile-posts.update', $profilePost->id),
             ['body' => '']
         );
 
@@ -89,7 +89,7 @@ class UpdatesProfilePostsTest extends TestCase
         $nonStringBody = array(15);
 
         $response = $this->patchJson(
-            route('api.profile-posts.update', $profilePost->id),
+            route('ajax.profile-posts.update', $profilePost->id),
             ['body' => $nonStringBody]
         );
 

@@ -20,7 +20,7 @@ class ManageConversationMessagesTest extends TestCase
         $randomMessageId = 1;
 
         $response = $this->patch(
-            route('api.messages.update', $randomMessageId),
+            route('ajax.messages.update', $randomMessageId),
             ['body' => 'new body']
         );
 
@@ -36,7 +36,7 @@ class ManageConversationMessagesTest extends TestCase
         $unathorizedUser = $this->signIn();
 
         $response = $this->patch(
-            route('api.messages.update', $message),
+            route('ajax.messages.update', $message),
             ['body' => 'new body']
         );
 
@@ -51,7 +51,7 @@ class ManageConversationMessagesTest extends TestCase
         $message = $conversation->messages()->first();
 
         $this->patch(
-            route('api.messages.update', $message),
+            route('ajax.messages.update', $message),
             $updatedMessage = ['body' => 'new body']
         )->assertOk();
 
@@ -69,7 +69,7 @@ class ManageConversationMessagesTest extends TestCase
         $message = $conversation->messages()->first();
 
         $response = $this->patchJson(
-            route('api.messages.update', $message),
+            route('ajax.messages.update', $message),
             $updatedMessage = ['body' => '']
         );
 
@@ -86,7 +86,7 @@ class ManageConversationMessagesTest extends TestCase
         $nonStringMessage = array(15);
 
         $response = $this->patchJson(
-            route('api.messages.update', $message),
+            route('ajax.messages.update', $message),
             $updatedMessage = ['body' => $nonStringMessage]
         );
 

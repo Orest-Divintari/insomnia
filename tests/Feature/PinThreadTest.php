@@ -18,7 +18,7 @@ class PinThreadTest extends TestCase
         $this->assertFalse($thread->pinned);
         $admin = $this->signInAdmin();
 
-        $this->post(route('api.pin-threads.store', $thread));
+        $this->patch(route('ajax.pin-threads.update', $thread));
 
         $this->assertTrue($thread->fresh()->pinned);
     }
@@ -30,7 +30,7 @@ class PinThreadTest extends TestCase
         $this->assertFalse($thread->pinned);
         $unathorizedUser = $this->signIn();
 
-        $response = $this->post(route('api.pin-threads.store', $thread));
+        $response = $this->patch(route('ajax.pin-threads.update', $thread));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertFalse($thread->fresh()->pinned);
@@ -44,7 +44,7 @@ class PinThreadTest extends TestCase
         $this->assertTrue($thread->pinned);
         $admin = $this->signInAdmin();
 
-        $this->delete(route('api.pin-threads.destroy', $thread));
+        $this->delete(route('ajax.pin-threads.destroy', $thread));
 
         $this->assertFalse($thread->fresh()->pinned);
     }
@@ -57,7 +57,7 @@ class PinThreadTest extends TestCase
         $this->assertTrue($thread->pinned);
         $unathorizedUser = $this->signIn();
 
-        $response = $this->delete(route('api.pin-threads.destroy', $thread));
+        $response = $this->delete(route('ajax.pin-threads.destroy', $thread));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertTrue($thread->fresh()->pinned);

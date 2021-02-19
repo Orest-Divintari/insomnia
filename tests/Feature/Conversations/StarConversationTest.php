@@ -17,7 +17,7 @@ class StarConversationTest extends TestCase
         $conversation = ConversationFactory::by($conversationStarter)->create();
         $this->assertFalse($conversation->starred());
 
-        $this->post(route('api.star-conversations.store', $conversation));
+        $this->patch(route('ajax.star-conversations.update', $conversation));
 
         $this->assertTrue($conversation->starred());
     }
@@ -30,7 +30,7 @@ class StarConversationTest extends TestCase
         $conversation->star();
         $this->assertTrue($conversation->starred());
 
-        $this->delete(route('api.star-conversations.destroy', $conversation));
+        $this->delete(route('ajax.star-conversations.destroy', $conversation));
 
         $this->assertFalse($conversation->starred());
     }

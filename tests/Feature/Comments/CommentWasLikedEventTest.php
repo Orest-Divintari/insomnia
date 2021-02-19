@@ -29,7 +29,7 @@ class CommentWasLikedEventTest extends TestCase
             ->create();
         $liker = $this->signIn();
 
-        $this->post(route('api.likes.store', $comment));
+        $this->post(route('ajax.likes.store', $comment));
 
         $like = Like::where('reply_id', $comment->id)->first();
         $listener->shouldHaveReceived('handle', function ($event) use (

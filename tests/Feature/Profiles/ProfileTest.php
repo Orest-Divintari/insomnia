@@ -41,7 +41,7 @@ class ProfileTest extends TestCase
         $profileOwner = create(User::class);
         $this->signIn();
 
-        $response = $this->get(route('api.profiles.show', $profileOwner))->json();
+        $response = $this->get(route('ajax.profiles.show', $profileOwner))->json();
 
         $this->assertArrayHasKey('messages_count', $response);
         $this->assertArrayHasKey('likes_count', $response);

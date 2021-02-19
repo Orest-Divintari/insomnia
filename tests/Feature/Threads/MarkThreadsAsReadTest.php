@@ -23,7 +23,7 @@ class MarkThreadsAsReadTest extends TestCase
 
         $this->get(route('threads.show', $readThread));
 
-        $threads = $this->getJson(route('filtered-threads.index', $category))->json()['data'];
+        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
         $threads = collect($threads);
         $this->assertTrue(
             $threads->every(function ($thread, $key) use ($readThread) {
@@ -43,7 +43,7 @@ class MarkThreadsAsReadTest extends TestCase
         $visitedThread = $threads->first();
 
         $this->get(route('threads.show', $visitedThread));
-        $threads = $this->getJson(route('filtered-threads.index', $category))->json()['data'];
+        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
 
         $threads = collect($threads);
         $this->assertTrue(
@@ -60,7 +60,7 @@ class MarkThreadsAsReadTest extends TestCase
         $thread = create(Thread::class);
         $this->assertTrue($thread->hasBeenUpdated());
 
-        $this->patch(route('api.read-threads.update', $thread));
+        $this->patch(route('ajax.read-threads.update', $thread));
 
         $this->assertFalse($thread->hasBeenUpdated());
     }
@@ -72,7 +72,7 @@ class MarkThreadsAsReadTest extends TestCase
         $thread = create(Thread::class);
         $this->assertTrue($thread->hasBeenUpdated());
 
-        $this->patch(route('api.read-threads.update', $thread))
+        $this->patch(route('ajax.read-threads.update', $thread))
             ->assertRedirect('login');
 
         $this->assertTrue($thread->hasBeenUpdated());

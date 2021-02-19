@@ -19,7 +19,7 @@ class ManageThreadsTest extends TestCase
         $thread = ThreadFactory::withTitle('old title')->create();
 
         $response = $this->patch(
-            route('api.threads.update', $thread),
+            route('ajax.threads.update', $thread),
             ['title' => 'new title']
         );
 
@@ -42,7 +42,7 @@ class ManageThreadsTest extends TestCase
         ]);
 
         $this->patch(
-            route('api.threads.update', $thread),
+            route('ajax.threads.update', $thread),
             $newTitle
         );
 
@@ -65,7 +65,7 @@ class ManageThreadsTest extends TestCase
         ]);
 
         $response = $this->patchJson(
-            route('api.threads.update', $thread),
+            route('ajax.threads.update', $thread),
             $emptyTitle
         );
 
@@ -89,7 +89,7 @@ class ManageThreadsTest extends TestCase
         ]);
 
         $response = $this->patchJson(
-            route('api.threads.update', $thread),
+            route('ajax.threads.update', $thread),
             $nonStringTitle
         );
 

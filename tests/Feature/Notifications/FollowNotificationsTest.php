@@ -20,7 +20,7 @@ class FollowNotificationsTest extends TestCase
         $follower = $this->signIn();
         $user = create(User::class);
 
-        $this->post(route('api.follow.store', $user->name));
+        $this->post(route('ajax.follow.store', $user->name));
 
         Notification::assertSentTo(
             $user,
@@ -40,7 +40,7 @@ class FollowNotificationsTest extends TestCase
         $follower->follow($user);
         $this->assertCount(1, $user->notifications);
 
-        $this->delete(route('api.follow.destroy', $user->name));
+        $this->delete(route('ajax.follow.destroy', $user->name));
 
         $this->assertCount(0, $user->fresh()->notifications);
     }

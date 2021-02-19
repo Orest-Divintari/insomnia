@@ -34,7 +34,7 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
         app()->instance(NotifyPostParticipants::class, $listener);
 
         $this->post(
-            route('api.comments.store', $profilePost),
+            route('ajax.comments.store', $profilePost),
             $comment
         );
 

@@ -22,7 +22,7 @@ class UpdateConversationsTest extends TestCase
         $newTitle = ['title' => 'some title'];
 
         $this->patch(
-            route('api.conversations.update', $conversation),
+            route('ajax.conversations.update', $conversation),
             $newTitle
         );
 
@@ -37,7 +37,7 @@ class UpdateConversationsTest extends TestCase
         $newTitle = ['title' => ''];
 
         $response = $this->patchJson(
-            route('api.conversations.update', $conversation),
+            route('ajax.conversations.update', $conversation),
             $newTitle
         );
 
@@ -53,7 +53,7 @@ class UpdateConversationsTest extends TestCase
         $newTitle = ['title' => array(5)];
 
         $response = $this->patchJson(
-            route('api.conversations.update', $conversation),
+            route('ajax.conversations.update', $conversation),
             $newTitle
         );
 
@@ -70,7 +70,7 @@ class UpdateConversationsTest extends TestCase
         $newTitle = ['title' => 'new title'];
 
         $response = $this->patch(
-            route('api.conversations.update', $conversation),
+            route('ajax.conversations.update', $conversation),
             $newTitle
         );
 
@@ -89,7 +89,7 @@ class UpdateConversationsTest extends TestCase
         $this->assertFalse($conversation->locked);
 
         $this->patch(
-            route('api.conversations.update', $conversation),
+            route('ajax.conversations.update', $conversation),
             ['title' => $conversation->title, 'locked' => true]
         );
 
@@ -105,7 +105,7 @@ class UpdateConversationsTest extends TestCase
         $this->assertTrue($conversation->fresh()->locked);
 
         $this->patch(
-            route('api.conversations.update', $conversation),
+            route('ajax.conversations.update', $conversation),
             ['title' => $conversation->title, 'locked' => false]
         );
 

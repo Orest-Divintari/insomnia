@@ -21,7 +21,7 @@ class UpdateThreadRepliesTest extends TestCase
         $newBody = ['body' => 'changed body'];
 
         $response = $this->patch(
-            route('api.replies.update', $reply),
+            route('ajax.replies.update', $reply),
             $newBody
         );
 
@@ -36,7 +36,7 @@ class UpdateThreadRepliesTest extends TestCase
         $newBody = ['body' => 'changed body'];
 
         $this->patch(
-            route('api.replies.update', $reply),
+            route('ajax.replies.update', $reply),
             $newBody
         );
 
@@ -58,7 +58,7 @@ class UpdateThreadRepliesTest extends TestCase
         $emptyReply = ['body' => ''];
 
         $response = $this->patchJson(
-            route('api.replies.update', $reply),
+            route('ajax.replies.update', $reply),
             $emptyReply
         );
 
@@ -74,7 +74,7 @@ class UpdateThreadRepliesTest extends TestCase
         $incorrectReply = ['body' => 15];
 
         $response = $this->patchJson(
-            route('api.replies.update', $reply),
+            route('ajax.replies.update', $reply),
             $incorrectReply
         );
 

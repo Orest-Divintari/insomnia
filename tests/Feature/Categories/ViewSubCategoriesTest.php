@@ -152,6 +152,6 @@ class ViewSubCategoriesTest extends TestCase
 
         $response = $this->get(route('categories.show', $accessories));
 
-        $response->assertRedirect(route('threads.index', $accessories));
+        $response->assertRedirect(route('category-threads.index', $accessories));
     }
 }

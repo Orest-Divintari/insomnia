@@ -20,7 +20,7 @@ class DeleteLikesTest extends TestCase
         $reply->likedBy($user);
         $this->assertCount(1, $reply->likes);
 
-        $this->delete(route('api.replies.destroy', $reply));
+        $this->delete(route('ajax.replies.destroy', $reply));
 
         $this->assertEquals(0, Like::all()->count());
     }
@@ -33,7 +33,7 @@ class DeleteLikesTest extends TestCase
         $reply->likedBy($user);
         $this->assertCount(1, $reply->likes);
 
-        $this->delete(route('api.comments.destroy', $reply));
+        $this->delete(route('ajax.comments.destroy', $reply));
 
         $this->assertEquals(0, Like::all()->count());
     }

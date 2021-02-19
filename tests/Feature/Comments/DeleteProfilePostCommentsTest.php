@@ -21,7 +21,7 @@ class DeleteProfilePostCommentsTest extends TestCase
         $commentPoster = $this->signIn();
         $comment = CommentFactory::by($commentPoster)->create();
 
-        $this->delete(route('api.comments.destroy', $comment));
+        $this->delete(route('ajax.comments.destroy', $comment));
 
         $this->assertDatabaseMissing('replies', [
             'repliable_id' => $comment->id,
@@ -42,7 +42,7 @@ class DeleteProfilePostCommentsTest extends TestCase
             ->create();
         $this->signIn($profileOwner);
 
-        $this->delete(route('api.comments.destroy', $comment));
+        $this->delete(route('ajax.comments.destroy', $comment));
 
         $this->assertDatabaseMissing('replies', [
             'repliable_id' => $comment->id,
@@ -60,7 +60,7 @@ class DeleteProfilePostCommentsTest extends TestCase
         $profilePost->addComment($this->faker->sentence, $poster);
         $this->assertCount(1, $profilePost->comments);
 
-        $this->delete(route('api.profile-posts.destroy', $profilePost->id));
+        $this->delete(route('ajax.profile-posts.destroy', $profilePost->id));
 
         $this->assertCount(0, Reply::where('repliable_type', '=', ProfilePost::class)->get());
     }

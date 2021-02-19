@@ -25,7 +25,7 @@ class DeleteActivitiesTest extends TestCase
         $profilePost = ProfilePostFactory::by($poster)->create();
         $this->assertCount(1, $profilePost->activities);
 
-        $this->delete(route('api.profile-posts.destroy', $profilePost->id));
+        $this->delete(route('ajax.profile-posts.destroy', $profilePost->id));
 
         $this->assertEquals(
             0,
@@ -43,7 +43,7 @@ class DeleteActivitiesTest extends TestCase
         $comment = CommentFactory::by($poster)->create();
         $this->assertCount(1, $comment->activities);
 
-        $this->delete(route('api.comments.destroy', $comment));
+        $this->delete(route('ajax.comments.destroy', $comment));
 
         $this->assertEquals(
             0,
@@ -62,7 +62,7 @@ class DeleteActivitiesTest extends TestCase
         $like = $comment->likedBy();
         $this->assertCount(1, $like->activities);
 
-        $this->delete(route('api.likes.destroy', $comment));
+        $this->delete(route('ajax.likes.destroy', $comment));
 
         $this->assertEquals(
             0,
@@ -81,7 +81,7 @@ class DeleteActivitiesTest extends TestCase
         $like = $reply->likedBy();
         $this->assertCount(1, $like->activities);
 
-        $this->delete(route('api.likes.destroy', $reply));
+        $this->delete(route('ajax.likes.destroy', $reply));
 
         $this->assertEquals(
             0,

@@ -30,7 +30,7 @@ class ReadProfilePostingsTest extends TestCase
         $commentLike = $comment->likedBy();
 
         $postings = $this->getJson(
-            route('api.posting-activity.index', $profileOwner)
+            route('ajax.posting-activity.index', $profileOwner)
         )->json()['data'];
 
         $this->assertCount(4, $postings);

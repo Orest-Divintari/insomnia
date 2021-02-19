@@ -25,8 +25,8 @@ class ConversationAdminTest extends TestCase
         $this->signIn($participantA);
         $this->assertFalse($conversation->isAdmin($participantB));
 
-        $this->post(route(
-            'api.conversation-admins.store',
+        $this->patch(route(
+            'ajax.conversation-admins.update',
             [$conversation, $participantB->id]
         ));
 
@@ -43,8 +43,8 @@ class ConversationAdminTest extends TestCase
         )->create();
         $this->assertFalse($conversation->isAdmin($participant));
 
-        $this->post(route(
-            'api.conversation-admins.store',
+        $this->patch(route(
+            'ajax.conversation-admins.update',
             [$conversation, $participant->id]
         ));
 
@@ -63,8 +63,8 @@ class ConversationAdminTest extends TestCase
         $this->assertFalse($conversation->isAdmin($participantB));
         $this->signIn($participantB);
 
-        $response = $this->post(route(
-            'api.conversation-admins.store',
+        $response = $this->patch(route(
+            'ajax.conversation-admins.update',
             [$conversation, $participantA->id]
         ));
 
@@ -81,7 +81,7 @@ class ConversationAdminTest extends TestCase
         $conversation->setAdmin($participant->id);
 
         $this->delete(route(
-            'api.conversation-admins.destroy',
+            'ajax.conversation-admins.destroy',
             [$conversation, $participant->id]
         ));
 
@@ -102,7 +102,7 @@ class ConversationAdminTest extends TestCase
         $this->assertTrue($conversation->isAdmin($participantB));
 
         $this->delete(route(
-            'api.conversation-admins.destroy',
+            'ajax.conversation-admins.destroy',
             [$conversation, $participantB->id]
         ));
 
@@ -123,7 +123,7 @@ class ConversationAdminTest extends TestCase
         $this->signIn($participantB);
 
         $response = $this->delete(
-            route('api.conversation-admins.destroy',
+            route('ajax.conversation-admins.destroy',
                 [$conversation, $participantA->id]
             )
         );

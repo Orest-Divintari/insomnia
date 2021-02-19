@@ -29,7 +29,7 @@ class CreateThreadRepliesTest extends TestCase
         $reply = raw(Reply::class);
 
         $response = $this->post(
-            route('api.replies.store', $thread),
+            route('ajax.replies.store', $thread),
             $reply
         );
 
@@ -42,7 +42,7 @@ class CreateThreadRepliesTest extends TestCase
         $user = $this->signIn();
         $thread = create(Thread::class);
 
-        $this->post(route('api.replies.store', $thread), ['body' => 'some body']);
+        $this->post(route('ajax.replies.store', $thread), ['body' => 'some body']);
 
         $this->assertDatabaseHas('replies', [
             'body' => 'some body',
@@ -60,7 +60,7 @@ class CreateThreadRepliesTest extends TestCase
         $replyPoster = $this->signIn();
         $emptyReply = ['body' => ''];
 
-        $response = $this->postJson(route('api.replies.store', $thread), $emptyReply);
+        $response = $this->postJson(route('ajax.replies.store', $thread), $emptyReply);
 
         $response->assertStatus(422)
             ->assertJson(['body' => [$this->errorMessage]]);
@@ -74,7 +74,7 @@ class CreateThreadRepliesTest extends TestCase
         $incorrectReply = ['body' => 15];
 
         $response = $this->postJson(
-            route('api.replies.store', $thread),
+            route('ajax.replies.store', $thread),
             $incorrectReply
         );
 
@@ -97,7 +97,7 @@ class CreateThreadRepliesTest extends TestCase
         );
         $thread = Thread::first();
         $response = $this->post(
-            route('api.replies.store', $thread),
+            route('ajax.replies.store', $thread),
             raw(Reply::class)
         );
 

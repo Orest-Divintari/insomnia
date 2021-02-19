@@ -23,7 +23,7 @@ class NewPostWasAddedToProfileEventTest extends TestCase
         app()->instance(NotifyProfileOwnerOfNewPost::class, $listener);
 
         $this->post(
-            route('api.profile-posts.store', $profileOwner),
+            route('ajax.profile-posts.store', $profileOwner),
             ['body' => $profilePost['body']]
         );
 

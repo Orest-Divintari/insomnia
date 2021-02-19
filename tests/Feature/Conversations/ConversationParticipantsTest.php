@@ -26,7 +26,7 @@ class ConversationParticipantsTest extends TestCase
         $newMember = create(User::class);
 
         $this->postJson(
-            route('api.conversation-participants.store', $conversation),
+            route('ajax.conversation-participants.store', $conversation),
             ['participants' => $newMember->name]
         );
 
@@ -44,7 +44,7 @@ class ConversationParticipantsTest extends TestCase
         $newMember = create(User::class);
 
         $this->postJson(
-            route('api.conversation-participants.store', $conversation),
+            route('ajax.conversation-participants.store', $conversation),
             ['participants' => $newMember->name]
         );
 
@@ -64,7 +64,7 @@ class ConversationParticipantsTest extends TestCase
         $newMembersNames = "{$john->name}, {$doe->name}";
 
         $this->postJson(
-            route('api.conversation-participants.store', $conversation),
+            route('ajax.conversation-participants.store', $conversation),
             ['participants' => $newMembersNames]
         );
 
@@ -93,7 +93,7 @@ class ConversationParticipantsTest extends TestCase
         $this->signIn($participant);
 
         $this->postJson(
-            route('api.conversation-participants.store', $conversation),
+            route('ajax.conversation-participants.store', $conversation),
             ['participants' => $newMembersNames]
         );
 
@@ -114,7 +114,7 @@ class ConversationParticipantsTest extends TestCase
         $conversation = ConversationFactory::by($conversationStarter)->create();
 
         $response = $this->postJson(
-            route('api.conversation-participants.store', $conversation),
+            route('ajax.conversation-participants.store', $conversation),
             ['participants' => []]
         );
 
@@ -131,7 +131,7 @@ class ConversationParticipantsTest extends TestCase
         $newMember = create(User::class);
 
         $response = $this->post(
-            route('api.conversation-participants.store', $conversation),
+            route('ajax.conversation-participants.store', $conversation),
             ['participants' => $newMember->name]
         );
 
@@ -146,7 +146,7 @@ class ConversationParticipantsTest extends TestCase
         $nonExistingMember = 'john';
 
         $response = $this->postJson(
-            route('api.conversation-participants.store', $conversation),
+            route('ajax.conversation-participants.store', $conversation),
             ['participants' => $nonExistingMember]
         );
 
@@ -167,7 +167,7 @@ class ConversationParticipantsTest extends TestCase
         $this->signIn($unathorizedUser);
 
         $response = $this->post(
-            route('api.conversation-participants.store', $conversation),
+            route('ajax.conversation-participants.store', $conversation),
             ['participants' => $newMember->name]
         );
 
@@ -188,7 +188,7 @@ class ConversationParticipantsTest extends TestCase
         );
 
         $this->deleteJson(route(
-            'api.conversation-participants.destroy',
+            'ajax.conversation-participants.destroy',
             [$conversation, $newMember->id]
         ));
 
@@ -215,7 +215,7 @@ class ConversationParticipantsTest extends TestCase
         );
 
         $this->deleteJson(route(
-            'api.conversation-participants.destroy',
+            'ajax.conversation-participants.destroy',
             [$conversation, $newMember->id]
         ));
 
@@ -237,7 +237,7 @@ class ConversationParticipantsTest extends TestCase
         $this->signIn($unathorizedUser);
 
         $response = $this->delete(route(
-            'api.conversation-participants.destroy',
+            'ajax.conversation-participants.destroy',
             [$conversation, $participant->id]
         ));
 

@@ -20,7 +20,7 @@ class FollowTest extends TestCase
         $anotherUser = create(User::class);
 
         $response = $this->post(
-            route('api.follow.store', $anotherUser),
+            route('ajax.follow.store', $anotherUser),
         );
 
         $response->assertRedirect('login');
@@ -33,7 +33,7 @@ class FollowTest extends TestCase
         $anotherUser = create(User::class);
 
         $response = $this->delete(
-            route('api.follow.destroy', $anotherUser)
+            route('ajax.follow.destroy', $anotherUser)
         );
 
         $response->assertRedirect('login');
@@ -46,7 +46,7 @@ class FollowTest extends TestCase
         $this->assertCount(0, $user->follows);
         $anotherUser = create(User::class);
 
-        $this->post(route('api.follow.store', $anotherUser));
+        $this->post(route('ajax.follow.store', $anotherUser));
 
         $this->assertCount(1, $user->fresh()->follows);
         $this->assertTrue($user->fresh()->following($anotherUser));
@@ -58,11 +58,11 @@ class FollowTest extends TestCase
         $user = $this->signIn();
         $anotherUser = create(User::class);
         $this->post(
-            route('api.follow.store', $anotherUser)
+            route('ajax.follow.store', $anotherUser)
         );
         $this->assertTrue($user->fresh()->following($anotherUser));
 
-        $this->delete(route('api.follow.destroy', $anotherUser));
+        $this->delete(route('ajax.follow.destroy', $anotherUser));
 
         $this->assertFalse($user->fresh()->following($anotherUser));
     }
@@ -74,9 +74,9 @@ class FollowTest extends TestCase
         $this->assertCount(0, $user->follows);
         $anotherUser = create(User::class);
 
-        $this->post(route('api.follow.store', $anotherUser));
+        $this->post(route('ajax.follow.store', $anotherUser));
         $this->assertCount(1, $user->refresh()->follows);
-        $this->post(route('api.follow.store', $anotherUser));
+        $this->post(route('ajax.follow.store', $anotherUser));
 
         $this->assertCount(1, $user->follows);
         $this->assertTrue($user->fresh()->following($anotherUser));
@@ -93,7 +93,7 @@ class FollowTest extends TestCase
         $followerB->follow($profileOwner);
 
         $followers = $this->getJson(
-            route('api.followedBy.index', $profileOwner)
+            route('ajax.followed-by.index', $profileOwner)
         )->json()['data'];
 
         $this->assertCount(2, $followers);
@@ -116,7 +116,7 @@ class FollowTest extends TestCase
         $profileOwner->follow($userB);
 
         $follows = $this->getJson(
-            route('api.follows.index', $profileOwner)
+            route('ajax.follows.index', $profileOwner)
         )->json()['data'];
 
         $this->assertCount(2, $follows);
@@ -141,7 +141,7 @@ class FollowTest extends TestCase
         $profileOwner->follow($followingUser);
 
         $response = $this->getJson(
-            route('api.follows.index', $profileOwner)
+            route('ajax.follows.index', $profileOwner)
         )->json()['data'];
 
         $this->assertEquals(1, $response[0]['likes_count']);
@@ -160,7 +160,7 @@ class FollowTest extends TestCase
         $follower->follow($profileOwner);
 
         $response = $this->getJson(
-            route('api.followedBy.index', $profileOwner)
+            route('ajax.followed-by.index', $profileOwner)
         )->json()['data'];
 
         $this->assertEquals(1, $response[0]['likes_count']);
@@ -175,7 +175,7 @@ class FollowTest extends TestCase
         $profileOwner->follow($followingUser);
 
         $response = $this->getJson(
-            route('api.follows.index', $profileOwner)
+            route('ajax.follows.index', $profileOwner)
         )->json()['data'];
 
         $this->assertEquals(1, $response[0]['messages_count']);
@@ -190,7 +190,7 @@ class FollowTest extends TestCase
         $follower->follow($profileOwner);
 
         $response = $this->getJson(
-            route('api.followedBy.index', $profileOwner)
+            route('ajax.followed-by.index', $profileOwner)
         )->json()['data'];
 
         $this->assertEquals(1, $response[0]['messages_count']);

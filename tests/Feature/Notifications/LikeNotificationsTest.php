@@ -31,7 +31,7 @@ class LikeNotificationsTest extends TestCase
         $liker = $this->signIn();
         $thread = $reply->repliable;
 
-        $this->post(route('api.likes.store', $reply));
+        $this->post(route('ajax.likes.store', $reply));
 
         $like = $reply->likes()->first();
         Notification::assertSentTo(
@@ -57,7 +57,7 @@ class LikeNotificationsTest extends TestCase
         $replyPoster = $this->signIn();
         $reply = ReplyFactory::by($replyPoster)->create();
 
-        $this->post(route('api.likes.store', $reply));
+        $this->post(route('ajax.likes.store', $reply));
 
         Notification::assertNotSentTo($replyPoster, ReplyHasNewLike::class);
     }
@@ -71,7 +71,7 @@ class LikeNotificationsTest extends TestCase
         $message = $conversation->messages->first();
         $this->signIn($liker);
 
-        $this->post(route('api.likes.store', $message));
+        $this->post(route('ajax.likes.store', $message));
 
         $like = $message->likes()->first();
         Notification::assertSentTo(
@@ -98,7 +98,7 @@ class LikeNotificationsTest extends TestCase
         $conversation = ConversationFactory::create();
         $message = $conversation->messages->first();
 
-        $this->post(route('api.likes.store', $message));
+        $this->post(route('ajax.likes.store', $message));
 
         Notification::assertNotSentTo(
             $conversationStarter,
@@ -119,7 +119,7 @@ class LikeNotificationsTest extends TestCase
         $profileOwner = $profilePost->profileOwner;
         $liker = $this->signIn();
 
-        $this->post(route('api.likes.store', $comment));
+        $this->post(route('ajax.likes.store', $comment));
 
         $like = $comment->likes()->first();
         Notification::assertSentTo(
@@ -155,7 +155,7 @@ class LikeNotificationsTest extends TestCase
             'repliable_type' => ProfilePost::class,
         ]);
 
-        $this->post(route('api.likes.store', $comment));
+        $this->post(route('ajax.likes.store', $comment));
 
         Notification::assertNotSentTo(
             $commentPoster,

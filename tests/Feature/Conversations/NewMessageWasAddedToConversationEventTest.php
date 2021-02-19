@@ -27,7 +27,7 @@ class NewMessageWasAddedToConversationEventTest extends TestCase
             ->create();
 
         $this->post(
-            route('api.messages.store', $conversation),
+            route('ajax.messages.store', $conversation),
             ['body' => 'some message']
         );
         $message = Reply::whereBody('some message')->first();

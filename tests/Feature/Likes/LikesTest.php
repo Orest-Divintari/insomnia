@@ -15,7 +15,7 @@ class LikesTest extends TestCase
     {
         $reply = ReplyFactory::create();
 
-        $this->post(route('api.likes.store', $reply))
+        $this->post(route('ajax.likes.store', $reply))
             ->assertRedirect('login');
     }
 
@@ -26,7 +26,7 @@ class LikesTest extends TestCase
 
         $reply = ReplyFactory::create();
 
-        $this->post(route('api.likes.store', $reply));
+        $this->post(route('ajax.likes.store', $reply));
 
         $this->assertDatabaseHas('likes', [
             'reply_id' => $reply->id,
@@ -44,11 +44,11 @@ class LikesTest extends TestCase
 
         $reply = ReplyFactory::create();
 
-        $this->post(route('api.likes.store', $reply));
+        $this->post(route('ajax.likes.store', $reply));
 
         $this->assertCount(1, $reply->fresh()->likes);
 
-        $this->post(route('api.likes.store', $reply));
+        $this->post(route('ajax.likes.store', $reply));
 
         $this->assertCount(1, $reply->fresh()->likes);
     }
@@ -61,7 +61,7 @@ class LikesTest extends TestCase
 
         $reply = ReplyFactory::create();
 
-        $this->post(route('api.likes.store', $reply));
+        $this->post(route('ajax.likes.store', $reply));
 
         $this->assertDatabaseHas('likes', [
             'reply_id' => $reply->id,
@@ -70,7 +70,7 @@ class LikesTest extends TestCase
 
         $this->assertCount(1, $reply->fresh()->likes);
 
-        $this->delete(route('api.likes.destroy', $reply));
+        $this->delete(route('ajax.likes.destroy', $reply));
 
         $this->assertDatabaseMissing('likes', [
             'reply_id' => $reply->id,

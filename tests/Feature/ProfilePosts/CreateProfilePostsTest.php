@@ -29,7 +29,7 @@ class CreateProfilePostsTest extends TestCase
         $post = ['body' => 'some news'];
 
         $response = $this->post(
-            route('api.profile-posts.store', $profileOwner),
+            route('ajax.profile-posts.store', $profileOwner),
             $post
         );
 
@@ -46,7 +46,7 @@ class CreateProfilePostsTest extends TestCase
         $this->signIn($poster);
 
         $response = $this->post(
-            route('api.profile-posts.store', $profileOwner),
+            route('ajax.profile-posts.store', $profileOwner),
             []
         );
 
@@ -61,7 +61,7 @@ class CreateProfilePostsTest extends TestCase
         $post = ['body' => 'some news'];
 
         $this->post(
-            route('api.profile-posts.store', $profileOwner),
+            route('ajax.profile-posts.store', $profileOwner),
             $post
         );
 
@@ -79,7 +79,7 @@ class CreateProfilePostsTest extends TestCase
         $this->signIn();
 
         $response = $this->postJson(
-            route('api.profile-posts.store', $profileOwner),
+            route('ajax.profile-posts.store', $profileOwner),
             ['body' => '']
         );
 
@@ -95,7 +95,7 @@ class CreateProfilePostsTest extends TestCase
         $nonStringBody = array(15);
 
         $response = $this->postJson(
-            route('api.profile-posts.store', $profileOwner),
+            route('ajax.profile-posts.store', $profileOwner),
             ['body' => $nonStringBody]
         );
 
@@ -114,11 +114,11 @@ class CreateProfilePostsTest extends TestCase
         $this->expectException(PostThrottlingException::class);
 
         $this->post(
-            route('api.profile-posts.store', $profileOwner),
+            route('ajax.profile-posts.store', $profileOwner),
             raw(ProfilePost::class)
         );
         $response = $this->post(
-            route('api.profile-posts.store', $profileOwner),
+            route('ajax.profile-posts.store', $profileOwner),
             raw(ProfilePost::class)
         );
 

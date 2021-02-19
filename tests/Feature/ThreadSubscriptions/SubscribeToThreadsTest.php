@@ -16,7 +16,7 @@ class SubscribeToThreadsTest extends TestCase
     public function guests_cannot_subscribe_to_a_thread()
     {
         $thread = create(Thread::class);
-        $this->put(route('api.thread-subscriptions.update', $thread))
+        $this->put(route('ajax.thread-subscriptions.update', $thread))
             ->assertRedirect('login');
     }
 
@@ -46,7 +46,7 @@ class SubscribeToThreadsTest extends TestCase
         ];
 
         $this->put(
-            route('api.thread-subscriptions.update', $thread),
+            route('ajax.thread-subscriptions.update', $thread),
             $prefersEmail)
         ;
 
@@ -68,7 +68,7 @@ class SubscribeToThreadsTest extends TestCase
         ];
 
         $this->put(
-            route('api.thread-subscriptions.update', $thread),
+            route('ajax.thread-subscriptions.update', $thread),
             $prefersEmail
         );
 
@@ -87,7 +87,7 @@ class SubscribeToThreadsTest extends TestCase
         $this->assertCount(0, $thread->subscriptions);
 
         $response = $this->put(
-            route('api.thread-subscriptions.update', $thread),
+            route('ajax.thread-subscriptions.update', $thread),
             []
         );
 
@@ -106,12 +106,12 @@ class SubscribeToThreadsTest extends TestCase
         $prefersEmail = [
             'email_notifications' => true,
         ];
-        $this->put(route('api.thread-subscriptions.update', $thread), $prefersEmail);
+        $this->put(route('ajax.thread-subscriptions.update', $thread), $prefersEmail);
 
         $this->assertCount(1, $user->subscriptions);
         $this->assertCount(1, $thread->subscriptions);
 
-        $this->delete(route('api.thread-subscriptions.destroy', $thread));
+        $this->delete(route('ajax.thread-subscriptions.destroy', $thread));
 
         $this->assertCount(0, $user->fresh()->subscriptions);
         $this->assertCount(0, $thread->fresh()->subscriptions);

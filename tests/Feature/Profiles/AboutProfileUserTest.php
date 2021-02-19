@@ -17,7 +17,7 @@ class AboutProfileUserTest extends TestCase
         $visitor = $this->signIn();
 
         $response = $this->getJson(
-            route('api.about.show', $profileOwner)
+            route('ajax.about.show', $profileOwner)
         )->json();
 
         $this->assertTrue(
@@ -39,7 +39,7 @@ class AboutProfileUserTest extends TestCase
         $visitor = $this->signIn();
 
         $response = $this->getJson(
-            route('api.about.show', $profileOwner)
+            route('ajax.about.show', $profileOwner)
         )->json()['followedBy'];
 
         $data = $response['data'];
@@ -52,7 +52,7 @@ class AboutProfileUserTest extends TestCase
             $followerB->id
         );
         $this->assertEquals(
-            '/api/users/' . $profileOwner->name . '/followedBy',
+            '/api/users/' . $profileOwner->name . '/followed-by',
             $response['path']
         );
     }
@@ -68,7 +68,7 @@ class AboutProfileUserTest extends TestCase
         $visitor = $this->signIn();
 
         $response = $this->getJson(
-            route('api.about.show', $profileOwner)
+            route('ajax.about.show', $profileOwner)
         )->json()['follows'];
 
         $data = $response['data'];

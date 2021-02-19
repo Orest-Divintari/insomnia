@@ -18,7 +18,7 @@ class DeleteThreadRepliesTest extends TestCase
         $replyPoster = $this->signIn();
         $reply = ReplyFactory::by($replyPoster)->create();
 
-        $this->delete(route('api.replies.destroy', $reply));
+        $this->delete(route('ajax.replies.destroy', $reply));
 
         $this->assertDatabaseMissing('replies', [
             'id' => $reply->id,
@@ -32,7 +32,7 @@ class DeleteThreadRepliesTest extends TestCase
         $reply = ReplyFactory::create();
         $unauthorizedUser = $this->signIn();
 
-        $response = $this->delete(route('api.replies.destroy', $reply));
+        $response = $this->delete(route('ajax.replies.destroy', $reply));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertDatabaseHas('replies', [

@@ -61,7 +61,7 @@ class HideConversationTest extends TestCase
         $this->assertCount(0, $participant->conversations);
 
         $this->post(
-            route('api.messages.store', $conversation),
+            route('ajax.messages.store', $conversation),
             ['body' => 'new message']
         );
 

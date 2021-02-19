@@ -30,7 +30,7 @@ class ReadLatestActivityTest extends TestCase
         $comment->likedBy($profileOwner);
 
         $activities = $this->getJson(
-            route('api.latest-activity.index', $profileOwner)
+            route('ajax.latest-activity.index', $profileOwner)
         )->json()['data'];
 
         $this->assertCount(6, $activities);

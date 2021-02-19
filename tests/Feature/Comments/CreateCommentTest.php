@@ -29,7 +29,7 @@ class CreateCommentTest extends TestCase
     {
         $post = create(ProfilePost::class);
 
-        $this->post(route('api.comments.store', $post), [])
+        $this->post(route('ajax.comments.store', $post), [])
             ->assertRedirect('login');
     }
 
@@ -42,7 +42,7 @@ class CreateCommentTest extends TestCase
         $this->signIn($user);
         $post = create(ProfilePost::class);
 
-        $response = $this->post(route('api.comments.store', $post), []);
+        $response = $this->post(route('ajax.comments.store', $post), []);
 
         $response->assertRedirect(route('verification.notice'));
     }
@@ -54,7 +54,7 @@ class CreateCommentTest extends TestCase
         $post = create(ProfilePost::class);
         $comment = ['body' => $this->faker->sentence];
 
-        $this->post(route('api.comments.store', $post), $comment);
+        $this->post(route('ajax.comments.store', $post), $comment);
 
         $this->assertDatabaseHas('replies', [
             'repliable_id' => $post->id,
@@ -71,7 +71,7 @@ class CreateCommentTest extends TestCase
         $post = create(ProfilePost::class);
         $comment = ['body' => ''];
 
-        $response = $this->post(route('api.comments.store', $post), $comment);
+        $response = $this->post(route('ajax.comments.store', $post), $comment);
 
         $response->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
         $this->assertDatabaseMissing('replies', [
@@ -90,7 +90,7 @@ class CreateCommentTest extends TestCase
         $notStringBody = array(5);
         $comment = ['body' => $notStringBody];
 
-        $response = $this->post(route('api.comments.store', $post), $comment);
+        $response = $this->post(route('ajax.comments.store', $post), $comment);
 
         $response->assertSessionHasErrors(['body' => $this->bodyErrorMessage]);
     }
@@ -106,11 +106,11 @@ class CreateCommentTest extends TestCase
         $this->expectException(PostThrottlingException::class);
 
         $this->post(
-            route('api.comments.store', $profilePost),
+            route('ajax.comments.store', $profilePost),
             raw(Reply::class)
         );
         $response = $this->post(
-            route('api.comments.store', $profilePost),
+            route('ajax.comments.store', $profilePost),
             raw(Reply::class)
         );
 

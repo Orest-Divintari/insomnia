@@ -21,7 +21,7 @@ class CreateConversationMessageTest extends TestCase
         $conversationSlug = 'randomSlug';
 
         $response = $this->post(
-            route('api.messages.store', $conversationSlug),
+            route('ajax.messages.store', $conversationSlug),
             ['body' => 'some message']
         );
 
@@ -36,7 +36,7 @@ class CreateConversationMessageTest extends TestCase
         $unathorizedUser = $this->signIn();
 
         $response = $this->post(
-            route('api.messages.store', $conversation),
+            route('ajax.messages.store', $conversation),
             $message
         );
 
@@ -51,7 +51,7 @@ class CreateConversationMessageTest extends TestCase
         $message = ['body' => ''];
 
         $response = $this->postJson(
-            route('api.messages.store', $conversation),
+            route('ajax.messages.store', $conversation),
             $message
         );
 
@@ -68,7 +68,7 @@ class CreateConversationMessageTest extends TestCase
         $message = ['body' => $nonStringMessage];
 
         $response = $this->postJson(
-            route('api.messages.store', $conversation),
+            route('ajax.messages.store', $conversation),
             $message
         );
 
@@ -84,7 +84,7 @@ class CreateConversationMessageTest extends TestCase
         $message = ['body' => 'some message'];
 
         $this->post(
-            route('api.messages.store', $conversation),
+            route('ajax.messages.store', $conversation),
             $message
         );
 
@@ -107,7 +107,7 @@ class CreateConversationMessageTest extends TestCase
         $this->signIn($participant);
 
         $this->post(
-            route('api.messages.store', $conversation),
+            route('ajax.messages.store', $conversation),
             $message
         );
 

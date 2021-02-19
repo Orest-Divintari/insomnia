@@ -32,7 +32,7 @@ class ViewThreadsTest extends TestCase
         $category = create(Category::class);
         $thread = ThreadFactory::inCategory($category)->create();
 
-        $response = $this->get(route('threads.index', $category));
+        $response = $this->get(route('category-threads.index', $category));
 
         $response->assertSee($thread->title);
     }
@@ -43,8 +43,8 @@ class ViewThreadsTest extends TestCase
         $category = create(Category::class);
         ThreadFactory::inCategory($category)->createMany(100);
 
-        $firstPage = $this->getJson(route('api.threads.index', $category))->json();
-        $secondPage = $this->getJson(route('api.threads.index', $category) . '?page=2')->json();
+        $firstPage = $this->getJson(route('ajax.threads.index', $category))->json();
+        $secondPage = $this->getJson(route('ajax.threads.index', $category) . '?page=2')->json();
 
         $this->assertCount(Thread::PER_PAGE, $firstPage['data']);
         $this->assertCount(Thread::PER_PAGE, $secondPage['data']);
@@ -53,6 +53,7 @@ class ViewThreadsTest extends TestCase
     /** @test */
     public function a_user_can_jump_to_a_specific_reply_of_a_thread()
     {
+        $this->withoutExceptionHandling();
         $thread = ThreadFactory::create();
         ReplyFactory::toThread($thread)->createMany(30);
         $desiredReply = Reply::find(15);
@@ -61,7 +62,7 @@ class ViewThreadsTest extends TestCase
             ->count();
         $pageNumber = (int) ceil($numberOfPreviousReplies / Thread::REPLIES_PER_PAGE);
 
-        $response = $this->get(route('api.replies.show', $desiredReply));
+        $response = $this->get(route('ajax.replies.show', $desiredReply));
 
         $response->assertSee($desiredReply->title);
     }
@@ -74,7 +75,7 @@ class ViewThreadsTest extends TestCase
         $threadByUric = ThreadFactory::by($uric)->create();
         $threadByJohn = ThreadFactory::by($john)->create();
 
-        $response = $this->get(route('filtered-threads.index') . "?postedBy={$uric->name}");
+        $response = $this->get(route('threads.index') . "?postedBy={$uric->name}");
 
         $response->assertSee($threadByUric->title)
             ->assertDontSee($threadByJohn->title);
@@ -93,7 +94,7 @@ class ViewThreadsTest extends TestCase
             ->inCategory($category)
             ->create();
 
-        $response = $this->get(route('threads.index', $category) . "?postedBy={$uric->name}");
+        $response = $this->get(route('category-threads.index', $category) . "?postedBy={$uric->name}");
 
         $response->assertSee($threadByUric->title)
             ->assertDontSee($threadByJohn->title);
@@ -105,7 +106,7 @@ class ViewThreadsTest extends TestCase
         $newThread = create(Thread::class);
         $oldThread = ThreadFactory::createdAt(Carbon::now()->subDay())->create();
 
-        $response = $this->getJson(route('filtered-threads.index') . '?newThreads=1');
+        $response = $this->getJson(route('threads.index') . '?newThreads=1');
 
         $this->assertEquals($newThread->id, $response['data'][0]['id']);
         $this->assertEquals($oldThread->id, $response['data'][1]['id']);
@@ -120,7 +121,7 @@ class ViewThreadsTest extends TestCase
             ->createdAt(Carbon::now()->subDay())
             ->create();
 
-        $response = $this->getJson(route('threads.index', $category) . '?newThreads=1');
+        $response = $this->getJson(route('category-threads.index', $category) . '?newThreads=1');
 
         $this->assertEquals($thread->id, $response['data'][0]['id']);
         $this->assertEquals($oldThread->id, $response['data'][1]['id']);
@@ -138,7 +139,7 @@ class ViewThreadsTest extends TestCase
         Carbon::setTestNow();
 
         $threads = $this->getJson(
-            route('filtered-threads.index') . "?newPosts=1"
+            route('threads.index') . "?newPosts=1"
         )->json()['data'];
 
         $this->assertCount(2, $threads);
@@ -158,7 +159,7 @@ class ViewThreadsTest extends TestCase
         Carbon::setTestNow();
 
         $threads = $this->getJson(
-            route('threads.index', $category) . "?newPosts=1"
+            route('category-threads.index', $category) . "?newPosts=1"
         )->json()['data'];
 
         $this->assertCount(2, $threads);
@@ -179,7 +180,7 @@ class ViewThreadsTest extends TestCase
             ->create();
 
         $response = $this->getJson(
-            route('filtered-threads.index') . "?contributed=" . $orestis->name
+            route('threads.index') . "?contributed=" . $orestis->name
         )->json();
 
         $this->assertEquals(
@@ -199,7 +200,7 @@ class ViewThreadsTest extends TestCase
         ReplyFactory::by($orestis)->create();
 
         $response = $this->getJson(
-            route('filtered-threads.index') . "?contributed=" . $orestis->name
+            route('threads.index') . "?contributed=" . $orestis->name
         )->json();
 
         $this->assertEquals(
@@ -218,7 +219,7 @@ class ViewThreadsTest extends TestCase
         ReplyFactory::toThread($lessTrendingThread)->create();
 
         $response = $this->getJson(
-            route('filtered-threads.index') . "?trending=1"
+            route('threads.index') . "?trending=1"
         );
 
         $this->assertEquals(
@@ -241,7 +242,7 @@ class ViewThreadsTest extends TestCase
         ReplyFactory::toThread($lessTrendingThread)->create();
 
         $response = $this->getJson(
-            route('threads.index', $category) . "?trending=1"
+            route('category-threads.index', $category) . "?trending=1"
         );
 
         $this->assertEquals(
@@ -261,7 +262,7 @@ class ViewThreadsTest extends TestCase
         $threadWithReplies = create(Thread::class);
         ReplyFactory::toThread($threadWithReplies)->createMany(5);
 
-        $response = $this->get(route('filtered-threads.index') . "?unanswered=1");
+        $response = $this->get(route('threads.index') . "?unanswered=1");
 
         $response->assertSee($threadWithoutReplies->title)
             ->assertDontSee($threadWithReplies->title);
@@ -275,7 +276,7 @@ class ViewThreadsTest extends TestCase
         $threadWithReplies = ThreadFactory::inCategory($category)->create();
         ReplyFactory::toThread($threadWithReplies)->createMany(5);
 
-        $response = $this->get(route('threads.index', $category) . "?unanswered=1");
+        $response = $this->get(route('category-threads.index', $category) . "?unanswered=1");
 
         $response->assertSee($threadWithoutReplies->title)
             ->assertDontSee($threadWithReplies->title);
@@ -289,7 +290,7 @@ class ViewThreadsTest extends TestCase
         $subscribedThread = create(Thread::class);
         $subscribedThread->subscribe($orestis->id);
 
-        $response = $this->get(route('filtered-threads.index') . "?watched=1");
+        $response = $this->get(route('threads.index') . "?watched=1");
 
         $response->assertSee($subscribedThread->title)
             ->assertDontSee($threadThatHasntSubscribedTo->title);
@@ -304,7 +305,7 @@ class ViewThreadsTest extends TestCase
         $subscribedThread = ThreadFactory::inCategory($category)->create();
         $subscribedThread->subscribe($orestis->id);
 
-        $response = $this->get(route('threads.index', $category) . "?watched=1");
+        $response = $this->get(route('category-threads.index', $category) . "?watched=1");
 
         $response->assertSee($subscribedThread->title)
             ->assertDontSee($threadThatHasntSubscribedTo->title);
@@ -319,7 +320,7 @@ class ViewThreadsTest extends TestCase
         $daysAgo = 3;
 
         $response = $this->get(
-            route('filtered-threads.index') . "?lastUpdated=" . $daysAgo
+            route('threads.index') . "?lastUpdated=" . $daysAgo
         );
 
         $response->assertSee($todaysThread->title)
@@ -337,7 +338,7 @@ class ViewThreadsTest extends TestCase
         $daysAgo = 3;
 
         $response = $this->get(
-            route('threads.index', $category) . "?lastUpdated=" . $daysAgo
+            route('category-threads.index', $category) . "?lastUpdated=" . $daysAgo
         );
 
         $response->assertSee($todaysThread->title)
@@ -353,7 +354,7 @@ class ViewThreadsTest extends TestCase
         $daysAgo = 3;
 
         $response = $this->get(
-            route('filtered-threads.index') . "?lastCreated=" . $daysAgo
+            route('threads.index') . "?lastCreated=" . $daysAgo
         );
 
         $response->assertSee($todaysThread->title)
@@ -371,7 +372,7 @@ class ViewThreadsTest extends TestCase
         $daysAgo = 3;
 
         $response = $this->get(
-            route('threads.index', $category) . "?lastCreated=" . $daysAgo
+            route('category-threads.index', $category) . "?lastCreated=" . $daysAgo
         );
 
         $response->assertSee($todaysThread->title)
@@ -388,7 +389,7 @@ class ViewThreadsTest extends TestCase
             ->create();
         $pinnedThread->pin();
 
-        $response = $this->get(route('filtered-threads.index'));
+        $response = $this->get(route('threads.index'));
 
         $response->assertSee($pinnedThread->title);
     }
@@ -405,7 +406,7 @@ class ViewThreadsTest extends TestCase
             ->create();
         $pinnedThread->pin();
 
-        $response = $this->get(route('threads.index', $category));
+        $response = $this->get(route('category-threads.index', $category));
 
         $response->assertSee($pinnedThread->title);
     }
@@ -419,7 +420,7 @@ class ViewThreadsTest extends TestCase
         $threadBody = 1;
         $thread->increment('replies_count', Thread::REPLIES_PER_PAGE * $pages - $threadBody);
 
-        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
+        $threads = $this->getJson(route('category-threads.index', $category))->json()['data'];
         $this->assertEquals(
             $thread->linkToPage(8),
             $threads[0]['last_pages'][8]
@@ -442,7 +443,7 @@ class ViewThreadsTest extends TestCase
         $threadBody = 1;
         $thread->increment('replies_count', Thread::REPLIES_PER_PAGE * $pages - $threadBody);
 
-        $threads = $this->getJson(route('filtered-threads.index'))->json()['data'];
+        $threads = $this->getJson(route('threads.index'))->json()['data'];
 
         $this->assertEquals(
             $thread->linkToPage(8),

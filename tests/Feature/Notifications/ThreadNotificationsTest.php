@@ -40,7 +40,7 @@ class ThreadNotificationsTest extends TestCase
         $desiredChannels = ['mail', 'database'];
 
         $this->post(
-            route('api.replies.store', $thread),
+            route('ajax.replies.store', $thread),
             ['body' => $newReply]
         );
 
@@ -74,7 +74,7 @@ class ThreadNotificationsTest extends TestCase
         $undesiredChannels = ['mail'];
 
         $this->post(
-            route('api.replies.store', $thread),
+            route('ajax.replies.store', $thread),
             ['body' => $newReply]
         );
 
@@ -106,7 +106,7 @@ class ThreadNotificationsTest extends TestCase
         $newReply = 'new reply';
 
         $this->post(
-            route('api.replies.store', $thread),
+            route('ajax.replies.store', $thread),
             ['body' => $newReply]
         );
 

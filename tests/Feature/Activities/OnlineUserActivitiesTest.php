@@ -22,7 +22,7 @@ class OnlineUserActivitiesTest extends TestCase
         $this->get(route('forum'));
         $this->assertCount(2, Activity::typeViewed()->get());
 
-        $response = $this->get(route('online-users-activity.index'));
+        $response = $this->get(route('online-user-activities.index'));
 
         $response->assertSee('Guest');
         $response->assertSee(UserViewedPage::FORUM);
@@ -38,7 +38,7 @@ class OnlineUserActivitiesTest extends TestCase
         $this->get(route('forum'));
         $this->assertCount(2, Activity::typeViewed()->get());
 
-        $response = $this->get(route('online-users-activity.index'));
+        $response = $this->get(route('online-user-activities.index'));
 
         $response->assertSee($user->name);
         $response->assertSee(UserViewedPage::FORUM);
@@ -52,7 +52,7 @@ class OnlineUserActivitiesTest extends TestCase
         $user = $this->signIn();
         $this->get(route('threads.show', $thread));
 
-        $response = $this->get(route('online-users-activity.index'));
+        $response = $this->get(route('online-user-activities.index'));
 
         $response->assertSee($user->name);
         $response->assertSee(UserViewedPage::THREAD);
@@ -66,7 +66,7 @@ class OnlineUserActivitiesTest extends TestCase
         $user = $this->signIn();
         $this->get(route('categories.show', $category));
 
-        $response = $this->get(route('online-users-activity.index'));
+        $response = $this->get(route('online-user-activities.index'));
 
         $response->assertSee($user->name);
         $response->assertSee(UserViewedPage::CATEGORY);
@@ -79,7 +79,7 @@ class OnlineUserActivitiesTest extends TestCase
         $user = $this->signIn();
         $this->get(route('conversations.index'));
 
-        $response = $this->get(route('online-users-activity.index'));
+        $response = $this->get(route('online-user-activities.index'));
 
         $response->assertSee($user->name);
         $response->assertSee(UserViewedPage::CONVERSATION);
@@ -92,7 +92,7 @@ class OnlineUserActivitiesTest extends TestCase
         $conversation = ConversationFactory::by($user)->create();
         $this->get(route('conversations.show', $conversation));
 
-        $response = $this->get(route('online-users-activity.index'));
+        $response = $this->get(route('online-user-activities.index'));
 
         $response->assertSee($user->name);
         $response->assertSee(UserViewedPage::CONVERSATION);

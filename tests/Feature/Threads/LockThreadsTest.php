@@ -18,7 +18,7 @@ class LockThreadsTest extends TestCase
         $thread = create(Thread::class);
         $this->assertFalse($thread->locked);
 
-        $this->post(route('api.lock-threads.store', $thread));
+        $this->patch(route('ajax.lock-threads.update', $thread));
 
         $this->assertTrue($thread->fresh()->locked);
     }
@@ -30,7 +30,7 @@ class LockThreadsTest extends TestCase
         $thread = create(Thread::class);
         $this->assertFalse($thread->locked);
 
-        $response = $this->post(route('api.lock-threads.store', $thread));
+        $response = $this->patch(route('ajax.lock-threads.update', $thread));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertFalse($thread->fresh()->locked);
@@ -42,7 +42,7 @@ class LockThreadsTest extends TestCase
         $thread = create(Thread::class);
         $this->assertFalse($thread->locked);
 
-        $response = $this->post(route('api.lock-threads.store', $thread));
+        $response = $this->patch(route('ajax.lock-threads.update', $thread));
 
         $response->assertRedirect('login');
         $this->assertFalse($thread->fresh()->locked);
@@ -56,7 +56,7 @@ class LockThreadsTest extends TestCase
         $thread->lock();
         $this->assertTrue($thread->fresh()->locked);
 
-        $this->delete(route('api.lock-threads.destroy', $thread));
+        $this->delete(route('ajax.lock-threads.destroy', $thread));
 
         $this->assertFalse($thread->fresh()->locked);
     }
@@ -70,7 +70,7 @@ class LockThreadsTest extends TestCase
         $thread->lock();
         $this->assertTrue($thread->fresh()->locked);
 
-        $response = $this->delete(route('api.lock-threads.destroy', $thread));
+        $response = $this->delete(route('ajax.lock-threads.destroy', $thread));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertTrue($thread->fresh()->locked);
@@ -85,7 +85,7 @@ class LockThreadsTest extends TestCase
         $this->assertTrue($thread->locked);
 
         $response = $this->delete(
-            route('api.lock-threads.destroy', $thread)
+            route('ajax.lock-threads.destroy', $thread)
         );
 
         $response->assertRedirect('login');
