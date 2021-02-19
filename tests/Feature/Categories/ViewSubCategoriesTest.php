@@ -5,7 +5,6 @@ namespace Tests\Feature\Categories;
 use App\Category;
 use App\GroupCategory;
 use App\Thread;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -102,42 +101,6 @@ class ViewSubCategoriesTest extends TestCase
 
         $ios->delete();
         $user->delete();
-    }
-
-    /** @test */
-    public function a_user_can_view_the_the_poster_of_the_most_recent_reply_of_a_sub_category()
-    {
-        $recentIosReplyPoster = create(User::class);
-        $oldIosReplyPoster = create(User::class);
-        $ios = create(Category::class);
-        $ios13 = create(
-            Category::class,
-            ['parent_id' => $ios->id]
-        );
-        create(
-            Thread::class,
-            [
-                'user_id' => $recentIosReplyPoster->id,
-                'category_id' => $ios13->id,
-            ]
-        );
-        Carbon::setTestNow(Carbon::now()->subDay());
-        create(
-            Thread::class,
-            [
-                'user_id' => $oldIosReplyPoster->id,
-                'category_id' => $ios13->id,
-            ]
-        );
-        Carbon::setTestNow();
-
-        $response = $this->get(route('forum'));
-
-        $response->assertSee($recentIosReplyPoster->shortName);
-
-        $ios->delete();
-        $recentIosReplyPoster->delete();
-        $oldIosReplyPoster->delete();
     }
 
     /** @test */
