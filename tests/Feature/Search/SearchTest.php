@@ -34,7 +34,7 @@ class SearchTest extends TestCase
     {
         $thread = create(Thread::class);
 
-        $this->get(route('search.show', [
+        $this->get(route('search.index', [
             'type' => 'thread',
             'q' => $this->searchTerm,
         ]))->assertSee($this->noResultsMessage);
@@ -50,7 +50,7 @@ class SearchTest extends TestCase
             'created_at' => Carbon::now()->subDays(10),
         ]);
 
-        $response = $this->get(route('search.show', [
+        $response = $this->get(route('search.index', [
             'type' => 'thread',
             'q' => $this->searchTerm,
             'lastCreated' => 1,
@@ -70,7 +70,7 @@ class SearchTest extends TestCase
         $name = 'benz';
         create(User::class, ['name' => $name]);
 
-        $response = $this->get(route('search.show', [
+        $response = $this->get(route('search.index', [
             'type' => 'thread',
             'q' => $this->searchTerm,
             'postedBy' => $name,
@@ -87,7 +87,7 @@ class SearchTest extends TestCase
         $username = $this->faker->userName();
         $error = 'The following member could not be found: ' . $username;
 
-        $response = $this->get(route('search.show', [
+        $response = $this->get(route('search.index', [
             'postedBy' => $username,
         ]));
 
@@ -102,7 +102,7 @@ class SearchTest extends TestCase
         $usernames = $user->name . ',' . $fakeUserName;
         $error = 'The following member could not be found: ' . $fakeUserName;
 
-        $response = $this->get(route('search.show', [
+        $response = $this->get(route('search.index', [
             'postedBy' => $fakeUserName,
         ]));
 
@@ -118,7 +118,7 @@ class SearchTest extends TestCase
         $errorForJohn = 'The following member could not be found: ' . $johnFake;
         $errorForDoe = 'The following member could not be found: ' . $doeFake;
 
-        $response = $this->get(route('search.show', [
+        $response = $this->get(route('search.index', [
             'postedBy' => $usernames,
         ]));
 
@@ -437,7 +437,7 @@ class SearchTest extends TestCase
         do {
             sleep(0.2);
             $results = $this->getJson(
-                route('search.show', $parameters)
+                route('search.index', $parameters)
             );
             $counter++;
 
@@ -449,7 +449,7 @@ class SearchTest extends TestCase
     /** @test */
     public function when_searching_a_query_or_a_username_must_be_specified()
     {
-        $this->get(route('search.show'))
+        $this->get(route('search.index'))
             ->assertSee('Please specify a search query or the name of a member.');
     }
 
@@ -459,7 +459,7 @@ class SearchTest extends TestCase
         $user = create(User::class, ['name' => 'george']);
         $nonExistingUsername = 'uric';
 
-        $this->get(route('search.show', [
+        $this->get(route('search.index', [
             'postedBy' => $nonExistingUsername,
         ]))->assertSee('The following member could not be found: ' . $nonExistingUsername);
     }
@@ -468,7 +468,7 @@ class SearchTest extends TestCase
     public function when_a_search_type_is_specified_it_must_be_one_of_the_specified_values()
     {
         $this->get(route(
-            'search.show',
+            'search.index',
             ['q' => 'something', 'type' => 'asdfs']
         ))->assertSee(
             'The following search type could not be found: ' . request('type')

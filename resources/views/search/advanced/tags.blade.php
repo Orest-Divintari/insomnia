@@ -2,7 +2,7 @@
 <x-layouts.search_advanced type="{{ $type }}">
     <main>
         <div class="form-container border-t-0 border-b-0">
-            <form method="GET" action="{{ route('search.show') }}" class="mb-0">
+            <form method="GET" action="{{ route('search.index') }}" class="mb-0">
                 <input type="" hidden name="type" value={{ $type }}>
                 <!-- ROW -->
                 <div class="form-row">

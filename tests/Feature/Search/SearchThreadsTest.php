@@ -51,7 +51,7 @@ class SearchThreadsTest extends SearchTest
     //     do {
     //         $results = $this->getJson(
     //             route(
-    //                 'search.show',
+    //                 'search.index',
     //                 ['type' => 'thread', 'numberOfReplies' => $numberOfReplies]
     //             )
     //         )->json()['data'];
@@ -98,7 +98,7 @@ class SearchThreadsTest extends SearchTest
     //     do {
     //         $results = $this->getJson(
     //             route(
-    //                 'search.show',
+    //                 'search.index',
     //                 [
     //                     'type' => 'thread',
     //                     'numberOfReplies' => $numberOfReplies,

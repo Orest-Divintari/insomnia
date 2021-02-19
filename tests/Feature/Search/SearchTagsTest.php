@@ -35,7 +35,7 @@ class SearchTagsTest extends SearchTest
         $nonExistingTag = 'randomTag';
 
         $response = $this->get(route(
-            'search.show',
+            'search.index',
             ['type' => 'tag', 'q' => $nonExistingTag]
         ),
         );

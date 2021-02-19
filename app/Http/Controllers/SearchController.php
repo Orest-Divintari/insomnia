@@ -32,7 +32,7 @@ class SearchController extends Controller
      *
      * @return Illuminate\View\View;
      */
-    public function show(Search $search, SearchRequest $searchRequest)
+    public function index(Search $search, SearchRequest $searchRequest)
     {
         $validator = $searchRequest
             ->handle($this->request)
@@ -41,7 +41,7 @@ class SearchController extends Controller
         $query = $searchRequest->getSearchQuery();
 
         if ($validator->fails()) {
-            return view('search.show', compact('query'))
+            return view('search.index', compact('query'))
                 ->withErrors($validator);
         }
 
@@ -49,7 +49,7 @@ class SearchController extends Controller
         if (request()->expectsJson()) {
             return $results;
         }
-        return view('search.show', compact('results', 'query'));
+        return view('search.index', compact('results', 'query'));
     }
 
     /**
