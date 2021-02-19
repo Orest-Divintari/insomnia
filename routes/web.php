@@ -27,8 +27,8 @@ Route::get('/online/user-activities', 'OnlineUserActivityController@index')
 
 /* ************ SEARCH ************ */
 
-Route::get('/search', 'SearchController@show')
-    ->name('search.show');
+Route::get('/search', 'SearchController@index')
+    ->name('search.index');
 
 Route::get('/search/advanced', 'SearchController@create')
     ->name('search.advanced');
