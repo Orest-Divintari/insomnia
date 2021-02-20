@@ -20,9 +20,8 @@
             @endforeach
         </div>
         <div class=" flex-1">
-            <x-categories._latest_posts :latestPosts="$latestPosts"></x-categories._latest_posts>
-            <x-categories._forum_statistics :totalThreads="$totalThreads" :totalMembers="$totalMembers"
-                :totalMessages="$totalMessages"></x-categories._forum_statistics>
+            @include('forum.latest-posts')
+            @include('forum.statistics')
         </div>
     </div>
 </x-layouts._forum>

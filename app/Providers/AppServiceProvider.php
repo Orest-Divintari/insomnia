@@ -34,8 +34,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-        View::composer('categories.index', function ($view) {
+        View::composer('forum.index', function ($view) {
             $latestPosts = Thread::with('category')->withRecentReply()
                 ->has('replies')
                 ->latest('updated_at')

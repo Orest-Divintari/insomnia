@@ -18,6 +18,6 @@ class ForumController extends Controller
 
         $groups = GroupCategory::withCategories()->get();
 
-        return view('categories.index', compact('groups'));
+        return view('forum.index', compact('groups'));
     }
 }
