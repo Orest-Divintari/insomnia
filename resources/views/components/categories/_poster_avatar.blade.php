@@ -1,1 +1,0 @@
-<img src="{{$avatarPath}}" alt="poster" class="avatar-md">

@@ -61,9 +61,9 @@ class SearchController extends Controller
     {
         $searchForm = [
             'thread' => 'search.advanced.threads',
-            'profile_post' => 'search.advanced.profile_posts',
+            'profile_post' => 'search.advanced.profile-posts',
             'tag' => 'search.advanced.tags',
-            '' => 'search.advanced.all_posts',
+            '' => 'search.advanced.all-posts',
         ];
         $type = $this->request->input('type') ?? '';
 

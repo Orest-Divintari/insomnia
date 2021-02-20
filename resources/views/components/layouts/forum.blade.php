@@ -2,8 +2,8 @@
     <x-slot name="navRight">
         <div class="flex">
             @guest
-            <x-head_tab_item name="Login" destination="login"></x-head_tab_item>
-            <x-head_tab_item name="Register" destination="register"></x-head_tab_item>
+            <x-tab-header name="Login" destination="login"></x-tab-header>
+            <x-tab-header name="Register" destination="register"></x-tab-header>
             @endguest
 
 
@@ -32,7 +32,7 @@
     <x-slot name="subHeader">
         <div class="flex justify-between items-center px-5 bg-blue-light text-gray-900 ">
             <div class="flex ">
-                <x-sub_head_tab_item name="Home" destination="{{ route('forum') }}"></x-sub_head_tab_item>
+                <x-tab-subheader name="Home" destination="{{ route('forum') }}"></x-tab-subheader>
                 @auth
                 <dropdown>
                     <template v-slot:dropdown-trigger>
@@ -48,24 +48,20 @@
                             class=" dropdown-item hover:bg-white-catskill">Threads you started</a>
                         <a href="{{ route('threads.index') . '?contributed=' . auth()->user()->name }}"
                             class="dropdown-item">Threads you replied to</a>
-                        <a href="{{ route('threads.index') . '?watched=true'}}"
-                            class="dropdown-item">Watched</a>
+                        <a href="{{ route('threads.index') . '?watched=true'}}" class="dropdown-item">Watched</a>
                         <a href="{{ route('recently-viewed-threads.index') }}" class="dropdown-item">History</a>
                     </template>
                 </dropdown>
                 @endauth
-                <x-sub_head_tab_item name="New Threads"
-                    destination="{{ route('threads.index') . '?newThreads=true'}}"></x-sub_head_tab_item>
-                <x-sub_head_tab_item name="New Posts"
-                    destination="{{ route('threads.index') . '?newPosts=true'}}">
-                </x-sub_head_tab_item>
-                <x-sub_head_tab_item name="Unanswered"
-                    destination="{{ route('threads.index') . '?unanswered=true'}}">
-                </x-sub_head_tab_item>
+                <x-tab-subheader name="New Threads" destination="{{ route('threads.index') . '?newThreads=true'}}">
+                </x-tab-subheader>
+                <x-tab-subheader name="New Posts" destination="{{ route('threads.index') . '?newPosts=true'}}">
+                </x-tab-subheader>
+                <x-tab-subheader name="Unanswered" destination="{{ route('threads.index') . '?unanswered=true'}}">
+                </x-tab-subheader>
 
-                <x-sub_head_tab_item name="Trending"
-                    destination="{{ route('threads.index') . '?trending=true' }}">
-                </x-sub_head_tab_item>
+                <x-tab-subheader name="Trending" destination="{{ route('threads.index') . '?trending=true' }}">
+                </x-tab-subheader>
                 @auth
                 <dropdown>
                     <template v-slot:dropdown-trigger>

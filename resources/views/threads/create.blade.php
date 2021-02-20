@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     @push('styles')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.css">
     @endpush
@@ -9,7 +9,7 @@
 
     <main class="section">
 
-        <x-form._errors></x-form._errors>
+        <x-form.errors></x-form.errors>
 
         <div class="form-container">
             <form action="/threads" method="POST">
@@ -62,9 +62,9 @@
                         </div>
                     </div>
                 </div>
-                <x-form._button class="text-xs" name="Post Thread"></x-form._button>
+                <x-form.button class="text-xs" name="Post Thread"></x-form.button>
 
             </form>
         </div>
     </main>
-</x-layouts._forum>
+</x-layouts.forum>

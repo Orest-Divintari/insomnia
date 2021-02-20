@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     <header>
         <h1 class="section-title"> Current Visitors </h1>
     </header>
@@ -56,4 +56,4 @@
         </div>
 
     </main>
-</x-layouts._forum>
+</x-layouts.forum>

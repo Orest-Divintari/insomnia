@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     @push('styles')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.css">
     @endpush
@@ -123,4 +123,4 @@
         </div>
     </thread>
 
-</x-layouts._forum>
+</x-layouts.forum>

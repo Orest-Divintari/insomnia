@@ -25,7 +25,7 @@ class CategoryController extends Controller
                 ->withRecentlyActiveThread()
                 ->get();
 
-            return view('sub_categories.index', compact('category', 'subCategories'));
+            return view('categories.show', compact('category', 'subCategories'));
         }
         return redirect(route('category-threads.index', $category->slug));
     }

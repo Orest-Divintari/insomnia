@@ -47,10 +47,10 @@ class ThreadHasNewReply extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->view('emails.subscription.notify_thread_subscribers', [
+            ->view('emails.subscription.notify-thread-subscribers', [
                 'thread' => $this->thread,
                 'reply' => $this->reply,
-                'view_type' => 'notify_thread_subscribers',
+                'view_type' => 'notify-thread-subscribers',
             ]);
     }
 

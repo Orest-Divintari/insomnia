@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     <header>
         <a href="#{{ $category->title }}" class="section-title"> {{ $category->title }} </a>
     </header>
@@ -12,8 +12,9 @@
 
         <div>
             @foreach($subCategories as $category)
-            <x-categories._list :category="$category" :loop="$loop"></x-categories._list>
+            <x-categories.list :category="$category" :loop="$loop">
+            </x-categories.list>
             @endforeach
         </div>
     </main>
-</x-layouts._forum>
+</x-layouts.forum>

@@ -1,9 +1,9 @@
-<x-layouts._forum>
+<x-layouts.forum>
     <header>
         <h1 class="section-title">Log in</h1>
     </header>
     <main class="section">
-        @include('components.form._errors')
+        @include('components.form.errors')
         <div class="form-container">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
@@ -48,9 +48,9 @@
                         </div>
                     </div>
                 </div>
-                <x-form._button name="Log in"></x-form._button>
+                <x-form.button name="Log in"></x-form.button>
             </form>
         </div>
     </main>
 
-</x-layouts._forum>
+</x-layouts.forum>

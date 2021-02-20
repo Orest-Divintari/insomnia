@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     @if(!empty($category))
     <header class="flex justify-between">
         <div>
@@ -41,4 +41,4 @@
     </main>
 
 
-</x-layouts._forum>
+</x-layouts.forum>
