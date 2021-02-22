@@ -17,7 +17,7 @@
       >
         <img
           v-if="trigger == 'avatar'"
-          :src="profileOwner.avatar_path"
+          :src="user.avatar_path"
           :class="triggerClasses"
         />
         <a
