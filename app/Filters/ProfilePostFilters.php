@@ -23,7 +23,7 @@ class ProfilePostFilters extends PostFilters implements FilterInterface
      * Fetch the posts that are on the given user's profile
      *
      * @param String $username
-     * @return void
+     * @return Builder
      */
     public function profileOwner($username)
     {
