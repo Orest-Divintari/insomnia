@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 class FilterManager
 {
-    public $request;
-    public $builder;
-    public $appliedFilters = [];
-    public $supportedFilters = [];
-    public $modelFilters = [];
-    public $requestedFilters = [];
-    public $chain;
+    protected $request;
+    protected $builder;
+    protected $appliedFilters = [];
+    protected $supportedFilters = [];
+    protected $modelFilters = [];
+    protected $requestedFilters = [];
+    protected $chain;
 
     /**
      * Create a new FilterManager instance
@@ -57,7 +57,7 @@ class FilterManager
      * @param mixed $filter
      * @return boolean
      */
-    public function canBeApplied($modelFilterClass, $filter)
+    private function canBeApplied($modelFilterClass, $filter)
     {
         if ($this->filterIsApplied($filter)) {
             return $this->filterClassIsApplied($modelFilterClass)
@@ -73,7 +73,7 @@ class FilterManager
      * @param string $filter
      * @return bool
      */
-    public function filterIsAppliedByFilterClass($modelFilterClass, $filter)
+    private function filterIsAppliedByFilterClass($modelFilterClass, $filter)
     {
         return collect($this->appliedFilters[$modelFilterClass])
             ->contains($filter);
@@ -85,7 +85,7 @@ class FilterManager
      * @param mixed $modelFilterClass
      * @return bool
      */
-    public function filterClassIsApplied($modelFilterClass)
+    private function filterClassIsApplied($modelFilterClass)
     {
         return array_key_exists($modelFilterClass, $this->appliedFilters);
     }
@@ -96,7 +96,7 @@ class FilterManager
      * @param string $filter
      * @return bool
      */
-    public function filterIsApplied($filter)
+    private function filterIsApplied($filter)
     {
         return collect($this->appliedFilters)
             ->flatten()
@@ -128,7 +128,7 @@ class FilterManager
      * @param $modelFilter
      * @return array
      */
-    public function getFiltersFor($modelFilter)
+    private function getFiltersFor($modelFilter)
     {
         return request()->only($modelFilter->filters);
     }
@@ -139,7 +139,7 @@ class FilterManager
      * @param array $filters
      * @return void
      */
-    public function cleanUp()
+    private function cleanUp()
     {
         $this->discardEmpty();
         $this->castValues();
@@ -151,7 +151,7 @@ class FilterManager
      * @param array $fiters
      * @return array
      */
-    public function discardEmpty()
+    private function discardEmpty()
     {
         $this->requestedFilters = array_filter(
             $this->requestedFilters,
@@ -166,7 +166,7 @@ class FilterManager
      * @param  array $filters
      * @return array
      */
-    public function castValues()
+    private function castValues()
     {
         $this->requestedFilters = collect($this->requestedFilters)
             ->map(function ($value, $key) {
