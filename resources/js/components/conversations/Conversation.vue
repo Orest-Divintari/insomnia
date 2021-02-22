@@ -83,7 +83,7 @@ export default {
     },
     star() {
       axios
-        .post(this.starPath)
+        .patch(this.starPath)
         .then(() => (this.starred = true))
         .then((error) => console.log(error));
     },
