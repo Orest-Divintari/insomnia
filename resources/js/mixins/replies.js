@@ -1,7 +1,7 @@
 export default {
     methods: {
         showReply(reply) {
-            window.location.href = "/api/replies/" + reply.id;
+            window.location.href = "/replies/" + reply.id;
         },
         updated() {
             this.editing = false;

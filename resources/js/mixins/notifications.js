@@ -12,7 +12,7 @@ export default {
         },
         showReply() {
             window.location.href =
-                "/api/replies/" + this.notificationData.reply.id;
+                "/replies/" + this.notificationData.reply.id;
         }
     }
 };
