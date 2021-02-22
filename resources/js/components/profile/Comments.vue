@@ -50,7 +50,7 @@ export default {
       return this.dataset.next_page_url != null;
     },
     path() {
-      return "/api/posts/" + this.post.id + "/comments";
+      return "/ajax/posts/" + this.post.id + "/comments";
     },
   },
   methods: {

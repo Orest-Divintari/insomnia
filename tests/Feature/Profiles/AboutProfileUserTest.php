@@ -52,7 +52,7 @@ class AboutProfileUserTest extends TestCase
             $followerB->id
         );
         $this->assertEquals(
-            '/api/users/' . $profileOwner->name . '/followed-by',
+            '/ajax/users/' . $profileOwner->name . '/followed-by',
             $response['path']
         );
     }
@@ -81,7 +81,7 @@ class AboutProfileUserTest extends TestCase
             $followerB->id
         );
         $this->assertEquals(
-            '/api/users/' . $profileOwner->name . '/follows',
+            '/ajax/users/' . $profileOwner->name . '/follows',
             $response['path']
         );
     }

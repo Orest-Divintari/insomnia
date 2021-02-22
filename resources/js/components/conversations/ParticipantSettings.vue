@@ -54,7 +54,7 @@ export default {
   computed: {
     participantPath() {
       return (
-        "/api/conversations/" +
+        "/ajax/conversations/" +
         this.conversation.slug +
         "/participants/" +
         this.participant.id
@@ -62,7 +62,7 @@ export default {
     },
     adminPath() {
       return (
-        "/api/conversations/" +
+        "/ajax/conversations/" +
         this.conversation.slug +
         "participants/" +
         this.participant.id +

@@ -3,7 +3,7 @@
     <button
       @click="toggle"
       class="btn-reply-control mr-2"
-      :class="[{'text-blue-like': this.isLiked}, styleAttributes]"
+      :class="[{ 'text-blue-like': this.isLiked }, styleAttributes]"
     >
       <span class="fas fa-thumbs-up"></span> Like
     </button>
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/replies/" + this.item.id + "/likes";
+      return "/ajax/replies/" + this.item.id + "/likes";
     },
   },
   methods: {

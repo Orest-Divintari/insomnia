@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/threads/" + this.thread.slug;
+      return "/ajax/threads/" + this.thread.slug;
     },
     data() {
       return { title: this.title };

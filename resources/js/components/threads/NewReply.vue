@@ -43,10 +43,10 @@ export default {
   },
   computed: {
     threadReplyPath() {
-      return "/api/threads/" + this.repliable.slug + "/replies";
+      return "/ajax/threads/" + this.repliable.slug + "/replies";
     },
     conversationMessagePath() {
-      return "/api/conversations/" + this.repliable.slug + "/messages";
+      return "/ajax/conversations/" + this.repliable.slug + "/messages";
     },
     path() {
       if (this.repliable.type == "conversation") {

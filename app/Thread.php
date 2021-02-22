@@ -125,7 +125,7 @@ class Thread extends Model
      */
     public function api_path()
     {
-        return '/api/threads/' . $this->slug;
+        return '/ajax/threads/' . $this->slug;
     }
 
     /**

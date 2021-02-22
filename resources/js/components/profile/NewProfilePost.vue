@@ -47,7 +47,7 @@ export default {
       return { body: this.body };
     },
     path() {
-      return "/api/profiles/" + this.profileOwner.name + "/posts";
+      return "/ajax/profiles/" + this.profileOwner.name + "/posts";
     },
   },
   methods: {

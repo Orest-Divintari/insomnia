@@ -27,7 +27,7 @@ export default {
       }
     },
     path() {
-      return "/api/threads/" + this.thread.slug + "/lock";
+      return "/ajax/threads/" + this.thread.slug + "/lock";
     },
   },
   methods: {

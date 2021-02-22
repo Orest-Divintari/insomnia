@@ -78,7 +78,7 @@ export default {
       return { body: this.body };
     },
     path() {
-      return "/api/profile/posts/" + this.post.id;
+      return "/ajax/profile/posts/" + this.post.id;
     },
     update() {
       axios

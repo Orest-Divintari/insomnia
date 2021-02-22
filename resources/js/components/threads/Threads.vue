@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     readPath(slug) {
-      return "/api/threads/" + slug + "/read";
+      return "/ajax/threads/" + slug + "/read";
     },
     markAsRead(thread) {
       thread.has_been_updated = false;

@@ -139,10 +139,10 @@ export default {
       return this.conversationMessagePath;
     },
     threadReplyPath() {
-      return "/api/replies/" + this.reply.id;
+      return "/ajax/replies/" + this.reply.id;
     },
     conversationMessagePath() {
-      return "/api/messages/" + this.reply.id;
+      return "/ajax/messages/" + this.reply.id;
     },
     isOriginalPoster() {
       return this.reply.poster.name == this.repliable.poster.name;

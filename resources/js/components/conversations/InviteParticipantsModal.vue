@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/conversations/" + this.conversation.slug + "/participants";
+      return "/ajax/conversations/" + this.conversation.slug + "/participants";
     },
     data() {
       return { participants: this.participants };

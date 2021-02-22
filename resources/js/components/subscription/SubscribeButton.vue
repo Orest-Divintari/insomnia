@@ -38,7 +38,7 @@ export default {
       return this.isSubscribed ? "Unwatch" : "Watch";
     },
     path() {
-      return "/api/threads/" + this.thread + "/subscriptions";
+      return "/ajax/threads/" + this.thread + "/subscriptions";
     },
   },
   methods: {

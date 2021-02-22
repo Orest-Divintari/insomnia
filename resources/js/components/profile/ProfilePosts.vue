@@ -46,7 +46,7 @@ export default {
       return this.dataset.next_page_url != null;
     },
     path() {
-      return "/api/profiles/" + this.profileOwner.name + "/posts";
+      return "/ajax/profiles/" + this.profileOwner.name + "/posts";
     },
   },
   methods: {

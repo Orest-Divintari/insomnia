@@ -104,7 +104,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/comments/" + this.comment.id;
+      return "/ajax/comments/" + this.comment.id;
     },
   },
   methods: {

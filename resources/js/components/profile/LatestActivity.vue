@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/profiles/" + this.profileOwner.name + "/latest-activity";
+      return "/ajax/profiles/" + this.profileOwner.name + "/latest-activity";
     },
     itemsExist() {
       return this.dataset.next_page_url != null;

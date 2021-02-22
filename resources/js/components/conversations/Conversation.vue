@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/conversations/" + this.conversation.slug;
+      return "/ajax/conversations/" + this.conversation.slug;
     },
     updatePath() {
       return this.path;

@@ -47,7 +47,7 @@ export default {
       return { body: this.body };
     },
     path() {
-      return "/api/posts/" + this.profilePost.id + "/comments";
+      return "/ajax/posts/" + this.profilePost.id + "/comments";
     },
   },
   methods: {

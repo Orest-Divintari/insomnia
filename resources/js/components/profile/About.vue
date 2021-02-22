@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/profiles/" + this.profileOwner.name + "/about";
+      return "/ajax/profiles/" + this.profileOwner.name + "/about";
     },
   },
   methods: {
