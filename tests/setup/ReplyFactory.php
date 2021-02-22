@@ -8,8 +8,8 @@ use Tests\Setup\PostFactory;
 
 class ReplyFactory extends PostFactory
 {
-    private $thread;
-    private $replies = [];
+    protected $thread;
+    protected $replies = [];
 
     public function create($attributes = [])
     {
