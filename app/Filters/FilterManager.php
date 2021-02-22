@@ -118,8 +118,32 @@ class FilterManager
                 $this->requestedFilters[] = $this->getFiltersFor($modelFilter);
             }
         }
+
         $this->cleanUp();
+
         return $this->requestedFilters;
+    }
+
+    /**
+     * Convert to filter keys to camel case
+     *
+     * @param array
+     * @return array
+     */
+    private function toCamelCase($filters)
+    {
+        $camelCaseKeyFilters = [];
+        foreach ($filters as $filterKey => $filterValue) {
+            if (!str_contains($filterKey, '_')) {
+                $camelCaseKeyFilters[$filterKey] = $filterValue;
+                continue;
+            }
+            $splitKey = explode('_', $filterKey);
+            $splitKey[1] = ucwords($splitKey[1]);
+            $camelCaseKey = implode('', $splitKey);
+            $camelCaseKeyFilters[$camelCaseKey] = $filterValue;
+        }
+        return $camelCaseKeyFilters;
     }
 
     /**
@@ -130,7 +154,31 @@ class FilterManager
      */
     private function getFiltersFor($modelFilter)
     {
-        return request()->only($modelFilter->filters);
+        $filters = $this->toSnakeCase($modelFilter->filters);
+
+        return $this->toCamelCase(request()->only($filters));
+    }
+
+    /**
+     * Convert to filter keys to snake case
+     *
+     * @param array $filters
+     * @return array
+     */
+    private function toSnakeCase($filters)
+    {
+        $snakeCaseFilters = [];
+        foreach ($filters as $filterKey) {
+            $snakeCaseFilter = strtolower(
+                preg_replace(
+                    '/(?<!^)[A-Z]/',
+                    '_$0',
+                    $filterKey
+                )
+            );
+            $snakeCaseFilters[] = $snakeCaseFilter;
+        }
+        return $snakeCaseFilters;
     }
 
     /**
