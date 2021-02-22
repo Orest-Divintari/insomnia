@@ -3,53 +3,72 @@
 namespace App\Http\Requests;
 
 use App\Actions\StringToArrayForRequestAction;
-use App\Http\Requests\SearchRequestInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class SearchPostingsRequest implements SearchRequestInterface
+class SearchPostingsRequest extends SearchRequest
 {
     protected $request;
 
+    /**
+     * Create a new instance
+     *
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
     /**
-     * Apply validation
+     * Handle validation
      *
-     * @return void
+     * @var \Illuminate\Validation\Validator
      */
-    public function validate()
+    public function handle()
     {
-        $this->beforeValidation();
+        $this->prepareForValidation();
 
-        $validator = Validator::make(
-            $this->request->input(),
-            $this->rules(),
-            $this->messages()
-        );
+        $validator = $this->validate();
 
         $this->afterValidation($this->request);
 
         return $validator;
     }
 
-    public function beforeValidation()
+    /**
+     * Create a validator instance and validate the request
+     *
+     * @var \Illuminate\Validation\Validator
+     */
+    public function validate()
     {
+        return Validator::make(
+            $this->request->input(),
+            $this->rules(),
+            $this->messages()
+        );
+    }
 
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    public function prepareForValidation()
+    {
         $action = new StringToArrayForRequestAction(
             $request = $this->request,
-            $attribute = 'postedBy',
-            $value = $this->request->input('postedBy')
+            $attribute = 'posted_by',
+            $value = $this->request->input('posted_by')
         );
+
         $action->execute();
     }
 
     /**
-     * Disable title search when no search query is passed
+     * Handle after validation
      *
      * @param Request $request
      * @return void
@@ -58,8 +77,8 @@ class SearchPostingsRequest implements SearchRequestInterface
     {
         // When the search query is empty, there is no point in having onlyTitle equal to true
         // since onlyTitle applies when a thread is being searched given a search query
-        if ($this->request->missing('q') && $this->request->boolean('onlyTitle')) {
-            $this->request->merge(['onlyTitle' => false]);
+        if ($this->request->missing('q') && $this->request->boolean('only_title')) {
+            $this->request->merge(['only_title' => false]);
         }
     }
 
@@ -73,13 +92,13 @@ class SearchPostingsRequest implements SearchRequestInterface
     {
         $rules = [];
 
-        if (!$this->request->filled('postedBy')) {
+        if (!$this->request->filled('posted_by')) {
             $rules['q'] = 'required';
         }
 
         if (!$this->request->filled('q')) {
-            $rules['postedBy'] = ['required', "array", 'min:1'];
-            $rules['postedBy.*'] = ['required', 'string', 'exists:users,name'];
+            $rules['posted_by'] = ['required', "array", 'min:1'];
+            $rules['posted_by.*'] = ['required', 'string', 'exists:users,name'];
         }
 
         $rules['type'] = [
@@ -117,12 +136,12 @@ class SearchPostingsRequest implements SearchRequestInterface
      */
     public function addPostedByExistsMessage($messages)
     {
-        if (is_null(request('postedBy'))) {
+        if (is_null(request('posted_by'))) {
             return $messages;
         }
-        foreach (request('postedBy') as $index => $username) {
+        foreach (request('posted_by') as $index => $username) {
             if (isset($username) && is_string($username)) {
-                $messages["postedBy." . $index . ".exists"] = "The following member could not be found: " . $username;
+                $messages["posted_by." . $index . ".exists"] = "The following member could not be found: " . $username;
             }
         }
         return $messages;
