@@ -5,7 +5,7 @@
       @input="$emit('input', $event.target.value)"
       class="form-input bg-white"
       type="text"
-      id="started-by"
+      id="posted_by"
       placeholder="member's name"
     />
   </div>
@@ -15,7 +15,7 @@
 export default {
   computed: {
     showFilter() {
-      return !window.location.href.includes("/threads?postedBy=");
+      return !window.location.href.includes("/threads?posted_by=");
     },
   },
 };

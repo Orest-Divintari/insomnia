@@ -28,7 +28,7 @@ export default {
       return { title: this.title };
     },
     sortedByLikes() {
-      return window.location.href.includes("?sortByLikes=1");
+      return window.location.href.includes("?sort_by_likes=1");
     },
     pinPath() {
       return this.path + "/pin";

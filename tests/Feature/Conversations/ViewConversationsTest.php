@@ -191,7 +191,7 @@ class ViewConversationsTest extends TestCase
         $conversationByOrestis = ConversationFactory::by($orestis)->create();
 
         $conversations = $this->getJson(
-            route('conversations.index', ['startedBy' => $orestis->name])
+            route('conversations.index', ['started_by' => $orestis->name])
         )->json()['data'];
 
         $this->assertCount(1, $conversations);
@@ -218,7 +218,7 @@ class ViewConversationsTest extends TestCase
         $desiredUsernames = "{$orestis->name}, {$john->name}";
 
         $conversations = $this->getJson(
-            route('conversations.index', ['startedBy' => $desiredUsernames])
+            route('conversations.index', ['started_by' => $desiredUsernames])
         )->json()['data'];
 
         $conversations = collect($conversations);
@@ -237,7 +237,7 @@ class ViewConversationsTest extends TestCase
         $conversationWithOrestis = ConversationFactory::withParticipants([$orestis->name])->create();
 
         $conversations = $this->getJson(
-            route('conversations.index', ['receivedBy' => $orestis->name])
+            route('conversations.index', ['received_by' => $orestis->name])
         )->json()['data'];
 
         $this->assertCount(1, $conversations);
@@ -260,7 +260,7 @@ class ViewConversationsTest extends TestCase
         )->create();
 
         $conversations = $this->getJson(
-            route('conversations.index', ['receivedBy' => $participantNames])
+            route('conversations.index', ['received_by' => $participantNames])
         )->json()['data'];
 
         $this->assertCount(1, $conversations);
@@ -295,7 +295,7 @@ class ViewConversationsTest extends TestCase
         $conversations = $this->getJson(
             route(
                 'conversations.index',
-                ['unread' => true, 'startedBy' => $orestis->name]
+                ['unread' => true, 'started_by' => $orestis->name]
             ))->json()['data'];
 
         $this->assertCount(1, $conversations);
@@ -336,7 +336,7 @@ class ViewConversationsTest extends TestCase
         $conversations = $this->getJson(
             route(
                 'conversations.index',
-                ['unread' => true, 'startedBy' => $desiredUsernames]
+                ['unread' => true, 'started_by' => $desiredUsernames]
             ))->json()['data'];
 
         $this->assertCount(2, $conversations);
@@ -372,7 +372,7 @@ class ViewConversationsTest extends TestCase
         $conversations = $this->getJson(
             route(
                 'conversations.index',
-                ['unread' => true, 'receivedBy' => $george->name]
+                ['unread' => true, 'received_by' => $george->name]
             ))->json()['data'];
 
         $this->assertCount(1, $conversations);
@@ -422,7 +422,7 @@ class ViewConversationsTest extends TestCase
         $conversations = $this->getJson(
             route(
                 'conversations.index',
-                ['unread' => true, 'receivedBy' => $participantNames]
+                ['unread' => true, 'received_by' => $participantNames]
             ))->json()['data'];
 
         $this->assertCount(2, $conversations);
@@ -457,7 +457,7 @@ class ViewConversationsTest extends TestCase
         $conversationStarter->read($readTodayConversation);
 
         $desiredConversations = $this->getJson(
-            route('ajax.conversations.index', ['recentAndUnread' => true])
+            route('ajax.conversations.index', ['recent_and_unread' => true])
         )->json();
 
         $this->assertEquals(

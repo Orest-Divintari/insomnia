@@ -66,7 +66,7 @@ export default {
       return this.conversationsCount > 0;
     },
     path() {
-      return "/api/conversations?recentAndUnread=true";
+      return "/ajax/conversations?recent_and_unread=true";
     },
   },
   methods: {

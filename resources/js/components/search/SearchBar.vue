@@ -28,7 +28,7 @@
                   type="checkbox"
                   ref="onlyTitle"
                   id="only_title"
-                  name="onlyTitle"
+                  name="only_title"
                 />
               </div>
               <div class="flex text-black-semi items-center mt-3 mb-2">
@@ -39,7 +39,7 @@
                   styleClasses="text-smaller rounded p-1 w-full focus:outline-none"
                   ref="postedBy"
                   value=""
-                  name="postedBy"
+                  name="posted_by"
                 ></names-autocomplete>
               </div>
             </div>

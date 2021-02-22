@@ -53,7 +53,7 @@ class SearchTest extends TestCase
         $response = $this->get(route('search.index', [
             'type' => 'thread',
             'q' => $this->searchTerm,
-            'lastCreated' => 1,
+            'last_created' => 1,
         ]));
 
         $response->assertSee($this->noResultsMessage);
@@ -73,7 +73,7 @@ class SearchTest extends TestCase
         $response = $this->get(route('search.index', [
             'type' => 'thread',
             'q' => $this->searchTerm,
-            'postedBy' => $name,
+            'posted_by' => $name,
         ]));
 
         $response->assertSee($this->noResultsMessage);
@@ -88,7 +88,7 @@ class SearchTest extends TestCase
         $error = 'The following member could not be found: ' . $username;
 
         $response = $this->get(route('search.index', [
-            'postedBy' => $username,
+            'posted_by' => $username,
         ]));
 
         $response->assertSee($error);
@@ -103,7 +103,7 @@ class SearchTest extends TestCase
         $error = 'The following member could not be found: ' . $fakeUserName;
 
         $response = $this->get(route('search.index', [
-            'postedBy' => $fakeUserName,
+            'posted_by' => $fakeUserName,
         ]));
 
         $response->assertSee($error);
@@ -119,7 +119,7 @@ class SearchTest extends TestCase
         $errorForDoe = 'The following member could not be found: ' . $doeFake;
 
         $response = $this->get(route('search.index', [
-            'postedBy' => $usernames,
+            'posted_by' => $usernames,
         ]));
 
         $response->assertSee($errorForJohn);
@@ -247,7 +247,7 @@ class SearchTest extends TestCase
     //     $results = $this->search([
     //         'q' => $this->searchTerm,
     //         'type' => 'thread',
-    //         'onlyTitle' => true,
+    //         'only_title' => true,
     //     ]);
 
     //     $this->assertCount(
@@ -460,7 +460,7 @@ class SearchTest extends TestCase
         $nonExistingUsername = 'uric';
 
         $this->get(route('search.index', [
-            'postedBy' => $nonExistingUsername,
+            'posted_by' => $nonExistingUsername,
         ]))->assertSee('The following member could not be found: ' . $nonExistingUsername);
     }
 

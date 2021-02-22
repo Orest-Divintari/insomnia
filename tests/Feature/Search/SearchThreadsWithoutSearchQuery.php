@@ -23,7 +23,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
 
         $results = $this->search([
             'type' => 'thread',
-            'postedBy' => $user->name,
+            'posted_by' => $user->name,
         ],
             $this->numberOfDesiredThreads
         );
@@ -51,7 +51,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
 
         $results = $this->search([
             'type' => 'thread',
-            'postedBy' => $usernames,
+            'posted_by' => $usernames,
         ],
             $numberOfDesiredThreads
         );
@@ -86,7 +86,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
 
         $results = $this->search([
             'type' => 'thread',
-            'postedBy' => $usernames,
+            'posted_by' => $usernames,
         ],
             $numberOfDesiredReplies
         );
@@ -121,7 +121,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
 
         $results = $this->search([
             'type' => 'thread',
-            'postedBy' => $usernames,
+            'posted_by' => $usernames,
         ],
             $numberOfDesiredItems
         );
@@ -163,8 +163,8 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
 
         $results = $this->search([
             'type' => 'thread',
-            'lastCreated' => $daysAgo,
-            'postedBy' => $user->name,
+            'last_created' => $daysAgo,
+            'posted_by' => $user->name,
         ],
             $this->totalNumberOfDesiredItems
         );

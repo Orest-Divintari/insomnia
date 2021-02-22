@@ -22,7 +22,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
             ->create();
 
         $results = $this->search([
-            'onlyTitle' => true,
+            'only_title' => true,
             'q' => $this->searchTerm,
         ],
             $this->numberOfDesiredThreads
@@ -55,8 +55,8 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
 
         $results = $this->search([
             'q' => $this->searchTerm,
-            'onlyTitle' => true,
-            'postedBy' => $usernames,
+            'only_title' => true,
+            'posted_by' => $usernames,
         ],
             $numberOfDesiredItems
         );
@@ -87,8 +87,8 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
 
         $results = $this->search([
             'q' => $this->searchTerm,
-            'onlyTitle' => true,
-            'lastCreated' => $daysAgo,
+            'only_title' => true,
+            'last_created' => $daysAgo,
         ],
             $this->numberOfDesiredThreads
         );
@@ -121,9 +121,9 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
 
         $results = $this->search([
             'q' => $this->searchTerm,
-            'onlyTitle' => true,
-            'lastCreated' => $daysAgo,
-            'postedBy' => $user->name,
+            'only_title' => true,
+            'last_created' => $daysAgo,
+            'posted_by' => $user->name,
         ],
             $this->numberOfDesiredThreads
         );

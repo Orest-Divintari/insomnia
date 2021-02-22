@@ -25,7 +25,7 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
 
         $results = $this->search([
             'type' => 'thread',
-            'postedBy' => $user->name,
+            'posted_by' => $user->name,
             'q' => $this->searchTerm,
         ],
             $this->numberOfDesiredThreads
@@ -114,7 +114,7 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $results = $this->search([
             'type' => 'thread',
             'q' => $this->searchTerm,
-            'lastCreated' => $daysAgo,
+            'last_created' => $daysAgo,
         ],
             $this->totalNumberOfDesiredItems
         );
@@ -147,7 +147,7 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $results = $this->search([
             'type' => 'thread',
             'q' => $this->searchTerm,
-            'postedBy' => $usernames,
+            'posted_by' => $usernames,
         ],
             $numberOfDesiredItems
         );
@@ -189,7 +189,7 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $results = $this->search([
             'type' => 'thread',
             'q' => $this->searchTerm,
-            'postedBy' => $usernames,
+            'posted_by' => $usernames,
         ],
             $numberOfDesiredItems
         );
@@ -232,7 +232,7 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $results = $this->search([
             'type' => 'thread',
             'q' => $this->searchTerm,
-            'postedBy' => $usernames,
+            'posted_by' => $usernames,
         ],
             $numberOfDesiredItems
         );
@@ -284,8 +284,8 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $results = $this->search([
             'type' => 'thread',
             'q' => $this->searchTerm,
-            'lastCreated' => $daysAgo,
-            'postedBy' => $user->name,
+            'last_created' => $daysAgo,
+            'posted_by' => $user->name,
         ],
             $this->totalNumberOfDesiredItems
         );
