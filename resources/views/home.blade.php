@@ -1,3 +1,3 @@
-<x-layouts._front_page>
+<x-layouts.front-page>
     body of home page
-</x-layouts._front_page>
+</x-layouts.front-page>

@@ -21,6 +21,6 @@ class RecentlyViewedThreadsController extends Controller
             ->withRecentReply()
             ->paginate(50);
 
-        return view('threads.recently_viewed', compact('threads'));
+        return view('threads.recently-viewed', compact('threads'));
     }
 }

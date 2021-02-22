@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     <header class="w-full flex items-center justify-between">
         <h1 class="section-title">Conversations</h1>
         <div class="py-4">
@@ -20,4 +20,4 @@
     </main>
 
 
-</x-layouts._forum>
+</x-layouts.forum>

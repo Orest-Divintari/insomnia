@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     @if($errors->any())
     <h1 class="text-3xl font-bold">Oops! We ran into some problems.<span class="text-blue-mid italic"> {{ $query }}
         </span></h1>
@@ -29,4 +29,4 @@
     @endif
 
 
-</x-layouts._forum>
+</x-layouts.forum>

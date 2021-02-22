@@ -20,12 +20,12 @@
             @endif
         </div>
         <div class="flex items-center ">
-            <x-categories._statistics :threadsCount="$category->threads_count"
-                :replies_count="$category->replies_count"></x-categories._statistics>
+            <x-categories.statistics :threadsCount="$category->threads_count" :replies_count="$category->replies_count">
+            </x-categories.statistics>
         </div>
         <div class="w-72 flex items-center justify-start ml-2">
-            <x-categories._recently_active_thread :thread="$category->recentlyActiveThread">
-            </x-categories._recently_active_thread>
+            <x-categories.recently-active-thread :thread="$category->recentlyActiveThread">
+            </x-categories.recently-active-thread>
         </div>
 
 

@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     @push('scripts')
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @endpush
@@ -6,7 +6,7 @@
         <h1 class="section-title">Register</h1>
     </header>
     <main class="section">
-        @include('components.form._errors')
+        <x-form.errors></x-form.errors>
         <div class="form-container">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
@@ -87,8 +87,8 @@
                     </div>
                 </div>
 
-                <x-form._button name="Register"></x-form._button>
+                <x-form.button name="Register"></x-form.button>
             </form>
         </div>
     </main>
-</x-layouts._forum>
+</x-layouts.forum>

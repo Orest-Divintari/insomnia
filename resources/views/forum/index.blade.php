@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     <div id="#Forum" class="flex section">
         <div class="w-4/5">
             @foreach($groups as $group)
@@ -12,8 +12,8 @@
                 </header>
                 <div>
                     @foreach($group->categories as $category)
-                    <x-categories._list :category="$category" :loop="$loop">
-                    </x-categories._list>
+                    <x-categories.list :category="$category" :loop="$loop">
+                    </x-categories.list>
                     @endforeach
                 </div>
             </div>
@@ -24,4 +24,4 @@
             @include('forum.statistics')
         </div>
     </div>
-</x-layouts._forum>
+</x-layouts.forum>

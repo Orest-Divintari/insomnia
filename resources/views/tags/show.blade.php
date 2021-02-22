@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     <header>
         <h1 class="section-title">{{ $tag->name }}</h1>
     </header>
@@ -39,4 +39,4 @@
         </div>
         @endforeach
     </main>
-</x-layouts._forum>
+</x-layouts.forum>

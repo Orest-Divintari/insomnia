@@ -9,10 +9,3 @@
     @endforeach
     @endif
 </div>
-<!-- @if($errors->any)
-            @foreach($errors->all() as $error)
-            <div class="w-full py-4 bg-red-alert">
-                {{$error}}
-            </div>
-            @endforeach
-            @endif -->

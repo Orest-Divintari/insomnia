@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
     <div class="section">
         <h1 class="section-title">Search</h1>
     </div>
@@ -25,4 +25,4 @@
         {{ $slot }}
 
     </div>
-</x-layouts._forum>
+</x-layouts.forum>

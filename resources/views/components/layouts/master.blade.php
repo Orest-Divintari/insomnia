@@ -53,12 +53,12 @@
                     <a class="font-bold text-4xl text-white" href="{{route('home')}}">iNsomnia</a>
                 </div>
                 <div class="hidden lg:flex items-stretch">
-                    <x-head_tab_item name="Front Page" destination="home"></x-head_tab_item>
-                    <x-head_tab_item name="Guides" destination="home"></x-head_tab_item>
-                    <x-head_tab_item name="How Tos" destination="home"></x-head_tab_item>
-                    <x-head_tab_item name="Reviews" destination="home"></x-head_tab_item>
-                    <x-head_tab_item name="Ads" destination="home"></x-head_tab_item>
-                    <x-head_tab_item name="Forums" destination="forum"></x-head_tab_item>
+                    <x-tab-header name="Front Page" destination="home"></x-tab-header>
+                    <x-tab-header name="Guides" destination="home"></x-tab-header>
+                    <x-tab-header name="How Tos" destination="home"></x-tab-header>
+                    <x-tab-header name="Reviews" destination="home"></x-tab-header>
+                    <x-tab-header name="Ads" destination="home"></x-tab-header>
+                    <x-tab-header name="Forums" destination="forum"></x-tab-header>
                 </div>
                 <div>
                     {{ $navRight }}

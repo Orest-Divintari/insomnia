@@ -1,4 +1,4 @@
-<x-layouts._forum>
+<x-layouts.forum>
 
     <header class="section-title">History</header>
     <main class="section">
@@ -41,4 +41,4 @@
             </tbody>
         </table>
     </main>
-</x-layouts._forum>
+</x-layouts.forum>
