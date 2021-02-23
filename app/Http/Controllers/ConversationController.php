@@ -55,7 +55,7 @@ class ConversationController extends Controller
         $conversation = Conversation::whereSlug($conversation->slug)
             ->withHasBeenUpdated()
             ->with('participants')
-            ->isStarred()
+            ->withIsStarred()
             ->firstOrFail();
 
         $participants = $conversation->participants;
@@ -87,6 +87,7 @@ class ConversationController extends Controller
             ->isStarred()
             ->filter($filters)
             ->with('starter')
+            ->withIsStarred()
             ->withRecentMessage()
             ->with('participants')
             ->withCount('participants')

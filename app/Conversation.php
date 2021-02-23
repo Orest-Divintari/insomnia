@@ -392,7 +392,7 @@ class Conversation extends Model
      * @param Builder $query
      * @return Builder
      */
-    public function scopeIsStarred($query)
+    public function scopeWithIsStarred($query)
     {
         return $query->addSelect([
             'starred' => ConversationParticipant::select('starred')
