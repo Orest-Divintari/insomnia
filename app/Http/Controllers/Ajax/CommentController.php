@@ -63,7 +63,10 @@ class CommentController extends Controller
      */
     public function index(ProfilePost $post)
     {
-        return Reply::forProfilePost($post);
+        return $post->comments()
+            ->withLikes()
+            ->latest()
+            ->paginate(ProfilePost::REPLIES_PER_PAGE);
     }
 
 }

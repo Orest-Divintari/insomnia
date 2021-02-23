@@ -6,7 +6,6 @@ use App\Category;
 use App\Events\Activity\UserViewedPage;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateThreadRequest;
-use App\Reply;
 use App\Thread;
 use DeepCopy\Filter\Filter;
 use Illuminate\Http\Request;
@@ -88,7 +87,11 @@ class ThreadController extends Controller
     {
         $thread->load(['poster', 'tags']);
         $filters = $this->filterManager->withReplyFilters();
-        $replies = Reply::forRepliable($thread, $filters);
+        $replies = $thread->replies()
+            ->filter($filters)
+            ->withLikes()
+            ->paginate(Thread::REPLIES_PER_PAGE);
+
         $thread->recordVisit();
 
         event(new UserViewedPage(UserViewedPage::THREAD, $thread));

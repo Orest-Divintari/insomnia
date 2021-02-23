@@ -59,7 +59,9 @@ class ConversationController extends Controller
             ->firstOrFail();
 
         $participants = $conversation->participants;
-        $messages = Reply::forRepliable($conversation);
+        $messages = $conversation->messages()
+            ->withLikes()
+            ->paginate(Conversation::REPLIES_PER_PAGE);
 
         if (request()->expectsJson()) {
             return compact('conversation', 'participants', 'messages');
