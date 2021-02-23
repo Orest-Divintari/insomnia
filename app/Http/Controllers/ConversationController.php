@@ -6,7 +6,6 @@ use App\Conversation;
 use App\Events\Activity\UserViewedPage;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateConversationRequest;
-use App\Reply;
 use Illuminate\Http\Request;
 
 class ConversationController extends Controller
@@ -85,15 +84,12 @@ class ConversationController extends Controller
 
         $conversations = auth()->user()
             ->conversations()
-            ->withHasBeenUpdated()
-            ->isStarred()
             ->filter($filters)
-            ->with('starter')
+            ->withHasBeenUpdated()
             ->withIsStarred()
             ->withRecentMessage()
-            ->with('participants')
-            ->withCount('participants')
-            ->withCount('messages')
+            ->with(['starter', 'participants'])
+            ->withCount(['messages', 'participants'])
             ->latest('conversations.created_at')
             ->paginate(Conversation::PER_PAGE);
 
