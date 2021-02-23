@@ -59,7 +59,7 @@ export default {
     },
     pin() {
       axios
-        .post(this.pinPath)
+        .patch(this.pinPath)
         .then(() => (this.pinned = true))
         .catch((error) => console.log(error));
     },
