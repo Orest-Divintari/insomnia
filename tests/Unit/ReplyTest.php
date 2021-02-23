@@ -108,11 +108,14 @@ class ReplyTest extends TestCase
     {
         $user = $this->signIn();
         $threadReply = ReplyFactory::create();
-        $this->assertFalse($threadReply->isLiked);
 
         $threadReply->likedBy($user);
 
-        $this->assertTrue($threadReply->fresh()->isLiked);
+        $threadReply = Reply::whereId($threadReply->id)
+            ->withIsLikedByAuthUser()
+            ->first();
+
+        $this->assertTrue($threadReply->is_liked);
     }
 
     /** @test */
@@ -263,7 +266,7 @@ class ReplyTest extends TestCase
         $reply->likedBy($user);
         $replyFilters = app(ReplyFilters::class);
 
-        $paginatedReplies = Reply::forRepliable($thread, $replyFilters);
+        $paginatedReplies = Reply::withLikes()->filter($replyFilters)->paginate(Thread::REPLIES_PER_PAGE);
         $replyArray = $paginatedReplies->firstWhere('id', $reply->id);
 
         $this->assertEquals(
