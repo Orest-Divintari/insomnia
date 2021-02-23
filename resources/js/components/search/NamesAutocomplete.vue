@@ -106,8 +106,8 @@ export default {
       currentlySearching: false,
       searchQuery: this.initialParticipant,
       searchClient: algoliasearch(
-        "3X43KKO02G",
-        "99e55c2575f62324a560428b94f0d6d2"
+        "UERUYRQHYV",
+        "f6d45b6ca000e7dfd136cd123b163fb8"
       ),
       commaSeparatedValues: "",
       currentSearchTerm: "",
