@@ -57,17 +57,16 @@ class ConversationController extends Controller
             ->withIsStarred()
             ->firstOrFail();
 
-        $participants = $conversation->participants;
-        $messages = $conversation->messages()
-            ->withLikes()
+        $messages = $conversation->messages()->withLikes()
             ->paginate(Conversation::REPLIES_PER_PAGE);
 
         if (request()->expectsJson()) {
-            return compact('conversation', 'participants', 'messages');
+            return compact('conversation', 'messages');
         }
+
         return view(
             'conversations.show',
-            compact('conversation', 'messages', 'participants')
+            compact('conversation', 'messages')
         );
     }
 
