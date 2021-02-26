@@ -365,39 +365,6 @@ class Thread extends Model
         $this->tags()->attach($tagIds);
     }
 
-    // return $query->addSelect(
-    //     ['has_been_updated' => Read::select(DB::raw(
-    //         'CASE
-    //             WHEN reads.read_at >= threads.updated_at then 0
-    //             ELSE 1
-    //         END'))->whereColumn('reads.readable_id', 'threads.id')
-    //             ->where('reads.readable_type', Thread::class)
-    //             ->where('user_id', '=', auth()->id()),
-    //     ]);
-
-    // return $query->select('threads.*', 'reads.read_at')
-    //     ->leftJoin('reads', function ($join) {
-    //         $join->on('reads.readable_id', '=', 'threads.id')
-    //             ->where('reads.readable_type', '=', Thread::class)
-    //             ->where('reads.user_id', auth()->id());
-    //     })->selectRaw(
-    //     'CASE
-    //         WHEN read_at >= threads.updated_at THEN 0
-    //         WHEN read_at IS NULL THEN 1
-    //         ELSE 1
-    //     END as has_been_updated'
-    // );
-
-    // public function getHasBeenUpdatedAttribute($value)
-    // {
-    //     if (is_null($value) || $value == "1") {
-    //         return true;
-    //     } else if ($value == "0") {
-    //         return false;
-    //     }
-    //     return $value;
-    // }
-
     /**
      * Get the pinned threads
      *
