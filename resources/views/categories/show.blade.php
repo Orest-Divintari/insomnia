@@ -12,8 +12,7 @@
 
         <div>
             @foreach($subCategories as $category)
-            <x-categories.list :category="$category" :loop="$loop">
-            </x-categories.list>
+            <x-categories.list :category="$category" :loop="$loop"></x-categories.list>
             @endforeach
         </div>
     </main>

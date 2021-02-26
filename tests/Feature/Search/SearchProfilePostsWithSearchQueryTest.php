@@ -65,7 +65,7 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
             [
                 'type' => 'profile_post',
                 'q' => $this->searchTerm,
-                'lastCreated' => $daysAgo,
+                'last_created' => $daysAgo,
             ],
             $this->totalNumberOfDesiredItems
         );
@@ -115,8 +115,8 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
         $results = $this->search([
             'type' => 'profile_post',
             'q' => $this->searchTerm,
-            'lastCreated' => $daysAgo,
-            'postedBy' => $user->name,
+            'last_created' => $daysAgo,
+            'posted_by' => $user->name,
         ],
             $this->totalNumberOfDesiredItems
         );
@@ -150,10 +150,11 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
             ->toProfilePost($undesiredProfilePost)
             ->create();
 
+        
         $results = $this->search([
             'type' => 'profile_post',
             'q' => $this->searchTerm,
-            'profileOwner' => $profileOwner->name,
+            'profile_owner' => $profileOwner->name,
         ],
             $this->totalNumberOfDesiredItems
         );
@@ -204,9 +205,9 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
         $results = $this->search([
             'type' => 'profile_post',
             'q' => $this->searchTerm,
-            'lastCreated' => $daysAgo,
-            'postedBy' => $user->name,
-            'profileOwner' => $profileOwner->name,
+            'last_created' => $daysAgo,
+            'posted_by' => $user->name,
+            'profile_owner' => $profileOwner->name,
         ],
             $this->totalNumberOfDesiredItems
         );

@@ -9,7 +9,7 @@ use Tests\Setup\PostFactory;
 class CommentFactory extends PostFactory
 {
 
-    private $profilePost;
+    protected $profilePost;
     protected $user;
     public function create($attributes = [])
     {

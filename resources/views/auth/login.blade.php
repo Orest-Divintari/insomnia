@@ -3,7 +3,7 @@
         <h1 class="section-title">Log in</h1>
     </header>
     <main class="section">
-        @include('components.form.errors')
+        <x-form.errors></x-form.errors>
         <div class="form-container">
             <form method="POST" action="{{ route('login') }}">
                 @csrf

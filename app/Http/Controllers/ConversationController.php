@@ -6,7 +6,6 @@ use App\Conversation;
 use App\Events\Activity\UserViewedPage;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateConversationRequest;
-use App\Reply;
 use Illuminate\Http\Request;
 
 class ConversationController extends Controller
@@ -55,18 +54,19 @@ class ConversationController extends Controller
         $conversation = Conversation::whereSlug($conversation->slug)
             ->withHasBeenUpdated()
             ->with('participants')
-            ->isStarred()
+            ->withIsStarred()
             ->firstOrFail();
 
-        $participants = $conversation->participants;
-        $messages = Reply::forRepliable($conversation);
+        $messages = $conversation->messages()->withLikes()
+            ->paginate(Conversation::REPLIES_PER_PAGE);
 
         if (request()->expectsJson()) {
-            return compact('conversation', 'participants', 'messages');
+            return compact('conversation', 'messages');
         }
+
         return view(
             'conversations.show',
-            compact('conversation', 'messages', 'participants')
+            compact('conversation', 'messages')
         );
     }
 
@@ -83,14 +83,12 @@ class ConversationController extends Controller
 
         $conversations = auth()->user()
             ->conversations()
-            ->withHasBeenUpdated()
-            ->isStarred()
             ->filter($filters)
-            ->with('starter')
+            ->withHasBeenUpdated()
+            ->withIsStarred()
             ->withRecentMessage()
-            ->with('participants')
-            ->withCount('participants')
-            ->withCount('messages')
+            ->with(['starter', 'participants'])
+            ->withCount(['messages', 'participants'])
             ->latest('conversations.created_at')
             ->paginate(Conversation::PER_PAGE);
 

@@ -34,9 +34,7 @@ class SearchController extends Controller
      */
     public function index(Search $search, SearchRequest $searchRequest)
     {
-        $validator = $searchRequest
-            ->handle($this->request)
-            ->getValidator();
+        $validator = $searchRequest->handle();
 
         $query = $searchRequest->getSearchQuery();
 
@@ -61,9 +59,9 @@ class SearchController extends Controller
     {
         $searchForm = [
             'thread' => 'search.advanced.threads',
-            'profile_post' => 'search.advanced.profile-posts',
+            'profile_post' => 'search.advanced.posts.profile',
             'tag' => 'search.advanced.tags',
-            '' => 'search.advanced.all-posts',
+            '' => 'search.advanced.posts.all',
         ];
         $type = $this->request->input('type') ?? '';
 

@@ -1,4 +1,4 @@
-@include('components.form.errors')
+<x-form.errors></x-form.errors>
 <x-layouts.advanced-search type="{{ $type }}">
     <main>
         <div class="form-container border-t-0 border-b-0">

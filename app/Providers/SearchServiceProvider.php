@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Requests\SearchRequest;
+use App\Http\Requests\SearchRequestFactory;
 use App\Search;
 use App\Search\ModelFilterFactory;
 use App\Search\SearchIndexFactory;
@@ -23,6 +25,11 @@ class SearchServiceProvider extends ServiceProvider
             $filtersFactory = app(ModelFilterFactory::class);
 
             return new Search($searchIndexFactory, $filtersFactory);
+        });
+
+        $this->app->bind(SearchRequest::class, function ($app) {
+
+            return app(SearchRequestFactory::class)->create();
         });
     }
 

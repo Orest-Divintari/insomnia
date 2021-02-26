@@ -17,7 +17,7 @@
       >
         <img
           v-if="trigger == 'avatar'"
-          :src="profileOwner.avatar_path"
+          :src="user.avatar_path"
           :class="triggerClasses"
         />
         <a
@@ -187,7 +187,7 @@ export default {
     },
     async fetchProfile() {
       try {
-        let response = await axios.get("/api/profiles/" + this.user.name);
+        let response = await axios.get("/ajax/profiles/" + this.user.name);
         this.onSuccess(response.data);
       } catch (error) {
         console.log(error);

@@ -56,7 +56,7 @@ export default {
           this.reply.id
         );
       }
-      return "/api/replies/" + this.reply.id;
+      return "/ajax/replies/" + this.reply.id;
     },
   },
 };

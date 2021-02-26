@@ -1,4 +1,4 @@
-@include('components.form.errors')
+<x-form.errors></x-form.errors>
 <x-layouts.advanced-search type="{{ $type }}">
     <main>
         <div class="form-container border-t-0 border-b-0">
@@ -26,8 +26,8 @@
                     <!-- RIGHT -->
                     <div class="form-right-col pt-0">
                         <div class="flex flex-row-reverse items-center">
-                            <label class="form-label flex-1 ml-2" for="onlyTitle">Search titles only</label>
-                            <input type="checkbox" name="onlyTitle" {{ old('onlyTitle') ? 'checked' : '' }}
+                            <label class="form-label flex-1 ml-2" for="only_title">Search titles only</label>
+                            <input type="checkbox" name="only_title" {{ old('only_title') ? 'checked' : '' }}
                                 value="true">
                         </div>
                     </div>
@@ -36,13 +36,13 @@
                 <div class="form-row">
                     <!-- LEFT -->
                     <div class="form-left-col ">
-                        <label class="form-label" for="postedBy">Posted by:</label>
+                        <label class="form-label" for="posted_by">Posted by:</label>
                     </div>
                     <!-- RIGHT -->
                     <div class="form-right-col">
                         <p class="form-label-phone">Posted by:</p>
                         <div>
-                            <names-autocomplete name="postedBy">
+                            <names-autocomplete name="posted_by">
                             </names-autocomplete>
                         </div>
                     </div>
@@ -51,14 +51,14 @@
                 <div class="form-row">
                     <!-- LEFT -->
                     <div class="form-left-col ">
-                        <label class="form-label" for="lastCreated">Last Created:</label>
+                        <label class="form-label" for="last_created">Last Created:</label>
                     </div>
                     <!-- RIGHT -->
                     <div class="form-right-col">
                         <p class="form-label-phone">Last Created:</p>
                         <div>
-                            <input class="form-input" type="text" id="lastCreated" name="lastCreated"
-                                autocomplete="lastCreated">
+                            <input class="form-input" type="text" id="last_created" name="last_created"
+                                autocomplete="last_created">
                         </div>
                     </div>
                 </div>
@@ -66,14 +66,14 @@
                 <div class="form-row">
                     <!-- LEFT -->
                     <div class="form-left-col ">
-                        <label class="form-label" for="numberOfReplies">Minimum number of replies:</label>
+                        <label class="form-label" for="number_of_replies">Minimum number of replies:</label>
                     </div>
                     <!-- RIGHT -->
                     <div class="form-right-col">
                         <p class="form-label-phone">Last Created:</p>
                         <div>
-                            <input class="form-input" type="text" id="numberOfReplies" name="numberOfReplies" value="0"
-                                autocomplete="numberOfReplies">
+                            <input class="form-input" type="text" id="number_of_replies" name="number_of_replies"
+                                value="0" autocomplete="number_of_replies">
                         </div>
                     </div>
                 </div>

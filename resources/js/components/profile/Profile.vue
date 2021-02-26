@@ -74,13 +74,13 @@
                     <template v-slot:dropdown-items>
                       <div class="dropdown-title">Find content</div>
                       <div class="dropdown-item">
-                        <a :href="'/search?postedBy=' + profileOwner.name"
+                        <a :href="'/search?posted_by=' + profileOwner.name"
                           >Find all content by {{ profileOwner.name }}
                         </a>
                       </div>
                       <a
                         :href="
-                          '/search?type=thread&postedBy=' + profileOwner.name
+                          '/search?type=thread&posted_by=' + profileOwner.name
                         "
                         class="dropdown-item"
                         >Find all threads by {{ profileOwner.name }}</a

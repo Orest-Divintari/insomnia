@@ -68,7 +68,6 @@ class CreateConversationRequest extends FormRequest
                 "slug" => $slug,
             ]
         );
-
         $conversation->addParticipants(
             $this->input('participants'),
             $this->boolean('admin')
@@ -76,6 +75,8 @@ class CreateConversationRequest extends FormRequest
         $conversation->addMessage(
             $this->input('message')
         );
+
+        return $conversation;
     }
 
     /**

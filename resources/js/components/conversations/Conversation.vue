@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/conversations/" + this.conversation.slug;
+      return "/ajax/conversations/" + this.conversation.slug;
     },
     updatePath() {
       return this.path;
@@ -83,7 +83,7 @@ export default {
     },
     star() {
       axios
-        .post(this.starPath)
+        .patch(this.starPath)
         .then(() => (this.starred = true))
         .then((error) => console.log(error));
     },

@@ -44,7 +44,7 @@
                         </div>
                     </template>
                     <template v-slot:dropdown-items>
-                        <a href="{{ route('threads.index') . '?postedBy=' . auth()->user()->name }}"
+                        <a href="{{ route('threads.index') . '?posted_by=' . auth()->user()->name }}"
                             class=" dropdown-item hover:bg-white-catskill">Threads you started</a>
                         <a href="{{ route('threads.index') . '?contributed=' . auth()->user()->name }}"
                             class="dropdown-item">Threads you replied to</a>
@@ -53,9 +53,9 @@
                     </template>
                 </dropdown>
                 @endauth
-                <x-tab-subheader name="New Threads" destination="{{ route('threads.index') . '?newThreads=true'}}">
+                <x-tab-subheader name="New Threads" destination="{{ route('threads.index') . '?new_threads=true'}}">
                 </x-tab-subheader>
-                <x-tab-subheader name="New Posts" destination="{{ route('threads.index') . '?newPosts=true'}}">
+                <x-tab-subheader name="New Posts" destination="{{ route('threads.index') . '?new_posts=true'}}">
                 </x-tab-subheader>
                 <x-tab-subheader name="Unanswered" destination="{{ route('threads.index') . '?unanswered=true'}}">
                 </x-tab-subheader>

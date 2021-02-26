@@ -33,13 +33,14 @@ class Like extends Model
      */
     protected $appends = ['date_created'];
 
-    /**
-     * Relationships to always eager-load
-     *
-     * @var array
-     */
+    // /**
+    //  * Relationships to always eager-load
+    //  *
+    //  * @var array
+    //  */
 
-    protected $with = ['reply'];
+    // protected $with = ['reply'];
+
     /**
      * Fetch the reply that was liked
      *

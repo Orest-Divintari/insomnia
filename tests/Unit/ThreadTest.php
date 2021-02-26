@@ -30,7 +30,7 @@ class ThreadTest extends TestCase
     public function a_thread_has_an_api_path()
     {
         $this->assertEquals(
-            "/api/threads/{$this->thread->slug}",
+            "/ajax/threads/{$this->thread->slug}",
             $this->thread->api_path()
         );
     }

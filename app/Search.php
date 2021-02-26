@@ -54,7 +54,7 @@ class Search
     public function handle(Request $request)
     {
         $type = $request->input('type') ?: '';
-        $onlyTitle = $request->boolean('onlyTitle') ?: false;
+        $onlyTitle = $request->boolean('only_title') ?: false;
         $searchQuery = $request->input('q') ?: '';
 
         $index = $this->indexFor(
@@ -64,7 +64,7 @@ class Search
         );
 
         $filters = $this->filtersFor($type);
-
+        
         $builder = $index->search($searchQuery);
         $results = $filters->apply($builder);
         return $this->fetch($results);

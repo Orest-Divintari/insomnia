@@ -33,7 +33,7 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
             ->create();
 
         $results = $this->search([
-            'postedBy' => $user->name,
+            'posted_by' => $user->name,
         ],
             $this->totalNumberOfDesiredItems
         );
@@ -80,7 +80,7 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
 
         $numberOfDesiredItems = 8;
         $results = $this->search([
-            'postedBy' => $usernames,
+            'posted_by' => $usernames,
         ],
             $numberOfDesiredItems
         );
@@ -136,8 +136,8 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
         $results = $this->search([
-            'lastCreated' => $daysAgo,
-            'postedBy' => $user->name,
+            'last_created' => $daysAgo,
+            'posted_by' => $user->name,
         ],
             $this->totalNumberOfDesiredItems
         );

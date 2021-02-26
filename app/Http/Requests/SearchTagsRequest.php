@@ -3,27 +3,43 @@
 namespace App\Http\Requests;
 
 use App\Actions\StringToArrayForRequestAction;
+use App\Http\Requests\SearchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class SearchTagsRequest implements SearchRequestInterface
+class SearchTagsRequest extends SearchRequest
 {
     protected $request;
 
+    /**
+     * Create a new instance
+     *
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
     /**
-     * Apply validation
+     * Handle validation
      *
-     * @return Validator
+     * @var \Illuminate\Validation\Validator
      */
-    public function validate()
+    public function handle()
     {
         $this->prepareForValidation();
 
+        return $this->validate();
+    }
+
+    /**
+     * Create a validator instance and validate the request
+     *
+     * @return Validator
+     */
+    protected function validate()
+    {
         return Validator::make(
             $this->request->input(),
             $this->rules(),
@@ -37,7 +53,7 @@ class SearchTagsRequest implements SearchRequestInterface
      * @param Request $request
      * @return array
      */
-    public function rules()
+    protected function rules()
     {
         return [
             'q' => ['array', 'required', 'min:1'],
@@ -50,7 +66,7 @@ class SearchTagsRequest implements SearchRequestInterface
      *
      * @return array
      */
-    public function messages()
+    protected function messages()
     {
         $messages = [
             'q.*.required' => 'Please anter at least one tag',
@@ -70,7 +86,7 @@ class SearchTagsRequest implements SearchRequestInterface
      *
      * @return void
      */
-    public function prepareForValidation()
+    protected function prepareForValidation()
     {
         $action = new StringToArrayForRequestAction(
             $request = $this->request,

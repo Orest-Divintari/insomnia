@@ -59,6 +59,7 @@ class Reply extends Model
      */
     protected $casts = [
         'position' => 'int',
+        'is_liked' => 'boolean',
     ];
 
     /**
@@ -108,54 +109,6 @@ class Reply extends Model
             ->count();
 
         return (int) ceil($numberOfRepliesBefore / $this->repliable::REPLIES_PER_PAGE);
-    }
-
-    /**
-     * Get the paginated replies with likes for the given repliable
-     *
-     * @param mixed $repliable
-     * @param FilterManager $filters
-     * @return Illuminate\Pagination\LengthAwarePaginator
-     */
-    public static function forRepliable($repliable, $filters = null)
-    {
-        $replies = static::where('repliable_id', $repliable->id)
-            ->where('repliable_type', get_class($repliable))
-            ->withLikes();
-
-        if ($filters) {
-            $replies = $replies->filter($filters);
-        }
-
-        $replies = $replies
-            ->paginate($repliable::REPLIES_PER_PAGE);
-
-        $replies->each(function ($reply) {
-            $reply->append('is_liked');
-        });
-
-        return $replies;
-    }
-
-    /**
-     * Get paginated comments with likes for a specific profile post
-     *
-     * @param ProfilePost $post
-     * @return Illuminate\Pagination\LengthAwarePaginator
-     */
-    public static function forProfilePost($post)
-    {
-        $comments = static::where('repliable_id', $post->id)
-            ->where('repliable_type', ProfilePost::class)
-            ->withLikes()
-            ->latest()
-            ->paginate($post::REPLIES_PER_PAGE);
-
-        $comments->each(function ($comment) {
-            $comment->append('is_liked');
-        });
-
-        return $comments;
     }
 
     /**

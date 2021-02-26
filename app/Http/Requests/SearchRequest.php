@@ -2,53 +2,66 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\SearchRequestFactory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
-class SearchRequest
+abstract class SearchRequest
 {
+    /**
+     * Create a new instance
+     *
+     * @param Request $request
+     */
+    abstract public function __construct(Request $request);
 
     /**
-     * The resulting validation instance
+     * Create a validator instance and validate the request
      *
      * @var \Illuminate\Validation\Validator
      */
-    protected $validator;
+    abstract protected function validate();
 
     /**
-     * Get the required search request and apply validation
+     * Get the error messages for the defined validation rules.
      *
-     * @return SearchRequest
+     * @return array
      */
-    public function handle($request)
+    abstract protected function messages();
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    abstract protected function rules();
+
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
     {
-        $searchRequest = $this->getSearchRequest($request);
-
-        $this->validator = $searchRequest->validate();
-
-        return $this;
+        //
     }
 
     /**
-     * Get the required search request
+     * Handle after validation
      *
-     * @param Request $request
-     * @return SearchRequestAbstractClass
+     * @return void
      */
-    public function getSearchRequest($request)
+    protected function afterValidation()
     {
-        return (new SearchRequestFactory($request))->create();
+        //
     }
 
     /**
-     * Get the validator instance
+     * Handle validation
      *
-     * @return \Illuminate\Validation\Validator
+     * @var \Illuminate\Validation\Validator
      */
-    public function getValidator()
+    public function handle()
     {
-        return $this->validator;
+        return $this->validate();
     }
 
     /**
@@ -66,5 +79,4 @@ class SearchRequest
         }
         return implode(', ', request('q'));
     }
-
-}
+};

@@ -60,16 +60,6 @@ trait Likeable
     }
 
     /**
-     * Determine whether the reply is liked by the authenticated user
-     *
-     * @return boolean
-     */
-    public function getIsLikedAttribute()
-    {
-        return $this->likes->contains('user_id', auth()->id());
-    }
-
-    /**
      * Get all the like information for a reply
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -77,8 +67,30 @@ trait Likeable
      */
     public function scopeWithLikes(Builder $query)
     {
-        return $query->with('likes')
-            ->withCount('likes');
+        return $query
+            ->withCount('likes')
+            ->withIsLikedByAuthUser();
+    }
+
+    /**
+     * Add a column which determines whether the reply has been liked by
+     * the authenticated user
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeWithIsLikedByAuthUser($query)
+    {
+        return $query->selectRaw('
+            EXISTS
+            (
+                SELECT *
+                FROM   likes
+                WHERE  likes.reply_id=replies.id
+                AND    likes.user_id = ?
+            ) AS is_liked',
+            [auth()->id()]
+        );
     }
 
 }

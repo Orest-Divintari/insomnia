@@ -356,14 +356,14 @@ class ConversationTest extends TestCase
         $starredConversation->star();
 
         $this->assertFalse(
-            Conversation::isStarred()
+            Conversation::withIsStarred()
                 ->whereId($unstarredConversation->id)
                 ->first()
                 ->starred
         );
         $this->assertArrayHasKey(
             'starred',
-            Conversation::isStarred()
+            Conversation::withIsStarred()
                 ->whereId($starredConversation->id)
                 ->first()
         );

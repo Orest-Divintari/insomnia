@@ -7,7 +7,7 @@ use App\Reply;
 
 class MessageFactory extends PostFactory
 {
-    private $conversation;
+    protected $conversation;
 
     public function create($attributes = [])
     {

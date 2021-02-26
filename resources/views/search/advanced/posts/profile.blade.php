@@ -1,4 +1,4 @@
-@include('components.form.errors')
+<x-form.errors></x-form.errors>
 <x-layouts.advanced-search type="{{ $type }}">
     <main>
         <div class="form-container border-t-0 border-b-0">
@@ -24,13 +24,13 @@
                 <div class="form-row">
                     <!-- LEFT -->
                     <div class="form-left-col ">
-                        <label class="form-label" for="postedBy">Posted by:</label>
+                        <label class="form-label" for="posted_by">Posted by:</label>
                     </div>
                     <!-- RIGHT -->
                     <div class="form-right-col">
                         <p class="form-label-phone">Posted by:</p>
                         <div>
-                            <names-autocomplete name="postedBy">
+                            <names-autocomplete name="posted_by">
                             </names-autocomplete>
                         </div>
                     </div>
@@ -39,13 +39,13 @@
                 <div class="form-row">
                     <!-- LEFT -->
                     <div class="form-left-col ">
-                        <label class="form-label" for="profileOwner">Posted on the profile of member: </label>
+                        <label class="form-label" for="profile_owner">Posted on the profile of member: </label>
                     </div>
                     <!-- RIGHT -->
                     <div class="form-right-col">
                         <p class="form-label-phone">Posted on the profile of member: </p>
                         <div>
-                            <names-autocomplete name="profileOwner">
+                            <names-autocomplete name="profile_owner">
                             </names-autocomplete>
                         </div>
                     </div>
@@ -54,14 +54,14 @@
                 <div class="form-row">
                     <!-- LEFT -->
                     <div class="form-left-col ">
-                        <label class="form-label" for="lastCreated">Last Created:</label>
+                        <label class="form-label" for="last_created">Last Created:</label>
                     </div>
                     <!-- RIGHT -->
                     <div class="form-right-col">
                         <p class="form-label-phone">Last Created:</p>
                         <div>
-                            <input class="form-input" type="text" id="lastCreated" name="lastCreated"
-                                autocomplete="lastCreated">
+                            <input class="form-input" type="text" id="last_created" name="last_created"
+                                autocomplete="last_created">
                         </div>
                     </div>
                 </div>
@@ -69,4 +69,7 @@
             </form>
         </div>
     </main>
+    <<<<<<< HEAD:resources/views/search/advanced/profile-posts.blade.php </x-layouts.advanced-search>
+        =======
 </x-layouts.advanced-search>
+>>>>>>> tmp:resources/views/search/advanced/posts/profile.blade.php

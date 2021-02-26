@@ -22,13 +22,13 @@ export default {
   },
   computed: {
     path() {
-      return "/api/threads/" + this.thread.slug;
+      return "/ajax/threads/" + this.thread.slug;
     },
     data() {
       return { title: this.title };
     },
     sortedByLikes() {
-      return window.location.href.includes("?sortByLikes=1");
+      return window.location.href.includes("?sort_by_likes=1");
     },
     pinPath() {
       return this.path + "/pin";
@@ -59,7 +59,7 @@ export default {
     },
     pin() {
       axios
-        .post(this.pinPath)
+        .patch(this.pinPath)
         .then(() => (this.pinned = true))
         .catch((error) => console.log(error));
     },

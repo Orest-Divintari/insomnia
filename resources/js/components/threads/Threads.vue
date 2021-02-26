@@ -19,6 +19,12 @@
     >
       Normal Threads
     </div>
+    <p
+      v-if="!threadsExist"
+      class="border border-white-catskill bg-white text-sm text-black-semi p-4 rounded-b"
+    >
+      There are no threads to display.
+    </p>
     <thread-list @read="read" :threads="threads"></thread-list>
     <paginator :dataset="dataset"></paginator>
   </div>
@@ -55,10 +61,13 @@ export default {
     pinnedThreadsExist() {
       return this.pinnedThreads.length > 0;
     },
+    threadsExist() {
+      return this.threads.length > 0;
+    },
   },
   methods: {
     readPath(slug) {
-      return "/api/threads/" + slug + "/read";
+      return "/ajax/threads/" + slug + "/read";
     },
     markAsRead(thread) {
       thread.has_been_updated = false;

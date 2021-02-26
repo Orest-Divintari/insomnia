@@ -3,7 +3,14 @@
     <conversation-filters
       :conversationFilters="conversationFilters"
     ></conversation-filters>
+    <p
+      v-if="!conversationsExist"
+      class="border border-white-catskill bg-white text-sm text-black-semi p-4 rounded-b"
+    >
+      There are no conversations to display.
+    </p>
     <div
+      v-else
       v-for="(conversation, conversationsIndex) in conversations"
       :key="conversation.id"
       class="border border-white-catskill"
@@ -113,6 +120,11 @@ export default {
       conversations: this.paginatedConversations.data,
       dataset: this.paginatedConversations,
     };
+  },
+  computed: {
+    conversationsExist() {
+      return this.conversations.length > 0;
+    },
   },
   methods: {
     participantNames(participant, index, total) {

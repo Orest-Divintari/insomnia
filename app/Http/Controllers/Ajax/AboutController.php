@@ -18,11 +18,11 @@ class AboutController extends Controller
     {
         $follows = $user->follows()
             ->paginate(Follow::FOLLOWS_PER_PAGE)
-            ->withPath('/api/users/' . $user->name . '/follows');
+            ->withPath('/ajax/users/' . $user->name . '/follows');
 
         $followedBy = $user->followedBy()
             ->paginate(Follow::FOLLOWED_BY_PER_PAGE)
-            ->withPath('/api/users/' . $user->name . '/followed-by');
+            ->withPath('/ajax/users/' . $user->name . '/followed-by');
 
         return compact('follows', 'followedBy');
     }

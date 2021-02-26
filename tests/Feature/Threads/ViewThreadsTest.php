@@ -75,7 +75,7 @@ class ViewThreadsTest extends TestCase
         $threadByUric = ThreadFactory::by($uric)->create();
         $threadByJohn = ThreadFactory::by($john)->create();
 
-        $response = $this->get(route('threads.index') . "?postedBy={$uric->name}");
+        $response = $this->get(route('threads.index') . "?posted_by={$uric->name}");
 
         $response->assertSee($threadByUric->title)
             ->assertDontSee($threadByJohn->title);
@@ -94,7 +94,7 @@ class ViewThreadsTest extends TestCase
             ->inCategory($category)
             ->create();
 
-        $response = $this->get(route('category-threads.index', $category) . "?postedBy={$uric->name}");
+        $response = $this->get(route('category-threads.index', $category) . "?posted_by={$uric->name}");
 
         $response->assertSee($threadByUric->title)
             ->assertDontSee($threadByJohn->title);
@@ -106,7 +106,7 @@ class ViewThreadsTest extends TestCase
         $newThread = create(Thread::class);
         $oldThread = ThreadFactory::createdAt(Carbon::now()->subDay())->create();
 
-        $response = $this->getJson(route('threads.index') . '?newThreads=1');
+        $response = $this->getJson(route('threads.index') . '?new_threads=1');
 
         $this->assertEquals($newThread->id, $response['data'][0]['id']);
         $this->assertEquals($oldThread->id, $response['data'][1]['id']);
@@ -121,7 +121,7 @@ class ViewThreadsTest extends TestCase
             ->createdAt(Carbon::now()->subDay())
             ->create();
 
-        $response = $this->getJson(route('category-threads.index', $category) . '?newThreads=1');
+        $response = $this->getJson(route('category-threads.index', $category) . '?new_threads=1');
 
         $this->assertEquals($thread->id, $response['data'][0]['id']);
         $this->assertEquals($oldThread->id, $response['data'][1]['id']);
@@ -139,7 +139,7 @@ class ViewThreadsTest extends TestCase
         Carbon::setTestNow();
 
         $threads = $this->getJson(
-            route('threads.index') . "?newPosts=1"
+            route('threads.index') . "?new_posts=1"
         )->json()['data'];
 
         $this->assertCount(2, $threads);
@@ -159,7 +159,7 @@ class ViewThreadsTest extends TestCase
         Carbon::setTestNow();
 
         $threads = $this->getJson(
-            route('category-threads.index', $category) . "?newPosts=1"
+            route('category-threads.index', $category) . "?new_posts=1"
         )->json()['data'];
 
         $this->assertCount(2, $threads);
@@ -320,7 +320,7 @@ class ViewThreadsTest extends TestCase
         $daysAgo = 3;
 
         $response = $this->get(
-            route('threads.index') . "?lastUpdated=" . $daysAgo
+            route('threads.index') . "?last_updated=" . $daysAgo
         );
 
         $response->assertSee($todaysThread->title)
@@ -338,7 +338,7 @@ class ViewThreadsTest extends TestCase
         $daysAgo = 3;
 
         $response = $this->get(
-            route('category-threads.index', $category) . "?lastUpdated=" . $daysAgo
+            route('category-threads.index', $category) . "?last_updated=" . $daysAgo
         );
 
         $response->assertSee($todaysThread->title)
@@ -354,7 +354,7 @@ class ViewThreadsTest extends TestCase
         $daysAgo = 3;
 
         $response = $this->get(
-            route('threads.index') . "?lastCreated=" . $daysAgo
+            route('threads.index') . "?last_created=" . $daysAgo
         );
 
         $response->assertSee($todaysThread->title)
@@ -372,7 +372,7 @@ class ViewThreadsTest extends TestCase
         $daysAgo = 3;
 
         $response = $this->get(
-            route('category-threads.index', $category) . "?lastCreated=" . $daysAgo
+            route('category-threads.index', $category) . "?last_created=" . $daysAgo
         );
 
         $response->assertSee($todaysThread->title)

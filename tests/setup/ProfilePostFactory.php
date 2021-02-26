@@ -9,8 +9,8 @@ use Tests\Setup\PostFactory;
 class ProfilePostFactory extends PostFactory
 {
 
-    private $poster;
-    private $profileOwner;
+    protected $poster;
+    protected $profileOwner;
 
     public function create($attributes = [])
     {
@@ -26,6 +26,7 @@ class ProfilePostFactory extends PostFactory
                 ],
                 $attributes
             ));
+
         $this->resetAttributes();
         return $profilePost;
     }

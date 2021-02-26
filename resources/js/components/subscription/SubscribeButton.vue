@@ -1,9 +1,17 @@
 <template>
   <div>
-    <button @click="toggleModals" class="btn-white-blue mr-1">{{ title }}</button>
+    <button @click="toggleModals" class="btn-white-blue mr-1">
+      {{ title }}
+    </button>
 
-    <watch-modal @watch="subscribe" :showWatchModal="showWatchModal"></watch-modal>
-    <unwatch-modal @unwatch="unsubscribe" :showUnwatchModal="showUnwatchModal"></unwatch-modal>
+    <watch-modal
+      @watch="subscribe"
+      :showWatchModal="showWatchModal"
+    ></watch-modal>
+    <unwatch-modal
+      @unwatch="unsubscribe"
+      :showUnwatchModal="showUnwatchModal"
+    ></unwatch-modal>
   </div>
 </template>
 
@@ -38,7 +46,7 @@ export default {
       return this.isSubscribed ? "Unwatch" : "Watch";
     },
     path() {
-      return "/api/threads/" + this.thread + "/subscriptions";
+      return "/ajax/threads/" + this.thread + "/subscriptions";
     },
   },
   methods: {

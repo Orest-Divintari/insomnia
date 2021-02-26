@@ -11,11 +11,13 @@
     </header>
 
     <main class="section">
-        @if(empty($conversations->items()))
-        <p class="mt-5 bg-white text-sm text-black-semi p-4 shadow-lg rounded">You have no conversations yet.</p>
+        @if(empty($conversations->items()) && !$conversationFilters)
+        <p class="mt-5 bg-white text-sm text-black-semi p-4 shadow-lg rounded">There are no conversations to display.
+        </p>
         @else
-        <conversations :conversation-filters="{{ json_encode($conversationFilters) }}"
-            :paginated-conversations="{{ json_encode($conversations) }}"></conversations>
+        <conversations :paginated-conversations="{{ json_encode($conversations) }}"
+            :conversation-filters="{{ json_encode($conversationFilters) }}">
+        </conversations>
         @endif
     </main>
 

@@ -27,7 +27,7 @@
                     <i class="fas fa-long-arrow-alt-down mr-1 "></i>
                     <a v-if="sortedByLikes" href="{{ route('threads.show', $thread )}}" class="hover:underline">Sort
                         (Post Date) </a>
-                    <a v-else href="{{ route('threads.show', $thread ) . '?sortByLikes=1'}}"
+                    <a v-else href="{{ route('threads.show', $thread ) . '?sort_by_likes=1'}}"
                         class="hover:underline">Sort
                         (Likes) </a>
 

@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     path() {
-      return "/api/notifications";
+      return "/ajax/notifications";
     },
     notificationsExist() {
       return this.notificationCount > 0;
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     readPath(notificationId) {
-      return "/api/notifications/" + notificationId;
+      return "/ajax/notifications/" + notificationId;
     },
     refresh(data) {
       this.notifications = data;
