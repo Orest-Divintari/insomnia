@@ -60,8 +60,10 @@ class ConversationController extends Controller
         $messages = $conversation->messages()->withLikes()
             ->paginate(Conversation::REPLIES_PER_PAGE);
 
+        $participants = $conversation->participants;
+
         if (request()->expectsJson()) {
-            return compact('conversation', 'messages');
+            return compact('conversation', 'messages', 'participants');
         }
 
         return view(
