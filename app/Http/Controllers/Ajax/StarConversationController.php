@@ -16,7 +16,7 @@ class StarConversationController extends Controller
     public function update(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-        $conversation->star();
+        $conversation->starredBy();
         return response('Conversation starred', 200);
     }
 
@@ -29,7 +29,7 @@ class StarConversationController extends Controller
     public function destroy(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-        $conversation->unstar();
+        $conversation->unstarredBy();
         return response('Conversation unstarred', 200);
     }
 }

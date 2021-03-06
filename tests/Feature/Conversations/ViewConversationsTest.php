@@ -517,7 +517,7 @@ class ViewConversationsTest extends TestCase
         $conversationStarter = $this->signIn();
         $unstarredConversation = create(Conversation::class);
         $starredConversation = create(Conversation::class);
-        $starredConversation->star();
+        $starredConversation->starredBy();
 
         $desiredConversations = $this->getJson(
             route('ajax.conversations.index', ['starred' => true])

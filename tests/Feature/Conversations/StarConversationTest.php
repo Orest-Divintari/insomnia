@@ -27,7 +27,7 @@ class StarConversationTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)->create();
-        $conversation->star();
+        $conversation->starredBy();
         $this->assertTrue($conversation->starred());
 
         $this->delete(route('ajax.star-conversations.destroy', $conversation));

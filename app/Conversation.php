@@ -365,13 +365,15 @@ class Conversation extends Model
      * Star the conversation
      *
      * @param boolean $starred
+     * @param User|null $user
      * @return void
      */
-    /** @test */
-    public function star($starred = true)
+    public function starredBy($user = null, $starred = true)
     {
+        $userId = $user ? $user->id : auth()->id();
+
         ConversationParticipant::where('conversation_id', $this->id)
-            ->where('user_id', auth()->id())
+            ->where('user_id', $userId)
             ->update(['starred' => $starred]);
     }
 
@@ -380,9 +382,9 @@ class Conversation extends Model
      *
      * @return void
      */
-    public function unstar()
+    public function unstarredBy($user = null)
     {
-        $this->star($starred = false);
+        $this->starredBy($user, $starred = false);
     }
 
     /**

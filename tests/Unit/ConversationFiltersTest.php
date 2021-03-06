@@ -177,7 +177,7 @@ class ConversationFiltersTest extends TestCase
         $unstarredConversation = create(Conversation::class);
         $starredConversation = create(Conversation::class);
 
-        $starredConversation->star();
+        $starredConversation->starredBy();
 
         $conversations = $this->conversationFilters->starred()->get();
         $this->assertCount(1, $conversations);

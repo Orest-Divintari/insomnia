@@ -327,7 +327,7 @@ class ConversationTest extends TestCase
         $conversation = create(Conversation::class);
         $this->assertFalse($conversation->starred());
 
-        $conversation->star();
+        $conversation->starredBy();
 
         $this->assertTrue($conversation->starred());
     }
@@ -338,10 +338,10 @@ class ConversationTest extends TestCase
         $user = $this->signIn();
         $conversation = create(Conversation::class);
         $this->assertFalse($conversation->starred());
-        $conversation->star();
+        $conversation->starredBy();
         $this->assertTrue($conversation->starred());
 
-        $conversation->unstar();
+        $conversation->unstarredBy();
 
         $this->assertFalse($conversation->starred());
     }
@@ -353,7 +353,7 @@ class ConversationTest extends TestCase
         $unstarredConversation = create(Conversation::class);
         $starredConversation = create(Conversation::class);
 
-        $starredConversation->star();
+        $starredConversation->starredBy();
 
         $this->assertFalse(
             Conversation::withIsStarred()
