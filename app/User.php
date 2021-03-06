@@ -299,7 +299,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function unread($readable)
     {
         $readable->reads()
-            ->where('user_id', auth()->id())
+            ->where('user_id', $this->id)
             ->update(['read_at' => null]);
     }
 
