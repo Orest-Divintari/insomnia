@@ -20,7 +20,10 @@ class ConversationFactory
 
         $conversation = create(
             Conversation::class,
-            ['title' => $title ?: 'some title']
+            [
+                'title' => $title ?: 'some title',
+                'user_id' => $this->user ? $this->user->id : auth()->id(),
+            ]
         );
 
         if (empty($this->participants)) {
@@ -31,7 +34,7 @@ class ConversationFactory
         }
 
         $conversation->addParticipants($this->participants);
-        $conversation->addMessage($this->message);
+        $conversation->addMessage($this->message, $this->user);
 
         return $conversation;
     }
