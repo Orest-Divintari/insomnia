@@ -8,6 +8,7 @@
         ref="starred"
         class="from-input"
         type="checkbox"
+        name="starred"
         id="starred"
       />
     </div>

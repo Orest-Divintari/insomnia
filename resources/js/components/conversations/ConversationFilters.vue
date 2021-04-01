@@ -11,12 +11,13 @@
       </div>
       <dropdown :styleClasses="'w-80'">
         <template v-slot:dropdown-trigger>
-          <div
-            class="cursor-pointer p-3/2 text-blue-mid text-xs hover:text-blue-ship-cove hover:bg-gray-loblolly rounded"
+          <button
+            name="filters"
+            class="cursor-pointer focus:outline-none p-3/2 text-blue-mid text-xs hover:text-blue-ship-cove hover:bg-gray-loblolly rounded"
           >
             Filters
             <span class="pb-1 fas fa-sort-down"></span>
-          </div>
+          </button>
         </template>
         <template v-slot:dropdown-items>
           <div class="dropdown-title">Show only</div>
@@ -31,7 +32,9 @@
           <started-by-filter v-model="form.startedBy"></started-by-filter>
           <received-by-filter v-model="form.receivedBy"></received-by-filter>
           <div class="text-right dropdown-item">
-            <button @click="apply" class="form-button-small">Filter</button>
+            <button name="filter" @click="apply" class="form-button-small">
+              Filter
+            </button>
           </div>
         </template>
       </dropdown>

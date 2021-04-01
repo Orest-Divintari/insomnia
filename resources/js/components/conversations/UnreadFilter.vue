@@ -7,6 +7,7 @@
         :checked="isChecked"
         ref="unread"
         class="from-input"
+        name="unread"
         type="checkbox"
         id="unread"
       />
