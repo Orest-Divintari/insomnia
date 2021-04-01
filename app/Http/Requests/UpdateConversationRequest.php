@@ -48,7 +48,7 @@ class UpdateConversationRequest extends FormRequest
      * @param Conversation $conversation
      * @return void
      */
-    protected function update($conversation)
+    public function update($conversation)
     {
         $conversation->update([
             'title' => request('title'),
