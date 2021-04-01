@@ -32,7 +32,10 @@
             :class="{ 'font-bold': conversation.has_been_updated }"
             v-text="conversation.title"
           ></a>
-          <div class="flex items-center">
+          <div
+            class="flex items-center"
+            :id="'conversation-' + conversation.id + '-participants'"
+          >
             <div
               class="flex items-center"
               v-for="(
@@ -55,6 +58,7 @@
             <p class="dot"></p>
             <a
               @click="showConversation(conversation)"
+              :id="'conversation-' + conversation.id + '-date-created'"
               class="hover:underline text-xs text-gray-lightest cursor-pointer"
               v-text="conversation.date_created"
             ></a>
@@ -66,8 +70,9 @@
         <div class="p-2 text-gray-lightest w-40 mr-4">
           <div class="flex flex-col justify-between items-start">
             <div class="flex items-center w-full">
-              <p class="text-sm flex-1">Replies:</p>
+              <p id="replies" class="text-sm flex-1">Replies:</p>
               <p
+                :id="'conversation-' + conversation.id + '-messages-count'"
                 class="ml-6 text-black-semi text-smaller"
                 v-text="conversation.messages_count"
               ></p>
@@ -76,18 +81,21 @@
               <p class="flex-1 text-sm">Participants:</p>
               <p
                 class="ml-6 text-black-semi text-smaller"
+                :id="'conversation-' + conversation.id + '-participants-count'"
                 v-text="conversation.participants_count"
               ></p>
             </div>
           </div>
         </div>
         <div class="w-56 p-5/2 text-right">
-          <p
+          <a
             @click="showMessage(conversation.recent_message)"
             class="text-gray-lightest text-xs hover:underline cursor-pointer"
-            v-text="conversation.recent_message.date_updated"
-          ></p>
+            :id="'conversation-' + conversation.id + '-date-updated'"
+            v-text="conversation.date_updated"
+          ></a>
           <profile-popover
+            :id="'conversation-' + conversation.id + '-recent-poster'"
             :user="conversation.recent_message.poster"
             triggerClasses="leading-relaxed text-gray-lightest text-xs"
           ></profile-popover>

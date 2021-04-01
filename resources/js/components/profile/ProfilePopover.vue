@@ -38,6 +38,7 @@
           <div class="flex text-black-semi p-2 bg-white-catskill">
             <img
               @click="showProfile(profileOwner)"
+              :id="'user-avatar-' + profileOwner.id"
               :src="profileOwner.avatar_path"
               class="avatar-xl cursor-pointer"
               alt=""
