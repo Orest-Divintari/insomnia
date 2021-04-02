@@ -161,11 +161,9 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::create();
 
-        $conversation = $this->getJson(
-            route('conversations.show', $conversation)
-        )->json()['conversation'];
+        $this->get(route('conversations.show', $conversation));
 
-        $this->assertFalse($conversation['has_been_updated']);
+        $this->assertFalse($conversation->fresh()->hasBeenUpdated());
     }
 
 }
