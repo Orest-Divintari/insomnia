@@ -1,4 +1,4 @@
-<div class="sidebar-block w-80 mt-5">
+<div class="sidebar-block w-80 mt-5" dusk="conversation-participants">
     <header class="sidebar-header">
         CONVERSATION PARTICIPANTS
     </header>

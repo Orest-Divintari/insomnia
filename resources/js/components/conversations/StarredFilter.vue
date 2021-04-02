@@ -9,6 +9,7 @@
         class="from-input"
         type="checkbox"
         name="starred"
+        dusk="starred-filter"
         id="starred"
       />
     </div>

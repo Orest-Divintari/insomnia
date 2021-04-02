@@ -7,6 +7,7 @@
       type="text"
       id="received-by"
       placeholder="member's name"
+      dusk="received-by-filter"
     />
   </div>
 </template>

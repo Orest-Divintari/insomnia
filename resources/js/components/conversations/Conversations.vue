@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dusk="conversations">
     <conversation-filters
       :conversationFilters="conversationFilters"
     ></conversation-filters>
@@ -64,7 +64,11 @@
             ></a>
           </div>
         </div>
-        <div v-if="conversation.starred" class="pt-3/2 self-start pr-2">
+        <div
+          dusk="conversation-star"
+          v-if="conversation.starred"
+          class="pt-3/2 self-start pr-2"
+        >
           <i class="fas fa-star text-2xs text-blue-mid"></i>
         </div>
         <div class="p-2 text-gray-lightest w-40 mr-4">

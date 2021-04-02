@@ -13,6 +13,7 @@
         <template v-slot:dropdown-trigger>
           <button
             name="filters"
+            dusk="conversation-filters-dropdown"
             class="cursor-pointer focus:outline-none p-3/2 text-blue-mid text-xs hover:text-blue-ship-cove hover:bg-gray-loblolly rounded"
           >
             Filters
@@ -32,7 +33,12 @@
           <started-by-filter v-model="form.startedBy"></started-by-filter>
           <received-by-filter v-model="form.receivedBy"></received-by-filter>
           <div class="text-right dropdown-item">
-            <button name="filter" @click="apply" class="form-button-small">
+            <button
+              name="filter"
+              dusk="conversation-filters-button"
+              @click="apply"
+              class="form-button-small"
+            >
               Filter
             </button>
           </div>

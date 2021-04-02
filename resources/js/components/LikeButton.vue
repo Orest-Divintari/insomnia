@@ -2,6 +2,7 @@
   <div>
     <button
       @click="toggle"
+      dusk="like-button"
       class="btn-reply-control mr-2"
       :class="[{ 'text-blue-like': this.isLiked }, styleAttributes]"
     >

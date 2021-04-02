@@ -7,6 +7,7 @@
       type="text"
       id="started-by"
       placeholder="member's name"
+      dusk="started-by-filter"
     />
   </div>
 </template>

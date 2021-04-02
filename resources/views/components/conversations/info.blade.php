@@ -1,4 +1,4 @@
-<div class="sidebar-block w-80 leading-relaxed">
+<div class="sidebar-block w-80 leading-relaxed" dusk="conversation-info">
     <header class="sidebar-header">
         CONVERSATION INFO
     </header>

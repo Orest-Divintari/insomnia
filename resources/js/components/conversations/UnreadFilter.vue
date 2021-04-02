@@ -9,6 +9,7 @@
         class="from-input"
         name="unread"
         type="checkbox"
+        dusk="unread-filter"
         id="unread"
       />
     </div>
