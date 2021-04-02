@@ -6,16 +6,13 @@ use App\User;
 use Carbon\Carbon;
 use Faker\Generator as Faker;
 
-abstract class PostFactory
+class PostFactory extends Factory
 {
     protected $user = null;
     protected $createdAt;
     protected $updatedAt;
     protected $body;
     protected $attributes;
-
-    abstract public function create($attributes = []);
-    abstract public function createMany($count = 1, $attributes = []);
 
     public function by($user)
     {
@@ -69,7 +66,7 @@ abstract class PostFactory
      *
      * @return bool
      */
-    public function userIdInAttributes()
+    protected function userIdInAttributes()
     {
         return (array_key_exists('user_id', $this->attributes));
     }
@@ -87,12 +84,6 @@ abstract class PostFactory
     protected function getRepliableId()
     {
         return $this->attributes['repliable_id'];
-    }
-    protected function resetAttributes()
-    {
-        foreach (get_object_vars($this) as $attribute => $value) {
-            $this->$attribute = null;
-        }
     }
 
 }
