@@ -18,7 +18,7 @@ class MessageObserver
         $conversation = $reply->repliable;
         if ($reply->isMessage()) {
             $conversation->unhide();
-            $reply->poster->read($conversation);
+            $conversation->read($reply->poster);
         }
     }
 }

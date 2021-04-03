@@ -17,9 +17,9 @@ class RecentlyViewedThreadsTest extends TestCase
         $user = $this->signIn();
         $recentlyViewedThread = create(Thread::class);
         $oldThread = create(Thread::class);
-        $user->read($recentlyViewedThread);
+        $recentlyViewedThread->read($user);
         Carbon::setTestNow(Carbon::now()->subYear());
-        $user->read($oldThread);
+        $oldThread->read($user);
         Carbon::setTestNow();
 
         $response = $this->get(route('recently-viewed-threads.index'));

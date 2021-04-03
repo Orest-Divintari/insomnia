@@ -4,7 +4,6 @@ namespace App;
 
 use App\Events\Profile\NewPostWasAddedToProfile;
 use App\Traits\Followable;
-use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -250,26 +249,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Mark a readable model as read
-     *
-     * @param mixed $readable
-     * @return void
-     */
-    public function read($readable)
-    {
-        $read = $readable->reads()->where('user_id', $this->id);
-
-        if ($read->exists()) {
-            $read->update(['read_at' => Carbon::now()]);
-        } else {
-            $readable->reads()->create([
-                'read_at' => Carbon::now(),
-                'user_id' => $this->id,
-            ]);
-        }
-    }
-
-    /**
      * Add the column which determines whether the user is a conversation admin
      *
      * @param Builder $query
@@ -288,19 +267,6 @@ class User extends Authenticatable implements MustVerifyEmail
                 ),
             ]
         );
-    }
-
-    /**
-     * Mark a conversation as unread
-     *
-     * @param mixed $readable
-     * @return void
-     */
-    public function unread($readable)
-    {
-        $readable->reads()
-            ->where('user_id', $this->id)
-            ->update(['read_at' => null]);
     }
 
     /**

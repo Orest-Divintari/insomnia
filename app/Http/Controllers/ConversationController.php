@@ -49,7 +49,7 @@ class ConversationController extends Controller
 
         event(new UserViewedPage(UserViewedPage::CONVERSATION));
 
-        auth()->user()->read($conversation);
+        $conversation->read();
 
         $conversation = Conversation::whereSlug($conversation->slug)
             ->withHasBeenUpdated()

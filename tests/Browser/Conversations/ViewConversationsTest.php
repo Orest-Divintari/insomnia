@@ -84,8 +84,9 @@ class ViewConversationsTest extends DuskTestCase
             ->withParticipants([$participant->name])
             ->withMessage('some message')
             ->create();
-        $conversationStarter->read($readConversation);
-        $conversationStarter->unread($unreadConversation);
+
+        $readConversation->read($conversationStarter);
+        $unreadConversation->unread($conversationStarter);
 
         $this->browse(function (Browser $browser) use (
             $conversationStarter,
@@ -204,18 +205,18 @@ class ViewConversationsTest extends DuskTestCase
         $unreadLastWeekConversation->update(
             ['updated_at' => Carbon::now()->subWeek()]
         );
-        $conversationStarter->unread($unreadLastWeekConversation);
+        $unreadLastWeekConversation->unread($conversationStarter);
         $readLastWeekConversation = ConversationFactory::by($conversationStarter)->create();
         $readLastWeekConversation->update(
             ['updated_at' => Carbon::now()->subWeek()]
         );
 
         $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
-        $conversationStarter->unread($unreadTodayConversation);
+        $unreadTodayConversation->unread($conversationStarter);
         $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
-        $conversationStarter->read($readLastMonthConversation);
-        $conversationStarter->read($readLastWeekConversation);
-        $conversationStarter->read($readTodayConversation);
+        $readLastMonthConversation->read($conversationStarter);
+        $readLastWeekConversation->read($conversationStarter);
+        $readTodayConversation->read($conversationStarter);
 
         $this->browse(function (Browser $browser) use (
             $conversationStarter,
@@ -306,9 +307,8 @@ class ViewConversationsTest extends DuskTestCase
         $unreadConversationByJohn = ConversationFactory::by($john)
             ->withParticipants([$participant->name])
             ->create();
-
-        $participant->read($readConversationByJohn);
-        $participant->read($readConversationByOrestis);
+        $readConversationByJohn->read($participant);
+        $readConversationByOrestis->read($participant);
 
         $this->browse(function (Browser $browser) use (
             $participant,
@@ -351,8 +351,8 @@ class ViewConversationsTest extends DuskTestCase
         $unreadConversationNotReceivedByGeorge = ConversationFactory::by($john)
             ->withParticipants([$participant->name, $orestis->name])
             ->create();
-        $participant->read($readConversationReceivedByGeorge);
-        $participant->read($readConversationNotReceivedByGeorge);
+        $readConversationReceivedByGeorge->read($participant);
+        $readConversationNotReceivedByGeorge->read($participant);
 
         $this->browse(function (Browser $browser) use (
             $participant,

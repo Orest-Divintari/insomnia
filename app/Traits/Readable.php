@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Carbon\Carbon;
+
 trait Readable
 {
     /**
@@ -52,7 +54,7 @@ trait Readable
         }
 
         $readable = $this->reads()
-            ->where('user_id', auth()->id())
+            ->byUser(auth()->user())
             ->first();
 
         if (is_null($readable)) {
@@ -60,5 +62,42 @@ trait Readable
         }
 
         return $this->updated_at > $readable->read_at;
+    }
+
+    /**
+     * Mark a readable model as read
+     *
+     * @param User $user
+     * @return void
+     */
+    public function read($user = null)
+    {
+        $user = $user ?? auth()->user();
+
+        $read = $this->reads()->byUser($user);
+
+        if ($read->exists()) {
+            $read->update(['read_at' => Carbon::now()]);
+        } else {
+            $this->reads()->create([
+                'read_at' => Carbon::now(),
+                'user_id' => $user->id,
+            ]);
+        }
+    }
+
+    /**
+     * Mark a readable model as unread
+     *
+     * @param User $user
+     * @return void
+     */
+    public function unread($user = null)
+    {
+        $user = $user ?? auth()->user();
+
+        $this->reads()
+            ->byUser($user)
+            ->update(['read_at' => null]);
     }
 }

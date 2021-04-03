@@ -153,14 +153,14 @@ class ConversationTest extends TestCase
         $user = $this->signIn();
         $conversation = create(Conversation::class);
 
-        $user->read($conversation);
+        $conversation->read($user);
 
         $this->assertCount(1, $conversation->reads);
 
         $anotherUser = $this->signIn();
         $conversation->addParticipants([$anotherUser->name]);
 
-        $anotherUser->read($conversation);
+        $conversation->read($anotherUser);
 
         $this->assertCount(2, $conversation->fresh()->reads);
     }
@@ -248,7 +248,7 @@ class ConversationTest extends TestCase
         $unreadConversation = create(Conversation::class);
         $readConversation = create(Conversation::class);
 
-        $conversationStarter->read($readConversation);
+        $readConversation->read($conversationStarter);
 
         $conversation = Conversation::withRead()
             ->whereId($unreadConversation->id)
@@ -272,10 +272,10 @@ class ConversationTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $readConversation = create(Conversation::class);
-        $conversationStarter->read($readConversation);
+        $readConversation->read($conversationStarter);
         $unreadConversation = create(Conversation::class);
         $anotherReadConversation = create(Conversation::class);
-        $conversationStarter->read($anotherReadConversation);
+        $anotherReadConversation->read($conversationStarter);
 
         $conversations = Conversation::orderByUnread()->get()->toArray();
 
@@ -387,11 +387,36 @@ class ConversationTest extends TestCase
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)
             ->create();
-        $conversationStarter->unread($conversation);
+        $conversation->unread($conversationStarter);
         $this->assertTrue($conversation->hasBeenUpdated());
 
-        $conversationStarter->read($conversation);
+        $conversation->read($conversationStarter);
 
         $this->assertFalse($conversation->hasBeenUpdated());
+    }
+
+    /** @test */
+    public function it_can_be_marked_as_read()
+    {
+        $conversation = create(Conversation::class);
+        $user = $this->signIn();
+        $this->assertTrue($conversation->hasBeenUpdated());
+
+        $conversation->read($user);
+
+        $this->assertFalse($conversation->fresh()->hasBeenUpdated());
+    }
+
+    /** @test */
+    public function it_can_be_marked_as_unread()
+    {
+        $conversation = create(Conversation::class);
+        $user = $this->signIn();
+        $conversation->read($user);
+        $this->assertFalse($conversation->hasBeenUpdated());
+
+        $conversation->unread($user);
+
+        $this->assertTrue($conversation->hasBeenUpdated());
     }
 }

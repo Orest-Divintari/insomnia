@@ -15,7 +15,7 @@ class ReadThreadController extends Controller
      */
     public function update(Thread $thread)
     {
-        auth()->user()->read($thread);
+        $thread->read();
         return response('The thread has been marked as read susccessfully', 200);
     }
 }

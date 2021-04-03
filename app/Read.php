@@ -22,4 +22,16 @@ class Read extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Fetch the read record for the given user
+     *
+     * @param User $user
+     * @return Builder
+     */
+    public function scopeByUser($query, $user)
+    {
+        return $query->where('user_id', $user->id);
+    }
+
 }

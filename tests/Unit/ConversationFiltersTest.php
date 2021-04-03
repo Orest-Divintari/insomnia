@@ -34,7 +34,7 @@ class ConversationFiltersTest extends TestCase
         $conversationStarter = $this->signIn();
         $readConversation = create(Conversation::class);
         $unreadConversation = create(Conversation::class);
-        $conversationStarter->read($readConversation);
+        $readConversation->read($conversationStarter);
 
         $conversations = $this->conversationFilters->unread()->get();
 
@@ -142,9 +142,9 @@ class ConversationFiltersTest extends TestCase
         );
         $unreadTodayConversation = ConversationFactory::by($conversationStarter)->create();
         $readTodayConversation = ConversationFactory::by($conversationStarter)->create();
-        $conversationStarter->read($readAndLastMonthConversation);
-        $conversationStarter->read($readAndLastWeekConversation);
-        $conversationStarter->read($readTodayConversation);
+        $readAndLastMonthConversation->read($conversationStarter);
+        $readAndLastWeekConversation->read($conversationStarter);
+        $readTodayConversation->read($conversationStarter);
 
         $desiredConversations = $this->conversationFilters
             ->recentAndUnread()

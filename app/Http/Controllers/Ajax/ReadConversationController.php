@@ -16,7 +16,7 @@ class ReadConversationController extends Controller
     public function update(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-        auth()->user()->read($conversation);
+        $conversation->read();
         return response('Conversation has been marked as read', 200);
     }
 
@@ -29,7 +29,7 @@ class ReadConversationController extends Controller
     public function destroy(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
-        auth()->user()->unread($conversation);
+        $conversation->unread();
         return response('Conversation has been marked as unread', 200);
     }
 }

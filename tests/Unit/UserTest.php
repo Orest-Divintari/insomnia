@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Activity;
 use App\Conversation;
-use App\Read;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
@@ -40,18 +39,6 @@ class UserTest extends TestCase
             Str::limit($user, config('contants.user.name_limit'), ''),
             $user->shorName
         );
-    }
-
-    /** @test */
-    public function an_authenticated_user_can_mark_a_thread_as_read()
-    {
-        $user = $this->signIn();
-        $thread = create(Thread::class);
-        $this->assertTrue($thread->hasBeenUpdated());
-
-        $user->read($thread);
-
-        $this->assertFalse($thread->hasBeenUpdated());
     }
 
     /** @test */
@@ -220,32 +207,6 @@ class UserTest extends TestCase
             ->create();
 
         $this->assertCount(2, $orestis->conversations);
-    }
-
-    /** @test */
-    public function a_user_can_mark_a_conversation_as_read()
-    {
-        $conversationStarter = $this->signIn();
-        $conversation = ConversationFactory::create();
-        $conversationStarter->unread($conversation);
-        $this->assertTrue($conversation->hasBeenUpdated());
-
-        $conversationStarter->read($conversation);
-
-        $this->assertFalse($conversation->hasBeenUpdated());
-    }
-
-    /** @test */
-    public function a_user_can_mark_a_conversation_as_unread()
-    {
-        $conversationStarter = $this->signIn();
-        $conversation = ConversationFactory::create();
-        $conversationStarter->read($conversation);
-        $this->assertFalse($conversation->hasBeenUpdated());
-
-        $conversationStarter->unread($conversation);
-
-        $this->assertTrue($conversation->hasBeenUpdated());
     }
 
     /** @test */

@@ -180,10 +180,10 @@ class ThreadTest extends TestCase
     public function a_thread_can_be_marked_as_read_by_many_users()
     {
         $user = $this->signIn();
-        $user->read($this->thread);
+        $this->thread->read($user);
         $anotherUser = $this->signIn();
 
-        $anotherUser->read($this->thread);
+        $this->thread->read($user);
 
         $this->assertCount(2, $this->thread->fresh()->reads);
     }
@@ -253,7 +253,7 @@ class ThreadTest extends TestCase
         $readThread = $threads->first();
         $user = $this->signIn();
 
-        $user->read($readThread);
+        $readThread->read($user);
         $threads = Thread::withHasBeenUpdated()->get();
 
         $this->assertFalse(
@@ -365,7 +365,7 @@ class ThreadTest extends TestCase
     {
         $user = $this->signIn();
         $thread = create(Thread::class);
-        $user->read($thread);
+        $thread->read($user);
 
         $thread = Thread::withReadAt()->find($thread->id);
 
@@ -373,5 +373,30 @@ class ThreadTest extends TestCase
             $thread->read_at,
             Carbon::parse($thread->reads->first()->read_at)->diffForHumans()
         );
+    }
+
+    /** @test */
+    public function it_can_be_marked_as_read()
+    {
+        $thread = create(Thread::class);
+        $user = $this->signIn();
+        $this->assertTrue($thread->hasBeenUpdated());
+
+        $thread->read($user);
+
+        $this->assertFalse($thread->hasBeenUpdated());
+    }
+
+    /** @test */
+    public function it_can_be_marked_as_unread()
+    {
+        $thread = create(Thread::class);
+        $user = $this->signIn();
+        $thread->read($user);
+        $this->assertFalse($thread->hasBeenUpdated());
+
+        $thread->unread($user);
+
+        $this->assertTrue($thread->hasBeenUpdated());
     }
 }

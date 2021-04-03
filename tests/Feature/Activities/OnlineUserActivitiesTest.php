@@ -30,14 +30,13 @@ class OnlineUserActivitiesTest extends TestCase
     }
 
     /** @test */
-    public function display_the_latest_viewed_activity_of_authenticated_online_users()
+    public function display_the_latest_view_activity_of_authenticated_online_users()
     {
         $thread = create(Thread::class);
         $user = $this->signIn();
         $this->get(route('threads.show', $thread));
         $this->get(route('forum'));
         $this->assertCount(2, Activity::typeViewed()->get());
-
         $response = $this->get(route('online-user-activities.index'));
 
         $response->assertSee($user->name);

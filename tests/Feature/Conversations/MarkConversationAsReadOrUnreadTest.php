@@ -75,8 +75,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $this->delete(
             route('ajax.read-conversations.destroy', $conversation)
         );
-
-        $this->assertTrue($conversation->hasBeenUpdated());
+        $this->assertTrue($conversation->fresh()->hasBeenUpdated());
     }
 
     /** @test */
@@ -84,7 +83,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
     {
         $conversationStarter = $this->signIn();
         $conversation = ConversationFactory::by($conversationStarter)->create();
-        $conversationStarter->unread($conversation);
+        $conversation->unread($conversationStarter);
         $this->assertTrue($conversation->hasBeenUpdated());
 
         $this->patch(
@@ -140,7 +139,7 @@ class MarkConversationAsReadOrUnreadTest extends TestCase
         $conversation = ConversationFactory::withParticipants([$participant->name])
             ->by($conversationStarter)
             ->create();
-        $participant->read($conversation);
+        $conversation->read($participant);
         $this->signIn($participant);
         $this->assertFalse($conversation->fresh()->hasBeenUpdated());
         $this->signIn($conversationStarter);

@@ -235,7 +235,7 @@ class Thread extends Model
     public function recordVisit()
     {
         if (auth()->check()) {
-            auth()->user()->read($this);
+            $this->read();
         }
         $this->increment('views');
     }
