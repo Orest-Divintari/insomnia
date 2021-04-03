@@ -165,13 +165,13 @@ class Conversation extends Model
      * @param User|null $user
      * @return Message
      */
-    public function addMessage($message, $user = null)
+    public function addMessage($attributes, $user = null)
     {
-        $message = $this->messages()
-            ->create([
-                'body' => $message,
-                'user_id' => $user ? $user->id : auth()->id(),
-            ]);
+        $user = $user ?? auth()->user();
+
+        $message = $this->messages()->save(
+            (new Reply($attributes))->setPoster($user)
+        );
 
         event(new NewMessageWasAddedToConversation($this, $message));
 

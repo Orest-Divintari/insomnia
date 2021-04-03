@@ -240,4 +240,15 @@ class Reply extends Model
         }
         return true;
     }
+
+    /**
+     * Associate a user to the reply
+     *
+     * @param User $user
+     * @return Reply
+     */
+    public function setPoster($user)
+    {
+        return $this->poster()->associate($user);
+    }
 }

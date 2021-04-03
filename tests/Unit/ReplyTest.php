@@ -346,4 +346,16 @@ class ReplyTest extends TestCase
         $this->assertTrue($message->isMessage());
     }
 
+    /** @test */
+    public function it_associates_a_user_to_itself()
+    {
+        $reply = ReplyFactory::create();
+        $user = create(User::class);
+        $this->assertNotEquals($reply->poster->id, $user->id);
+
+        $reply->setPoster($user)->save();
+
+        $this->assertEquals($reply->fresh()->poster->id, $user->id);
+    }
+
 }

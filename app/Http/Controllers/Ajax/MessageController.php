@@ -19,7 +19,7 @@ class MessageController extends Controller
     public function store(Conversation $conversation, CreateMessageRequest $request)
     {
         return $conversation
-            ->addMessage(request('body'))
+            ->addMessage($request->validated())
             ->load('poster');
     }
 

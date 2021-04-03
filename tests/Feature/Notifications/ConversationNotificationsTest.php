@@ -85,7 +85,7 @@ class ConversationNotificationsTest extends TestCase
         $conversation->leftBy($orestis);
 
         $message = $conversation->addMessage(
-            'some message',
+            ['body' => 'some message'],
             $conversationStarter
         );
 
@@ -126,7 +126,7 @@ class ConversationNotificationsTest extends TestCase
         ]);
         $conversation->hideFrom($orestis);
         $message = $conversation->addMessage(
-            'some message',
+            ['body' => 'some message'],
             $conversationStarter
         );
 

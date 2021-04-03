@@ -73,7 +73,7 @@ class CreateConversationRequest extends FormRequest
             $this->boolean('admin')
         );
         $conversation->addMessage(
-            $this->input('message')
+            ['body' => $this->input('message')]
         );
 
         return $conversation;

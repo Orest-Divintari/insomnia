@@ -21,7 +21,7 @@ class ReplyController extends Controller
      */
     public function store(Thread $thread, PostReplyRequest $request)
     {
-        $reply = $thread->addReply(request('body'), auth()->user())
+        $reply = $thread->addReply($request->validated(), auth()->user())
             ->load('poster')
             ->loadCount('likes');
 

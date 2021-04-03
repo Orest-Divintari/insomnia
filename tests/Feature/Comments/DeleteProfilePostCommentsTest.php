@@ -57,7 +57,7 @@ class DeleteProfilePostCommentsTest extends TestCase
     {
         $poster = $this->signIn();
         $profilePost = ProfilePostFactory::by($poster)->create();
-        $profilePost->addComment($this->faker->sentence, $poster);
+        $profilePost->addComment(['body' => $this->faker->sentence], $poster);
         $this->assertCount(1, $profilePost->comments);
 
         $this->delete(route('ajax.profile-posts.destroy', $profilePost->id));

@@ -213,14 +213,13 @@ class Thread extends Model
      * @param array $reply
      * @return Reply $reply;
      */
-    public function addReply($reply, $poster = null)
+    public function addReply($attributes, $poster = null)
     {
         $poster = $poster ?? auth()->user();
 
-        $reply = $this->replies()->create([
-            'body' => $reply,
-            'user_id' => $poster->id,
-        ]);
+        $reply = $this->replies()->save(
+            (new Reply($attributes))->setPoster($poster)
+        );
 
         event(new NewReplyWasPostedToThread($this, $reply));
 

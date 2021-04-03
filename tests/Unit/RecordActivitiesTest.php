@@ -251,6 +251,7 @@ class RecordActivitiesTest extends TestCase
         $this->post(route('ajax.messages.store', $conversation), ['body' => $messageBody]);
 
         $message = Reply::whereBody($messageBody)->first();
+        
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $message->id,
             'subject_type' => Reply::class,

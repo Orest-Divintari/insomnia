@@ -122,7 +122,7 @@ class ConversationTest extends TestCase
             ->update(
                 ['created_at' => Carbon::now()->subHour()]
             );
-        $newMessage = $conversation->addMessage('new message');
+        $newMessage = $conversation->addMessage(['body' => 'new message']);
 
         $conversation = Conversation::whereSlug($conversation->slug)
             ->withRecentMessage()
@@ -178,7 +178,7 @@ class ConversationTest extends TestCase
             $conversation->fresh()->updated_at > $conversationDate
         );
 
-        $conversation->addMessage('some message');
+        $conversation->addMessage(['body' => 'some message']);
 
         $this->assertTrue(
             $conversation->fresh()->updated_at > $conversationDate
@@ -221,7 +221,7 @@ class ConversationTest extends TestCase
         $conversation->hideFrom($user);
         $this->assertCount(1, $user->fresh()->conversations);
 
-        $conversation->addMessage('some message');
+        $conversation->addMessage(['body' => 'some message']);
 
         $this->assertCount(2, $user->fresh()->conversations);
     }

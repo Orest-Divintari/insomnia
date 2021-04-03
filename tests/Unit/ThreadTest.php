@@ -107,7 +107,7 @@ class ThreadTest extends TestCase
         $thread = create(Thread::class);
         $user = create(User::class);
 
-        $thread->addReply($this->faker->sentence, $user);
+        $thread->addReply(['body' => $this->faker->sentence], $user);
 
         $this->assertEquals($thread->fresh()->replies_count, 1);
     }

@@ -92,7 +92,7 @@ class ConversationFactory extends Factory implements FactoryInterface
 
         $conversations->each(function ($conversation) {
             $this->addParticipants($conversation);
-            $this->addMessage($conversation);
+            $this->addMessage(['body' => $conversation]);
         });
 
         $this->resetAttributes();
@@ -156,7 +156,7 @@ class ConversationFactory extends Factory implements FactoryInterface
             $this->withMessage();
         }
 
-        $conversation->addMessage($this->message, $this->user);
+        $conversation->addMessage(['body' => $this->message], $this->user);
     }
 
     /**

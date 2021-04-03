@@ -33,7 +33,7 @@ class UserNotificationsTest extends TestCase
         Notification::fake();
         $user = $this->signIn();
         $thread = create(Thread::class);
-        $reply = $thread->addReply($this->faker->sentence);
+        $reply = ReplyFactory::toThread($thread)->create();
         $notification = new ThreadHasNewReply($thread, $reply);
 
         $user->notify($notification);
@@ -252,7 +252,7 @@ class UserNotificationsTest extends TestCase
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
-        $message = $conversation->addMessage($this->faker->sentence);
+        $message = $conversation->addMessage(['body' => $this->faker->sentence]);
         $notification = new ConversationHasNewMessage($conversation, $message);
 
         $participant->notify($notification);

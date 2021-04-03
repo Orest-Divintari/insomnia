@@ -63,21 +63,22 @@ class ProfilePost extends Model
      * @param array $comment
      * @return Comment
      */
-    public function addComment($comment, $poster = null)
+    public function addComment($attributes, $poster = null)
     {
         $poster = $poster ?: auth()->user();
-        $newComment = $this->comments()->create([
-            'body' => $comment,
-            'user_id' => $poster->id,
-        ]);
+
+        $comment = $this->comments()->save(
+            (new Reply($attributes))->setPoster($poster)
+        );
+
         event(new NewCommentWasAddedToProfilePost(
             $this,
-            $newComment,
+            $comment,
             $poster,
             $this->profileOwner,
         ));
 
-        return $newComment;
+        return $comment;
     }
 
     /**
