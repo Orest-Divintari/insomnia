@@ -20,19 +20,11 @@ class MarkThreadsAsReadTest extends TestCase
         $threads = ThreadFactory::inCategory($category)->createMany(2);
         $readThread = $threads->first();
         $user = $this->signIn();
+        $this->assertTrue($readThread->hasBeenUpdated());
 
         $this->get(route('threads.show', $readThread));
 
-        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
-        $threads = collect($threads);
-        $this->assertTrue(
-            $threads->every(function ($thread, $key) use ($readThread) {
-                if ($thread['id'] == $readThread->id) {
-                    return $thread['has_been_updated'] == false;
-                }
-                return $thread['has_been_updated'] == true;
-            })
-        );
+        $this->assertFalse($readThread->hasBeenUpdated());
     }
 
     /** @test */
@@ -41,16 +33,11 @@ class MarkThreadsAsReadTest extends TestCase
         $category = create(Category::class);
         $threads = ThreadFactory::inCategory($category)->createMany(2);
         $visitedThread = $threads->first();
+        $this->assertTrue($visitedThread->hasBeenUpdated());
 
         $this->get(route('threads.show', $visitedThread));
-        $threads = $this->getJson(route('threads.index', $category))->json()['data'];
 
-        $threads = collect($threads);
-        $this->assertTrue(
-            $threads->every(function ($thread, $key) use ($visitedThread) {
-                return $thread['has_been_updated'] == true;
-            })
-        );
+        $this->assertTrue($visitedThread->hasBeenUpdated());
     }
 
     /** @test */

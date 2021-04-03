@@ -94,7 +94,10 @@ class ViewThreadsTest extends TestCase
             ->inCategory($category)
             ->create();
 
-        $response = $this->get(route('category-threads.index', $category) . "?posted_by={$uric->name}");
+        $response = $this->get(route(
+            'category-threads.index',
+            [$category, 'posted_by' => $uric->name]
+        ));
 
         $response->assertSee($threadByUric->title)
             ->assertDontSee($threadByJohn->title);
@@ -106,10 +109,9 @@ class ViewThreadsTest extends TestCase
         $newThread = create(Thread::class);
         $oldThread = ThreadFactory::createdAt(Carbon::now()->subDay())->create();
 
-        $response = $this->getJson(route('threads.index') . '?new_threads=1');
+        $response = $this->get(route('threads.index', ['new_threads' => true]));
 
-        $this->assertEquals($newThread->id, $response['data'][0]['id']);
-        $this->assertEquals($oldThread->id, $response['data'][1]['id']);
+        $response->assertSeeInOrder([$newThread->title, $oldThread->title]);
     }
 
     /** @test */
@@ -121,14 +123,16 @@ class ViewThreadsTest extends TestCase
             ->createdAt(Carbon::now()->subDay())
             ->create();
 
-        $response = $this->getJson(route('category-threads.index', $category) . '?new_threads=1');
+        $response = $this->get(route(
+            'category-threads.index',
+            [$category, 'new_threads' => true]
+        ));
 
-        $this->assertEquals($thread->id, $response['data'][0]['id']);
-        $this->assertEquals($oldThread->id, $response['data'][1]['id']);
+        $response->assertSeeInOrder([$thread->title, $oldThread->title]);
     }
 
     /** @test */
-    public function user_can_fetch_the_threads_with_the_most_recent_replies()
+    public function user_can_view_the_threads_with_the_most_recent_replies_in_descending_order()
     {
         $user = create(User::class);
         $recentlyActiveThread = ThreadFactory::create();
@@ -138,17 +142,13 @@ class ViewThreadsTest extends TestCase
         ReplyFactory::toThread($recentlyActiveThread)->create();
         Carbon::setTestNow();
 
-        $threads = $this->getJson(
-            route('threads.index') . "?new_posts=1"
-        )->json()['data'];
+        $response = $this->get(route('threads.index', ['new_posts' => true]));
 
-        $this->assertCount(2, $threads);
-        $this->assertEquals($recentlyActiveThread->id, $threads[0]['id']);
-        $this->assertEquals($inactiveThread->id, $threads[1]['id']);
+        $response->assertSeeInOrder([$recentlyActiveThread->title, $inactiveThread->title]);
     }
 
     /** @test */
-    public function user_can_fetch_the_threads_of_a_category_with_the_most_recent_replies()
+    public function user_can_view_the_threads_of_a_category_with_the_most_recent_replies_in_descending_order()
     {
         $category = create(Category::class);
         $recentlyActiveThread = ThreadFactory::inCategory($category)->create();
@@ -158,13 +158,12 @@ class ViewThreadsTest extends TestCase
         ReplyFactory::toThread($inactiveThread)->create();
         Carbon::setTestNow();
 
-        $threads = $this->getJson(
-            route('category-threads.index', $category) . "?new_posts=1"
-        )->json()['data'];
+        $response = $this->get(route(
+            'category-threads.index',
+            [$category, 'new_posts' => true]
+        ));
 
-        $this->assertCount(2, $threads);
-        $this->assertEquals($recentlyActiveThread->id, $threads[0]['id']);
-        $this->assertEquals($inactiveThread->id, $threads[1]['id']);
+        $response->assertSeeInOrder([$recentlyActiveThread->title, $inactiveThread->title]);
     }
 
     /** @test */
@@ -179,14 +178,13 @@ class ViewThreadsTest extends TestCase
             ->toThread($threadWithParticipation)
             ->create();
 
-        $response = $this->getJson(
-            route('threads.index') . "?contributed=" . $orestis->name
-        )->json();
+        $response = $this->get(route(
+            'threads.index',
+            ['contributed' => $orestis->name]
+        ));
 
-        $this->assertEquals(
-            $orestis->id,
-            $response['data'][0]['recent_reply']['poster']['id']
-        );
+        $response->assertSee($threadWithParticipation->title);
+        $response->assertDontSee($threadWithoutParticipation->title);
     }
 
     /** @test */
@@ -195,45 +193,37 @@ class ViewThreadsTest extends TestCase
         $category = create(Category::class);
         $threadWithoutParticipation = ThreadFactory::inCategory($category)->create();
         ReplyFactory::toThread($threadWithoutParticipation)->create();
-        $threadWithoutReplies = ThreadFactory::inCategory($category)->create();
+        $threadWithoutReplies = create(Thread::class);
         $orestis = create(User::class);
-        ReplyFactory::by($orestis)->create();
+        $threadWithParticipation = ThreadFactory::inCategory($category)->create();
+        ReplyFactory::by($orestis)
+            ->toThread($threadWithParticipation)
+            ->create();
 
-        $response = $this->getJson(
-            route('threads.index') . "?contributed=" . $orestis->name
-        )->json();
+        $response = $this->get(route(
+            'category-threads.index',
+            [$category, 'contributed' => $orestis->name]
+        ));
 
-        $this->assertEquals(
-            $orestis->id,
-            $response['data'][0]['recent_reply']['poster']['id']
-        );
+        $response->assertSee($threadWithParticipation->title);
+        $response->assertDontSee($threadWithoutParticipation->title);
     }
 
     /** @test */
-    public function user_can_view_trending_threads()
+    public function user_can_view_trending_threads_in_descending_order()
     {
         $trendingThread = create(Thread::class, ['views' => 50]);
         ReplyFactory::toThread($trendingThread)->createMany(5);
-
         $lessTrendingThread = create(Thread::class, ['views' => 100]);
         ReplyFactory::toThread($lessTrendingThread)->create();
 
-        $response = $this->getJson(
-            route('threads.index') . "?trending=1"
-        );
+        $response = $this->get(route('threads.index', ['trending' => true]));
 
-        $this->assertEquals(
-            $trendingThread->id,
-            $response['data'][0]['id']
-        );
-        $this->assertEquals(
-            $lessTrendingThread->id,
-            $response['data'][1]['id']
-        );
+        $response->assertSeeInOrder([$trendingThread->title, $lessTrendingThread->title]);
     }
 
     /** @test */
-    public function user_can_view_the_trending_threads_of_a_category()
+    public function user_can_view_the_trending_threads_of_a_category_in_descending_order()
     {
         $category = create(Category::class);
         $trendingThread = ThreadFactory::inCategory($category)->create(['views' => 50]);
@@ -241,18 +231,9 @@ class ViewThreadsTest extends TestCase
         $lessTrendingThread = ThreadFactory::inCategory($category)->create(['views' => 100]);
         ReplyFactory::toThread($lessTrendingThread)->create();
 
-        $response = $this->getJson(
-            route('category-threads.index', $category) . "?trending=1"
-        );
+        $response = $this->get(route('threads.index', [$category, 'trending' => true]));
 
-        $this->assertEquals(
-            $trendingThread->id,
-            $response['data'][0]['id']
-        );
-        $this->assertEquals(
-            $lessTrendingThread->id,
-            $response['data'][1]['id']
-        );
+        $response->assertSeeInOrder([$trendingThread->title, $lessTrendingThread->title]);
     }
 
     /** @test */
@@ -262,7 +243,7 @@ class ViewThreadsTest extends TestCase
         $threadWithReplies = create(Thread::class);
         ReplyFactory::toThread($threadWithReplies)->createMany(5);
 
-        $response = $this->get(route('threads.index') . "?unanswered=1");
+        $response = $this->get(route('threads.index', ['unanswered' => true]));
 
         $response->assertSee($threadWithoutReplies->title)
             ->assertDontSee($threadWithReplies->title);
@@ -276,7 +257,7 @@ class ViewThreadsTest extends TestCase
         $threadWithReplies = ThreadFactory::inCategory($category)->create();
         ReplyFactory::toThread($threadWithReplies)->createMany(5);
 
-        $response = $this->get(route('category-threads.index', $category) . "?unanswered=1");
+        $response = $this->get(route('category-threads.index', [$category, 'unanswered' => true]));
 
         $response->assertSee($threadWithoutReplies->title)
             ->assertDontSee($threadWithReplies->title);
@@ -409,53 +390,5 @@ class ViewThreadsTest extends TestCase
         $response = $this->get(route('category-threads.index', $category));
 
         $response->assertSee($pinnedThread->title);
-    }
-
-    /** @test */
-    public function view_the_last_pages_of_replies_for_a_thread_of_a_given_category()
-    {
-        $thread = create(Thread::class);
-        $category = $thread->category;
-        $pages = 10;
-        $threadBody = 1;
-        $thread->increment('replies_count', Thread::REPLIES_PER_PAGE * $pages - $threadBody);
-
-        $threads = $this->getJson(route('category-threads.index', $category))->json()['data'];
-        $this->assertEquals(
-            $thread->linkToPage(8),
-            $threads[0]['last_pages'][8]
-        );
-        $this->assertEquals(
-            $thread->linkToPage(9),
-            $threads[0]['last_pages'][9]
-        );
-        $this->assertEquals(
-            $thread->linkToPage(10),
-            $threads[0]['last_pages'][10]
-        );
-    }
-
-    /** @test */
-    public function view_the_last_pages_of_replies_for_a_thread()
-    {
-        $thread = create(Thread::class);
-        $pages = 10;
-        $threadBody = 1;
-        $thread->increment('replies_count', Thread::REPLIES_PER_PAGE * $pages - $threadBody);
-
-        $threads = $this->getJson(route('threads.index'))->json()['data'];
-
-        $this->assertEquals(
-            $thread->linkToPage(8),
-            $threads[0]['last_pages'][8]
-        );
-        $this->assertEquals(
-            $thread->linkToPage(9),
-            $threads[0]['last_pages'][9]
-        );
-        $this->assertEquals(
-            $thread->linkToPage(10),
-            $threads[0]['last_pages'][10]
-        );
     }
 }

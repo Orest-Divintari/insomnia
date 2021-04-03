@@ -39,9 +39,6 @@ class ThreadController extends Controller
         $pinnedThreads = $threadsQuery->pinned()->get();
         $threadFilters = $filters->getRequestedFilters();
 
-        if (request()->wantsJson()) {
-            return $normalThreads;
-        }
         return view(
             'threads.index',
             compact(
