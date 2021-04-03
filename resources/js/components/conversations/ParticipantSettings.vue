@@ -64,7 +64,7 @@ export default {
       return (
         "/ajax/conversations/" +
         this.conversation.slug +
-        "participants/" +
+        "/participants/" +
         this.participant.id +
         "/admin"
       );
