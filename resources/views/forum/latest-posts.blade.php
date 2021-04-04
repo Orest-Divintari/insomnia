@@ -19,7 +19,9 @@
                         popover-classes="inline" trigger-classes="tet-smaller text-gray-lightest pt-1">
                     </profile-popover>
                     <span class="dot inline-block mb-1"></span>
-                    <span class="inline"> {{ $latestPost->updated_at->diffForHumans() }} </span>
+                    <a href="{{ route('replies.show', $latestPost->recentReply) }}"
+                        class="inline cursor-pointer hover:underline">
+                        {{ $latestPost->updated_at->diffForHumans() }} </a>
                 </div>
                 <a class="text-smaller text-gray-lightest underline"
                     href="{{ route('categories.show', $latestPost->category->slug) }}">
