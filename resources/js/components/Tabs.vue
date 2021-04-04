@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class>
+    <div>
       <ul class="flex tabs">
         <li
           v-for="(tab, index) in tabs"
@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import EventBus from "../eventBus";
 export default {
   data() {
     return {
@@ -39,12 +38,18 @@ export default {
       this.tabs.forEach((tab) => {
         tab.isActive = tab.name == selectedTabName;
       });
+      window.location.href;
+    },
+    previouslySelectedTab() {
+      this.tabs.forEach((tab) => {
+        if (window.location.href.includes(tab.hrefDescription)) {
+          this.selectTab(tab.name);
+        }
+      });
     },
   },
   mounted() {
-    EventBus.$on("selectTab", (tabName) => {
-      this.selectTab(tabName);
-    });
+    this.previouslySelectedTab();
   },
 };
 </script>
