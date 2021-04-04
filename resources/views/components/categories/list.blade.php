@@ -3,14 +3,15 @@
     <div class="flex items-center">
         <img src="{{ $category->avatar_path }}" alt="category_avatar" class="avatar-lg mr-3">
         <div class="flex-1">
-            <a class="text-sm text-blue-mid-dark font-semibold tracking-wide"
+            <a class="text-sm text-blue-mid-dark font-semibold tracking-wide hover:underline"
                 href="{{ route('categories.show',$category->slug) }}">{{ $category->title }}</a>
             @if($category->hasSubCategories())
             <div class=" flex">
                 @foreach($category->subCategories as $subCategory)
                 <a href="{{ route('categories.show',$subCategory->slug) }}" class="mr-4"> <i
                         class="text-sm far fa-comment-dots"></i>
-                    <span class="text-smaller font-black font-hairline">{{ $subCategory->title }}</span></a>
+                    <span
+                        class="text-smaller font-black font-hairline hover:text-blue-mid-dark hover:underline">{{ $subCategory->title }}</span></a>
                 @endforeach
             </div>
             @else
