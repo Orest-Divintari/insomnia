@@ -3,16 +3,19 @@
     <div class>
       <ul class="flex tabs">
         <li
-          class="tab"
-          :class="{
-            'is-active': tab.isActive,
-            'tab-disable-hover': tab.isActive,
-          }"
           v-for="(tab, index) in tabs"
           :key="tab.id"
           @click="selectTab(tab.name)"
         >
-          <a :href="'#' + tab.hrefDescription">{{ tab.name }}</a>
+          <a
+            class="block tab cursor-pointer"
+            :class="{
+              'is-active': tab.isActive,
+              'tab-disable-hover': tab.isActive,
+            }"
+            :href="'#' + tab.hrefDescription"
+            >{{ tab.name }}</a
+          >
         </li>
       </ul>
     </div>
