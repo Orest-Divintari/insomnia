@@ -27,7 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $appends = ['avatarPath', 'short_name'];
+    protected $appends = ['short_name'];
 
     /**
      * Don't auto-apply mass assignment protection.
