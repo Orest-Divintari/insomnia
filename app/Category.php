@@ -250,7 +250,7 @@ class Category extends Model
      */
     public function getAvatarPathAttribute($avatar)
     {
-        return asset($avatar ?: '/avatars/categories/apple_logo.png');
+        return asset($avatar ?: '/images/categories/apple_logo.png');
     }
 
     /**
