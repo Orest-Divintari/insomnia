@@ -3,7 +3,7 @@
     <div class="comment-container">
       <div class="comment-avatar">
         <profile-popover
-          :user="comment.poster"
+          :user="user"
           trigger="avatar"
           triggerClasses="avatar-sm"
         ></profile-popover>
@@ -11,7 +11,7 @@
       <div class="post-right-col">
         <div class="post-header mb-0 text-smaller">
           <profile-popover
-            :user="comment.poster"
+            :user="user"
             triggerClasses="post-username"
           ></profile-popover>
         </div>
@@ -76,6 +76,7 @@
 import Highlight from "../Highlight";
 import LikeButton from "../LikeButton";
 import replies from "../../mixins/replies";
+import authorization from "../../mixins/authorization";
 export default {
   components: {
     Highlight,
@@ -93,9 +94,10 @@ export default {
       required: true,
     },
   },
-  mixins: [replies],
+  mixins: [replies, authorization],
   data() {
     return {
+      poster: this.comment.poster,
       body: this.comment.body,
       editing: false,
       isLiked: this.comment.is_liked,
@@ -105,6 +107,9 @@ export default {
   computed: {
     path() {
       return "/ajax/comments/" + this.comment.id;
+    },
+    user() {
+      return this.ownsProfile(this.poster) ? this.profileOwner : this.poster;
     },
   },
   methods: {

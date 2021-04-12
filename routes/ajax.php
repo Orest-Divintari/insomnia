@@ -144,6 +144,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/notifications/{notificationId}', 'UserNotificationController@destroy')
         ->name('user-notifications.destroy');
 
+    // USER AVATAR
+    Route::patch('/users/{user}/avatar', 'UserAvatarController@update')
+        ->name('user-avatar.update');
+
+    Route::delete('/users/{user}/avatar', 'UserAvatarController@destroy')
+        ->name('user-avatar.destroy');
+
 });
 
 /* ************ PROFILE ************ */

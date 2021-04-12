@@ -1,4 +1,7 @@
 // the methods and variables are named from the point of view of the authenticated user
+
+import Vue from "vue";
+
 // for example, the authenticated isFollowing a given user
 export const store = {
     state: {

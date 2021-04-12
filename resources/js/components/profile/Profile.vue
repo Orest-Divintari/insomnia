@@ -1,16 +1,34 @@
 <template>
   <div>
-    <div class="border border-gray-lighter rounded relative">
+    <div class="border border-gray-lighter rounded">
       <div class="bg-white-catskill p-4 flex">
-        <div class="w-56">
-          <img
-            :src="profileOwner.avatar_path"
-            class="avatar-2xl absolute"
-            alt="avatar"
-          />
+        <div
+          class="w-56 relative"
+          @mouseenter="hover = true"
+          @mouseleave="hover = false"
+        >
+          <span class="absolute">
+            <img
+              :src="user.avatar_path"
+              class="avatar-2xl text-center"
+              alt="avatar"
+            />
+
+            <edit-user-avatar-modal
+              @updated-avatar="onUpdatedAvatar"
+              :user="this.user"
+            >
+              <a
+                v-if="canUpdate"
+                class="cursor-pointer bottom-0 pt-24 text-center w-48 h-32 absolute edit-background-gradient text-semi-white text-sm"
+              >
+                Edit
+              </a>
+            </edit-user-avatar-modal>
+          </span>
         </div>
         <div>
-          <p class="text-2xl" v-text="profileOwner.name"></p>
+          <p class="text-2xl" v-text="user.name"></p>
           <p class="text-sm">Macrumors newbie</p>
         </div>
       </div>
@@ -20,17 +38,11 @@
           <div class="flex justify-between p-4">
             <div>
               <p class="text-xs text-gray-lightest">Messages</p>
-              <p
-                class="text-md text-center"
-                v-text="profileOwner.messages_count"
-              ></p>
+              <p class="text-md text-center" v-text="user.messages_count"></p>
             </div>
             <div>
               <p class="text-xs text-gray-lightest">Likes Score</p>
-              <p
-                class="text-md text-center"
-                v-text="profileOwner.likes_count"
-              ></p>
+              <p class="text-md text-center" v-text="user.likes_count"></p>
             </div>
             <div>
               <p class="text-xs text-gray-lightest">Points</p>
@@ -45,24 +57,24 @@
                 <div class="flex">
                   <p>
                     <span class="text-gray-lightest">Joined:</span>
-                    {{ profileOwner.join_date }}
+                    {{ user.join_date }}
                   </p>
                   <p class="self-center dot"></p>
                   <p>
                     Viewing member profile
                     <a
                       class="italic hover:underline text-blue-like"
-                      :href="'/profiles/' + profileOwner.name"
-                      v-text="profileOwner.name"
+                      :href="'/profiles/' + user.name"
+                      v-text="user.name"
                     ></a>
                   </p>
                 </div>
                 <div class="flex">
                   <follow-button
                     class="mr-1"
-                    v-if="!authorize('is', profileOwner) && signedIn"
-                    :profileOwner="profileOwner"
-                    :followed="profileOwner.followed_by_visitor"
+                    v-if="!authorize('is', user) && signedIn"
+                    :profileOwner="user"
+                    :followed="user.followed_by_visitor"
                   ></follow-button>
                   <dropdown :styleClasses="'w-56'">
                     <template v-slot:dropdown-trigger>
@@ -74,16 +86,14 @@
                     <template v-slot:dropdown-items>
                       <div class="dropdown-title">Find content</div>
                       <div class="dropdown-item">
-                        <a :href="'/search?posted_by=' + profileOwner.name"
-                          >Find all content by {{ profileOwner.name }}
+                        <a :href="'/search?posted_by=' + user.name"
+                          >Find all content by {{ user.name }}
                         </a>
                       </div>
                       <a
-                        :href="
-                          '/search?type=thread&posted_by=' + profileOwner.name
-                        "
+                        :href="'/search?type=thread&posted_by=' + user.name"
                         class="dropdown-item"
-                        >Find all threads by {{ profileOwner.name }}</a
+                        >Find all threads by {{ user.name }}</a
                       >
                     </template>
                   </dropdown>
@@ -96,16 +106,16 @@
     </div>
     <tabs class="mt-5">
       <tab name="Profile Posts" :selected="true">
-        <profile-posts :profile-owner="profileOwner"></profile-posts>
+        <profile-posts :profile-owner="user"></profile-posts>
       </tab>
       <tab name="Latest Activity">
-        <latest-activity :profile-owner="profileOwner"></latest-activity>
+        <latest-activity :profile-owner="user"></latest-activity>
       </tab>
       <tab name="Postings">
-        <posting-activity :profile-owner="profileOwner"></posting-activity>
+        <posting-activity :profile-owner="user"></posting-activity>
       </tab>
       <tab name="About">
-        <about :profile-owner="profileOwner"></about>
+        <about :profile-owner="user"></about>
       </tab>
     </tabs>
   </div>
@@ -119,7 +129,8 @@ import FollowButton from "./FollowButton";
 import About from "./About";
 import Tabs from "../Tabs";
 import Tab from "../Tab";
-
+import authorization from "../../mixins/authorization";
+import EditUserAvatarModal from "./EditUserAvatarModal";
 export default {
   components: {
     ProfilePosts,
@@ -129,6 +140,7 @@ export default {
     PostingActivity,
     About,
     FollowButton,
+    EditUserAvatarModal,
   },
   props: {
     profileOwner: {
@@ -136,8 +148,32 @@ export default {
       default: {},
     },
   },
+  mixins: [authorization],
+  computed: {
+    canUpdate() {
+      return this.hover && this.ownsProfile(this.user);
+    },
+  },
+  data() {
+    return {
+      user: this.profileOwner,
+      hover: false,
+    };
+  },
+  methods: {
+    onUpdatedAvatar(user) {
+      this.user = user;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.edit-background-gradient {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+}
 </style>

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Avatar\AvatarInterface;
 use App\Events\Profile\NewPostWasAddedToProfile;
 use App\Traits\Followable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -26,16 +27,14 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $appends = ['avatar_path', 'short_name'];
+    protected $appends = ['avatarPath', 'short_name'];
 
     /**
-     * The attributes that are mass assignable.
+     * Don't auto-apply mass assignment protection.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -55,6 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'conversation_admin' => 'boolean',
         'followed_by_visitor' => 'boolean',
+        'default_avatar' => 'boolean',
     ];
 
     /**
@@ -75,7 +75,9 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getAvatarPathAttribute($avatar)
     {
-        return asset($avatar ?: '/avatars/users/user_logo.png');
+        return $avatar ?
+        asset($avatar) :
+        app(AvatarInterface::class)->generate($this->name);
     }
 
     /**

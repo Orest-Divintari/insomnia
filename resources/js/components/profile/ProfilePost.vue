@@ -3,7 +3,7 @@
     <div class="reply-container">
       <div class="reply-left-col w-24">
         <profile-popover
-          :user="post.poster"
+          :user="user"
           trigger="avatar"
           triggerClasses="avatar-lg"
         ></profile-popover>
@@ -11,7 +11,7 @@
       <div class="post-right-col">
         <div class="post-header">
           <profile-popover
-            :user="post.poster"
+            :user="user"
             triggerClasses="post-username"
           ></profile-popover>
           <p class="dot"></p>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import authorization from "../../mixins/authorization";
 import Highlight from "../Highlight";
 import Wysiwyg from "../Wysiwyg";
 import Comments from "./Comments";
@@ -64,8 +65,15 @@ export default {
       default: {},
     },
   },
+  mixins: [authorization],
+  computed: {
+    user() {
+      return this.ownsProfile(this.poster) ? this.profileOwner : this.poster;
+    },
+  },
   data() {
     return {
+      poster: this.post.poster,
       body: this.post.body,
       editing: false,
     };

@@ -54,7 +54,6 @@ export default {
       this.dataset = paginatedCollection;
       this.posts = this.posts.concat(paginatedCollection.data);
     },
-
     add(data) {
       this.posts.unshift(data);
     },
