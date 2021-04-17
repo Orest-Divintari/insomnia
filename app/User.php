@@ -352,8 +352,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->notifications_viewed_at > $latestNotification->created_at;
     }
 
-    public function getUnnviewedNotificationsCountAttribute()
+    /**
+     * Get the number of unviewed notifications
+     *
+     * @return integer
+     */
+    public function getUnviewedNotificationsCountAttribute()
     {
-        return $this->unreadNotifications()->where('created_at', '<=', $this->viewed_notifications_at)->count();
+        if ($this->viewed_notifications_at) {
+            return $this->unreadNotifications()->where('created_at', '<=', $this->viewed_notifications_at)->count();
+        }
+        return $this->unreadNotifications()->count();
     }
 }
