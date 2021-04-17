@@ -46,6 +46,7 @@ class AvatarTest extends TestCase
     {
         $user = $this->signIn();
         $gravatarMail = 'orestisdivintari@gmail.com';
+
         $user = $this->json('patch', route('ajax.user-avatar.update', $user), [
             'gravatar' => $gravatarMail,
         ])->json();

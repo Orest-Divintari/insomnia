@@ -12,6 +12,5 @@ export default {
         isAuthUser(user){
             return this.authorize('is', user);
         }
-        
     }
 };
