@@ -230,8 +230,8 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Eager load the users that follows and the number of users
      *
-     * @param [type] $query
-     * @return void
+     * @param Builder $query
+     * @return Builder
      */
     public function scopeWithFollows($query)
     {
