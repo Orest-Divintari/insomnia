@@ -18,11 +18,7 @@
       :comment="comment"
       :profile-owner="profileOwner"
     ></comment>
-    <new-comment
-      @created="add"
-      :user="profileOwner"
-      :profile-post="post"
-    ></new-comment>
+    <new-comment @created="add" :profile-post="post"></new-comment>
   </div>
 </template>
 

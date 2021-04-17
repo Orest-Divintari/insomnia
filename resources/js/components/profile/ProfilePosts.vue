@@ -23,8 +23,10 @@
 import NewProfilePost from "./NewProfilePost";
 import ProfilePost from "./ProfilePost";
 import fetch from "../../mixins/fetch";
+import FetchMoreButton from "./FetchMoreButton";
 export default {
   components: {
+    FetchMoreButton,
     NewProfilePost,
     ProfilePost,
   },

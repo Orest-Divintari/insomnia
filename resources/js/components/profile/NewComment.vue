@@ -30,11 +30,6 @@ export default {
     ProfilePostInput,
   },
   props: {
-    user: {
-      type: Object,
-      default: {},
-      required: true,
-    },
     profilePost: {
       type: Object,
       default: {},

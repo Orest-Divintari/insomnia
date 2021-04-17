@@ -3,7 +3,7 @@
     <div class="reply-container">
       <div class="reply-left-col w-24">
         <profile-popover
-          :user="profileOwner"
+          :user="user"
           trigger="avatar"
           triggerClasses="avatar-lg"
         ></profile-popover>
