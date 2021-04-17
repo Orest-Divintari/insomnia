@@ -222,7 +222,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function scopeWithProfileInfo($query)
     {
-        $query->withMessagesCount()
+        return $query->withMessagesCount()
             ->withLikesCount()
             ->withFollowedByVisitor();
     }
