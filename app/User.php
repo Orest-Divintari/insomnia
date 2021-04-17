@@ -57,6 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'default_avatar' => 'boolean',
     ];
 
+    protected $dates = ['notifications_viewed_at'];
+
     /**
      * Get the route key name for Laravel.
      *
@@ -323,5 +325,22 @@ class User extends Authenticatable implements MustVerifyEmail
                 'App\ProfilePost',
             ])->latest('created_at')
             ->first();
+    }
+    /**
+     * Determine whether the user has viewed the notifications
+     *
+     * @return boolean
+     */
+    public function notificationsViewed()
+    {
+        if (!$latestNotification = $this->unreadNotifications()->latest()->first()) {
+            return true;
+        }
+        return $this->notifications_viewed_at > $latestNotification->created_at;
+    }
+
+    public function getUnnviewedNotificationsCountAttribute()
+    {
+        return $this->unreadNotifications()->where('created_at', '<=', $this->viewed_notifications_at)->count();
     }
 }

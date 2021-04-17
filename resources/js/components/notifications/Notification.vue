@@ -5,9 +5,9 @@
         <div class="relative hover:bg-blue-mid h-14 text-center pt-4 px-2">
           <i class="fas fa-bell"></i>
           <i
-            v-if="notificationsExist"
-            class="bg-red-700 rounded-full absolute left-1/2 -mt-1 text-2xs font-black shadow-lg text-white"
-            v-text="notificationCount"
+            v-if="unviewedNotifications"
+            class="notification-badge"
+            v-text="unviewedCount"
           ></i>
         </div>
       </template>
@@ -44,6 +44,7 @@ import MessageLikeNotification from "./MessageLikeNotification";
 import FollowNotification from "./FollowNotification";
 import replies from "../../mixins/replies";
 import fetch from "../../mixins/fetch";
+import store from "../../store";
 export default {
   components: {
     ThreadReplyNotification,
@@ -57,16 +58,22 @@ export default {
   mixins: [replies, fetch],
   data() {
     return {
+      state: store.state,
       notifications: [],
-      notificationCount: 0,
     };
   },
   computed: {
     path() {
       return "/ajax/notifications";
     },
+    unviewedCount() {
+      return this.state.visitor.unviewed_notifications;
+    },
+    unviewedNotifications() {
+      return this.unviewedCount > 0;
+    },
     notificationsExist() {
-      return this.notificationCount > 0;
+      return this.notifications.length > 0;
     },
   },
   methods: {
@@ -75,10 +82,8 @@ export default {
     },
     refresh(data) {
       this.notifications = data;
-      this.notificationCount = this.notifications.length;
     },
     markAsRead(notificationId) {
-      this.notificationCount--;
       axios
         .delete(this.readPath(notificationId))
         .then((response) => notification.length)

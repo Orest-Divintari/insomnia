@@ -1,6 +1,7 @@
 import Vue from "vue";
 import authorization from "./policy/authorize";
 import EventBus from "./eventBus";
+import store from "../js/store";
 window.Vue = Vue;
 window._ = require("lodash");
 
@@ -27,6 +28,18 @@ window.axios = require("axios");
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
+
+
+window.axios.interceptors.response.use(
+    response => {
+        // response.data.data contains the data that are returned from the controllers
+        // response.data.visitor contains the data that are appended by the middleware
+        // then we reassign the response.data.data to response.data which is the structure that vue components expect
+        store.updateVisitor(response.data.visitor);
+        delete response.data.visitor;
+        response.data = response.data.data;
+        return Promise.resolve(response);
+});
 Vue.prototype.user = window.App.user;
 // -------  authentication ---------
 Vue.prototype.signedIn = window.App.signedIn;
@@ -75,6 +88,8 @@ Vue.directive("focus", {
         
     }
 });
+
+
 
 
 // -------- global error modal message function --------

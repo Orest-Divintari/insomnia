@@ -4,6 +4,9 @@
       <template v-slot:dropdown-trigger>
         <div class="relative hover:bg-blue-mid h-14 text-center pt-4 px-2">
           <i class="fas fa-envelope"></i>
+          <span v-if="conversationsExist" class="notification-badge">
+            {{ unreadCount }}</span
+          >
         </div>
       </template>
       <template v-slot:dropdown-items>
@@ -53,17 +56,21 @@
 
 <script>
 import view from "../../mixins/view";
+import store from "../../store";
 export default {
   data() {
     return {
+      state: store.state,
       conversations: [],
-      conversationsCount: 0,
     };
   },
   mixins: [view],
   computed: {
+    unreadCount() {
+      return this.state.visitor.unread_conversations;
+    },
     conversationsExist() {
-      return this.conversationsCount > 0;
+      return this.unreadCount > 0;
     },
     path() {
       return "/ajax/conversations?recent_and_unread=true";
@@ -91,7 +98,7 @@ export default {
       axios
         .get(this.path)
         .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error.response.data));
     },
   },
   created() {

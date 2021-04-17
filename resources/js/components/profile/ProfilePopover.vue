@@ -17,7 +17,7 @@
       >
         <img
           v-if="trigger == 'avatar'"
-          :src="user.avatar_path"
+          :src="avatarPath"
           :class="triggerClasses"
         />
         <a
@@ -39,7 +39,7 @@
             <img
               @click="showProfile(profileOwner)"
               :id="'user-avatar-' + profileOwner.id"
-              :src="profileOwner.avatar_path"
+              :src="avatarPath"
               class="avatar-xl cursor-pointer"
               alt=""
             />
@@ -100,7 +100,7 @@ import FollowButton from "../profile/FollowButton";
 import view from "../../mixins/view";
 import _ from "lodash";
 import authorization from "../../mixins/authorization";
-import { store } from "../../store";
+import store from "../../store";
 export default {
   components: {
     FollowButton,
@@ -141,6 +141,12 @@ export default {
     },
     isFollowed() {
       return this.profileOwner.followed_by_visitor;
+    },
+    avatarPath() {
+      if (this.isAuthUser(this.user)) {
+        return store.state.visitor.avatar_path;
+      }
+      return this.user.avatar_path;
     },
   },
   data() {

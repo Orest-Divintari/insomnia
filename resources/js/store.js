@@ -1,11 +1,17 @@
 // the methods and variables are named from the point of view of the authenticated user
 
-import Vue from "vue";
 
-// for example, the authenticated isFollowing a given user
-export const store = {
+// for example, the authenticated user isFollowing a given user
+export default {
     state: {
         profiles: {},
+        visitor: {}
+    },
+    updateVisitor(visitor){
+        this.state.visitor = visitor;
+    },
+    getVisitor(){
+        return this.state.visitor;
     },
     addOrUpdateProfile(user){
         this.state.profiles[user.id] = user;
