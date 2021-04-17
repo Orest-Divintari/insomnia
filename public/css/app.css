@@ -1483,6 +1483,19 @@ div.form-left-col {
   opacity: 1;
   transition: opacity 0.15s;
 }
+.notification-badge {
+  border-radius: 0.125rem;
+  --bg-opacity: 1;
+  background-color: #c53030;
+  background-color: rgba(197, 48, 48, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  position: absolute;
+  font-size: 0.6rem;
+  line-height: 1;
+  padding: 0.125rem;
+}
 @charset "UTF-8";
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */

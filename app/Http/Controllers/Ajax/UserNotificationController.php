@@ -15,6 +15,7 @@ class UserNotificationController extends Controller
      */
     public function index()
     {
+        auth()->user()->viewNotifications();
         return auth()->user()->fresh()->unreadNotifications;
     }
 

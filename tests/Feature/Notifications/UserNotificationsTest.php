@@ -44,8 +44,22 @@ class UserNotificationsTest extends TestCase
         $this->delete(route('ajax.user-notifications.destroy', $firstNotification->id));
 
         $response = $this->get(route('ajax.user-notifications.index'))->json();
-        $this->assertCount(1, $response);
+        $this->assertCount(0, $response);
+    }
 
+    /** @test */
+    public function a_user_can_mark_notifications_as_viewed()
+    {
+        $orestis = $this->signIn();
+        $thread = create(Thread::class);
+        $thread->subscribe($orestis->id);
+        $john = create(User::class);
+        $thread->addReply(['body' => $this->faker->sentence], $john);
+        Carbon::setTestNow(Carbon::now()->addDay());
+
+        $this->get(route('ajax.user-notifications.index'))->json();
+
+        $this->assertTrue($orestis->notificationsViewed());
     }
 
 }

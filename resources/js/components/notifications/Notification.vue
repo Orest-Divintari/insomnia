@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="fetchData">
     <dropdown styleClasses="w-80">
       <template v-slot:dropdown-trigger>
         <div class="relative hover:bg-blue-mid h-14 text-center pt-4 px-2">
@@ -13,22 +13,25 @@
       </template>
       <template v-slot:dropdown-items>
         <div class="dropdown-title">Alerts</div>
-        <div v-if="notificationsExist">
-          <div
-            @click="markAsRead(notification.id)"
-            v-for="(notification, index) in notifications"
-            :key="notification.id"
-            class="dropdown-notification-item"
-          >
-            <component
-              :is="notification.data.type"
-              :notification-data="notification.data"
-            ></component>
+        <div v-if="fetchedData">
+          <div v-if="notificationsExist">
+            <div
+              @click="markAsRead(notification.id)"
+              v-for="(notification, index) in notifications"
+              :key="notification.id"
+              class="dropdown-notification-item"
+            >
+              <component
+                :is="notification.data.type"
+                :notification-data="notification.data"
+              ></component>
+            </div>
+          </div>
+          <div v-if="!notificationsExist">
+            <div class="dropdown-notification-item">You have no new alerts</div>
           </div>
         </div>
-        <div v-else>
-          <div class="dropdown-notification-item">You have no new alerts</div>
-        </div>
+        <div v-else class="dropdown-notification-item">...</div>
       </template>
     </dropdown>
   </div>
@@ -60,6 +63,7 @@ export default {
     return {
       state: store.state,
       notifications: [],
+      fetchedData: false,
     };
   },
   computed: {
@@ -82,6 +86,7 @@ export default {
     },
     refresh(data) {
       this.notifications = data;
+      this.fetchedData = true;
     },
     markAsRead(notificationId) {
       axios
@@ -89,9 +94,6 @@ export default {
         .then((response) => notification.length)
         .catch((error) => console.log(error));
     },
-  },
-  created() {
-    this.fetchData();
   },
 };
 </script>

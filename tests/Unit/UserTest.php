@@ -297,4 +297,20 @@ class UserTest extends TestCase
         $this->assertArrayHasKey('likes_count', $user);
         $this->assertArrayHasKey('followed_by_visitor', $user);
     }
+
+    /** @test */
+    public function can_mark_notifications_as_viewed()
+    {
+        $orestis = $this->signIn();
+        $thread = create(Thread::class);
+        $thread->subscribe($orestis->id);
+        $john = create(User::class);
+        $thread->addReply(['body' => $this->faker->sentence], $john);
+        Carbon::setTestNow(Carbon::now()->addDay());
+        $this->assertFalse($orestis->notificationsViewed());
+
+        $orestis->viewNotifications();
+
+        $this->assertTrue($orestis->notificationsViewed());
+    }
 }

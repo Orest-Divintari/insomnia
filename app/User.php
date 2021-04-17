@@ -5,9 +5,11 @@ namespace App;
 use App\Avatar\AvatarInterface;
 use App\Events\Profile\NewPostWasAddedToProfile;
 use App\Traits\Followable;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
@@ -326,6 +328,17 @@ class User extends Authenticatable implements MustVerifyEmail
             ])->latest('created_at')
             ->first();
     }
+
+    /**
+     * Mark the notifications as viewed
+     *
+     * @return void
+     */
+    public function viewNotifications()
+    {
+        $this->update(['notifications_viewed_at' => Carbon::now()]);
+    }
+
     /**
      * Determine whether the user has viewed the notifications
      *
