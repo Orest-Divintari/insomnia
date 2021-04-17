@@ -2,12 +2,19 @@
 
 namespace Tests;
 
+use App\Http\Middleware\AppendVisitor;
 use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutMiddleware(AppendVisitor::class);
+    }
 
     /**
      * Authenticates user
