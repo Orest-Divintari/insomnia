@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div @click="fetchData">
     <dropdown styleClasses="w-80">
       <template v-slot:dropdown-trigger>
         <div class="relative hover:bg-blue-mid h-14 text-center pt-4 px-2">
           <i class="fas fa-envelope"></i>
-          <span v-if="conversationsExist" class="notification-badge">
+          <span v-if="unreadExist" class="notification-badge">
             {{ unreadCount }}</span
           >
         </div>
@@ -12,8 +12,8 @@
       <template v-slot:dropdown-items>
         <div class="dropdown-title">Conversations</div>
 
-        <div class="overflow-scroll max-h-96">
-          <div>
+        <div v-if="fetchedData" class="overflow-scroll max-h-96">
+          <div v-if="conversationsExist">
             <div v-for="(conversation, index) in conversations">
               <div
                 @click="showConversation(conversation)"
@@ -41,7 +41,11 @@
               </div>
             </div>
           </div>
+          <div v-else class="dropdown-notification-item">
+            You have no recent conversations.
+          </div>
         </div>
+        <div v-else class="dropdown-notification-item">...</div>
         <div class="dropdown-footer-item flex items-center shadow-2xl">
           <a href="/conversations" class="blue-link">Show all</a>
           <p class="dot"></p>
@@ -62,6 +66,7 @@ export default {
     return {
       state: store.state,
       conversations: [],
+      fetchedData: false,
     };
   },
   mixins: [view],
@@ -69,11 +74,14 @@ export default {
     unreadCount() {
       return this.state.visitor.unread_conversations;
     },
-    conversationsExist() {
+    unreadExist() {
       return this.unreadCount > 0;
     },
     path() {
       return "/ajax/conversations?recent_and_unread=true";
+    },
+    conversationsExist() {
+      return this.conversations.length > 0;
     },
   },
   methods: {
@@ -93,6 +101,7 @@ export default {
     },
     refresh(data) {
       this.conversations = data;
+      this.fetchedData = true;
     },
     fetchData() {
       axios
@@ -100,9 +109,6 @@ export default {
         .then(({ data }) => this.refresh(data))
         .catch((error) => console.log(error.response.data));
     },
-  },
-  created() {
-    this.fetchData();
   },
 };
 </script>
