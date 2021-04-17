@@ -144,7 +144,7 @@ export default {
     },
     avatarPath() {
       if (this.isAuthUser(this.user)) {
-        return store.state.visitor.avatar_path;
+        return store.state.visitor.avatar_path ?? this.user.avatar_path;
       }
       return this.user.avatar_path;
     },
