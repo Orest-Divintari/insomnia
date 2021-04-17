@@ -1,0 +1,3 @@
+.notification-badge {
+    @apply .rounded-sm .bg-red-700 .text-white .absolute .text-2xs .leading-none .p-1/2;
+}
