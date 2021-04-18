@@ -2,31 +2,11 @@
   <div>
     <div class="border border-gray-lighter rounded">
       <div class="bg-white-catskill p-4 flex">
-        <div
-          class="w-56 relative"
-          @mouseenter="hover = true"
-          @mouseleave="hover = false"
-        >
-          <span class="absolute">
-            <img
-              :src="user.avatar_path"
-              class="avatar-2xl text-center"
-              alt="avatar"
-            />
-
-            <edit-user-avatar-modal
-              @updated-avatar="onUpdatedAvatar"
-              :user="this.user"
-            >
-              <a
-                v-if="canUpdate"
-                class="cursor-pointer bottom-0 pt-24 text-center w-48 h-32 absolute edit-background-gradient text-semi-white text-sm"
-              >
-                Edit
-              </a>
-            </edit-user-avatar-modal>
-          </span>
-        </div>
+        <avatar
+          class=""
+          :user="user"
+          @updated-avatar="onUpdatedAvatar"
+        ></avatar>
         <div>
           <p class="text-2xl" v-text="user.name"></p>
           <p class="text-sm">Macrumors newbie</p>
@@ -130,9 +110,10 @@ import About from "./About";
 import Tabs from "../Tabs";
 import Tab from "../Tab";
 import authorization from "../../mixins/authorization";
-import EditUserAvatarModal from "./EditUserAvatarModal";
+import Avatar from "./Avatar";
 export default {
   components: {
+    Avatar,
     ProfilePosts,
     Tabs,
     Tab,
@@ -140,7 +121,6 @@ export default {
     PostingActivity,
     About,
     FollowButton,
-    EditUserAvatarModal,
   },
   props: {
     profileOwner: {
@@ -169,11 +149,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.edit-background-gradient {
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 60%,
-    rgba(0, 0, 0, 0.9) 100%
-  );
-}
 </style>

@@ -3,7 +3,7 @@
     <div @click="show">
       <slot></slot>
     </div>
-    <modal name="edit-user-avatar" width="800px" height="auto">
+    <modal :name="name" width="800px" height="auto">
       <div class="form-container">
         <div
           class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-5"
@@ -31,7 +31,6 @@
                 >
                 <input
                   type="radio"
-                  id="custom-avatar-radio-button"
                   name="avatar-radio-button"
                   value="true"
                   ref="avatar-radio"
@@ -50,7 +49,6 @@
                   <image-upload
                     :clearInput="avatarIsPersisted"
                     :disabled="!avatarIsSelected"
-                    id="avatar-input"
                     class="form-input"
                     :class="{ 'bg-gray-disabled': !avatarIsSelected }"
                     name="avatar"
@@ -137,11 +135,15 @@ export default {
       default: {},
       required: true,
     },
+    name: {
+      type: String,
+      default: "",
+      required: true,
+    },
   },
   mixins: [authorization],
   data() {
     return {
-      name: "edit-user-avatar",
       avatarPath: this.user.avatar_path,
       avatarIsPersisted: false,
       avatarIsSelected: true,
