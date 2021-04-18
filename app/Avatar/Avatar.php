@@ -3,6 +3,7 @@
 namespace App\Avatar;
 
 use App\Avatar\AvatarInterface;
+use Illuminate\Support\Facades\Storage;
 
 class Avatar implements AvatarInterface
 {
@@ -29,6 +30,14 @@ class Avatar implements AvatarInterface
         $options = $this->buildOptions($username);
 
         return $avatarUrl . $options;
+    }
+
+    public function delete($username)
+    {
+        $files = Storage::allFiles("/images/avatars/users/{$username}");
+        if ($files) {
+            Storage::delete($files);
+        }
     }
 
     protected function buildOptions($username)

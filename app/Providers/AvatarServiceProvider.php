@@ -15,6 +15,11 @@ class AvatarServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+        $this->app->bind('avatar', function ($app) {
+            return app(AvatarInterface::class);
+        });
+
         $this->app->bind(AvatarInterface::class, function ($app) {
             return new Avatar(config('avatar.default'));
         });

@@ -35,6 +35,7 @@ class AvatarTest extends TestCase
 
         Storage::disk('public')
             ->assertExists("images/avatars/users/{$user->name}/{$image->hashName()}");
+
         $this->assertEquals(
             asset("/images/avatars/users/{$user->name}/{$image->hashName()}"),
             $user->fresh()->avatar_path);
@@ -151,12 +152,40 @@ class AvatarTest extends TestCase
 
         $this->json('delete', route('ajax.user-avatar.destroy', $user));
 
+        Storage::disk('public')
+            ->missing("images/avatars/users/{$user->name}/{$image->hashName()}");
         $this->assertDatabaseHas('users', [
             'name' => $user->name,
             'id' => $user->id,
             'avatar_path' => null,
             'default_avatar' => true,
         ]);
+
+    }
+
+    /** @test */
+    public function it_deletes_the_previous_avatar_when_new_avatar_is_persisted()
+    {
+        $user = $this->signIn();
+        Storage::fake('public');
+        $this->json('patch', route('ajax.user-avatar.update', $user), [
+            'avatar' => $firstImage = UploadedFile::fake()->image('avatar.jpg'),
+        ]);
+        Storage::disk('public')
+            ->assertExists("images/avatars/users/{$user->name}/{$firstImage->hashName()}");
+        $this->assertEquals(
+            asset("/images/avatars/users/{$user->name}/{$firstImage->hashName()}"),
+            $user->fresh()->avatar_path);
+        $this->assertFalse($user->default_avatar);
+
+        $this->json('patch', route('ajax.user-avatar.update', $user), [
+            'avatar' => $secondImage = UploadedFile::fake()->image('avatar.jpg'),
+        ]);
+
+        Storage::disk('public')
+            ->missing("images/avatars/users/{$user->name}/{$firstImage->hashName()}");
+        Storage::disk('public')
+            ->assertExists("images/avatars/users/{$user->name}/{$secondImage->hashName()}");
     }
 
 }

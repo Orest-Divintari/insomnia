@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
+use App\Facades\Avatar;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserAvatarRequest;
 use App\User;
@@ -18,11 +19,15 @@ class UserAvatarController extends Controller
 
     public function destroy()
     {
-        auth()->user()->update([
+        $user = auth()->user();
+
+        $user->update([
             'avatar_path' => null,
             'default_avatar' => true,
         ]);
 
-        return auth()->user()->fresh();
+        Avatar::delete($user->name);
+
+        return $user->fresh();
     }
 }

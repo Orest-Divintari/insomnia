@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Facades\Avatar;
 use App\Rules\GravatarExists;
 use App\User;
 use Creativeorange\Gravatar\Facades\Gravatar;
@@ -48,8 +49,10 @@ class UpdateUserAvatarRequest extends FormRequest
         $username = auth()->user()->name;
 
         if ($this->has('avatar')) {
-            return $this->file('avatar')
-                ->store("/images/avatars/users/{$username}");
+
+            $this->deleteExistingAvatar($username);
+
+            return $this->persistAvatar($username);
 
         } elseif ($this->has('gravatar')) {
             return Gravatar::get($this->input('gravatar'));
@@ -67,5 +70,16 @@ class UpdateUserAvatarRequest extends FormRequest
             'gravatar.required' => 'Gravatars require valid email addresses.',
             'gravatar.email' => 'Gravatars require valid email addresses.',
         ];
+    }
+
+    protected function deleteExistingAvatar($username)
+    {
+        Avatar::delete($username);
+    }
+
+    protected function persistAvatar($username)
+    {
+        return $this->file('avatar')
+            ->store("/images/avatars/users/{$username}");
     }
 }

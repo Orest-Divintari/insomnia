@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Avatar\AvatarInterface;
 use App\Events\Profile\NewPostWasAddedToProfile;
+use App\Facades\Avatar;
 use App\Traits\Followable;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -81,7 +81,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $avatar ?
         asset($avatar) :
-        app(AvatarInterface::class)->generate($this->name);
+        Avatar::generate($this->name);
     }
 
     /**
