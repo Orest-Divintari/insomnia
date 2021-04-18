@@ -7,5 +7,5 @@ function user_avatar($user = null)
 
 function guest_avatar()
 {
-    return asset('/avatars/users/user_logo.png');
+    return asset('/images/avatars/users/guest/guest_logo.png');
 }
