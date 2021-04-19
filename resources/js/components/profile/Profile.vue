@@ -1,83 +1,80 @@
 <template>
   <div>
-    <div class="border border-gray-lighter rounded">
-      <div class="bg-white-catskill p-4 flex">
-        <avatar
-          class=""
-          :user="user"
-          @updated-avatar="onUpdatedAvatar"
-        ></avatar>
-        <div>
-          <p class="text-2xl" v-text="user.name"></p>
+    <div class="relative flex border border-gray-lighter rounded">
+      <div class="bg-blue-light absolute h-20 p-4 w-full"></div>
+      <avatar
+        class="p-4"
+        :user="user"
+        @updated-avatar="onUpdatedAvatar"
+      ></avatar>
+
+      <div class="w-full flex-1 p-4 pl-0 z-0">
+        <div class="leading-none">
+          <p class="text-2xl pb-3" v-text="user.name"></p>
           <p class="text-sm">Macrumors newbie</p>
         </div>
-      </div>
-      <div class="flex">
-        <div class="w-56"></div>
-        <div class="w-full flex-1">
-          <div class="flex justify-between p-4">
-            <div>
-              <p class="text-xs text-gray-lightest">Messages</p>
-              <p class="text-md text-center" v-text="user.messages_count"></p>
-            </div>
-            <div>
-              <p class="text-xs text-gray-lightest">Likes Score</p>
-              <p class="text-md text-center" v-text="user.likes_count"></p>
-            </div>
-            <div>
-              <p class="text-xs text-gray-lightest">Points</p>
-              <p class="text-md text-center">0</p>
-            </div>
-          </div>
-
+        <div class="flex justify-around pt-8">
           <div>
-            <hr />
-            <div class="p-4 text-sm">
-              <div class="flex justify-between">
-                <div class="flex">
-                  <p>
-                    <span class="text-gray-lightest">Joined:</span>
-                    {{ user.join_date }}
-                  </p>
-                  <p class="self-center dot"></p>
-                  <p>
-                    Viewing member profile
+            <p class="text-xs text-gray-lightest">Messages</p>
+            <p class="text-md text-center" v-text="user.messages_count"></p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-lightest">Likes Score</p>
+            <p class="text-md text-center" v-text="user.likes_count"></p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-lightest">Points</p>
+            <p class="text-md text-center">0</p>
+          </div>
+        </div>
+
+        <div>
+          <hr class="mt-7/2 mb-6" />
+          <div class="pr-4 text-sm">
+            <div class="flex justify-between items-center">
+              <div class="flex">
+                <p>
+                  <span class="text-gray-lightest">Joined:</span>
+                  {{ user.join_date }}
+                </p>
+                <p class="self-center dot"></p>
+                <p>
+                  Viewing member profile
+                  <a
+                    class="italic hover:underline text-blue-like"
+                    :href="'/profiles/' + user.name"
+                    v-text="user.name"
+                  ></a>
+                </p>
+              </div>
+              <div class="flex">
+                <follow-button
+                  class="mr-1"
+                  v-if="!authorize('is', user) && signedIn"
+                  :profileOwner="user"
+                  :followed="user.followed_by_visitor"
+                ></follow-button>
+                <dropdown :styleClasses="'w-56'">
+                  <template v-slot:dropdown-trigger>
+                    <div class="btn-white-blue flex items-center">
+                      <p>Find</p>
+                      <span class="ml-1 fas fa-caret-down"></span>
+                    </div>
+                  </template>
+                  <template v-slot:dropdown-items>
+                    <div class="dropdown-title">Find content</div>
+                    <div class="dropdown-item">
+                      <a :href="'/search?posted_by=' + user.name"
+                        >Find all content by {{ user.name }}
+                      </a>
+                    </div>
                     <a
-                      class="italic hover:underline text-blue-like"
-                      :href="'/profiles/' + user.name"
-                      v-text="user.name"
-                    ></a>
-                  </p>
-                </div>
-                <div class="flex">
-                  <follow-button
-                    class="mr-1"
-                    v-if="!authorize('is', user) && signedIn"
-                    :profileOwner="user"
-                    :followed="user.followed_by_visitor"
-                  ></follow-button>
-                  <dropdown :styleClasses="'w-56'">
-                    <template v-slot:dropdown-trigger>
-                      <div class="btn-white-blue flex items-center">
-                        <p>Find</p>
-                        <span class="ml-1 fas fa-caret-down"></span>
-                      </div>
-                    </template>
-                    <template v-slot:dropdown-items>
-                      <div class="dropdown-title">Find content</div>
-                      <div class="dropdown-item">
-                        <a :href="'/search?posted_by=' + user.name"
-                          >Find all content by {{ user.name }}
-                        </a>
-                      </div>
-                      <a
-                        :href="'/search?type=thread&posted_by=' + user.name"
-                        class="dropdown-item"
-                        >Find all threads by {{ user.name }}</a
-                      >
-                    </template>
-                  </dropdown>
-                </div>
+                      :href="'/search?type=thread&posted_by=' + user.name"
+                      class="dropdown-item"
+                      >Find all threads by {{ user.name }}</a
+                    >
+                  </template>
+                </dropdown>
               </div>
             </div>
           </div>
