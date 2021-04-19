@@ -69,6 +69,11 @@ Vue.component(
     "Paginator",
     require("./components/Paginator.vue").default
 );
+Vue.component(
+    "ProfileButton",
+    require("./components/profile/ProfileButton.vue").default
+);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

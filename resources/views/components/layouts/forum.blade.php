@@ -10,10 +10,7 @@
             @auth
             <div class="flex items-center">
 
-                <a href="{{ '/profiles/' . auth()->user()->name }}" class="flex items-center head-tab-item">
-                    <img src="{{ auth()->user()->avatar_path }}" class="avatar-sm mr-1" alt="">
-                    <p> {{ auth()->user()->name  }} </p>
-                </a>
+                <profile-button :profile-owner="{{ auth()->user() }}"></profile-button>
                 @verified
                 <notification></notification>
                 <conversations-button></conversations-button>
