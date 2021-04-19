@@ -18,6 +18,7 @@
 @import "./components/search.css";
 @import "./components/tags.css";
 @import "./components/tooltip.css";
+@import "./components/notification.css";
 
 .section {
     @apply pt-5;
@@ -64,7 +65,6 @@ html {
 .avatar-2xl {
     @apply .avatar .w-48 .h-48;
 }
-
 
 .dot {
     @apply .bg-gray-600  .w-tiny .h-tiny .rounded-full .mx-2;

@@ -32,6 +32,7 @@ module.exports = {
                 "blue-mid-dark": "#4F6C98",
                 "blue-reply-border": "#A2BBDF",
                 "blue-link-menu": "#2C435F",
+                "gray-shuttle": "#5C656F",
                 "gray-50": "#F0F0F0",
                 "gray-light": "#979DA5",
                 "gray-lighter": "#D7E2EF",
@@ -60,26 +61,37 @@ module.exports = {
                 "purple-muted": "#75587A",
                 "black-semi": "#2C2C2C"
             },
-            spacing: {
-                "1/2": "0.125rem",
+            width:{
+                "80": "20rem",
+                "84": "21rem",
+                "72": "18rem",
                 tiny: "0.15rem",
+                "9": "2.25rem",
+                "180": "45rem"
+            },
+            height: {
+                "1/2": "50%",
+                "14": "3.5rem",
+                "9": "2.25rem",
+                tiny: "0.15rem",
+            },
+            padding: {
+                "7": "1.75rem",
+                "1/2": "0.125rem",
                 "3/2": "0.35rem",
                 "5/2": "0.625rem",
                 "7/2": "0.9375rem",
                 "5.5": "1.35rem",
-                "7": "1.75rem",
-                "9": "2.25rem",
-                "14": "3.5rem",
-                "17": "4.25rem",
-                "28": "7rem",
-                "72": "18rem",
-                "80": "20rem",
-            },
-            width:{
-                "180": "45rem"
-            },
-            padding: {
                 input: "0.375rem"
+            },
+            margin: {
+                "17": "4.25rem",
+                "7": "1.75rem",
+                "1/2": "0.125rem",
+                "3/2": "0.35rem",
+                "5/2": "0.625rem",
+                "7/2": "0.9375rem",
+                "5.5": "1.35rem",
             },
             fontFamily: {
                 insomnia: "Verdana, Arial, sans-serif"
@@ -88,7 +100,6 @@ module.exports = {
                 "6": "0.375rem",
                 "3": "3px"
             },
-
             fontSize: {
                 "4xs": "0.1rem",
                 "3xs": "0.25rem",
@@ -99,7 +110,6 @@ module.exports = {
         }
     },
     variants: {
-            
             textColor: ["responsive", "hover", "focus", "active", "group-hover"],
             textDecoration: ['hover','group-hover'],
             cursor: ['hover', 'group-hover']
