@@ -1,26 +1,28 @@
 <template>
   <div>
-    <div class="w-56" @mouseenter="hover" @mouseleave="stopHovering">
-      <span class="absolute">
-        <img
-          :src="user.avatar_path"
-          class="avatar-2xl text-center relative"
-          alt="avatar"
-        />
-
-        <edit-user-avatar-modal
-          @updated-avatar="onUpdatedAvatar"
-          :user="user"
-          :name="name"
+    <div class="relative">
+      <img
+        @mouseenter="showEditButton"
+        @mouseleave="hideEditButton"
+        :src="user.avatar_path"
+        :class="avatarClasses"
+        alt="avatar"
+      />
+      <edit-user-avatar-modal
+        @updated-avatar="broadcastUpdate"
+        :user="user"
+        :name="name"
+      >
+        <button
+          @mouseenter="showEditButton"
+          @mouseleave="hideEditButton"
+          v-if="canUpdate"
+          class="z-10 absolute bottom-0 text-center edit-background-gradient text-semi-white cursor-pointer focus:outline-none"
+          :class="buttonClasses"
         >
-          <a
-            v-if="canUpdate"
-            class="cursor-pointer bottom-0 pt-24 text-center w-48 h-3/4 absolute edit-background-gradient text-semi-white text-sm"
-          >
-            Edit
-          </a>
-        </edit-user-avatar-modal>
-      </span>
+          Edit
+        </button>
+      </edit-user-avatar-modal>
     </div>
   </div>
 </template>
@@ -34,6 +36,14 @@ export default {
     EditUserAvatarModal,
   },
   props: {
+    avatarClasses: {
+      type: String,
+      default: "w-48 h-48",
+    },
+    buttonClasses: {
+      type: String,
+      default: "w-48 h-24 text-sm",
+    },
     user: {
       type: Object,
       default: {},
@@ -56,13 +66,13 @@ export default {
     };
   },
   methods: {
-    hover() {
+    showEditButton() {
       this.isHovering = true;
     },
-    stopHovering() {
+    hideEditButton() {
       this.isHovering = false;
     },
-    onUpdatedAvatar(user) {
+    broadcastUpdate(user) {
       this.$emit("updated-avatar", user);
     },
   },
@@ -73,7 +83,7 @@ export default {
 .edit-background-gradient {
   background-image: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0) 10%,
     rgba(0, 0, 0, 0.9) 100%
   );
 }
