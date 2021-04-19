@@ -65,7 +65,7 @@
 
           <hr class="bg-blue-light my-1" />
 
-          <div class="flex items-start p-4">
+          <div class="flex items-start p-4 text-black-semi">
             <!-- LEFT -->
             <img :src="user.avatar_path" class="avatar-xl" />
             <!-- RIGHT -->
@@ -171,6 +171,7 @@ export default {
     hide() {
       this.$modal.hide(this.name);
     },
+
     selectAvatar() {
       this.avatarIsSelected = true;
     },
@@ -192,12 +193,12 @@ export default {
         .then(({ data }) => this.onDestroyed(data))
         .catch((error) => console.log(error.response.data));
     },
-    broadcastUpdated(user) {
+    broadcastUpdate(user) {
       this.$emit("updated-avatar", user);
     },
     onDestroyed(user) {
       this.avatarPath = user.avatar_path;
-      this.broadcastUpdated(user);
+      this.broadcastUpdate(user);
     },
     onLoad(avatar) {
       this.avatarIsPersisted = false;
@@ -232,7 +233,7 @@ export default {
     },
     onPersisted(user) {
       this.avatarPath = user.avatar_path;
-      this.broadcastUpdated(user);
+      this.broadcastUpdate(user);
       this.hide();
     },
   },
