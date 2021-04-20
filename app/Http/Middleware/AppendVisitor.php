@@ -34,7 +34,19 @@ class AppendVisitor
 
     protected function getContent($response)
     {
-        return json_decode($response->content(), true);
+        $content = $response->content();
+
+        if ($this->isJson($content)) {
+            return json_decode($content, true);
+        }
+
+        return $content;
+    }
+
+    protected function isJson($string)
+    {
+        json_decode($string);
+        return json_last_error() == JSON_ERROR_NONE;
     }
 
     protected function getVisitor($request)

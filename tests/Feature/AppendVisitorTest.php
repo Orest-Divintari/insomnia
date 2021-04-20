@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Http\Middleware\AppendVisitor;
+use App\Thread;
 use App\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -46,7 +47,6 @@ class AppendVisitorTest extends TestCase
     /** @test */
     public function it_appends_the_number_of_unviewed_notifications_on_every_json_request()
     {
-        $this->withoutExceptionHandling();
         $orestis = create(User::class);
         $george = $this->signIn();
         $post = ['body' => $this->faker->sentence()];
@@ -58,5 +58,17 @@ class AppendVisitorTest extends TestCase
         $visitor = $response['visitor'];
 
         $this->assertEquals($visitor['unviewed_notifications'], $orestis->unviewedNotificationsCount);
+    }
+
+    /** @test */
+    public function it_appends_visitor_when_response_is_error()
+    {
+        $user = $this->signIn();
+        $thread = create(Thread::class);
+
+        $response = $this->postJson(route('ajax.replies.store', $thread), ['body' => '']);
+
+        $this->assertNotNull($response['data']);
+        $this->assertNotNull($response['visitor']);
     }
 }

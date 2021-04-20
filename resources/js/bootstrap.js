@@ -39,6 +39,15 @@ window.axios.interceptors.response.use(
         delete response.data.visitor;
         response.data = response.data.data;
         return Promise.resolve(response);
+}, error => {
+    // error.response.data.data contains the error message that is returned by laravel
+        // error.response.data.visitor contains the data that are appended by the middleware
+        // then we reassign the error.response.data.data to error.response.data 
+        // because vue components expects the error message to be in error.response.data
+    store.updateVisitor(error.response.data.visitor);
+    delete error.response.data.visitor;
+    error.response.data = error.response.data.data;
+    return Promise.reject(error);
 });
 Vue.prototype.user = window.App.user;
 // -------  authentication ---------
