@@ -2,11 +2,7 @@
   <div>
     <div class="relative flex border border-gray-lighter rounded">
       <div class="bg-blue-light absolute h-20 p-4 w-full"></div>
-      <avatar
-        class="p-4"
-        :user="user"
-        @updated-avatar="onUpdatedAvatar"
-      ></avatar>
+      <avatar class="p-4" :user="user"></avatar>
 
       <div class="w-full flex-1 p-4 pl-0 z-0">
         <div class="leading-none">
@@ -137,11 +133,7 @@ export default {
       hover: false,
     };
   },
-  methods: {
-    onUpdatedAvatar(user) {
-      this.user = user;
-    },
-  },
+  methods: {},
 };
 </script>
 
