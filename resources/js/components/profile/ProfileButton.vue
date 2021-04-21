@@ -4,7 +4,7 @@
       <template v-slot:dropdown-trigger>
         <a class="flex items-center head-tab-item">
           <img :src="avatarPath" class="avatar-sm mr-1" alt="" />
-          <p>{{ user.name }}</p>
+          <button class="focus:outline-none">{{ user.name }}</button>
         </a>
       </template>
       <template v-slot:dropdown-items>
