@@ -67,7 +67,7 @@
 
           <div class="flex items-start p-4 text-black-semi">
             <!-- LEFT -->
-            <img :src="user.avatar_path" class="avatar-xl" />
+            <img :src="gravatarPath" class="avatar-xl" />
             <!-- RIGHT -->
             <div class="ml-3 flex-1">
               <div
@@ -124,6 +124,7 @@
 
 <script>
 import authorization from "../../mixins/authorization";
+import store from "../../store";
 import ImageUpload from "../ImageUpload";
 export default {
   components: {
@@ -141,15 +142,15 @@ export default {
       required: true,
     },
   },
-  mixins: [authorization],
+  mixins: [authorization, store],
   data() {
     return {
-      avatarPath: this.user.avatar_path,
       avatarIsPersisted: false,
       avatarIsSelected: true,
+      customAvatarPath: null,
       form: {
         avatar: "",
-        gravatar: this.user.gravatar,
+        gravatar: this.user.gravatar_email,
       },
     };
   },
@@ -161,7 +162,20 @@ export default {
       return !this.avatarIsSelected;
     },
     customAvatar() {
-      return !this.user.default_avatar;
+      return !store.state.visitor.default_avatar;
+    },
+    avatarPath() {
+      return (
+        this.customAvatarPath ??
+        store.state.visitor.avatar_path ??
+        this.user.avatar_path
+      );
+    },
+    gravatarPath() {
+      return this.user.gravatar_path;
+    },
+    imageIsLoaded() {
+      return this.form.avatar ? true : false;
     },
   },
   methods: {
@@ -171,7 +185,6 @@ export default {
     hide() {
       this.$modal.hide(this.name);
     },
-
     selectAvatar() {
       this.avatarIsSelected = true;
     },
@@ -179,7 +192,7 @@ export default {
       this.avatarIsSelected = false;
     },
     persist() {
-      if (this.avatarIsSelected && this.form.avatar) {
+      if (this.avatarIsSelected && this.imageIsLoaded) {
         this.persistAvatar();
       } else if (this.gravatarIsSelected && this.form.gravatar) {
         this.persistGravatar();
@@ -193,23 +206,16 @@ export default {
         .then(({ data }) => this.onDestroyed(data))
         .catch((error) => console.log(error.response.data));
     },
-    broadcastUpdate(user) {
-      this.$emit("updated-avatar", user);
-    },
-    onDestroyed(user) {
-      this.avatarPath = user.avatar_path;
-      this.broadcastUpdate(user);
-    },
     onLoad(avatar) {
       this.avatarIsPersisted = false;
-      this.avatarPath = avatar.src;
+      this.customAvatarPath = avatar.src;
       this.form.avatar = avatar.file;
     },
     persistAvatar() {
       let data = this.formData(this.form.avatar);
       axios
         .post(this.path, data)
-        .then(({ data }) => this.onAvatarPersisted(data))
+        .then(({ data }) => this.onAvatarPersisted())
         .catch((error) => showErrorModal(error.response.data));
     },
     formData(file) {
@@ -218,22 +224,25 @@ export default {
       data.append("_method", "patch");
       return data;
     },
-    onAvatarPersisted(user) {
-      this.onPersisted(user);
+    onAvatarPersisted() {
+      this.onPersisted();
       this.avatarIsPersisted = true;
+    },
+    onDestroyed() {
+      this.clearUploadedImage();
     },
     persistGravatar() {
       axios
-        .patch(this.path, { gravatar: this.form.gravatar })
-        .then(({ data }) => this.onGravatarPersisted(data))
+        .patch(this.path, { gravatar_email: this.form.gravatar })
+        .then(({ data }) => this.onPersisted())
         .catch((error) => console.log(error));
     },
-    onGravatarPersisted(user) {
-      this.onPersisted(user);
+    clearUploadedImage() {
+      this.form.avatar = null;
+      this.customAvatarPath = null;
     },
-    onPersisted(user) {
-      this.avatarPath = user.avatar_path;
-      this.broadcastUpdate(user);
+    onPersisted() {
+      this.clearUploadedImage();
       this.hide();
     },
   },

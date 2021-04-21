@@ -58,6 +58,7 @@ class AppendVisitor
             'avatar_path' => $user->avatar_path,
             'unread_conversations' => $unreadConversations,
             'unviewed_notifications' => $this->unviewedNotifications($user),
+            'default_avatar' => $user->default_avatar,
         ]];
     }
 

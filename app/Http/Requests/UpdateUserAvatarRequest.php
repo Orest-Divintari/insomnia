@@ -30,46 +30,67 @@ class UpdateUserAvatarRequest extends FormRequest
     {
         return [
             'avatar' => ['sometimes', 'required', 'image', 'mimes:jpeg,png,jpg', 'max:10000'],
-            'gravatar' => ['sometimes', 'required', 'email', new GravatarExists],
+            'gravatar_email' => ['sometimes', 'required', 'email', new GravatarExists],
         ];
-    }
-
-    public function persist()
-    {
-        auth()->user()->update([
-            'avatar_path' => $this->getAvatarPath(),
-            'default_avatar' => false,
-            'gravatar' => $this->getGravatar(),
-        ]);
-
-    }
-
-    protected function getAvatarPath()
-    {
-        $username = auth()->user()->name;
-
-        if ($this->has('avatar')) {
-
-            $this->deleteExistingAvatar($username);
-
-            return $this->persistAvatar($username);
-
-        } elseif ($this->has('gravatar')) {
-            return Gravatar::get($this->input('gravatar'));
-        }
-    }
-
-    public function getGravatar()
-    {
-        return $this->has('gravatar') ? $this->input('gravatar') : $this->user()->gravatar;
     }
 
     public function messages()
     {
         return [
-            'gravatar.required' => 'Gravatars require valid email addresses.',
-            'gravatar.email' => 'Gravatars require valid email addresses.',
+            'gravatar_email.required' => 'Gravatars require valid email addresses.',
+            'gravatar_email.email' => 'Gravatars require valid email addresses.',
         ];
+    }
+
+    public function persist()
+    {
+        if ($this->has('avatar')) {
+            $this->persistAvatar($this->user()->name);
+        } elseif ($this->hasGravatar()) {
+            $this->persistGravatar();
+        }
+    }
+
+    protected function persistAvatar($username)
+    {
+        $this->deleteExistingAvatar($username);
+
+        $this->user()->update([
+            'avatar_path' => $this->getAvatarPath($username),
+            'default_avatar' => false,
+        ]);
+    }
+
+    protected function persistGravatar()
+    {
+        $gravatarPath = $this->getGravatarPath();
+
+        $this->user()->update([
+            'avatar_path' => $gravatarPath,
+            'gravatar_path' => $gravatarPath,
+            'gravatar_email' => $this->input('gravatar_email'),
+            'default_avatar' => false,
+        ]);
+    }
+
+    protected function hasGravatar()
+    {
+        return $this->isNewGravatar($this->input('gravatar_email'));
+    }
+
+    protected function getAvatarPath($username)
+    {
+        return $this->storeAvatarFile($username);
+    }
+
+    protected function getGravatarPath()
+    {
+        return Gravatar::get($this->input('gravatar_email'), ['size' => 400]);
+    }
+
+    protected function isNewGravatar($gravatarEmail)
+    {
+        return $gravatarEmail != $this->user()->gravatar_mail;
     }
 
     protected function deleteExistingAvatar($username)
@@ -77,7 +98,7 @@ class UpdateUserAvatarRequest extends FormRequest
         Avatar::delete($username);
     }
 
-    protected function persistAvatar($username)
+    protected function storeAvatarFile($username)
     {
         return $this->file('avatar')
             ->store("/images/avatars/users/{$username}");

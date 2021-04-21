@@ -49,25 +49,26 @@ class AvatarTest extends TestCase
         $gravatarMail = 'orestisdivintari@gmail.com';
 
         $user = $this->json('patch', route('ajax.user-avatar.update', $user), [
-            'gravatar' => $gravatarMail,
+            'gravatar_email' => $gravatarMail,
         ])->json();
 
         $this->assertStringContainsString('gravatar', $user['avatar_path']);
+        $this->assertStringContainsString('gravatar', $user['gravatar_path']);
         $this->assertFalse($user['default_avatar']);
-        $this->assertEquals($user['gravatar'], $gravatarMail);
+        $this->assertEquals($user['gravatar_email'], $gravatarMail);
     }
 
     /** @test */
-    public function the_gravatar_vale_must_be_an_email()
+    public function the_gravatar_value_must_be_an_email()
     {
         $user = $this->signIn();
 
         $response = $this->json('patch', route('ajax.user-avatar.update', $user), [
-            'gravatar' => 'asdasdasd',
+            'gravatar_email' => 'asdasdasd',
         ]);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->assertJson(['gravatar' => ['Gravatars require valid email addresses.']]);
+            ->assertJson(['gravatar_email' => ['Gravatars require valid email addresses.']]);
     }
 
     /** @test */
@@ -76,11 +77,11 @@ class AvatarTest extends TestCase
         $user = $this->signIn();
 
         $response = $this->json('patch', route('ajax.user-avatar.update', $user), [
-            'gravatar' => '',
+            'gravatar_email' => '',
         ]);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->assertJson(['gravatar' => ['Gravatars require valid email addresses.']]);
+            ->assertJson(['gravatar_email' => ['Gravatars require valid email addresses.']]);
     }
 
     /** @test */
@@ -89,11 +90,11 @@ class AvatarTest extends TestCase
         $user = $this->signIn();
 
         $response = $this->json('patch', route('ajax.user-avatar.update', $user), [
-            'gravatar' => 'gravatarDoesNotExist@gmail.com',
+            'gravatar_email' => 'gravatarDoesNotExist@gmail.com',
         ]);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->assertJson(['gravatar' => ['Gravatars require valid email addresses.']]);
+            ->assertJson(['gravatar_email' => ['Gravatars require valid email addresses.']]);
     }
 
     /** @test */

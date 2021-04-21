@@ -4,15 +4,11 @@
       <img
         @mouseenter="showEditButton"
         @mouseleave="hideEditButton"
-        :src="user.avatar_path"
+        :src="avatarPath"
         :class="avatarClasses"
         alt="avatar"
       />
-      <edit-user-avatar-modal
-        @updated-avatar="broadcastUpdate"
-        :user="user"
-        :name="name"
-      >
+      <edit-user-avatar-modal :user="user" :name="name">
         <button
           @mouseenter="showEditButton"
           @mouseleave="hideEditButton"
@@ -50,13 +46,16 @@ export default {
       required: true,
     },
   },
-  mixins: [authorization],
+  mixins: [authorization, store],
   computed: {
     name() {
       return "edit-avatar-" + this.$parent.$options.name + "-modal";
     },
     canUpdate() {
       return this.isHovering && this.ownsProfile(this.user);
+    },
+    avatarPath() {
+      return this.state.visitor.avatar_path ?? this.user.avatar_path;
     },
   },
   data() {
