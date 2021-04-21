@@ -51,7 +51,7 @@
                 <follow-button
                   class="mr-1"
                   v-if="!authorize('is', user) && signedIn"
-                  :profileOwner="user"
+                  :profile-owner="user"
                   :followed="user.followed_by_visitor"
                 ></follow-button>
                 <dropdown :styleClasses="'w-56'">
