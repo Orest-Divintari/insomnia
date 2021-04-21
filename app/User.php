@@ -84,6 +84,11 @@ class User extends Authenticatable implements MustVerifyEmail
         Avatar::generate($this->name);
     }
 
+    public function getGravatarPathAttribute($gravatar)
+    {
+        return $gravatar ?? 'http://www.gravatar.com/avatar?s=400';
+    }
+
     /**
      * Shorten the length of the name
      *
