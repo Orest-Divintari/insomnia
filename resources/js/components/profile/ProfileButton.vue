@@ -50,7 +50,6 @@
 <script>
 import store from "../../store";
 import Dropdown from "../Dropdown.vue";
-import EditUserAvatarModal from "../profile/EditUserAvatarModal";
 import authorization from "../../mixins/authorization";
 import Avatar from "../profile/Avatar";
 import view from "../../mixins/view";
@@ -59,7 +58,6 @@ export default {
   components: {
     Avatar,
     Dropdown,
-    EditUserAvatarModal,
   },
   props: {
     profileOwner: {
