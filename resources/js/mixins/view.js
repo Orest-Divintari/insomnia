@@ -6,7 +6,6 @@ export default {
             window.location.href = "/profiles/" + user.name;
         },
         showPost(user, post) {
-            EventBus.$emit("selectTab", "Profile Posts");
             window.location.href =
                 "/profiles/" + user.name + "#profile-post-" + post.id;
         },
@@ -17,7 +16,6 @@ export default {
             window.location.href = "/forum/categories/" + category.slug;
         },
         showConversation(conversation){
-            
             window.location.href="/conversations/" + conversation.slug;
         },
         showThread(thread) {
