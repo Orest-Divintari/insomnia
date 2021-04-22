@@ -8,7 +8,11 @@
         :class="avatarClasses"
         alt="avatar"
       />
-      <edit-user-avatar-modal :user="user" :name="name">
+      <edit-user-avatar-modal
+        v-if="signedIn && ownsProfile(user)"
+        :user="user"
+        :name="name"
+      >
         <button
           @mouseenter="showEditButton"
           @mouseleave="hideEditButton"
@@ -55,7 +59,10 @@ export default {
       return this.isHovering && this.ownsProfile(this.user);
     },
     avatarPath() {
-      return this.state.visitor.avatar_path ?? this.user.avatar_path;
+      if (this.signedIn && this.state.visitor.avatar_path) {
+        return this.state.visitor.avatar_path;
+      }
+      return this.user.avatar_path;
     },
   },
   data() {
