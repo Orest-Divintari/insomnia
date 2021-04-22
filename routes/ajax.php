@@ -119,9 +119,6 @@ Route::group(['middleware' => 'visitor.append'], function () {
         Route::delete('/comments/{comment}', 'CommentController@destroy')
             ->name('comments.destroy');
 
-        Route::get('/posts/{post}/comments', 'CommentController@index')
-            ->name('comments.index');
-
         /* ************ LIKES ************ */
 
         Route::post('/replies/{reply}/likes', 'LikeController@store')
@@ -189,3 +186,8 @@ Route::group(['middleware' => 'visitor.append'], function () {
     Route::get('/categories/{category}/threads', 'ThreadController@index')
         ->name('threads.index');
 });
+
+/* ************ PROFILE POST COMMENTS ************ */
+
+Route::get('/posts/{post}/comments', 'CommentController@index')
+    ->name('comments.index');
