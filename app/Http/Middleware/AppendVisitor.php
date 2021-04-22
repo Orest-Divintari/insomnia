@@ -17,10 +17,11 @@ class AppendVisitor
     {
         $response = $next($request);
 
-        $visitor = $this->getVisitor($request);
+        if (auth()->check()) {
+            $visitor = $this->getVisitor($request);
 
-        $response = $this->appendVisitor($response, $visitor);
-
+            $response = $this->appendVisitor($response, $visitor);
+        }
         return $response;
     }
 
