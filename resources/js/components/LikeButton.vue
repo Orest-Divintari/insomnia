@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="signedIn">
     <button
       @click="toggle"
       dusk="like-button"
