@@ -13,7 +13,7 @@
           @posted="post"
           :posted="posted"
           v-model="body"
-          placeholder="Update your status..."
+          :placeholder="placeHolder"
           button-name="Post"
         ></profile-post-input>
       </div>
@@ -24,6 +24,7 @@
 <script>
 import ProfilePostInput from "./ProfilePostInput";
 import Wysiwyg from "../Wysiwyg";
+import authorization from "../../mixins/authorization";
 export default {
   components: {
     Wysiwyg,
@@ -35,6 +36,7 @@ export default {
       default: {},
     },
   },
+  mixins: [authorization],
   data() {
     return {
       body: "",
@@ -43,6 +45,12 @@ export default {
     };
   },
   computed: {
+    placeHolder() {
+      if (this.isAuthUser(this.profileOwner)) {
+        return "Update your status...";
+      }
+      return "Write something...";
+    },
     data() {
       return { body: this.body };
     },
