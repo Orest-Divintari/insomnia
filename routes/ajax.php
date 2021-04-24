@@ -185,9 +185,9 @@ Route::group(['middleware' => 'visitor.append'], function () {
 
     Route::get('/categories/{category}/threads', 'ThreadController@index')
         ->name('threads.index');
-});
 
 /* ************ PROFILE POST COMMENTS ************ */
 
-Route::get('/posts/{post}/comments', 'CommentController@index')
-    ->name('comments.index');
+    Route::get('/posts/{post}/comments', 'CommentController@index')
+        ->name('comments.index');
+});
