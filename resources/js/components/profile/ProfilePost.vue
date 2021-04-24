@@ -41,7 +41,7 @@
         </div>
         <comments
           :profile-owner="profileOwner"
-          :paginated-comments="post.paginatedCommnets"
+          :paginated-comments="post.paginatedComments"
           :post="post"
         ></comments>
       </div>
