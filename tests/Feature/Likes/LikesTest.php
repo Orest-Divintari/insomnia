@@ -34,7 +34,6 @@ class LikesTest extends TestCase
         ]);
 
         $this->assertCount(1, $reply->fresh()->likes);
-
     }
 
     /** @test */
@@ -56,7 +55,6 @@ class LikesTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_unlike_a_reply()
     {
-
         $user = $this->signIn();
 
         $reply = ReplyFactory::create();
@@ -77,6 +75,6 @@ class LikesTest extends TestCase
             'user_id' => $user->id,
         ]);
         $this->assertCount(0, $reply->fresh()->likes);
-
     }
+
 }

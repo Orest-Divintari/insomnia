@@ -21,6 +21,7 @@ class AppendVisitor
         if (auth()->check()) {
             $response = $this->appendVisitor($response, Visitor::get());
         }
+
         return $response;
     }
 
