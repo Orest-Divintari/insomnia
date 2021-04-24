@@ -1,5 +1,5 @@
 <x-layouts.forum>
-    <div id="#Forum" class="flex section">
+    <div id="Forum" class="flex section">
         <div class="w-4/5">
             @foreach($groups as $group)
             <div class="mb-5">
