@@ -299,6 +299,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the number of unread conversations
+     *
+     * @return integer
+     */
+    public function getUnreadConversationsCountAttribute()
+    {
+        return $this->unreadConversations()->count();
+    }
+
+    /**
      * Determine if the user is admin
      *
      * @return boolean
@@ -364,9 +374,13 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getUnviewedNotificationsCountAttribute()
     {
-        if ($this->viewed_notifications_at) {
-            return $this->unreadNotifications()->where('created_at', '<=', $this->viewed_notifications_at)->count();
+        if ($this->notifications_viewed_at) {
+
+            return $this->unreadNotifications()
+                ->where('created_at', '>', $this->notifications_viewed_at)
+                ->count();
         }
+
         return $this->unreadNotifications()->count();
     }
 }

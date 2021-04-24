@@ -26,7 +26,8 @@
     <script>
     window.App = @json([
         'user' => Auth::user(),
-        'signedIn' => Auth::check()
+        'signedIn' => Auth::check(),
+        'visitor' => $visitor
     ]);
     </script>
 
@@ -40,9 +41,7 @@
 </head>
 
 <body>
-
     <div id="app">
-
         <header>
             <div class="hidden lg:block bg-blue-light">
                 <a href="{{route('home')}}" class="pt-3 px-5 text-5xl font-bold text-blue-dark">iNsomnia</a>

@@ -72,7 +72,7 @@ export default {
   mixins: [view],
   computed: {
     unreadCount() {
-      return this.state.visitor.unread_conversations;
+      return this.state.visitor.unread_conversations_count;
     },
     unreadExist() {
       return this.unreadCount > 0;

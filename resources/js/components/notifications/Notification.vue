@@ -71,7 +71,7 @@ export default {
       return "/ajax/notifications";
     },
     unviewedCount() {
-      return this.state.visitor.unviewed_notifications;
+      return this.state.visitor.unviewed_notifications_count;
     },
     unviewedNotifications() {
       return this.unviewedCount > 0;

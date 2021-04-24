@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\helpers\Visitor;
 use Closure;
 
 class AppendVisitor
@@ -18,9 +19,7 @@ class AppendVisitor
         $response = $next($request);
 
         if (auth()->check()) {
-            $visitor = $this->getVisitor($request);
-
-            $response = $this->appendVisitor($response, $visitor);
+            $response = $this->appendVisitor($response, Visitor::get());
         }
         return $response;
     }
@@ -29,7 +28,7 @@ class AppendVisitor
     {
         $content = $this->getContent($response);
         return $response->setContent(json_encode(
-            array_merge(['data' => $content], $visitor)
+            array_merge(['data' => $content], ['visitor' => $visitor])
         ));
     }
 
@@ -48,23 +47,5 @@ class AppendVisitor
     {
         json_decode($string);
         return json_last_error() == JSON_ERROR_NONE;
-    }
-
-    protected function getVisitor($request)
-    {
-        $user = $request->user();
-        $unreadConversations = $user->unreadConversations()->count();
-
-        return ['visitor' => [
-            'avatar_path' => $user->avatar_path,
-            'unread_conversations' => $unreadConversations,
-            'unviewed_notifications' => $this->unviewedNotifications($user),
-            'default_avatar' => $user->default_avatar,
-        ]];
-    }
-
-    protected function unviewedNotifications($user)
-    {
-        return $user->notificationsViewed() ? 0 : $user->unviewedNotificationsCount;
     }
 }

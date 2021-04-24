@@ -14,6 +14,7 @@ use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -222,6 +223,20 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function get_the_number_of_unread_conversations()
+    {
+        $conversationStarter = $this->signIn();
+        $this->assertEquals(0, $conversationStarter->unreadConversationsCount);
+
+        $conversation = create(
+            Conversation::class,
+            ['user_id' => $conversationStarter->id]
+        );
+
+        $this->assertEquals(1, $conversationStarter->unreadConversationsCount);
+    }
+
+    /** @test */
     public function a_user_knows_if_is_admin()
     {
         $notAdminUser = create(User::class);
@@ -299,8 +314,30 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function it_considers_that_notifications_are_viewed_when_there_are_not_any_notifications()
+    {
+        $orestis = $this->signIn();
+
+        $this->assertTrue($orestis->notificationsViewed());
+    }
+
+    /** @test */
+    public function can_determine_whether_the_notifications_are_viewed_when_there_are_unread_notifications()
+    {
+        $orestis = $this->signIn();
+        $thread = create(Thread::class);
+        $thread->subscribe($orestis->id);
+        $john = create(User::class);
+        $thread->addReply(['body' => $this->faker->sentence], $john);
+        Carbon::setTestNow(Carbon::now()->addDay());
+
+        $this->assertFalse($orestis->notificationsViewed());
+    }
+
+    /** @test */
     public function can_mark_notifications_as_viewed()
     {
+        $this->withoutExceptionHandling();
         $orestis = $this->signIn();
         $thread = create(Thread::class);
         $thread->subscribe($orestis->id);
@@ -312,5 +349,20 @@ class UserTest extends TestCase
         $orestis->viewNotifications();
 
         $this->assertTrue($orestis->notificationsViewed());
+        $this->assertEquals(0, $orestis->unviewedNotificationsCount);
+    }
+
+    /** @test */
+    public function get_the_number_of_unviewed_notifications()
+    {
+        $orestis = $this->signIn();
+        $thread = create(Thread::class);
+        $thread->subscribe($orestis->id);
+        $john = create(User::class);
+
+        $thread->addReply(['body' => $this->faker->sentence], $john);
+        Carbon::setTestNow(Carbon::now()->addDay());
+
+        $this->assertEquals(1, $orestis->unviewedNotificationsCount);
     }
 }

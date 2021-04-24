@@ -23,6 +23,7 @@ class AppendVisitorTest extends TestCase
     /** @test */
     public function it_appends_the_avatar_path_of_the_authenticated_user_on_every_json_request()
     {
+        $this->withoutExceptionHandling();
         $user = $this->signIn();
 
         $response = $this->getJson(route('ajax.conversations.index'))->json();
@@ -34,6 +35,7 @@ class AppendVisitorTest extends TestCase
     /** @test */
     public function it_appends_the_number_of_unread_converastions_on_every_json_request()
     {
+        $this->withoutExceptionHandling();
         $user = $this->signIn();
         $conversation = ConversationFactory::by($user)->create();
         $conversation->unread($user);
@@ -41,7 +43,7 @@ class AppendVisitorTest extends TestCase
         $response = $this->getJson(route('ajax.conversations.index'))->json();
 
         $visitor = $response['visitor'];
-        $this->assertEquals($visitor['unread_conversations'], $user->unreadConversations()->count());
+        $this->assertEquals($visitor['unread_conversations_count'], $user->unreadConversations()->count());
     }
 
     /** @test */
@@ -57,7 +59,7 @@ class AppendVisitorTest extends TestCase
 
         $visitor = $response['visitor'];
 
-        $this->assertEquals($visitor['unviewed_notifications'], $orestis->unviewedNotificationsCount);
+        $this->assertEquals($visitor['unviewed_notifications_count'], $orestis->unviewedNotificationsCount);
     }
 
     /** @test */

@@ -8,7 +8,10 @@ export default {
         visitor: {}
     },
     updateVisitor(visitor){
-        this.state.visitor = visitor;
+        this.state.visitor['avatar_path'] = visitor.avatar_path;
+        this.state.visitor['unread_conversations_count'] = visitor.unread_conversations_count ;
+        this.state.visitor['unviewed_notifications_count'] = visitor.unviewed_notifications_count;
+        this.state.visitor['default_avatar'] = visitor.default_avatar;
     },
     getVisitor(){
         return this.state.visitor;

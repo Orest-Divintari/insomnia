@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\helpers\Visitor;
 use App\Notifications\ThreadHasNewReply;
 use App\Reply;
 use App\Search\AllPosts;
@@ -46,6 +47,11 @@ class AppServiceProvider extends ServiceProvider
             $totalMembers = User::count();
 
             $view->with(compact('latestPosts', 'totalThreads', 'totalMessages', 'totalMembers'));
+        });
+
+        View::composer('components.layouts.master', function ($view) {
+            $visitor = Visitor::get();
+            $view->with(compact('visitor'));
         });
 
         Threads::bootSearchable();

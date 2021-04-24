@@ -47,7 +47,7 @@
     "autoload": {
         "files": [
             "tests/utilities/model_factory.php",
-            "app/helpers/avatar.php"
+            "app/Helpers/avatar.php"
         ],
         "psr-4": {
             "App\\": "app/"

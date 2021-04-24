@@ -56,6 +56,12 @@ window.axios.interceptors.response.use(
     return Promise.reject(error);
 });
 Vue.prototype.user = window.App.user;
+
+// update visitor on page load
+if(window.App.signedIn){
+    store.updateVisitor(window.App.visitor);
+}
+
 // -------  authentication ---------
 Vue.prototype.signedIn = window.App.signedIn;
 
