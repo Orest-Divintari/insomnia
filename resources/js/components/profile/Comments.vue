@@ -32,6 +32,9 @@ export default {
       default: {},
       required: true,
     },
+    paginatedComments: {
+      type: Object,
+    },
     profileOwner: {
       type: Object,
       default: {},
@@ -58,9 +61,15 @@ export default {
       this.dataset = paginatedCollection;
       this.items.unshift(...paginatedCollection.data.reverse());
     },
+    initialize() {
+      if (this.paginatedComments) {
+        this.items = this.paginatedComments.data;
+        this.dataset = this.paginatedComments;
+      }
+    },
   },
   created() {
-    this.fetchData();
+    this.initialize();
   },
 };
 </script>

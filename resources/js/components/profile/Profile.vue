@@ -79,7 +79,10 @@
     </div>
     <tabs class="mt-5">
       <tab name="Profile Posts" :selected="true">
-        <profile-posts :profile-owner="user"></profile-posts>
+        <profile-posts
+          :paginated-posts="posts"
+          :profile-owner="user"
+        ></profile-posts>
       </tab>
       <tab name="Latest Activity">
         <latest-activity :profile-owner="user"></latest-activity>
@@ -117,6 +120,10 @@ export default {
   },
   props: {
     profileOwner: {
+      type: Object,
+      default: {},
+    },
+    posts: {
       type: Object,
       default: {},
     },

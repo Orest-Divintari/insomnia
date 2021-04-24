@@ -1,3 +1,3 @@
 <x-layouts.forum>
-    <profile :profile-owner="{{ $user }}"></profile>
+    <profile :posts="{{ $profilePosts->toJson() }}" :profile-owner="{{ $user }}"></profile>
 </x-layouts.forum>

@@ -39,7 +39,11 @@
             <button @click="destroy" class="btn-reply-control">Delete</button>
           </div>
         </div>
-        <comments :profile-owner="profileOwner" :post="post"></comments>
+        <comments
+          :profile-owner="profileOwner"
+          :paginated-comments="post.paginatedCommnets"
+          :post="post"
+        ></comments>
       </div>
     </div>
   </div>

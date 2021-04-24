@@ -5,7 +5,7 @@
       :profile-owner="profileOwner"
     ></new-profile-post>
     <profile-post
-      v-for="(post, index) in posts"
+      v-for="(post, index) in items"
       :key="post.id"
       @deleted="remove(index)"
       :post="post"
@@ -35,12 +35,16 @@ export default {
       type: Object,
       default: {},
     },
+    paginatedPosts: {
+      type: Object,
+      default: {},
+    },
   },
   mixins: [fetch],
   data() {
     return {
-      posts: [],
-      dataset: {},
+      items: this.paginatedPosts.data,
+      dataset: this.paginatedPosts,
     };
   },
   computed: {
@@ -54,17 +58,17 @@ export default {
   methods: {
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
-      this.posts = this.posts.concat(paginatedCollection.data);
+      this.items = this.items.concat(paginatedCollection.data);
     },
     add(data) {
-      this.posts.unshift(data);
+      this.items.unshift(data);
     },
     remove(index) {
-      this.posts.splice(index, 1);
+      this.items.splice(index, 1);
     },
   },
   created() {
-    this.fetchData();
+    // this.fetchData();
   },
 };
 </script>

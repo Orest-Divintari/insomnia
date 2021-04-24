@@ -137,4 +137,12 @@ class ProfilePost extends Model
     {
         return true;
     }
+
+    public function getPaginatedCommentsAttribute()
+    {
+        return $this->comments()
+            ->withLikes()
+            ->latest()
+            ->paginate(ProfilePost::REPLIES_PER_PAGE);
+    }
 }
