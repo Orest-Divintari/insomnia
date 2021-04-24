@@ -8,7 +8,6 @@ export default {
           },
           fetchMore() {
             let nextPage = parseInt(this.dataset.current_page)  + 1;
-            console.log(this.path + '?page=' + nextPage);
             axios
               .get(this.path + '?page=' + nextPage)
               .then(({ data }) => this.refresh(data))
