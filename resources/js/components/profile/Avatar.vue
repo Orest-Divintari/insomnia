@@ -59,7 +59,7 @@ export default {
       return this.isHovering && this.ownsProfile(this.user);
     },
     avatarPath() {
-      if (this.signedIn && this.state.visitor.avatar_path) {
+      if (this.signedIn && this.isAuthUser(this.user)) {
         return this.state.visitor.avatar_path;
       }
       return this.user.avatar_path;
