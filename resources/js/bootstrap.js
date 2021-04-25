@@ -55,7 +55,7 @@ window.axios.interceptors.response.use(
     error.response.data = error.response.data.data;
     return Promise.reject(error);
 });
-Vue.prototype.user = window.App.user;
+Vue.prototype.authUser = window.App.user;
 
 // update visitor on page load
 if(window.App.signedIn){

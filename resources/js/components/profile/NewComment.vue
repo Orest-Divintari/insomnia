@@ -4,7 +4,7 @@
       <div class="comment-container border-b">
         <div class="comment-avatar">
           <profile-popover
-            :user="user"
+            :user="authUser"
             trigger="avatar"
             triggerClasses="avatar-sm"
           ></profile-popover>
