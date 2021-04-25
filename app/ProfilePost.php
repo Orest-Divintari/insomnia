@@ -145,4 +145,24 @@ class ProfilePost extends Model
             ->latest()
             ->paginate(ProfilePost::REPLIES_PER_PAGE);
     }
+
+    public function getPageNumberAttribute()
+    {
+        $numberOfPreviousPosts = ProfilePost::where('id', '<', $this->id)->count();
+
+        return (int) ceil($numberOfPreviousPosts / static::PER_PAGE);
+    }
+
+    public function getUrlAttribute()
+    {
+        $url = route('profiles.show', $this->profileOwner);
+
+        $pageNumber = $this->pageNumber;
+
+        if ($pageNumber > 1) {
+            $url = $url . '?page=' . $pageNumber;
+        }
+
+        return $url . '#profile-post-' . $this->id;
+    }
 }

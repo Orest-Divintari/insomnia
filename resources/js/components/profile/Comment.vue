@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dusk="profile-post-comment" :id="'profile-post-comment-' + comment.id">
     <div class="comment-container">
       <div class="comment-avatar">
         <profile-popover

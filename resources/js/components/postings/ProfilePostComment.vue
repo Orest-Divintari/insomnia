@@ -1,9 +1,6 @@
 <template>
   <div>
-    <a
-      @click="showPost(posting.repliable.profile_owner, posting.repliable)"
-      class="blue-link"
-    >
+    <a @click="showComment(posting.repliable)" class="blue-link">
       <highlight class="text-md" :content="body"></highlight>
     </a>
     <highlight class="italic text-smaller" :content="body"></highlight>

@@ -5,9 +5,12 @@ export default {
         showProfile(user) {
             window.location.href = "/profiles/" + user.name;
         },
-        showPost(user, post) {
+        showPost(post) {
             window.location.href =
-                "/profiles/" + user.name + "#profile-post-" + post.id;
+                "/profile-posts/" + post.id;
+        },
+        showComment(comment){
+            window.location.href="/profile-posts/comments/" + comment.id;
         },
         showReply(reply) {
             window.location.href = "/replies/" + reply.id;

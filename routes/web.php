@@ -64,6 +64,16 @@ Route::get('/replies/{reply}', 'ReplyController@show')
 Route::get('/profiles/{user}', 'ProfileController@show')
     ->name('profiles.show');
 
+/* ************ PROFILE POSTS ************ */
+
+Route::get('/profile-posts/{post}', 'ProfilePostController@show')
+    ->name('profile-posts.show');
+
+/* ************ PROFILE POST COMMENTS ************ */
+
+Route::get('/profile-posts/comments/{comment}', 'CommentController@show')
+    ->name('comments.show');
+
 Route::group(['middleware' => 'auth'], function () {
 
     /* ************ RECENTLY VIEWED THREADS ************ */

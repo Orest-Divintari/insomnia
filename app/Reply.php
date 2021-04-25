@@ -111,6 +111,37 @@ class Reply extends Model
     }
 
     /**
+     * Get the url the reply can be found
+     *
+     * @return string
+     */
+    public function getUrlAttribute()
+    {
+        if ($this->isComment()) {
+            $post = $this->repliable;
+            $pageNumber = $post->pageNumber;
+            $commentUrl = route('profiles.show', $post->profileOwner);
+
+            if ($pageNumber > 1) {
+                $commentUrl = $commentUrl . '?page=' . $pageNumber;
+            }
+
+            return $commentUrl . '#profile-post-comment-' . $this->id;
+
+        } elseif ($this->isThreadReply()) {
+
+            $threadReplyUrl = route('threads.show', $this->repliable);
+            $pageNumber = $this->pageNumber;
+
+            if ($pageNumber > 0) {
+                $threadReplyUrl = $threadReplyUrl . '?page=' . $pageNumber;
+            }
+
+            return $threadReplyUrl . '#post-' . $this->id;
+        }
+    }
+
+    /**
      * Get the activities of the reply
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany

@@ -8,15 +8,7 @@
           popover-classes="inline"
           triggerClasses="blue-link text-md mr-1/2"
         ></profile-popover>
-        <a
-          @click="
-            showPost(
-              activity.subject.reply.poster,
-              activity.subject.reply.repliable
-            )
-          "
-          class="blue-link"
-        >
+        <a @click="showComment(activity.subject.reply)" class="blue-link">
           {{ activity.subject.reply.poster.name }}
           's comment
         </a>

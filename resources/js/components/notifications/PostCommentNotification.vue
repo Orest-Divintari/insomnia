@@ -15,47 +15,36 @@
         class="inline"
       ></profile-popover>
       <div
-        @click="
-          showPost(notificationData.profileOwner, notificationData.profilePost)
-        "
+        @click="showComment(notificationData.comment)"
         class="inline notification-content"
       >
         <span class="no-underline hover:no-underline">commented on</span>
         <a
           v-if="
-            ownsProfile(notificationData.profileOwner) &&
-            ownsPost(
-              notificationData.profileOwner,
-              notificationData.profilePost
-            )
+            isAuthUser(notificationData.profileOwner) &&
+            ownsPost(notificationData.profilePost)
           "
           class="blue-link"
           >your status</a
         >
         <a
           v-if="
-            !ownsProfile(notificationData.profileOwner) &&
-            ownsPost(
-              notificationData.profileOwner,
-              notificationData.profilePost
-            )
+            !isAuthUser(notificationData.profileOwner) &&
+            ownsPost(notificationData.profilePost)
           "
           class="blue-link"
           >your post</a
         >
         <a
           v-if="
-            !ownsProfile(notificationData.profileOwner) &&
-            !ownsPost(
-              notificationData.profileOwner,
-              notificationData.profilePost
-            )
+            isAuthUser(notificationData.profileOwner) &&
+            !ownsPost(notificationData.profilePost)
           "
           class="blue-link"
           >{{ notificationData.postPoster.name }}'s post</a
         >
         <div class="inline">
-          <span v-if="ownsProfile(notificationData.profileOwner)"
+          <span v-if="isAuthUser(notificationData.profileOwner)"
             >on your profile</span
           >
           <span v-else

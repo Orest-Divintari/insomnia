@@ -12,15 +12,23 @@
         <div class="flex justify-around pt-8">
           <div>
             <p class="text-xs text-gray-lightest">Messages</p>
-            <p class="text-md text-center" v-text="user.messages_count"></p>
+            <p
+              dusk="messages-count"
+              class="text-md text-center"
+              v-text="user.messages_count"
+            ></p>
           </div>
           <div>
             <p class="text-xs text-gray-lightest">Likes Score</p>
-            <p class="text-md text-center" v-text="user.likes_count"></p>
+            <p
+              dusk="likes-count"
+              class="text-md text-center"
+              v-text="user.likes_count"
+            ></p>
           </div>
           <div>
             <p class="text-xs text-gray-lightest">Points</p>
-            <p class="text-md text-center">0</p>
+            <p dusk="points" class="text-md text-center">0</p>
           </div>
         </div>
 

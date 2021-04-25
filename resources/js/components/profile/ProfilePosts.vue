@@ -11,11 +11,7 @@
       :post="post"
       :profile-owner="profileOwner"
     ></profile-post>
-    <fetch-more-button
-      v-if="itemsExist"
-      @fetchMore="fetchMore"
-      title="Show older posts"
-    ></fetch-more-button>
+    <paginator :dataset="dataset"> </paginator>
   </div>
 </template>
 
@@ -24,8 +20,10 @@ import NewProfilePost from "./NewProfilePost";
 import ProfilePost from "./ProfilePost";
 import fetch from "../../mixins/fetch";
 import FetchMoreButton from "./FetchMoreButton";
+import Paginator from "../Paginator";
 export default {
   components: {
+    Paginator,
     FetchMoreButton,
     NewProfilePost,
     ProfilePost,

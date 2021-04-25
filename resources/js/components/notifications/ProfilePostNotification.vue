@@ -14,16 +14,9 @@
         triggerClasses="blue-link text-smaller notification-profile mr-1/2"
         class="inline"
       ></profile-popover>
-      <div @click="showPost()" class="text-black inline notification-content">
+      <div class="text-black inline notification-content">
         <span>wrote a message on</span>
-        <a
-          @click="
-            showProfile(
-              notificationData.profileOwner,
-              notificationData.profilePost
-            )
-          "
-          class="blue-link"
+        <a @click="showPost(notificationData.profilePost)" class="blue-link"
           >your profile</a
         >.
         <p class="text-xs text-gray-lightest">

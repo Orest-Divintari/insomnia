@@ -16,9 +16,7 @@
       ></profile-popover>
 
       <div
-        @click="
-          showPost(notificationData.profileOwner, notificationData.profilePost)
-        "
+        @click="showPost(notificationData.profilePost)"
         class="text-black inline notification-content"
       >
         <span>liked</span>

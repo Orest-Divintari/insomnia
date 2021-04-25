@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a @click="showPost(posting.profile_owner, posting)" class="blue-link">
+    <a @click="showPost(posting)" class="blue-link">
       <highlight class="text-md" :content="body"></highlight>
     </a>
     <highlight class="italic text-smaller" :content="body"></highlight>

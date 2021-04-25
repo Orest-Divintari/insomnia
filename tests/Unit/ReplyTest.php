@@ -12,6 +12,7 @@ use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\MessageFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -89,6 +90,39 @@ class ReplyTest extends TestCase
         $correctPageNumber = ceil(15 / $comment->repliable::REPLIES_PER_PAGE);
 
         $this->assertEquals($correctPageNumber, $comment->pageNumber);
+    }
+
+    /** @test */
+    public function a_profile_post_comment_knows_its_url()
+    {
+        $orestis = create(User::class);
+        $numberOfPages = 5;
+        $posts = ProfilePostFactory::toProfile($orestis)
+            ->createMany(ProfilePost::PER_PAGE * $numberOfPages);
+        $lastPost = $posts->last();
+        $comment = CommentFactory::toProfilePost($lastPost)->create();
+
+        $this->assertEquals(
+            route('profiles.show', $orestis) . "?page=" . $numberOfPages,
+            $comment->url
+        );
+    }
+
+    /** @test */
+    public function a_thread_reply_knows_its_url()
+    {
+        $thread = create(Thread::class);
+        $numberOfPages = 5;
+        $replies = ReplyFactory::toThread($thread)
+            ->createMany(Thread::REPLIES_PER_PAGE * $numberOfPages);
+        $lastReply = $replies->last();
+
+        $this->assertEquals(
+            route('threads.show', $thread) .
+            '?page=' . $lastReply->pageNumber .
+            '#post-' . $lastReply->id,
+            $lastReply->url
+        );
     }
 
     /** @test */

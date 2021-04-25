@@ -1,5 +1,5 @@
 <template>
-  <div :id="'profile-post-' + post.id">
+  <div dusk="profile-post" :id="'profile-post-' + post.id">
     <div class="reply-container">
       <div class="reply-left-col w-24">
         <profile-popover

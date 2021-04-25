@@ -90,4 +90,39 @@ class ProfilePostTest extends TestCase
         $this->assertArrayHasKey('profile_owner', $profilePost);
     }
 
+    /** @test */
+    public function it_knows_the_number_of_the_page_it_belongs_to()
+    {
+        $orestis = create(User::class);
+        $john = create(User::class);
+        $numberOfPages = 5;
+        $posts = ProfilePostFactory::by($john)
+            ->toProfile($orestis)
+            ->createMany(ProfilePost::PER_PAGE * $numberOfPages);
+
+        $lastPost = $posts->last();
+
+        $this->assertEquals($numberOfPages, $lastPost->pageNumber);
+    }
+
+    /** @test */
+    public function it_knows_its_url()
+    {
+        $orestis = create(User::class);
+        $john = create(User::class);
+        $numberOfPages = 5;
+        $posts = ProfilePostFactory::by($john)
+            ->toProfile($orestis)
+            ->createMany(ProfilePost::PER_PAGE * $numberOfPages);
+
+        $lastPost = $posts->last();
+
+        $this->assertEquals(
+            route('profiles.show', $orestis) .
+            '?page=' . $lastPost->pageNumber .
+            '#profile-post-' . $lastPost->id
+            , $lastPost->url
+        );
+    }
+
 }

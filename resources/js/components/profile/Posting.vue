@@ -7,16 +7,13 @@
         }}</a>
         <span v-if="ownsPost(activity.subject)">
           updated their
-          <a @click="showPost(profileOwner, activity.subject)" class="blue-link"
-            >status</a
-          >
+          <a @click="showPost(activity.subject)" class="blue-link">status</a>
         </span>
         <span v-else>
           left a message on
-          <a
-            @click="showPost(activity.subject.poster, activity.subject)"
-            class="blue-link"
-            >{{ activity.subject.poster.name }}</a
+          <a @click="showPost(activity.subject)" class="blue-link">{{
+            activity.subject.poster.name
+          }}</a
           >'s profile.
         </span>
       </p>

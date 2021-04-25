@@ -9,15 +9,9 @@
           triggerClasses="blue-link text-md mr-1/2"
         ></profile-popover>
         commented on
-        <a
-          @click="
-            showPost(
-              activity.subject.repliable.poster,
-              activity.subject.repliable
-            )
-          "
-          class="blue-link"
-          >{{ activity.subject.repliable.poster.name }}</a
+        <a @click="showComment(activity.subject)" class="blue-link">{{
+          activity.subject.repliable.poster.name
+        }}</a
         >'s profile post.
       </p>
     </div>
