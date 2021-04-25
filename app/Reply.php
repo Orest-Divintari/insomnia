@@ -133,7 +133,7 @@ class Reply extends Model
             $threadReplyUrl = route('threads.show', $this->repliable);
             $pageNumber = $this->pageNumber;
 
-            if ($pageNumber > 0) {
+            if ($pageNumber > 1) {
                 $threadReplyUrl = $threadReplyUrl . '?page=' . $pageNumber;
             }
 
