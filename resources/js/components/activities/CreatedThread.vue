@@ -1,24 +1,24 @@
 <template>
   <div>
-    <a class="blue-link text-md" @click="showThread(activity.subject)">{{
-      activity.subject.title
+    <a class="blue-link text-md" @click="showThread(subject)">{{
+      subject.title
     }}</a>
     <highlight class="italic text-smaller" :content="body"></highlight>
     <div class="flex text-xs text-gray-lightest items-center">
-      <p class="text-smaller">{{ activity.subject.date_created }}</p>
+      <p class="text-smaller">{{ subject.date_created }}</p>
       <p class="dot"></p>
       <div class>
         thread by
         <profile-popover
-          :user="activity.subject.poster"
+          :user="subject.poster"
           class="inline"
           popover-classes="inline"
           triggerClasses="blue-link mr-1/2"
         ></profile-popover>
       </div>
       <p class="dot"></p>
-      <a @click="showCategory(activity.subject.category)" class="blue-link">{{
-        activity.subject.category.title
+      <a @click="showCategory(subject.category)" class="blue-link">{{
+        subject.category.title
       }}</a>
     </div>
   </div>
@@ -45,8 +45,13 @@ export default {
   },
   computed: {
     body() {
-      return this.clean(this.activity.subject.body);
+      return this.clean(this.subject.body);
     },
+  },
+  data() {
+    return {
+      ...this.activity,
+    };
   },
 };
 </script>

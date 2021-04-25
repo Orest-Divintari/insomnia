@@ -9,22 +9,22 @@
           triggerClasses="blue-link text-md mr-1/2"
         ></profile-popover>
         liked
-        <a @click="showReply(activity.subject.reply)" class="blue-link"
-          >{{ activity.subject.reply.poster.name }}'s post</a
+        <a @click="showReply(subject.reply)" class="blue-link"
+          >{{ subject.reply.poster.name }}'s post</a
         >
         in the thread
-        <a @click="showReply(activity.subject.reply)" class="blue-link">{{
-          activity.subject.reply.repliable.title
+        <a @click="showReply(subject.reply)" class="blue-link">{{
+          subject.reply.repliable.title
         }}</a>
       </p>
     </div>
     <div>
       <highlight
         class="italic text-smaller"
-        :content="activity.subject.reply.body"
+        :content="subject.reply.body"
       ></highlight>
       <p class="text-smaller text-gray-lightest">
-        {{ activity.subject.date_created }}
+        {{ subject.date_created }}
       </p>
     </div>
   </div>
@@ -47,6 +47,11 @@ export default {
       type: Object,
       default: {},
     },
+  },
+  data() {
+    return {
+      ...this.activity,
+    };
   },
 };
 </script>

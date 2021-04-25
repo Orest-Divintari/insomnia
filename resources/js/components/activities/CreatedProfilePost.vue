@@ -8,16 +8,15 @@
           popover-classes="inline"
           triggerClasses="blue-link text-md mr-1/2"
         ></profile-popover>
-        <span v-if="ownsPost(activity.subject)">
+        <span v-if="ownsPost(subject)">
           updated their
-          <a @click="showPost(activity.subject)" class="blue-link">status</a>
+          <a @click="showPost(subject)" class="blue-link">status</a>
         </span>
         <span v-else>
           left a message on
-          <a
-            @click="showPost(activity.subject.poster, activity.subject)"
-            class="blue-link"
-            >{{ activity.subject.poster.name }}</a
+          <a @click="showPost(subject.poster, subject)" class="blue-link">{{
+            subject.poster.name
+          }}</a
           >'s profile.
         </span>
       </p>
@@ -25,10 +24,10 @@
     <div>
       <highlight
         class="italic text-smaller"
-        :content="activity.subject.body"
+        :content="subject.body"
       ></highlight>
       <p class="text-smaller text-gray-lightest">
-        {{ activity.subject.date_created }}
+        {{ subject.date_created }}
       </p>
     </div>
   </div>
@@ -52,6 +51,11 @@ export default {
       type: Object,
       default: {},
     },
+  },
+  data() {
+    return {
+      ...this.activity,
+    };
   },
 };
 </script>

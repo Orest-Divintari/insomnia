@@ -9,8 +9,8 @@
           triggerClasses="blue-link text-md mr-1/2"
         ></profile-popover>
         commented on
-        <a @click="showComment(activity.subject)" class="blue-link">{{
-          activity.subject.repliable.poster.name
+        <a @click="showComment(subject)" class="blue-link">{{
+          subject.repliable.poster.name
         }}</a
         >'s profile post.
       </p>
@@ -18,10 +18,10 @@
     <div>
       <highlight
         class="italic text-smaller"
-        :content="activity.subject.body"
+        :content="subject.body"
       ></highlight>
       <p class="text-smaller text-gray-lightest">
-        {{ activity.subject.date_created }}
+        {{ subject.date_created }}
       </p>
     </div>
   </div>
@@ -44,6 +44,11 @@ export default {
       type: Object,
       default: {},
     },
+  },
+  data() {
+    return {
+      ...this.activity,
+    };
   },
 };
 </script>

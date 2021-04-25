@@ -1,27 +1,25 @@
 <template>
   <div>
-    <a class="blue-link text-md" @click="showReply(activity.subject)">{{
-      activity.subject.repliable.title
+    <a class="blue-link text-md" @click="showReply(subject)">{{
+      subject.repliable.title
     }}</a>
     <highlight class="italic text-smaller" :content="body"></highlight>
     <div class="flex text-xs text-gray-lightest items-center">
-      <p class="text-smaller">{{ activity.subject.date_created }}</p>
+      <p class="text-smaller">{{ subject.date_created }}</p>
       <p class="dot"></p>
       <div class>
         reply by
         <profile-popover
-          :user="activity.subject.poster"
+          :user="subject.poster"
           class="inline"
           popover-classes="inline"
           triggerClasses="blue-link mr-1/2"
         ></profile-popover>
       </div>
       <p class="dot"></p>
-      <a
-        @click="showCategory(activity.subject.repliable.category)"
-        class="blue-link"
-        >{{ activity.subject.repliable.category.title }}</a
-      >
+      <a @click="showCategory(subject.repliable.category)" class="blue-link">{{
+        subject.repliable.category.title
+      }}</a>
     </div>
   </div>
 </template>
@@ -48,8 +46,13 @@ export default {
   },
   computed: {
     body() {
-      return this.clean(this.activity.subject.body);
+      return this.clean(this.subject.body);
     },
+  },
+  data() {
+    return {
+      ...this.activity,
+    };
   },
 };
 </script>
