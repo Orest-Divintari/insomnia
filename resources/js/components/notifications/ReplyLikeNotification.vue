@@ -2,29 +2,24 @@
   <div class="flex">
     <profile-popover
       class="mr-2"
-      :user="notificationData.liker"
+      :user="liker"
       trigger="avatar"
       triggerClasses="avatar-sm"
     >
     </profile-popover>
     <div class="flex-1">
       <profile-popover
-        :user="notificationData.liker"
+        :user="liker"
         popover-classes="inline"
         triggerClasses="blue-link text-smaller notification-profile mr-1/2"
         class="inline"
       ></profile-popover>
-      <div
-        @click="showReply(notificationData.reply)"
-        class="inline notification-content w-full"
-      >
+      <div @click="showReply(reply)" class="inline notification-content w-full">
         liked
-        <a @click="showThread(notificationData.reply.thread)" class="blue-link"
-          >your post</a
-        >
-        in the thread {{ notificationData.reply.repliable.title }}
+        <a @click="showThread(reply.thread)" class="blue-link">your post</a>
+        in the thread {{ reply.repliable.title }}
         <p class="text-xs text-gray-lightest">
-          {{ notificationData.like.date_created }}
+          {{ like.date_created }}
         </p>
       </div>
     </div>
@@ -39,6 +34,11 @@ export default {
       type: Object,
       default: {},
     },
+  },
+  data() {
+    return {
+      ...this.notificationData,
+    };
   },
   mixins: [view],
 };

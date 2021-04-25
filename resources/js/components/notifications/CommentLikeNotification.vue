@@ -2,7 +2,7 @@
   <div class="flex">
     <profile-popover
       class="mr-2"
-      :user="notificationData.liker"
+      :user="liker"
       trigger="avatar"
       triggerClasses="avatar-sm"
     >
@@ -11,28 +11,22 @@
       <profile-popover
         class="inline"
         popover-classes="inline"
-        :user="notificationData.liker"
+        :user="liker"
         triggerClasses="blue-link notification-profile text-smaller"
       ></profile-popover>
 
       <div
-        @click="showPost(notificationData.profilePost)"
+        @click="showPost(profilePost)"
         class="text-black inline notification-content"
       >
         <span>liked</span>
-        <a v-if="ownsComment(notificationData.comment)" class="blue-link"
-          >your comment</a
-        >
-        <a v-else class="blue-link"
-          >{{ notificationData.commentPoster }}'s comment</a
-        >
+        <a v-if="ownsComment(comment)" class="blue-link">your comment</a>
+        <a v-else class="blue-link">{{ commentPoster }}'s comment</a>
         on
-        <span v-if="ownsProfile(notificationData.profileOwner)"
-          >your profile</span
-        >
-        <span v-else>{{ notificationData.profileOwner.name }}'s profile</span>.
+        <span v-if="ownsProfile(profileOwner)">your profile</span>
+        <span v-else>{{ profileOwner.name }}'s profile</span>.
         <p class="text-xs text-gray-lightest">
-          {{ notificationData.like.date_created }}
+          {{ like.date_created }}
         </p>
       </div>
     </div>
@@ -48,6 +42,11 @@ export default {
       type: Object,
       default: {},
     },
+  },
+  data() {
+    return {
+      ...this.notificationData,
+    };
   },
   mixins: [view, authorization],
 };

@@ -2,57 +2,41 @@
   <div class="flex">
     <profile-popover
       class="mr-2"
-      :user="notificationData.commentPoster"
+      :user="commentPoster"
       trigger="avatar"
       triggerClasses="avatar-sm"
     >
     </profile-popover>
     <div class="flex-1">
       <profile-popover
-        :user="notificationData.commentPoster"
+        :user="commentPoster"
         popover-classes="inline"
         triggerClasses="blue-link text-smaller notification-profile mr-1/2"
         class="inline"
       ></profile-popover>
-      <div
-        @click="showComment(notificationData.comment)"
-        class="inline notification-content"
-      >
+      <div @click="showComment(comment)" class="inline notification-content">
         <span class="no-underline hover:no-underline">commented on</span>
         <a
-          v-if="
-            isAuthUser(notificationData.profileOwner) &&
-            ownsPost(notificationData.profilePost)
-          "
+          v-if="isAuthUser(profileOwner) && ownsPost(profilePost)"
           class="blue-link"
           >your status</a
         >
         <a
-          v-if="
-            !isAuthUser(notificationData.profileOwner) &&
-            ownsPost(notificationData.profilePost)
-          "
+          v-if="!isAuthUser(profileOwner) && ownsPost(profilePost)"
           class="blue-link"
           >your post</a
         >
         <a
-          v-if="
-            isAuthUser(notificationData.profileOwner) &&
-            !ownsPost(notificationData.profilePost)
-          "
+          v-if="isAuthUser(profileOwner) && !ownsPost(profilePost)"
           class="blue-link"
-          >{{ notificationData.postPoster.name }}'s post</a
+          >{{ postPoster.name }}'s post</a
         >
         <div class="inline">
-          <span v-if="isAuthUser(notificationData.profileOwner)"
-            >on your profile</span
-          >
-          <span v-else
-            >on {{ notificationData.profileOwner.name }}'s profile</span
-          >
+          <span v-if="isAuthUser(profileOwner)">on your profile</span>
+          <span v-else>on {{ profileOwner.name }}'s profile</span>
         </div>
         <p class="text-xs text-gray-lightest">
-          {{ notificationData.profilePost.date_created }}
+          {{ profilePost.date_created }}
         </p>
       </div>
     </div>
@@ -70,6 +54,11 @@ export default {
     },
   },
   mixins: [view, authorization],
+  data() {
+    return {
+      ...this.notificationData,
+    };
+  },
 };
 </script>F
 

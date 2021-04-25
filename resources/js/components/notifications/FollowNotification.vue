@@ -17,7 +17,7 @@
         </profile-popover>
         <span> is now following you.</span>
         <p class="block text-xs text-gray-lightest">
-          {{ notificationData.follow_date_created }}
+          {{ follow_date_created }}
         </p>
       </p>
     </div>
@@ -36,8 +36,7 @@ export default {
   mixins: [view],
   data() {
     return {
-      following: this.notificationData.following,
-      follower: this.notificationData.follower,
+      ...this.notificationData,
     };
   },
 };
