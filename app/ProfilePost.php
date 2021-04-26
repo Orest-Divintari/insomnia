@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
+use App\Helpers\Facades\ResourcePath;
 use App\Traits\FormatsDate;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
@@ -146,23 +147,8 @@ class ProfilePost extends Model
             ->paginate(ProfilePost::REPLIES_PER_PAGE);
     }
 
-    public function getPageNumberAttribute()
+    public function getPathAttribute()
     {
-        $numberOfPreviousPosts = ProfilePost::where('id', '<', $this->id)->count();
-
-        return (int) ceil($numberOfPreviousPosts / static::PER_PAGE);
-    }
-
-    public function getUrlAttribute()
-    {
-        $url = route('profiles.show', $this->profileOwner);
-
-        $pageNumber = $this->pageNumber;
-
-        if ($pageNumber > 1) {
-            $url = $url . '?page=' . $pageNumber;
-        }
-
-        return $url . '#profile-post-' . $this->id;
+        return ResourcePath::generate($this);
     }
 }

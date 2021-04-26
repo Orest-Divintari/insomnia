@@ -21,10 +21,6 @@ class MessageController extends Controller
 
         $this->authorize('view', $message->repliable);
 
-        return redirect(
-            route('conversations.show', $message->repliable) .
-            "?page=" . $message->pageNumber .
-            '#convMessage-' . $message->id
-        );
+        return redirect($message->path);
     }
 }

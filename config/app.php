@@ -1,7 +1,5 @@
 <?php
 
-use App\Providers\AvatarServiceProvider;
-
 return [
 
     /*
@@ -183,6 +181,7 @@ return [
         App\Providers\FilterServiceProvider::class,
         App\Providers\AvatarServiceProvider::class,
         Creativeorange\Gravatar\GravatarServiceProvider::class,
+        App\Providers\ResourcePathProvider::class,
 
     ],
 
@@ -236,6 +235,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
+        'ResourcePath' => App\Helpers\Facades\ResourcePath::class,
     ],
 
 ];

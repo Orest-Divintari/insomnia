@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\Facades\ResourcePath;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
@@ -94,51 +95,13 @@ class Reply extends Model
     }
 
     /**
-     * Get the number of the page a specific reply belongs to
-     *
-     * @param Thread $thread
-     * @return void
-     */
-    public function getPageNumberAttribute()
-    {
-        $numberOfRepliesBefore = Reply::where(
-            'repliable_type', get_class($this->repliable)
-        )->where('repliable_id', $this->repliable->id)
-            ->where('id', '<', $this->id)
-            ->count();
-
-        return (int) ceil($numberOfRepliesBefore / $this->repliable::REPLIES_PER_PAGE);
-    }
-
-    /**
      * Get the url the reply can be found
      *
      * @return string
      */
-    public function getUrlAttribute()
+    public function getPathAttribute()
     {
-        if ($this->isComment()) {
-            $post = $this->repliable;
-            $pageNumber = $post->pageNumber;
-            $commentUrl = route('profiles.show', $post->profileOwner);
-
-            if ($pageNumber > 1) {
-                $commentUrl = $commentUrl . '?page=' . $pageNumber;
-            }
-
-            return $commentUrl . '#profile-post-comment-' . $this->id;
-
-        } elseif ($this->isThreadReply()) {
-
-            $threadReplyUrl = route('threads.show', $this->repliable);
-            $pageNumber = $this->pageNumber;
-
-            if ($pageNumber > 1) {
-                $threadReplyUrl = $threadReplyUrl . '?page=' . $pageNumber;
-            }
-
-            return $threadReplyUrl . '#post-' . $this->id;
-        }
+        return ResourcePath::generate($this);
     }
 
     /**

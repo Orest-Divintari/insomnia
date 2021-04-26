@@ -69,31 +69,7 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_reply_knows_on_which_page_it_belongs_to()
-    {
-        $thread = create(Thread::class);
-        ReplyFactory::toThread($thread)->createMany(50);
-        $reply = Reply::find(15);
-
-        $correctPageNumber = ceil(15 / $reply->repliable::REPLIES_PER_PAGE);
-
-        $this->assertEquals($correctPageNumber, $reply->pageNumber);
-    }
-
-    /** @test */
-    public function a_profile_post_comment_knows_on_which_page_it_belongs_to()
-    {
-        $profilePost = create(ProfilePost::class);
-        CommentFactory::toProfilePost($profilePost)->createMany(50);
-
-        $comment = Reply::find(15);
-        $correctPageNumber = ceil(15 / $comment->repliable::REPLIES_PER_PAGE);
-
-        $this->assertEquals($correctPageNumber, $comment->pageNumber);
-    }
-
-    /** @test */
-    public function a_profile_post_comment_knows_its_url()
+    public function a_profile_post_comment_knows_its_path()
     {
         $orestis = create(User::class);
         $numberOfPages = 5;
@@ -103,13 +79,33 @@ class ReplyTest extends TestCase
         $comment = CommentFactory::toProfilePost($lastPost)->create();
 
         $this->assertEquals(
-            route('profiles.show', $orestis) . "?page=" . $numberOfPages,
-            $comment->url
+            route('profiles.show', $orestis) .
+            "?page=" . $numberOfPages .
+            '#profile-post-comment-' . $comment->id,
+            $comment->path
         );
     }
 
     /** @test */
-    public function a_thread_reply_knows_its_url()
+    public function a_conversation_message_knows_its_path()
+    {
+        $conversation = create(Conversation::class);
+        $numberOfPages = 5;
+        $messages = MessageFactory::toConversation($conversation)
+            ->createMany(Conversation::REPLIES_PER_PAGE * $numberOfPages);
+
+        $message = $messages->last();
+
+        $this->assertEquals(
+            route('conversations.show', $message->repliable) .
+            "?page=" . $numberOfPages .
+            '#convMessage-' . $message->id,
+            $message->path
+        );
+    }
+
+    /** @test */
+    public function a_thread_reply_knows_its_path()
     {
         $thread = create(Thread::class);
         $numberOfPages = 5;
@@ -119,22 +115,10 @@ class ReplyTest extends TestCase
 
         $this->assertEquals(
             route('threads.show', $thread) .
-            '?page=' . $lastReply->pageNumber .
+            '?page=' . $numberOfPages .
             '#post-' . $lastReply->id,
-            $lastReply->url
+            $lastReply->path
         );
-    }
-
-    /** @test */
-    public function a_conversation_message_knows_on_which_page_it_belongs_to()
-    {
-        $conversation = create(Conversation::class);
-        MessageFactory::toConversation($conversation)->createMany(50);
-
-        $message = Reply::find(15);
-        $correctPageNumber = ceil(15 / $message->repliable::REPLIES_PER_PAGE);
-
-        $this->assertEquals($correctPageNumber, $message->pageNumber);
     }
 
     /** @test */
