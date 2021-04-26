@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\ViewModels;
 
 use App\Activity;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Spatie\ViewModels\ViewModel;
 
-class OnlineRepository
+class OnlineUserActivitiesViewModel extends ViewModel
 {
     const ACTIVITIES_PER_PAGE = 10;
 
@@ -25,19 +25,35 @@ class OnlineRepository
     private $guestsCount;
 
     /**
-     * Get the latest activities of online users
+     * The type of user
+     *
+     * @var string|null
+     */
+    protected $type;
+
+    /**
+     * Create a new view model instance
      *
      * @param string|null $type
+     */
+    public function __construct($type = null)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get the latest activities of online users
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function activities($type = null)
+    public function activities()
     {
         $activities = Activity::typeViewed()
             ->lastFifteenMinutes();
 
-        if ($type == 'guest') {
+        if ($this->type == 'guest') {
             $activities->byGuests();
-        } elseif ($type == 'member') {
+        } elseif ($this->type == 'member') {
             $activities->byMembers();
         }
 
@@ -96,4 +112,13 @@ class OnlineRepository
         return $guestsCount + $membersCount;
     }
 
+    /**
+     * Get the type of the user
+     *
+     * @return string|null
+     */
+    public function type()
+    {
+        return $this->type;
+    }
 }

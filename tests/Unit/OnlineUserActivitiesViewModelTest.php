@@ -4,11 +4,12 @@ namespace Tests\Unit;
 
 use App\Actions\ActivityLogger;
 use App\Repositories\OnlineRepository;
+use App\ViewModels\OnlineUserActivitiesViewModel;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class OnlineRepositoryTest extends TestCase
+class OnlineUserActivitiesViewModelTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -36,8 +37,9 @@ class OnlineRepositoryTest extends TestCase
             ->description('something')
             ->by($user)
             ->log();
+        $viewModel = new OnlineUserActivitiesViewModel();
 
-        $activities = $this->online->activities();
+        $activities = $viewModel->activities();
 
         $this->assertCount(2, $activities->items());
     }
@@ -57,8 +59,11 @@ class OnlineRepositoryTest extends TestCase
             ->description('something')
             ->by($user)
             ->log();
+        $type = 'guest';
 
-        $activities = $this->online->activities('guest');
+        $viewModel = new OnlineUserActivitiesViewModel($type);
+
+        $activities = $viewModel->activities();
 
         $this->assertCount(1, $activities->items());
     }
@@ -77,8 +82,10 @@ class OnlineRepositoryTest extends TestCase
             ->description('something')
             ->by($user
             )->log();
+        $type = 'member';
+        $viewModel = new OnlineUserActivitiesViewModel($type);
 
-        $activities = $this->online->activities('member');
+        $activities = $viewModel->activities();
 
         $this->assertCount(1, $activities->items());
     }
@@ -110,8 +117,9 @@ class OnlineRepositoryTest extends TestCase
             ->description('something')
             ->by($user)
             ->log();
+        $viewModel = new OnlineUserActivitiesViewModel();
 
-        $activities = $this->online->activities();
+        $activities = $viewModel->activities();
 
         $this->assertCount(2, $activities->items());
     }
@@ -132,8 +140,9 @@ class OnlineRepositoryTest extends TestCase
             ->type('viewed')
             ->description('something')
             ->log();
+        $viewModel = new OnlineUserActivitiesViewModel();
 
-        $this->assertEquals(1, $this->online->membersCount());
+        $this->assertEquals(1, $viewModel->membersCount());
     }
 
     /** @test */
@@ -150,8 +159,9 @@ class OnlineRepositoryTest extends TestCase
             ->byGuest()
             ->type('viewed')
             ->description('something')->log();
+        $viewModel = new OnlineUserActivitiesViewModel();
 
-        $this->assertEquals(1, $this->online->guestsCount());
+        $this->assertEquals(1, $viewModel->guestsCount());
     }
 
     /** @test */
@@ -180,7 +190,8 @@ class OnlineRepositoryTest extends TestCase
             ->description('something')
             ->byGuest()
             ->log();
+        $viewModel = new OnlineUserActivitiesViewModel();
 
-        $this->assertEquals(2, $this->online->totalUsersCount());
+        $this->assertEquals(2, $viewModel->totalUsersCount());
     }
 }
