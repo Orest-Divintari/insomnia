@@ -35,10 +35,6 @@ class ReadConversationMessagesTest extends TestCase
             route('messages.show', $message)
         );
 
-        $response->assertRedirect(
-            route('conversations.show', $message->repliable) .
-            '?page=' . $message->pageNumber .
-            '#convMessage-' . $message->id
-        );
+        $response->assertRedirect($message->path);
     }
 }
