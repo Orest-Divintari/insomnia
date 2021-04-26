@@ -137,8 +137,10 @@ export default {
           }
         }
       } else {
+        console.log("does not have query");
         var path = window.location.pathname + "?page=" + pageNumber;
       }
+
       window.location.href = path;
     },
     updatePageParameter(path, pageNumber) {

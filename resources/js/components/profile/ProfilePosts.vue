@@ -11,7 +11,7 @@
       :post="post"
       :profile-owner="profileOwner"
     ></profile-post>
-    <paginator :dataset="dataset"> </paginator>
+    <paginator :with-query-string="false" :dataset="dataset"> </paginator>
   </div>
 </template>
 
