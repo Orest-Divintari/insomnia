@@ -54,6 +54,6 @@ class ViewCommentsTest extends TestCase
 
         $response = $this->get("/profile-posts/comments/$comment->id");
 
-        $response->assertRedirect($comment->url);
+        $response->assertRedirect($comment->path);
     }
 }

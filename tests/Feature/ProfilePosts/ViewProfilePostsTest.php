@@ -23,6 +23,6 @@ class ViewProfilePostsTest extends TestCase
 
         $response = $this->get(route('profile-posts.show', $lastPost));
 
-        $response->assertRedirect($lastPost->url);
+        $response->assertRedirect($lastPost->path);
     }
 }
