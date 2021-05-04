@@ -1,8 +1,8 @@
 <?php
 
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         $users = ['uric', 'orestis', 'urielakos'];
 
         foreach ($users as $user) {
-            DB::table('users')->insert([
+            User::create([
                 'name' => $user,
                 'email' => $user . '@example.com',
                 'created_at' => Carbon::now(),
