@@ -11,11 +11,7 @@
           <p>Avatar</p>
           <button @click="hide" class="fas fa-times"></button>
         </div>
-        <form
-          action="post"
-          @submit.prevent="persist"
-          enctype="multipart/form-data"
-        >
+        <form enctype="multipart/form-data">
           <!-- ROW -->
           <div class="flex items-start p-4">
             <!-- LEFT -->
@@ -106,7 +102,9 @@
           </div>
 
           <div class="form-button-container justify-center">
-            <button type="submit" class="form-button">Okay</button>
+            <button type="button" @click="persist" class="form-button">
+              Okay
+            </button>
             <button
               v-if="customAvatar"
               @click="destroy"

@@ -14,6 +14,7 @@
         :name="name"
       >
         <button
+          type="button"
           @mouseenter="showEditButton"
           @mouseleave="hideEditButton"
           v-if="canUpdate"
