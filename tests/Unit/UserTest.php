@@ -6,6 +6,7 @@ use App\Activity;
 use App\Conversation;
 use App\Thread;
 use App\User;
+use App\User\Details;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
@@ -365,4 +366,45 @@ class UserTest extends TestCase
 
         $this->assertEquals(1, $orestis->unviewedNotificationsCount);
     }
+
+    /** @test */
+    public function when_user_is_created_the_default_details_are_set()
+    {
+        $user = create(User::class);
+
+        $details = new Details([], $user);
+
+        $this->assertEmpty(array_diff_assoc($user->details, $details->getDefault()));
+    }
+
+    /** @test */
+    public function the_user_can_get_a_details_instance()
+    {
+        $user = $this->signIn();
+
+        $this->assertInstanceOf(Details::class, $user->details());
+    }
+
+    /** @test */
+    public function a_user_can_update_the_details_attributes()
+    {
+        $user = $this->signIn();
+        $location = 'albania';
+
+        $user->details()->merge(compact('location'));
+
+        $this->assertEquals($user->details()->location, $location);
+    }
+
+    /** @test */
+    public function access_a_specific_detail_attribute_through_details_method()
+    {
+        $user = $this->signIn();
+        $location = 'albania';
+
+        $user->details()->merge(compact('location'));
+
+        $this->assertEquals($user->details()->location, $location);
+    }
+
 }

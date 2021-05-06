@@ -74,6 +74,16 @@ Vue.component(
     require("./components/profile/ProfileButton.vue").default
 );
 
+Vue.component(
+    "EditEmailModal",
+    require("./components/EditEmailModal.vue").default
+);
+
+Vue.component(
+    "Avatar",
+    require("./components/profile/Avatar.vue").default
+);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

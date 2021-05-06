@@ -84,6 +84,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/messages/{messageId}', 'MessageController@show')
         ->name('messages.show');
 
+    /* ************ ACCOUNT FOLLOWS ************ */
+
+    Route::get('/account/follows', 'FollowsController@index')
+        ->name('account.follows.index');
+
     /* ************ THREADS ************ */
 
     Route::get('/threads/create/{categorySlug}', 'ThreadController@create')

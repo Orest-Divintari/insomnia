@@ -9650,6 +9650,12 @@ html {
   border-color: rgba(225, 234, 243, var(--divide-opacity));
 }
 
+.divide-white-smoke > :not(template) ~ :not(template){
+  --divide-opacity: 1;
+  border-color: #F7F7F7;
+  border-color: rgba(247, 247, 247, var(--divide-opacity));
+}
+
 .divide-blue-form-hover-button > :not(template) ~ :not(template){
   --divide-opacity: 1;
   border-color: #334866;
@@ -10516,6 +10522,12 @@ html {
   background-color: rgba(225, 234, 243, var(--bg-opacity));
 }
 
+.bg-white-smoke{
+  --bg-opacity: 1;
+  background-color: #F7F7F7;
+  background-color: rgba(247, 247, 247, var(--bg-opacity));
+}
+
 .bg-blue-form-hover-button{
   --bg-opacity: 1;
   background-color: #334866;
@@ -11298,6 +11310,12 @@ html {
   background-color: rgba(225, 234, 243, var(--bg-opacity));
 }
 
+.hover\:bg-white-smoke:hover{
+  --bg-opacity: 1;
+  background-color: #F7F7F7;
+  background-color: rgba(247, 247, 247, var(--bg-opacity));
+}
+
 .hover\:bg-blue-form-hover-button:hover{
   --bg-opacity: 1;
   background-color: #334866;
@@ -12078,6 +12096,12 @@ html {
   --bg-opacity: 1;
   background-color: #E1EAF3;
   background-color: rgba(225, 234, 243, var(--bg-opacity));
+}
+
+.focus\:bg-white-smoke:focus{
+  --bg-opacity: 1;
+  background-color: #F7F7F7;
+  background-color: rgba(247, 247, 247, var(--bg-opacity));
 }
 
 .focus\:bg-blue-form-hover-button:focus{
@@ -13002,6 +13026,12 @@ html {
   border-color: rgba(225, 234, 243, var(--border-opacity));
 }
 
+.border-white-smoke{
+  --border-opacity: 1;
+  border-color: #F7F7F7;
+  border-color: rgba(247, 247, 247, var(--border-opacity));
+}
+
 .border-blue-form-hover-button{
   --border-opacity: 1;
   border-color: #334866;
@@ -13784,6 +13814,12 @@ html {
   border-color: rgba(225, 234, 243, var(--border-opacity));
 }
 
+.hover\:border-white-smoke:hover{
+  --border-opacity: 1;
+  border-color: #F7F7F7;
+  border-color: rgba(247, 247, 247, var(--border-opacity));
+}
+
 .hover\:border-blue-form-hover-button:hover{
   --border-opacity: 1;
   border-color: #334866;
@@ -14564,6 +14600,12 @@ html {
   --border-opacity: 1;
   border-color: #E1EAF3;
   border-color: rgba(225, 234, 243, var(--border-opacity));
+}
+
+.focus\:border-white-smoke:focus{
+  --border-opacity: 1;
+  border-color: #F7F7F7;
+  border-color: rgba(247, 247, 247, var(--border-opacity));
 }
 
 .focus\:border-blue-form-hover-button:focus{
@@ -21166,6 +21208,30 @@ html {
   color: rgba(225, 234, 243, var(--placeholder-opacity));
 }
 
+.placeholder-white-smoke::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--placeholder-opacity));
+}
+
+.placeholder-white-smoke:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--placeholder-opacity));
+}
+
+.placeholder-white-smoke::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--placeholder-opacity));
+}
+
+.placeholder-white-smoke::placeholder{
+  --placeholder-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--placeholder-opacity));
+}
+
 .placeholder-blue-form-hover-button::-moz-placeholder{
   --placeholder-opacity: 1;
   color: #334866;
@@ -24294,6 +24360,30 @@ html {
   color: rgba(225, 234, 243, var(--placeholder-opacity));
 }
 
+.focus\:placeholder-white-smoke:focus::-moz-placeholder{
+  --placeholder-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-white-smoke:focus:-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-white-smoke:focus::-ms-input-placeholder{
+  --placeholder-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--placeholder-opacity));
+}
+
+.focus\:placeholder-white-smoke:focus::placeholder{
+  --placeholder-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--placeholder-opacity));
+}
+
 .focus\:placeholder-blue-form-hover-button:focus::-moz-placeholder{
   --placeholder-opacity: 1;
   color: #334866;
@@ -25709,6 +25799,12 @@ html {
   color: rgba(225, 234, 243, var(--text-opacity));
 }
 
+.text-white-smoke{
+  --text-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--text-opacity));
+}
+
 .text-blue-form-hover-button{
   --text-opacity: 1;
   color: #334866;
@@ -26489,6 +26585,12 @@ html {
   --text-opacity: 1;
   color: #E1EAF3;
   color: rgba(225, 234, 243, var(--text-opacity));
+}
+
+.hover\:text-white-smoke:hover{
+  --text-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--text-opacity));
 }
 
 .hover\:text-blue-form-hover-button:hover{
@@ -27273,6 +27375,12 @@ html {
   color: rgba(225, 234, 243, var(--text-opacity));
 }
 
+.focus\:text-white-smoke:focus{
+  --text-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--text-opacity));
+}
+
 .focus\:text-blue-form-hover-button:focus{
   --text-opacity: 1;
   color: #334866;
@@ -28053,6 +28161,12 @@ html {
   --text-opacity: 1;
   color: #E1EAF3;
   color: rgba(225, 234, 243, var(--text-opacity));
+}
+
+.active\:text-white-smoke:active{
+  --text-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--text-opacity));
 }
 
 .active\:text-blue-form-hover-button:active{
@@ -28837,6 +28951,12 @@ html {
   color: rgba(225, 234, 243, var(--text-opacity));
 }
 
+.group:hover .group-hover\:text-white-smoke{
+  --text-opacity: 1;
+  color: #F7F7F7;
+  color: rgba(247, 247, 247, var(--text-opacity));
+}
+
 .group:hover .group-hover\:text-blue-form-hover-button{
   --text-opacity: 1;
   color: #334866;
@@ -29234,6 +29354,14 @@ html {
 
 .w-72{
   width: 18rem;
+}
+
+.w-74{
+  width: 18.5rem;
+}
+
+.w-76{
+  width: 19rem;
 }
 
 .w-80{
@@ -33102,6 +33230,12 @@ html {
     border-color: rgba(225, 234, 243, var(--divide-opacity));
   }
 
+  .xs\:divide-white-smoke > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--divide-opacity));
+  }
+
   .xs\:divide-blue-form-hover-button > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #334866;
@@ -33968,6 +34102,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .xs\:bg-white-smoke{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .xs\:bg-blue-form-hover-button{
     --bg-opacity: 1;
     background-color: #334866;
@@ -34750,6 +34890,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .xs\:hover\:bg-white-smoke:hover{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .xs\:hover\:bg-blue-form-hover-button:hover{
     --bg-opacity: 1;
     background-color: #334866;
@@ -35530,6 +35676,12 @@ html {
     --bg-opacity: 1;
     background-color: #E1EAF3;
     background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .xs\:focus\:bg-white-smoke:focus{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
   }
 
   .xs\:focus\:bg-blue-form-hover-button:focus{
@@ -36454,6 +36606,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .xs\:border-white-smoke{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .xs\:border-blue-form-hover-button{
     --border-opacity: 1;
     border-color: #334866;
@@ -37236,6 +37394,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .xs\:hover\:border-white-smoke:hover{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .xs\:hover\:border-blue-form-hover-button:hover{
     --border-opacity: 1;
     border-color: #334866;
@@ -38016,6 +38180,12 @@ html {
     --border-opacity: 1;
     border-color: #E1EAF3;
     border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .xs\:focus\:border-white-smoke:focus{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
   }
 
   .xs\:focus\:border-blue-form-hover-button:focus{
@@ -44534,6 +44704,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .xs\:placeholder-white-smoke::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-white-smoke:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-white-smoke::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xs\:placeholder-white-smoke::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .xs\:placeholder-blue-form-hover-button::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -47662,6 +47856,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .xs\:focus\:placeholder-white-smoke:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-white-smoke:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-white-smoke:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xs\:focus\:placeholder-white-smoke:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .xs\:focus\:placeholder-blue-form-hover-button:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -49077,6 +49295,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .xs\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .xs\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -49857,6 +50081,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .xs\:hover\:text-white-smoke:hover{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .xs\:hover\:text-blue-form-hover-button:hover{
@@ -50641,6 +50871,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .xs\:focus\:text-white-smoke:focus{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .xs\:focus\:text-blue-form-hover-button:focus{
     --text-opacity: 1;
     color: #334866;
@@ -51421,6 +51657,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .xs\:active\:text-white-smoke:active{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .xs\:active\:text-blue-form-hover-button:active{
@@ -52205,6 +52447,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .group:hover .xs\:group-hover\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .group:hover .xs\:group-hover\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -52566,6 +52814,14 @@ html {
 
   .xs\:w-72{
     width: 18rem;
+  }
+
+  .xs\:w-74{
+    width: 18.5rem;
+  }
+
+  .xs\:w-76{
+    width: 19rem;
   }
 
   .xs\:w-80{
@@ -56435,6 +56691,12 @@ html {
     border-color: rgba(225, 234, 243, var(--divide-opacity));
   }
 
+  .smaller\:divide-white-smoke > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--divide-opacity));
+  }
+
   .smaller\:divide-blue-form-hover-button > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #334866;
@@ -57301,6 +57563,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .smaller\:bg-white-smoke{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .smaller\:bg-blue-form-hover-button{
     --bg-opacity: 1;
     background-color: #334866;
@@ -58083,6 +58351,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .smaller\:hover\:bg-white-smoke:hover{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .smaller\:hover\:bg-blue-form-hover-button:hover{
     --bg-opacity: 1;
     background-color: #334866;
@@ -58863,6 +59137,12 @@ html {
     --bg-opacity: 1;
     background-color: #E1EAF3;
     background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .smaller\:focus\:bg-white-smoke:focus{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
   }
 
   .smaller\:focus\:bg-blue-form-hover-button:focus{
@@ -59787,6 +60067,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .smaller\:border-white-smoke{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .smaller\:border-blue-form-hover-button{
     --border-opacity: 1;
     border-color: #334866;
@@ -60569,6 +60855,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .smaller\:hover\:border-white-smoke:hover{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .smaller\:hover\:border-blue-form-hover-button:hover{
     --border-opacity: 1;
     border-color: #334866;
@@ -61349,6 +61641,12 @@ html {
     --border-opacity: 1;
     border-color: #E1EAF3;
     border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .smaller\:focus\:border-white-smoke:focus{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
   }
 
   .smaller\:focus\:border-blue-form-hover-button:focus{
@@ -67867,6 +68165,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .smaller\:placeholder-white-smoke::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-white-smoke:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-white-smoke::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .smaller\:placeholder-white-smoke::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .smaller\:placeholder-blue-form-hover-button::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -70995,6 +71317,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .smaller\:focus\:placeholder-white-smoke:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-white-smoke:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-white-smoke:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .smaller\:focus\:placeholder-white-smoke:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .smaller\:focus\:placeholder-blue-form-hover-button:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -72410,6 +72756,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .smaller\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .smaller\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -73190,6 +73542,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .smaller\:hover\:text-white-smoke:hover{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .smaller\:hover\:text-blue-form-hover-button:hover{
@@ -73974,6 +74332,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .smaller\:focus\:text-white-smoke:focus{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .smaller\:focus\:text-blue-form-hover-button:focus{
     --text-opacity: 1;
     color: #334866;
@@ -74754,6 +75118,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .smaller\:active\:text-white-smoke:active{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .smaller\:active\:text-blue-form-hover-button:active{
@@ -75538,6 +75908,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .group:hover .smaller\:group-hover\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .group:hover .smaller\:group-hover\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -75899,6 +76275,14 @@ html {
 
   .smaller\:w-72{
     width: 18rem;
+  }
+
+  .smaller\:w-74{
+    width: 18.5rem;
+  }
+
+  .smaller\:w-76{
+    width: 19rem;
   }
 
   .smaller\:w-80{
@@ -79768,6 +80152,12 @@ html {
     border-color: rgba(225, 234, 243, var(--divide-opacity));
   }
 
+  .sm\:divide-white-smoke > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--divide-opacity));
+  }
+
   .sm\:divide-blue-form-hover-button > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #334866;
@@ -80634,6 +81024,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .sm\:bg-white-smoke{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .sm\:bg-blue-form-hover-button{
     --bg-opacity: 1;
     background-color: #334866;
@@ -81416,6 +81812,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .sm\:hover\:bg-white-smoke:hover{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .sm\:hover\:bg-blue-form-hover-button:hover{
     --bg-opacity: 1;
     background-color: #334866;
@@ -82196,6 +82598,12 @@ html {
     --bg-opacity: 1;
     background-color: #E1EAF3;
     background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .sm\:focus\:bg-white-smoke:focus{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
   }
 
   .sm\:focus\:bg-blue-form-hover-button:focus{
@@ -83120,6 +83528,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .sm\:border-white-smoke{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .sm\:border-blue-form-hover-button{
     --border-opacity: 1;
     border-color: #334866;
@@ -83902,6 +84316,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .sm\:hover\:border-white-smoke:hover{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .sm\:hover\:border-blue-form-hover-button:hover{
     --border-opacity: 1;
     border-color: #334866;
@@ -84682,6 +85102,12 @@ html {
     --border-opacity: 1;
     border-color: #E1EAF3;
     border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .sm\:focus\:border-white-smoke:focus{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
   }
 
   .sm\:focus\:border-blue-form-hover-button:focus{
@@ -91200,6 +91626,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .sm\:placeholder-white-smoke::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-white-smoke:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-white-smoke::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .sm\:placeholder-white-smoke::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .sm\:placeholder-blue-form-hover-button::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -94328,6 +94778,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .sm\:focus\:placeholder-white-smoke:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-white-smoke:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-white-smoke:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .sm\:focus\:placeholder-white-smoke:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .sm\:focus\:placeholder-blue-form-hover-button:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -95743,6 +96217,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .sm\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .sm\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -96523,6 +97003,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .sm\:hover\:text-white-smoke:hover{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .sm\:hover\:text-blue-form-hover-button:hover{
@@ -97307,6 +97793,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .sm\:focus\:text-white-smoke:focus{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .sm\:focus\:text-blue-form-hover-button:focus{
     --text-opacity: 1;
     color: #334866;
@@ -98087,6 +98579,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .sm\:active\:text-white-smoke:active{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .sm\:active\:text-blue-form-hover-button:active{
@@ -98871,6 +99369,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .group:hover .sm\:group-hover\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .group:hover .sm\:group-hover\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -99232,6 +99736,14 @@ html {
 
   .sm\:w-72{
     width: 18rem;
+  }
+
+  .sm\:w-74{
+    width: 18.5rem;
+  }
+
+  .sm\:w-76{
+    width: 19rem;
   }
 
   .sm\:w-80{
@@ -103101,6 +103613,12 @@ html {
     border-color: rgba(225, 234, 243, var(--divide-opacity));
   }
 
+  .md\:divide-white-smoke > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--divide-opacity));
+  }
+
   .md\:divide-blue-form-hover-button > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #334866;
@@ -103967,6 +104485,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .md\:bg-white-smoke{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .md\:bg-blue-form-hover-button{
     --bg-opacity: 1;
     background-color: #334866;
@@ -104749,6 +105273,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .md\:hover\:bg-white-smoke:hover{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .md\:hover\:bg-blue-form-hover-button:hover{
     --bg-opacity: 1;
     background-color: #334866;
@@ -105529,6 +106059,12 @@ html {
     --bg-opacity: 1;
     background-color: #E1EAF3;
     background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .md\:focus\:bg-white-smoke:focus{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
   }
 
   .md\:focus\:bg-blue-form-hover-button:focus{
@@ -106453,6 +106989,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .md\:border-white-smoke{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .md\:border-blue-form-hover-button{
     --border-opacity: 1;
     border-color: #334866;
@@ -107235,6 +107777,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .md\:hover\:border-white-smoke:hover{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .md\:hover\:border-blue-form-hover-button:hover{
     --border-opacity: 1;
     border-color: #334866;
@@ -108015,6 +108563,12 @@ html {
     --border-opacity: 1;
     border-color: #E1EAF3;
     border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .md\:focus\:border-white-smoke:focus{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
   }
 
   .md\:focus\:border-blue-form-hover-button:focus{
@@ -114533,6 +115087,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .md\:placeholder-white-smoke::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-white-smoke:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-white-smoke::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .md\:placeholder-white-smoke::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .md\:placeholder-blue-form-hover-button::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -117661,6 +118239,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .md\:focus\:placeholder-white-smoke:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-white-smoke:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-white-smoke:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .md\:focus\:placeholder-white-smoke:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .md\:focus\:placeholder-blue-form-hover-button:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -119076,6 +119678,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .md\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .md\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -119856,6 +120464,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .md\:hover\:text-white-smoke:hover{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .md\:hover\:text-blue-form-hover-button:hover{
@@ -120640,6 +121254,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .md\:focus\:text-white-smoke:focus{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .md\:focus\:text-blue-form-hover-button:focus{
     --text-opacity: 1;
     color: #334866;
@@ -121420,6 +122040,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .md\:active\:text-white-smoke:active{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .md\:active\:text-blue-form-hover-button:active{
@@ -122204,6 +122830,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .group:hover .md\:group-hover\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .group:hover .md\:group-hover\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -122565,6 +123197,14 @@ html {
 
   .md\:w-72{
     width: 18rem;
+  }
+
+  .md\:w-74{
+    width: 18.5rem;
+  }
+
+  .md\:w-76{
+    width: 19rem;
   }
 
   .md\:w-80{
@@ -126434,6 +127074,12 @@ html {
     border-color: rgba(225, 234, 243, var(--divide-opacity));
   }
 
+  .lg\:divide-white-smoke > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--divide-opacity));
+  }
+
   .lg\:divide-blue-form-hover-button > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #334866;
@@ -127300,6 +127946,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .lg\:bg-white-smoke{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .lg\:bg-blue-form-hover-button{
     --bg-opacity: 1;
     background-color: #334866;
@@ -128082,6 +128734,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .lg\:hover\:bg-white-smoke:hover{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .lg\:hover\:bg-blue-form-hover-button:hover{
     --bg-opacity: 1;
     background-color: #334866;
@@ -128862,6 +129520,12 @@ html {
     --bg-opacity: 1;
     background-color: #E1EAF3;
     background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .lg\:focus\:bg-white-smoke:focus{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
   }
 
   .lg\:focus\:bg-blue-form-hover-button:focus{
@@ -129786,6 +130450,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .lg\:border-white-smoke{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .lg\:border-blue-form-hover-button{
     --border-opacity: 1;
     border-color: #334866;
@@ -130568,6 +131238,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .lg\:hover\:border-white-smoke:hover{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .lg\:hover\:border-blue-form-hover-button:hover{
     --border-opacity: 1;
     border-color: #334866;
@@ -131348,6 +132024,12 @@ html {
     --border-opacity: 1;
     border-color: #E1EAF3;
     border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .lg\:focus\:border-white-smoke:focus{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
   }
 
   .lg\:focus\:border-blue-form-hover-button:focus{
@@ -137866,6 +138548,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .lg\:placeholder-white-smoke::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-white-smoke:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-white-smoke::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .lg\:placeholder-white-smoke::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .lg\:placeholder-blue-form-hover-button::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -140994,6 +141700,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .lg\:focus\:placeholder-white-smoke:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-white-smoke:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-white-smoke:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .lg\:focus\:placeholder-white-smoke:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .lg\:focus\:placeholder-blue-form-hover-button:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -142409,6 +143139,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .lg\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .lg\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -143189,6 +143925,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .lg\:hover\:text-white-smoke:hover{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .lg\:hover\:text-blue-form-hover-button:hover{
@@ -143973,6 +144715,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .lg\:focus\:text-white-smoke:focus{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .lg\:focus\:text-blue-form-hover-button:focus{
     --text-opacity: 1;
     color: #334866;
@@ -144753,6 +145501,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .lg\:active\:text-white-smoke:active{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .lg\:active\:text-blue-form-hover-button:active{
@@ -145537,6 +146291,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .group:hover .lg\:group-hover\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .group:hover .lg\:group-hover\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -145898,6 +146658,14 @@ html {
 
   .lg\:w-72{
     width: 18rem;
+  }
+
+  .lg\:w-74{
+    width: 18.5rem;
+  }
+
+  .lg\:w-76{
+    width: 19rem;
   }
 
   .lg\:w-80{
@@ -149767,6 +150535,12 @@ html {
     border-color: rgba(225, 234, 243, var(--divide-opacity));
   }
 
+  .xl\:divide-white-smoke > :not(template) ~ :not(template){
+    --divide-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--divide-opacity));
+  }
+
   .xl\:divide-blue-form-hover-button > :not(template) ~ :not(template){
     --divide-opacity: 1;
     border-color: #334866;
@@ -150633,6 +151407,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .xl\:bg-white-smoke{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .xl\:bg-blue-form-hover-button{
     --bg-opacity: 1;
     background-color: #334866;
@@ -151415,6 +152195,12 @@ html {
     background-color: rgba(225, 234, 243, var(--bg-opacity));
   }
 
+  .xl\:hover\:bg-white-smoke:hover{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
+  }
+
   .xl\:hover\:bg-blue-form-hover-button:hover{
     --bg-opacity: 1;
     background-color: #334866;
@@ -152195,6 +152981,12 @@ html {
     --bg-opacity: 1;
     background-color: #E1EAF3;
     background-color: rgba(225, 234, 243, var(--bg-opacity));
+  }
+
+  .xl\:focus\:bg-white-smoke:focus{
+    --bg-opacity: 1;
+    background-color: #F7F7F7;
+    background-color: rgba(247, 247, 247, var(--bg-opacity));
   }
 
   .xl\:focus\:bg-blue-form-hover-button:focus{
@@ -153119,6 +153911,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .xl\:border-white-smoke{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .xl\:border-blue-form-hover-button{
     --border-opacity: 1;
     border-color: #334866;
@@ -153901,6 +154699,12 @@ html {
     border-color: rgba(225, 234, 243, var(--border-opacity));
   }
 
+  .xl\:hover\:border-white-smoke:hover{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
+  }
+
   .xl\:hover\:border-blue-form-hover-button:hover{
     --border-opacity: 1;
     border-color: #334866;
@@ -154681,6 +155485,12 @@ html {
     --border-opacity: 1;
     border-color: #E1EAF3;
     border-color: rgba(225, 234, 243, var(--border-opacity));
+  }
+
+  .xl\:focus\:border-white-smoke:focus{
+    --border-opacity: 1;
+    border-color: #F7F7F7;
+    border-color: rgba(247, 247, 247, var(--border-opacity));
   }
 
   .xl\:focus\:border-blue-form-hover-button:focus{
@@ -161199,6 +162009,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .xl\:placeholder-white-smoke::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-white-smoke:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-white-smoke::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xl\:placeholder-white-smoke::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .xl\:placeholder-blue-form-hover-button::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -164327,6 +165161,30 @@ html {
     color: rgba(225, 234, 243, var(--placeholder-opacity));
   }
 
+  .xl\:focus\:placeholder-white-smoke:focus::-moz-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-white-smoke:focus:-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-white-smoke:focus::-ms-input-placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
+  .xl\:focus\:placeholder-white-smoke:focus::placeholder{
+    --placeholder-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--placeholder-opacity));
+  }
+
   .xl\:focus\:placeholder-blue-form-hover-button:focus::-moz-placeholder{
     --placeholder-opacity: 1;
     color: #334866;
@@ -165742,6 +166600,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .xl\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .xl\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -166522,6 +167386,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .xl\:hover\:text-white-smoke:hover{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .xl\:hover\:text-blue-form-hover-button:hover{
@@ -167306,6 +168176,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .xl\:focus\:text-white-smoke:focus{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .xl\:focus\:text-blue-form-hover-button:focus{
     --text-opacity: 1;
     color: #334866;
@@ -168086,6 +168962,12 @@ html {
     --text-opacity: 1;
     color: #E1EAF3;
     color: rgba(225, 234, 243, var(--text-opacity));
+  }
+
+  .xl\:active\:text-white-smoke:active{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
   }
 
   .xl\:active\:text-blue-form-hover-button:active{
@@ -168870,6 +169752,12 @@ html {
     color: rgba(225, 234, 243, var(--text-opacity));
   }
 
+  .group:hover .xl\:group-hover\:text-white-smoke{
+    --text-opacity: 1;
+    color: #F7F7F7;
+    color: rgba(247, 247, 247, var(--text-opacity));
+  }
+
   .group:hover .xl\:group-hover\:text-blue-form-hover-button{
     --text-opacity: 1;
     color: #334866;
@@ -169231,6 +170119,14 @@ html {
 
   .xl\:w-72{
     width: 18rem;
+  }
+
+  .xl\:w-74{
+    width: 18.5rem;
+  }
+
+  .xl\:w-76{
+    width: 19rem;
   }
 
   .xl\:w-80{

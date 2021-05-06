@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\User;
+use App\User\Details;
 
 class UserObserver
 {
@@ -17,4 +18,16 @@ class UserObserver
         $user->threads->each->delete();
         $user->activities->each->delete();
     }
+
+    /**
+     * Handle the user "creating" event.
+     *
+     * @param User $user
+     * @return void
+     */
+    public function creating(User $user)
+    {
+        $user->details = (new Details([], $user))->getDefault();
+    }
+
 }

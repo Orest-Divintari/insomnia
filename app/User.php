@@ -5,6 +5,7 @@ namespace App;
 use App\Events\Profile\NewPostWasAddedToProfile;
 use App\Facades\Avatar;
 use App\Traits\Followable;
+use App\User\Details;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -57,6 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'conversation_admin' => 'boolean',
         'followed_by_visitor' => 'boolean',
         'default_avatar' => 'boolean',
+        'details' => 'json',
     ];
 
     protected $dates = ['notifications_viewed_at'];
@@ -382,5 +384,15 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $this->unreadNotifications()->count();
+    }
+
+    /**
+     * Get the user's details
+     *
+     * @return App\User\Details
+     */
+    public function details()
+    {
+        return app(Details::class);
     }
 }

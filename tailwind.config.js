@@ -49,6 +49,7 @@ module.exports = {
                 "blue-botticelli": "#D3DDE9",
 
                 "white-catskill": "#E1EAF3",
+                "white-smoke": "#F7F7F7",
                 "blue-form-hover-button": "#334866",
                 "blue-form-link": "#859DC1",
                 "gray-form-label": "#9FA8B2",
@@ -65,6 +66,8 @@ module.exports = {
                 "80": "20rem",
                 "84": "21rem",
                 "72": "18rem",
+                "74": "18.5rem",
+                "76": "19rem",
                 tiny: "0.15rem",
                 "9": "2.25rem",
                 "180": "45rem"
