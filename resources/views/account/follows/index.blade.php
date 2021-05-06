@@ -1,8 +1,7 @@
 <x-layouts.account section="following" title="Following">
     <x-slot name="main">
-        @if(!empty($followingUsers->items()))
         <div class="border rounded border-white-catskill" v-cloak>
-            @foreach($followingUsers as $user)
+            @forelse($followingUsers as $user)
             <div class="flex items-center {{ !$loop->last ? 'border-b' : '' }} border-white-catstkill p-7/2">
                 <a href="{{ route('profiles.show', $user) }}"><img src="{{ $user->avatar_path }}" class="avatar-lg"
                         alt=""></a>
@@ -30,19 +29,15 @@
                 <follow-button class="self-start" :followed="true" :profile-owner="{{ $user }}">
                 </follow-button>
             </div>
-
-            @endforeach
-
-
-
+            @empty
+            <p class="p-7/2  text-sm text-black-semi"> You are not currently
+                following
+                any
+                members. </p>
+            @endforelse
         </div>
         <paginator :dataset="{{ json_encode($followingUsers) }}"> </paginator>
 
-        @else
-        <p class="p-7/2 border rounded border-white-catskill text-sm text-black-semi"> You are not currently following
-            any
-            members. </p>
-        @endif
 
     </x-slot>
 </x-layouts.account>
