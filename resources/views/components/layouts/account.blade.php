@@ -7,6 +7,8 @@
     <main class="section">
         <x-breadcrumb.container>
             <x-breadcrumb.item :title="'Forum'" :route="route('forum')"></x-breadcrumb.item>
+            <x-breadcrumb.leaf :jumpToContent="'false'" :title="'Your Account'" :route="route('account')">
+            </x-breadcrumb.leaf>
         </x-breadcrumb.container>
         <div class="flex">
             <div class="w-1/5 border border-gray-lighter border-t-8 text-gray-shuttle">
@@ -32,7 +34,7 @@
                     <h1 class="text-md p-5/2  border-t border-gray-lighter">SETTINGS </h1>
                     <div class="flex flex-col text-sm">
                         <a class="py-2 px-4 {{ $section == 'details' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi'  }}"
-                            href=""> Account details </a>
+                            href="{{ route('account.details.edit') }}"> Account details </a>
 
                         <a class="py-2 px-4 {{ $section == 'password and security' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
                             href=""> Password and security
@@ -47,7 +49,7 @@
                         </a>
 
                         <a class="py-2 px-4 {{ $section == 'following' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
-                            href=""> Following </a>
+                            href="{{ route('account.follows.index') }}"> Following </a>
                         <a class="py-2 px-4 {{ $section == 'ignoring' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
                             href=""> Ignoring </a>
                         <a class="py-2 px-4 {{ $section == 'log out' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"

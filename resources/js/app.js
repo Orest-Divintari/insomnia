@@ -84,6 +84,10 @@ Vue.component(
     require("./components/profile/Avatar.vue").default
 );
 
+Vue.component(
+    "FollowButton",
+    require("./components/profile/FollowButton.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

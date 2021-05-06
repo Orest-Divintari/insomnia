@@ -84,10 +84,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/messages/{messageId}', 'MessageController@show')
         ->name('messages.show');
 
+    /* ************ ACCOUNT  ************ */
+    Route::get('/account', 'AccountDetailsController@edit')
+        ->name('account');
+
     /* ************ ACCOUNT FOLLOWS ************ */
 
-    Route::get('/account/follows', 'FollowsController@index')
+    Route::get('/account/follows', 'AccountFollowsController@index')
         ->name('account.follows.index');
+
+    /* ************ ACCOUNT DETAILS ************ */
+
+    Route::patch('/account/details', 'AccountDetailsController@update')
+        ->name('account.details.update');
+
+    Route::get('account/details', 'AccountDetailsController@edit')
+        ->name('account.details.edit');
 
     /* ************ THREADS ************ */
 
