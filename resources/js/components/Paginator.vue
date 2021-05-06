@@ -70,7 +70,6 @@
 </template>
 
 <script>
-import EventBus from "../eventBus";
 export default {
   props: {
     dataset: Object,
@@ -113,9 +112,6 @@ export default {
       }
       return null;
     },
-    brodcast(page) {
-      this.$emit("changePage", page);
-    },
     clearInput() {
       this.goToPage = "";
     },
@@ -137,14 +133,13 @@ export default {
           }
         }
       } else {
-        console.log("does not have query");
         var path = window.location.pathname + "?page=" + pageNumber;
       }
 
       window.location.href = path;
     },
     updatePageParameter(path, pageNumber) {
-      return path.replace(/(\page=\d)/i, "page=" + pageNumber);
+      return path.replace(/(\page=\d+)/i, "page=" + pageNumber);
     },
     queryParametersExist(path) {
       return path.match(/(\?\w)/i);
