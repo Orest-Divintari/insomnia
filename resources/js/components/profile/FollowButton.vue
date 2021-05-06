@@ -1,4 +1,4 @@
-<template>
+e<template>
   <div>
     <button @click="toggleFollow" class="btn-white-blue flex items-center">
       <p v-if="isFollowed">Unfollow</p>
