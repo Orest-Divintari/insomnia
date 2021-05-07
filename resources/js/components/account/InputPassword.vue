@@ -13,7 +13,9 @@
       class="border border-white-catskill rounded-r flex items-center p-2 text-gray-700 hover:text-black-semi"
     >
       <i class="fas fa-eye mr-1 cursor-pointer"></i
-      ><button type="button" class="focus:outline-none text-xs">Show</button>
+      ><button tabindex="-1" type="button" class="focus:outline-none text-xs">
+        Show
+      </button>
     </div>
     <div
       v-else
@@ -21,7 +23,9 @@
       class="border border-white-catskill rounded-r flex items-center p-2 text-gray-700 hover:text-black-semi"
     >
       <i class="fas fa-eye-slash mr-1 cursor-pointer"></i
-      ><button type="button" class="focus:outline-none text-xs">Hide</button>
+      ><button tabindex="-1" type="button" class="focus:outline-none text-xs">
+        Hide
+      </button>
     </div>
   </div>
 </template>
