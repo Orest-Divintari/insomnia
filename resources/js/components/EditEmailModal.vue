@@ -22,11 +22,12 @@
             <p class="form-label-phone">Email:</p>
             <div>
               <input
-                v-focus
+                v-focuxs
                 type="email"
                 name="email"
                 class="bg-white form-input"
                 v-model="form.email"
+                ref="email"
               />
             </div>
           </div>
@@ -39,34 +40,7 @@
           <!-- RIGHT -->
           <div class="form-right-col">
             <p class="form-label-phone">Current password:</p>
-            <div class="flex">
-              <input
-                :type="passwordType"
-                name="password"
-                class="bg-white form-input border-r-0 rounded-r-none"
-                v-model="form.password"
-              />
-              <div
-                v-if="!passwordVisible"
-                @click="showPassword"
-                class="border border-white-catskill rounded-r flex items-center p-2 text-gray-700 hover:text-black-semi"
-              >
-                <i class="fas fa-eye mr-1 cursor-pointer"></i
-                ><button type="button" class="focus:outline-none text-xs">
-                  Show
-                </button>
-              </div>
-              <div
-                v-else
-                @click="hidePassword"
-                class="border border-white-catskill rounded-r flex items-center p-2 text-gray-700 hover:text-black-semi"
-              >
-                <i class="fas fa-eye-slash mr-1 cursor-pointer"></i
-                ><button type="button" class="focus:outline-none text-xs">
-                  Hide
-                </button>
-              </div>
-            </div>
+            <input-password @input="sync" name="password"></input-password>
           </div>
         </div>
         <div class="form-button-container justify-center">
@@ -78,7 +52,11 @@
 </template>
 
 <script>
+import InputPassword from "../components/account/InputPassword";
 export default {
+  components: {
+    InputPassword,
+  },
   props: {
     user: {
       type: Object,
@@ -92,29 +70,21 @@ export default {
         password: "",
         email: this.user.email,
       },
-      passwordVisible: false,
     };
   },
   computed: {
     path() {
       return "/ajax/users/" + this.user.name + "/email";
     },
-    passwordType() {
-      return this.passwordVisible ? "text" : "password";
-    },
   },
   methods: {
-    showPassword() {
-      this.passwordVisible = true;
-    },
-    hidePassword() {
-      this.passwordVisible = false;
+    sync(input) {
+      this.form.password = input;
     },
     show() {
       this.$modal.show("edit-email");
     },
     hide() {
-      this.form.password = "";
       this.$modal.hide("edit-email");
     },
     save() {
