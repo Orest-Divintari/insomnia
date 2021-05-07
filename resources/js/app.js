@@ -19,8 +19,8 @@ Vue.component("Replies", require("./components/threads/Replies.vue").default);
 Vue.component("search", require("./components/Search.vue").default);
 Vue.component("Wysiwyg", require("./components/Wysiwyg.vue").default);
 Vue.component(
-    "Notification",
-    require("./components/notifications/Notification.vue").default
+    "NotificationButton",
+    require("./components/notifications/NotificationButton.vue").default
 );
 Vue.component("Dropdown", require("./components/Dropdown.vue").default);
 Vue.component("Profile", require("./components/profile/Profile.vue").default);
@@ -92,6 +92,44 @@ Vue.component(
 Vue.component(
     "InputPassword",
     require("./components/account/InputPassword.vue").default
+);
+
+
+Vue.component(
+    "Notifications",
+    require("./components/account/Notifications.vue").default
+);
+
+Vue.component(
+    "ThreadReplyNotification",
+    require("./components/notifications/ThreadReplyNotification.vue").default
+);
+
+Vue.component(
+    "ReplyLikeNotification",
+    require("./components/notifications/ReplyLikeNotification.vue").default
+);
+
+Vue.component(
+    "PostCommentNotification",
+    require("./components/notifications/PostCommentNotification.vue").default
+);
+
+Vue.component(
+    "ProfilePostNotification",
+    require("./components/notifications/ProfilePostNotification.vue").default
+);
+Vue.component(
+    "CommentLikeNotification",
+    require("./components/notifications/CommentLikeNotification.vue").default
+);
+Vue.component(
+    "MessageLikeNotification",
+    require("./components/notifications/MessageLikeNotification.vue").default
+);
+Vue.component(
+    "FollowNotification",
+    require("./components/notifications/FollowNotification.vue").default
 );
 
 /**

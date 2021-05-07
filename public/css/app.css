@@ -503,40 +503,6 @@ div.form-left-col {
   color: rgba(66, 102, 147, var(--text-opacity));
 }
 
-.dropdown-notification-item {
-  display: block;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  cursor: pointer;
-  border-top-width: 1px;
-  --border-opacity: 1;
-  border-color: #DDE6F1;
-  border-color: rgba(221, 230, 241, var(--border-opacity));
-  --bg-opacity: 1;
-  background-color: #EDF4F9;
-  background-color: rgba(237, 244, 249, var(--bg-opacity));
-  --text-opacity: 1;
-  color: #2C2C2C;
-  color: rgba(44, 44, 44, var(--text-opacity));
-  font-size: 0.8125rem;
-}
-
-.dropdown-notification-item:hover {
-  --bg-opacity: 1;
-  background-color: #E1EAF3;
-  background-color: rgba(225, 234, 243, var(--bg-opacity));
-}
-
-.dropdown-notification-item a.notification-profile:hover {
-  text-decoration: underline;
-}
-
-.dropdown-notification-item .notification-content:hover a {
-  text-decoration: underline;
-}
-
 .dropdown-title {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1495,6 +1461,40 @@ div.form-left-col {
   font-size: 0.6rem;
   line-height: 1;
   padding: 0.125rem;
+}
+
+.notification-item {
+  display: block;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  border-top-width: 1px;
+  --border-opacity: 1;
+  border-color: #DDE6F1;
+  border-color: rgba(221, 230, 241, var(--border-opacity));
+  --bg-opacity: 1;
+  background-color: #EDF4F9;
+  background-color: rgba(237, 244, 249, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #2C2C2C;
+  color: rgba(44, 44, 44, var(--text-opacity));
+  font-size: 0.8125rem;
+}
+
+.notification-item:hover {
+  --bg-opacity: 1;
+  background-color: #E1EAF3;
+  background-color: rgba(225, 234, 243, var(--bg-opacity));
+}
+
+.notification-item a.notification-profile:hover {
+  text-decoration: underline;
+}
+
+.notification-item .notification-content:hover a {
+  text-decoration: underline;
 }
 @charset "UTF-8";
 

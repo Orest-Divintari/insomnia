@@ -109,6 +109,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/account/password', 'AccountPasswordController@edit')
         ->name('account.password.edit');
 
+    /* ************ ACCOUNT PASSWORD ************ */
+
+    Route::get('/account/notifications', 'AccountNotificationsController@index')
+        ->name('account.notifications.index');
+
     /* ************ THREADS ************ */
 
     Route::get('/threads/create/{categorySlug}', 'ThreadController@create')
