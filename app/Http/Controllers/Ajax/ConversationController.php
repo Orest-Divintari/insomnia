@@ -32,7 +32,9 @@ class ConversationController extends Controller
     {
         $conversationFilters = $filterManager->withConversationFilters();
 
-        return Conversation::filter($conversationFilters)
+        return auth()->user()->conversations()
+            ->filter($conversationFilters)
+            ->withHasBeenUpdated()
             ->with('starter')
             ->with('participants')
             ->orderByUnread()
