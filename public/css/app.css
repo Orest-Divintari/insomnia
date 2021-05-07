@@ -477,10 +477,7 @@ div.form-left-col {
 
 .dropdown-footer-item {
   display: block;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem;
   border-top-width: 1px;
   --border-opacity: 1;
   border-color: #DDE6F1;

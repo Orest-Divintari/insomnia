@@ -7,7 +7,7 @@
 }
 
 .dropdown-footer-item {
-    @apply .block .px-4 .py-2 .border-t .border-blue-light .bg-blue-lighter .text-black-semi .text-smaller;
+    @apply .block .p-2 .border-t .border-blue-light .bg-blue-lighter .text-black-semi .text-smaller;
 }
 
 .dropdown-item:hover {

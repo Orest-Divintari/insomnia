@@ -10,7 +10,7 @@
         </div>
       </template>
       <template v-slot:dropdown-items>
-        <div class="dropdown-title">Conversations</div>
+        <div class="dropdown-title pl-2">Conversations</div>
 
         <div v-if="fetchedData" class="overflow-scroll max-h-96">
           <div v-if="conversationsExist">
@@ -31,21 +31,23 @@
                   >
                     {{ conversation.title }}
                   </p>
-                  <p class="text-xs text-gray-lightest">
+                  <p class="text-xs text-gray-shuttle">
                     {{ participantNames(conversation.participants) }}
                   </p>
-                  <p class="text-xs text-gray-mid">
+                  <p class="text-xs text-gray-shuttle">
                     {{ conversation.date_updated }}
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <div v-else class="dropdown-notification-item">
+          <div v-else class="bg-blue-lighter text-black-semi text-smaller p-2">
             You have no recent conversations.
           </div>
         </div>
-        <div v-else class="dropdown-notification-item">...</div>
+        <div v-else class="bg-blue-lighter text-black-semi text-smaller p-2">
+          ...
+        </div>
         <div class="dropdown-footer-item flex items-center shadow-2xl">
           <a href="/conversations" class="blue-link">Show all</a>
           <p class="dot"></p>
