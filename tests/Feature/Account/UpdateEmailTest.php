@@ -5,7 +5,6 @@ namespace Tests\Feature\Account;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class UpdateEmailTest extends TestCase
@@ -16,7 +15,7 @@ class UpdateEmailTest extends TestCase
     public function a_user_can_update_the_email()
     {
         $password = 'example123';
-        $user = create(User::class, ['password' => Hash::make($password)]);
+        $user = create(User::class, compact('password'));
         $this->signIn($user);
         $email = 'orestis@yahoo.com';
 
@@ -43,7 +42,7 @@ class UpdateEmailTest extends TestCase
     public function the_new_email_must_be_unique()
     {
         $password = 'example123';
-        $user = create(User::class, ['password' => Hash::make($password)]);
+        $user = create(User::class, compact('password'));
         $email = 'orestis@yahoo.com';
         create(User::class, compact('email'));
         $this->signIn($user);
@@ -59,7 +58,7 @@ class UpdateEmailTest extends TestCase
     public function the_current_email_is_ignored_by_unique_email_rule()
     {
         $password = 'example123';
-        $user = create(User::class, ['password' => Hash::make($password)]);
+        $user = create(User::class, compact('password'));
         create(User::class, ['email' => 'random@email']);
         $this->signIn($user);
         $email = $user->email;

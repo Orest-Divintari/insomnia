@@ -13,8 +13,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $password = 'example123';
-
         $users = ['uric', 'orestis', 'urielakos'];
 
         foreach ($users as $user) {
@@ -24,7 +22,7 @@ class UserSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'email_verified_at' => Carbon::now(),
-                'password' => bcrypt($password),
+                'password' => 'example123',
             ]);
         }
     }
