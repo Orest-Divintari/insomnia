@@ -7,7 +7,7 @@
       <div
         @click="hideOnClick ? hide() : null"
         v-show="isOpen"
-        class="z-10 dropdown-menu"
+        class="z-10 dropdown-menu mt-0"
         :class="styleClasses"
       >
         <slot name="dropdown-items"></slot>
