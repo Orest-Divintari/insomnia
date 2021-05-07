@@ -5,6 +5,7 @@
       :name="name"
       class="bg-white form-input border-r-0 rounded-r-none"
       v-model="password"
+      required
     />
     <div
       v-if="!visible"

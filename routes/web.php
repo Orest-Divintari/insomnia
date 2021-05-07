@@ -101,6 +101,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('account/details', 'AccountDetailsController@edit')
         ->name('account.details.edit');
 
+    /* ************ ACCOUNT PASSWORD ************ */
+
+    Route::patch('/account/password', 'AccountPasswordController@update')
+        ->name('account.password.update');
+
+    Route::get('/account/password', 'AccountPasswordController@edit')
+        ->name('account.password.edit');
+
     /* ************ THREADS ************ */
 
     Route::get('/threads/create/{categorySlug}', 'ThreadController@create')
