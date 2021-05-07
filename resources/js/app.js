@@ -89,6 +89,11 @@ Vue.component(
     require("./components/profile/FollowButton.vue").default
 );
 
+Vue.component(
+    "InputPassword",
+    require("./components/account/InputPassword.vue").default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

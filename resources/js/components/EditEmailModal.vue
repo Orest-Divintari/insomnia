@@ -22,7 +22,7 @@
             <p class="form-label-phone">Email:</p>
             <div>
               <input
-                v-focuxs
+                v-focus
                 type="email"
                 name="email"
                 class="bg-white form-input"
@@ -52,11 +52,7 @@
 </template>
 
 <script>
-import InputPassword from "../components/account/InputPassword";
 export default {
-  components: {
-    InputPassword,
-  },
   props: {
     user: {
       type: Object,
