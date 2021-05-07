@@ -12,7 +12,7 @@
 
                 <profile-button :profile-owner="{{ auth()->user() }}"></profile-button>
                 @verified
-                <notification></notification>
+                <notification-button></notification-button>
                 <conversations-button></conversations-button>
                 @endverified
 

@@ -19,7 +19,7 @@
               @click="markAsRead(notification.id)"
               v-for="(notification, index) in notifications"
               :key="notification.id"
-              class="dropdown-notification-item"
+              class="notification-item"
             >
               <component
                 :is="notification.data.type"
@@ -28,36 +28,20 @@
             </div>
           </div>
           <div v-if="!notificationsExist">
-            <div class="dropdown-notification-item">You have no new alerts</div>
+            <div class="notification-item">You have no new alerts</div>
           </div>
         </div>
-        <div v-else class="dropdown-notification-item">...</div>
+        <div v-else class="notification-item">...</div>
       </template>
     </dropdown>
   </div>
 </template>
 
 <script>
-import ThreadReplyNotification from "./ThreadReplyNotification";
-import ReplyLikeNotification from "./ReplyLikeNotification";
-import ProfilePostNotification from "./ProfilePostNotification";
-import PostCommentNotification from "./PostCommentNotification";
-import CommentLikeNotification from "./CommentLikeNotification";
-import MessageLikeNotification from "./MessageLikeNotification";
-import FollowNotification from "./FollowNotification";
 import replies from "../../mixins/replies";
 import fetch from "../../mixins/fetch";
 import store from "../../store";
 export default {
-  components: {
-    ThreadReplyNotification,
-    ReplyLikeNotification,
-    ProfilePostNotification,
-    PostCommentNotification,
-    CommentLikeNotification,
-    FollowNotification,
-    MessageLikeNotification,
-  },
   mixins: [replies, fetch],
   data() {
     return {
