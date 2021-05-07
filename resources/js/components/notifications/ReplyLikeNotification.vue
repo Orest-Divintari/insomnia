@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <profile-popover
-      class="mr-2"
+      class="mr-5/2"
       :user="liker"
       trigger="avatar"
       triggerClasses="avatar-sm"
