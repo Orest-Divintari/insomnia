@@ -30,7 +30,7 @@ class Details extends Settings
     /**
      * Persist the details
      *
-     * @return mixed
+     * @return void
      */
     public function persist()
     {
