@@ -115,20 +115,20 @@
                                 <p class="form-label-phone">Gender</p>
 
                                 <div class="flex items-center">
-                                    <input type="radio" name="gender" id="gender" value="male" class=" mr-2 w-4 h-4"
+                                    <input type="radio" name="gender" id="male" value="male" class=" mr-2 w-4 h-4"
                                         {{ $user->details()->gender == 'male' ? 'checked' : '' }}>
-                                    <label class="text-sm text-black-semi" for="gender">Male</label>
+                                    <label class="text-sm text-black-semi" for="male">Male</label>
                                 </div>
                                 <div class="flex items-center">
 
-                                    <input type="radio" name="gender" id="gender" value="female" class="mr-2 w-4 h-4"
+                                    <input type="radio" name="gender" id="female" value="female" class="mr-2 w-4 h-4"
                                         {{ $user->details()->gender == 'female' ? 'checked' : '' }}>
-                                    <label class="text-sm text-black-semi" for="gender">Female</label>
+                                    <label class="text-sm text-black-semi" for="female">Female</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="radio" name="gender" id="gender" value="" class="mr-2 w-4 h-4"
+                                    <input type="radio" name="gender" id="no-selection" value="" class="mr-2 w-4 h-4"
                                         {{ !$user->details()->gender ? 'checked' : "" }}>
-                                    <label class="text-sm text-black-semi" for="gender">No
+                                    <label class="text-sm text-black-semi" for="no-selection">No
                                         selection</label>
                                 </div>
                             </div>
