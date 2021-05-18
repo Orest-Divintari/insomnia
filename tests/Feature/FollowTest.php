@@ -7,6 +7,7 @@ use App\User;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class FollowTest extends TestCase
@@ -83,9 +84,9 @@ class FollowTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_the_paginated_list_of_followers_of_profile_user()
+    public function a_member_can_view_the_paginated_list_of_followers_of_profile_user()
     {
-        $profileOwner = create(User::class);
+        $profileOwner = $this->signIn();
         $followerA = create(User::class);
         $followerB = create(User::class);
 
@@ -106,9 +107,26 @@ class FollowTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_the_paginated_list_of_users_that_profile_user_follows()
+    public function guests_may_not_see_the_list_of_followers_of_a_profile_user()
     {
         $profileOwner = create(User::class);
+        $followerA = create(User::class);
+        $followerB = create(User::class);
+
+        $followerA->follow($profileOwner);
+        $followerB->follow($profileOwner);
+
+        $response = $this->getJson(
+            route('ajax.followed-by.index', $profileOwner)
+        );
+
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    /** @test */
+    public function a_member_can_view_the_paginated_list_of_users_that_profile_user_follows()
+    {
+        $profileOwner = $this->signIn();
         $userA = create(User::class);
         $userB = create(User::class);
 
@@ -129,7 +147,24 @@ class FollowTest extends TestCase
     }
 
     /** @test */
-    public function profile_visitor_can_view_the_like_score_of_users_that_the_profile_owner_follows()
+    public function guests_may_not_view_the_paginated_list_of_users_that_profile_user_follows()
+    {
+        $profileOwner = create(User::class);
+        $userA = create(User::class);
+        $userB = create(User::class);
+
+        $profileOwner->follow($userA);
+        $profileOwner->follow($userB);
+
+        $response = $this->getJson(
+            route('ajax.follows.index', $profileOwner)
+        );
+
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    /** @test */
+    public function a_member_may_view_the_like_score_of_users_that_the_profile_owner_follows()
     {
         $profileOwner = create(User::class);
 
@@ -137,6 +172,7 @@ class FollowTest extends TestCase
         $reply = ReplyFactory::by($followingUser)->create();
         $anotherUser = $this->signIn();
         $reply->likedBy($anotherUser);
+        $visitor = $this->signIn();
 
         $profileOwner->follow($followingUser);
 
@@ -148,7 +184,7 @@ class FollowTest extends TestCase
     }
 
     /** @test */
-    public function profile_visitor_can_view_the_like_score_of_profile_owner_followers()
+    public function a_member_may_view_the_like_score_of_profile_owner_followers()
     {
         $profileOwner = create(User::class);
 
@@ -156,6 +192,7 @@ class FollowTest extends TestCase
         $reply = ReplyFactory::by($follower)->create();
         $anotherUser = $this->signIn();
         $reply->likedBy($anotherUser);
+        $visitor = $this->signIn();
 
         $follower->follow($profileOwner);
 
@@ -167,12 +204,13 @@ class FollowTest extends TestCase
     }
 
     /** @test */
-    public function a_profile_visitor_can_view_the_number_of_messages_of_users_that_profile_owner_follows()
+    public function a_member_may_view_the_number_of_messages_of_users_that_profile_owner_follows()
     {
         $profileOwner = create(User::class);
         $followingUser = create(User::class);
         $profilePost = ProfilePostFactory::toProfile($followingUser)->create();
         $profileOwner->follow($followingUser);
+        $this->signIn();
 
         $response = $this->getJson(
             route('ajax.follows.index', $profileOwner)
@@ -182,12 +220,13 @@ class FollowTest extends TestCase
     }
 
     /** @test */
-    public function a_profile_visitor_can_view_the_number_of_messags_of_profile_owner_followers()
+    public function a_member_may_view_the_number_of_messags_of_profile_owner_followers()
     {
         $profileOwner = create(User::class);
         $follower = create(User::class);
         $profilePost = ProfilePostFactory::toProfile($follower)->create();
         $follower->follow($profileOwner);
+        $this->signIn();
 
         $response = $this->getJson(
             route('ajax.followed-by.index', $profileOwner)

@@ -57,7 +57,7 @@ class GenerateResourcePathTest extends TestCase
     /** @test */
     public function it_generates_the_path_for_a_profile_post_comment()
     {
-        $orestis = create(User::class);
+        $orestis = $this->signIn();
         $numberOfPages = 5;
         $posts = ProfilePostFactory::toProfile($orestis)
             ->createMany(ProfilePost::PER_PAGE * $numberOfPages);

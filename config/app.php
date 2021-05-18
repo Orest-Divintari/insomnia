@@ -182,7 +182,6 @@ return [
         App\Providers\AvatarServiceProvider::class,
         Creativeorange\Gravatar\GravatarServiceProvider::class,
         App\Providers\ResourcePathProvider::class,
-        App\Providers\UserSettingsProvider::class,
     ],
 
     /*

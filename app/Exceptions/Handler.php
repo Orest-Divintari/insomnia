@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Arr;
@@ -75,6 +76,12 @@ class Handler extends ExceptionHandler
             return back()
                 ->withInput()
                 ->withErrors($exception->error());
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            if ($request->expectsJson()) {
+                return response($exception->getMessage(), 403);
+            }
         }
 
         return parent::render($request, $exception);

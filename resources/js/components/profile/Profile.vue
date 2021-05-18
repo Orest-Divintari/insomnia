@@ -58,6 +58,10 @@
                   :profile-owner="user"
                   :followed="user.followed_by_visitor"
                 ></follow-button>
+                <start-conversation-button
+                  class="mr-1"
+                  :user="profileOwner"
+                ></start-conversation-button>
                 <dropdown :styleClasses="'w-56'">
                   <template v-slot:dropdown-trigger>
                     <div class="btn-white-blue flex items-center">
@@ -110,13 +114,16 @@ import ProfilePosts from "./ProfilePosts";
 import LatestActivity from "./LatestActivity";
 import PostingActivity from "./PostingActivity";
 import FollowButton from "./FollowButton";
+import StartConversationButton from "../conversations/StartConversationButton";
 import About from "./About";
 import Tabs from "../Tabs";
 import Tab from "../Tab";
 import authorization from "../../mixins/authorization";
 import Avatar from "./Avatar";
+
 export default {
   components: {
+    StartConversationButton,
     Avatar,
     ProfilePosts,
     Tabs,
@@ -129,7 +136,7 @@ export default {
   props: {
     profileOwner: {
       type: Object,
-      default: {},
+      required: true,
     },
     posts: {
       type: Object,

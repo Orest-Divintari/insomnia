@@ -24,6 +24,8 @@ class AboutController extends Controller
             ->paginate(Follow::FOLLOWED_BY_PER_PAGE)
             ->withPath('/ajax/users/' . $user->name . '/followed-by');
 
-        return compact('follows', 'followedBy');
+        $user->append('date_of_birth');
+
+        return compact('follows', 'followedBy', 'user');
     }
 }

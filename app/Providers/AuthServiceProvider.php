@@ -17,6 +17,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Reply' => 'App\Policies\ReplyPolicy',
         'App\Comment' => 'App\Policies\CommentPolicy',
         'App\Conversation' => 'App\Policies\ConversationPolicy',
+        'App\User' => 'App\Policies\UserPolicy',
+        'App\Activity' => 'App\Policies\ActivityPolicy',
     ];
 
     /**
@@ -27,7 +29,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
     }
+
 }

@@ -7,6 +7,7 @@ use App\Conversation;
 use App\Thread;
 use App\User;
 use App\User\Details;
+use App\User\Privacy;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
@@ -405,6 +406,98 @@ class UserTest extends TestCase
         $user->details()->merge(compact('location'));
 
         $this->assertEquals($user->details()->location, $location);
+    }
+
+    /** @test */
+    public function access_a_specific_privacy_attribute_through_privacy_method()
+    {
+        $user = $this->signIn();
+        $user->disallow('show_current_activity');
+
+        $this->assertFalse($user->privacy()->show_current_activity);
+    }
+
+    /** @test */
+    public function a_user_can_update_the_privacy_settings_attributes()
+    {
+        $user = $this->signIn();
+        $user->disallow('show_current_activity');
+
+        $this->assertFalse($user->privacy()->show_current_activity);
+    }
+
+    /** @test */
+    public function it_can_find_a_user_by_name()
+    {
+        $name = 'orestis';
+        create(User::class, compact('name'));
+
+        $this->assertEquals($name, User::findByName($name)->first()->name);
+    }
+
+    /** @test */
+    public function it_can_find_multiple_users_by_name()
+    {
+        create(User::class);
+        $names = ['orestis', 'john'];
+        foreach ($names as $name) {
+            create(User::class, compact('name'));
+        }
+
+        $this->assertCount(2, User::findByName($names)->get());
+    }
+
+    /** @test */
+    public function it_returns_only_the_month_and_the_day_of_the_birth()
+    {
+        $user = $this->signIn();
+        $dateOfBirth = '25-08-1993';
+        $user->details()->merge(['birth_date' => $dateOfBirth]);
+
+        $this->assertEquals(Carbon::parse($dateOfBirth)->format('M d'), $user->date_of_birth);
+    }
+
+    /** @test */
+    public function it_returns_the_full_date_of_birth()
+    {
+        $user = $this->signIn();
+        $dateOfBirth = '25-08-1993';
+        $age = Carbon::parse($dateOfBirth)->age;
+        $user->details()->merge(['birth_date' => $dateOfBirth]);
+        $user->allow('show_birth_year');
+
+        $this->assertEquals(Carbon::parse($dateOfBirth)->format('M d, Y') . " ( Age: {$age} )", $user->date_of_birth);
+    }
+
+    /** @test */
+    public function it_returns_null_when_the_users_wants_to_hide_the_birth_date()
+    {
+        $user = $this->signIn();
+        $dateOfBirth = '25-08-1993';
+        $user->details()->merge(['birth_date' => $dateOfBirth]);
+        $user->disallow('show_birth_date');
+
+        $this->assertNull($user->date_of_birth);
+    }
+
+    /** @test */
+    public function it_appends_an_array_of_permissions()
+    {
+        $user = $this->signIn();
+        $user->privacy()->merge([
+            'post_on_profile' => Privacy::ALLOW_NOONE,
+            'start_conversation' => Privacy::ALLOW_NOONE,
+            'show_identities' => Privacy::ALLOW_NOONE,
+            'show_current_activity' => false,
+        ]);
+        $visitor = $this->signIn();
+
+        $user->append('permissions');
+
+        $this->assertFalse($user->permissions['post_on_profile']);
+        $this->assertFalse($user->permissions['start_conversation']);
+        $this->assertFalse($user->permissions['view_identities']);
+        $this->assertFalse($user->permissions['view_current_activity']);
     }
 
 }

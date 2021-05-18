@@ -22,12 +22,14 @@ class ViewProfileTest extends DuskTestCase
     }
 
     /** @test */
-    public function view_the_user_profile_information()
+    public function members_may_see_the_profile_information_of_a_user()
     {
         $user = create(User::class);
 
         $this->browse(function (Browser $browser) use ($user) {
-            $browser->visit("/profiles/{$user->name}")
+            $browser
+                ->loginAs($user)
+                ->visit("/profiles/{$user->name}")
                 ->assertSee($user->name)
                 ->assertSee('Macrumors newbie')
                 ->assertSee('Messages')
@@ -43,7 +45,129 @@ class ViewProfileTest extends DuskTestCase
     }
 
     /** @test */
-    public function view_profile_posts_and_associated_comments()
+    public function members__will_not_see_the_input_to_post_on_a_profile_if_the_profile_owner_does_not_allow_it()
+    {
+        $profileOwner = create(User::class);
+        ProfilePostFactory::by($profileOwner)->toProfile($profileOwner)->create();
+        $profileOwner->allowNoone('post_on_profile');
+        $visitor = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($visitor, $profileOwner) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}");
+
+            $response
+                ->assertMissing('@new-profile-post')
+                ->assertMissing('@new-comment');
+        });
+    }
+
+    /** @test */
+    public function members_will_not_see_the_input_to_post_on_profile_if_is_not_followed_by_the_profile_owner()
+    {
+        $profileOwner = create(User::class);
+        $profileOwner->allowFollowing('post_on_profile');
+        ProfilePostFactory::by($profileOwner)->toProfile($profileOwner)->create();
+        $visitor = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($visitor, $profileOwner) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}");
+
+            $response
+                ->assertMissing('@new-profile-post')
+                ->assertMissing('@new-comment');
+        });
+    }
+
+    /** @test */
+    public function members_will_see_the_form_to_post_on_profile_if_is_followed_by_the_profile_owner()
+    {
+        $profileOwner = create(User::class);
+        $profileOwner->allowFollowing('post_on_profile');
+        ProfilePostFactory::by($profileOwner)->toProfile($profileOwner)->create();
+        $visitor = create(User::class);
+        $profileOwner->follow($visitor);
+
+        $this->browse(function (Browser $browser) use ($visitor, $profileOwner) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}");
+
+            $response
+                ->assertPresent('@new-profile-post')
+                ->assertPresent('@new-comment');
+        });
+    }
+
+    /** @test */
+    public function the_profile_owner_may_always_see_the_contact_identities()
+    {
+        $profileOwner = create(User::class);
+        $facebookName = 'orestis';
+        $profileOwner->details()->merge(['facebook' => $facebookName]);
+
+        $this->browse(function (Browser $browser) use ($profileOwner, $facebookName) {
+
+            $response = $browser->loginAs($profileOwner)
+                ->visit("/profiles/{$profileOwner->name}")
+                ->clickLink('About');
+
+            $response
+                ->assertSee('Contact')
+                ->assertSee('Facebook')
+                ->assertSee($facebookName);
+        });
+    }
+
+    /** @test */
+    public function noone_can_see_the_contact_identities_of_a_user_if_that_user_does_not_allow_it()
+    {
+        $profileOwner = create(User::class);
+        $facebookName = 'orestis';
+        $profileOwner->details()->merge(['facebook' => $facebookName]);
+        $profileOwner->allowNoone('show_identities');
+        $visitor = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($profileOwner, $facebookName, $visitor) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}")
+                ->clickLink("About");
+
+            $response
+                ->assertDontSee('Contact')
+                ->assertDontSee('Facebook')
+                ->assertDontSee($facebookName);
+        });
+    }
+
+    /** @test */
+    public function a_member_may_see_the_contact_identities_of_a_user_if_the_user_allows_it()
+    {
+        $profileOwner = create(User::class);
+        $facebookName = 'orestis';
+        $profileOwner->details()->merge(['facebook' => $facebookName]);
+        $profileOwner->allowMembers('show_identities');
+        $visitor = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($profileOwner, $facebookName, $visitor) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}")
+                ->clickLink('About');
+
+            $response
+                ->assertSee('Contact')
+                ->assertSee('Facebook')
+                ->assertSee($facebookName);
+        });
+    }
+
+    /** @test */
+    public function members_may_view_profile_posts_and_associated_comments()
     {
         $orestis = create(User::class);
         $john = create(User::class);
@@ -51,8 +175,12 @@ class ViewProfileTest extends DuskTestCase
         $comment = CommentFactory::by($john)->toProfilePost($post)->create();
 
         $this->browse(function (Browser $browser) use ($orestis, $john, $comment, $post) {
-            $browser->visit("/profiles/{$orestis->name}")
-                ->assertSee($post->body)
+
+            $response = $browser
+                ->loginAs($orestis)
+                ->visit("/profiles/{$orestis->name}");
+
+            $response->assertSee($post->body)
                 ->assertSee($post->date_created)
                 ->assertSee($comment->body)
                 ->assertSee($comment->date_created)
@@ -61,7 +189,7 @@ class ViewProfileTest extends DuskTestCase
     }
 
     /** @test */
-    public function jump_to_a_specific_comment_in_profile_posts()
+    public function members_may_jump_to_a_specific_comment_in_profile_posts()
     {
         $orestis = create(User::class);
         $john = create(User::class);
@@ -72,7 +200,12 @@ class ViewProfileTest extends DuskTestCase
         $comment = CommentFactory::by($john)->toProfilePost($lastPost)->create();
 
         $this->browse(function (Browser $browser) use ($orestis, $john, $comment, $lastPost) {
-            $browser->visit(route('comments.show', $comment))
+
+            $response = $browser
+                ->loginAs($orestis)
+                ->visit(route('comments.show', $comment));
+
+            $response
                 ->assertSee($lastPost->body)
                 ->assertSee($lastPost->date_created)
                 ->assertSee($comment->body)
@@ -83,7 +216,7 @@ class ViewProfileTest extends DuskTestCase
     }
 
     /** @test */
-    public function jump_to_a_specific_profile_post()
+    public function members_may_jump_to_a_specific_profile_post()
     {
         $orestis = create(User::class);
         $john = create(User::class);
@@ -93,7 +226,12 @@ class ViewProfileTest extends DuskTestCase
         $lastPost = $posts->first();
 
         $this->browse(function (Browser $browser) use ($orestis, $lastPost, $john) {
-            $browser->visit(route('profile-posts.show', $lastPost))
+
+            $response = $browser
+                ->loginAs($orestis)
+                ->visit(route('profile-posts.show', $lastPost));
+
+            $response
                 ->assertSee($lastPost->body)
                 ->assertSee($lastPost->date_created)
                 ->assertSee($john->name)

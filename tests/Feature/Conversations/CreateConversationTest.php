@@ -6,13 +6,15 @@ use App\Conversation;
 use App\ConversationParticipant;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class CreateConversationTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     protected $title;
     protected $messageBody;
@@ -117,31 +119,132 @@ class CreateConversationTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_and_verified_user_can_start_a_new_conversation()
+    public function a_member_can_start_a_conversation_only_when_the_participant_allows_to_have_conversations_with_members()
     {
+        $participant = $this->signIn();
+        $participant->allowMembers('start_conversation');
         $conversationStarter = $this->signIn();
 
-        $this->postConversation(
+        $response = $this->postConversation(
             $this->title,
             $this->messageBody,
-            $this->participantA->name
+            $participant->name
         );
 
         $conversation = $conversationStarter->conversations()->first();
         $this->assertTrue(
-            $conversation->participants
-                ->contains($this->participantA->id)
+            $conversation
+                ->participants
+                ->contains($participant->id)
         );
-        $this->assertEquals(
-            $conversation->title,
-            $this->title
-        );
-        $message = $conversation->messages()->first();
-        $this->assertEquals($message->body, $this->messageBody);
+        $response->assertRedirect(route('conversations.show', $conversation));
     }
 
     /** @test */
-    public function an_authenticated_and_verified_user_can_start_a_new_conversation_with_multiple_participants()
+    public function a_member_cannot_create_a_conversation_when_the_participant_does_not_allow_to_have_conversations_with_anyone()
+    {
+        $participant = $this->signIn();
+        $participant->allowNoone('start_conversation');
+        $conversationStarter = $this->signIn();
+
+        $response = $this->postConversation(
+            $this->title,
+            $this->messageBody,
+            $participant->name
+        );
+
+        $response->assertSessionHasErrors(
+            ['participants.*' => ["You may not start a conversation with the following particpant: {$participant->name}"]]
+        );
+    }
+
+    /** @test */
+    public function a_member_cannot_start_a_conversation_if_is_not_followed_by_the_participant_when_the__participant_allows_to_have_conversations_only_with_members_that_follows()
+    {
+        $participant = $this->signIn();
+        $participant->allowFollowing('start_conversation');
+        $conversationStarter = $this->signIn();
+
+        $response = $this->postConversation(
+            $this->title,
+            $this->messageBody,
+            $participant->name
+        );
+
+        $response->assertSessionHasErrors(
+            ['participants.*' => ["You may not start a conversation with the following particpant: {$participant->name}"]]
+        );
+    }
+
+    /** @test */
+    public function a_member_can_start_a_conversation_if_is_followed_by_the_participant_when_the__participant_allows_to_have_conversations_only_with_members_that_follows()
+    {
+        $participant = $this->signIn();
+        $participant->allowFollowing('start_conversation');
+        $conversationStarter = $this->signIn();
+        $participant->follow($conversationStarter);
+
+        $response = $this->postConversation(
+            $this->title,
+            $this->messageBody,
+            $participant->name
+        );
+
+        $conversation = $conversationStarter->conversations()->first();
+        $this->assertTrue(
+            $conversation
+                ->participants
+                ->contains($participant->id)
+        );
+        $response->assertRedirect(route('conversations.show', $conversation));
+    }
+
+    /** @test */
+    public function a_member_cannot_start_a_conversation_if_at_least_one_of_the_participants_does_not_allow_to_have_conversations()
+    {
+        $participantA = $this->signIn();
+        $participantA->allowMembers('start_conversation');
+        $participantB = $this->signIn();
+        $participantB->allowNoone('start_conversation');
+        $conversationStarter = $this->signIn();
+
+        $response = $this->postConversation(
+            $this->title,
+            $this->messageBody,
+            [$participantA->name, $participantB->name]
+        );
+
+        $response->assertSessionHasErrors(
+            ['participants.*' =>
+                ["You may not start a conversation with the following particpant: {$participantB->name}"],
+            ]
+        );
+    }
+
+    /** @test */
+    public function a_member_that_is_not_followed_by_a_participant_cannot_start_a_conversation_if_at_least_one_of_the_participants_allow_to_have_conversations_with_users_they_follow()
+    {
+        $participantA = $this->signIn();
+        $participantA->allowFollowing('start_conversation');
+        $participantB = $this->signIn();
+        $participantB->allowNoone('start_conversation');
+        $conversationStarter = $this->signIn();
+
+        $response = $this->postConversation(
+            $this->title,
+            $this->messageBody,
+            [$participantA->name, $participantB->name]
+        );
+
+        $response->assertSessionHasErrors(
+            ['participants.*' =>
+                ["You may not start a conversation with the following particpant: {$participantB->name}"],
+            ]
+        );
+    }
+
+    /** @test */
+    public function a_member_can_start_a_new_conversation_with_multiple_participants()
     {
         $conversationStarter = $this->signIn();
         $participants = "{$this->participantA->name}, {$this->participantB->name}";
@@ -242,6 +345,20 @@ class CreateConversationTest extends TestCase
         );
 
         $response->assertSessionHasErrors('title');
+    }
+
+    /** @test */
+    public function to_start_conversation_the_starter_must_not_be_in_the_participants_list()
+    {
+        $conversationStarter = $this->signIn();
+
+        $response = $this->postConversation(
+            $this->title,
+            $this->messageBody,
+            $conversationStarter->name
+        );
+
+        $response->assertSessionHasErrors(['participants.*' => ['You cannot start a conversation with yourself.']]);
     }
 
     /** @test */

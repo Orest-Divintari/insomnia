@@ -439,24 +439,6 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function when_a_user_visits_the_profile_of_another_member_the_activity_is_recorded()
-    {
-        $john = create(User::class);
-        $peter = create(User::class);
-
-        $this->get(route('profiles.show', $john));
-
-        $this->assertDatabaseHas('activities', [
-            'user_id' => null,
-            'guest_id' => csrf_token(),
-            'subject_id' => $john->id,
-            'subject_type' => User::class,
-            'type' => 'viewed-user',
-            'description' => UserViewedPage::PROFILE,
-        ]);
-    }
-
-    /** @test */
     public function when_an_authenticated_user_visits_the_profile_of_another_member_the_activity_is_recorded()
     {
         $peter = $this->signIn();

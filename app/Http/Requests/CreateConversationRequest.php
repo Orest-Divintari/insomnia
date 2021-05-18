@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use App\Actions\StringToArrayForRequestAction;
 use App\Conversation;
+use App\Rules\AllowsConversations;
+use App\Rules\DifferentFromStarter;
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -31,7 +34,7 @@ class CreateConversationRequest extends FormRequest
             'title' => ['required', 'string'],
             'message' => ['required', 'string'],
             'participants' => ['required', "array", 'min:1'],
-            'participants.*' => ['required', 'string', 'exists:users,name'],
+            'participants.*' => ['required', 'string', 'exists:users,name', new AllowsConversations, new DifferentFromStarter, 'bail'],
             'admin' => ['sometimes'],
         ];
     }

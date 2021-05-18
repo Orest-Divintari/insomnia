@@ -18,7 +18,7 @@ class ProfilePost extends Model
      *
      * @var int
      */
-    const PER_PAGE = 3;
+    const PER_PAGE = 5;
 
     /**
      * Number of profile post comments per page
@@ -64,12 +64,12 @@ class ProfilePost extends Model
      * @param array $comment
      * @return Comment
      */
-    public function addComment($attributes, $poster = null)
+    public function addComment($body, $poster = null)
     {
         $poster = $poster ?: auth()->user();
 
         $comment = $this->comments()->save(
-            (new Reply($attributes))->setPoster($poster)
+            (new Reply(compact('body')))->setPoster($poster)
         );
 
         event(new NewCommentWasAddedToProfilePost(

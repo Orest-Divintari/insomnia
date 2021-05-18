@@ -107,6 +107,9 @@ Route::group(['middleware' => 'visitor.append'], function () {
         Route::delete('/profile/posts/{post}', 'ProfilePostController@destroy')
             ->name('profile-posts.destroy');
 
+        Route::get('/profiles/{user}/posts', 'ProfilePostController@index')
+            ->name('profile-posts.index');
+
         /* ************ PROFILE POST COMMENTS ************ */
 
         Route::post('/posts/{post}/comments', 'CommentController@store')
@@ -118,6 +121,32 @@ Route::group(['middleware' => 'visitor.append'], function () {
 
         Route::delete('/comments/{comment}', 'CommentController@destroy')
             ->name('comments.destroy');
+
+        Route::get('/posts/{post}/comments', 'CommentController@index')
+            ->name('comments.index');
+
+        /* ************ POSTING ACTIVITIES ************ */
+
+        Route::get('/profiles/{user}/postings/', 'PostingActivityController@index')
+            ->name('posting-activity.index');
+
+        /* ************ LATEST ACTIVITIES ************ */
+
+        Route::get('/profiles/{user}/latest-activity/', 'LatestActivityController@index')
+            ->name('latest-activity.index');
+
+        /* ************ FOLLOWS ************ */
+
+        Route::get('/users/{user}/follows', 'FollowsController@index')
+            ->name('follows.index');
+
+        Route::get('/users/{user}/followed-by', 'FollowedByController@index')
+            ->name('followed-by.index');
+
+        /* ************ PROFILE ABOUT ************ */
+
+        Route::get('/profiles/{user}/about', 'AboutController@show')
+            ->name('about.show');
 
         /* ************ LIKES ************ */
 
@@ -162,37 +191,9 @@ Route::group(['middleware' => 'visitor.append'], function () {
     Route::get('/profiles/{user}', 'ProfileController@show')
         ->name('profiles.show');
 
-    Route::get('/profiles/{user}/about', 'AboutController@show')
-        ->name('about.show');
-
-/* ************ FOLLOWS ************ */
-
-    Route::get('/users/{user}/follows', 'FollowsController@index')
-        ->name('follows.index');
-
-    Route::get('/users/{user}/followed-by', 'FollowedByController@index')
-        ->name('followed-by.index');
-
-/* ************ LATEST ACTIVITIES ************ */
-
-    Route::get('/profiles/{user}/latest-activity/', 'LatestActivityController@index')
-        ->name('latest-activity.index');
-
-/* ************ POSTING ACTIVITIES ************ */
-
-    Route::get('/profiles/{user}/postings/', 'PostingActivityController@index')
-        ->name('posting-activity.index');
-
-/* ************ PROFILE POSTS ************ */
-
-    Route::get('/profiles/{user}/posts', 'ProfilePostController@index')
-        ->name('profile-posts.index');
+/* ************ THREADS ************ */
 
     Route::get('/categories/{category}/threads', 'ThreadController@index')
         ->name('threads.index');
 
-/* ************ PROFILE POST COMMENTS ************ */
-
-    Route::get('/posts/{post}/comments', 'CommentController@index')
-        ->name('comments.index');
 });

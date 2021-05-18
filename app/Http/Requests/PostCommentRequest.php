@@ -13,7 +13,9 @@ class PostCommentRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        $profileOwner = $this->route('post')->profileOwner;
+
+        return auth()->user()->can('post_on_profile', $profileOwner);
     }
 
     /**

@@ -11,14 +11,18 @@ class ProfileController extends Controller
     /**
      * Display user's profile
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function show($username)
     {
         $user = User::withProfileInfo()
             ->whereName($username)
-            ->first()
+            ->firstOrFail()
             ->append('join_date');
+
+        $this->authorize('view_profile', $user);
+
+        event(new UserViewedPage(UserViewedPage::PROFILE, $user));
 
         $profilePosts = $user->profilePosts()
             ->latest()
@@ -27,8 +31,6 @@ class ProfileController extends Controller
         foreach ($profilePosts->items() as $post) {
             $post->append('paginatedComments');
         }
-
-        event(new UserViewedPage(UserViewedPage::PROFILE, $user));
 
         return view('profiles.show', compact('user', 'profilePosts'));
     }

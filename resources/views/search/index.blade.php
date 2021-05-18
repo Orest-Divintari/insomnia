@@ -1,13 +1,12 @@
 <x-layouts.forum>
     @if($errors->any())
-    <h1 class="text-3xl font-bold">Oops! We ran into some problems.<span class="text-blue-mid italic"> {{ $query }}
-        </span></h1>
+    <x-errors.title></x-errors.title>
     @foreach($errors->all() as $error)
-    <p class="mt-5 bg-white text-sm text-black-semi p-4 shadow-lg rounded"> {{ $error }} </p>
+    <p class="error-message-white"> {{ $error }} </p>
     @endforeach
     @elseif(is_string($results))
     <h1 class="text-3xl font-bold">Insomnia Forum</h1>
-    <p class="mt-5 bg-white text-sm text-black-semi p-4 shadow-lg rounded">{{ $results }}</p>
+    <p class="error-message-white">{{ $results }}</p>
     @else
     <div class="py-12 -mx-5 -mt-5 bg-gallery"></div>
     <div class="section mb-1">

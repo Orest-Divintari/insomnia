@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dusk="profile-popover">
     <v-popover
       :class="popoverClasses"
       popoverClass="focus:outline-none"
@@ -35,7 +35,10 @@
           @mouseover="keepOpen"
           @mouseout="hide"
         >
-          <div class="flex text-black-semi p-2 bg-white-catskill">
+          <div
+            class="flex text-black-semi p-2 bg-white-catskill"
+            dusk="profile-popover-content"
+          >
             <img
               @click="showProfile(profileOwner)"
               :id="'user-avatar-' + profileOwner.id"

@@ -60,15 +60,16 @@
                     <div class="form-row">
                         <!-- LEFT -->
                         <div class="form-left-col ">
-                            <label class="form-label" for="birth_date">Date of birth:</label>
+                            <label class="form-label" for="birth-date">Date of birth:</label>
                         </div>
                         <!-- RIGHT -->
                         <div class="flex">
                             <div class="form-right-col  pr-0">
                                 <p class="form-label-phone">Date of birth</p>
                                 <div>
-                                    <input type="date" name="birth_date" value="{{ $user->details()->birth_date }}"
-                                        class="form-input" style="caret-color: transparent">
+                                    <input type="date" name="birth_date" id="birth-date"
+                                        value="{{ $user->details()->birth_date }}" class="form-input"
+                                        style="caret-color: transparent">
                                 </div>
                             </div>
                         </div>

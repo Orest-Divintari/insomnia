@@ -8,6 +8,7 @@ use App\ProfilePost;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class CreateProfilePostsTest extends TestCase
@@ -54,10 +55,83 @@ class CreateProfilePostsTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_users_that_have_verified_the_email_can_create_a_profile_post()
+    public function the_profile_owner_can_always_create_posts_on_their_profile()
     {
+        $profileOwner = $this->signIn();
+        $profileOwner->allowNoone('post_on_profile');
+        $post = ['body' => 'some news'];
+
+        $this->post(
+            route('ajax.profile-posts.store', $profileOwner),
+            $post
+        );
+
+        $this->assertDatabaseHas('profile_posts', [
+            'body' => $post['body'],
+            'profile_owner_id' => $profileOwner->id,
+            'user_id' => $profileOwner->id,
+        ]);
+    }
+
+    /** @test */
+    public function members_can_create_a_profile_post_only_when_the_profile_owners_allow_posts_from_members()
+    {
+        $profileOwner = $this->signIn();
         $poster = $this->signIn();
-        $profileOwner = create(User::class);
+        $profileOwner->allowMembers('post_on_profile');
+        $post = ['body' => 'some news'];
+
+        $this->post(
+            route('ajax.profile-posts.store', $profileOwner),
+            $post
+        );
+
+        $this->assertDatabaseHas('profile_posts', [
+            'body' => $post['body'],
+            'profile_owner_id' => $profileOwner->id,
+            'user_id' => $poster->id,
+        ]);
+    }
+
+    /** @test */
+    public function members_may_not_create_a_profile_post_when_the_profile_owners_do_not_allow_posts_from_anyone()
+    {
+        $profileOwner = $this->signIn();
+        $poster = $this->signIn();
+        $profileOwner->allowNoone('post_on_profile');
+        $post = ['body' => 'some news'];
+
+        $response = $this->post(
+            route('ajax.profile-posts.store', $profileOwner),
+            $post
+        );
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+    }
+
+    /** @test */
+    public function a_member_cannot_create_a_profile_post_when_is_not_followed_by_the_profile_owner_when_the_profile_owner_allow_posts_only_from_users_they_follow()
+    {
+        $profileOwner = $this->signIn();
+        $poster = $this->signIn();
+        $profileOwner->allowFollowing('post_on_profile');
+        $post = ['body' => 'some news'];
+
+        $response = $this->post(
+            route('ajax.profile-posts.store', $profileOwner),
+            $post
+        );
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+    }
+
+    /** @test */
+    public function a_member_can_create_a_profile_post_when_is_followed_by_the_profile_owner_when_the_profile_owner_allow_posts_only_from_users_they_follow()
+    {
+        $profileOwner = $this->signIn();
+        $poster = $this->signIn();
+        $profileOwner->follow($poster);
+        $profileOwner->allowFollowing('post_on_profile');
         $post = ['body' => 'some news'];
 
         $this->post(

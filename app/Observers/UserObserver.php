@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\User;
 use App\User\Details;
+use App\User\Privacy;
 
 class UserObserver
 {
@@ -27,7 +28,8 @@ class UserObserver
      */
     public function creating(User $user)
     {
-        $user->details = (new Details([], $user))->getDefault();
+        $user->details = config('settings.details.attributes');
+        $user->privacy = config('settings.privacy.attributes');
     }
 
 }

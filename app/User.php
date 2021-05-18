@@ -5,6 +5,7 @@ namespace App;
 use App\Events\Profile\NewPostWasAddedToProfile;
 use App\Facades\Avatar;
 use App\Traits\Followable;
+use App\Traits\HandlesPrivacy;
 use App\User\Details;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,7 +20,7 @@ use Laravel\Scout\Searchable;
 class User extends Authenticatable implements MustVerifyEmail
 {
 
-    use Notifiable, Followable, Searchable;
+    use Notifiable, Followable, Searchable, HandlesPrivacy;
 
     /**
      * Set the maximum length for a username
@@ -31,7 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $appends = ['short_name'];
+    protected $appends = ['short_name', 'permissions'];
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -60,6 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'followed_by_visitor' => 'boolean',
         'default_avatar' => 'boolean',
         'details' => 'json',
+        'privacy' => 'json',
     ];
 
     protected $dates = ['notifications_viewed_at'];
@@ -405,6 +407,57 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function details()
     {
-        return app(Details::class);
+        return new Details($this->details, $this);
     }
+
+    /**
+     * Find users by name
+     *
+     * @param Builder $query
+     * @param string|string[] $names
+     * @return Builder
+     */
+    public function scopefindByName($query, $names)
+    {
+        if (is_array($names)) {
+            return $query->whereIn('name', $names);
+        }
+
+        return $query->where('name', $names);
+    }
+
+    /**
+     * Get the date of birth
+     *
+     * @return string|null
+     */
+    public function getDateOfBirthAttribute()
+    {
+        if ($this->allows('show_birth_date')) {
+
+            $dateOfBirth = Carbon::parse($this->details()->birth_date);
+            if ($this->allows('show_birth_year')) {
+                return $dateOfBirth->format('M d, Y') . " ( Age: {$dateOfBirth->age} )";
+            }
+            return $dateOfBirth->format('M d');
+        }
+    }
+
+    /**
+     * Append the permissions of the user
+     *
+     * @return array
+     */
+    public function getPermissionsAttribute()
+    {
+        $user = optional(auth()->user());
+
+        return [
+            'post_on_profile' => $user->can('post_on_profile', $this),
+            'start_conversation' => $user->can('create', [Conversation::class, $this]),
+            'view_identities' => $user->can('view_identities', $this),
+            'view_current_activity' => $user->can('view_current', [Activity::class, $this]),
+        ];
+    }
+
 }

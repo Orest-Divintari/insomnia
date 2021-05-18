@@ -63,22 +63,6 @@ class UserViewedPageEventTest extends TestCase
     }
 
     /** @test */
-    public function when_a_user_visits_the_profile_of_another_user_an_event_is_fired()
-    {
-        $listener = Mockery::spy(LogUserActivity::class);
-        app()->instance(LogUserActivity::class, $listener);
-        $john = create(User::class);
-        $peter = create(User::class);
-
-        $this->get(route('profiles.show', $john));
-
-        $listener->shouldHaveReceived('handle', function ($event) use ($john) {
-            return $event->subject->id == $john->id
-            && $event->description == UserViewedPage::PROFILE;
-        });
-    }
-
-    /** @test */
     public function when_an_authenticated_user_opens_a_conversation_an_event_is_fired()
     {
         $listener = Mockery::spy(LogUserActivity::class);

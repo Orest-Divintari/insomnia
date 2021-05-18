@@ -92,6 +92,10 @@ html {
     }
 }
 
+.error-message-white {
+    @apply .mt-5 .bg-white .text-sm .text-black-semi .p-4 .shadow-lg .rounded;
+}
+
 .sub-head-tab-container {
     @apply .py-2 .text-blue-link-menu .leading-6 .text-smaller;
     &:hover {

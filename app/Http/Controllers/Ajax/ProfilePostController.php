@@ -45,17 +45,4 @@ class ProfilePostController extends Controller
         $this->authorize('delete', $post);
         $post->delete();
     }
-
-    /**
-     * Get the posts of the given user's profile
-     *
-     * @param User $user
-     * @return void
-     */
-    public function index(User $user)
-    {
-        return $user->profilePosts()
-            ->latest()
-            ->paginate(ProfilePost::PER_PAGE);
-    }
 }

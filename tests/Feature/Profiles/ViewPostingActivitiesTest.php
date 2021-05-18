@@ -2,20 +2,22 @@
 
 namespace Tests\Feature\Profiles;
 
+use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
-class ReadProfilePostingsTest extends TestCase
+class ViewProfilePostingsTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
     /** @test */
-    public function a_user_can_read_the_posting_activities_of_the_profile_owner()
+    public function members_may_view_the_posting_activities_of_the_profile_owner()
     {
         $profileOwner = $this->signIn();
         $thread = ThreadFactory::by($profileOwner)->create();
@@ -34,5 +36,15 @@ class ReadProfilePostingsTest extends TestCase
         )->json()['data'];
 
         $this->assertCount(4, $postings);
+    }
+
+    /** @test */
+    public function guests_may_not_view_the_posting_activities_of_a_user()
+    {
+        $response = $this->getJson(
+            route('ajax.posting-activity.index', create(User::class))
+        );
+
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 }

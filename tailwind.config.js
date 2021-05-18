@@ -95,6 +95,8 @@ module.exports = {
                 "5/2": "0.625rem",
                 "7/2": "0.9375rem",
                 "5.5": "1.35rem",
+                "10.5": "2.6rem",
+                
             },
             fontFamily: {
                 insomnia: "Verdana, Arial, sans-serif"

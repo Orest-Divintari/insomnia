@@ -49,9 +49,6 @@ export default {
     itemsExist() {
       return this.dataset.next_page_url != null;
     },
-    path() {
-      return "/ajax/profiles/" + this.profileOwner.name + "/posts";
-    },
   },
   methods: {
     refresh(paginatedCollection) {

@@ -15,7 +15,7 @@ class ViewCommentsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_user_can_view_all_the_comments_associated_with_a_post()
+    public function an_authenticated_user_can_view_all_the_comments_associated_with_a_post()
     {
         $profilePost = create(ProfilePost::class);
         $oldComment = CommentFactory::toProfilePost($profilePost)->create();
@@ -42,10 +42,10 @@ class ViewCommentsTest extends TestCase
     }
 
     /** @test */
-    public function jump_to_a_specific_comment()
+    public function an_authenticated_user_may_jump_to_a_specific_comment()
     {
         $orestis = create(User::class);
-        $john = create(User::class);
+        $john = $this->signIn();
         $posts = ProfilePostFactory::by($john)
             ->toProfile($orestis)
             ->createMany(ProfilePost::PER_PAGE * 5);
@@ -55,5 +55,21 @@ class ViewCommentsTest extends TestCase
         $response = $this->get("/profile-posts/comments/$comment->id");
 
         $response->assertRedirect($comment->path);
+    }
+
+    /** @test */
+    public function guests_may_not_jump_to_a_specific_comment()
+    {
+        $orestis = create(User::class);
+        $john = create(User::class);
+        $posts = ProfilePostFactory::by($john)
+            ->toProfile($orestis)
+            ->createMany(ProfilePost::PER_PAGE * 5);
+        $lastPost = $posts->last();
+        $comment = CommentFactory::by($john)->toProfilePost($lastPost)->create();
+
+        $response = $this->get("/profile-posts/comments/{$comment->id}");
+
+        $response->assertRedirect('login');
     }
 }

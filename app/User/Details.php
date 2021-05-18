@@ -4,27 +4,16 @@ namespace App\User;
 
 use App\User;
 use App\User\Settings;
-use Illuminate\Support\Arr;
 
 class Details extends Settings
 {
     /**
-     * The list of default details
+     * The attributes that should be cast to native types before saving in the database.
      *
      * @var array
      */
-    protected $default = [
-        'location' => '',
-        'birth_date' => '',
-        'website' => '',
-        'gender' => '',
-        'occupation' => '',
-        'about' => '',
-        'skype' => '',
-        'google_talk' => '',
-        'facebook' => '',
-        'twitter' => '',
-        'instagram' => '',
+    protected $setCasts = [
+        'birth_date' => 'datetime',
     ];
 
     /**

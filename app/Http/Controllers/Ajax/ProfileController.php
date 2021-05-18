@@ -13,6 +13,7 @@ class ProfileController extends Controller
         return User::whereName($username)
             ->withProfileInfo()
             ->first()
-            ->append('join_date');
+            ->append('join_date')
+            ->append('permissions');
     }
 }

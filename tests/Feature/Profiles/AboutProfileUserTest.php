@@ -4,6 +4,7 @@ namespace Tests\Feature\Profiles;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class AboutProfileUserTest extends TestCase
@@ -11,25 +12,29 @@ class AboutProfileUserTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_user_can_view_the_about_tab_of_another_profile_user()
+    public function members_may_view_the_about_information_of_a_user()
     {
         $profileOwner = create(User::class);
         $visitor = $this->signIn();
 
-        $response = $this->getJson(
-            route('ajax.about.show', $profileOwner)
-        )->json();
+        $response = $this->getJson(route('ajax.about.show', $profileOwner))->json();
 
-        $this->assertTrue(
-            array_key_exists('follows', $response)
-        );
-        $this->assertTrue(
-            array_key_exists('followedBy', $response)
-        );
+        $this->assertTrue(array_key_exists('follows', $response));
+        $this->assertTrue(array_key_exists('followedBy', $response));
+        $this->assertTrue(array_key_exists('date_of_birth', $response['user']));
+        $this->assertTrue(array_key_exists('permissions', $response['user']));
     }
 
     /** @test */
-    public function a_user_can_view_the_list_of_followers_of_profile_user()
+    public function guests_may_not_view_the_about_information_of_a_user()
+    {
+        $response = $this->getJson(route('ajax.about.show', create(User::class)));
+
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    /** @test */
+    public function members_may_view_the_list_of_followers_of_profile_user()
     {
         $profileOwner = create(User::class);
         $followerA = create(User::class);
@@ -58,7 +63,7 @@ class AboutProfileUserTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_the_list_of_users_that_profile_user_is_following()
+    public function members_may_view_the_list_of_users_that_profile_user_is_following()
     {
         $profileOwner = create(User::class);
         $followerA = create(User::class);

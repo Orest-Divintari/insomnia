@@ -1,5 +1,5 @@
 <template>
-  <div v-if="signedIn">
+  <div v-if="can('post_on_profile', profileOwner)" dusk="new-profile-post">
     <div class="reply-container">
       <div class="reply-left-col w-24">
         <profile-popover
@@ -25,6 +25,7 @@
 import ProfilePostInput from "./ProfilePostInput";
 import Wysiwyg from "../Wysiwyg";
 import authorization from "../../mixins/authorization";
+import authorizable from "../../mixins/authorizable";
 export default {
   components: {
     Wysiwyg,
@@ -36,7 +37,7 @@ export default {
       default: {},
     },
   },
-  mixins: [authorization],
+  mixins: [authorization, authorizable],
   data() {
     return {
       body: "",

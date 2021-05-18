@@ -2,7 +2,9 @@
 
 namespace App\User;
 
+use App\Exceptions\SettingDoesNotExistException;
 use App\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Arr;
 
@@ -23,20 +25,6 @@ abstract class Settings
     protected $settings;
 
     /**
-     * The list of allowed settings
-     *
-     * @var array
-     */
-    protected $allowed;
-
-    /**
-     * The list of default settings
-     *
-     * @var array
-     */
-    protected $default;
-
-    /**
      * Create a new Settings instance
      *
      * @param array $settings
@@ -46,7 +34,6 @@ abstract class Settings
     {
         $this->settings = $settings;
         $this->user = $user;
-        $this->allowed = array_keys($this->default);
     }
 
     /**
@@ -54,16 +41,77 @@ abstract class Settings
      * Prevents from adding new settings
      *
      * @param array $attributes
-     * @return mixed
+     * @return void
      */
     public function merge($attributes)
     {
-        $this->settings = array_merge(
-            $this->settings,
-            Arr::only($attributes, $this->allowed)
-        );
+        $attributes = $this->allowed($attributes);
+
+        $attributes = $this->setCasts($attributes);
+
+        $this->settings = array_merge($this->settings, $attributes);
 
         $this->persist();
+    }
+
+    /**
+     * Filter out the attributes that are not allowed
+     *
+     * @param array $attributes
+     * @return array
+     */
+    public function allowed($attributes)
+    {
+        return Arr::only($attributes, array_keys($this->settings));
+    }
+
+    /**
+     * Cast attributes
+     *
+     * @param array $attributes
+     * @return array
+     */
+    public function setCasts($attributes)
+    {
+        if (!empty($this->setCasts)) {
+            $casts = array_intersect_key($this->setCasts, $attributes);
+
+            foreach ($casts as $attribute => $type) {
+                $castMethod = $this->setCasts[$attribute];
+
+                $value = $attributes[$attribute];
+
+                $castValue = $this->$castMethod($value);
+                $attributes[$attribute] = $castValue;
+            }
+        }
+        return $attributes;
+    }
+
+    /**
+     * Cast to boolean
+     *
+     * @param mixed $value
+     * @return bool
+     */
+    protected function boolean($value)
+    {
+        return to_bool($value);
+    }
+
+    /**
+     * Cast to datetime string
+     *
+     * @param mixed $value
+     * @return string
+     */
+    protected function datetime($value)
+    {
+        if ($value instanceof Carbon) {
+            return $value->format('Y-m-d');
+        }
+
+        return Carbon::parse($value)->format('Y-m-d');
     }
 
     /**
@@ -111,34 +159,14 @@ abstract class Settings
      * Magic property access for settings.
      *
      * @param  string $key
-     * @throws Exception
-     * @return
+     * @return string
+     * @throws SettingDoesNotExistException
      */
     public function __get($key)
     {
         if ($this->has($key)) {
             return $this->get($key);
         }
-        throw new Exception("The {$key} setting does not exist.");
-    }
-
-    /**
-     * Set settings to default
-     *
-     * @return void
-     */
-    public function setDefault()
-    {
-        $this->merge($this->default);
-    }
-
-    /**
-     * Get the default settings
-     *
-     * @return void
-     */
-    public function getDefault()
-    {
-        return $this->default;
+        throw new SettingDoesNotExistException("The {$key} setting does not exist.");
     }
 }

@@ -415,5 +415,4 @@ class Conversation extends Model
             ->firstOrFail()
             ->starred;
     }
-
 }

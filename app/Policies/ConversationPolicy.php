@@ -43,7 +43,7 @@ class ConversationPolicy
      *
      * @param User $user
      * @param Conversation $conversation
-     * @return void
+     * @return mixed
      */
     public function manage(User $user, Conversation $conversation)
     {
@@ -53,4 +53,15 @@ class ConversationPolicy
         return $user->is($conversation->starter) || ($participant && $participant->admin);
     }
 
+    /**
+     * Determine whether the authenticated user can start a conversation with the given user
+     *
+     * @param User|null $authUser
+     * @param User $user
+     * @return mixed
+     */
+    public function create(User $authUser, User $user)
+    {
+        return $authUser->isNot($user) && $user->allows('start_conversation');
+    }
 }

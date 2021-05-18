@@ -15,6 +15,7 @@
                         href="{{ route('online-user-activities.index', [ 'type' => 'guest'] ) }}">Guests</a>
                 </div>
                 @forelse($activities as $activity)
+                @can('view_current', [App\Activity::class, $activity->user])
                 <div class="flex items-start p-7/2 {{ $loop->last ? '' : 'border-b' }}">
                     <div class="">
                         @if(isset($activity->user))
@@ -45,6 +46,7 @@
                     </div>
 
                 </div>
+                @endcan
                 @empty
                 <p class="font-bold p-5">There are no activities yet</p>
                 @endforelse

@@ -13,9 +13,9 @@ class ViewProfilePostsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function jump_to_a_specific_profile_post()
+    public function only_authenticated_users_can_jump_to_a_specific_profile_post()
     {
-        $orestis = create(User::class);
+        $orestis = $this->signIn();
         $numberOfPages = 5;
         $posts = ProfilePostFactory::toProfile($orestis)
             ->createMany(ProfilePost::PER_PAGE * $numberOfPages);
@@ -25,4 +25,16 @@ class ViewProfilePostsTest extends TestCase
 
         $response->assertRedirect($lastPost->path);
     }
+
+    /** @test */
+    public function guests_may_not_see_a_profile_post()
+    {
+        $profileOwner = create(User::class);
+        $post = ProfilePostFactory::by($profileOwner)->toProfile($profileOwner)->create();
+
+        $response = $this->get(route('profile-posts.show', $post));
+
+        $response->assertRedirect('login');
+    }
+
 }

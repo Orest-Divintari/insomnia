@@ -22,11 +22,6 @@ Route::get('/', function () {
 Route::get('/tags/{tag}', 'TagController@show')
     ->name('tags.show');
 
-/* ************ ONLINE ************ */
-
-Route::get('/online/user-activities', 'OnlineUserActivityController@index')
-    ->name('online-user-activities.index');
-
 /* ************ SEARCH ************ */
 
 Route::get('/search', 'SearchController@index')
@@ -59,22 +54,27 @@ Route::get('/threads/{thread}', 'ThreadController@show')
 Route::get('/replies/{reply}', 'ReplyController@show')
     ->name('replies.show');
 
-/* ************ PROFILE ************ */
+Route::group(['middleware' => 'auth'], function () {
 
-Route::get('/profiles/{user}', 'ProfileController@show')
-    ->name('profiles.show');
+    /* ************ ONLINE ************ */
+
+    Route::get('/online/user-activities', 'OnlineUserActivityController@index')
+        ->name('online-user-activities.index');
+
+    /* ************ PROFILE ************ */
+
+    Route::get('/profiles/{user}', 'ProfileController@show')
+        ->name('profiles.show');
 
 /* ************ PROFILE POSTS ************ */
 
-Route::get('/profile-posts/{post}', 'ProfilePostController@show')
-    ->name('profile-posts.show');
+    Route::get('/profile-posts/{post}', 'ProfilePostController@show')
+        ->name('profile-posts.show');
 
 /* ************ PROFILE POST COMMENTS ************ */
 
-Route::get('/profile-posts/comments/{comment}', 'CommentController@show')
-    ->name('comments.show');
-
-Route::group(['middleware' => 'auth'], function () {
+    Route::get('/profile-posts/comments/{comment}', 'CommentController@show')
+        ->name('comments.show');
 
     /* ************ RECENTLY VIEWED THREADS ************ */
 
@@ -98,8 +98,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/account/details', 'AccountDetailsController@update')
         ->name('account.details.update');
 
-    Route::get('account/details', 'AccountDetailsController@edit')
+    Route::get('/account/details', 'AccountDetailsController@edit')
         ->name('account.details.edit');
+
+    /* ************ ACCOUNT PRIVACY ************ */
+
+    Route::patch('/account/privacy', 'AccountPrivacyController@update')
+        ->name('account.privacy.update');
+
+    Route::get('/account/privacy', 'AccountPrivacyController@edit')
+        ->name('account.privacy.edit');
 
     /* ************ ACCOUNT PASSWORD ************ */
 

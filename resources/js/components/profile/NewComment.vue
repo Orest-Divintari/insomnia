@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="signedIn">
+  <div dusk="new-comment" v-if="can('post_on_profile', profileOwner)">
+    <div>
       <div class="comment-container border-b">
         <div class="comment-avatar">
           <profile-popover
@@ -25,6 +25,7 @@
 
 <script>
 import ProfilePostInput from "./ProfilePostInput";
+import authorizable from "../../mixins/authorizable";
 export default {
   components: {
     ProfilePostInput,
@@ -35,7 +36,13 @@ export default {
       default: {},
       required: true,
     },
+    profileOwner: {
+      type: Object,
+      default: {},
+      required: true,
+    },
   },
+  mixins: [authorizable],
   data() {
     return {
       body: "",

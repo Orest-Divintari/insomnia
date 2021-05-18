@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Actions\ActivityLogger;
-use App\Repositories\OnlineRepository;
 use App\ViewModels\OnlineUserActivitiesViewModel;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,7 +18,6 @@ class OnlineUserActivitiesViewModelTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->online = new OnlineRepository;
         $this->logger = new ActivityLogger;
     }
 

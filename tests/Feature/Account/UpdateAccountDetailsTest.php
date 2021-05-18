@@ -25,7 +25,7 @@ class UpdateAccountDetailsTest extends TestCase
     {
         $user = $this->signIn();
 
-        $details = (new Details([], $user))->getDefault();
+        $details = $user->details;
 
         $details['location'] = 'netherlads';
         $details['website'] = 'insomnia';

@@ -15,12 +15,21 @@ class OnlineUserActivitiesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function display_the_latest_viewed_activity_of_guest_online_users()
+    public function guests_may_not_view_the_current_activities_of_online_users()
+    {
+        $response = $this->get(route('online-user-activities.index'));
+
+        $response->assertRedirect('login');
+    }
+
+    /** @test */
+    public function members_may_view_the_latest_viewed_activity_of_guest_online_users()
     {
         $thread = create(Thread::class);
         $this->get(route('threads.show', $thread));
         $this->get(route('forum'));
         $this->assertCount(2, Activity::typeViewed()->get());
+        $this->signIn();
 
         $response = $this->get(route('online-user-activities.index'));
 
@@ -30,18 +39,34 @@ class OnlineUserActivitiesTest extends TestCase
     }
 
     /** @test */
-    public function display_the_latest_view_activity_of_authenticated_online_users()
+    public function members_may_view_the_latest_view_activity_of_other_members()
     {
         $thread = create(Thread::class);
         $user = $this->signIn();
         $this->get(route('threads.show', $thread));
         $this->get(route('forum'));
         $this->assertCount(2, Activity::typeViewed()->get());
+
         $response = $this->get(route('online-user-activities.index'));
 
         $response->assertSee($user->name);
         $response->assertSee(UserViewedPage::FORUM);
         $response->assertDontSee(UserViewedPage::THREAD);
+    }
+
+    /** @test */
+    public function members_may_hide_their_current_activity()
+    {
+        $thread = create(Thread::class);
+        $user = $this->signIn();
+        $user->disallow('show_current_activity');
+        $this->get(route('threads.show', $thread));
+        $this->get(route('forum'));
+
+        $response = $this->get(route('online-user-activities.index'));
+
+        $response->assertDontSeeText(UserViewedPage::FORUM);
+        $response->assertDontSeeText(UserViewedPage::THREAD);
     }
 
     /** @test */
@@ -93,7 +118,6 @@ class OnlineUserActivitiesTest extends TestCase
 
         $response = $this->get(route('online-user-activities.index'));
 
-        $response->assertSee($user->name);
         $response->assertSee(UserViewedPage::CONVERSATION);
     }
 
