@@ -101,10 +101,10 @@ class ProfilePostTest extends TestCase
             ->createMany(ProfilePost::PER_PAGE * $numberOfPages);
 
         $lastPost = $posts->last();
-        dd($lastPost->pageNumber);
+
         $this->assertEquals(
             route('profiles.show', $orestis) .
-            '?page=' . $lastPost->pageNumber .
+            '?page=' . $numberOfPages .
             '#profile-post-' . $lastPost->id
             , $lastPost->path
         );

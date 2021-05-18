@@ -182,8 +182,7 @@ class ThreadTest extends TestCase
         $user = $this->signIn();
         $this->thread->read($user);
         $anotherUser = $this->signIn();
-
-        $this->thread->read($user);
+        $this->thread->read($anotherUser);
 
         $this->assertCount(2, $this->thread->fresh()->reads);
     }

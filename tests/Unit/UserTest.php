@@ -375,7 +375,7 @@ class UserTest extends TestCase
 
         $details = new Details([], $user);
 
-        $this->assertEmpty(array_diff_assoc($user->details, $details->getDefault()));
+        $this->assertEmpty(array_diff_assoc($user->details, config('settings.details.attributes')));
     }
 
     /** @test */

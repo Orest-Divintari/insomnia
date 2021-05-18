@@ -65,11 +65,12 @@ class ThreadFiltersTest extends TestCase
     /** @test */
     public function get_the_threads_that_a_user_has_contributed_to()
     {
-        $user = create(User::class);
-        $reply = ReplyFactory::by($user)->create();
-        ReplyFactory::create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $reply = ReplyFactory::by($john)->create();
+        ReplyFactory::by($doe)->create();
 
-        $this->threadFilters->contributed($user->name);
+        $this->threadFilters->contributed($john->name);
         $contributedThread = $this->threadFilters->builder()->get();
 
         $this->assertCount(1, $contributedThread);
