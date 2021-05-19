@@ -415,4 +415,17 @@ class Conversation extends Model
             ->firstOrFail()
             ->starred;
     }
+
+    /**
+     * Determine whether the given user participates in the conversation
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function hasParticipant($user)
+    {
+        return $this->participants()
+            ->where('user_id', $user->id)
+            ->exists();
+    }
 }

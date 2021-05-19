@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Conversation;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\InviteConversationParticipant;
+use App\Http\Requests\InviteConversationParticipantRequest;
 
 class ConversationParticipantController extends Controller
 {
@@ -13,10 +13,10 @@ class ConversationParticipantController extends Controller
      * Store a new conversation participant in the database
      *
      * @param Conversation $conversation
-     * @param InviteConversationParticipant $request
+     * @param InviteConversationParticipantRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(InviteConversationParticipant $request)
+    public function store(InviteConversationParticipantRequest $request)
     {
         $request->addParticipants();
 

@@ -50,6 +50,7 @@ class ConversationPolicy
         $participant = ConversationParticipant::where('user_id', $user->id)
             ->where('conversation_id', $conversation->id)
             ->first();
+
         return $user->is($conversation->starter) || ($participant && $participant->admin);
     }
 

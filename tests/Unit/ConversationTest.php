@@ -419,4 +419,17 @@ class ConversationTest extends TestCase
 
         $this->assertTrue($conversation->hasBeenUpdated());
     }
+
+    /** @test */
+    public function it_determines_whether_a_user_participants_in_the_conversation()
+    {
+        $conversationStarter = create(User::class);
+        $participant = create(User::class);
+        $randomUser = create(User::class);
+        $conversation = ConversationFactory::by($conversationStarter)->withParticipants([$participant->name])->create();
+
+        $this->assertTrue($conversation->hasParticipant($participant));
+        $this->assertTrue($conversation->hasParticipant($conversationStarter));
+        $this->assertFalse($conversation->hasParticipant($randomUser));
+    }
 }

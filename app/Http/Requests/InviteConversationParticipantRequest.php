@@ -4,9 +4,10 @@ namespace App\Http\Requests;
 
 use App\Actions\StringToArrayForRequestAction;
 use App\Conversation;
+use App\Rules\IsNotAlreadyAParticipant;
 use Illuminate\Foundation\Http\FormRequest;
 
-class InviteConversationParticipant extends FormRequest
+class InviteConversationParticipantRequest extends FormRequest
 {
     private $conversation;
 
@@ -46,7 +47,7 @@ class InviteConversationParticipant extends FormRequest
     {
         return [
             'participants' => ['required', "array", 'min:1'],
-            'participants.*' => ['required', 'string', 'exists:users,name'],
+            'participants.*' => ['required', 'string', 'exists:users,name', new IsNotAlreadyAParticipant],
         ];
     }
 
