@@ -118,7 +118,7 @@ import StartConversationButton from "../conversations/StartConversationButton";
 import About from "./About";
 import Tabs from "../Tabs";
 import Tab from "../Tab";
-import authorization from "../../mixins/authorization";
+import authorizable from "../../mixins/authorizable";
 import Avatar from "./Avatar";
 
 export default {
@@ -143,7 +143,7 @@ export default {
       default: {},
     },
   },
-  mixins: [authorization],
+  mixins: [authorizable],
   computed: {
     canUpdate() {
       return this.hover && this.ownsProfile(this.user);

@@ -35,7 +35,7 @@
 
 <script>
 import view from "../../mixins/view";
-import authorization from "../../mixins/authorization";
+import authorizable from "../../mixins/authorizable";
 export default {
   props: {
     notificationData: {
@@ -48,7 +48,7 @@ export default {
       ...this.notificationData,
     };
   },
-  mixins: [view, authorization],
+  mixins: [view, authorizable],
 };
 </script>
 

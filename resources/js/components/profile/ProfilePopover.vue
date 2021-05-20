@@ -102,7 +102,7 @@
 import FollowButton from "../profile/FollowButton";
 import view from "../../mixins/view";
 import _ from "lodash";
-import authorization from "../../mixins/authorization";
+import authorizable from "../../mixins/authorizable";
 import store from "../../store";
 export default {
   components: {
@@ -135,7 +135,7 @@ export default {
       required: false,
     },
   },
-  mixins: [view, authorization],
+  mixins: [view, authorizable],
   computed: {
     username() {
       return this.triggerText !== ""

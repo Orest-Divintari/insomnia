@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import authorization from "../../mixins/authorization";
+import authorizable from "../../mixins/authorizable";
 import store from "../../store";
 import EditUserAvatarModal from "./EditUserAvatarModal";
 export default {
@@ -51,7 +51,7 @@ export default {
       required: true,
     },
   },
-  mixins: [authorization, store],
+  mixins: [authorizable, store],
   computed: {
     name() {
       return "edit-avatar-" + this.$parent.$options.name + "-modal";

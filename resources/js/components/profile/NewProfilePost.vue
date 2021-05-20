@@ -24,7 +24,6 @@
 <script>
 import ProfilePostInput from "./ProfilePostInput";
 import Wysiwyg from "../Wysiwyg";
-import authorization from "../../mixins/authorization";
 import authorizable from "../../mixins/authorizable";
 export default {
   components: {
@@ -37,7 +36,7 @@ export default {
       default: {},
     },
   },
-  mixins: [authorization, authorizable],
+  mixins: [authorizable],
   data() {
     return {
       body: "",

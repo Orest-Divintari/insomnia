@@ -1,7 +1,6 @@
 export default {
     methods: {
         can(ability, model){
-            console.log(model.name);
             return model.permissions[ability];
         },
         isAuthUser(user){

@@ -1,5 +1,5 @@
 import Vue from "vue";
-import authorization from "./policy/authorize";
+import authorize from "./policy/authorize";
 import EventBus from "./eventBus";
 import store from "../js/store";
 window.Vue = Vue;
@@ -71,7 +71,7 @@ Vue.prototype.authorize = function(policy, model) {
     if (!window.App.signedIn) return false;
 
     if (typeof policy == "string") {
-        return authorization[policy](user, model);
+        return authorize[policy](user, model);
     }
 };
 

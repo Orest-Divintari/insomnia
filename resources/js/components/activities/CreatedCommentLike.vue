@@ -34,12 +34,12 @@
 <script>
 import highlight from "../Highlight";
 import view from "../../mixins/view";
-import authorization from "../../mixins/authorization";
+import authorizable from "../../mixins/authorizable";
 export default {
   components: {
     highlight,
   },
-  mixins: [view, authorization],
+  mixins: [view, authorizable],
   props: {
     activity: {
       type: Object,

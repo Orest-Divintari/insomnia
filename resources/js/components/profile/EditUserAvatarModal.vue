@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import authorization from "../../mixins/authorization";
+import authorizable from "../../mixins/authorizable";
 import store from "../../store";
 import ImageUpload from "../ImageUpload";
 export default {
@@ -140,7 +140,7 @@ export default {
       required: true,
     },
   },
-  mixins: [authorization, store],
+  mixins: [authorizable, store],
   data() {
     return {
       avatarIsPersisted: false,
