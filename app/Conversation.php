@@ -344,9 +344,10 @@ class Conversation extends Model
      */
     public function isAdmin($participant)
     {
-        return ConversationParticipant::where('conversation_id', $this->id)
+        return ConversationParticipant::query()
+            ->where('conversation_id', $this->id)
             ->where('user_id', $participant->id)
-            ->first()
+            ->firstOrFail()
             ->admin;
     }
 
