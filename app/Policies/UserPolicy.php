@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function view_profile(?User $authUser, User $user)
     {
-        return $user->allows('show_details') ?:
+        return ($user->is($authUser) || $user->allows('show_details')) ?:
         $this->deny('This member limits who may view their full profile.', 403);
     }
 
