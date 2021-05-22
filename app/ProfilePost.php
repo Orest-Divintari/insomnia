@@ -69,7 +69,7 @@ class ProfilePost extends Model
         $poster = $poster ?: auth()->user();
 
         $comment = $this->comments()->save(
-            (new Reply(compact('body')))->setPoster($poster)
+            (new Reply($body))->setPoster($poster)
         );
 
         event(new NewCommentWasAddedToProfilePost(
