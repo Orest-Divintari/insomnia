@@ -7,6 +7,7 @@ use App\Facades\Avatar;
 use App\Traits\Followable;
 use App\Traits\HandlesPrivacy;
 use App\User\Details;
+use App\User\Preferences;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -62,6 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'default_avatar' => 'boolean',
         'details' => 'json',
         'privacy' => 'json',
+        'preferences' => 'json',
     ];
 
     protected $dates = ['notifications_viewed_at'];
@@ -458,6 +460,16 @@ class User extends Authenticatable implements MustVerifyEmail
             'view_identities' => $user->can('view_identities', $this),
             'view_current_activity' => $user->can('view_current', [Activity::class, $this]),
         ];
+    }
+
+    /**
+     * Get an instance of the use preferences settings
+     *
+     * @return Preferences
+     */
+    public function preferences()
+    {
+        return new Preferences($this->preferences, $this);
     }
 
 }

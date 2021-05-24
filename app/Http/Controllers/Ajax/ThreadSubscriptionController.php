@@ -55,6 +55,6 @@ class ThreadSubscriptionController extends Controller
             $thread->subscribe($userId);
 
         }
-        $thread->subscribeWithoutEmails($userId);
+        $thread->subscribeWithoutEmailNotifications($userId);
     }
 }

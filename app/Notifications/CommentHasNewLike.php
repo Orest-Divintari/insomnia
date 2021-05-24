@@ -47,7 +47,7 @@ class CommentHasNewLike extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return $notifiable->preferences()->comment_liked;
     }
 
     /**

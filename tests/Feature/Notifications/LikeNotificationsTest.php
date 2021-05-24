@@ -8,7 +8,9 @@ use App\Notifications\ReplyHasNewLike;
 use App\ProfilePost;
 use App\Reply;
 use App\User;
+use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
@@ -23,34 +25,39 @@ class LikeNotificationsTest extends TestCase
         parent::setUp();
         Notification::fake();
     }
+
     /** @test */
-    public function the_thread_reply_poster_receives_notifications_when_the_reply_is_liked()
+    public function users_may_receive_database_notifications_when_another_user_likes_their_thread_replies()
     {
-        $replyPoster = create(User::class);
-        $reply = ReplyFactory::by($replyPoster)->create();
+        $user = create(User::class);
+        $reply = ReplyFactory::by($user)->create();
         $liker = $this->signIn();
-        $thread = $reply->repliable;
+        $desiredChannels = ['database'];
 
-        $this->post(route('ajax.likes.store', $reply));
+        $this->postJson(route('ajax.likes.store', $reply));
 
-        $like = $reply->likes()->first();
-        Notification::assertSentTo(
-            $replyPoster,
-            ReplyHasNewLike::class,
-            function ($notification, $channels)
-             use (
-                $liker,
-                $like,
-                $reply,
-                $thread
-            ) {
-                return $notification->reply->id == $reply->id
-                && $notification->liker->id == $liker->id
-                && $notification->like->id == $like->id
-                && $notification->thread->id == $thread->id;
-            });
+        Notification::assertSentTo($user, function (ReplyHasNewLike $notification, $channels) use ($reply, $desiredChannels) {
+            return $reply->id == $notification->reply->id &&
+                $desiredChannels == $channels;
+        });
     }
 
+    /** @test */
+    public function users_may_disable_database_notifications_when_another_user_likes_their_thread_replies()
+    {
+        $user = create(User::class);
+        $user->preferences()->merge(['thread_reply_liked' => []]);
+        $reply = ReplyFactory::by($user)->create();
+        $liker = $this->signIn();
+        $desiredChannels = [];
+
+        $this->postJson(route('ajax.likes.store', $reply));
+
+        Notification::assertSentTo($user, function (ReplyHasNewLike $notification, $channels) use ($reply, $desiredChannels) {
+            return $reply->id == $notification->reply->id &&
+                $desiredChannels == $channels;
+        });
+    }
     /** @test */
     public function the_thread_reply_poster_must_not_receive_a_notification_when_like_their_own_reply()
     {
@@ -63,32 +70,42 @@ class LikeNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function the_conversation_message_poster_should_receive_a_notification_when_another_user_likes_the_message()
+    public function users_may_receive_a_database_notification_when_other_participants_like_their_messages()
     {
         $conversationStarter = $this->signIn();
-        $liker = create(User::class);
-        $conversation = ConversationFactory::withParticipants([$liker->name])->create();
-        $message = $conversation->messages->first();
-        $this->signIn($liker);
+        $participant = create(User::class);
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$participant->name])
+            ->create();
+        $message = $conversation->messages()->first();
+        $this->signIn($participant);
 
-        $this->post(route('ajax.likes.store', $message));
+        $this->postJson(route('ajax.likes.store', $message));
 
-        $like = $message->likes()->first();
-        Notification::assertSentTo(
-            $conversationStarter,
-            MessageHasNewLike::class,
-            function ($notification, $channels) use (
-                $message,
-                $liker,
-                $like,
-                $conversation
-            ) {
-                return true;
-                return $notification->message->id == $message->id
-                && $notification->like->id == $like->id
-                && $notification->liker->id == $liker->id
-                && $notification->conversation->id == $conversation->id;
-            });
+        Notification::assertSentTo($conversationStarter, function (MessageHasNewLike $notification, $channels) use ($message) {
+            return $message->id == $notification->message->id &&
+            empty(array_diff_assoc($channels, ['database']));
+        });
+    }
+
+    /** @test */
+    public function users_may_disable_database_notifications_when_their_messages_are_liked_by_other_participants()
+    {
+        $conversationStarter = $this->signIn();
+        $conversationStarter->preferences()->merge(['message_liked' => []]);
+        $participant = create(User::class);
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$participant->name])
+            ->create();
+        $message = $conversation->messages()->first();
+        $this->signIn($participant);
+
+        $this->postJson(route('ajax.likes.store', $message));
+
+        Notification::assertSentTo($conversationStarter, function (MessageHasNewLike $notification, $channels) use ($message) {
+            return $message->id == $notification->message->id &&
+            empty($channels);
+        });
     }
 
     /** @test */
@@ -107,41 +124,64 @@ class LikeNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function the_owner_of_a_comment_should_receive_notification_when_the_comment_is_liked_by_another_user()
+    public function comment_posters_may_receive_database_notifications_when_another_user_likes_their_comment()
     {
+        $profileOwner = create(User::class);
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
         $commentPoster = create(User::class);
-        $profilePost = create(ProfilePost::class);
-        $comment = create(Reply::class, [
-            'user_id' => $commentPoster->id,
-            'repliable_id' => $profilePost->id,
-            'repliable_type' => ProfilePost::class,
-        ]);
-        $profileOwner = $profilePost->profileOwner;
+        $comment = CommentFactory::by($commentPoster)
+            ->toProfilePost($profilePost)
+            ->create();
         $liker = $this->signIn();
+        $desiredChannels = ['database'];
 
         $this->post(route('ajax.likes.store', $comment));
 
         $like = $comment->likes()->first();
         Notification::assertSentTo(
             $commentPoster,
-            CommentHasNewLike::class,
-            function ($notification)
-             use (
-                $commentPoster,
-                $profilePost,
-                $profileOwner,
-                $like,
-                $liker,
-                $comment
-            ) {
-                return $notification->comment->id == $comment->id
-                && $notification->commentPoster->id == $commentPoster->id
-                && $notification->profileOwner->id == $profileOwner->id
-                && $notification->liker->id == $liker->id
-                && $notification->like->id == $like->id
-                && $notification->profilePost->id == $profilePost->id;
-            }
-        );
+            function (CommentHasNewLike $notification, $channels)
+             use ($liker, $like, $comment, $commentPoster, $profilePost, $profileOwner, $desiredChannels) {
+
+                return $notification->like->is($like) &&
+                $notification->liker->is($liker) &&
+                $notification->comment->is($comment) &&
+                $notification->commentPoster->is($commentPoster) &&
+                $notification->profilePost->is($profilePost) &&
+                $notification->profileOwner->is($profileOwner) &&
+                    $channels == $desiredChannels;
+            });
+    }
+
+    /** @test */
+    public function comment_posters_may_disable_database_notifications_when_another_user_likes_their_comment()
+    {
+        $profileOwner = create(User::class);
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
+        $commentPoster = create(User::class);
+        $commentPoster->preferences()->merge(['comment_liked' => []]);
+        $comment = CommentFactory::by($commentPoster)
+            ->toProfilePost($profilePost)
+            ->create();
+        $liker = $this->signIn();
+        $desiredChannels = [];
+
+        $this->post(route('ajax.likes.store', $comment));
+
+        $like = $comment->likes()->first();
+        Notification::assertSentTo(
+            $commentPoster,
+            function (CommentHasNewLike $notification, $channels)
+             use ($liker, $like, $comment, $commentPoster, $profilePost, $profileOwner, $desiredChannels) {
+
+                return $notification->like->is($like) &&
+                $notification->liker->is($liker) &&
+                $notification->comment->is($comment) &&
+                $notification->commentPoster->is($commentPoster) &&
+                $notification->profilePost->is($profilePost) &&
+                $notification->profileOwner->is($profileOwner) &&
+                    $channels == $desiredChannels;
+            });
     }
 
     /** @test */

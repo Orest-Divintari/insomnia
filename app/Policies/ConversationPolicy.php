@@ -44,6 +44,10 @@ class ConversationPolicy
      */
     public function manage(User $user, Conversation $conversation)
     {
+        if (!$conversation->hasParticipant($user)) {
+            return false;
+        }
+
         return $user->is($conversation->starter) || $conversation->isAdmin($user);
     }
 

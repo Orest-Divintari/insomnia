@@ -5,14 +5,14 @@ namespace Tests\Feature\Notifications;
 use App\Conversation;
 use App\Notifications\ConversationHasNewMessage;
 use App\User;
-use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ConversationNotificationsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -21,47 +21,62 @@ class ConversationNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function when_a_new_message_is_added_to_conversation_the_participants_should_receive_email_notification()
+    public function users_may_prefer_to_receive_email_every_time_they_receive_a_new_conversation_message()
     {
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
-        $conversation = ConversationFactory::withParticipants([$participant->name])
-            ->create();
-        $message = $conversation->messages()->first();
+        $attributes = [
+            'title' => $this->faker()->sentence(),
+            'message' => $this->faker()->text(),
+            'participants' => $participant->name,
+        ];
 
-        Notification::assertSentTo(
-            $participant,
-            function (ConversationHasNewMessage $notification, $channels)
-             use (
-                $conversation,
-                $message
-            ) {
-                return $notification->conversation->id == $conversation->id
-                && $notification->message->id == $message->id;
-            }
-        );
+        $this->post(route('conversations.store'), $attributes);
+
+        $conversation = $participant->conversations()->first();
+        Notification::assertSentTo($participant,
+            function (ConversationHasNewMessage $notification, $channels) use ($conversation, $participant) {
+                return empty(array_diff_assoc($participant->preferences()->message_created, $channels)) &&
+                $conversation->id == $notification->conversation->id;
+            });
     }
 
     /** @test */
-    public function when_a_new_message_is_added_to_conversation_the_user_who_added_the_message_should_not_receive_a_notification()
+    public function users_may_disable_email_notifications_when_they_receive_a_new_converasation_message()
     {
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
-        $conversation = ConversationFactory::withParticipants([$participant->name])
-            ->create();
-        $message = $conversation->messages()->first();
+        $participant->preferences()->merge(['message_created' => []]);
+        $attributes = [
+            'title' => $this->faker()->sentence(),
+            'message' => $this->faker()->text(),
+            'participants' => $participant->name,
+        ];
 
-        Notification::assertSentTo(
-            $participant,
-            function (ConversationHasNewMessage $notification, $channels)
-             use (
-                $conversation,
-                $message
-            ) {
-                return $notification->conversation->id == $conversation->id
-                && $notification->message->id == $message->id;
-            }
-        );
+        $this->post(route('conversations.store'), $attributes);
+
+        $conversation = $participant->conversations()->first();
+        Notification::assertSentTo($participant,
+            function (ConversationHasNewMessage $notification, $channels) use ($conversation, $participant) {
+                return empty($channels) &&
+                $conversation->id == $notification->conversation->id;
+            });
+    }
+
+    /** @test */
+    public function the_users_who_add_a_message_to_a_conversation_should_not_receive_notification_about_their_own_message()
+    {
+        $conversationStarter = $this->signIn();
+        $participant = create(User::class);
+        $attributes = [
+            'title' => $this->faker()->sentence(),
+            'message' => $this->faker()->text(),
+            'participants' => $participant->name,
+        ];
+
+        $this->post(route('conversations.store'), $attributes);
+
+        $conversation = $conversationStarter->conversations()->first();
         Notification::assertNotSentTo(
             $conversationStarter,
             ConversationHasNewMessage::class
@@ -143,4 +158,5 @@ class ConversationNotificationsTest extends TestCase
             ConversationHasNewMessage::class
         );
     }
+
 }

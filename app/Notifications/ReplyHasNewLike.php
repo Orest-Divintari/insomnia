@@ -39,7 +39,7 @@ class ReplyHasNewLike extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return $notifiable->preferences()->thread_reply_liked;
     }
 
     /**b

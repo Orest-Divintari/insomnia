@@ -66,7 +66,7 @@ class ThreadSubscription extends Model
      *
      * @return void
      */
-    public function enableEmails()
+    public function enableEmailNotifications()
     {
         $this->update([
             'prefers_email' => true,
@@ -78,7 +78,7 @@ class ThreadSubscription extends Model
      *
      * @return void
      */
-    public function disableEmails()
+    public function disableEmailNotifications()
     {
         $this->update([
             'prefers_email' => false,

@@ -166,17 +166,6 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function determine_whether_a_given_user_is_subscribed_to_a_thread()
-    {
-        $user = create(User::class);
-        $this->assertFalse($this->thread->isSubscribedBy($user->id));
-
-        $this->thread->subscribe($user->id);
-
-        $this->assertTrue($this->thread->isSubscribedBy($user->id));
-    }
-
-    /** @test */
     public function a_thread_can_be_marked_as_read_by_many_users()
     {
         $user = $this->signIn();
@@ -397,5 +386,16 @@ class ThreadTest extends TestCase
         $thread->unread($user);
 
         $this->assertTrue($thread->hasBeenUpdated());
+    }
+
+    /** @test */
+    public function it_knows_if_a_user_is_a_subscriber()
+    {
+        $user = create(User::class);
+        $thread = create(Thread::class);
+
+        $thread->subscribe($user->id);
+
+        $this->assertTrue($thread->hasSubscriber($user));
     }
 }

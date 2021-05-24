@@ -14,20 +14,38 @@ class FollowNotificationsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function notify_a_user_when_has_a_new_follower()
+    public function users_may_receive_database_notification_when_another_user_follows_them()
     {
         Notification::fake();
-        $follower = $this->signIn();
         $user = create(User::class);
+        $follower = $this->signIn();
+        $desiredChannels = ['database'];
 
-        $this->post(route('ajax.follow.store', $user->name));
+        $this->postJson(route('ajax.follow.store', $user));
 
-        Notification::assertSentTo(
-            $user,
-            function (YouHaveANewFollower $notification, $channels) use ($follower, $user) {
-                return $notification->following->id == $user->id
-                && $notification->follower->id == $follower->id;
-            });
+        Notification::assertSentTo($user, function (YouHaveANewFollower $notification, $channels) use ($user, $follower, $desiredChannels) {
+            return $notification->follower->is($follower) &&
+            $notification->following->is($user) &&
+                $channels == $desiredChannels;
+        });
+    }
+
+    /** @test */
+    public function users_may_disable_database_notification_when_another_user_follows_them()
+    {
+        Notification::fake();
+        $user = create(User::class);
+        $user->preferences()->merge(['user_followed_you' => []]);
+        $follower = $this->signIn();
+        $desiredChannels = [];
+
+        $this->postJson(route('ajax.follow.store', $user));
+
+        Notification::assertSentTo($user, function (YouHaveANewFollower $notification, $channels) use ($user, $follower, $desiredChannels) {
+            return $notification->follower->is($follower) &&
+            $notification->following->is($user) &&
+                $channels == $desiredChannels;
+        });
     }
 
     /** @test */

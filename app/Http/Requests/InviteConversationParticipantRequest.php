@@ -47,7 +47,7 @@ class InviteConversationParticipantRequest extends FormRequest
     {
         return [
             'participants' => ['required', "array", 'min:1'],
-            'participants.*' => ['required', 'string', 'exists:users,name', new IsNotAlreadyAParticipant],
+            'participants.*' => ['required', 'string', 'exists:users,name', new IsNotAlreadyAParticipant, 'bail'],
         ];
     }
 
@@ -93,7 +93,7 @@ class InviteConversationParticipantRequest extends FormRequest
      */
     public function addParticipants()
     {
-        $this->getConversation()->addParticipants($this->input('participants'));
+        $this->conversation->addParticipants($this->input('participants'));
     }
 
     /**

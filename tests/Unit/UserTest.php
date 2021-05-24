@@ -7,6 +7,7 @@ use App\Conversation;
 use App\Thread;
 use App\User;
 use App\User\Details;
+use App\User\Preferences;
 use App\User\Privacy;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
@@ -387,6 +388,32 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function when_a_user_is_created_the_default_preferences_are_set()
+    {
+        $user = create(User::class);
+
+        $defaultPreferences = collect(config('settings.preferences.attributes'));
+        $userPreferences = collect($user->preferences);
+
+        $this->assertTrue(
+            $defaultPreferences->every(function ($value, $key) use ($userPreferences) {
+                if (is_array($value)) {
+                    array_diff_assoc($value, $userPreferences[$key]);
+                }
+                return $value === $userPreferences[$key];
+            })
+        );
+    }
+
+    /** @test */
+    public function users_have_preferences()
+    {
+        $user = create(User::class);
+
+        $this->assertInstanceOf(Preferences::class, $user->preferences());
+    }
+
+    /** @test */
     public function a_user_can_update_the_details_attributes()
     {
         $user = $this->signIn();
@@ -499,5 +526,4 @@ class UserTest extends TestCase
         $this->assertFalse($user->permissions['view_identities']);
         $this->assertFalse($user->permissions['view_current_activity']);
     }
-
 }

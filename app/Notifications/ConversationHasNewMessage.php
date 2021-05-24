@@ -36,7 +36,7 @@ class ConversationHasNewMessage extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return $notifiable->preferences()->message_created;
     }
 
     /**

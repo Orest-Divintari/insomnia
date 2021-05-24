@@ -30,6 +30,7 @@ class UserObserver
     {
         $user->details = config('settings.details.attributes');
         $user->privacy = config('settings.privacy.attributes');
+        $user->preferences = config('settings.preferences.attributes');
     }
 
 }

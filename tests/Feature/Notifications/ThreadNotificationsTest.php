@@ -32,12 +32,13 @@ class ThreadNotificationsTest extends TestCase
     /** @test */
     public function a_thread_subscriber_receives_a_mail_and_database_notifications_when_new_reply_is_posted_to_thread()
     {
+        $user = $this->signIn();
         $thread = create(Thread::class);
         $subscriber = create(User::class);
         $thread->subscribe($subscriber->id);
         $replyPoster = $this->signIn();
         $newReply = 'new reply';
-        $desiredChannels = ['mail', 'database'];
+        $desiredChannels = ['database', 'mail'];
 
         $this->post(
             route('ajax.replies.store', $thread),
@@ -46,7 +47,7 @@ class ThreadNotificationsTest extends TestCase
 
         $reply = $thread->replies->firstWhere('body', $newReply);
         Notification::assertSentTo(
-            $this->user,
+            $user,
             ThreadHasNewReply::class,
             function ($notification, $channels)
              use (
@@ -57,8 +58,43 @@ class ThreadNotificationsTest extends TestCase
                 return collect($channels)->every(function ($channel) use ($desiredChannels) {
                     return collect($desiredChannels)->contains($channel);
                 })
-                && $notification->reply->id == $reply->id
-                && $notification->thread->id == $thread->id;
+                && $notification->reply->is($reply)
+                && $notification->thread->is($thread);
+            });
+    }
+
+    /** @test */
+    public function a_thread_subscriber_may_disable_the_database_notifications_for_new_replies_in_the_thread()
+    {
+        $thread = create(Thread::class);
+        $subscriber = create(User::class);
+        $subscriber->preferences()->merge(['thread_reply_created' => []]);
+        $thread->subscribe($subscriber->id);
+        $replyPoster = $this->signIn();
+        $newReply = 'new reply';
+        $desiredChannels = ['mail'];
+
+        $this->post(
+            route('ajax.replies.store', $thread),
+            ['body' => $newReply]
+        );
+
+        $reply = $thread->replies->firstWhere('body', $newReply);
+        Notification::assertSentTo(
+            $subscriber,
+            ThreadHasNewReply::class,
+            function ($notification, $channels)
+             use (
+                $reply,
+                $thread,
+                $desiredChannels
+            ) {
+                return
+                collect($channels)->every(function ($channel) use ($desiredChannels) {
+                    return collect($desiredChannels)->contains($channel);
+                }) &&
+                $notification->reply->is($reply) &&
+                $notification->thread->is($thread);
             });
     }
 
@@ -67,7 +103,7 @@ class ThreadNotificationsTest extends TestCase
     {
         $thread = create(Thread::class);
         $subscriber = create(User::class);
-        $thread->subscribeWithoutEmails($subscriber->id);
+        $thread->subscribeWithoutEmailNotifications($subscriber->id);
         $replyPoster = $this->signIn();
         $newReply = 'new reply';
         $desiredChannels = ['database'];
@@ -89,15 +125,15 @@ class ThreadNotificationsTest extends TestCase
                 $desiredChannels,
                 $undesiredChannels
             ) {
-                return in_array($desiredChannels[0], $channels)
-                && !in_array($undesiredChannels[0], $channels)
-                && $notification->thread->id == $thread->id
-                && $notification->reply->id == $reply->id;
+                return in_array($desiredChannels[0], $channels) &&
+                !in_array($undesiredChannels[0], $channels) &&
+                $notification->thread->is($thread) &&
+                $notification->reply->is($reply);
             });
     }
 
     /** @test */
-    public function a_thread_subscriber_should_not_receive_any_notifications_when_posts_replies_to_thread()
+    public function users_should_not_receive_any_notifications_about_their_own_thread_replies()
     {
         $thread = create(Thread::class);
         $subscriber = create(User::class);

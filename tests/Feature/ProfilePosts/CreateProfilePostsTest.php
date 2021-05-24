@@ -81,7 +81,7 @@ class CreateProfilePostsTest extends TestCase
         $profileOwner->allowMembers('post_on_profile');
         $post = ['body' => 'some news'];
 
-        $this->post(
+        $this->postJson(
             route('ajax.profile-posts.store', $profileOwner),
             $post
         );

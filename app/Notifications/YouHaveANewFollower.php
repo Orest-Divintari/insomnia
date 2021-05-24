@@ -50,7 +50,7 @@ class YouHaveANewFollower extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return $notifiable->preferences()->user_followed_you;
     }
 
     /**

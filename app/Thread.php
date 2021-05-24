@@ -97,9 +97,6 @@ class Thread extends Model
 
         static::created(function ($thread) {
             $thread->createReplyForThreadBody();
-            if (auth()->check()) {
-                $thread->subscribe(auth()->id());
-            }
         });
 
         static::deleting(function ($thread) {

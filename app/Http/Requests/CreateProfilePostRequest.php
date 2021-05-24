@@ -14,6 +14,7 @@ class CreateProfilePostRequest extends FormRequest
     public function authorize()
     {
         $profileOwner = $this->route('user')->firstOrFail();
+
         return auth()->user()->can('post_on_profile', $profileOwner);
     }
 

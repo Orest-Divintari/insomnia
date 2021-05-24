@@ -36,7 +36,7 @@ class MessageHasNewLike extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return $notifiable->preferences()->message_liked;
     }
 
     /**

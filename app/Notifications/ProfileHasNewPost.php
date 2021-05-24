@@ -37,7 +37,7 @@ class ProfileHasNewPost extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return $notifiable->preferences()->profile_post_created;
     }
 
     /**

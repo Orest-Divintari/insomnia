@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('notifications_viewed_at')->nullable();
             $table->json('details')->nullable();
             $table->json('privacy')->nullable();
+            $table->json('preferences')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

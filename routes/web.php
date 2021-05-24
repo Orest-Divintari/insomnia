@@ -109,6 +109,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/account/privacy', 'AccountPrivacyController@edit')
         ->name('account.privacy.edit');
 
+    /* ************ ACCOUNT PREFERENCES ************ */
+
+    Route::patch('/account/preferences', 'AccountPreferenceController@update')
+        ->name('account.preferences.update');
+
+    Route::get('/account/preferences', 'AccountPreferenceController@edit')
+        ->name('account.preferences.edit');
+
     /* ************ ACCOUNT PASSWORD ************ */
 
     Route::patch('/account/password', 'AccountPasswordController@update')

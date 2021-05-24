@@ -16,7 +16,7 @@ trait Subscribable
      */
     public function subscribe($userId = null)
     {
-        $this->subscriptions()->updateOrcreate([
+        return $this->subscriptions()->updateOrcreate([
             'user_id' => $userId ?? auth()->id(),
             'prefers_email' => true,
         ]);
@@ -29,7 +29,7 @@ trait Subscribable
      * @param int $userId
      * @return void
      */
-    public function subscribeWithoutEmails($userId = null)
+    public function subscribeWithoutEmailNotifications($userId = null)
     {
         $this->subscriptions()->updateOrcreate([
             'user_id' => $userId ?? auth()->id(),
@@ -64,19 +64,6 @@ trait Subscribable
     }
 
     /**
-     * Determine whether a user is subscribed to current thread
-     *
-     * @param int $userId
-     * @return boolean
-     */
-    public function isSubscribedBy($userId)
-    {
-        return $this->subscriptions()->where([
-            'user_id' => $userId,
-        ])->exists();
-    }
-
-    /**
      * A thread can have many subscriptions
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -86,4 +73,16 @@ trait Subscribable
         return $this->hasMany(ThreadSubscription::class);
     }
 
+    /**
+     * Determine whether a user has subscribe to the thread
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function hasSubscriber($user)
+    {
+        return $this->subscriptions()
+            ->where('user_id', $user->id)
+            ->exists();
+    }
 }

@@ -11,10 +11,12 @@ use App\Observers\GroupCategoryObserver;
 use App\Observers\MessageObserver;
 use App\Observers\ProfilePostObserver;
 use App\Observers\ReplyObserver;
+use App\Observers\SubscribeToThreadObserver;
 use App\Observers\ThreadReplyObserver;
 use App\Observers\UserObserver;
 use App\ProfilePost;
 use App\Reply;
+use App\Thread;
 use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -33,14 +35,19 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         'App\Events\Subscription\NewReplyWasPostedToThread' => [
-            'App\Listeners\Subscription\NotifyThreadSubscribers',
+            'App\Listeners\Subscription\SubscribeToThread',
+        'App\Listeners\Subscription\NotifyThreadSubscribers',
         ],
         'App\Events\Profile\NewCommentWasAddedToProfilePost' => [
-            'App\Listeners\Profile\NotifyPostParticipants',
+            'App\Listeners\Profile\NotifyPostParticipantsOfNewComment',
+            'App\Listeners\Profile\NotifyProfileOwnerOfNewCommentOnAPost',
+            'App\Listeners\Profile\NotifyProfileOwnerOfNewCommentOnTheirPost',
+            'App\Listeners\Profile\NotifyProfilePostOwnerOfNewComment',
         ],
         'App\Events\Profile\NewPostWasAddedToProfile' => [
             'App\Listeners\Profile\NotifyProfileOwnerOfNewPost',
         ],
+
         'App\Events\Subscription\ReplyWasLiked' => [
             'App\Listeners\Subscription\NotifyReplyPoster',
         ],
@@ -93,6 +100,7 @@ class EventServiceProvider extends ServiceProvider
         Reply::observe(ReplyObserver::class);
         Reply::observe(ThreadReplyObserver::class);
         Reply::observe(MessageObserver::class);
+        Thread::observe(SubscribeToThreadObserver::class);
 
     }
 }

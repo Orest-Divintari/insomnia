@@ -3,10 +3,12 @@
 namespace Tests\Feature\Notifications;
 
 use App\Http\Middleware\ThrottlePosts;
+use App\Notifications\ParticipatedProfilePostHasNewComment;
+use App\Notifications\PostOnYourProfileHasNewComment;
 use App\Notifications\ProfileHasNewPost;
-use App\Notifications\ProfilePostHasNewComment;
+use App\Notifications\YourPostOnYourProfileHasNewComment;
+use App\Notifications\YourProfilePostHasNewComment;
 use App\ProfilePost;
-use App\Reply;
 use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
@@ -27,64 +29,158 @@ class ProfilePostNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function the_owner_of_a_profile_receives_notification_when_a_new_post_is_added_to_profile()
+    public function profile_owners_may_receive_database_notification_when_another_user_posts_on_their_profile()
     {
-        $poster = $this->signIn();
         $profileOwner = create(User::class);
-        $post = ['body' => $this->faker->sentence];
+        $poster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $desiredChannels = ['database'];
 
-        $this->post(
-            route('ajax.profile-posts.store', $profileOwner),
-            $post
-        );
+        $this->postJson(route('ajax.profile-posts.store', $profileOwner), $attributes);
 
-        $profilePost = ProfilePost::whereBody($post['body'])->first();
+        $profilePost = $profileOwner->profilePosts()->first();
         Notification::assertSentTo(
             $profileOwner,
-            ProfileHasNewPost::class,
-            function ($notificiation) use (
-                $poster,
-                $profileOwner,
-                $profilePost
-            ) {
-                return $notificiation->postPoster->id == $poster->id
-                && $notificiation->profileOwner->id == $profileOwner->id
-                && $notificiation->profilePost->id == $profilePost->id;
-            }
-        );
+            function (ProfileHasNewPost $notification, $channels)
+             use ($profilePost, $desiredChannels) {
+
+                return $notification->profilePost->id == $profilePost->id &&
+                    $desiredChannels == $channels;
+            });
     }
 
     /** @test */
-    public function participants_in_a_profile_post_receive_notifications_when_a_new_comment_is_added_to_the_post()
+    public function profile_owners_may_disable_the_database_notification_for_new_profile_posts_on_their_profile()
     {
-        $commentPoster = $this->signIn();
         $profileOwner = create(User::class);
-        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
-        $postParticipant = create(User::class);
-        CommentFactory::by($postParticipant)
-            ->toProfilePost($profilePost)
-            ->create();
-        $comment = ['body' => $this->faker->sentence];
+        $profileOwner->preferences()->merge(['profile_post_created' => []]);
+        $poster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $desiredChannels = [];
 
-        $this->post(route('ajax.comments.store', $profilePost), $comment);
+        $this->postJson(route('ajax.profile-posts.store', $profileOwner), $attributes);
 
-        $comment = Reply::whereBody($comment['body'])->first();
+        $profilePost = $profileOwner->profilePosts()->first();
         Notification::assertSentTo(
-            $postParticipant,
-            ProfilePostHasNewComment::class,
-            function ($notificiation) use (
-                $commentPoster,
-                $comment,
-                $profilePost,
-                $profileOwner
-            ) {
-                return $notificiation->commentPoster->id == $commentPoster->id
-                && $notificiation->comment->id == $comment->id
-                && $notificiation->profilePost->id == $profilePost->id
-                && $notificiation->profileOwner->id == $profileOwner->id;
-            }
-        );
+            $profileOwner,
+            function (ProfileHasNewPost $notification, $channels)
+             use ($profilePost, $desiredChannels) {
 
+                return $notification->profilePost->id == $profilePost->id &&
+                    $desiredChannels == $channels;
+            });
+    }
+
+    /** @test */
+    public function profile_owners_may_receive_database_notification_when_a_user_adds_a_comment_on_their_post()
+    {
+        $profileOwner = create(User::class);
+        $profilePost = ProfilePostFactory::by($profileOwner)
+            ->toProfile($profileOwner)
+            ->create();
+        $commentPoster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $desiredChannels = ['database'];
+
+        $this->postJson(route('ajax.comments.store', $profilePost), $attributes)->json();
+
+        $comment = $profilePost->comments()->first();
+        Notification::assertSentTo(
+            $profileOwner,
+            function (YourPostOnYourProfileHasNewComment $notification, $channels)
+             use ($profilePost, $comment, $commentPoster, $profileOwner, $desiredChannels) {
+
+                return $notification->profilePost->is($profilePost) &&
+                $notification->commentPoster->is($commentPoster) &&
+                $notification->comment->is($comment) &&
+                $notification->profileOwner->is($profileOwner) &&
+                    $desiredChannels == $channels;
+            });
+    }
+
+    /** @test */
+    public function profile_owners_may_disable_database_notification_when_a_user_adds_a_comment_on_their_post()
+    {
+        $profileOwner = create(User::class);
+        $profileOwner->preferences()->merge(['comment_on_your_post_on_your_profile_created' => []]);
+        $profilePost = ProfilePostFactory::by($profileOwner)
+            ->toProfile($profileOwner)
+            ->create();
+        $commentPoster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $desiredChannels = [];
+
+        $this->postJson(route('ajax.comments.store', $profilePost), $attributes)->json();
+
+        $comment = $profilePost->comments()->first();
+        Notification::assertSentTo(
+            $profileOwner,
+            function (YourPostOnYourProfileHasNewComment $notification, $channels)
+             use ($profilePost, $comment, $commentPoster, $profileOwner, $desiredChannels) {
+                return $notification->profilePost->is($profilePost) &&
+
+                $notification->commentPoster->is($commentPoster) &&
+                $notification->comment->is($comment) &&
+                $notification->profileOwner->is($profileOwner) &&
+                    $desiredChannels == $channels;
+            });
+    }
+
+    /** @test */
+    public function profile_owners_may_receive_database_notifications_when_a_user_adds_a_comment_on_a_post_on_their_profile()
+    {
+        $profileOwner = create(User::class);
+        $postPoster = create(User::class);
+        $profilePost = ProfilePostFactory::by($postPoster)
+            ->toProfile($profileOwner)
+            ->create();
+        $commentPoster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $desiredChannels = ['database'];
+
+        $this->postJson(route('ajax.comments.store', $profilePost), $attributes)->json();
+
+        $comment = $profilePost->comments()->first();
+        Notification::assertSentTo(
+            $profileOwner,
+            function (PostOnYourProfileHasNewComment $notification, $channels)
+             use ($profilePost, $comment, $commentPoster, $profileOwner, $desiredChannels) {
+                return $notification->profilePost->is($profilePost) &&
+
+                $notification->commentPoster->is($commentPoster) &&
+                $notification->comment->is($comment) &&
+                $notification->profileOwner->is($profileOwner) &&
+                    $desiredChannels == $channels;
+            });
+    }
+
+    /** @test */
+    public function profile_owners_may_disable_database_notifications_when_a_user_adds_a_comment_on_a_post_on_their_profile()
+    {
+        $profileOwner = create(User::class);
+        $profileOwner->preferences()->merge(['comment_on_a_post_on_your_profile_created' => []]);
+        $postPoster = create(User::class);
+        $profilePost = ProfilePostFactory::by($postPoster)
+            ->toProfile($profileOwner)
+            ->create();
+        $commentPoster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $desiredChannels = [];
+
+        $this->postJson(route('ajax.comments.store', $profilePost), $attributes)->json();
+
+        $comment = $profilePost->comments()->first();
+        Notification::assertSentTo(
+            $profileOwner,
+            function (PostOnYourProfileHasNewComment $notification, $channels)
+             use ($profilePost, $comment, $commentPoster, $profileOwner, $desiredChannels) {
+
+                return $notification->profilePost->is($profilePost) &&
+                $notification->commentPoster->is($commentPoster) &&
+                $notification->comment->is($comment) &&
+                $notification->profileOwner->is($profileOwner) &&
+                    $desiredChannels == $channels;
+            });
     }
 
     /** @test */
@@ -102,7 +198,7 @@ class ProfilePostNotificationsTest extends TestCase
 
         Notification::assertNotSentTo(
             $commentPoster,
-            ProfilePostHasNewComment::class
+            ParticipatedProfilePostHasNewComment::class
         );
     }
 
@@ -125,8 +221,112 @@ class ProfilePostNotificationsTest extends TestCase
 
         Notification::assertSentTo(
             $profileOwner,
-            ProfilePostHasNewComment::class
+            PostOnYourProfileHasNewComment::class
         );
+    }
+
+    /** @test */
+    public function the_owner_of_a_profile_post_may_receive_database_notifications_when_another_user_adds_a_comment_on_that_post()
+    {
+        $profileOwner = create(User::class);
+        $postPoster = create(User::class);
+        $profilePost = ProfilePostFactory::by($postPoster)
+            ->toProfile($profileOwner)
+            ->create();
+        $commentPoster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $desiredChannels = ['database'];
+
+        $this->postJson(route('ajax.comments.store', $profilePost), $attributes)->json();
+
+        $comment = $profilePost->comments()->first();
+        Notification::assertSentTo($postPoster, function (YourProfilePostHasNewComment $notification, $channels) use ($profilePost, $comment, $commentPoster, $profileOwner, $desiredChannels) {
+            return $notification->profilePost->is($profilePost) &&
+            $notification->commentPoster->is($commentPoster) &&
+            $notification->comment->is($comment) &&
+            $notification->profileOwner->is($profileOwner) &&
+                $desiredChannels == $channels;
+        });
+    }
+
+    /** @test */
+    public function the_owner_of_a_profile_post_may_disable_database_notifications_when_another_user_adds_a_comment_on_that_post()
+    {
+        $profileOwner = create(User::class);
+        $postPoster = create(User::class);
+        $postPoster->preferences()->merge(['comment_on_your_profile_post_created' => []]);
+        $profilePost = ProfilePostFactory::by($postPoster)
+            ->toProfile($profileOwner)
+            ->create();
+        $commentPoster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $desiredChannels = [];
+
+        $this->postJson(route('ajax.comments.store', $profilePost), $attributes)->json();
+
+        $comment = $profilePost->comments()->first();
+        Notification::assertSentTo($postPoster, function (YourProfilePostHasNewComment $notification, $channels) use ($profilePost, $comment, $commentPoster, $profileOwner, $desiredChannels) {
+            return $notification->profilePost->is($profilePost) &&
+            $notification->commentPoster->is($commentPoster) &&
+            $notification->comment->is($comment) &&
+            $notification->profileOwner->is($profileOwner) &&
+                $desiredChannels == $channels;
+        });
+    }
+
+    /** @test */
+    public function a_post_participant_may_receive_database_notifications_when_another_user_adds_a_comment_on_that_post()
+    {
+        $profileOwner = create(User::class);
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
+        $postParticipant = create(User::class);
+        CommentFactory::toProfilePost($profilePost)->by($postParticipant)->create();
+        $commentPoster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $desiredChannels = ['database'];
+
+        $this->postJson(route('ajax.comments.store', $profilePost), $attributes)->json();
+
+        $comment = $profilePost->comments()->latest('id')->first();
+        Notification::assertSentTo(
+            $postParticipant,
+            function (ParticipatedProfilePostHasNewComment $notification, $channels)
+             use ($profilePost, $comment, $commentPoster, $profileOwner, $desiredChannels) {
+
+                return $notification->profilePost->is($profilePost) &&
+                $notification->commentPoster->is($commentPoster) &&
+                $notification->comment->is($comment) &&
+                $notification->profileOwner->is($profileOwner) &&
+                    $desiredChannels == $channels;
+            });
+    }
+
+    /** @test */
+    public function a_post_participant_may_disable_database_notifications_when_another_user_adds_a_comment_on_that_post()
+    {
+        $profileOwner = create(User::class);
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
+        $postParticipant = create(User::class);
+        $postParticipant->preferences()->merge(['comment_on_participated_profile_post_created' => []]);
+        CommentFactory::toProfilePost($profilePost)->by($postParticipant)->create();
+        $commentPoster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $desiredChannels = [];
+
+        $this->postJson(route('ajax.comments.store', $profilePost), $attributes)->json();
+
+        $comment = $profilePost->comments()->latest('id')->first();
+        Notification::assertSentTo(
+            $postParticipant,
+            function (ParticipatedProfilePostHasNewComment $notification, $channels)
+             use ($profilePost, $comment, $commentPoster, $profileOwner, $desiredChannels) {
+                return $notification->profilePost->is($profilePost) &&
+
+                $notification->commentPoster->is($commentPoster) &&
+                $notification->comment->is($comment) &&
+                $notification->profileOwner->is($profileOwner) &&
+                    $desiredChannels == $channels;
+            });
     }
 
     /** @test */
@@ -145,7 +345,7 @@ class ProfilePostNotificationsTest extends TestCase
 
         Notification::assertNotSentTo(
             $profileOwner,
-            ProfilePostHasNewComment::class
+            PostOnYourProfileHasNewComment::class
         );
     }
 }

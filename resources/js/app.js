@@ -137,6 +137,16 @@ Vue.component(
     require("./components/account/BirthDateCheckbox.vue").default
 );
 
+Vue.component(
+    "WatchOnCreationCheckbox",
+    require("./components/account/WatchOnCreationCheckbox.vue").default
+);
+Vue.component(
+    "WatchOnInteractionCheckbox",
+    require("./components/account/WatchOnInteractionCheckbox.vue").default
+);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

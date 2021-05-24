@@ -25,7 +25,7 @@ class NotifyProfileOwnerOfNewPost
      */
     public function handle(NewPostWasAddedToProfile $event)
     {
-        if ($event->profileOwner->id != $event->postPoster->id) {
+        if ($event->profileOwner->isNot($event->postPoster)) {
 
             $event->profileOwner
                 ->notify(new ProfileHasNewPost(

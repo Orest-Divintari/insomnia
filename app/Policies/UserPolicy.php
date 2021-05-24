@@ -27,7 +27,7 @@ class UserPolicy
      * @param User $user
      * @return mixed
      */
-    public function view_profile(?User $authUser, User $user)
+    public function view_profile(User $authUser, User $user)
     {
         return ($user->is($authUser) || $user->allows('show_details')) ?:
         $this->deny('This member limits who may view their full profile.', 403);
@@ -40,8 +40,9 @@ class UserPolicy
      * @param User $profileOwner
      * @return void
      */
-    public function post_on_profile(?User $user, User $profileOwner)
+    public function post_on_profile(User $user, User $profileOwner)
     {
+
         return
         $user->is($profileOwner) || $profileOwner->allows('post_on_profile') ?:
         $this->deny('This member limits who may post on their profile.', 403);
