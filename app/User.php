@@ -435,9 +435,14 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getDateOfBirthAttribute()
     {
+        if (!$birthDate = $this->details()->birth_date) {
+            return;
+        }
+
         if ($this->allows('show_birth_date')) {
 
-            $dateOfBirth = Carbon::parse($this->details()->birth_date);
+            $dateOfBirth = Carbon::parse($birthDate);
+
             if ($this->allows('show_birth_year')) {
                 return $dateOfBirth->format('M d, Y') . " ( Age: {$dateOfBirth->age} )";
             }
