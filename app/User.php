@@ -463,7 +463,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get an instance of the use preferences settings
+     * Get an instance of the user preferences settings
      *
      * @return Preferences
      */
