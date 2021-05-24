@@ -34,9 +34,14 @@ class ThreadHasNewReply extends Notification
     public function via($notifiable)
     {
         $channels = $notifiable->preferences()->thread_reply_created;
-        $channels[] = $notifiable
+
+        $prefersEmail = $notifiable
             ->subscription($this->thread->id)
-            ->prefers_email ? 'mail' : '';
+            ->prefers_email;
+
+        if ($prefersEmail) {
+            $channels[] = 'mail';
+        }
 
         return $channels;
     }
