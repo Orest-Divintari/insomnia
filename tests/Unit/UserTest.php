@@ -497,6 +497,14 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function it_returns_null_if_there_is_no_birth_of_date()
+    {
+        $user = create(User::class);
+
+        $this->assertNull($user->dateOfBirth);
+    }
+
+    /** @test */
     public function it_returns_null_when_the_users_wants_to_hide_the_birth_date()
     {
         $user = $this->signIn();
