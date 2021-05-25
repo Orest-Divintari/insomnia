@@ -17,11 +17,11 @@
                 </header>
                 <div class="flex flex-col text-sm">
                     <a class="py-2 px-4 {{ $section == 'profile' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
-                        href=""> Your
+                        href="{{ route('profiles.show', auth()->user() ) }}"> Your
                         profile
                     </a>
-                    <a class="py-2 px-4 {{ $section == 'alerts' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
-                        href=""> Alerts </a>
+                    <a class="py-2 px-4 {{ $section == 'notifications' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
+                        href="{{ route('account.notifications.index') }}"> Notifications </a>
                     <a class="py-2 px-4 {{ $section == 'likes' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
                         href=""> Likes received </a>
                     <a class="py-2 px-4 {{ $section == 'bookmarks' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
@@ -37,11 +37,11 @@
                             href="{{ route('account.details.edit') }}"> Account details </a>
 
                         <a class="py-2 px-4 {{ $section == 'password and security' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
-                            href=""> Password and security
+                            href="{{ route('account.password.edit') }}"> Password and security
                         </a>
 
                         <a class="py-2 px-4 {{ $section == 'privacy' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
-                            href=""> Privacy </a>
+                            href="{{ route('account.privacy.edit') }}"> Privacy </a>
                         <a class="py-2 px-4 {{ $section == 'preferences' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
                             href=""> Preferences </a>
                         <a class="py-2 px-4 {{ $section == 'connected accounts' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
@@ -52,8 +52,11 @@
                             href="{{ route('account.follows.index') }}"> Following </a>
                         <a class="py-2 px-4 {{ $section == 'ignoring' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
                             href=""> Ignoring </a>
-                        <a class="py-2 px-4 {{ $section == 'log out' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
-                            href=""> Log out </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            <button
+                                class="py-2 px-4 {{ $section == 'log out' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}">
+                                Log out </button>
+                        </form>
                     </div>
                 </div>
             </div>
