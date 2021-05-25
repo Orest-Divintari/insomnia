@@ -12,7 +12,7 @@
         </div>
       </template>
       <template v-slot:dropdown-items>
-        <div class="dropdown-title">Alerts</div>
+        <div class="dropdown-title">Notifications</div>
         <div v-if="fetchedData">
           <div v-if="notificationsExist">
             <div
@@ -28,7 +28,7 @@
             </div>
           </div>
           <div v-if="!notificationsExist">
-            <div class="notification-item">You have no new alerts</div>
+            <div class="notification-item">You have no new notifications</div>
           </div>
         </div>
         <div v-else class="notification-item">...</div>
