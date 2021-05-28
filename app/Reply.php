@@ -248,6 +248,9 @@ class Reply extends Model
 
     public function getPermissionsAttribute()
     {
+        if (!auth()->check()) {
+            return;
+        }
         return [
             'update' => auth()->user()->can('update', $this),
             'delete' => auth()->user()->can('delete', $this),
