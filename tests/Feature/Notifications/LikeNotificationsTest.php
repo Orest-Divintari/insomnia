@@ -230,6 +230,32 @@ class LikeNotificationsTest extends TestCase
     }
 
     /** @test */
+    public function users_may_disable_database_notifications_when_their_profile_post_is_liked_by_another_user()
+    {
+        $poster = create(User::class);
+        $poster->preferences()->merge(['profile_post_liked' => []]);
+        $profilePost = ProfilePostFactory::by($poster)->create();
+        $profileOwner = $profilePost->profileOwner;
+        $liker = $this->signIn();
+        $desiredChannels = [];
+
+        $this->post(route('ajax.profile-post-likes.store', $profilePost));
+
+        $like = $profilePost->likes()->first();
+        Notification::assertSentTo(
+            $poster,
+            function (ProfilePostHasNewLike $notification, $channels) use ($desiredChannels, $profileOwner, $poster, $profilePost, $liker, $like) {
+                return $notification->poster->is($poster) &&
+                $notification->profileOwner->is($profileOwner) &&
+                $notification->profilePost->is($profilePost) &&
+                $notification->liker->is($liker) &&
+                $notification->like->is($like) &&
+                    $desiredChannels == $channels;
+            });
+
+    }
+
+    /** @test */
     public function users_who_create_a_profile_post_should_not_receive_notification_when_they_like_their_own_posts()
     {
         $poster = $this->signIn();

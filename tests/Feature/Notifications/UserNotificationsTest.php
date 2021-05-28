@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Notifications;
 
-use App\Http\Middleware\AppendVisitor;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
