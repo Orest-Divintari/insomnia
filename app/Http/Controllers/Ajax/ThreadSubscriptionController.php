@@ -25,7 +25,7 @@ class ThreadSubscriptionController extends Controller
 
         $this->subscribe($thread, auth()->id());
 
-        return response()->noContent();
+        return response('You have subsribed successfully', 200);
 
     }
 
@@ -39,7 +39,7 @@ class ThreadSubscriptionController extends Controller
     {
         $thread->unsubscribe();
 
-        return response()->noContent();
+        return response('You have unsubsribed successfully', 200);
     }
 
     /**

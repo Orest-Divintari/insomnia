@@ -119,7 +119,6 @@ export default {
       this.body = this.item.body;
     },
     update() {
-      console.log("asds");
       axios
         .patch(this.path, { body: this.body })
         .then(() => this.hideEdit())

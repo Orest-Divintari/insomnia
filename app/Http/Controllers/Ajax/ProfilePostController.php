@@ -44,5 +44,6 @@ class ProfilePostController extends Controller
     {
         $this->authorize('delete', $post);
         $post->delete();
+        return response('The post has been deleted', 200);
     }
 }

@@ -39,7 +39,7 @@ class CommentController extends Controller
     public function update(Reply $comment, UpdateCommentRequest $request)
     {
         $request->update($comment);
-        return response()->noContent();
+        return response('The comment has been updated', 200);
     }
 
     /**

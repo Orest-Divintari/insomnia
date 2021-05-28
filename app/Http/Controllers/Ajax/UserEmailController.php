@@ -10,5 +10,7 @@ class UserEmailController extends Controller
     public function update(UpdateUserEmailRequest $request)
     {
         $request->persist();
+
+        return response('Your email has been updated', 200);
     }
 }

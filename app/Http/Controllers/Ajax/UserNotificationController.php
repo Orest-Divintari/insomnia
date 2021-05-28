@@ -31,5 +31,7 @@ class UserNotificationController extends Controller
             ->unreadNotifications()
             ->findOrFail($notificationId)
             ->markAsRead();
+
+        return response('The notification has been marked as read', 200);
     }
 }
