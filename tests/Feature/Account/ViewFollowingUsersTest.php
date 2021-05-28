@@ -23,6 +23,6 @@ class ViewFollowingUsersTest extends TestCase
             ->assertSee($john->name)
             ->assertSeeInOrder(['Messages:', $john->messages_count])
             ->assertSeeInOrder(['Likes score:', $john->messages_count])
-            ->assertSee($john->likes_count);
+            ->assertSee($john->like_score_count);
     }
 }

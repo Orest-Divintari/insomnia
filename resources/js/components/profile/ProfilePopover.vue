@@ -67,7 +67,7 @@
             </div>
             <div>
               <p class="text-gray-lightest">Like Score</p>
-              <p class="text-center">{{ profileOwner.likes_count }}</p>
+              <p class="text-center">{{ profileOwner.like_score_count }}</p>
             </div>
             <div>
               <p class="text-gray-lightest">Points</p>
