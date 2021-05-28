@@ -66,6 +66,5 @@ class UpdateEmailTest extends TestCase
         $response = $this->json('patch', route('ajax.user-email.update', $user), compact('email', 'password'));
 
         $response->assertOk();
-        $response->assertJsonMissingValidationErrors('email');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Event;
+namespace Tests\Feature\Events;
 
 use App\Listeners\Like\DeletePostLikeNotification;
 use App\User;
@@ -62,9 +62,9 @@ class PostWasUnlikedEventTest extends TestCase
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
+        $this->signIn($participant);
         $message = $conversation->messages()->first();
         $like = $message->likedBy($participant);
-        $this->signIn($participant);
 
         $this->deleteJson(route('ajax.reply-likes.destroy', $message));
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\ThreadReplies;
+namespace Tests\Feature\Events;
 
 use App\Like;
 use App\Listeners\Subscription\NotifyReplyPoster;
