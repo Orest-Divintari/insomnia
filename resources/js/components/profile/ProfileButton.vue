@@ -67,7 +67,7 @@
                 <hr class="border-b-1 border-gray-lighter" />
                 <a
                   class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
-                  :href="'/search?posted_by=' + user.name"
+                  href="/account/password"
                   >Password and security</a
                 >
                 <hr class="border-b-1 border-gray-lighter" />
