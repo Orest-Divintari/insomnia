@@ -3,6 +3,9 @@
 namespace App\Traits;
 
 use App\Activity;
+use App\Like;
+use App\ProfilePost;
+use App\Reply;
 
 trait RecordsActivity
 {
@@ -17,6 +20,7 @@ trait RecordsActivity
                 if (!$model->shouldBeRecordable()) {
                     return;
                 }
+
                 $model->recordActivity($event);
             });
         }
@@ -61,11 +65,16 @@ trait RecordsActivity
                 $type = 'reply';
             }
         }
-        if (class_basename($this) == 'Like') {
-            if (class_basename($this->reply->repliable_type) == 'ProfilePost') {
-                $type = "comment-like";
-            } elseif (class_basename($this->reply->repliable_type) == 'Thread') {
-                $type = "reply-like";
+        if (get_class($this) == Like::class) {
+
+            if ($this->likeable_type == Reply::class) {
+                if (class_basename($this->likeable->repliable_type) == 'ProfilePost') {
+                    $type = "comment-like";
+                } elseif (class_basename($this->likeable->repliable_type) == 'Thread') {
+                    $type = "reply-like";
+                }
+            } elseif ($this->likeable_type == ProfilePost::class) {
+                $type = 'profile-post-like';
             }
         }
 

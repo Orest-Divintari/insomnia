@@ -65,7 +65,12 @@ class Activity extends Model
                             ProfilePost::class => ['profileOwner'],
                         ]);
                     }],
-                    Like::class => ['reply.repliable'],
+                    Like::class => ['likeable' => function (MorphTo $morphTo) {
+                        $morphTo->morphWith([
+                            Reply::class => ['repliable'],
+                            ProfilePost::class,
+                        ]);
+                    }],
                     ProfilePost::class => ['profileOwner'],
                 ]);
             }]);
@@ -109,6 +114,17 @@ class Activity extends Model
     public function scopeTypeViewed($query)
     {
         return $query->where('type', 'like', 'viewed%');
+    }
+
+    /**
+     * Get the activities of type Like
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeTypeLiked($query)
+    {
+        return $query->where('subject_type', Like::class);
     }
 
     /**

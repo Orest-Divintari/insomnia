@@ -4,6 +4,7 @@ namespace Tests\Feature\Notifications;
 
 use App\Notifications\CommentHasNewLike;
 use App\Notifications\MessageHasNewLike;
+use App\Notifications\ProfilePostHasNewLike;
 use App\Notifications\ReplyHasNewLike;
 use App\ProfilePost;
 use App\Reply;
@@ -34,7 +35,7 @@ class LikeNotificationsTest extends TestCase
         $liker = $this->signIn();
         $desiredChannels = ['database'];
 
-        $this->postJson(route('ajax.likes.store', $reply));
+        $this->postJson(route('ajax.reply-likes.store', $reply));
 
         Notification::assertSentTo($user, function (ReplyHasNewLike $notification, $channels) use ($reply, $desiredChannels) {
             return $reply->id == $notification->reply->id &&
@@ -51,7 +52,7 @@ class LikeNotificationsTest extends TestCase
         $liker = $this->signIn();
         $desiredChannels = [];
 
-        $this->postJson(route('ajax.likes.store', $reply));
+        $this->postJson(route('ajax.reply-likes.store', $reply));
 
         Notification::assertSentTo($user, function (ReplyHasNewLike $notification, $channels) use ($reply, $desiredChannels) {
             return $reply->id == $notification->reply->id &&
@@ -59,12 +60,12 @@ class LikeNotificationsTest extends TestCase
         });
     }
     /** @test */
-    public function the_thread_reply_poster_must_not_receive_a_notification_when_like_their_own_reply()
+    public function the_thread_reply_poster_must_not_receive_a_notification_when_they_like_their_own_reply()
     {
         $replyPoster = $this->signIn();
         $reply = ReplyFactory::by($replyPoster)->create();
 
-        $this->post(route('ajax.likes.store', $reply));
+        $this->post(route('ajax.reply-likes.store', $reply));
 
         Notification::assertNotSentTo($replyPoster, ReplyHasNewLike::class);
     }
@@ -80,7 +81,7 @@ class LikeNotificationsTest extends TestCase
         $message = $conversation->messages()->first();
         $this->signIn($participant);
 
-        $this->postJson(route('ajax.likes.store', $message));
+        $this->postJson(route('ajax.reply-likes.store', $message));
 
         Notification::assertSentTo($conversationStarter, function (MessageHasNewLike $notification, $channels) use ($message) {
             return $message->id == $notification->message->id &&
@@ -100,7 +101,7 @@ class LikeNotificationsTest extends TestCase
         $message = $conversation->messages()->first();
         $this->signIn($participant);
 
-        $this->postJson(route('ajax.likes.store', $message));
+        $this->postJson(route('ajax.reply-likes.store', $message));
 
         Notification::assertSentTo($conversationStarter, function (MessageHasNewLike $notification, $channels) use ($message) {
             return $message->id == $notification->message->id &&
@@ -115,7 +116,7 @@ class LikeNotificationsTest extends TestCase
         $conversation = ConversationFactory::create();
         $message = $conversation->messages->first();
 
-        $this->post(route('ajax.likes.store', $message));
+        $this->post(route('ajax.reply-likes.store', $message));
 
         Notification::assertNotSentTo(
             $conversationStarter,
@@ -135,7 +136,7 @@ class LikeNotificationsTest extends TestCase
         $liker = $this->signIn();
         $desiredChannels = ['database'];
 
-        $this->post(route('ajax.likes.store', $comment));
+        $this->post(route('ajax.reply-likes.store', $comment));
 
         $like = $comment->likes()->first();
         Notification::assertSentTo(
@@ -166,7 +167,7 @@ class LikeNotificationsTest extends TestCase
         $liker = $this->signIn();
         $desiredChannels = [];
 
-        $this->post(route('ajax.likes.store', $comment));
+        $this->post(route('ajax.reply-likes.store', $comment));
 
         $like = $comment->likes()->first();
         Notification::assertSentTo(
@@ -195,7 +196,7 @@ class LikeNotificationsTest extends TestCase
             'repliable_type' => ProfilePost::class,
         ]);
 
-        $this->post(route('ajax.likes.store', $comment));
+        $this->post(route('ajax.reply-likes.store', $comment));
 
         Notification::assertNotSentTo(
             $commentPoster,
@@ -203,4 +204,41 @@ class LikeNotificationsTest extends TestCase
         );
     }
 
+    /** @test */
+    public function users_receive_database_notifications_when_their_profile_post_is_liked_by_another_user()
+    {
+        $poster = create(User::class);
+        $profilePost = ProfilePostFactory::by($poster)->create();
+        $profileOwner = $profilePost->profileOwner;
+        $liker = $this->signIn();
+        $desiredChannels = ['database'];
+
+        $this->post(route('ajax.profile-post-likes.store', $profilePost));
+
+        $like = $profilePost->likes()->first();
+        Notification::assertSentTo(
+            $poster,
+            function (ProfilePostHasNewLike $notification, $channels) use ($desiredChannels, $profileOwner, $poster, $profilePost, $liker, $like) {
+                return $notification->poster->is($poster) &&
+                $notification->profileOwner->is($profileOwner) &&
+                $notification->profilePost->is($profilePost) &&
+                $notification->liker->is($liker) &&
+                $notification->like->is($like) &&
+                    $desiredChannels == $channels;
+            });
+
+    }
+
+    /** @test */
+    public function users_who_create_a_profile_post_should_not_receive_notification_when_they_like_their_own_posts()
+    {
+        $poster = $this->signIn();
+        $profilePost = ProfilePostFactory::by($poster)->create();
+        $profileOwner = $profilePost->profileOwner;
+        $desiredChannels = ['database'];
+
+        $this->postJson(route('ajax.profile-post-likes.store', $profilePost));
+
+        Notification::assertNotSentTo($poster, ProfilePostHasNewLike::class);
+    }
 }

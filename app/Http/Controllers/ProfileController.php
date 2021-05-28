@@ -25,6 +25,7 @@ class ProfileController extends Controller
         event(new UserViewedPage(UserViewedPage::PROFILE, $user));
 
         $profilePosts = $user->profilePosts()
+            ->withLikes()
             ->latest()
             ->paginate(ProfilePost::PER_PAGE);
 

@@ -131,7 +131,7 @@ class ActivityTest extends TestCase
         $user = $this->signIn();
         $reply = ReplyFactory::create();
 
-        $this->post(route('ajax.likes.store', $reply));
+        $this->post(route('ajax.reply-likes.store', $reply));
 
         $like = $reply->likes->first();
         $this->assertCount(1, $like->activities);
@@ -149,7 +149,7 @@ class ActivityTest extends TestCase
         $user = $this->signIn();
         $comment = CommentFactory::create();
 
-        $this->post(route('ajax.likes.store', $comment));
+        $this->post(route('ajax.reply-likes.store', $comment));
 
         $like = $comment->likes()->first();
         $this->assertCount(1, $comment->activities);
@@ -157,6 +157,25 @@ class ActivityTest extends TestCase
             'subject_id' => $like->id,
             'subject_type' => Like::class,
             'type' => 'created-comment-like',
+            'user_id' => $user->id,
+        ]);
+    }
+
+    /** @test */
+    public function when_an_authenticated_user_likes_a_profile_post_the_activity_is_recorded()
+    {
+        $this->withoutExceptionHandling();
+        $user = $this->signIn();
+        $profilePost = ProfilePostFactory::create();
+
+        $this->post(route('ajax.profile-post-likes.store', $profilePost));
+
+        $like = $profilePost->likes()->first();
+
+        $this->assertDatabaseHas('activities', [
+            'subject_id' => $like->id,
+            'subject_type' => Like::class,
+            'type' => 'created-profile-post-like',
             'user_id' => $user->id,
         ]);
     }
@@ -221,7 +240,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('ajax.likes.destroy', $reply));
+        $this->delete(route('ajax.reply-likes.destroy', $reply));
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $like->id,
@@ -245,7 +264,7 @@ class ActivityTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->delete(route('ajax.likes.destroy', $comment));
+        $this->delete(route('ajax.reply-likes.destroy', $comment));
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $like->id,
@@ -306,7 +325,7 @@ class ActivityTest extends TestCase
         $message = $conversation->messages()->first();
         $liker = $this->signIn();
 
-        $this->post(route('ajax.likes.store', $message));
+        $this->post(route('ajax.reply-likes.store', $message));
 
         $like = $message->likes()->first();
         $this->assertDatabaseMissing('activities', [
@@ -441,6 +460,7 @@ class ActivityTest extends TestCase
     /** @test */
     public function when_an_authenticated_user_visits_the_profile_of_another_member_the_activity_is_recorded()
     {
+        $this->withoutExceptionHandling();
         $peter = $this->signIn();
         $john = create(User::class);
 

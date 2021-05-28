@@ -8,7 +8,7 @@
     <reply
       v-for="(reply, index) in items"
       :key="reply.id"
-      :reply="reply"
+      :item="reply"
       :repliable="repliable"
     ></reply>
     <paginator @isPaginated="isPaginated = true" :dataset="dataset"></paginator>
@@ -44,7 +44,7 @@ export default {
     NewReply,
   },
   props: {
-    titlle: {
+    title: {
       type: String,
       default: "",
     },

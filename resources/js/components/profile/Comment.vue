@@ -1,9 +1,9 @@
 <template>
-  <div dusk="profile-post-comment" :id="'profile-post-comment-' + comment.id">
+  <div dusk="profile-post-comment" :id="'profile-post-comment-' + item.id">
     <div class="comment-container">
       <div class="comment-avatar">
         <profile-popover
-          :user="comment.poster"
+          :user="item.poster"
           trigger="avatar"
           triggerClasses="avatar-sm"
         ></profile-popover>
@@ -11,7 +11,7 @@
       <div class="post-right-col">
         <div class="post-header mb-0 text-smaller">
           <profile-popover
-            :user="comment.poster"
+            :user="item.poster"
             triggerClasses="post-username"
           ></profile-popover>
         </div>
@@ -34,19 +34,17 @@
           <div class="flex justify-between">
             <div>
               <button class="btn-reply-control bg-blue-lighter">
-                {{ comment.date_created }}
+                {{ item.date_created }}
               </button>
               <button
-                v-if="authorize('owns', comment)"
+                v-if="can('update', item)"
                 @click="editing = true"
                 class="btn-reply-control bg-blue-lighter"
               >
                 Edit
               </button>
               <button
-                v-if="
-                  authorize('owns', comment) || authorize('is', profileOwner)
-                "
+                v-if="can('delete', item)"
                 @click="destroy"
                 class="btn-reply-control bg-blue-lighter"
               >
@@ -54,10 +52,10 @@
               </button>
             </div>
             <like-button
-              v-if="!authorize('owns', comment)"
               :styleAttributes="'bg-blue-lighter'"
+              :path="likePath"
               @liked="updateLikeStatus"
-              :item="comment"
+              :item="item"
             ></like-button>
           </div>
           <div v-if="hasLikes" class="flex pl-1 mt-3">
@@ -75,14 +73,15 @@
 <script>
 import Highlight from "../Highlight";
 import LikeButton from "../LikeButton";
-import replies from "../../mixins/replies";
+import likeable from "../../mixins/likeable";
+import authorizable from "../../mixins/authorizable";
 export default {
   components: {
     Highlight,
     LikeButton,
   },
   props: {
-    comment: {
+    item: {
       type: Object,
       default: {},
       required: true,
@@ -93,18 +92,19 @@ export default {
       required: true,
     },
   },
-  mixins: [replies],
+  mixins: [likeable, authorizable],
   data() {
     return {
-      body: this.comment.body,
+      body: this.item.body,
       editing: false,
-      isLiked: this.comment.is_liked,
-      likesCount: this.comment.likes_count,
     };
   },
   computed: {
+    likePath() {
+      return "/ajax/replies/" + this.item.id + "/likes";
+    },
     path() {
-      return "/ajax/comments/" + this.comment.id;
+      return "/ajax/comments/" + this.item.id;
     },
   },
   methods: {
@@ -116,11 +116,12 @@ export default {
     },
     cancel() {
       this.hideEdit();
-      this.body = this.comment.body;
+      this.body = this.item.body;
     },
     update() {
+      console.log("asds");
       axios
-        .patch(this.path, this.data)
+        .patch(this.path, { body: this.body })
         .then(() => this.hideEdit())
         .catch((error) => showErrorModal(error.response.data));
     },

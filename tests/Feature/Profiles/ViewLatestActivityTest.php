@@ -19,6 +19,7 @@ class ViewLatestActivityTest extends TestCase
     /** @test */
     public function members_may_view_the_latest_activity_of_the_profile_owner()
     {
+        $this->withoutExceptionHandling();
         $profileOwner = $this->signIn();
         $thread = ThreadFactory::by($profileOwner)->create();
         $profilePost = ProfilePostFactory::by($profileOwner)->create();
@@ -30,12 +31,13 @@ class ViewLatestActivityTest extends TestCase
             ->create();
         $threadReply->likedBy($profileOwner);
         $comment->likedBy($profileOwner);
+        $profilePost->likedBy($profileOwner);
 
         $activities = $this->getJson(
             route('ajax.latest-activity.index', $profileOwner)
         )->json()['data'];
 
-        $this->assertCount(6, $activities);
+        $this->assertCount(7, $activities);
     }
 
     /** @test */

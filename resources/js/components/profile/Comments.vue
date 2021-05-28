@@ -15,7 +15,7 @@
       @deleted="remove(index)"
       v-for="(comment, index) in items"
       :key="comment.id"
-      :comment="comment"
+      :item="comment"
       :profile-owner="profileOwner"
     ></comment>
     <new-comment

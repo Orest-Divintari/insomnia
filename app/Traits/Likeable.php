@@ -3,27 +3,26 @@
 namespace App\Traits;
 
 use App\Events\LikeEvent;
-use App\Events\Like\ReplyWasUnliked;
+use App\Events\Like\PostWasUnliked;
 use App\Like;
-use App\Reply;
 use Illuminate\Database\Eloquent\Builder;
 
 trait Likeable
 {
 /**
- * A reply has likes
+ * A likeable model has likes
  *
  * @return \Illuminate\Database\Eloquent\Relations\HasMany
  */
     public function likes()
     {
-        return $this->hasMany(Like::class);
+        return $this->morphMany(Like::class, 'likeable');
     }
 
     /**
-     * Like the current reply
+     * Like the given likeable model
      *
-     * @param User $$user
+     * @param User $user
      * @return Like
      */
     public function likedBy($user = null)
@@ -31,36 +30,41 @@ trait Likeable
         $liker = $user ?: auth()->user();
         $likerId = $liker->id;
 
-        if (!$this->likes()->where('user_id', $likerId)->exists()) {
+        if (!$this->likes()->where('liker_id', $likerId)->exists()) {
+
             $like = $this->likes()->create([
-                'user_id' => $likerId,
+                'liker_id' => $likerId,
+                'likee_id' => $this->poster->id,
             ]);
+
             event((new LikeEvent($liker, $this, $like))->create());
+
             return $like;
         }
     }
 
     /**
-     * Unlike the current reply
+     * Unlike the given likeable model
      *
      * @param integer $userId
      * @return void
      */
     public function unlikedBy($user = null)
     {
-        $currentUserId = $user->id ?: auth()->id();
+        $liker = $user->id ?: auth()->id();
 
         $like = $this->likes()
-            ->where('user_id', $currentUserId)
+            ->where('liker_id', $liker)
             ->first();
+
         $likeId = $like->id;
         $like->delete();
 
-        event(new ReplyWasUnliked($this, $likeId));
+        event(new PostWasUnliked($this, $likeId));
     }
 
     /**
-     * Get all the like information for a reply
+     * Get all the like information for a likeable model
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder $query
@@ -73,7 +77,7 @@ trait Likeable
     }
 
     /**
-     * Add a column which determines whether the reply has been liked by
+     * Add a column which determines whether the likeable model has been liked by
      * the authenticated user
      *
      * @param Builder $query
@@ -81,15 +85,19 @@ trait Likeable
      */
     public function scopeWithIsLikedByAuthUser($query)
     {
+        $tableName = $this->getTable();
+
         return $query->selectRaw('
             EXISTS
             (
                 SELECT *
                 FROM   likes
-                WHERE  likes.reply_id=replies.id
-                AND    likes.user_id = ?
+                WHERE  likes.likeable_id=' . "{$tableName}.id" . '
+                AND    likes.likeable_type=?
+                AND    likes.liker_id =?
+                AND    likes.likee_id =' . "{$tableName}.user_id" . '
             ) AS is_liked',
-            [auth()->id()]
+            [get_class($this), auth()->id()]
         );
     }
 

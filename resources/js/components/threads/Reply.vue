@@ -3,12 +3,12 @@
     <div :id="typeId" class="reply-container">
       <div class="reply-left-col">
         <profile-popover
-          :user="reply.poster"
+          :user="item.poster"
           trigger="avatar"
           triggerClasses="avatar-xl"
         ></profile-popover>
         <profile-popover
-          :user="reply.poster"
+          :user="item.poster"
           triggerClasses="mt-1 text-blue-mid text-sm font-bold"
         ></profile-popover>
 
@@ -24,7 +24,7 @@
         <div class="flex justify-between items-center">
           <a
             :href="'#' + typeId"
-            v-text="reply.date_created"
+            v-text="item.date_created"
             class="text-xs text-gray-lightest hover:underline font-hairline pl-5/2"
             :class="{ 'mt-2': !isThreadReply }"
           ></a>
@@ -35,7 +35,7 @@
             <a class="mr-3 fas fa-share-alt"></a>
             <a v-if="signedIn" class="mx-3 far fa-bookmark"></a>
             <div class="bg-blue-reply-border text-white px-5/2 py-2">
-              #{{ reply.position }}
+              #{{ item.position }}
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@
                   Report
                 </button>
                 <button
-                  v-if="ownsPost(reply)"
+                  v-if="can('update', item)"
                   @click="editing = true"
                   class="btn-reply-control"
                 >
@@ -85,10 +85,11 @@
               </div>
               <div class="flex">
                 <like-button
+                  :path="likePath"
                   @liked="updateLikeStatus"
-                  :item="reply"
+                  :item="item"
                 ></like-button>
-                <quote-reply :reply="reply"></quote-reply>
+                <quote-reply :reply="item"></quote-reply>
               </div>
             </div>
           </div>
@@ -102,8 +103,8 @@
 import Highlight from "../Highlight";
 import LikeButton from "../LikeButton";
 import QuoteReply from "./QuoteReply";
-import replies from "../../mixins/replies";
-import authorization from "../../mixins/authorization";
+import likeable from "../../mixins/likeable";
+import authorizable from "../../mixins/authorizable";
 
 export default {
   components: {
@@ -117,21 +118,22 @@ export default {
       default: {},
       required: false,
     },
-    reply: {
+    item: {
       type: Object,
       default: {},
     },
   },
-  mixins: [replies, authorization],
+  mixins: [likeable, authorizable],
   data() {
     return {
       editing: false,
-      body: this.reply.body,
-      isLiked: this.reply.is_liked,
-      likesCount: this.reply.likes_count,
+      body: this.item.body,
     };
   },
   computed: {
+    likePath() {
+      return "/ajax/replies/" + this.item.id + "/likes";
+    },
     path() {
       if (this.isThreadReply) {
         return this.threadReplyPath;
@@ -139,33 +141,39 @@ export default {
       return this.conversationMessagePath;
     },
     threadReplyPath() {
-      return "/ajax/replies/" + this.reply.id;
+      return "/ajax/replies/" + this.item.id;
     },
     conversationMessagePath() {
-      return "/ajax/messages/" + this.reply.id;
+      return "/ajax/messages/" + this.item.id;
     },
     isOriginalPoster() {
-      return this.reply.poster.name == this.repliable.poster.name;
+      return this.item.poster.name == this.repliable.poster.name;
+    },
+    isThreadReply() {
+      return this.item.repliable_type.includes("Thread");
     },
     typeId() {
       if (this.isThreadReply) {
         var type = "post-";
-      } else if (this.reply.repliable_type.includes("Conversation")) {
+      } else if (this.item.repliable_type.includes("Conversation")) {
         var type = "convMessage-";
       }
-      return type + this.reply.id;
+      return type + this.item.id;
     },
   },
   methods: {
     update() {
       axios
-        .patch(this.path, this.data)
-        .then(() => this.updated())
+        .patch(this.path, { body: this.body })
+        .then(() => this.hideEdit())
         .catch((error) => showErrorModal(error.response.data));
+    },
+    hideEdit() {
+      this.editing = false;
     },
     cancel() {
       this.editing = false;
-      this.body = this.reply.body;
+      this.body = this.item.body;
     },
   },
 };

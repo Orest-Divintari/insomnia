@@ -5,8 +5,10 @@ namespace App\Events;
 use App\Conversation;
 use App\Events\Conversation\MessageWasLiked;
 use App\Events\Profile\CommentWasLiked;
+use App\Events\Subscription\ProfilePostWasLiked;
 use App\Events\Subscription\ReplyWasLiked;
 use App\ProfilePost;
+use App\Reply;
 use App\Thread;
 
 class LikeEvent
@@ -27,23 +29,23 @@ class LikeEvent
     protected $like;
 
     /**
-     * The reply that was liked
+     * The model that was liked
      *
-     * @var Reply
+     * @var mixed
      */
-    protected $reply;
+    protected $likeable;
 
     /**
      * Create a new LikeEvent instance
      *
      * @param User $liker
-     * @param Reply $reply
+     * @param mixed $likeable
      * @param Like $like
      */
-    public function __construct($liker, $reply, $like)
+    public function __construct($liker, $likeable, $like)
     {
         $this->liker = $liker;
-        $this->reply = $reply;
+        $this->likeable = $likeable;
         $this->like = $like;
     }
 
@@ -54,13 +56,19 @@ class LikeEvent
      */
     public function create()
     {
-        if ($this->isComment()) {
-            return $this->commentWasLiked();
-        } elseif ($this->isThreadReply()) {
-            return $this->threadReplyWasLiked();
-        } elseif ($this->isMessage()) {
-            return $this->messageWasLiked();
+
+        if (get_class($this->likeable) == Reply::class) {
+            if ($this->isComment()) {
+                return $this->commentWasLiked();
+            } elseif ($this->isThreadReply()) {
+                return $this->threadReplyWasLiked();
+            } elseif ($this->isMessage()) {
+                return $this->messageWasLiked();
+            }
+        } elseif (get_class($this->likeable) == ProfilePost::class) {
+            return $this->profilePostWasLiked();
         }
+
     }
 
     /**
@@ -70,7 +78,7 @@ class LikeEvent
      */
     public function isThreadReply()
     {
-        return $this->reply->repliable_type === Thread::class;
+        return $this->likeable->repliable_type === Thread::class;
     }
 
     /**
@@ -80,7 +88,7 @@ class LikeEvent
      */
     public function isComment()
     {
-        return $this->reply->repliable_type === ProfilePost::class;
+        return $this->likeable->repliable_type === ProfilePost::class;
     }
 
     /**
@@ -90,7 +98,7 @@ class LikeEvent
      */
     public function isMessage()
     {
-        return $this->reply->repliable_type === Conversation::class;
+        return $this->likeable->repliable_type === Conversation::class;
     }
 
     /**
@@ -103,8 +111,8 @@ class LikeEvent
         return new ReplyWasLiked(
             $this->liker,
             $this->like,
-            $this->reply->repliable,
-            $this->reply
+            $this->likeable->repliable,
+            $this->likeable
         );
     }
 
@@ -118,10 +126,10 @@ class LikeEvent
         return new CommentWasLiked(
             $this->liker,
             $this->like,
-            $this->reply,
-            $this->reply->poster,
-            $this->reply->repliable,
-            $this->reply->repliable->profileOwner
+            $this->likeable,
+            $this->likeable->poster,
+            $this->likeable->repliable,
+            $this->likeable->repliable->profileOwner
         );
     }
 
@@ -135,9 +143,26 @@ class LikeEvent
         return new MessageWasLiked(
             $this->liker,
             $this->like,
-            $this->reply->repliable,
-            $this->reply,
-            $this->reply->poster
+            $this->likeable->repliable,
+            $this->likeable,
+            $this->likeable->poster
         );
     }
+
+    /**
+     * Create ProfilePostWasLiked event
+     *
+     * @return ProfilePostWasLiked
+     */
+    protected function profilePostWasLiked()
+    {
+        return new ProfilePostWasLiked(
+            $this->liker,
+            $this->like,
+            $this->likeable,
+            $this->likeable->profileOwner,
+            $this->likeable->poster,
+        );
+    }
+
 }

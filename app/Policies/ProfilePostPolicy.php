@@ -33,6 +33,18 @@ class ProfilePostPolicy
     }
 
     /**
+     * Determine if the user can update the given profile post
+     *
+     * @param User $user
+     * @param ProfilePost $post
+     * @return bool
+     */
+    public function update(User $user, ProfilePost $post)
+    {
+        return $user->is($post->poster);
+    }
+
+    /**
      * Determine whether the user can delete a profile post
      *
      * @param User $user
@@ -43,4 +55,5 @@ class ProfilePostPolicy
     {
         return $post->poster->is($user) || $post->profileOwner->is($user);
     }
+
 }

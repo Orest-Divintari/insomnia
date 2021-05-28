@@ -150,11 +150,17 @@ Route::group(['middleware' => 'visitor.append'], function () {
 
         /* ************ LIKES ************ */
 
-        Route::post('/replies/{reply}/likes', 'LikeController@store')
-            ->name('likes.store');
+        Route::post('/replies/{reply}/likes', 'ReplyLikeController@store')
+            ->name('reply-likes.store');
 
-        Route::delete('/replies/{reply}/likes', 'LikeController@destroy')
-            ->name('likes.destroy');
+        Route::delete('/replies/{reply}/likes', 'ReplyLikeController@destroy')
+            ->name('reply-likes.destroy');
+
+        Route::post('/profile-posts/{profilePost}/likes', 'ProfilePostLikeController@store')
+            ->name('profile-post-likes.store');
+
+        Route::delete('/profile-posts/{profilePost}/likes', 'ProfilePostLikeController@destroy')
+            ->name('profile-post-likes.destroy');
 
         /* ************ THREAD SUBSCRIPTION ************ */
 

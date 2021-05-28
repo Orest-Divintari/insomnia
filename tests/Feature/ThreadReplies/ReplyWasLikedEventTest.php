@@ -22,9 +22,9 @@ class ReplyWasLikedEventTest extends TestCase
         $listener = Mockery::spy(NotifyReplyPoster::class);
         app()->instance(NotifyReplyPoster::class, $listener);
 
-        $this->post(route('ajax.likes.store', $reply));
+        $this->post(route('ajax.reply-likes.store', $reply));
 
-        $like = Like::where('reply_id', $reply->id)->first();
+        $like = $reply->likes()->first();
         $listener->shouldHaveReceived('handle', function ($event) use (
             $like,
             $reply,

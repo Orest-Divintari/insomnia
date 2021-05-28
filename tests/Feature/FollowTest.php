@@ -180,7 +180,7 @@ class FollowTest extends TestCase
             route('ajax.follows.index', $profileOwner)
         )->json()['data'];
 
-        $this->assertEquals(1, $response[0]['likes_count']);
+        $this->assertEquals(1, $response[0]['like_score_count']);
     }
 
     /** @test */
@@ -200,7 +200,7 @@ class FollowTest extends TestCase
             route('ajax.followed-by.index', $profileOwner)
         )->json()['data'];
 
-        $this->assertEquals(1, $response[0]['likes_count']);
+        $this->assertEquals(1, $response[0]['like_score_count']);
     }
 
     /** @test */

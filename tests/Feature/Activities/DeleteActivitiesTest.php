@@ -59,10 +59,12 @@ class DeleteActivitiesTest extends TestCase
     {
         $comment = CommentFactory::create();
         $liker = $this->signIn();
+
         $like = $comment->likedBy();
+
         $this->assertCount(1, $like->activities);
 
-        $this->delete(route('ajax.likes.destroy', $comment));
+        $this->delete(route('ajax.reply-likes.destroy', $comment));
 
         $this->assertEquals(
             0,
@@ -74,6 +76,25 @@ class DeleteActivitiesTest extends TestCase
     }
 
     /** @test */
+    public function when_a_profile_post_is_unliked_the_associated_activity_is_deleted()
+    {
+        $profilePost = ProfilePostFactory::create();
+        $liker = $this->signIn();
+        $like = $profilePost->likedBy($liker);
+        $this->assertCount(1, $like->activities);
+
+        $this->deleteJson(route('ajax.profile-post-likes.destroy', $profilePost));
+
+        $this->assertCount(
+            0,
+            Activity::where([
+                'subject_type' => Like::class,
+                'subject_id' => $like->id,
+            ])->get()
+        );
+    }
+
+    /** @test */
     public function when_a_thread_reply_is_unliked_the_associated_activities_are_deleted()
     {
         $reply = ReplyFactory::create();
@@ -81,7 +102,7 @@ class DeleteActivitiesTest extends TestCase
         $like = $reply->likedBy();
         $this->assertCount(1, $like->activities);
 
-        $this->delete(route('ajax.likes.destroy', $reply));
+        $this->delete(route('ajax.reply-likes.destroy', $reply));
 
         $this->assertEquals(
             0,

@@ -1,9 +1,9 @@
 <template>
-  <div dusk="profile-post" :id="'profile-post-' + post.id">
+  <div dusk="profile-post" :id="'profile-post-' + item.id">
     <div class="reply-container">
       <div class="reply-left-col w-24">
         <profile-popover
-          :user="post.poster"
+          :user="item.poster"
           trigger="avatar"
           triggerClasses="avatar-lg"
         ></profile-popover>
@@ -11,11 +11,11 @@
       <div class="post-right-col">
         <div class="post-header">
           <profile-popover
-            :user="post.poster"
+            :user="item.poster"
             triggerClasses="post-username"
           ></profile-popover>
           <p class="dot"></p>
-          <p class="text-sm text-gray-lightest" v-text="post.date_created"></p>
+          <p class="text-sm text-gray-lightest" v-text="item.date_created"></p>
         </div>
         <div v-if="editing">
           <wysiwyg v-model="body" name="body"></wysiwyg>
@@ -32,17 +32,40 @@
           <div class="reply-body">
             <highlight :content="body"></highlight>
           </div>
-          <div class="flex" v-if="authorize('owns', post)">
-            <button @click="editing = true" class="btn-reply-control">
-              Edit
-            </button>
-            <button @click="destroy" class="btn-reply-control">Delete</button>
+          <div v-if="hasLikes" class="flex pl-1 mb-2">
+            <i v-if class="text-blue-like text-sm fas fa-thumbs-up"></i>
+            <a href class="text-gray-lightest text-xs underline ml-1"
+              >{{ this.likesCount }} likes</a
+            >
+          </div>
+          <div class="flex justify-between">
+            <div>
+              <button
+                v-if="can('update', item)"
+                @click="editing = true"
+                class="btn-reply-control"
+              >
+                Edit
+              </button>
+              <button
+                v-if="can('delete', item)"
+                @click="destroy"
+                class="btn-reply-control"
+              >
+                Delete
+              </button>
+            </div>
+            <like-button
+              :path="likePath"
+              @liked="updateLikeStatus"
+              :item="item"
+            ></like-button>
           </div>
         </div>
         <comments
           :profile-owner="profileOwner"
-          :paginated-comments="post.paginatedComments"
-          :post="post"
+          :paginated-comments="item.paginatedComments"
+          :post="item"
         ></comments>
       </div>
     </div>
@@ -53,13 +76,17 @@
 import Highlight from "../Highlight";
 import Wysiwyg from "../Wysiwyg";
 import Comments from "./Comments";
+import LikeButton from "../LikeButton";
+import likeable from "../../mixins/likeable";
+import authorizable from "../../mixins/authorizable";
 export default {
   components: {
     Highlight,
     Comments,
+    LikeButton,
   },
   props: {
-    post: {
+    item: {
       type: Object,
       default: {},
     },
@@ -68,11 +95,17 @@ export default {
       default: {},
     },
   },
+  mixins: [likeable, authorizable],
   data() {
     return {
-      body: this.post.body,
+      body: this.item.body,
       editing: false,
     };
+  },
+  computed: {
+    likePath() {
+      return "/ajax/profile-posts/" + this.item.id + "/likes";
+    },
   },
   methods: {
     cancel() {
@@ -82,7 +115,7 @@ export default {
       return { body: this.body };
     },
     path() {
-      return "/ajax/profile/posts/" + this.post.id;
+      return "/ajax/profile/posts/" + this.item.id;
     },
     update() {
       axios

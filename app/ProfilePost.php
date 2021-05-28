@@ -5,13 +5,14 @@ namespace App;
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Helpers\Facades\ResourcePath;
 use App\Traits\FormatsDate;
+use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
 class ProfilePost extends Model
 {
-    use FormatsDate, RecordsActivity, Searchable;
+    use FormatsDate, RecordsActivity, Searchable, Likeable;
 
     /**
      * Number of visible posts per page
@@ -39,7 +40,7 @@ class ProfilePost extends Model
      *
      * @var array
      */
-    protected $appends = ['date_created', 'type'];
+    protected $appends = ['date_created', 'type', 'permissions'];
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -150,5 +151,13 @@ class ProfilePost extends Model
     public function getPathAttribute()
     {
         return ResourcePath::generate($this);
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return [
+            'update' => auth()->user()->can('update', $this),
+            'delete' => auth()->user()->can('delete', $this),
+        ];
     }
 }

@@ -31,6 +31,7 @@
 <script>
 import FetchMoreButton from "./FetchMoreButton";
 import CreatedCommentLike from "../activities/CreatedCommentLike";
+import CreatedProfilePostLike from "../activities/CreatedProfilePostLike";
 import CreatedReplyLike from "../activities/CreatedReplyLike";
 import CreatedReply from "../activities/CreatedReply";
 import CreatedComment from "../activities/CreatedComment";
@@ -39,6 +40,7 @@ import CreatedThread from "../activities/CreatedThread";
 import fetch from "../../mixins/fetch";
 export default {
   components: {
+    CreatedProfilePostLike,
     CreatedCommentLike,
     CreatedReplyLike,
     CreatedReply,

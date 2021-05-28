@@ -9,19 +9,19 @@
           triggerClasses="blue-link text-md mr-1/2"
         ></profile-popover>
         liked
-        <a @click="showReply(subject.reply)" class="blue-link"
-          >{{ subject.reply.poster.name }}'s post</a
+        <a @click="showReply(subject.likeable)" class="blue-link"
+          >{{ subject.likeable.poster.name }}'s post</a
         >
         in the thread
-        <a @click="showReply(subject.reply)" class="blue-link">{{
-          subject.reply.repliable.title
+        <a @click="showReply(subject.likeable)" class="blue-link">{{
+          subject.likeable.repliable.title
         }}</a>
       </p>
     </div>
     <div>
       <highlight
         class="italic text-smaller"
-        :content="subject.reply.body"
+        :content="subject.likeable.body"
       ></highlight>
       <p class="text-smaller text-gray-lightest">
         {{ subject.date_created }}

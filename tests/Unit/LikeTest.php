@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Like;
 use App\Reply;
 use App\Thread;
+use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\MessageFactory;
 use Facades\Tests\Setup\ReplyFactory;
@@ -16,18 +16,15 @@ class LikeTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_like_belongs_to_a_reply()
+    public function a_like_belongs_to_a_likeable_model()
     {
         $thread = create(Thread::class);
         $reply = ReplyFactory::toThread($thread)->create();
+        $liker = create(User::class);
 
-        $like = Like::create([
-            'user_id' => 1,
-            'reply_id' => $reply->id,
-        ]);
+        $like = $reply->likedBy($liker);
 
-        $this->assertInstanceOf(Reply::class, $like->reply);
-
+        $this->assertInstanceOf(Reply::class, $like->likeable);
     }
 
     /** @test */

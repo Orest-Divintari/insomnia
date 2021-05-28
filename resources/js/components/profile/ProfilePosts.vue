@@ -8,7 +8,7 @@
       v-for="(post, index) in items"
       :key="post.id"
       @deleted="remove(index)"
-      :post="post"
+      :item="post"
       :profile-owner="profileOwner"
     ></profile-post>
     <paginator :with-query-string="false" :dataset="dataset"> </paginator>

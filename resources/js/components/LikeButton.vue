@@ -14,6 +14,10 @@
 <script>
 export default {
   props: {
+    path: {
+      type: String,
+      required: true,
+    },
     item: {
       type: Object,
       default: {},
@@ -28,11 +32,6 @@ export default {
     return {
       isLiked: this.item.is_liked,
     };
-  },
-  computed: {
-    path() {
-      return "/ajax/replies/" + this.item.id + "/likes";
-    },
   },
   methods: {
     toggle() {

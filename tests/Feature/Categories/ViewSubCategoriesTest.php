@@ -50,6 +50,7 @@ class ViewSubCategoriesTest extends TestCase
         );
         $repliesCount = 10;
         $threadsCount = 2;
+
         create(Thread::class, ['replies_count' => 5, 'category_id' => $ios13->id]);
         create(Thread::class, ['replies_count' => 5, 'category_id' => $ios13->id]);
 

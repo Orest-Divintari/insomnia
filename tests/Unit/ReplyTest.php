@@ -61,6 +61,7 @@ class ReplyTest extends TestCase
         $reply = ReplyFactory::create();
         $user = create(User::class);
         $reply->likedBy($user);
+
         $this->assertCount(1, $reply->likes);
 
         $reply->unlikedBy($user);

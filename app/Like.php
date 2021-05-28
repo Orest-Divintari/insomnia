@@ -33,24 +33,6 @@ class Like extends Model
      */
     protected $appends = ['date_created'];
 
-    // /**
-    //  * Relationships to always eager-load
-    //  *
-    //  * @var array
-    //  */
-
-    // protected $with = ['reply'];
-
-    /**
-     * Fetch the reply that was liked
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function reply()
-    {
-        return $this->belongsTo(Reply::class);
-    }
-
     /**
      * Get the activities of the like
      *
@@ -62,13 +44,23 @@ class Like extends Model
     }
 
     /**
+     * It has a likeable model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function likeable()
+    {
+        return $this->morphTo();
+    }
+
+    /**
      * Determine if the activity for this model should be recorded
      *
      * @return boolean
      */
     public function shouldBeRecordable()
     {
-        if ($this->reply->repliable_type == 'App\Conversation') {
+        if ($this->likeable->repliable_type == 'App\Conversation') {
             return false;
         }
         return true;

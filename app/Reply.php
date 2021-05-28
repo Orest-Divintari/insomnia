@@ -29,6 +29,7 @@ class Reply extends Model
         'date_updated',
         'date_created',
         'type',
+        'permissions',
     ];
 
     /**
@@ -243,5 +244,13 @@ class Reply extends Model
     public function setPoster($user)
     {
         return $this->poster()->associate($user);
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return [
+            'update' => auth()->user()->can('update', $this),
+            'delete' => auth()->user()->can('delete', $this),
+        ];
     }
 }

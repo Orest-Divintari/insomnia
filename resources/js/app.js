@@ -124,6 +124,10 @@ Vue.component(
     require("./components/notifications/CommentLikeNotification.vue").default
 );
 Vue.component(
+    "ProfilePostLikeNotification",
+    require("./components/notifications/ProfilePostLikeNotification.vue").default
+);
+Vue.component(
     "MessageLikeNotification",
     require("./components/notifications/MessageLikeNotification.vue").default
 );

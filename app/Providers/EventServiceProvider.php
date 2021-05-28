@@ -36,7 +36,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\Subscription\NewReplyWasPostedToThread' => [
             'App\Listeners\Subscription\SubscribeToThread',
-        'App\Listeners\Subscription\NotifyThreadSubscribers',
+            'App\Listeners\Subscription\NotifyThreadSubscribers',
         ],
         'App\Events\Profile\NewCommentWasAddedToProfilePost' => [
             'App\Listeners\Profile\NotifyPostParticipantsOfNewComment',
@@ -48,6 +48,9 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Profile\NotifyProfileOwnerOfNewPost',
         ],
 
+        'App\Events\Subscription\ProfilePostWasLiked' => [
+            'App\Listeners\Subscription\NotifyProfilePostPosterOfNewLike',
+        ],
         'App\Events\Subscription\ReplyWasLiked' => [
             'App\Listeners\Subscription\NotifyReplyPoster',
         ],
@@ -72,8 +75,8 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Follow\AUserUnfollowedYou' => [
             'App\Listeners\Follow\DeleteFollowNotification',
         ],
-        'App\Events\Like\ReplyWasUnliked' => [
-            'App\Listeners\Like\DeleteReplyLikeNotification',
+        'App\Events\Like\PostWasUnliked' => [
+            'App\Listeners\Like\DeletePostLikeNotification',
         ],
         'App\Events\Activity\UserViewedPage' => [
             'App\Listeners\Activity\LogUserActivity',

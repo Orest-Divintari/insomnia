@@ -13,7 +13,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
@@ -118,29 +117,23 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Fetch the posts that were liked by the user
+     * User may like a post
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function likes()
     {
-        return $this->hasMany(Like::class);
+        return $this->hasMany(Like::class, 'liker_id');
     }
 
     /**
-     * Get the total number of likes of user's posts
+     * User's posts may be liked
      *
-     * @param Builder $query
-     * @return Builder
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function scopeWithLikesCount($query)
+    public function likeScore()
     {
-        return $query->addSelect([
-            'likes_count' => Reply::select(DB::raw('count(*)'))
-                ->whereColumn('replies.user_id', 'users.id')
-                ->whereIn('repliable_type', [Thread::class, ProfilePost::class])
-                ->join('likes', 'replies.id', '=', 'likes.reply_id'),
-        ]);
+        return $this->hasMany(Like::class, 'likee_id');
     }
 
     /**
@@ -246,7 +239,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeWithProfileInfo($query)
     {
         return $query->withMessagesCount()
-            ->withLikesCount()
+            ->withCount('likeScore')
             ->withFollowedByVisitor();
     }
 
@@ -441,7 +434,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         if ($this->allows('show_birth_date')) {
 
-            $dateOfBirth = Carbon::parse($birthDate);
+            $dateOfBirth = Carbon::make($this->details()->birth_date);
 
             if ($this->allows('show_birth_year')) {
                 return $dateOfBirth->format('M d, Y') . " ( Age: {$dateOfBirth->age} )";

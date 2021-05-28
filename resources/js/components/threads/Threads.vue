@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import replies from "../../mixins/replies";
 import ThreadList from "./ThreadList";
 import ThreadFilters from "./ThreadFilters";
 import view from "../../mixins/view";
@@ -50,7 +49,7 @@ export default {
       default: [],
     },
   },
-  mixins: [replies, view],
+  mixins: [view],
   data() {
     return {
       threads: this.paginatedThreads.data,

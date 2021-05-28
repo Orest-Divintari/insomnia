@@ -5,7 +5,9 @@ namespace Tests\Unit;
 use App\Events\Conversation\MessageWasLiked;
 use App\Events\LikeEvent;
 use App\Events\Profile\CommentWasLiked;
+use App\Events\Subscription\ProfilePostWasLiked;
 use App\Events\Subscription\ReplyWasLiked;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -26,6 +28,18 @@ class LikeEventTest extends TestCase
         $likeEvent = (new LikeEvent($liker, $reply, $like))->create();
 
         $this->assertInstanceOf(ReplyWasLiked::class, $likeEvent);
+    }
+
+    /** @test */
+    public function when_a_profile_post__is_liked_then_create_a_profile_post_was_liked_event()
+    {
+        $profilePost = ProfilePostFactory::create();
+        $liker = $this->signIn();
+        $like = $profilePost->likedBy($liker);
+
+        $likeEvent = (new LikeEvent($liker, $profilePost, $like))->create();
+
+        $this->assertInstanceOf(ProfilePostWasLiked::class, $likeEvent);
     }
 
     /** @test */

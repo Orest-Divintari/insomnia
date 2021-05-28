@@ -38,11 +38,10 @@
 </template>
 
 <script>
-import replies from "../../mixins/replies";
 import fetch from "../../mixins/fetch";
 import store from "../../store";
 export default {
-  mixins: [replies, fetch],
+  mixins: [fetch],
   data() {
     return {
       state: store.state,

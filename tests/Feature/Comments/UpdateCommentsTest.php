@@ -35,7 +35,6 @@ class UpdateCommentsTest extends TestCase
     /** @test */
     public function the_user_who_posted_the_comment_may_edit_the_comment()
     {
-        $this->withoutExceptionHandling();
         $commentPoster = $this->signIn();
         $comment = CommentFactory::by($commentPoster)->create();
         $updatedComment = ['body' => $this->faker->sentence];

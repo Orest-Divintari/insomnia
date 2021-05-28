@@ -8,21 +8,21 @@
           popover-classes="inline"
           triggerClasses="blue-link text-md mr-1/2"
         ></profile-popover>
-        <a @click="showComment(subject.reply)" class="blue-link">
-          {{ subject.reply.poster.name }}
+        <a @click="showComment(subject.likeable)" class="blue-link">
+          {{ subject.likeable.poster.name }}
           's comment
         </a>
         on
-        <span v-if="ownsPost(subject.reply.repliable)">your post.</span>
+        <span v-if="ownsPost(subject.likeable.repliable)">your post.</span>
         <span v-else
-          >{{ subject.reply.repliable.poster.name }}'s profile post.</span
+          >{{ subject.likeable.repliable.poster.name }}'s profile post.</span
         >
       </p>
     </div>
     <div>
       <highlight
         class="italic text-smaller"
-        :content="subject.reply.body"
+        :content="subject.likeable.body"
       ></highlight>
       <p class="text-smaller text-gray-lightest">
         {{ subject.date_created }}
