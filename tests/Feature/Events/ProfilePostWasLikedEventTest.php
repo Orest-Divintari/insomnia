@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\ProfilePosts;
+namespace Tests\Feature\Events;
 
 use App\Listeners\Subscription\NotifyProfilePostPosterOfNewLike;
 use App\User;

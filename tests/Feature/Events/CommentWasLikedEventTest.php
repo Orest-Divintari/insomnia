@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Comments;
+namespace Tests\Feature\Events;
 
 use App\Like;
 use App\Listeners\Profile\NotifyCommentPoster;

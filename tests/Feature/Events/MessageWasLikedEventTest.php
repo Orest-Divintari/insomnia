@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Messages;
+namespace Tests\Feature\Events;
 
 use App\Listeners\Conversation\NotifyMessagePoster;
 use App\User;

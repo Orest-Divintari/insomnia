@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Comments;
+namespace Tests\Feature\Events;
 
 use App\Http\Middleware\ThrottlePosts;
 use App\Listeners\Profile\NotifyPostParticipantsOfNewComment;

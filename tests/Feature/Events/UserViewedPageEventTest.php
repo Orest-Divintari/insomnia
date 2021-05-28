@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Activities;
+namespace Tests\Feature\Events;
 
 use App\Category;
 use App\Events\Activity\UserViewedPage;

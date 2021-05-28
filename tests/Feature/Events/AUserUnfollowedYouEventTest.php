@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Follows;
+namespace Tests\Feature\Events;
 
 use App\Listeners\Follow\DeleteFollowNotification;
 use App\User;

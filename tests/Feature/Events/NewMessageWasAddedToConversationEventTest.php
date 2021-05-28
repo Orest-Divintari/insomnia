@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Conversations;
+namespace Tests\Feature\Events;
 
 use App\Listeners\Conversation\NotifyConversationParticipants;
 use App\Reply;

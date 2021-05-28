@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Conversations;
+namespace Tests\Feature\Events;
 
 use App\Listeners\Conversation\DeleteConversationReadRecord;
 use App\User;

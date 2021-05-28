@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Conversations;
+namespace Tests\Feature\Events;
 
 use App\Conversation;
 use App\Listeners\Conversation\MarkConversationAsUnread;
