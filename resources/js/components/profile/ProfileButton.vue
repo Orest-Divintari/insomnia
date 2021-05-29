@@ -35,7 +35,7 @@
               </div>
               <div class="flex leading-relaxed">
                 <p class="flex-1">Likes score:</p>
-                <p v-text="user.like_score_count"></p>
+                <p v-text="user.received_likes_count"></p>
               </div>
               <div class="flex leading-relaxed">
                 <p class="flex-1">Points:</p>

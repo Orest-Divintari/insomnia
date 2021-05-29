@@ -17,7 +17,7 @@
                         <p class="dot"></p>
                         <div class="flex items-center">
                             <p class="mr-1">Likes score:</p>
-                            <p>{{ $user->like_score_count }}</p>
+                            <p>{{ $user->received_likes_count }}</p>
                         </div>
                         <p class="dot"></p>
                         <div class="flex items-center">

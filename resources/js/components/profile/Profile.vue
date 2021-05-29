@@ -23,7 +23,7 @@
             <p
               dusk="likes-count"
               class="text-md text-center"
-              v-text="user.like_score_count"
+              v-text="user.received_likes_count"
             ></p>
           </div>
           <div>
