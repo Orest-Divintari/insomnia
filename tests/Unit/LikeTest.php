@@ -7,6 +7,7 @@ use App\Thread;
 use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\MessageFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -70,4 +71,15 @@ class LikeTest extends TestCase
 
         $this->assertFalse($like->shouldBeRecordable());
     }
+
+    /** @test */
+    public function it_knows_who_created_the_like()
+    {
+        $liker = $this->signIn();
+        $profilePost = ProfilePostFactory::create();
+        $like = $profilePost->likedBy($liker);
+
+        $this->assertEquals($liker->id, $like->liker->id);
+    }
+
 }

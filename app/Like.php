@@ -54,6 +54,16 @@ class Like extends Model
     }
 
     /**
+     * Get the user that created the like
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function liker()
+    {
+        return $this->belongsTo(User::class, 'liker_id');
+    }
+
+    /**
      * Determine if the activity for this model should be recorded
      *
      * @return boolean
@@ -65,5 +75,4 @@ class Like extends Model
         }
         return true;
     }
-
 }

@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Events\LikeEvent;
 use App\Events\Like\PostWasUnliked;
+use App\Helpers\ModelType;
 use App\Like;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -35,6 +36,8 @@ trait Likeable
             $like = $this->likes()->create([
                 'liker_id' => $likerId,
                 'likee_id' => $this->poster->id,
+                'type' => ModelType::like($this),
+
             ]);
 
             event((new LikeEvent($liker, $this, $like))->create());

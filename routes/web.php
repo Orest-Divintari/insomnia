@@ -93,6 +93,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/account/follows', 'AccountFollowsController@index')
         ->name('account.follows.index');
 
+    /* ************ ACCOUNT FOLLOWS ************ */
+
+    Route::get('/account/likes', 'AccountLikeController@index')
+        ->name('account.likes.index');
+
     /* ************ ACCOUNT DETAILS ************ */
 
     Route::patch('/account/details', 'AccountDetailsController@update')

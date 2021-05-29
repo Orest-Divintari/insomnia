@@ -149,6 +149,10 @@ Vue.component(
     "WatchOnInteractionCheckbox",
     require("./components/account/WatchOnInteractionCheckbox.vue").default
 );
+Vue.component(
+    "HtmlToText",
+    require("./components/HtmlToText.vue").default
+);
 
 
 /**

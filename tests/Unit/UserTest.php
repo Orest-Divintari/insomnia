@@ -152,6 +152,17 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function users_may_receive_likes()
+    {
+        $poster = create(User::class);
+        $post = ProfilePostFactory::by($poster)->create();
+        $liker = create(User::class);
+        $post->likedBy($liker);
+
+        $this->assertCount(1, $poster->receivedLikes);
+    }
+
+    /** @test */
     public function the_thread_reply_of_a_user_may_be_liked()
     {
         $user = create(User::class);
@@ -160,7 +171,7 @@ class UserTest extends TestCase
 
         $reply->likedBy($liker);
 
-        $this->assertCount(1, $user->likeScore);
+        $this->assertCount(1, $user->receivedLikes);
     }
 
     /** @test */
@@ -172,7 +183,7 @@ class UserTest extends TestCase
 
         $reply->likedBy($liker);
 
-        $this->assertCount(1, $user->likeScore);
+        $this->assertCount(1, $user->receivedLikes);
     }
 
     /** @test */
@@ -186,7 +197,7 @@ class UserTest extends TestCase
         $message = $conversation->messages()->first();
         $message->likedBy($liker);
 
-        $this->assertCount(1, $user->likeScore);
+        $this->assertCount(1, $user->receivedLikes);
     }
 
     /** @test */
@@ -200,7 +211,7 @@ class UserTest extends TestCase
         $comment->likedBy($liker);
         $reply->likedBy($liker);
 
-        $this->assertEquals(2, $user->loadCount('likeScore')->like_score_count);
+        $this->assertEquals(2, $user->loadCount('receivedLikes')->received_likes_count);
     }
 
     /** @test */
@@ -333,7 +344,7 @@ class UserTest extends TestCase
         $user = User::select()->withProfileInfo()->whereName($profileOwner->name)->first()->toArray();
 
         $this->assertArrayHasKey('messages_count', $user);
-        $this->assertArrayHasKey('like_score_count', $user);
+        $this->assertArrayHasKey('received_likes_count', $user);
         $this->assertArrayHasKey('followed_by_visitor', $user);
     }
 

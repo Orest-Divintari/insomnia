@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Helpers\ModelType;
+use App\ProfilePost;
 use App\Reply;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
@@ -36,6 +38,7 @@ class LikesTest extends TestCase
             'likeable_id' => $reply->id,
             'likeable_type' => Reply::class,
             'liker_id' => $user->id,
+            'type' => ModelType::like($reply),
         ]);
 
         $this->assertCount(1, $reply->fresh()->likes);
@@ -54,6 +57,7 @@ class LikesTest extends TestCase
             'likeable_id' => $comment->id,
             'likeable_type' => Reply::class,
             'liker_id' => $user->id,
+            'type' => ModelType::like($comment),
         ]);
 
         $this->assertCount(1, $comment->fresh()->likes);
@@ -74,6 +78,7 @@ class LikesTest extends TestCase
             'likeable_id' => $message->id,
             'likeable_type' => Reply::class,
             'liker_id' => $user->id,
+            'type' => ModelType::like($message),
         ]);
 
         $this->assertCount(1, $message->fresh()->likes);
@@ -87,6 +92,12 @@ class LikesTest extends TestCase
 
         $this->postJson(route('ajax.profile-post-likes.store', $profilePost));
 
+        $this->assertDatabaseHas('likes', [
+            'likeable_id' => $profilePost->id,
+            'likeable_type' => ProfilePost::class,
+            'liker_id' => $user->id,
+            'type' => ModelType::like($profilePost),
+        ]);
         $this->assertCount(1, $profilePost->fresh()->likes);
     }
 

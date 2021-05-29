@@ -19,6 +19,7 @@ class CreateLikesTable extends Migration
             $table->string('likeable_type');
             $table->foreignId('liker_id');
             $table->foreignId('likee_id');
+            $table->string('type')->nullable();
             $table->unique(['liker_id', 'likeable_id', 'likeable_type']);
             $table->timestamps();
         });

@@ -137,6 +137,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the likes the user has received
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function receivedLikes()
+    {
+        return $this->hasMany(Like::class, 'likee_id');
+    }
+
+    /**
      * A user has replies
      *
      * @return void
