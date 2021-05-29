@@ -14,7 +14,7 @@ class AccountFollowsController extends Controller
         $followingUsers = auth()->user()
             ->follows()
             ->withMessagesCount()
-            ->withLikesCount()
+            ->withCount('receivedLikes')
             ->paginate(2);
 
         return view('account.follows.index', compact('followingUsers'));
