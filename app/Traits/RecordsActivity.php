@@ -3,9 +3,7 @@
 namespace App\Traits;
 
 use App\Activity;
-use App\Like;
-use App\ProfilePost;
-use App\Reply;
+use App\Helpers\ModelType;
 
 trait RecordsActivity
 {
@@ -52,31 +50,7 @@ trait RecordsActivity
      */
     public function getActivityType($event)
     {
-        $class = class_basename($this);
-
-        $class = ltrim(implode(' ', preg_split('/(?=[A-Z])/', $class)));
-
-        $type = strtolower(implode("-", explode(" ", $class)));
-
-        if (class_basename($this) == 'Reply') {
-            if (class_basename($this->repliable_type) == 'ProfilePost') {
-                $type = 'comment';
-            } elseif (class_basename($this->repliable_type) == 'Thread') {
-                $type = 'reply';
-            }
-        }
-        if (get_class($this) == Like::class) {
-
-            if ($this->likeable_type == Reply::class) {
-                if (class_basename($this->likeable->repliable_type) == 'ProfilePost') {
-                    $type = "comment-like";
-                } elseif (class_basename($this->likeable->repliable_type) == 'Thread') {
-                    $type = "reply-like";
-                }
-            } elseif ($this->likeable_type == ProfilePost::class) {
-                $type = 'profile-post-like';
-            }
-        }
+        $type = ModelType::get($this);
 
         return "{$event}-{$type}";
     }

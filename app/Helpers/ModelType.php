@@ -15,6 +15,7 @@ class ModelType
         Like::class => 'getLikeableType',
         Reply::class => 'getReplyType',
         ProfilePost::class => 'getProfilePostType',
+        Thread::class => 'getThreadType',
     ];
 
     /**
@@ -27,7 +28,10 @@ class ModelType
     {
         $type = static::$types[get_class($model)];
 
-        return static::$type($model);
+        if (method_exists(static::class, $type)) {
+            return static::$type($model);
+        }
+
     }
 
     /**
@@ -79,7 +83,33 @@ class ModelType
      */
     protected static function getProfilePostType($model)
     {
-        return 'profile-post';
+        return static::classType($model);
+    }
+
+    /**
+     * Get the type of a thread
+     *
+     * @param Thread $model
+     * @return string
+     */
+    protected static function getThreadType($model)
+    {
+        return static::classType($model);
+    }
+
+    /**
+     * Get the type based on the class name
+     *
+     * @param mixed $model
+     * @return string
+     */
+    protected static function classType($model)
+    {
+        $class = class_basename($model);
+
+        $class = ltrim(implode(' ', preg_split('/(?=[A-Z])/', $class)));
+
+        return strtolower(implode("-", explode(" ", $class)));
     }
 
 }
