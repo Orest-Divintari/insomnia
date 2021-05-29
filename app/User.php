@@ -127,16 +127,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * User's posts may be liked
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function likeScore()
-    {
-        return $this->hasMany(Like::class, 'likee_id');
-    }
-
-    /**
      * Get the likes the user has received
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -249,7 +239,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeWithProfileInfo($query)
     {
         return $query->withMessagesCount()
-            ->withCount('likeScore')
+            ->withCount('receivedLikes')
             ->withFollowedByVisitor();
     }
 
