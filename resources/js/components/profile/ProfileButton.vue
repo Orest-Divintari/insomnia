@@ -55,7 +55,7 @@
                 <hr class="border-b-1 border-gray-lighter" />
                 <a
                   class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
-                  :href="'/search?posted_by=' + user.name"
+                  href="/account/likes"
                   >Likes Received</a
                 >
                 <hr class="border-b-1 border-gray-lighter" />
@@ -88,7 +88,7 @@
               <hr class="border-b-1 border-gray-lighter" />
               <a
                 class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
-                :href="'/search?posted_by=' + user.name"
+                href="/account/ignored"
                 >Ignoring
               </a>
               <hr class="border-b-1 border-gray-lighter" />
