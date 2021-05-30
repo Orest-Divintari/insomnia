@@ -1,30 +1,38 @@
 <template>
   <div>
-    <div
-      class="border border-gray-lighter p-4"
-      :class="classes(index)"
-      v-for="(activity, index) in activities"
-      :key="activity.id"
-    >
-      <div class="flex">
-        <profile-popover
-          :user="profileOwner"
-          trigger="avatar"
-          triggerClasses="avatar-lg"
-        ></profile-popover>
-        <component
-          :activity="activity"
-          class="pl-4"
-          :is="activity.type"
-          :profile-owner="profileOwner"
-        ></component>
+    <div v-if="hasActivities">
+      <div
+        class="border border-gray-lighter p-4"
+        :class="classes(index)"
+        v-for="(activity, index) in activities"
+        :key="activity.id"
+      >
+        <div class="flex">
+          <profile-popover
+            :user="profileOwner"
+            trigger="avatar"
+            triggerClasses="avatar-lg"
+          ></profile-popover>
+          <component
+            :activity="activity"
+            class="pl-4"
+            :is="activity.type"
+            :profile-owner="profileOwner"
+          ></component>
+        </div>
       </div>
+      <fetch-more-button
+        v-if="itemsExist"
+        @fetchMore="fetchMore"
+        title="Show older items"
+      ></fetch-more-button>
     </div>
-    <fetch-more-button
-      v-if="itemsExist"
-      @fetchMore="fetchMore"
-      title="Show older items"
-    ></fetch-more-button>
+    <p
+      v-else
+      class="p-7/2 text-sm text-black-semi border border-gray-lighter rounded"
+    >
+      The news feed is currently empty.
+    </p>
   </div>
 </template>
 
@@ -69,6 +77,9 @@ export default {
     },
     itemsExist() {
       return this.dataset.next_page_url != null;
+    },
+    hasActivities() {
+      return this.activities.length > 0;
     },
   },
   methods: {

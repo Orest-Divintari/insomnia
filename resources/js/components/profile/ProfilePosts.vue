@@ -4,14 +4,22 @@
       @added="add"
       :profile-owner="profileOwner"
     ></new-profile-post>
-    <profile-post
-      v-for="(post, index) in items"
-      :key="post.id"
-      @deleted="remove(index)"
-      :item="post"
-      :profile-owner="profileOwner"
-    ></profile-post>
-    <paginator :with-query-string="false" :dataset="dataset"> </paginator>
+    <div v-if="hasPosts">
+      <profile-post
+        v-for="(post, index) in items"
+        :key="post.id"
+        @deleted="remove(index)"
+        :item="post"
+        :profile-owner="profileOwner"
+      ></profile-post>
+      <paginator :with-query-string="false" :dataset="dataset"> </paginator>
+    </div>
+    <p
+      v-else
+      class="p-7/2 border border-gray-lighter rounded text-black-semi text-sm"
+    >
+      There are no messages on {{ profileOwner.name }}'s profile yet.
+    </p>
   </div>
 </template>
 
@@ -48,6 +56,9 @@ export default {
   computed: {
     itemsExist() {
       return this.dataset.next_page_url != null;
+    },
+    hasPosts() {
+      return this.paginatedPosts.data.length > 0;
     },
   },
   methods: {

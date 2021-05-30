@@ -1,12 +1,21 @@
 <template>
   <div>
+    <p
+      v-if="!hasDetails"
+      class="p-7/2 text-sm text-black-semi border border-gray-lighter rounded"
+    >
+      {{ user.name }} has not provided any additional information
+    </p>
     <div
       v-if="user.details.about"
       class="border border-gray-lighter p-4 rounded mb-2 text-black-semi text-sm"
     >
       <p v-html="user.details.about"></p>
     </div>
-    <div class="border border-gray-lighter p-4 rounded mb-2">
+    <div
+      v-if="hasPersonalInformation"
+      class="border border-gray-lighter p-4 rounded mb-2"
+    >
       <div class="flex items-center text-sm mb-1/2" v-if="user.date_of_birth">
         <p class="w-48 text-gray-shuttle">Birthday:</p>
         <p class="text-black-semi">{{ user.date_of_birth }}</p>
@@ -129,6 +138,30 @@ export default {
         }
       });
       return identityExists;
+    },
+    hasPersonalInformation() {
+      let personalInformation = [
+        "date_of_birth",
+        "website",
+        "location",
+        "gender",
+        "occupation",
+      ];
+
+      let personalInformationExists = false;
+      personalInformation.forEach((information) => {
+        if (this.user.details[information]) {
+          personalInformationExists = true;
+        }
+      });
+      return personalInformationExists;
+    },
+    hasDetails() {
+      for (let detail in this.user.details) {
+        if (this.user.details[detail]) {
+          return true;
+        }
+      }
     },
   },
   methods: {

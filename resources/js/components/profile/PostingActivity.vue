@@ -1,30 +1,38 @@
 <template>
   <div>
-    <div
-      class="border border-gray-lighter p-4"
-      :class="classes(index)"
-      v-for="(posting, index) in postings"
-      :key="posting.id"
-    >
-      <div class="flex">
-        <profile-popover
-          :user="profileOwner"
-          trigger="avatar"
-          triggerClasses="avatar-lg"
-        ></profile-popover>
-        <component
-          @getPoster="setPoster"
-          :posting="posting.subject"
-          :is="posting.type"
-          class="pl-4"
-        ></component>
+    <div v-if="hasPostings">
+      <div
+        class="border border-gray-lighter p-4"
+        :class="classes(index)"
+        v-for="(posting, index) in postings"
+        :key="posting.id"
+      >
+        <div class="flex">
+          <profile-popover
+            :user="profileOwner"
+            trigger="avatar"
+            triggerClasses="avatar-lg"
+          ></profile-popover>
+          <component
+            @getPoster="setPoster"
+            :posting="posting.subject"
+            :is="posting.type"
+            class="pl-4"
+          ></component>
+        </div>
       </div>
+      <fetch-more-button
+        v-if="itemsExist"
+        @fetchMore="fetchMore"
+        title="See more"
+      ></fetch-more-button>
     </div>
-    <fetch-more-button
-      v-if="itemsExist"
-      @fetchMore="fetchMore"
-      title="See more"
-    ></fetch-more-button>
+    <p
+      v-else
+      class="border border-gray-lighter p-4 rounded mb-2 text-black-semi text-sm"
+    >
+      {{ profileOwner.name }} has not posted any content recently.
+    </p>
   </div>
 </template>
 
@@ -64,6 +72,9 @@ export default {
     },
     itemsExist() {
       return this.dataset.next_page_url != null;
+    },
+    hasPostings() {
+      return this.postings.length > 0;
     },
   },
   methods: {
