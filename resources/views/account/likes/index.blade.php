@@ -14,5 +14,6 @@
             <p class="p-7/2  text-sm text-black-semi">You haven't received any likes yet.</p>
             @endforelse
         </div>
+        <paginator :dataset="{{ json_encode($likes) }}"></paginator>
     </x-slot>
 </x-layouts.account>

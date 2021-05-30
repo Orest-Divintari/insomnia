@@ -29,6 +29,6 @@ class AccountLikesViewModel
                     }],
                     ProfilePost::class => ['profileOwner'],
                 ]);
-            }])->get();
+            }])->paginate(20);
     }
 }
