@@ -144,8 +144,9 @@ class ProfilePost extends Model
     {
         return $this->comments()
             ->withLikes()
-            ->latest()
-            ->paginate(ProfilePost::REPLIES_PER_PAGE);
+            ->latest('id')
+            ->paginate(ProfilePost::REPLIES_PER_PAGE)
+            ->withPath(route('ajax.comments.index', $this));
     }
 
     public function getPathAttribute()

@@ -67,7 +67,7 @@ export default {
     },
     initialize() {
       if (this.paginatedComments) {
-        this.items = this.paginatedComments.data;
+        this.items = this.paginatedComments.data.reverse();
         this.dataset = this.paginatedComments;
       }
     },
