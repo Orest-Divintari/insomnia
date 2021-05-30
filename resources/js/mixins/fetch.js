@@ -9,7 +9,7 @@ export default {
           fetchMore() {
             let nextPage = parseInt(this.dataset.current_page)  + 1;
             axios
-              .get(this.path + '?page=' + nextPage)
+              .get(this.dataset.path + '?page=' + nextPage)
               .then(({ data }) => this.refresh(data))
               .catch((error) => console.log(error));
            }
