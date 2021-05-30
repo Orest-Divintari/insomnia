@@ -1,3 +1,4 @@
+@if(isset($thread))
 <profile-popover :user="{{ $thread->recentReply->poster }}" trigger="avatar" trigger-classes="avatar-md">
 </profile-popover>
 <div class="ml-2 leading-snug flex-1 truncate mr-2">
@@ -15,3 +16,4 @@
 
     </div>
 </div>
+@endif
