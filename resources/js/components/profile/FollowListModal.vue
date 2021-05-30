@@ -1,6 +1,7 @@
 <template>
   <div>
     <button
+      dusk="follow-list-button"
       @click="
         show();
         fetchMore();
@@ -9,17 +10,12 @@
     >
       ... and {{ membersCount }} more.
     </button>
-    <modal
-      :name="name"
-      :scrollable="true"
-      height="500px"
-      classes="overflow-y-auto"
-    >
+    <modal :name="name" height="auto">
       <p class="sticky top-0 p-4 bg-white-catskill text-lg text-black-semi">
         {{ title }}
       </p>
 
-      <div class="flex flex-col overflow-y-auto">
+      <div class="flex flex-col overflow-y-scroll h-112">
         <div
           v-for="(member, index) in items"
           class="flex items-start"
@@ -66,7 +62,7 @@ export default {
     FetchMoreButton,
   },
   props: {
-    data: {
+    followList: {
       type: Object,
       default: {},
     },
@@ -82,8 +78,8 @@ export default {
   mixins: [fetch, view],
   data() {
     return {
-      items: [],
-      dataset: this.data,
+      items: this.followList.data,
+      dataset: this.followList,
     };
   },
   computed: {
@@ -110,7 +106,7 @@ export default {
     },
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
-      this.items.unshift(...paginatedCollection.data);
+      this.items.push(...paginatedCollection.data);
     },
   },
 };

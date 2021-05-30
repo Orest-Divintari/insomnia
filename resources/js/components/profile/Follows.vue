@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dusk="follows-component">
     <div class="border border-gray-lighter p-4 rounded">
       <h1 class="text-md text-black-semi mb-2">Following</h1>
       <div class="flex flex-row">
@@ -16,7 +16,7 @@
         name="follows-modal "
         :title="'Members ' + profileOwner.name + ' follows'"
         v-if="hasMore"
-        :data="dataset"
+        :follow-list="dataset"
       ></follow-list-modal>
     </div>
   </div>

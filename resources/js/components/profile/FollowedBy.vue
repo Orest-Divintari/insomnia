@@ -16,7 +16,7 @@
         name="followedBy-modal"
         :title="'Members following ' + profileOwner.name"
         v-if="hasMore"
-        :data="dataset"
+        :follow-list="dataset"
       ></follow-list-modal>
     </div>
   </div>

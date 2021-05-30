@@ -15755,6 +15755,10 @@ html {
   height: 16rem;
 }
 
+.h-112{
+  height: 28rem;
+}
+
 .h-auto{
   height: auto;
 }
@@ -39281,6 +39285,10 @@ html {
     height: 16rem;
   }
 
+  .xs\:h-112{
+    height: 28rem;
+  }
+
   .xs\:h-auto{
     height: auto;
   }
@@ -62770,6 +62778,10 @@ html {
 
   .smaller\:h-64{
     height: 16rem;
+  }
+
+  .smaller\:h-112{
+    height: 28rem;
   }
 
   .smaller\:h-auto{
@@ -86263,6 +86275,10 @@ html {
     height: 16rem;
   }
 
+  .sm\:h-112{
+    height: 28rem;
+  }
+
   .sm\:h-auto{
     height: auto;
   }
@@ -109752,6 +109768,10 @@ html {
 
   .md\:h-64{
     height: 16rem;
+  }
+
+  .md\:h-112{
+    height: 28rem;
   }
 
   .md\:h-auto{
@@ -133245,6 +133265,10 @@ html {
     height: 16rem;
   }
 
+  .lg\:h-112{
+    height: 28rem;
+  }
+
   .lg\:h-auto{
     height: auto;
   }
@@ -156734,6 +156758,10 @@ html {
 
   .xl\:h-64{
     height: 16rem;
+  }
+
+  .xl\:h-112{
+    height: 28rem;
   }
 
   .xl\:h-auto{
