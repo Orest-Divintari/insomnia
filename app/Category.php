@@ -239,7 +239,7 @@ class Category extends Model
         if (is_null($query->getQuery()->columns)) {
             $query->addSelect('*');
         }
-        return $query->selectRaw('count_replies(categories.id) as replies_count');
+        return $query->selectRaw('IFNULL(count_replies(categories.id), 0) as replies_count');
     }
 
     /**
