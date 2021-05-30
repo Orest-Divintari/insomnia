@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Activity;
+use App\Category;
 use App\Conversation;
 use App\Filters\ReplyFilters;
 use App\ProfilePost;
@@ -67,6 +68,11 @@ class ReplyTest extends TestCase
         $reply->unlikedBy($user);
 
         $this->assertCount(0, $reply->fresh()->likes);
+
+        $reply->repliable->category->delete();
+        $reply->repliable->poster->delete();
+        $reply->poster->delete();
+        $user->delete();
     }
 
     /** @test */

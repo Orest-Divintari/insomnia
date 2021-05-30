@@ -61,6 +61,9 @@ class FollowNotificationsTest extends TestCase
         $this->delete(route('ajax.follow.destroy', $user->name));
 
         $this->assertCount(0, $user->fresh()->notifications);
+
+        $follower->delete();
+        $user->delete();
     }
 
 }

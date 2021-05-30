@@ -2,15 +2,19 @@
 
 namespace Tests\Feature\Notifications;
 
+use App\Category;
 use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class DeleteLikeNotificationsTest extends TestCase
 {
+    use DatabaseTransactions;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -31,7 +35,9 @@ class DeleteLikeNotificationsTest extends TestCase
 
         $this->assertCount(0, $poster->fresh()->notifications);
 
-        $reply->delete();
+        $reply->repliable->category->delete();
+        $reply->repliable->poster->delete();
+        $liker->delete();
         $poster->delete();
     }
 
@@ -39,7 +45,10 @@ class DeleteLikeNotificationsTest extends TestCase
     public function when_user_unlikes_a_profile_post_comment_the_notification_is_deleted()
     {
         $poster = create(User::class);
-        $comment = CommentFactory::by($poster)->create();
+        $profilePost = ProfilePostFactory::by($poster)->toProfile($poster)->create();
+        $comment = CommentFactory::by($poster)
+            ->toProfilePost($profilePost)
+            ->create();
         $liker = $this->signIn();
         $comment->likedBy($liker);
         $this->assertCount(1, $poster->notifications);
@@ -48,14 +57,14 @@ class DeleteLikeNotificationsTest extends TestCase
 
         $this->assertCount(0, $poster->fresh()->notifications);
 
-        $comment->delete();
+        $profilePost->delete();
         $poster->delete();
+        $liker->delete();
     }
 
     /** @test */
     public function when_a_converastion_participant_unlikes_a_conversation_message_the_notification_is_deleted()
     {
-        $this->withoutExceptionHandling();
         $conversationStarter = create(User::class);
         $participant = create(User::class);
         $conversation = ConversationFactory::by($conversationStarter)
@@ -80,7 +89,9 @@ class DeleteLikeNotificationsTest extends TestCase
     public function when_a_user_unlikes_a_profile_post_the_notification_is_deleted()
     {
         $poster = create(User::class);
-        $profilePost = ProfilePostFactory::by($poster)->create();
+        $profilePost = ProfilePostFactory::by($poster)
+            ->toProfile($poster)
+            ->create();
         $liker = $this->signIn();
         $profilePost->likedBy($liker);
         $this->assertCount(1, $poster->notifications);

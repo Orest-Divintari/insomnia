@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Category;
 use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
@@ -31,6 +32,10 @@ class UnlikeReplyNotificationsTest extends TestCase
         $reply->unlikedBy($liker);
 
         $this->assertCount(0, $poster->fresh()->notifications);
+
+        $reply->repliable->category->delete();
+        $poster->delete();
+        $liker->delete();
     }
 
     /** @test */
@@ -49,6 +54,11 @@ class UnlikeReplyNotificationsTest extends TestCase
         $message->unlikedBy($participant);
 
         $this->assertCount(0, $conversationStarter->fresh()->notifications);
+
+        $conversation->delete();
+        $message->delete();
+        $conversationStarter->delete();
+        $participant->delete();
     }
 
     /** @test */
@@ -63,5 +73,12 @@ class UnlikeReplyNotificationsTest extends TestCase
         $comment->unlikedBy($liker);
 
         $this->assertCount(0, $poster->fresh()->notifications);
+
+        $comment->repliable->delete();
+        $comment->repliable->profileOwner->delete();
+        $comment->repliable->poster->delete();
+        $comment->delete();
+        $liker->delete();
+        $poster->delete();
     }
 }

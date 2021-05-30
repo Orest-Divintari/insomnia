@@ -181,6 +181,8 @@ class ForumTest extends TestCase
 
         $response->assertSee($groupCategory->title)
             ->assertSee($category->title);
+
+        $category->delete();
     }
 
     /** @test */

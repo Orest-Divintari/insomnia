@@ -23,7 +23,8 @@ class ViewSubCategoriesTest extends TestCase
     /** @test */
     public function a_user_can_view_the_list_of_subcategories_of_a_parent_category()
     {
-        $mac = create(Category::class);
+        $apple = create(GroupCategory::class);
+        $mac = create(Category::class, ['group_category_id' => $apple->id]);
         $macbook = create(Category::class, ['parent_id' => $mac->id]);
         $imac = create(Category::class, ['parent_id' => $mac->id]);
 
@@ -32,7 +33,7 @@ class ViewSubCategoriesTest extends TestCase
         $response->assertSee($macbook->title)
             ->assertSee($imac->title);
 
-        $mac->delete();
+        $apple->delete();
     }
 
     /** @test */
@@ -67,7 +68,8 @@ class ViewSubCategoriesTest extends TestCase
     public function a_user_can_view_the_most_recently_active_thread_of_a_sub_category()
     {
         $user = $this->signIn();
-        $ios = create(Category::class);
+        $apple = create(GroupCategory::class);
+        $ios = create(Category::class, ['group_category_id' => $apple->id]);
         $ios13 = create(
             Category::class,
             ['parent_id' => $ios->id]
@@ -100,7 +102,7 @@ class ViewSubCategoriesTest extends TestCase
         $response->assertSee($recentlyActiveIos13Thread->shortTitle)
             ->assertSee($recentlyActiveIos14Thread->shortTitle);
 
-        $ios->delete();
+        $apple->delete();
         $user->delete();
     }
 
@@ -108,7 +110,8 @@ class ViewSubCategoriesTest extends TestCase
     public function view_the_list_of_the_associated_threads_of_a_sub_category_that_has_no_descendants()
     {
         $user = $this->signIn();
-        $accessories = create(Category::class);
+        $apple = create(GroupCategory::class);
+        $accessories = create(Category::class, ['group_category_id' => $apple->id]);
         $threadAccessories = create(
             Thread::class,
             ['category_id' => $accessories->id]
@@ -117,5 +120,8 @@ class ViewSubCategoriesTest extends TestCase
         $response = $this->get(route('categories.show', $accessories));
 
         $response->assertRedirect(route('category-threads.index', $accessories));
+
+        $apple->delete();
+        $user->delete();
     }
 }

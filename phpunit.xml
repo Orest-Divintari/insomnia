@@ -57,6 +57,12 @@
         <testsuite name="Comments">
             <directory suffix="Test.php">./tests/Feature/Comments</directory>
         </testsuite>
+        <testsuite name="Account">
+            <directory suffix="Test.php">./tests/Feature/Account</directory>
+        </testsuite>
+        <testsuite name="Events">
+            <directory suffix="Test.php">./tests/Feature/Events</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
