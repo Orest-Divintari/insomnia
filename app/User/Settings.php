@@ -107,6 +107,10 @@ abstract class Settings
      */
     protected function datetime($value)
     {
+        if (empty($value)) {
+            return;
+        }
+
         if ($value instanceof Carbon) {
             return $value->format('Y-m-d');
         }
