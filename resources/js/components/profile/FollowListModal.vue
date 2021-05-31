@@ -17,7 +17,7 @@
 
       <div class="flex flex-col overflow-y-scroll h-112">
         <div
-          v-for="(member, index) in items"
+          v-for="(member, index) in members"
           class="flex items-start"
           :class="classes(index)"
         >
@@ -83,9 +83,6 @@ export default {
     };
   },
   computed: {
-    hasMore() {
-      return this.dataset.next_page_url ? true : false;
-    },
     membersCount() {
       return this.dataset.total - this.dataset.per_page;
     },
@@ -95,7 +92,7 @@ export default {
       return [
         "p-4",
         "border",
-        index == this.items.length - 1 ? "border-b" : "border-b-0",
+        index == this.members.length - 1 ? "border-b" : "border-b-0",
       ];
     },
     show() {
@@ -106,7 +103,7 @@ export default {
     },
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
-      this.items.push(...paginatedCollection.data);
+      this.members.push(...paginatedCollection.data);
     },
   },
 };
