@@ -22,7 +22,7 @@
         </div>
       </div>
       <fetch-more-button
-        v-if="itemsExist"
+        v-if="hasMore"
         @fetchMore="fetchMore"
         title="Show older items"
       ></fetch-more-button>
@@ -74,9 +74,6 @@ export default {
   computed: {
     path() {
       return "/ajax/profiles/" + this.profileOwner.name + "/latest-activity";
-    },
-    itemsExist() {
-      return this.dataset.next_page_url != null;
     },
     hasActivities() {
       return this.activities.length > 0;

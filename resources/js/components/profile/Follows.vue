@@ -13,9 +13,9 @@
         ></profile-popover>
       </div>
       <follow-list-modal
+        v-if="hasMore"
         name="follows-modal "
         :title="'Members ' + profileOwner.name + ' follows'"
-        v-if="hasMore"
         :follow-list="dataset"
       ></follow-list-modal>
     </div>

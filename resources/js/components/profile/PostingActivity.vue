@@ -22,7 +22,7 @@
         </div>
       </div>
       <fetch-more-button
-        v-if="itemsExist"
+        v-if="hasMore"
         @fetchMore="fetchMore"
         title="See more"
       ></fetch-more-button>
@@ -69,9 +69,6 @@ export default {
   computed: {
     path() {
       return "/ajax/profiles/" + this.profileOwner.name + "/postings";
-    },
-    itemsExist() {
-      return this.dataset.next_page_url != null;
     },
     hasPostings() {
       return this.postings.length > 0;

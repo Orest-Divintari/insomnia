@@ -1,7 +1,7 @@
 <template>
   <div class="mt-3">
     <div
-      v-if="nextPage"
+      v-if="hasMore"
       class="mb-2 bg-blue-lighter border border-gray-lighter p-2"
     >
       <button
@@ -53,9 +53,6 @@ export default {
     };
   },
   computed: {
-    nextPage() {
-      return this.dataset.next_page_url != null;
-    },
     path() {
       return "/ajax/posts/" + this.post.id + "/comments";
     },

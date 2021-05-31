@@ -12,6 +12,11 @@ export default {
               .get(this.dataset.path + '?page=' + nextPage)
               .then(({ data }) => this.refresh(data))
               .catch((error) => console.log(error));
-           }
-    }
+           },
+    },
+    computed: {
+        hasMore(){
+          return this.dataset.next_page_url ? true : false;
+        }
+    },
 };

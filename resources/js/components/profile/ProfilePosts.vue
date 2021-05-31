@@ -54,9 +54,6 @@ export default {
     };
   },
   computed: {
-    itemsExist() {
-      return this.dataset.next_page_url != null;
-    },
     hasPosts() {
       return this.paginatedPosts.data.length > 0;
     },
