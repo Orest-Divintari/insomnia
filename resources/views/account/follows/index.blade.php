@@ -12,7 +12,7 @@
                     <div class="flex leading-3 items-center text-gray-lightest text-smaller ">
                         <div class="flex items-center leading-4">
                             <p class="mr-1">Messages:</p>
-                            <p>{{ $user->messages_count }}</p>
+                            <p>{{ $user->profile_posts_count }}</p>
                         </div>
                         <p class="dot"></p>
                         <div class="flex items-center">

@@ -52,7 +52,7 @@ class ProfileTest extends TestCase
             route('profiles.show', $profileOwner)
         );
 
-        $response->assertSee('messages_count');
+        $response->assertSee('profile_posts_count');
         $response->assertSee('followed_by_visitor');
         $response->assertSee('received_likes_count');
         $response->assertSee('join_date');
@@ -65,7 +65,7 @@ class ProfileTest extends TestCase
 
         $response = $this->get(route('ajax.profiles.show', $profileOwner))->json();
 
-        $this->assertArrayHasKey('messages_count', $response);
+        $this->assertArrayHasKey('profile_posts_count', $response);
         $this->assertArrayHasKey('received_likes_count', $response);
         $this->assertArrayHasKey('join_date', $response);
         $this->assertArrayHasKey('followed_by_visitor', $response);
@@ -78,7 +78,7 @@ class ProfileTest extends TestCase
 
         $response = $this->get(route('ajax.profiles.show', $profileOwner))->json();
 
-        $this->assertArrayHasKey('messages_count', $response);
+        $this->assertArrayHasKey('profile_posts_count', $response);
         $this->assertArrayHasKey('received_likes_count', $response);
         $this->assertArrayHasKey('join_date', $response);
         $this->assertArrayHasKey('followed_by_visitor', $response);

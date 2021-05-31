@@ -15,7 +15,7 @@
             <p
               dusk="messages-count"
               class="text-md text-center"
-              v-text="user.messages_count"
+              v-text="user.profile_posts_count"
             ></p>
           </div>
           <div>

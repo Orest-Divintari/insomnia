@@ -63,7 +63,7 @@
           <div class="flex justify-between text-smaller bg-white p-2">
             <div>
               <p class="text-gray-lightest">Messages</p>
-              <p class="text-center">{{ profileOwner.messages_count }}</p>
+              <p class="text-center">{{ profileOwner.profile_posts_count }}</p>
             </div>
             <div>
               <p class="text-gray-lightest">Like Score</p>
