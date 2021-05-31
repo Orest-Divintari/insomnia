@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\Profile;
 
+use App\Follow;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -12,6 +13,20 @@ use Tests\DuskTestCase;
 class ViewAboutTest extends DuskTestCase
 {
     use DatabaseMigrations, WithFaker;
+
+    /** @test */
+    public function it_displays_a_message_when_profile_owner_has_not_provided_any_details()
+    {
+        $user = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($user) {
+
+            $response = $browser->loginAs($user)
+                ->visit("/profiles/{$user->name}")
+                ->clickLink('About')
+                ->assertSee("{$user->name} has not provided any additional information");
+        });
+    }
 
     /** @test */
     public function members_may_view_the_about_information_of_a_profile()
@@ -167,6 +182,162 @@ class ViewAboutTest extends DuskTestCase
                 ->assertDontSee('Contact')
                 ->assertDontSee('Facebook')
                 ->assertDontSee($facebook);
+        });
+    }
+
+    /** @test */
+    public function members_may_view_the_users_the_profile_owner_follows()
+    {
+        $profileOwner = create(User::class);
+        $visitor = create(User::class);
+        $profileOwner->follow($visitor);
+
+        $this->browse(function (Browser $browser) use ($visitor, $profileOwner) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}")
+                ->clickLink('About')
+                ->waitForText('Following');
+
+            $response
+                ->assertSee('Following')
+                ->assertVue('profileOwner.name', $visitor->name, '@profile-popover');
+        });
+    }
+
+    /** @test */
+    public function members_may_view_the_followers_of_profile_owner()
+    {
+        $profileOwner = create(User::class);
+        $visitor = create(User::class);
+        $visitor->follow($profileOwner);
+
+        $this->browse(function (Browser $browser) use ($visitor, $profileOwner) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}")
+                ->clickLink('About')
+                ->waitForText('Followers');
+
+            $response
+                ->assertSee('Followers')
+                ->assertVue('profileOwner.name', $visitor->name, '@profile-popover');
+        });
+    }
+
+    /** @test */
+    public function members_may_view_the_list_of_followers_of_profile_owner()
+    {
+        $profileOwner = create(User::class);
+        $visitor = create(User::class);
+        $users = createMany(User::class, Follow::FOLLOWED_BY_PER_PAGE * 2);
+        $users->each(function ($user) use ($profileOwner) {
+            $user->follow($profileOwner);
+        });
+        $firstFollower = $users->first();
+        $this->browse(function (Browser $browser) use ($visitor, $profileOwner, $firstFollower, $users) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}")
+                ->clickLink('About')
+                ->waitForText('Followers')
+                ->click('@follow-list-button')
+                ->waitForText($firstFollower->name);
+
+            $users->each(function ($user) use ($response) {
+                $response
+                    ->assertSee($user->name)
+                    ->assertSee("Like score: {$user->receivedLikes()->count()}")
+                    ->assertSee("Messages: {$user->profilePosts()->count()}");
+            });
+        });
+    }
+
+    /** @test */
+    public function members_may_view_the_list_of_users_that_the_profile_owner_follows()
+    {
+        $profileOwner = create(User::class);
+        $visitor = create(User::class, ['name' => 'azem']);
+        $users = createMany(User::class, Follow::FOLLOWS_PER_PAGE * 2);
+        $users->each(function ($user) use ($profileOwner) {
+            $profileOwner->follow($user);
+        });
+        $firstFollowing = $users->first();
+        $this->browse(function (Browser $browser) use ($visitor, $profileOwner, $firstFollowing, $users) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}")
+                ->clickLink('About')
+                ->waitForText('Following')
+                ->click('@follow-list-button')
+                ->waitForText($firstFollowing->name);
+
+            $users->each(function ($user) use ($response) {
+                $response
+                    ->assertSee($user->name)
+                    ->assertSee("Like score: {$user->receivedLikes()->count()}")
+                    ->assertSee("Messages: {$user->profilePosts()->count()}");
+            });
+        });
+    }
+
+    /** @test */
+    public function visitor_may_click_to_view_more_users_that_follow_the_profile_owner()
+    {
+        $profileOwner = create(User::class);
+        $visitor = create(User::class);
+        $users = createMany(User::class, Follow::FOLLOWED_BY_PER_PAGE * 2 + 1);
+        $users->each(function ($user) use ($profileOwner) {
+            $user->follow($profileOwner);
+        });
+        $firstFollower = $users->first();
+
+        $this->browse(function (Browser $browser) use ($visitor, $profileOwner, $firstFollower, $users) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}")
+                ->clickLink('About')
+                ->waitForText('Followers')
+                ->click('@follow-list-button')
+                ->waitFor('@fetch-more-button')
+                ->click('@fetch-more-button');
+
+            $users->each(function ($user) use ($response) {
+                $response
+                    ->assertSee($user->name)
+                    ->assertSee("Like score: {$user->receivedLikes()->count()}")
+                    ->assertSee("Messages: {$user->profilePosts()->count()}");
+            });
+        });
+    }
+
+    /** @test */
+    public function visitor_may_click_to_view_more_users_that_the_profile_owner_follows()
+    {
+        $profileOwner = create(User::class);
+        $visitor = create(User::class);
+        $users = createMany(User::class, Follow::FOLLOWS_PER_PAGE * 2 + 1);
+        $users->each(function ($user) use ($profileOwner) {
+            $profileOwner->follow($user);
+        });
+        $firstFollower = $users->first();
+
+        $this->browse(function (Browser $browser) use ($visitor, $profileOwner, $firstFollower, $users) {
+
+            $response = $browser->loginAs($visitor)
+                ->visit("/profiles/{$profileOwner->name}")
+                ->clickLink('About')
+                ->waitForText('Following')
+                ->click('@follow-list-button')
+                ->waitFor('@fetch-more-button')
+                ->click('@fetch-more-button');
+
+            $users->each(function ($user) use ($response) {
+                $response
+                    ->assertSee($user->name)
+                    ->assertSee("Like score: {$user->receivedLikes()->count()}")
+                    ->assertSee("Messages: {$user->profilePosts()->count()}");
+            });
         });
     }
 

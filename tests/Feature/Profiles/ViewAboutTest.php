@@ -12,17 +12,48 @@ class ViewAboutTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function members_may_view_the_about_information_of_a_user()
+    public function it_returns_the_profile_owners_details()
     {
-        $profileOwner = create(User::class);
+        $profileOwner = $this->signIn();
+        $details = $profileOwner->details;
+        $details['location'] = 'netherlads';
+        $details['website'] = 'insomnia';
+        $details['birth_date'] = "1993-08-25";
+        $details['occupation'] = 'developer';
+        $details['gender'] = 'male';
+        $details['about'] = 'My name is orestis and i am 28 years old.';
+        $details['skype'] = 'orestis';
+        $details['google_talk'] = 'orestis@gmail.com';
+        $details['facebook'] = 'orestis uric';
+        $details['twitter'] = 'OrestisDivintari';
+        $details['instagram'] = 'Orestis';
+        $details['location'] = 'netherlads';
+        $response = $this->patch(route('account.details.update', $details));
         $visitor = $this->signIn();
 
-        $response = $this->getJson(route('ajax.about.show', $profileOwner))->json();
+        $response = $this->get(route('ajax.about.show', $profileOwner));
 
-        $this->assertTrue(array_key_exists('follows', $response));
-        $this->assertTrue(array_key_exists('followedBy', $response));
-        $this->assertTrue(array_key_exists('date_of_birth', $response['user']));
+        $this->assertTrue(
+            collect($profileOwner->details)
+                ->every(function ($value, $key) use ($details, $response) {
+                    return $value == $response['user']['details'][$key];
+                })
+        );
+        $this->assertEquals(
+            $response['user']['date_of_birth'],
+            $profileOwner->date_of_birth
+        );
+    }
+
+    /** @test */
+    public function it_returns_the_permissions_of_the_profile_owner()
+    {
+        $user = $this->signIn();
+
+        $response = $this->get(route('ajax.about.show', $user));
+
         $this->assertTrue(array_key_exists('permissions', $response['user']));
+
     }
 
     /** @test */
@@ -34,7 +65,7 @@ class ViewAboutTest extends TestCase
     }
 
     /** @test */
-    public function members_may_view_the_list_of_followers_of_profile_user()
+    public function it_returns_the_list_of_followers_of_profile_user()
     {
         $profileOwner = create(User::class);
         $followerA = create(User::class);
@@ -63,7 +94,7 @@ class ViewAboutTest extends TestCase
     }
 
     /** @test */
-    public function members_may_view_the_list_of_users_that_profile_user_is_following()
+    public function it_returns_the_list_of_users_that_profile_user_is_following()
     {
         $profileOwner = create(User::class);
         $followerA = create(User::class);

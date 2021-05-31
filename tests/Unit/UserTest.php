@@ -97,19 +97,6 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function a_user_has_messages_count_which_is_the_number_of_profile_posts_on_his_profile()
-    {
-        $user = create(User::class);
-        ProfilePostFactory::toProfile($user)->create();
-
-        $user = User::withMessagesCount()
-            ->whereId($user->id)
-            ->first();
-
-        $this->assertEquals(1, $user->messages_count);
-    }
-
-    /** @test */
     public function a_user_has_profile_posts()
     {
         $user = create(User::class);
@@ -136,19 +123,6 @@ class UserTest extends TestCase
             'profile_owner_id' => $profileOwner->id,
             'user_id' => auth()->id(),
         ]);
-    }
-
-    /** @test */
-    public function a_user_knows_the_message_count_which_is_the_number_of_posts_on_his_profile()
-    {
-        $profileOwner = create(User::class);
-        ProfilePostFactory::toProfile($profileOwner)->create();
-
-        $profileOwner = User::withMessagesCount()
-            ->whereId($profileOwner->id)
-            ->first();
-
-        $this->assertEquals(1, $profileOwner->messages_count);
     }
 
     /** @test */
@@ -343,7 +317,7 @@ class UserTest extends TestCase
 
         $user = User::select()->withProfileInfo()->whereName($profileOwner->name)->first()->toArray();
 
-        $this->assertArrayHasKey('messages_count', $user);
+        $this->assertArrayHasKey('profile_posts_count', $user);
         $this->assertArrayHasKey('received_likes_count', $user);
         $this->assertArrayHasKey('followed_by_visitor', $user);
     }

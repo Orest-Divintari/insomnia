@@ -17,10 +17,12 @@ class AboutController extends Controller
     public function show(User $user)
     {
         $follows = $user->follows()
+            ->withProfileInfo()
             ->paginate(Follow::FOLLOWS_PER_PAGE)
             ->withPath(route('ajax.follows.index', $user));
 
         $followedBy = $user->followedBy()
+            ->withProfileInfo()
             ->paginate(Follow::FOLLOWED_BY_PER_PAGE)
             ->withPath(route('ajax.followed-by.index', $user));
 
