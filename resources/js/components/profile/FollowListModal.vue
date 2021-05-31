@@ -2,10 +2,7 @@
   <div>
     <button
       dusk="follow-list-button"
-      @click="
-        show();
-        fetchMore();
-      "
+      @click="show"
       class="text-smaller blue-link hover:underline cursor"
     >
       ... and {{ membersCount }} more.
