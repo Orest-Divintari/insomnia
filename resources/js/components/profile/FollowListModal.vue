@@ -78,7 +78,7 @@ export default {
   mixins: [fetch, view],
   data() {
     return {
-      items: this.followList.data,
+      members: [...this.followList.data],
       dataset: this.followList,
     };
   },

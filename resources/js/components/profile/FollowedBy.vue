@@ -45,7 +45,7 @@ export default {
   mixins: [fetch, view],
   data() {
     return {
-      followedByUsers: this.dataset.data,
+      followedByUsers: [...this.dataset.data],
     };
   },
   computed: {
