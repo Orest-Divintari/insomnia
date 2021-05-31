@@ -88,7 +88,7 @@ class ViewAboutTest extends TestCase
             $followerB->id
         );
         $this->assertEquals(
-            '/ajax/users/' . $profileOwner->name . '/followed-by',
+            route('ajax.followed-by.index', $profileOwner),
             $response['path']
         );
     }
@@ -117,7 +117,7 @@ class ViewAboutTest extends TestCase
             $followerB->id
         );
         $this->assertEquals(
-            '/ajax/users/' . $profileOwner->name . '/follows',
+            route('ajax.follows.index', $profileOwner),
             $response['path']
         );
     }

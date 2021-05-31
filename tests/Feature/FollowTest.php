@@ -232,7 +232,7 @@ class FollowTest extends TestCase
             route('ajax.followed-by.index', $profileOwner)
         )->json()['data'];
 
-        $this->assertEquals(1, $response[0]['messages_count']);
+        $this->assertEquals(1, $response[0]['profile_posts_count']);
     }
 
 }
