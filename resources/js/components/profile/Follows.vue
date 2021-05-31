@@ -24,12 +24,10 @@
 
 <script>
 import FollowListModal from "./FollowListModal";
-import FetchMoreButton from "../profile/FetchMoreButton";
 import fetch from "../../mixins/fetch";
 import view from "../../mixins/view";
 export default {
   components: {
-    FetchMoreButton,
     FollowListModal,
   },
   props: {
@@ -47,19 +45,6 @@ export default {
     return {
       followingUsers: [...this.dataset.data],
     };
-  },
-  computed: {
-    hasMore() {
-      return this.dataset.next_page_url ? true : false;
-    },
-  },
-  methods: {
-    refresh(paginatedCollection) {
-      this.dataset = paginatedCollection;
-      this.followingUsers = this.followingUsers.concat(
-        paginatedCollection.data
-      );
-    },
   },
 };
 </script>
