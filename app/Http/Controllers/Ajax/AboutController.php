@@ -18,11 +18,11 @@ class AboutController extends Controller
     {
         $follows = $user->follows()
             ->paginate(Follow::FOLLOWS_PER_PAGE)
-            ->withPath('/ajax/users/' . $user->name . '/follows');
+            ->withPath(route('ajax.follows.index', $user));
 
         $followedBy = $user->followedBy()
             ->paginate(Follow::FOLLOWED_BY_PER_PAGE)
-            ->withPath('/ajax/users/' . $user->name . '/followed-by');
+            ->withPath(route('ajax.followed-by.index', $user));
 
         $user->append('date_of_birth');
 
