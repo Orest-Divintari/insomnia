@@ -8,15 +8,16 @@
           popover-classes="inline"
           triggerClasses="blue-link text-md mr-1/2"
         ></profile-popover>
-        <span v-if="ownsPost(subject)">
+        <span v-if="belongsToProfile(subject, profileOwner)">
           updated their
           <a @click="showPost(subject)" class="blue-link">status</a>
         </span>
         <span v-else>
           left a message on
-          <a @click="showPost(subject.poster, subject)" class="blue-link">{{
-            subject.poster.name
-          }}</a
+          <a
+            @click="showPost(subject.profile_owner, subject)"
+            class="blue-link"
+            >{{ subject.profile_owner.name }}</a
           >'s profile.
         </span>
       </p>
@@ -56,6 +57,11 @@ export default {
     return {
       ...this.activity,
     };
+  },
+  methods: {
+    belongsToProfile(post, user) {
+      return post.profile_owner_id == user.id;
+    },
   },
 };
 </script>
