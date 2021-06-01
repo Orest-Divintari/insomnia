@@ -24,6 +24,5 @@ class Details extends Settings
     public function persist()
     {
         $this->user->update(['details' => $this->settings]);
-
     }
 }

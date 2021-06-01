@@ -85,6 +85,7 @@ abstract class Settings
                 $attributes[$attribute] = $castValue;
             }
         }
+
         return $attributes;
     }
 
