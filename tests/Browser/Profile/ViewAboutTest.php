@@ -245,6 +245,7 @@ class ViewAboutTest extends DuskTestCase
                 ->click('@follow-list-button')
                 ->waitFor('@fetch-more-button')
                 ->click('@fetch-more-button')
+                ->pause(50)
                 ->click('@fetch-more-button');
 
             $users->each(function ($user) use ($response) {
@@ -253,6 +254,7 @@ class ViewAboutTest extends DuskTestCase
                     ->assertSee("Like score: {$user->receivedLikes()->count()}")
                     ->assertSee("Messages: {$user->profilePosts()->count()}");
             });
+            $response->assertMissing('@fetch-more-button');
         });
     }
 
@@ -275,6 +277,8 @@ class ViewAboutTest extends DuskTestCase
                 ->waitForText('Following')
                 ->click('@follow-list-button')
                 ->waitFor('@fetch-more-button')
+                ->click('@fetch-more-button')
+                ->pause(30)
                 ->click('@fetch-more-button');
 
             $users->each(function ($user) use ($response) {
@@ -283,6 +287,7 @@ class ViewAboutTest extends DuskTestCase
                     ->assertSee("Like score: {$user->receivedLikes()->count()}")
                     ->assertSee("Messages: {$user->profilePosts()->count()}");
             });
+            $response->assertMissing('@fetch-more-button');
         });
     }
 
