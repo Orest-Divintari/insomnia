@@ -269,4 +269,34 @@ class ViewLatestActivityTest extends DuskTestCase
         });
     }
 
+    /** @test */
+    public function visitors_may_view_more_of_profile_owners_latest_activities()
+    {
+        $profileOwner = create(User::class);
+        $threads = ThreadFactory::by($profileOwner)
+            ->createMany(Activity::NUMBER_OF_ACTIVITIES * 2);
+        $threads->each(function ($thread) use ($profileOwner) {
+            Activity::create([
+                'user_id' => $profileOwner->id,
+                'subject_id' => $thread->id,
+                'subject_type' => Thread::class,
+                'type' => ModelType::prefixCreated($thread),
+            ]);
+        });
+
+        $this->browse(function (Browser $browser) use ($profileOwner, $threads) {
+            $response = $browser
+                ->loginAs($profileOwner)
+                ->visit(route('profiles.show', $profileOwner) . "?")
+                ->clickLink('Latest Activity')
+                ->waitFor('@fetch-more-button')
+                ->click('@fetch-more-button');
+
+            $threads->each(function ($thread) use ($response) {
+                $response->assertSee($thread->title);
+            });
+        });
+
+    }
+
 }
