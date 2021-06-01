@@ -28,7 +28,7 @@
       ></fetch-more-button>
     </div>
     <p
-      v-else
+      v-if="!hasActivities && fetchedData"
       class="p-7/2 text-sm text-black-semi border border-gray-lighter rounded"
     >
       The news feed is currently empty.
@@ -69,6 +69,7 @@ export default {
     return {
       activities: [],
       dataset: [],
+      fetchedData: false,
     };
   },
   computed: {
@@ -90,6 +91,7 @@ export default {
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
       this.activities = this.activities.concat(paginatedCollection.data);
+      this.fetchedData = true;
     },
   },
   created() {

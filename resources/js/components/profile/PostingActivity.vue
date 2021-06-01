@@ -28,7 +28,7 @@
       ></fetch-more-button>
     </div>
     <p
-      v-else
+      v-if="!hasPostings && fetchedData"
       class="border border-gray-lighter p-4 rounded mb-2 text-black-semi text-sm"
     >
       {{ profileOwner.name }} has not posted any content recently.
@@ -61,6 +61,7 @@ export default {
   mixins: [fetch],
   data() {
     return {
+      fetchedData: false,
       postings: [],
       dataset: [],
       poster: {},

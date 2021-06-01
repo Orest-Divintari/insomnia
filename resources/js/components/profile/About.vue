@@ -1,7 +1,7 @@
 <template>
   <div>
     <p
-      v-if="hasNoAbout"
+      v-if="hasNoAbout && fetchedData"
       class="p-7/2 text-sm text-black-semi border border-gray-lighter rounded"
     >
       {{ user.name }} has not provided any additional information
@@ -122,6 +122,7 @@ export default {
   mixins: [authorizable],
   data() {
     return {
+      fetchedData: false,
       user: this.profileOwner,
       followsDataset: {},
       followedByDataset: {},
@@ -185,6 +186,7 @@ export default {
       this.user = data.user;
       this.hasFollowing = this.followsDataset.total > 0;
       this.hasFollowers = this.followedByDataset.total > 0;
+      this.fetchedData = true;
     },
   },
   created() {

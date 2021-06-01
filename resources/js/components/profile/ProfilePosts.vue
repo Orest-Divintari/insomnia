@@ -15,7 +15,7 @@
       <paginator :with-query-string="false" :dataset="dataset"> </paginator>
     </div>
     <p
-      v-else
+      v-if="!hasPosts && fetchedData"
       class="p-7/2 border border-gray-lighter rounded text-black-semi text-sm"
     >
       There are no messages on {{ profileOwner.name }}'s profile yet.
@@ -47,6 +47,7 @@ export default {
   },
   data() {
     return {
+      fetchedData: false,
       items: this.paginatedPosts.data,
       dataset: this.paginatedPosts,
     };
