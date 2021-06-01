@@ -121,4 +121,5 @@ class ViewAboutTest extends TestCase
             $response['path']
         );
     }
+
 }

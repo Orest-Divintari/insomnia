@@ -15,7 +15,7 @@ class ViewAboutTest extends DuskTestCase
     use DatabaseMigrations, WithFaker;
 
     /** @test */
-    public function it_displays_a_message_when_profile_owner_has_not_provided_any_details()
+    public function it_displays_a_message_when_profile_owner_has_not_about_data()
     {
         $user = create(User::class);
 
@@ -74,7 +74,7 @@ class ViewAboutTest extends DuskTestCase
             $response = $browser->loginAs($visitor)
                 ->visit("/profiles/{$profileOwner->name}")
                 ->clickLink('About')
-                ->waitForText('Birthday');
+                ->waitForText('Birthday:');
 
             $response->assertSee($birthDay->format('M d'));
         });
