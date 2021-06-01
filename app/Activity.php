@@ -68,7 +68,7 @@ class Activity extends Model
                     Like::class => ['likeable' => function (MorphTo $morphTo) {
                         $morphTo->morphWith([
                             Reply::class => ['repliable'],
-                            ProfilePost::class,
+                            ProfilePost::class => ['profileOwner'],
                         ]);
                     }],
                     ProfilePost::class => ['profileOwner'],

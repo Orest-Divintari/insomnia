@@ -8,9 +8,9 @@
           popover-classes="inline"
           triggerClasses="blue-link text-md mr-1/2"
         ></profile-popover>
+        liked
         <a @click="showComment(subject.likeable)" class="blue-link">
-          {{ subject.likeable.poster.name }}
-          's comment
+          {{ subject.likeable.poster.name }}'s comment
         </a>
         on
         <span v-if="ownsPost(subject.likeable.repliable)">your post.</span>

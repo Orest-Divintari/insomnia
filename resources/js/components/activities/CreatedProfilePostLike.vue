@@ -12,7 +12,7 @@
         <a @click="showPost(subject.likeable)" class="blue-link"
           >{{ subject.likeable.poster.name }}'s post</a
         >
-        on {{ profileOwner.name }}'s profile.
+        on {{ subject.likeable.profile_owner.name }}'s profile.
       </p>
     </div>
     <div>
