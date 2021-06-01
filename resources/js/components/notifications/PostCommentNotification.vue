@@ -17,7 +17,11 @@
       <div @click="showComment(comment)" class="inline notification-content">
         <span class="no-underline hover:no-underline">commented on</span>
         <a
-          v-if="isAuthUser(profileOwner) && ownsPost(profilePost)"
+          v-if="
+            isAuthUser(profileOwner) &&
+            ownsPost(profilePost) &&
+            belongsToProfile(profilePost, profileOwner)
+          "
           class="blue-link"
           >your status</a
         >
@@ -32,8 +36,12 @@
           >{{ postPoster.name }}'s post</a
         >
         <div class="inline">
-          <span v-if="isAuthUser(profileOwner)">on your profile</span>
-          <span v-else>on {{ profileOwner.name }}'s profile</span>
+          <span v-if="isAuthUser(profileOwner) && !ownsPost(profilePost)"
+            >on your profile</span
+          >
+          <span v-if="!belongsToProfile(profilePost, profileOwner)"
+            >on {{ profileOwner.name }}'s profile</span
+          >
         </div>
         <p class="text-xs text-gray-lightest">
           {{ profilePost.date_created }}
@@ -58,6 +66,11 @@ export default {
     return {
       ...this.notificationData,
     };
+  },
+  methods: {
+    belongsToProfile(post, user) {
+      return post.profile_owner_id == user.id;
+    },
   },
 };
 </script>F
