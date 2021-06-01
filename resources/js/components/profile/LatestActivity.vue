@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dusk="latest-activity-tab">
     <div v-if="hasActivities">
       <div
         class="border border-gray-lighter p-4"
