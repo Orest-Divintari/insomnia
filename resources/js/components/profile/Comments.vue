@@ -6,6 +6,7 @@
     >
       <button
         @click="fetchMore"
+        dusk="previous-comments-button"
         class="text-smaller text-blue-ship-cove font-hairline hover:underline focus:outline-none"
       >
         View previous comments...
