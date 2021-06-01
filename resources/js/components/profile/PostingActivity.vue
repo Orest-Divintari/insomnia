@@ -1,5 +1,5 @@
 <template>
-  <div dusk="postings">
+  <div dusk="postings-tab">
     <div v-if="hasPostings">
       <div
         class="border border-gray-lighter p-4"
