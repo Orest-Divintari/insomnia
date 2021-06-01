@@ -17,7 +17,7 @@
         v-if="hasPersonalInformation"
         class="border border-gray-lighter p-4 rounded mb-2"
       >
-        <div class="flex items-center text-sm mb-1/2">
+        <div class="flex items-center text-sm mb-1/2" v-if="user.date_of_birth">
           <p class="w-48 text-gray-shuttle">Birthday:</p>
           <p class="text-black-semi">{{ user.date_of_birth }}</p>
         </div>

@@ -108,7 +108,7 @@ class ViewAboutTest extends DuskTestCase
         $birthDay = Carbon::parse('1993-08-25');
         $birth_date = $birthDay->format('Y-m-d');
         $profileOwner->details()->merge(compact('birth_date'));
-        $profileOwner->disallow('birth_date');
+        $profileOwner->disallow('show_birth_date');
         $visitor = create(User::class);
 
         $this->browse(function (Browser $browser) use ($visitor, $profileOwner, $birthDay) {
