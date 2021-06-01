@@ -46,6 +46,17 @@ class ModelType
     }
 
     /**
+     * Adds "created-" suffix  to the given model type
+     *
+     * @param mixed $model
+     * @return string
+     */
+    public static function prefixCreated($model)
+    {
+        return "created-" . static::get($model);
+    }
+
+    /**
      * Get the type of the model that was liked
      *
      * @param mixed $model

@@ -68,7 +68,10 @@
             <div>{{$subHeader}}</div>
         </header>
 
-        <main class="p-5 h-screen bg-semi-white">{{$main}}</main>
+        <main class="p-5 h-full bg-semi-white">{{$main}}</main>
+        <div class="mt-10">
+            sadas
+        </div>
         <error-modal></error-modal>
     </div>
 

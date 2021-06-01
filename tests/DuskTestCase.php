@@ -19,7 +19,7 @@ abstract class DuskTestCase extends BaseTestCase
      */
     public static function prepare()
     {
-        if (! static::runningInSail()) {
+        if (!static::runningInSail()) {
             static::startChromeDriver();
         }
     }
@@ -56,6 +56,6 @@ abstract class DuskTestCase extends BaseTestCase
     protected function hasHeadlessDisabled()
     {
         return isset($_SERVER['DUSK_HEADLESS_DISABLED']) ||
-               isset($_ENV['DUSK_HEADLESS_DISABLED']);
+        isset($_ENV['DUSK_HEADLESS_DISABLED']);
     }
 }

@@ -14,7 +14,7 @@
       <p>{{ posting.date_created }}</p>
       <p class="dot"></p>
       <p>
-        Category :
+        Category:
         <a
           @click="showCategory(posting.repliable.category)"
           class="cursor-pointer underline"
