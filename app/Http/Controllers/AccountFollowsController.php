@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Follow;
+
 class AccountFollowsController extends Controller
 {
     /**
@@ -15,7 +17,7 @@ class AccountFollowsController extends Controller
             ->follows()
             ->withMessagesCount()
             ->withCount('receivedLikes')
-            ->paginate(2);
+            ->paginate(Follow::FOLLOWS_PER_PAGE);
 
         return view('account.follows.index', compact('followingUsers'));
     }
