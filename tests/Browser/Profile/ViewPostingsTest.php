@@ -22,6 +22,20 @@ class ViewPostingsTest extends DuskTestCase
     use DatabaseMigrations;
 
     /** @test */
+    public function it_shows_a_message_when_profile_owner_does_not_have_any_posting_acivities()
+    {
+        $user = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($user) {
+
+            $response = $browser->loginAs($user)
+                ->visit("/profiles/{$user->name}")
+                ->clickLink('Postings')
+                ->assertSee("{$user->name} has not posted any content recently.");
+        });
+    }
+
+    /** @test */
     public function it_shows_the_threads_that_profile_owner_has_created()
     {
         $profileOwner = create(User::class);
@@ -43,7 +57,7 @@ class ViewPostingsTest extends DuskTestCase
                 ->waitForText($thread->title);
 
             $response
-                ->assertSeeIn('@postings', $profileOwner->name)
+                ->assertSeeIn('@postings-tab', $profileOwner->name)
                 ->assertSee($thread->title)
                 ->assertSee($thread->body)
                 ->assertSee('Thread')
@@ -76,7 +90,7 @@ class ViewPostingsTest extends DuskTestCase
                 ->waitForText($thread->title);
 
             $response
-                ->assertSeeIn('@postings', $profileOwner->name)
+                ->assertSeeIn('@postings-tab', $profileOwner->name)
                 ->assertSee($thread->title)
                 ->assertSee($reply->body)
                 ->assertSee("Post #{$reply->position}")
@@ -107,7 +121,7 @@ class ViewPostingsTest extends DuskTestCase
                 ->waitForText($profilePost->body);
 
             $response
-                ->assertSeeIn('@postings', $profileOwner->name)
+                ->assertSeeIn('@postings-tab', $profileOwner->name)
                 ->assertSee($profilePost->body)
                 ->assertSee('Profile post')
                 ->assertSee($profilePost->date_created);
@@ -135,7 +149,7 @@ class ViewPostingsTest extends DuskTestCase
                 ->waitForText($comment->body);
 
             $response
-                ->assertSeeIn('@postings', $profileOwner->name)
+                ->assertSeeIn('@postings-tab', $profileOwner->name)
                 ->assertSee($comment->body)
                 ->assertSee('Profile post comment')
                 ->assertSee($comment->date_created);
