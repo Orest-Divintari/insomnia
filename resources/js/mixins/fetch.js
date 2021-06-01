@@ -13,8 +13,10 @@ export default {
               .then(({ data }) => this.refresh(data))
               .catch((error) => console.log(error));
            },
-           hasMore(){
-            return this.dataset.next_page_url ? true : false;
-          }
     },
+    computed: {
+      hasMore(){
+        return this.dataset.next_page_url ? true : false;
+      }
+    }
 };

@@ -106,7 +106,6 @@
 <script>
 import Follows from "./Follows";
 import FollowedBy from "./FollowedBy";
-import fetch from "../../mixins/fetch";
 import authorizable from "../../mixins/authorizable";
 export default {
   components: {
@@ -120,7 +119,7 @@ export default {
       required: true,
     },
   },
-  mixins: [fetch, authorizable],
+  mixins: [authorizable],
   data() {
     return {
       user: this.profileOwner,
@@ -159,7 +158,6 @@ export default {
           personalInformationExists = true;
         }
       });
-      return true;
       return personalInformationExists || this.user.date_of_birth;
     },
     hasNoAbout() {
@@ -175,6 +173,12 @@ export default {
     },
   },
   methods: {
+    fetchData() {
+      axios
+        .get(this.path)
+        .then(({ data }) => this.refresh(data))
+        .catch((error) => console.log(error));
+    },
     refresh(data) {
       this.followsDataset = data.follows;
       this.followedByDataset = data.followedBy;

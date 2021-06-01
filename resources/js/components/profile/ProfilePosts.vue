@@ -26,7 +26,6 @@
 <script>
 import NewProfilePost from "./NewProfilePost";
 import ProfilePost from "./ProfilePost";
-import fetch from "../../mixins/fetch";
 import FetchMoreButton from "./FetchMoreButton";
 import Paginator from "../Paginator";
 export default {
@@ -46,7 +45,6 @@ export default {
       default: {},
     },
   },
-  mixins: [fetch],
   data() {
     return {
       items: this.paginatedPosts.data,
@@ -69,9 +67,6 @@ export default {
     remove(index) {
       this.items.splice(index, 1);
     },
-  },
-  created() {
-    // this.fetchData();
   },
 };
 </script>

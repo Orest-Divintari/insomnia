@@ -38,10 +38,8 @@
 </template>
 
 <script>
-import fetch from "../../mixins/fetch";
 import store from "../../store";
 export default {
-  mixins: [fetch],
   data() {
     return {
       state: store.state,
@@ -64,6 +62,12 @@ export default {
     },
   },
   methods: {
+    fetchData() {
+      axios
+        .get(this.path)
+        .then(({ data }) => this.refresh(data))
+        .catch((error) => console.log(error));
+    },
     readPath(notificationId) {
       return "/ajax/notifications/" + notificationId;
     },

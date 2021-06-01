@@ -132,7 +132,6 @@ import Dropdown from "../Dropdown.vue";
 import authorizable from "../../mixins/authorizable";
 import Avatar from "../profile/Avatar";
 import view from "../../mixins/view";
-import fetch from "../../mixins/fetch";
 export default {
   components: {
     Avatar,
@@ -145,7 +144,7 @@ export default {
       required: true,
     },
   },
-  mixins: [authorizable, view, fetch],
+  mixins: [authorizable, view],
   computed: {
     avatarPath() {
       return this.state.visitor.avatar_path ?? this.user.avatar_path;
@@ -166,6 +165,12 @@ export default {
     };
   },
   methods: {
+    fetchData() {
+      axios
+        .get(this.path)
+        .then(({ data }) => this.refresh(data))
+        .catch((error) => console.log(error));
+    },
     refresh(user) {
       this.user = user;
       this.fetchedData = true;
