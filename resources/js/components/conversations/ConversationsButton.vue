@@ -17,7 +17,14 @@
             <div v-for="(conversation, index) in conversations">
               <div
                 @click="showConversation(conversation)"
-                class="p-2 flex group hover:bg-white-catskill cursor-pointer border-t border-gray-lighter"
+                class="
+                  p-2
+                  flex
+                  group
+                  hover:bg-white-catskill
+                  cursor-pointer
+                  border-t border-gray-lighter
+                "
                 :class="containerClasses(index)"
               >
                 <profile-popover
@@ -27,7 +34,10 @@
                 ></profile-popover>
                 <div class="text-xs">
                   <p
-                    class="text-blue-link group-hover:underline group-hover:text-blue-link-hover"
+                    class="
+                      text-blue-link
+                      group-hover:underline group-hover:text-blue-link-hover
+                    "
                   >
                     {{ conversation.title }}
                   </p>
