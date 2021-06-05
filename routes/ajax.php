@@ -178,6 +178,12 @@ Route::group(['middleware' => 'visitor.append'], function () {
         Route::delete('/notifications/{notificationId}', 'UserNotificationController@destroy')
             ->name('user-notifications.destroy');
 
+        Route::patch('/notifications/{notification}/read', 'ReadNotificationController@update')
+            ->name('read-notifications.update');
+
+        Route::delete('/notifications/{notification}/read', 'ReadNotificationController@destroy')
+            ->name('read-notifications.destroy');
+
         /* ************ USER AVATAR ************ */
 
         Route::patch('/users/{user}/avatar', 'UserAvatarController@update')

@@ -15,5 +15,5 @@
 }
 
 .notification-item .notification-content:hover a {
-    @apply .underline;
+    @apply .underline .break-words;
 }

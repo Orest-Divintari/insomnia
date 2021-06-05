@@ -16,19 +16,20 @@ module.exports = {
             },
             maxHeight: {
                 "64": "16rem",
-                "96": "24rem"
+                "96": "24rem",
             },
             flexGrow: {
                 "2": 2
             },
             colors: {
+                "inherit":"inherit",
                 gallery: "#EEEEEE",
                 "green-mid": "#048004",
                 "blue-dark": "#162A44",
                 "blue-lighter": "#EDF4F9",
                 "blue-light": "#DDE6F1",
                 "blue-mid": "#426693",
-                "blue-mid-light": "#CFDEEB",
+                "blue-mid-light": "#6786B1",
                 "blue-mid-dark": "#4F6C98",
                 "blue-reply-border": "#A2BBDF",
                 "blue-link-menu": "#2C435F",
@@ -64,7 +65,9 @@ module.exports = {
             },
             width:{
                 "80": "20rem",
+                "82": "20.5rem",
                 "84": "21rem",
+                "86": "21.5rem",
                 "72": "18rem",
                 "74": "18.5rem",
                 "76": "19rem",

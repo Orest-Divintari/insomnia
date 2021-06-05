@@ -99,6 +99,10 @@ Vue.component(
     "Notifications",
     require("./components/account/Notifications.vue").default
 );
+Vue.component(
+    "Notification",
+    require("./components/notifications/Notification.vue").default
+);
 
 Vue.component(
     "ThreadReplyNotification",

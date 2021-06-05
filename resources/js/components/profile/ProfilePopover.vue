@@ -10,7 +10,7 @@
       delay="0"
     >
       <div
-        @click="showProfile(profileOwner)"
+        @click.stop="showProfile(profileOwner)"
         class="cursor-pointer"
         @mouseover="show"
         @mouseout="hide"
@@ -40,7 +40,7 @@
             dusk="profile-popover-content"
           >
             <img
-              @click="showProfile(profileOwner)"
+              @click.stop="showProfile(profileOwner)"
               :id="'user-avatar-' + profileOwner.id"
               :src="avatarPath"
               class="avatar-xl cursor-pointer"
@@ -48,7 +48,7 @@
             />
             <div class="pl-2 w-72 flex flex-col space-y-1">
               <h1
-                @click="showProfile(profileOwner)"
+                @click.stop="showProfile(profileOwner)"
                 class="text-lg hover:underline cursor-pointer"
               >
                 {{ profileOwner.name }}

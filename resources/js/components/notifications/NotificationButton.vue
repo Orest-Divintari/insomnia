@@ -1,8 +1,8 @@
 <template>
   <div @click="fetchData">
-    <dropdown styleClasses="w-80">
+    <dropdown styleClasses="w-80 border-r-0 border-l-0">
       <template v-slot:dropdown-trigger>
-        <div class="relative hover:bg-blue-mid h-14 text-center pt-4 px-2">
+        <div class="relative h-14 text-center pt-4 px-2">
           <i class="fas fa-bell"></i>
           <i
             v-if="unviewedNotifications"
@@ -14,24 +14,28 @@
       <template v-slot:dropdown-items>
         <div class="dropdown-title">Notifications</div>
         <div v-if="fetchedData">
-          <div v-if="notificationsExist">
-            <div
-              @click="markAsRead(notification.id)"
-              v-for="(notification, index) in notifications"
-              :key="notification.id"
-              class="notification-item"
-            >
-              <component
-                :is="notification.data.type"
-                :notification-data="notification.data"
-              ></component>
+          <div
+            style="max-height: 18rem"
+            class="overflow-y-scroll overflow-x-hidden"
+            v-if="notificationsExist"
+          >
+            <div v-for="(notification, index) in notifications">
+              <notification
+                :notification="notification"
+                class="notification-item"
+              ></notification>
             </div>
           </div>
-          <div v-if="!notificationsExist">
-            <div class="notification-item">You have no new notifications</div>
-          </div>
+          <p v-else class="notification-item">
+            You do not have any recent notifications.
+          </p>
         </div>
         <div v-else class="notification-item">...</div>
+        <div class="dropdown-footer-item flex items-center shadow-2xl">
+          <a href="/account/notifications" class="blue-link">Show all</a>
+          <p class="dot"></p>
+          <a href="/account/preferences" class="blue-link">Preferences</a>
+        </div>
       </template>
     </dropdown>
   </div>
@@ -39,7 +43,11 @@
 
 <script>
 import store from "../../store";
+import Notifications from "../account/Notifications";
 export default {
+  components: {
+    Notifications,
+  },
   data() {
     return {
       state: store.state,
@@ -65,21 +73,12 @@ export default {
     fetchData() {
       axios
         .get(this.path)
-        .then(({ data }) => this.refresh(data))
+        .then((data) => this.refresh(data))
         .catch((error) => console.log(error));
-    },
-    readPath(notificationId) {
-      return "/ajax/notifications/" + notificationId;
     },
     refresh(data) {
-      this.notifications = data;
+      this.notifications = data.data;
       this.fetchedData = true;
-    },
-    markAsRead(notificationId) {
-      axios
-        .delete(this.readPath(notificationId))
-        .then((response) => notification.length)
-        .catch((error) => console.log(error));
     },
   },
 };
