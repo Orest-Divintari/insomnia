@@ -73,7 +73,7 @@ export default {
     },
   },
 };
-</script>F
+</script>
 
 <style lang="scss" scoped>
 </style>
