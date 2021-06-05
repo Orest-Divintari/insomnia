@@ -16,22 +16,11 @@ class UserNotificationController extends Controller
     public function index()
     {
         auth()->user()->viewNotifications();
-        return auth()->user()->fresh()->unreadNotifications;
-    }
 
-    /**
-     * Mark a notification as read
-     *
-     * @param int $notificationId
-     * @return void
-     */
-    public function destroy($notificationId)
-    {
-        auth()->user()
-            ->unreadNotifications()
-            ->findOrFail($notificationId)
-            ->markAsRead();
-
-        return response('The notification has been marked as read', 200);
+        return auth()->user()
+            ->fresh()
+            ->notifications()
+            ->sinceLastWeek()
+            ->get();
     }
 }

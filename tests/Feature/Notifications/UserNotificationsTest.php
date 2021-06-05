@@ -18,48 +18,39 @@ class UserNotificationsTest extends TestCase
     protected $response;
 
     /** @test */
-    public function a_user_can_fetch_the_unread_database_notifications()
+    public function it_returns_unread_notifications_up_to_one_week_old()
     {
         $orestis = $this->signIn();
         $thread = create(Thread::class);
         $thread->subscribe($orestis->id);
         $john = create(User::class);
+        Carbon::setTestNow(Carbon::now()->subMonth());
+        $thread->addReply(['body' => $this->faker->sentence], $john);
+        Carbon::setTestNow();
         $thread->addReply(['body' => $this->faker->sentence], $john);
 
-        $response = $this->get(route('ajax.user-notifications.index'))->json();
+        $notification = $this->get(route('ajax.user-notifications.index'))->json()[0];
 
-        $this->assertCount(1, $response);
+        $this->assertEquals($notification['id'], $orestis->notifications()->first()->id);
+        $this->assertFalse($notification['is_read']);
     }
 
     /** @test */
-    public function a_user_can_mark_a_database_notification_as_read()
+    public function it_returns_read_notifications_up_to_one_week_old()
     {
         $orestis = $this->signIn();
         $thread = create(Thread::class);
         $thread->subscribe($orestis->id);
         $john = create(User::class);
+        Carbon::setTestNow(Carbon::now()->subMonth());
         $thread->addReply(['body' => $this->faker->sentence], $john);
-        $notification = $orestis->unreadNotifications->first();
-
-        $this->delete(route('ajax.user-notifications.destroy', $notification->id));
-
-        $response = $this->get(route('ajax.user-notifications.index'))->json();
-        $this->assertCount(0, $response);
-    }
-
-    /** @test */
-    public function a_user_can_mark_notifications_as_viewed()
-    {
-        $orestis = $this->signIn();
-        $thread = create(Thread::class);
-        $thread->subscribe($orestis->id);
-        $john = create(User::class);
+        Carbon::setTestNow();
         $thread->addReply(['body' => $this->faker->sentence], $john);
-        Carbon::setTestNow(Carbon::now()->addDay());
+        $orestis->notifications()->first()->markAsRead();
 
-        $this->get(route('ajax.user-notifications.index'))->json();
+        $notification = $this->get(route('ajax.user-notifications.index'))->json()[0];
 
-        $this->assertTrue($orestis->notificationsViewed());
+        $this->assertEquals($notification['id'], $orestis->notifications()->first()->id);
+        $this->assertTrue($notification['is_read']);
     }
-
 }

@@ -13,7 +13,10 @@ class AccountNotificationsController extends Controller
     {
         return view('account.notifications.index', [
             'user' => auth()->user(),
-            'notifications' => auth()->user()->unreadNotifications()->paginate(50),
+            'notifications' => auth()->user()
+                ->notifications()
+                ->sinceLastWeek()
+                ->paginate(2),
         ]);
     }
 }
