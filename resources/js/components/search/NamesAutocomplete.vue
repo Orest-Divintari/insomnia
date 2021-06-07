@@ -23,7 +23,14 @@
 
           <div
             v-if="typeMore"
-            class="absolute text-black-semi text-xs bg-white p-2 shadow-xl rounded"
+            class="
+              absolute
+              text-black-semi text-xs
+              bg-white
+              p-2
+              shadow-xl
+              rounded
+            "
           >
             Please enter {{ charactersLeft }} or more characters.
           </div>
@@ -106,8 +113,8 @@ export default {
       currentlySearching: false,
       searchQuery: this.initialParticipant,
       searchClient: algoliasearch(
-        "1CTUZQ0316",
-        "f85cc7ea8e1093c370978f061108afc7"
+        "EVF642L8GM",
+        "f7b7eab4aa53e12f32086bb8b57e7c34"
       ),
       commaSeparatedValues: "",
       currentSearchTerm: "",
