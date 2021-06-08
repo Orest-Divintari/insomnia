@@ -70,6 +70,8 @@ class ProfilePostHasNewLike extends Notification
             'profilePost' => $this->profilePost,
             'profileOwner' => $this->profileOwner,
             'poster' => $this->poster,
+            'triggerer' => $this->liker,
+            'redirectTo' => route('profile-posts.show', $this->profilePost),
         ];
     }
 }

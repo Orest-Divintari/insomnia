@@ -74,6 +74,8 @@ class ThreadHasNewReply extends Notification
             'thread' => $this->thread,
             'reply' => $this->reply,
             'type' => 'thread-reply-notification',
+            'triggerer' => $this->reply->poster,
+            'redirectTo' => route('replies.show', $this->reply),
         ];
     }
 }

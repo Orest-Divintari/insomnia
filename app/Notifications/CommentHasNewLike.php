@@ -80,6 +80,8 @@ class CommentHasNewLike extends Notification
             'liker' => $this->liker,
             'like' => $this->like,
             'type' => 'comment-like-notification',
+            'triggerer' => $this->liker,
+            'redirectTo' => route('comments.show', $this->comment),
         ];
     }
 }

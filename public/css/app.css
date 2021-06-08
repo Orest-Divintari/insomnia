@@ -1462,10 +1462,7 @@ div.form-left-col {
 
 .notification-item {
   display: block;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem;
   cursor: pointer;
   border-top-width: 1px;
   --border-opacity: 1;
@@ -1484,15 +1481,6 @@ div.form-left-col {
   --bg-opacity: 1;
   background-color: #E1EAF3;
   background-color: rgba(225, 234, 243, var(--bg-opacity));
-}
-
-.notification-item a.notification-profile:hover {
-  text-decoration: underline;
-}
-
-.notification-item .notification-content:hover a {
-  text-decoration: underline;
-  overflow-wrap: break-word;
 }
 @charset "UTF-8";
 

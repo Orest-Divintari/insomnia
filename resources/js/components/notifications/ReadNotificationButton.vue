@@ -3,26 +3,40 @@
     class="text-blue-mid hover:text-blue-mid-light text-xs"
     @click.stop="toggleRead"
   >
-    <button
-      class="focus:outline-none"
-      v-if="read && hovering"
-      v-tooltip="{
-        content: 'Mark unread',
-        classes: ['read-notification'],
-      }"
-    >
-      <i class="far fa-circle"></i>
-    </button>
-    <button
-      class="focus:outline-none"
-      v-if="!read"
-      v-tooltip="{
-        content: 'Mark read',
-        classes: ['read-notification'],
-      }"
-    >
-      <i class="fas fa-circle"></i>
-    </button>
+    <div v-if="read && hovering">
+      <v-popover
+        placement="top"
+        offset="10"
+        trigger="hover"
+        popoverWrapperClass="border-black"
+        popoverInnerClass="bg-black py-1 px-2 text-white text-xs rounded"
+        :popperOptions="{
+          modifiers: { preventOverflow: { escapeWithReference: true } },
+        }"
+      >
+        <button class="focus:outline-none">
+          <i class="far fa-circle"></i>
+        </button>
+        <template slot="popover"> Mark unread </template>
+      </v-popover>
+    </div>
+    <div v-if="!read">
+      <v-popover
+        placement="top"
+        offset="10"
+        trigger="hover"
+        popoverWrapperClass="border-black"
+        popoverInnerClass="bg-black py-1 px-2 text-white text-xs rounded"
+        :popperOptions="{
+          modifiers: { preventOverflow: { escapeWithReference: true } },
+        }"
+      >
+        <button class="focus:outline-none">
+          <i class="fas fa-circle"></i>
+        </button>
+        <template slot="popover"> Mark read </template>
+      </v-popover>
+    </div>
   </div>
 </template>
 
@@ -52,22 +66,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.tooltip {
-  // ...
-
-  &.read-notification {
-    .tooltip-inner {
-      background: black;
-      opacity: 0.7;
-      color: white;
-      font-size: 0.75rem;
-      padding: 0.4rem;
-    }
-
-    .tooltip-arrow {
-      border-color: black;
-    }
-  }
-}
+<style lang="scss" scoped>
 </style>

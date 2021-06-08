@@ -55,6 +55,8 @@ class ReplyHasNewLike extends Notification
             'type' => 'reply-like-notification',
             'liker' => $this->liker,
             'like' => $this->like,
+            'triggerer' => $this->liker,
+            'redirectTo' => route('replies.show', $this->reply),
         ];
     }
 }

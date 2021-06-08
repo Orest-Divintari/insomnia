@@ -67,6 +67,8 @@ class ProfileHasNewPost extends Notification
             'profilePost' => $this->profilePost,
             'profileOwner' => $this->profileOwner,
             'type' => "profile-post-notification",
+            'triggerer' => $this->postPoster,
+            'redirectTo' => route('profile-posts.show', $this->profilePost),
         ];
     }
 }

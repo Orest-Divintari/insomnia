@@ -67,6 +67,8 @@ class YouHaveANewFollower extends Notification
             'type' => 'follow-notification',
             'follow_date_created' => $this->followDate->calendar(),
             'follower_id' => $this->follower->id,
+            'triggerer' => $this->follower,
+            'redirectTo' => route('profiles.show', $this->follower),
         ];
     }
 }

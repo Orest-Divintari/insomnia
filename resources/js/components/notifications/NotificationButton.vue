@@ -5,7 +5,7 @@
         <div class="relative h-14 text-center pt-4 px-2">
           <i class="fas fa-bell"></i>
           <i
-            v-if="unviewedNotifications"
+            v-if="hasUnviewedNotifications"
             class="notification-badge"
             v-text="unviewedCount"
           ></i>
@@ -20,10 +20,7 @@
             v-if="notificationsExist"
           >
             <div v-for="(notification, index) in notifications">
-              <notification
-                :notification="notification"
-                class="notification-item"
-              ></notification>
+              <notification :notification="notification"></notification>
             </div>
           </div>
           <p v-else class="notification-item">
@@ -62,7 +59,7 @@ export default {
     unviewedCount() {
       return this.state.visitor.unviewed_notifications_count;
     },
-    unviewedNotifications() {
+    hasUnviewedNotifications() {
       return this.unviewedCount > 0;
     },
     notificationsExist() {

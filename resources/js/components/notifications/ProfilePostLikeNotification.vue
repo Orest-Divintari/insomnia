@@ -1,40 +1,24 @@
 <template>
-  <div class="flex">
+  <div>
     <profile-popover
-      class="mr-5/2"
+      class="inline"
+      popover-classes="inline"
       :user="liker"
-      trigger="avatar"
-      triggerClasses="avatar-sm"
-    >
-    </profile-popover>
-    <div class="flex-1">
-      <profile-popover
-        class="inline"
-        popover-classes="inline"
-        :user="liker"
-        triggerClasses="blue-link notification-profile text-smaller"
-      ></profile-popover>
+      triggerClasses="blue-link text-smaller"
+    ></profile-popover>
 
-      <div
-        @click="showPost(profilePost)"
-        class="text-black inline notification-content"
-      >
-        <span>liked</span>
-        <a v-if="ownsPost(profilePost)" class="blue-link">your post</a>
-        <a v-else class="blue-link">{{ poster }}'s post</a>
-        on
-        <span v-if="ownsProfile(profileOwner)">your profile</span>
-        <span v-else>{{ profileOwner.name }}'s profile</span>.
-        <p class="text-xs text-gray-lightest">
-          {{ like.date_created }}
-        </p>
-      </div>
+    <div class="text-black inline">
+      <span>liked</span>
+      <a v-if="ownsPost(profilePost)" class="blue-link">your post</a>
+      <a v-else class="blue-link">{{ poster }}'s post</a>
+      on
+      <span v-if="ownsProfile(profileOwner)">your profile</span>
+      <span v-else>{{ profileOwner.name }}'s profile</span>.
     </div>
   </div>
 </template>
 
 <script>
-import view from "../../mixins/view";
 import authorizable from "../../mixins/authorizable";
 export default {
   props: {
@@ -48,7 +32,7 @@ export default {
       ...this.notificationData,
     };
   },
-  mixins: [view, authorizable],
+  mixins: [authorizable],
 };
 </script>
 

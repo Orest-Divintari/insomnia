@@ -65,6 +65,8 @@ class YourPostOnYourProfileHasNewComment extends Notification
             'comment' => $this->comment,
             'profileOwner' => $this->profileOwner,
             'type' => 'post-comment-notification',
+            'triggerer' => $this->commentPoster,
+            'redirectTo' => route('comments.show', $this->comment),
         ];
     }
 }

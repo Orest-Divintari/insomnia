@@ -3,17 +3,9 @@
 }
 
 .notification-item {
-    @apply .block .px-4 .py-2 .cursor-pointer .border-t .border-blue-light .bg-blue-lighter .text-black-semi .text-smaller;
+    @apply .block .p-2 .cursor-pointer .border-t .border-blue-light .bg-blue-lighter .text-black-semi .text-smaller;
 }
 
 .notification-item:hover {
     @apply .bg-white-catskill;
-}
-
-.notification-item a.notification-profile:hover {
-    @apply .underline;
-}
-
-.notification-item .notification-content:hover a {
-    @apply .underline .break-words;
 }

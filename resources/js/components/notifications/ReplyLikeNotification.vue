@@ -1,33 +1,20 @@
 <template>
-  <div class="flex">
+  <div>
     <profile-popover
-      class="mr-5/2"
       :user="liker"
-      trigger="avatar"
-      triggerClasses="avatar-sm"
-    >
-    </profile-popover>
-    <div class="flex-1">
-      <profile-popover
-        :user="liker"
-        popover-classes="inline"
-        triggerClasses="blue-link text-smaller notification-profile mr-1/2"
-        class="inline"
-      ></profile-popover>
-      <div @click="showReply(reply)" class="inline notification-content w-full">
-        liked
-        <a @click="showThread(reply.thread)" class="blue-link">your post</a>
-        in the thread {{ reply.repliable.title }}
-        <p class="text-xs text-gray-lightest">
-          {{ like.date_created }}
-        </p>
-      </div>
-    </div>
+      popover-classes="inline"
+      triggerClasses="blue-link text-smaller  mr-1/2"
+      class="inline"
+    ></profile-popover>
+    <p class="inline w-full">
+      liked
+      <a class="blue-link">your post</a>
+      in the thread {{ reply.repliable.title }}
+    </p>
   </div>
 </template>
 
 <script>
-import view from "../../mixins/view";
 export default {
   props: {
     notificationData: {
@@ -40,7 +27,6 @@ export default {
       ...this.notificationData,
     };
   },
-  mixins: [view],
 };
 </script>
 

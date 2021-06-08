@@ -1,26 +1,13 @@
 <template>
-  <div class="flex">
+  <div>
     <profile-popover
-      class="mr-5/2 inline"
       :user="follower"
-      trigger="avatar"
-      triggerClasses="avatar-sm"
+      popover-classes="inline"
+      triggerClasses="text-blue-link text-smaller"
+      class="inline"
     >
     </profile-popover>
-
-    <div>
-      <p class="flex space-x-1 items-center">
-        <profile-popover
-          :user="follower"
-          triggerClasses="text-blue-link text-smaller"
-        >
-        </profile-popover>
-        <span> is now following you.</span>
-        <p class="block text-xs text-gray-lightest">
-          {{ follow_date_created }}
-        </p>
-      </p>
-    </div>
+    <p class="inline">is now following you.</p>
   </div>
 </template>
 

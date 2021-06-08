@@ -1,21 +1,35 @@
 <template>
   <div
-    class="flex justify-between"
-    @mouseleave="hovering = false"
+    class="flex notification-item break-words"
+    :class="{ 'bg-white-catskill': !read }"
     @mouseenter="hovering = true"
-    @click="markAsRead"
+    @mouseleave="hovering = false"
+    @click="view"
   >
-    <component
-      :is="notification.data.type"
-      :notification-data="notification.data"
-    ></component>
-    <read-notification-button
-      @toggleRead="toggleRead"
-      :hovering="hovering"
-      class="-ml-5 self-end"
-      :notification="notification"
+    <profile-popover
+      :user="notification.data.triggerer"
+      trigger="avatar"
+      triggerClasses="avatar-sm"
     >
-    </read-notification-button>
+    </profile-popover>
+    <div class="flex-1 ml-5/2">
+      <component
+        :is="notification.data.type"
+        :notification-data="notification.data"
+        :hovering="hovering"
+      ></component>
+      <div class="flex justify-between">
+        <p class="text-xs text-gray-lightest">
+          {{ notification.date_created }}
+        </p>
+        <read-notification-button
+          @toggleRead="toggleRead"
+          :hovering="hovering"
+          :notification="notification"
+        >
+        </read-notification-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,6 +71,13 @@ export default {
     },
     markAsUnread() {
       axios.delete(this.path).catch((error) => console.log(error));
+    },
+    redirect() {
+      window.location.href = this.notification.data.redirectTo;
+    },
+    view() {
+      this.markAsRead();
+      this.redirect();
     },
   },
 };

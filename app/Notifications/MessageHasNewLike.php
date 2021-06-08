@@ -53,6 +53,8 @@ class MessageHasNewLike extends Notification
             'liker' => $this->liker,
             'like' => $this->like,
             'type' => 'message-like-notification',
+            'triggerer' => $this->liker,
+            'redirectTo' => route('messages.show', $this->message),
         ];
     }
 }
