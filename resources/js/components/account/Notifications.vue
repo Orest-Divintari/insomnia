@@ -1,10 +1,10 @@
 <template>
   <div>
     <div v-if="notificationsExist" v-cloak>
-      <div class="border border-gray-lighter rounded" v-cloak>
+      <div class="border border-t-0 border-gray-lighter rounded" v-cloak>
         <div v-for="(notification, index) in items" :key="notification.id">
           <notification
-            class="p-7/2 border-t-0 text-sm text-black-semi"
+            class="p-7/2 border-t text-sm text-black-semi"
             :notification="notification"
             hover-background=""
             :class="notificationClasses(index)"
