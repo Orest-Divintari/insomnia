@@ -1,17 +1,15 @@
 <template>
   <div>
-    <div v-if="notificationsExist">
-      <div class="border border-gray-lighter rounded">
-        <div
-          v-for="(notification, index) in items"
-          :key="notification.id"
-          class="bg-white-catskill p-7/2 text-sm"
-          :class="notificationClasses(index)"
-        >
-          <component
-            :is="notification.data.type"
-            :notification-data="notification.data"
-          ></component>
+    <div v-if="notificationsExist" v-cloak>
+      <div class="border border-gray-lighter rounded" v-cloak>
+        <div v-for="(notification, index) in items" :key="notification.id">
+          <notification
+            class="p-7/2 border-t-0 text-sm text-black-semi"
+            :notification="notification"
+            hover-background=""
+            :class="notificationClasses(index)"
+            read-background="bg-white"
+          ></notification>
         </div>
       </div>
       <paginator class="mt-2" :dataset="dataset"></paginator>
@@ -24,8 +22,9 @@
 
 <script>
 import Paginator from "../Paginator.vue";
+import Notification from "../notifications/Notification.vue";
 export default {
-  components: { Paginator },
+  components: { Paginator, Notification },
   props: {
     dataset: {
       type: Object,
@@ -48,9 +47,7 @@ export default {
   },
   methods: {
     notificationClasses(index) {
-      return [
-        this.items.length - 1 == index ? "" : "border-b border-gray-lighter",
-      ];
+      return [this.items.length - 1 == index ? "border-t" : ""];
     },
   },
 };

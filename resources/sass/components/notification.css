@@ -3,9 +3,5 @@
 }
 
 .notification-item {
-    @apply .block .p-2 .cursor-pointer .border-t .border-blue-light .bg-blue-lighter .text-black-semi .text-smaller;
-}
-
-.notification-item:hover {
-    @apply .bg-white-catskill;
+    @apply .block .p-2 .cursor-pointer .border-t .border-blue-light  .text-black-semi .text-smaller;
 }

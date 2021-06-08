@@ -1,7 +1,10 @@
 <template>
   <div
     class="flex notification-item break-words"
-    :class="{ 'bg-white-catskill': !read }"
+    :class="[
+      read ? readBackground : unreadBackground,
+      hovering ? hoverBackground : '',
+    ]"
     @mouseenter="hovering = true"
     @mouseleave="hovering = false"
     @click="view"
@@ -43,6 +46,18 @@ export default {
     notification: {
       type: Object,
       required: true,
+    },
+    readBackground: {
+      type: String,
+      default: "bg-blue-lighter",
+    },
+    unreadBackground: {
+      type: String,
+      default: "bg-white-catskill",
+    },
+    hoverBackground: {
+      type: String,
+      default: "bg-white-catskill",
     },
   },
   data() {
