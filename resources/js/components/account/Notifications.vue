@@ -1,13 +1,28 @@
 <template>
   <div>
+    <div class="flex justify-end pb-7/2">
+      <read-all-notifications-button
+        @markedAllRead="onMarkedAllRead"
+        button-classes="px-2
+          py-1
+          bg-white
+          border border-gray-lighter
+          rounded
+          text-blue-mid text-smaller
+          focus:outline-none
+          active:text-blue-mid-light"
+      >
+      </read-all-notifications-button>
+    </div>
     <div v-if="notificationsExist" v-cloak>
-      <div class="border border-t-0 border-gray-lighter rounded" v-cloak>
+      <div class="border border-gray-lighter rounded" v-cloak>
         <div v-for="(notification, index) in items" :key="notification.id">
           <notification
-            class="p-7/2 border-t text-sm text-black-semi"
+            class="p-7/2 border-t-0 text-sm text-black-semi"
             :notification="notification"
             hover-background=""
             :class="notificationClasses(index)"
+            :read-all="readAll"
             read-background="bg-white"
           ></notification>
         </div>
@@ -23,8 +38,9 @@
 <script>
 import Paginator from "../Paginator.vue";
 import Notification from "../notifications/Notification.vue";
+import ReadAllNotificationsButton from "../notifications/ReadAllNotificationsButton.vue";
 export default {
-  components: { Paginator, Notification },
+  components: { Paginator, Notification, ReadAllNotificationsButton },
   props: {
     dataset: {
       type: Object,
@@ -38,6 +54,7 @@ export default {
   data() {
     return {
       items: this.dataset.data,
+      readAll: false,
     };
   },
   computed: {
@@ -48,6 +65,9 @@ export default {
   methods: {
     notificationClasses(index) {
       return [this.items.length - 1 == index ? "border-t" : ""];
+    },
+    onMarkedAllRead() {
+      this.readAll = true;
     },
   },
 };

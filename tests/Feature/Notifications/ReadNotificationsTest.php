@@ -30,7 +30,6 @@ class ReadNotificationsTest extends TestCase
     /** @test */
     public function users_may_mark_a_notification_as_unread()
     {
-        $this->withoutExceptionHandling();
         $user = create(User::class);
         $profilePost = ProfilePostFactory::by($user)->create();
         $liker = create(User::class);
@@ -43,5 +42,22 @@ class ReadNotificationsTest extends TestCase
         $this->delete(route('ajax.read-notifications.destroy', $unreadNotification->id));
 
         $this->assertCount(1, $user->fresh()->unreadNotifications);
+    }
+
+    /** @test */
+    public function users_may_mark_all_unread_notifications_as_read()
+    {
+        $user = create(User::class);
+        $profilePost = ProfilePostFactory::by($user)->create();
+        $john = create(User::class);
+        $profilePost->likedBy($john);
+        $doe = create(User::class);
+        $profilePost->likedBy($doe);
+        $this->assertCount(2, $user->fresh()->unreadNotifications);
+        $this->signIn($user);
+
+        $this->deleteJson(route('ajax.read-all-notifications.destroy'));
+
+        $this->assertCount(0, $user->fresh()->unreadNotifications);
     }
 }

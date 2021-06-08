@@ -20,7 +20,10 @@
             v-if="notificationsExist"
           >
             <div v-for="(notification, index) in notifications">
-              <notification :notification="notification"></notification>
+              <notification
+                :read-all="readAll"
+                :notification="notification"
+              ></notification>
             </div>
           </div>
           <p v-else class="notification-item">
@@ -30,6 +33,12 @@
         <div v-else class="notification-item">...</div>
         <div class="dropdown-footer-item flex items-center shadow-2xl">
           <a href="/account/notifications" class="blue-link">Show all</a>
+          <p class="dot"></p>
+          <read-all-notifications-button
+            @markedAllRead="onMarkedAllRead"
+            button-classes="blue-link active:text-blue-mid-light focus:outline-none"
+          >
+          </read-all-notifications-button>
           <p class="dot"></p>
           <a href="/account/preferences" class="blue-link">Preferences</a>
         </div>
@@ -41,13 +50,16 @@
 <script>
 import store from "../../store";
 import Notifications from "../account/Notifications";
+import ReadAllNotificationsButton from "../notifications/ReadAllNotificationsButton.vue";
 export default {
   components: {
     Notifications,
+    ReadAllNotificationsButton,
   },
   data() {
     return {
       state: store.state,
+      readAll: false,
       notifications: [],
       fetchedData: false,
     };
@@ -76,6 +88,9 @@ export default {
     refresh(data) {
       this.notifications = data.data;
       this.fetchedData = true;
+    },
+    onMarkedAllRead() {
+      this.readAll = true;
     },
   },
 };

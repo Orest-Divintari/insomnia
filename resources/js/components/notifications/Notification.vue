@@ -28,6 +28,7 @@
         <read-notification-button
           @toggleRead="toggleRead"
           :hovering="hovering"
+          :is-read="read"
           :notification="notification"
         >
         </read-notification-button>
@@ -43,6 +44,10 @@ export default {
     ReadNotificationButton,
   },
   props: {
+    readAll: {
+      type: Boolean,
+      default: false,
+    },
     notification: {
       type: Object,
       required: true,
@@ -69,6 +74,13 @@ export default {
   computed: {
     path() {
       return "/ajax/notifications/" + this.notification.id + "/read";
+    },
+  },
+  watch: {
+    readAll(newValue, oldValue) {
+      if (newValue) {
+        this.read = true;
+      }
     },
   },
   methods: {

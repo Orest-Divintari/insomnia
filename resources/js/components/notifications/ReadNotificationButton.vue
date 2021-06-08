@@ -47,6 +47,10 @@
 <script>
 export default {
   props: {
+    isRead: {
+      type: Boolean,
+      required: true,
+    },
     hovering: {
       type: Boolean,
       required: true,
@@ -58,8 +62,13 @@ export default {
   },
   data() {
     return {
-      read: this.notification.is_read,
+      read: this.isRead,
     };
+  },
+  watch: {
+    isRead(newValue, oldValue) {
+      this.read = newValue;
+    },
   },
   methods: {
     toggleRead() {
