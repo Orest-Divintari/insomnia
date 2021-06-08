@@ -15,7 +15,9 @@
         }"
       >
         <button class="focus:outline-none">
-          <i class="far fa-circle"></i>
+          <span class="inline p-2">
+            <i class="far fa-circle"></i>
+          </span>
         </button>
         <template slot="popover"> Mark unread </template>
       </v-popover>
@@ -32,7 +34,9 @@
         }"
       >
         <button class="focus:outline-none">
-          <i class="fas fa-circle"></i>
+          <span class="inline p-2">
+            <i class="fas fa-circle"></i>
+          </span>
         </button>
         <template slot="popover"> Mark read </template>
       </v-popover>
