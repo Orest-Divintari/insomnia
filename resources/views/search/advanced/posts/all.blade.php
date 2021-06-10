@@ -1,8 +1,10 @@
+<x-form.errors>
 </x-form.errors>
 <x-layouts.advanced-search type="{{ $type }}">
     <main>
         <div class="form-container border-t-0 border-b-0">
             <form method="GET" action="{{ route('search.index') }}" class="mb-0">
+                @csrf
                 <!-- ROW -->
                 <div class="form-row">
                     <!-- LEFT -->
