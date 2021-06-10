@@ -23,7 +23,7 @@
       </div>
     </div>
     <fetch-more-button
-      v-if="itemsExist"
+      v-if="hasMore"
       @fetchMore="fetchMore"
       title="See more"
     ></fetch-more-button>
@@ -60,11 +60,6 @@ export default {
       poster: {},
       postings: this.dataset.data,
     };
-  },
-  computed: {
-    itemsExist() {
-      return this.dataset.next_page_url != null;
-    },
   },
   methods: {
     setPoster(poster) {
