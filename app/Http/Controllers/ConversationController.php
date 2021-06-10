@@ -51,18 +51,22 @@ class ConversationController extends Controller
 
         $conversation->read();
 
-        $conversation = Conversation::whereSlug($conversation->slug)
+        $conversation = Conversation::query()
+            ->where('slug', $conversation->slug)
             ->withHasBeenUpdated()
-            ->with('participants')
             ->withIsStarred()
             ->firstOrFail();
 
         $messages = $conversation->messages()->withLikes()
             ->paginate(Conversation::REPLIES_PER_PAGE);
 
+        $participants = $conversation->participants()
+            ->withConversationAdmin($conversation)
+            ->get();
+
         return view(
             'conversations.show',
-            compact('conversation', 'messages')
+            compact('conversation', 'messages', 'participants')
         );
     }
 

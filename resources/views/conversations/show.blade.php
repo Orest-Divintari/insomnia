@@ -8,7 +8,7 @@
                 <h1 class="font-bold text-3xl mb-1" v-text="title"></h1>
                 <div class="flex items-center text-smaller text-gray-lightest">
                     <span class="fas fa-user mr-1"></span>
-                    @foreach($conversation->participants as $participant)
+                    @foreach($participants as $participant)
                     <p>
                         {{ $participant->name }}
                     </p>
@@ -141,10 +141,9 @@
                         <replies :repliable="conversation" :replies="{{ json_encode($messages) }}"></replies>
                     </div>
                     <div class="h-0 mt-12">
-                        <x-conversations.info :messages="$messages" :participants="$conversation->participants">
+                        <x-conversations.info :messages="$messages" :participants="$participants">
                         </x-conversations.info>
-                        <x-conversations.participants :conversation="$conversation"
-                            :participants="$conversation->participants">
+                        <x-conversations.participants :conversation="$conversation" :participants="$participants">
                         </x-conversations.participants>
 
                         @can('manage', $conversation)

@@ -10,7 +10,6 @@ use App\User\Details;
 use App\User\Preferences;
 use App\User\Privacy;
 use Carbon\Carbon;
-use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
@@ -539,5 +538,21 @@ class UserTest extends TestCase
         $this->assertFalse($user->permissions['start_conversation']);
         $this->assertFalse($user->permissions['view_identities']);
         $this->assertFalse($user->permissions['view_current_activity']);
+    }
+
+    /** @test */
+    public function a_user_knows_if_is_admin_of_a_conversation()
+    {
+        $user = $this->signIn();
+        $participant = create(User::class);
+        $conversation = ConversationFactory::by($user)
+            ->withParticipants([$participant->name])
+            ->create();
+
+        $user = User::whereId($user->id)
+            ->withConversationAdmin($conversation)
+            ->first();
+
+        $this->assertTrue($user->conversation_admin);
     }
 }

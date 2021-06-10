@@ -276,7 +276,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param Builder $query
      * @return Builder
      */
-    public function scopeIsConversationAdmin($query, $conversation)
+    public function scopeWithConversationAdmin($query, $conversation)
     {
         return $query->addSelect(
             ['conversation_admin' => ConversationParticipant::select('admin')

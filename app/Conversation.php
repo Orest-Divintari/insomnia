@@ -84,8 +84,7 @@ class Conversation extends Model
             'conversation_participants',
             'conversation_id',
             'user_id'
-        )->isConversationAdmin($this)
-            ->withTimestamps();
+        )->withTimestamps();
     }
 
     /**
