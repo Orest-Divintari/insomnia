@@ -9,13 +9,12 @@
       <div class="flex">
         <profile-popover
           class="mr-2"
-          :user="poster"
+          :user="posting.poster"
           trigger="avatar"
           triggerClasses="avatar-lg"
         >
         </profile-popover>
         <component
-          @getPoster="setPoster"
           :posting="posting"
           :is="posting.type"
           :query="query"

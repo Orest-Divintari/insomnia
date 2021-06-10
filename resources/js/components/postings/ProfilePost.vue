@@ -46,9 +46,6 @@ export default {
       return cleanBody;
     },
   },
-  created() {
-    this.$emit("getPoster", this.posting.poster);
-  },
 };
 </script>
 
