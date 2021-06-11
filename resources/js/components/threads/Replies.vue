@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ '-mt-12': isPaginated }">
+  <div dusk="replies" :class="{ '-mt-12': isPaginated }">
     <paginator
       :class="{ 'pb-5': isPaginated }"
       @isPaginated="isPaginated = true"
@@ -25,7 +25,16 @@
     </p>
     <div
       v-if="locked"
-      class="flex items-center bg-blue-lighter rounded border-l-1 border-blue-mid p-3 text-smaller text-black-semi mt-4"
+      class="
+        flex
+        items-center
+        bg-blue-lighter
+        rounded
+        border-l-1 border-blue-mid
+        p-3
+        text-smaller text-black-semi
+        mt-4
+      "
     >
       <i class="pl-3 fas fa-lock mr-4 text-red-900"></i>
       <p class="pt-1">Closed for new replies</p>

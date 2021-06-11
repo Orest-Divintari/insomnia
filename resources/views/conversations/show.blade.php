@@ -2,7 +2,7 @@
     @push('styles')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.css">
     @endpush
-    <conversation :conversation="{{ $conversation }}" inline-template v-cloak>
+    <conversation dusk="conversation" :conversation="{{ $conversation }}" inline-template v-cloak>
         <div>
             <header>
                 <h1 class="font-bold text-3xl mb-1" v-text="title"></h1>

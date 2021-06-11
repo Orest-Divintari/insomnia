@@ -411,6 +411,57 @@ class ViewConversationsTest extends DuskTestCase
                 ->assertSeeIn('@conversation-info', 'Last reply from:')
                 ->assertSeeIn('@conversation-info', $conversationStarter->name);
         });
+    }
 
+    /** @test */
+    public function it_shows_the_number_of_likes_a_message_has()
+    {
+        $conversationStarter = create(User::class);
+        $participant = create(User::class);
+        $message = ['body' => 'some message'];
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$participant->name])
+            ->withMessage($message['body'])
+            ->create();
+        $message = $conversation->messages()->first();
+        $message->likedBy($conversationStarter);
+
+        $this->browse(function (Browser $browser) use (
+            $conversationStarter,
+            $participant,
+            $message,
+            $conversation
+        ) {
+            $browser
+                ->loginAs($conversationStarter)
+                ->visit(route('conversations.show', $conversation))
+                ->assertSee('1 likes');
+        });
+    }
+
+    /** @test */
+    public function it_shows_whether_a_message_has_been_liked_by_the_visitor()
+    {
+        $conversationStarter = create(User::class);
+        $participant = create(User::class);
+        $message = ['body' => 'some message'];
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$participant->name])
+            ->withMessage($message['body'])
+            ->create();
+        $message = $conversation->messages()->first();
+        $message->likedBy($conversationStarter);
+
+        $this->browse(function (Browser $browser) use (
+            $conversationStarter,
+            $participant,
+            $message,
+            $conversation
+        ) {
+            $browser
+                ->loginAs($conversationStarter)
+                ->visit(route('conversations.show', $conversation))
+                ->assertVue('isLiked', true, '@like-button-component');
+        });
     }
 }

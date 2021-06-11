@@ -89,7 +89,7 @@ class ConversationController extends Controller
             ->withRecentMessage()
             ->with(['starter', 'participants'])
             ->withCount(['messages', 'participants'])
-            ->latest('conversations.created_at')
+            ->latest('conversations.updated_at')
             ->paginate(Conversation::PER_PAGE);
 
         $conversationFilters = $filters->getRequestedFilters();

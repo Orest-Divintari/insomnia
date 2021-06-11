@@ -1,7 +1,6 @@
 <template>
-  <div v-if="signedIn">
+  <div @click="toggle" v-if="signedIn" dusk="like-button-component">
     <button
-      @click="toggle"
       dusk="like-button"
       class="btn-reply-control mr-2"
       :class="[{ 'text-blue-like': this.isLiked }, styleAttributes]"

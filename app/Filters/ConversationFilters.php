@@ -79,7 +79,7 @@ class ConversationFilters implements FilterInterface
     public function startedBy($usernames)
     {
         $namesArray = (new StringToArrayAction($usernames))->execute();
-
+        
         $userIds = User::whereIn('name', $namesArray)->pluck('id');
 
         return $this->builder->whereIn('conversations.user_id', $userIds);
