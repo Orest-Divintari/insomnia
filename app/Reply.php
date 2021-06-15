@@ -3,8 +3,10 @@
 namespace App;
 
 use App\Helpers\Facades\ResourcePath;
+use App\Scopes\ExcludeIgnoredScope;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
+use App\Traits\Ignorable;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +20,8 @@ class Reply extends Model
     Likeable,
     FormatsDate,
     RecordsActivity,
-        Searchable;
+    Searchable,
+        Ignorable;
 
     /**
      * The accessors to append to the model's array form.
@@ -62,6 +65,16 @@ class Reply extends Model
         'position' => 'int',
         'is_liked' => 'boolean',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new ExcludeIgnoredScope);
+    }
 
     /**
      * A reply belongs to a repliable model
@@ -255,5 +268,10 @@ class Reply extends Model
             'update' => auth()->user()->can('update', $this),
             'delete' => auth()->user()->can('delete', $this),
         ];
+    }
+
+    public function scopeIncludeIgnored($query)
+    {
+        return $query->withoutGlobalScope(ExcludeIgnoredScope::class);
     }
 }

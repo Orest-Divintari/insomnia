@@ -5,9 +5,12 @@ namespace App\Listeners\Conversation;
 use App\Events\Conversation\MessageWasAdded;
 use App\Events\Conversation\NewMessageWasAddedToConversation;
 use App\Notifications\ConversationHasNewMessage;
+use App\Traits\HandlesNotifications;
 
 class NotifyConversationParticipants
 {
+    use HandlesNotifications;
+
     /**
      * Create the event listener.
      *
@@ -31,11 +34,20 @@ class NotifyConversationParticipants
             ->where('user_id', '!=', $event->message->poster->id)
             ->get()
             ->each(function ($participant) use ($event) {
-                $participant->notify(
-                    new ConversationHasNewMessage(
-                        $event->conversation, $event->message
-                    )
-                );
+                $this->notify($participant, $this->notification($event));
             });
+    }
+
+    /**
+     * Create a new notification instance
+     *
+     * @param NewMessageWasAddedToConversation $event
+     * @return ConversationHasNewMessage
+     */
+    public function notification($event)
+    {
+        return new ConversationHasNewMessage(
+            $event->conversation, $event->message
+        );
     }
 }

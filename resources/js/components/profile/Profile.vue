@@ -58,6 +58,13 @@
                   :profile-owner="user"
                   :followed="user.followed_by_visitor"
                 ></follow-button>
+                <ignore-user-button
+                  class="mr-1"
+                  v-if="!authorize('is', user) && signedIn"
+                  :profile-owner="user"
+                  :ignored="user.ignored_by_visitor"
+                ></ignore-user-button>
+
                 <start-conversation-button
                   class="mr-1"
                   :user="profileOwner"
@@ -114,6 +121,7 @@ import ProfilePosts from "./ProfilePosts";
 import LatestActivity from "./LatestActivity";
 import PostingActivity from "./PostingActivity";
 import FollowButton from "./FollowButton";
+import IgnoreUserButton from "./IgnoreUserButton";
 import StartConversationButton from "../conversations/StartConversationButton";
 import About from "./About";
 import Tabs from "../Tabs";
@@ -132,6 +140,7 @@ export default {
     PostingActivity,
     About,
     FollowButton,
+    IgnoreUserButton,
   },
   props: {
     profileOwner: {

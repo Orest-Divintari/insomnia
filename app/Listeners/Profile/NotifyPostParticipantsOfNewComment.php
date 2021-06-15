@@ -5,9 +5,12 @@ namespace App\Listeners\Profile;
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Notifications\ParticipatedProfilePostHasNewComment;
 use App\ProfilePost;
+use App\Traits\HandlesNotifications;
 
 class NotifyPostParticipantsOfNewComment
 {
+    use HandlesNotifications;
+
     /**
      * Create the event listener.
      *
@@ -41,7 +44,7 @@ class NotifyPostParticipantsOfNewComment
     public function notifyParticipants($comments, $event)
     {
         $comments->each(function ($comment) use ($event) {
-            $comment->poster->notify($this->notification($event));
+            $this->notify($comment->poster, $this->notification($event));
         });
     }
 

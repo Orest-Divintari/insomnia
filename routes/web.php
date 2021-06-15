@@ -46,7 +46,7 @@ Route::get('/threads', 'ThreadController@index')
 Route::get('/categories/{category}/threads/', 'ThreadController@index')
     ->name('category-threads.index');
 
-Route::get('/threads/{thread}', 'ThreadController@show')
+Route::get('/threads/{threadSlug}', 'ThreadController@show')
     ->name('threads.show');
 
 /* ************ THREADS REPLIES ************ */
@@ -93,10 +93,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/account/follows', 'AccountFollowsController@index')
         ->name('account.follows.index');
 
-    /* ************ ACCOUNT FOLLOWS ************ */
+    /* ************ ACCOUNT LIKES ************ */
 
     Route::get('/account/likes', 'AccountLikeController@index')
         ->name('account.likes.index');
+
+    /* ************ ACCOUNT IGNORED ************ */
+
+    Route::get('/account/ignored-users', 'AccountIgnoredUserController@index')
+        ->name('account.ignored-users.index');
+
+    Route::get('/account/ignored-threads', 'AccountIgnoredThreadController@index')
+        ->name('account.ignored-threads.index');
 
     /* ************ ACCOUNT DETAILS ************ */
 

@@ -196,6 +196,21 @@ Route::group(['middleware' => 'visitor.append'], function () {
 
         Route::patch('/users/{user}/email', 'UserEmailController@update')
             ->name('user-email.update');
+
+        /* ************ IGNORED ************ */
+
+        Route::post('/users/{user}/ignoration', 'UserIgnorationController@store')
+            ->name('user-ignorations.store');
+
+        Route::delete('/users/{user}/ignoration', 'UserIgnorationController@destroy')
+            ->name('user-ignorations.destroy');
+
+        Route::post('/threads/{thread}/ignoration', 'ThreadIgnorationController@store')
+            ->name('thread-ignorations.store');
+
+        Route::delete('/threads/{thread}/ignoration', 'ThreadIgnorationController@destroy')
+            ->name('thread-ignorations.destroy');
+
     });
 
 /* ************ PROFILE ************ */

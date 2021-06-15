@@ -21,7 +21,9 @@ class ReplyFiltersTest extends TestCase
         $popularReply = ReplyFactory::toThread($thread)->create();
         $orestis = create(User::class);
         $john = create(User::class);
+        $this->signIn($orestis);
         $popularReply->likedBy($orestis);
+        $this->signIn($john);
         $popularReply->likedBy($john);
         $unpopularReply->likedBy($john);
 

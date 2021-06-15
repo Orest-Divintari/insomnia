@@ -3,11 +3,16 @@
 namespace App\Listeners\Profile;
 
 use App\Events\Profile\CommentWasLiked;
+use App\Listeners\Notify;
 use App\Notifications\CommentHasNewLike;
+use App\Traits\HandlesNotifications;
 use Egulias\EmailValidator\Warning\Comment;
 
 class NotifyCommentPoster
 {
+
+    use HandlesNotifications;
+
     public $event;
     /**
      * Create the event listener.
@@ -28,20 +33,12 @@ class NotifyCommentPoster
     public function handle(CommentWasLiked $event)
     {
         $this->event = $event;
+
         if ($this->isOwnerOfComment()) {
             return;
         }
 
-        $this->event->commentPoster->notify(
-            new CommentHasNewLike(
-                $this->event->liker,
-                $this->event->like,
-                $this->event->comment,
-                $this->event->commentPoster,
-                $this->event->profilePost,
-                $this->event->profileOwner,
-            )
-        );
+        $this->notify($event->commentPoster, $this->notification());
     }
 
     /**
@@ -51,5 +48,22 @@ class NotifyCommentPoster
     public function isOwnerOfComment()
     {
         return auth()->id() == $this->event->commentPoster->id;
+    }
+
+    /**
+     * Create a new notification instance
+     *
+     * @return CommentHasNewLike
+     */
+    public function notification()
+    {
+        return new CommentHasNewLike(
+            $this->event->liker,
+            $this->event->like,
+            $this->event->comment,
+            $this->event->commentPoster,
+            $this->event->profilePost,
+            $this->event->profileOwner,
+        );
     }
 }

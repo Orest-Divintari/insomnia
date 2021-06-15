@@ -25,7 +25,6 @@ class ConversationTest extends TestCase
             ->create();
 
         $this->assertCount(2, $conversation->participants);
-        $this->assertTrue($conversation->participants->first()->conversation_admin);
     }
 
     /** @test */
@@ -421,9 +420,9 @@ class ConversationTest extends TestCase
     }
 
     /** @test */
-    public function it_determines_whether_a_user_participants_in_the_conversation()
+    public function it_determines_whether_a_user_participates_in_the_conversation()
     {
-        $conversationStarter = create(User::class);
+        $conversationStarter = $this->signIn();
         $participant = create(User::class);
         $randomUser = create(User::class);
         $conversation = ConversationFactory::by($conversationStarter)->withParticipants([$participant->name])->create();

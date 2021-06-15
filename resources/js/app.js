@@ -157,6 +157,21 @@ Vue.component(
     "HtmlToText",
     require("./components/HtmlToText.vue").default
 );
+Vue.component(
+    "IgnoreUserButton",
+    require("./components/profile/IgnoreUserButton.vue").default
+);
+Vue.component(
+    "IgnoreThreadButton",
+    require("./components/threads/IgnoreThreadButton.vue").default
+);
+
+Vue.component(
+    "ThreadListItem",
+    require("./components/threads/ThreadListItem.vue").default
+);
+
+
 
 
 /**

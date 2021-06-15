@@ -5,6 +5,7 @@ namespace App;
 use App\Events\Conversation\NewMessageWasAddedToConversation;
 use App\Events\Conversation\NewParticipantsWereAdded;
 use App\Events\Conversation\ParticipantWasRemoved;
+use App\Scopes\ExcludeIgnoredScope;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Lockable;
@@ -61,6 +62,16 @@ class Conversation extends Model
         'has_been_updated' => 'boolean',
         'starred' => 'boolean',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new ExcludeIgnoredScope);
+    }
 
     /**
      * Get the route key name
@@ -428,4 +439,5 @@ class Conversation extends Model
             ->where('user_id', $user->id)
             ->exists();
     }
+
 }

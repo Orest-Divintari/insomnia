@@ -6,10 +6,12 @@ use App\Events\Profile\NewPostWasAddedToProfile;
 use App\Facades\Avatar;
 use App\Traits\Followable;
 use App\Traits\HandlesPrivacy;
+use App\Traits\Ignorable;
 use App\User\Details;
 use App\User\Preferences;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
@@ -20,7 +22,7 @@ use Laravel\Scout\Searchable;
 class User extends Authenticatable implements MustVerifyEmail
 {
 
-    use Notifiable, Followable, Searchable, HandlesPrivacy;
+    use Ignorable, Notifiable, Followable, Searchable, HandlesPrivacy;
 
     /**
      * Set the maximum length for a username
@@ -59,6 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'conversation_admin' => 'boolean',
         'followed_by_visitor' => 'boolean',
+        'ignored_by_visitor' => 'boolean',
         'default_avatar' => 'boolean',
         'details' => 'json',
         'privacy' => 'json',
@@ -240,7 +243,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $query->withCount('profilePosts')
             ->withCount('receivedLikes')
-            ->withFollowedByVisitor();
+            ->withFollowedByVisitor()
+            ->withIgnoredByVisitor();
     }
 
     /**
@@ -468,6 +472,61 @@ class User extends Authenticatable implements MustVerifyEmail
     public function preferences()
     {
         return new Preferences($this->preferences, $this);
+    }
+
+    public function ignorings()
+    {
+        return $this->hasMany(Ignoration::class, 'user_id');
+    }
+
+    public function ignoredUserIds()
+    {
+        return Ignoration::where('user_id', $this->id)
+            ->where('ignorable_type', User::class)
+            ->pluck('ignorable_id');
+    }
+
+    public function ignoredThreadIds()
+    {
+        return Ignoration::where('user_id', $this->id)
+            ->where('ignorable_type', Thread::class)
+            ->pluck('ignorable_id');
+
+    }
+
+    /**
+     * Fetch the users that are ignored by the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function ignoredUsers()
+    {
+        return $this->hasManyThrough(
+            User::class,
+            Ignoration::class,
+            'user_id',
+            'id',
+            'id',
+            'ignorable_id'
+        )->where('ignorable_type', User::class);
+    }
+
+    /**
+     * Fetch the threads that are ignored by the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function ignoredThreads()
+    {
+        return $this->hasManyThrough(
+            Thread::class,
+            Ignoration::class,
+            'user_id',
+            'id',
+            'id',
+            'ignorable_id'
+        )->includeIgnored()
+            ->where('ignorable_type', Thread::class);
     }
 
 }

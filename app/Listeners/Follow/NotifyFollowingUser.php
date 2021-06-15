@@ -4,9 +4,13 @@ namespace App\Listeners\Follow;
 
 use App\Events\Follow\AUserStartedFollowingYou;
 use App\Notifications\YouHaveANewFollower;
+use App\Traits\HandlesNotifications;
 
 class NotifyFollowingUser
 {
+
+    use HandlesNotifications;
+
     /**
      * Create the event listener.
      *
@@ -25,12 +29,21 @@ class NotifyFollowingUser
      */
     public function handle(AUserStartedFollowingYou $event)
     {
-        $event->following->notify(
-            new YouHaveANewFollower(
-                $event->follower,
-                $event->following,
-                $event->followDate
-            )
+        $this->notify($event->following, $this->notification($event));
+    }
+
+    /**
+     * Create a new notification instance
+     *
+     * @param AUserStartedFollowingYou $event
+     * @return YouHaveANewFollower
+     */
+    public function notification($event)
+    {
+        return new YouHaveANewFollower(
+            $event->follower,
+            $event->following,
+            $event->followDate
         );
     }
 }

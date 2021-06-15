@@ -50,6 +50,9 @@ import view from "../../mixins/view";
 import highlight from "../Highlight";
 import postings from "../../mixins/postings";
 export default {
+  components: {
+    highlight,
+  },
   props: {
     posting: {
       type: Object,
@@ -61,9 +64,7 @@ export default {
     },
   },
   mixins: [view, postings],
-  components: {
-    highlight,
-  },
+
   computed: {
     title() {
       if (this.query != "") {

@@ -4,9 +4,12 @@ namespace App\Listeners\Profile;
 
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Notifications\PostOnYourProfileHasNewComment;
+use App\Traits\HandlesNotifications;
 
 class NotifyProfileOwnerOfNewCommentOnAPost
 {
+    use HandlesNotifications;
+
     /**
      * Create the event listener.
      *
@@ -32,7 +35,7 @@ class NotifyProfileOwnerOfNewCommentOnAPost
         if ($profileOwner->isNot($profilePostPoster)
             && $profileOwner->isNot($commentPoster)
         ) {
-            $profileOwner->notify($this->notification($event));
+            $this->notify($profileOwner, $this->notification($event));
         }
     }
 

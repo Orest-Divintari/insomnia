@@ -34,7 +34,7 @@ class ModelTypeTest extends TestCase
     /** @test */
     public function it_knows_the_type_of_a_conversation_message()
     {
-        $conversationStarer = create(User::class);
+        $conversationStarer = $this->signIn();
         $participant = create(User::class);
         $conversation = ConversationFactory::by($conversationStarer)
             ->withParticipants([$participant->name])
@@ -57,6 +57,8 @@ class ModelTypeTest extends TestCase
     {
         $reply = ReplyFactory::create();
         $user = create(User::class);
+        $this->signIn($user);
+
         $like = $reply->likedBy($user);
 
         $this->assertEquals('reply-like', ModelType::get($like));
@@ -67,6 +69,8 @@ class ModelTypeTest extends TestCase
     {
         $comment = CommentFactory::create();
         $user = create(User::class);
+        $this->signIn($user);
+
         $like = $comment->likedBy($user);
 
         $this->assertEquals('comment-like', ModelType::get($like));
@@ -75,12 +79,14 @@ class ModelTypeTest extends TestCase
     /** @test */
     public function it_knows_the_type_of_a_liked_conversation_message()
     {
-        $conversationStarer = create(User::class);
+        $conversationStarer = $this->signIn();
         $participant = create(User::class);
         $conversation = ConversationFactory::by($conversationStarer)
             ->withParticipants([$participant->name])
             ->create();
         $message = $conversation->messages()->first();
+        $this->signIn($participant);
+
         $like = $message->likedBy($participant);
 
         $this->assertEquals('message-like', ModelType::get($like));
@@ -90,7 +96,7 @@ class ModelTypeTest extends TestCase
     public function it_knows_the_type_of_a_liked_profile_post()
     {
         $profilePost = ProfilePostFactory::create();
-        $user = create(User::class);
+        $user = $this->signIn();
         $like = $profilePost->likedBy($user);
 
         $this->assertEquals('profile-post-like', ModelType::get($like));
@@ -115,7 +121,7 @@ class ModelTypeTest extends TestCase
     /** @test */
     public function it_appends_the_like_suffix_to_a_conversation_message()
     {
-        $conversationStarer = create(User::class);
+        $conversationStarer = $this->signIn();
         $participant = create(User::class);
         $conversation = ConversationFactory::by($conversationStarer)
             ->withParticipants([$participant->name])

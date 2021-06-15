@@ -3,12 +3,16 @@
 namespace App\Listeners\Subscription;
 
 use App\Events\Subscription\ReplyWasLiked;
+use App\Listeners\Notify;
 use App\Notifications\ReplyHasNewLike;
 use App\Reply;
+use App\Traits\HandlesNotifications;
 use App\User;
 
 class NotifyReplyPoster
 {
+    use HandlesNotifications;
+
     protected $event;
     /**
      * Create the event listener.
@@ -36,13 +40,7 @@ class NotifyReplyPoster
             return;
         }
 
-        $poster->notify(new ReplyHasNewLike(
-            $this->event->liker,
-            $this->event->like,
-            $this->event->thread,
-            $this->event->reply
-        ));
-
+        $this->notify($poster, $this->notification());
     }
 
     /**
@@ -55,5 +53,20 @@ class NotifyReplyPoster
     public function isOwnerOfReply($poster)
     {
         return $this->event->liker->id == $poster->id;
+    }
+
+    /**
+     * Create a new notification instance
+     *
+     * @return ReplyHasNewLike
+     */
+    public function notification()
+    {
+        return new ReplyHasNewLike(
+            $this->event->liker,
+            $this->event->like,
+            $this->event->thread,
+            $this->event->reply
+        );
     }
 }

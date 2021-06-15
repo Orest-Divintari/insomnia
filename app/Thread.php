@@ -3,9 +3,11 @@
 namespace App;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
+use App\Scopes\ExcludeIgnoredScope;
 use App\Search\Threads;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
+use App\Traits\Ignorable;
 use App\Traits\Lockable;
 use App\Traits\Readable;
 use App\Traits\RecordsActivity;
@@ -28,7 +30,8 @@ class Thread extends Model
     Searchable,
     Sluggable,
     Lockable,
-        Readable;
+    Readable,
+        Ignorable;
     /**
      * Number of visible threads per page
      *
@@ -85,6 +88,7 @@ class Thread extends Model
         'locked' => 'boolean',
         'pinned' => 'boolean',
         'has_been_updated' => 'boolean',
+        'ignored_by_visitor' => 'boolean',
         'replies_count' => 'int',
     ];
 
@@ -103,6 +107,8 @@ class Thread extends Model
             $thread->replies->each->delete();
             $thread->subscriptions->each->delete();
         });
+
+        static::addGlobalScope(new ExcludeIgnoredScope);
     }
 
     /**
@@ -475,4 +481,15 @@ class Thread extends Model
         return Carbon::parse($value)->diffForHumans();
     }
 
+    /**
+     * Include threads that are either directly ignored
+     * or are created by ignored users
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeIncludeIgnored($query)
+    {
+        return $query->withoutGlobalScope(ExcludeIgnoredScope::class);
+    }
 }

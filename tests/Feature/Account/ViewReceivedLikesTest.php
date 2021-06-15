@@ -11,6 +11,7 @@ use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ViewReceivedLikesTest extends TestCase
@@ -39,6 +40,7 @@ class ViewReceivedLikesTest extends TestCase
     /** @test */
     public function users_may_view_the_likes_their_thread_replies_have_received()
     {
+        Notification::fake();
         $poster = create(User::class);
         $reply = ReplyFactory::by($poster)->create();
         $liker = $this->signIn();
@@ -79,12 +81,13 @@ class ViewReceivedLikesTest extends TestCase
     /** @test */
     public function users_should_not_view_the_likes_their_conversation_messages_have_received()
     {
-        $conversationStarter = create(User::class);
+        $conversationStarter = $this->signIn();
         $participant = create(User::class);
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
         $message = $conversation->messages()->first();
+        $this->signIn($participant);
         $message->likedBy($participant);
         $this->signIn($conversationStarter);
 
@@ -122,10 +125,9 @@ class ViewReceivedLikesTest extends TestCase
     /** @test */
     public function users_should_not_view_their_own_likes_on_their_own_profile_post_comments()
     {
-        $poster = create(User::class);
+        $poster = $this->signIn();
         $comment = CommentFactory::by($poster)->create();
         $comment->likedBy($poster);
-        $this->signIn($poster);
 
         $response = $this->get(route('account.likes.index'));
 

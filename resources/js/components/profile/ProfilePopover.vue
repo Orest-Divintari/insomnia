@@ -86,7 +86,12 @@
               :followed="isFollowed"
               :profileOwner="profileOwner"
             ></follow-button>
-            <p class="btn-white-blue">Ignore</p>
+            <ignore-user-button
+              v-if="signedIn"
+              @ignore="updateIgnore"
+              :ignored="isIgnored"
+              :profile-owner="profileOwner"
+            ></ignore-user-button>
             <start-conversation-button
               class="ml-2"
               :user="profileOwner"
@@ -100,6 +105,7 @@
 
 <script>
 import FollowButton from "../profile/FollowButton";
+import IgnoreUserButton from "../profile/IgnoreUserButton";
 import view from "../../mixins/view";
 import _ from "lodash";
 import authorizable from "../../mixins/authorizable";
@@ -107,6 +113,7 @@ import store from "../../store";
 export default {
   components: {
     FollowButton,
+    IgnoreUserButton,
   },
   props: {
     triggerClasses: {
@@ -145,6 +152,9 @@ export default {
     isFollowed() {
       return this.profileOwner.followed_by_visitor;
     },
+    isIgnored() {
+      return this.profileOwner.ignored_by_visitor;
+    },
     avatarPath() {
       if (this.isAuthUser(this.user)) {
         return store.state.visitor.avatar_path ?? this.user.avatar_path;
@@ -167,6 +177,10 @@ export default {
   methods: {
     getProfile() {
       return store.getProfile(this.user) ?? this.user;
+    },
+    updateIgnore(isIgnored) {
+      store.updateIgnore(this.profileOwner, isIgnored);
+      this.profileOwner.ignored_by_visitor = isIgnored;
     },
     updateFollow(isFollowed) {
       store.updateFollow(this.profileOwner, isFollowed);

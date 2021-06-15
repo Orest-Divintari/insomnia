@@ -398,4 +398,80 @@ class ThreadTest extends TestCase
 
         $this->assertTrue($thread->hasSubscriber($user));
     }
+
+    /** @test */
+    public function it_knows_if_is_marked_as_ignored_by_visitor()
+    {
+        $thread = create(Thread::class);
+        $user = $this->signIn();
+        $thread->markAsIgnored($user);
+
+        $thread = Thread::includeIgnored()
+            ->withIgnoredByVisitor()
+            ->where('id', $thread->id)
+            ->first();
+
+        $this->assertTrue($thread->ignored_by_visitor);
+    }
+
+    /** @test */
+    public function it_can_be_marked_as_ignored()
+    {
+        $john = $this->signIn();
+
+        $this->thread->markAsIgnored($john);
+
+        $this->assertTrue($this->thread->isIgnored($john));
+    }
+
+    /** @test */
+    public function it_can_be_marked_as_unignored()
+    {
+        $john = $this->signIn();
+        $this->thread->markAsIgnored($john);
+        $thread = Thread::includeIgnored()->where('id', $this->thread->id)->first();
+
+        $thread->markAsUnignored($john);
+
+        $this->assertFalse($thread->isIgnored($john));
+    }
+
+    /** @test */
+    public function it_includes_threads_that_are_directly_ignored()
+    {
+        $john = create(User::class);
+        $this->thread->markAsIgnored($john);
+        $this->signIn($john);
+
+        $threads = Thread::includeIgnored()->get();
+
+        $this->assertCount(1, $threads);
+    }
+
+    /** @test */
+    public function it_includes_threads_that_are_created_by_ignored_users()
+    {
+        $john = create(User::class);
+        $ignoredUser = $this->thread->poster;
+        $ignoredUser->markAsIgnored($john);
+        $this->signIn($john);
+
+        $threads = Thread::includeIgnored()->get();
+
+        $this->assertCount(1, $threads);
+    }
+
+    /** @test */
+    public function it_determines_whether_it_is_ignored_by_the_authenticated_user_using_a_query_scope()
+    {
+        $john = $this->signIn();
+        $this->thread->markAsIgnored($john);
+
+        $thread = Thread::where('id', $this->thread->id)
+            ->includeIgnored()
+            ->withIgnoredByVisitor()
+            ->first();
+
+        $this->assertTrue($thread->ignored_by_visitor);
+    }
 }

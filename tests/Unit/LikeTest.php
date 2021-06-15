@@ -22,6 +22,7 @@ class LikeTest extends TestCase
         $thread = create(Thread::class);
         $reply = ReplyFactory::toThread($thread)->create();
         $liker = create(User::class);
+        $this->signIn($liker);
 
         $like = $reply->likedBy($liker);
 
@@ -33,6 +34,7 @@ class LikeTest extends TestCase
     {
         $user = $this->signIn();
         $threadReply = ReplyFactory::create();
+        $this->signIn($user);
 
         $like = $threadReply->likedBy($user);
 

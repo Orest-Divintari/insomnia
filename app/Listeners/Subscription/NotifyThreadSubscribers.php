@@ -3,10 +3,14 @@
 namespace App\Listeners\Subscription;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
+use App\Listeners\Notify;
 use App\Notifications\ThreadHasNewReply;
+use App\Traits\HandlesNotifications;
 
 class NotifyThreadSubscribers
 {
+
+    use HandlesNotifications;
 
     /**
      * Create the event listener.
@@ -29,10 +33,18 @@ class NotifyThreadSubscribers
             ->where('user_id', '!=', $event->reply->poster->id)
             ->get()
             ->each(function ($subscription) use ($event) {
-                $subscription->user->notify(
-                    new ThreadHasNewReply($event->thread, $event->reply)
-                );
+                $this->notify($subscription->user, $this->notification($event));
             });
+    }
 
+    /**
+     * Create a new notification instance
+     *
+     * @param NewReplyWasPostedToThread $event
+     * @return ThreadHasNewReply
+     */
+    public function notification($event)
+    {
+        return new ThreadHasNewReply($event->thread, $event->reply);
     }
 }

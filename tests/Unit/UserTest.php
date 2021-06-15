@@ -10,6 +10,7 @@ use App\User\Details;
 use App\User\Preferences;
 use App\User\Privacy;
 use Carbon\Carbon;
+use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
@@ -310,6 +311,21 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function it_knows_if_is_ignored_by_profile_visitor()
+    {
+        $profileOwner = create(User::class);
+        $visitor = create(User::class);
+        $profileOwner->markAsIgnored($visitor);
+        $this->signIn($visitor);
+
+        $user = User::withIgnoredByVisitor()
+            ->whereName($profileOwner->name)
+            ->first();
+
+        $this->assertTrue($user->ignored_by_visitor);
+    }
+
+    /** @test */
     public function it_knows_the_profile_info()
     {
         $profileOwner = create(User::class);
@@ -319,6 +335,7 @@ class UserTest extends TestCase
         $this->assertArrayHasKey('profile_posts_count', $user);
         $this->assertArrayHasKey('received_likes_count', $user);
         $this->assertArrayHasKey('followed_by_visitor', $user);
+        $this->assertArrayHasKey('ignored_by_visitor', $user);
     }
 
     /** @test */
@@ -555,4 +572,55 @@ class UserTest extends TestCase
 
         $this->assertTrue($user->conversation_admin);
     }
+
+    /** @test */
+    public function a_user_can_be_ignored_by_another_user()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+
+        $doe->markAsIgnored($john);
+
+        $this->assertTrue($doe->isIgnored($john));
+    }
+
+    /** @test */
+    public function a_user_has_ignored_users()
+    {
+        $user = create(User::class);
+        $ingoredUser = create(User::class);
+
+        $ingoredUser->markAsIgnored($user);
+
+        $this->assertCount(1, $user->ignoredUsers);
+        $this->assertEquals($ingoredUser->id, $user->ignoredUsers()->first()->id);
+    }
+
+    /** @test */
+    public function a_user_has_ignored_threads()
+    {
+        $thread = create(Thread::class);
+        $user = create(User::class);
+
+        $thread->markAsIgnored($user);
+
+        $this->assertCount(1, $user->ignoredThreads);
+        $this->assertEquals($thread->id, $user->ignoredThreads()->first()->id);
+    }
+
+    /** @test */
+    public function a_user_can_exclude_ingored_users_from_followers_list()
+    {
+        $john = create(User::class, ['name' => 'alekos']);
+        $doe = create(User::class);
+        $bob = create(User::class);
+        $doe->follow($john);
+        $bob->follow($john);
+        $this->signIn($john);
+
+        $doe->markAsIgnored($john);
+
+        $this->assertCount(1, $john->unignoredFollowers);
+    }
+
 }

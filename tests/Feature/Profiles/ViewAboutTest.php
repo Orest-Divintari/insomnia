@@ -70,6 +70,7 @@ class ViewAboutTest extends TestCase
         $profileOwner = create(User::class);
         $followerA = create(User::class);
         $followerB = create(User::class);
+        $this->signIn($followerA);
         $followerA->follow($profileOwner);
         $followerB->follow($profileOwner);
         $visitor = $this->signIn();
@@ -99,6 +100,7 @@ class ViewAboutTest extends TestCase
         $profileOwner = create(User::class);
         $followerA = create(User::class);
         $followerB = create(User::class);
+        $this->signIn($profileOwner);
         $profileOwner->follow($followerA);
         $profileOwner->follow($followerB);
         $visitor = $this->signIn();

@@ -51,11 +51,13 @@
                 </x-breadcrumb.container>
 
                 <div class="mt-7 flex justify-end">
-                    <button class="btn-white-blue mr-1">Ignore</button>
-
                     <subscribe-button thread-slug="{{ $thread->slug }}"
                         subscription-status="{{ json_encode($thread->subscribedByAuthUser)}}">
                     </subscribe-button>
+
+                    <ignore-thread-button :thread="{{ $thread }}"
+                        :ignored="{{ json_encode($thread->ignored_by_visitor) }}">
+                    </ignore-thread-button>
                     @if(auth()->check() && Gate::allows('lock', $thread))
                     <lock-thread-button :thread="{{ $thread }}"></lock-thread-button>
                     @endif

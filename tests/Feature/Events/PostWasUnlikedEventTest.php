@@ -57,7 +57,7 @@ class PostWasUnlikedEventTest extends TestCase
     {
         $listener = Mockery::spy(DeletePostLikeNotification::class);
         app()->instance(DeletePostLikeNotification::class, $listener);
-        $conversationStarter = create(User::class);
+        $conversationStarter = $this->signIn();
         $participant = create(User::class);
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])

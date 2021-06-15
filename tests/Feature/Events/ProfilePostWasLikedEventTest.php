@@ -17,7 +17,7 @@ class ProfilePostWasLikedEventTest extends TestCase
     public function when_a_user_adds_a_post_to_a_profile_then_an_event_is_fired()
     {
         $profileOwner = create(User::class);
-        $poster = create(User::class);
+        $poster = $this->signIn();
         $profilePost = ProfilePostFactory::by($poster)
             ->toProfile($profileOwner)
             ->create();

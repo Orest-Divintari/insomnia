@@ -4,9 +4,12 @@ namespace App\Listeners\Profile;
 
 use App\Events\Profile\NewPostWasAddedToProfile;
 use App\Notifications\ProfileHasNewPost;
+use App\Traits\HandlesNotifications;
 
 class NotifyProfileOwnerOfNewPost
 {
+    use HandlesNotifications;
+
     /**
      * Create the event listener.
      *
@@ -26,14 +29,23 @@ class NotifyProfileOwnerOfNewPost
     public function handle(NewPostWasAddedToProfile $event)
     {
         if ($event->profileOwner->isNot($event->postPoster)) {
-
-            $event->profileOwner
-                ->notify(new ProfileHasNewPost(
-                    $event->profilePost,
-                    $event->postPoster,
-                    $event->profileOwner
-                ));
+            $this->notify($event->profileOwner, $this->notification($event));
         }
 
+    }
+
+    /**
+     * Createa a new notification instance
+     *
+     * @param [type] $event
+     * @return void
+     */
+    public function notification($event)
+    {
+        return new ProfileHasNewPost(
+            $event->profilePost,
+            $event->postPoster,
+            $event->profileOwner
+        );
     }
 }

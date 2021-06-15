@@ -80,9 +80,15 @@ class ThreadController extends Controller
      * @param Thread $thread
      * @return Illuminate\View\View
      */
-    public function show(Thread $thread)
+    public function show($threadSlug)
     {
-        $thread->load(['poster', 'tags']);
+        $thread = Thread::query()
+            ->where('slug', $threadSlug)
+            ->includeIgnored()
+            ->withIgnoredByVisitor()
+            ->with(['poster', 'tags'])
+            ->first();
+
         $filters = $this->filterManager->withReplyFilters();
         $replies = $thread->replies()
             ->filter($filters)

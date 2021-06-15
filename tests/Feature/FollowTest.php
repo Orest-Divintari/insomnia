@@ -8,6 +8,7 @@ use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class FollowTest extends TestCase
@@ -112,9 +113,10 @@ class FollowTest extends TestCase
         $profileOwner = create(User::class);
         $followerA = create(User::class);
         $followerB = create(User::class);
-
+        $this->signIn($followerA);
         $followerA->follow($profileOwner);
         $followerB->follow($profileOwner);
+        Auth::logout();
 
         $response = $this->getJson(
             route('ajax.followed-by.index', $profileOwner)
@@ -152,9 +154,10 @@ class FollowTest extends TestCase
         $profileOwner = create(User::class);
         $userA = create(User::class);
         $userB = create(User::class);
-
+        $this->signIn($profileOwner);
         $profileOwner->follow($userA);
         $profileOwner->follow($userB);
+        Auth::logout();
 
         $response = $this->getJson(
             route('ajax.follows.index', $profileOwner)
@@ -209,8 +212,9 @@ class FollowTest extends TestCase
         $profileOwner = create(User::class);
         $followingUser = create(User::class);
         $profilePost = ProfilePostFactory::toProfile($followingUser)->create();
+        $this->signIn($profileOwner);
         $profileOwner->follow($followingUser);
-        $this->signIn();
+        $this->signIn($followingUser);
 
         $response = $this->getJson(
             route('ajax.follows.index', $profileOwner)
@@ -220,13 +224,15 @@ class FollowTest extends TestCase
     }
 
     /** @test */
-    public function a_member_may_view_the_number_of_messags_of_profile_owner_followers()
+    public function a_member_may_view_the_number_of_messages_of_profile_owner_followers()
     {
         $profileOwner = create(User::class);
         $follower = create(User::class);
         $profilePost = ProfilePostFactory::toProfile($follower)->create();
+        $this->signIn($follower);
         $follower->follow($profileOwner);
-        $this->signIn();
+        $member = create(User::class);
+        $this->signIn($member);
 
         $response = $this->getJson(
             route('ajax.followed-by.index', $profileOwner)

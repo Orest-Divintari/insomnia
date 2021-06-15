@@ -79,6 +79,21 @@ trait Followable
     }
 
     /**
+     * Fetch followers that are not ignored by the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function unignoredFollowers()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'follows',
+            'following_user_id',
+            'user_id'
+        )->whereNotIn('follows.user_id', $this->ignoredUserIds());
+    }
+
+    /**
      * Determine whether is following the given user
      *
      * @param User $user
@@ -108,4 +123,5 @@ trait Followable
                     AND    follows.following_user_id=users.id
                 ) AS followed_by_visitor', [auth()->id()]);
     }
+
 }

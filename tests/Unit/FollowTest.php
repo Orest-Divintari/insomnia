@@ -27,6 +27,7 @@ class FollowTest extends TestCase
         $this->assertFalse(
             $this->user->following($this->anotherUser)
         );
+        $this->signIn($this->user);
 
         $this->user->follow($this->anotherUser);
 
@@ -38,6 +39,7 @@ class FollowTest extends TestCase
     public function a_user_may_follow_another_user()
     {
         $this->assertCount(0, $this->user->follows);
+        $this->signIn($this->user);
 
         $this->user->follow($this->anotherUser);
 
@@ -51,6 +53,7 @@ class FollowTest extends TestCase
     public function a_user_cannot_follow_a_user_that_is_already_following()
     {
         $this->assertCount(0, $this->user->follows);
+        $this->signIn($this->user);
 
         $this->user->follow($this->anotherUser);
 
@@ -68,6 +71,7 @@ class FollowTest extends TestCase
     /** @test */
     public function a_user_may_toggle_the_follow_to_another_user()
     {
+        $this->signIn($this->user);
         $this->user->follow($this->anotherUser);
         $this->assertTrue(
             $this->user->following($this->anotherUser)
@@ -87,6 +91,7 @@ class FollowTest extends TestCase
     /** @test */
     public function a_user_may_have_followers()
     {
+        $this->signIn($this->anotherUser);
         $this->anotherUser->follow($this->user);
 
         $this->assertCount(1, $this->user->followedBy);
@@ -96,6 +101,8 @@ class FollowTest extends TestCase
     /** @test */
     public function a_user_knows_the_users_that_is_following()
     {
+        $this->signIn($this->user);
+
         $this->user->follow($this->anotherUser);
 
         $this->assertCount(1, $this->user->follows);
@@ -121,8 +128,9 @@ class FollowTest extends TestCase
         $user = create(User::class);
         $john = create(User::class);
         $george = create(User::class);
-
+        $this->signIn($john);
         $john->follow($user);
+        $this->signIn($george);
         $george->follow($user);
 
         $this->assertEquals(
@@ -137,6 +145,7 @@ class FollowTest extends TestCase
         $user = create(User::class);
         $john = create(User::class);
         $george = create(User::class);
+        $this->signIn($user);
 
         $user->follow($john);
         $user->follow($george);

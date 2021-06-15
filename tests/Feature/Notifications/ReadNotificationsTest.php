@@ -16,7 +16,7 @@ class ReadNotificationsTest extends TestCase
     {
         $user = create(User::class);
         $profilePost = ProfilePostFactory::by($user)->create();
-        $liker = create(User::class);
+        $liker = $this->signIn();
         $profilePost->likedBy($liker);
         $this->assertCount(1, $user->unreadNotifications);
         $unreadNotification = $user->unreadNotifications()->first();
@@ -32,7 +32,7 @@ class ReadNotificationsTest extends TestCase
     {
         $user = create(User::class);
         $profilePost = ProfilePostFactory::by($user)->create();
-        $liker = create(User::class);
+        $liker = $this->signIn();
         $profilePost->likedBy($liker);
         $unreadNotification = $user->unreadNotifications()->first();
         $unreadNotification->markAsRead();
@@ -49,9 +49,9 @@ class ReadNotificationsTest extends TestCase
     {
         $user = create(User::class);
         $profilePost = ProfilePostFactory::by($user)->create();
-        $john = create(User::class);
+        $john = $this->signIn();
         $profilePost->likedBy($john);
-        $doe = create(User::class);
+        $doe = $this->signIn();
         $profilePost->likedBy($doe);
         $this->assertCount(2, $user->fresh()->unreadNotifications);
         $this->signIn($user);

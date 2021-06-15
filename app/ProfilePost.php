@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Helpers\Facades\ResourcePath;
+use App\Scopes\ExcludeIgnoredScope;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
@@ -48,6 +49,16 @@ class ProfilePost extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new ExcludeIgnoredScope);
+    }
 
     /**
      * A profile post has an owner

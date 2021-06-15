@@ -57,7 +57,10 @@ class ConversationController extends Controller
             ->withIsStarred()
             ->firstOrFail();
 
-        $messages = $conversation->messages()->withLikes()
+        $messages = $conversation
+            ->messages()
+            ->includeIgnored()
+            ->withLikes()
             ->paginate(Conversation::REPLIES_PER_PAGE);
 
         $participants = $conversation->participants()

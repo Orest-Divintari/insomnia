@@ -4,9 +4,12 @@ namespace App\Listeners\Subscription;
 
 use App\Events\Subscription\ProfilePostWasLiked;
 use App\Notifications\ProfilePostHasNewLike;
+use App\Traits\HandlesNotifications;
 
 class NotifyProfilePostPosterOfNewLike
 {
+    use HandlesNotifications;
+
     /**
      * Create the event listener.
      *
@@ -27,7 +30,7 @@ class NotifyProfilePostPosterOfNewLike
     {
         if ($event->poster->isNot($event->liker)) {
 
-            $event->poster->notify($this->notification($event));
+            $this->notify($event->poster, $this->notification($event));
         }
     }
 

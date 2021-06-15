@@ -22,6 +22,9 @@ export default {
     updateFollow(user, isFollowing){
         this.state.profiles[user.id].followed_by_visitor = isFollowing;
     },
+    updateIgnore(user, isIgnoring){
+        this.state.profiles[user.id].ignored_by_visitor = isIgnoring;
+    },
     // determine if the user exists in the profiles object
     profileExists(user){
         return user.id in this.state.profiles;

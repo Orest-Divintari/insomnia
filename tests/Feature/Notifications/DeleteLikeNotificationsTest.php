@@ -63,16 +63,16 @@ class DeleteLikeNotificationsTest extends TestCase
     }
 
     /** @test */
-    public function when_a_converastion_participant_unlikes_a_conversation_message_the_notification_is_deleted()
+    public function when_a_conversation_participant_unlikes_a_conversation_message_the_notification_is_deleted()
     {
-        $conversationStarter = create(User::class);
+        $conversationStarter = $this->signIn();
         $participant = create(User::class);
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
         $message = $conversation->messages()->first();
-        $message->likedBy($participant);
         $this->signIn($participant);
+        $message->likedBy($participant);
         $this->assertCount(1, $conversationStarter->notifications);
 
         $this->deleteJson(route('ajax.reply-likes.destroy', $message));

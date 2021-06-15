@@ -44,6 +44,7 @@ class DeleteLikesTest extends TestCase
     {
         $profilePost = ProfilePostFactory::create();
         $profileOwner = $profilePost->profileOwner;
+        $this->signIn($profileOwner);
         $profilePost->likedBy($profileOwner);
         $this->assertCount(1, $profilePost->likes);
 
