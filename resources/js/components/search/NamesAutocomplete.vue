@@ -113,8 +113,8 @@ export default {
       currentlySearching: false,
       searchQuery: this.initialParticipant,
       searchClient: algoliasearch(
-        "EVF642L8GM",
-        "f7b7eab4aa53e12f32086bb8b57e7c34"
+        "DCMRH4VDNL",
+        "afcab18601a381069280d4c79321a461"
       ),
       commaSeparatedValues: "",
       currentSearchTerm: "",
