@@ -141,7 +141,8 @@
                         <replies :repliable="conversation" :replies="{{ json_encode($messages) }}"></replies>
                     </div>
                     <div class="h-0 mt-12">
-                        <x-conversations.info :messages="$messages" :participants="$participants">
+                        <x-conversations.info :messages="$messages" :conversation="$conversation"
+                            :participants="$participants">
                         </x-conversations.info>
                         <x-conversations.participants :conversation="$conversation" :participants="$participants">
                         </x-conversations.participants>

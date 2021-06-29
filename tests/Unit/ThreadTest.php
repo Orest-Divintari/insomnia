@@ -406,8 +406,7 @@ class ThreadTest extends TestCase
         $user = $this->signIn();
         $thread->markAsIgnored($user);
 
-        $thread = Thread::includeIgnored()
-            ->withIgnoredByVisitor()
+        $thread = Thread::withIgnoredByVisitor($user)
             ->where('id', $thread->id)
             ->first();
 
@@ -429,7 +428,7 @@ class ThreadTest extends TestCase
     {
         $john = $this->signIn();
         $this->thread->markAsIgnored($john);
-        $thread = Thread::includeIgnored()->where('id', $this->thread->id)->first();
+        $thread = Thread::where('id', $this->thread->id)->first();
 
         $thread->markAsUnignored($john);
 
@@ -443,7 +442,7 @@ class ThreadTest extends TestCase
         $this->thread->markAsIgnored($john);
         $this->signIn($john);
 
-        $threads = Thread::includeIgnored()->get();
+        $threads = Thread::all();
 
         $this->assertCount(1, $threads);
     }
@@ -456,7 +455,7 @@ class ThreadTest extends TestCase
         $ignoredUser->markAsIgnored($john);
         $this->signIn($john);
 
-        $threads = Thread::includeIgnored()->get();
+        $threads = Thread::all();
 
         $this->assertCount(1, $threads);
     }
@@ -468,8 +467,7 @@ class ThreadTest extends TestCase
         $this->thread->markAsIgnored($john);
 
         $thread = Thread::where('id', $this->thread->id)
-            ->includeIgnored()
-            ->withIgnoredByVisitor()
+            ->withIgnoredByVisitor($john)
             ->first();
 
         $this->assertTrue($thread->ignored_by_visitor);

@@ -3,10 +3,8 @@
 namespace App;
 
 use App\Helpers\Facades\ResourcePath;
-use App\Scopes\ExcludeIgnoredScope;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
-use App\Traits\Ignorable;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
@@ -20,8 +18,7 @@ class Reply extends Model
     Likeable,
     FormatsDate,
     RecordsActivity,
-    Searchable,
-        Ignorable;
+        Searchable;
 
     /**
      * The accessors to append to the model's array form.
@@ -64,17 +61,8 @@ class Reply extends Model
     protected $casts = [
         'position' => 'int',
         'is_liked' => 'boolean',
+        'ignored_by_visitor' => 'boolean',
     ];
-
-    /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
-    protected static function booted()
-    {
-        static::addGlobalScope(new ExcludeIgnoredScope);
-    }
 
     /**
      * A reply belongs to a repliable model
@@ -259,6 +247,11 @@ class Reply extends Model
         return $this->poster()->associate($user);
     }
 
+    /**
+     * Append the permissions of the authenticated user
+     *
+     * @return array
+     */
     public function getPermissionsAttribute()
     {
         if (!auth()->check()) {
@@ -270,8 +263,38 @@ class Reply extends Model
         ];
     }
 
-    public function scopeIncludeIgnored($query)
+    /**
+     * Add column that determines whether it is ignored by the authenticated user
+     *
+     * @param Builder $query
+     * @param Bool $authUser
+     * @return Builder
+     */
+    public function scopeWithIgnoredByVisitor($query, $authUser)
     {
-        return $query->withoutGlobalScope(ExcludeIgnoredScope::class);
+        return $query->when(isset($authUser), function ($query) use ($authUser) {
+            return $query->select()->selectRaw('EXISTS
+            (
+                SELECT *
+                FROM   ignorations
+                WHERE  ignorations.user_id=?
+                AND    ignorations.ignorable_id=' . $this->getTable() . '.user_id' . '
+                AND    ignorations.ignorable_type=?
+            ) AS ignored_by_visitor', [$authUser->id, User::class]
+            );
+        });
+    }
+
+    /**
+     * Filter out the replies that are created by ignored users
+     *
+     * @param Builder $builder
+     * @param User $authUser
+     * @param ExcludeIngoredFilter $excludeIgnoredFilter
+     * @return Builder
+     */
+    public function scopeExcludeIgnored($builder, $authUser, $excludeIgnoredFilter)
+    {
+        return $excludeIgnoredFilter->apply($builder, $authUser);
     }
 }

@@ -17,7 +17,7 @@ class FollowsController extends Controller
     public function index(User $user)
     {
         return $user->follows()
-            ->withProfileInfo()
+            ->withProfileInfo(auth()->user())
             ->paginate(Follow::FOLLOWS_PER_PAGE);
     }
 }

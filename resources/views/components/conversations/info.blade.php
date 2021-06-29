@@ -5,20 +5,20 @@
     <div class="text-smaller mt-1 pb-2">
         <div class="flex justify-between ">
             <p class="text-gray-lightest">Participants: </p>
-            <p>{{ $participants->count() }}</p>
+            <p>{{ $conversation->participants_count }}</p>
         </div>
         <div class="flex justify-between ">
             <p class="text-gray-lightest">Replies: </p>
-            <p>{{ $messages->count() }}</p>
+            <p>{{ $conversation->messages_count }}</p>
         </div>
         <div class="flex justify-between ">
             <p class="text-gray-lightest">Last reply date: </p>
-            <p>{{ $messages->last()->dateCreated }}</p>
+            <p>{{ $conversation->recentMessage->dateCreated }}</p>
         </div>
         <div class="flex justify-between ">
             <p class="text-gray-lightest">Last reply from: </p>
             <a class="blue-link"
-                @click="showProfile( {{ $messages->last()->poster }} )">{{ $messages->last()->poster->name }}</a>
+                @click="showProfile( {{ $conversation->recentMessage->poster }} )">{{ $conversation->recentMessage->poster->name }}</a>
         </div>
     </div>
 </div>

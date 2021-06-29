@@ -237,14 +237,22 @@ class User extends Authenticatable implements MustVerifyEmail
      * Get the user's profile information
      *
      * @param Builder $query
+     * @param User $authUser
      * @return Builder
      */
-    public function scopeWithProfileInfo($query)
+    public function scopeWithProfileInfo($query, $authUser)
     {
         return $query->withCount('profilePosts')
             ->withCount('receivedLikes')
             ->withFollowedByVisitor()
-            ->withIgnoredByVisitor();
+            ->withIgnoredByVisitor($authUser);
+    }
+
+    public function ignoredUserIds()
+    {
+        return Ignoration::where('user_id', $this->id)
+            ->where('ignorable_type', User::class)
+            ->pluck('ignorable_id');
     }
 
     /**
@@ -474,26 +482,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return new Preferences($this->preferences, $this);
     }
 
-    public function ignorings()
-    {
-        return $this->hasMany(Ignoration::class, 'user_id');
-    }
-
-    public function ignoredUserIds()
-    {
-        return Ignoration::where('user_id', $this->id)
-            ->where('ignorable_type', User::class)
-            ->pluck('ignorable_id');
-    }
-
-    public function ignoredThreadIds()
-    {
-        return Ignoration::where('user_id', $this->id)
-            ->where('ignorable_type', Thread::class)
-            ->pluck('ignorable_id');
-
-    }
-
     /**
      * Fetch the users that are ignored by the user
      *
@@ -525,8 +513,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'id',
             'id',
             'ignorable_id'
-        )->includeIgnored()
-            ->where('ignorable_type', Thread::class);
+        )->where('ignorable_type', Thread::class);
     }
 
 }

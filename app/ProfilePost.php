@@ -4,7 +4,6 @@ namespace App;
 
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Helpers\Facades\ResourcePath;
-use App\Scopes\ExcludeIgnoredScope;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
@@ -51,14 +50,11 @@ class ProfilePost extends Model
     protected $guarded = [];
 
     /**
-     * The "booted" method of the model.
+     * Comments of the profile post that are not created by ignored users
      *
-     * @return void
+     * @var Illuminate\Pagination\LengthAwarePaginator;
      */
-    protected static function booted()
-    {
-        static::addGlobalScope(new ExcludeIgnoredScope);
-    }
+    public $unignoredComments;
 
     /**
      * A profile post has an owner
@@ -103,6 +99,19 @@ class ProfilePost extends Model
     {
         return $this->morphMany(Reply::class, 'repliable');
     }
+
+    // /**
+    //  * Get the comments that are created by users that are not ignored
+    //  * by the authenticated user
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+    //  */
+    // public function unignoredComments()
+    // {
+
+    //     return $this->morphMany(Reply::class, 'repliable')
+    //         ->whereNotIn('user_id', auth()->user()->ignoredUserIds());
+    // }
 
     /**
      * Get the owner of the profile in which the post was posted
@@ -151,13 +160,14 @@ class ProfilePost extends Model
         return true;
     }
 
+    /**
+     * Append unignored comments pagination for the current profile post
+     *
+     * @return
+     */
     public function getPaginatedCommentsAttribute()
     {
-        return $this->comments()
-            ->withLikes()
-            ->latest('id')
-            ->paginate(ProfilePost::REPLIES_PER_PAGE)
-            ->withPath(route('ajax.comments.index', $this));
+        return $this->unignoredComments;
     }
 
     public function getPathAttribute()
@@ -174,5 +184,19 @@ class ProfilePost extends Model
             'update' => auth()->user()->can('update', $this),
             'delete' => auth()->user()->can('delete', $this),
         ];
+    }
+
+    /**
+     * Filter out the profile posts that are created by users that are ignored
+     * by the authenticated user
+     *
+     * @param Builder $query
+     * @param User $authUser
+     * @param ExcludeIgnoredFilter $excludeIgnoredFilter
+     * @return Builder
+     */
+    public function scopeExcludeIgnored($query, $authUser, $excludeIgnoredFilter)
+    {
+        return $excludeIgnoredFilter->apply($query, $authUser);
     }
 }

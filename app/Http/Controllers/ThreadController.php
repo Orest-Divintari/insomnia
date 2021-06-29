@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Events\Activity\UserViewedPage;
+use App\Filters\ExcludeIgnoredFilter;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateThreadRequest;
 use App\Thread;
@@ -25,19 +26,21 @@ class ThreadController extends Controller
      * @param Category $category
      * @return Illuminate\View\View
      */
-    public function index(Category $category)
+    public function index(Category $category, ExcludeIgnoredFilter $excludeIgnoredFilter)
     {
-        $filters = $this->filterManager->withThreadFilters();
-        $threadsQuery = Thread::with('poster')
+        $threadFilters = $this->filterManager->withThreadFilters();
+        $threadsQuery = Thread::query()
+            ->excludeIgnored(auth()->user(), $excludeIgnoredFilter)
+            ->with('poster')
             ->withHasBeenUpdated()
             ->withRecentReply()
             ->forCategory($category)
-            ->filter($filters)
+            ->filter($threadFilters)
             ->latest('updated_at');
 
         $normalThreads = $threadsQuery->paginate(Thread::PER_PAGE);
         $pinnedThreads = $threadsQuery->pinned()->get();
-        $threadFilters = $filters->getRequestedFilters();
+        $threadFilters = $threadFilters->getRequestedFilters();
 
         return view(
             'threads.index',
@@ -84,17 +87,21 @@ class ThreadController extends Controller
     {
         $thread = Thread::query()
             ->where('slug', $threadSlug)
-            ->includeIgnored()
-            ->withIgnoredByVisitor()
+            ->withIgnoredByVisitor(auth()->user())
             ->with(['poster', 'tags'])
             ->first();
 
         $filters = $this->filterManager->withReplyFilters();
         $replies = $thread->replies()
+            ->withIgnoredByVisitor(auth()->user())
             ->filter($filters)
             ->withLikes()
             ->paginate(Thread::REPLIES_PER_PAGE);
 
+        $hasIgnoredContent = collect(['has_ignored_content' => to_bool(collect($replies->items())->contains(function ($reply) {
+            return $reply['ignored_by_visitor'] === true;
+        }))]);
+        $replies = $hasIgnoredContent->merge($replies);
         $thread->recordVisit();
 
         event(new UserViewedPage(UserViewedPage::THREAD, $thread));

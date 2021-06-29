@@ -329,8 +329,11 @@ class UserTest extends TestCase
     public function it_knows_the_profile_info()
     {
         $profileOwner = create(User::class);
-
-        $user = User::select()->withProfileInfo()->whereName($profileOwner->name)->first()->toArray();
+        $this->signIn();
+        $user = User::where('name', $profileOwner->name)
+            ->withProfileInfo(auth()->user())
+            ->first()
+            ->toArray();
 
         $this->assertArrayHasKey('profile_posts_count', $user);
         $this->assertArrayHasKey('received_likes_count', $user);

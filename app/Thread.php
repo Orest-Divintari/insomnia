@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
-use App\Scopes\ExcludeIgnoredScope;
 use App\Search\Threads;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
@@ -107,8 +106,6 @@ class Thread extends Model
             $thread->replies->each->delete();
             $thread->subscriptions->each->delete();
         });
-
-        static::addGlobalScope(new ExcludeIgnoredScope);
     }
 
     /**
@@ -482,14 +479,16 @@ class Thread extends Model
     }
 
     /**
-     * Include threads that are either directly ignored
-     * or are created by ignored users
+     * Filter out threads that are either directly ignored by the authenticated user
+     * or are created by users that are ignored by the authenticated user
      *
      * @param Builder $query
-     * @return Builder
+     * @param User $authUser
+     * @param ExcludeIgnoredFilter $excludeIgnoredFilter
+     * @return Builbder
      */
-    public function scopeIncludeIgnored($query)
+    public function scopeExcludeIgnored($query, $authUser, $excludeIgnoredFilter)
     {
-        return $query->withoutGlobalScope(ExcludeIgnoredScope::class);
+        return $excludeIgnoredFilter->apply($query, $authUser);
     }
 }

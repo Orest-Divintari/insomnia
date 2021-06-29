@@ -64,18 +64,24 @@ trait Ignorable
      * Determine whether it is ignored by the authenticated user
      *
      * @param Builder $query
+     * @param Bool $authenticated
      * @return Builder
      */
-    public function scopeWithIgnoredByVisitor($query)
+    public function scopeWithIgnoredByVisitor($query, $authUser)
     {
-        return $query
-            ->selectRaw('EXISTS
+        return $query->when(isset($authUser), function ($query) use ($authUser) {
+            if (is_null($query->getQuery()->columns)) {
+                $query->addSelect('*');
+            }
+            return $query->selectRaw('EXISTS
             (
                 SELECT *
                 FROM   ignorations
                 WHERE  ignorations.user_id=?
                 AND    ignorations.ignorable_id=' . $this->getTable() . '.id' . '
                 AND    ignorations.ignorable_type=?
-            ) AS ignored_by_visitor', [auth()->id(), get_class($this)]);
+            ) AS ignored_by_visitor', [$authUser->id, get_class($this)]
+            );
+        });
     }
 }

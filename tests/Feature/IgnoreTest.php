@@ -102,7 +102,7 @@ class IgnoreTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_the_followers_except_from_the_ignored_users()
+    public function it_returns_the_followers_except_the_ignored_users()
     {
         $john = create(User::class);
         $doe = $this->signIn();
@@ -119,9 +119,8 @@ class IgnoreTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_threads_replies_created_by_users_that_are_not_ignored()
+    public function it_returns_all_thread_replies_including_thread_replies_created_by_ignored_users()
     {
-        // $this->withoutExceptionHandling();
         $john = $this->signIn();
         $doe = create(User::class);
         $bob = create(User::class);
@@ -133,10 +132,16 @@ class IgnoreTest extends TestCase
         $response = $this->get(route('threads.show', $thread));
 
         $replies = collect($response['replies']->items());
-        $this->assertCount(2, $replies);
-        $this->assertFalse($replies->search(function ($reply) use ($replyByDoe) {
-            return $reply->id == $replyByDoe->id;
-        }));
+        $ignoredReply = $replies->firstWhere('id', $replyByDoe->id);
+        $this->assertTrue($ignoredReply['ignored_by_visitor']);
+        $unignoredReplies = $replies->filter(function ($reply) use ($ignoredReply) {
+            return $reply->isNot($ignoredReply);
+        });
+        $this->assertTrue(
+            $unignoredReplies->every(function ($reply) {
+                return !$reply['ignored_by_visitor'];
+            })
+        );
     }
 
     /** @test */
@@ -198,7 +203,7 @@ class IgnoreTest extends TestCase
         $comments = collect($response['profilePosts']->items()[0]['paginatedComments']->items());
         $this->assertCount(1, $comments);
         $this->assertFalse($comments->search(function ($comment) use ($commentByDoe) {
-            return $comment->id == $commentByDoe->id;
+            return $comment->is($commentByDoe);
         }));
     }
 
@@ -270,6 +275,23 @@ class IgnoreTest extends TestCase
     }
 
     /** @test */
+    public function it_returns_all_likes_even_by_users_that_are_ignored()
+    {
+        $doe = create(User::class);
+        $john = create(User::class);
+        $reply = ReplyFactory::by($john)->create();
+
+        $this->signIn($doe);
+        $reply->likedBy($doe);
+        $this->signIn($john);
+
+        $response = $this->get(route('threads.show', $reply->repliable));
+
+        $reply = $response['replies'][1];
+        $this->assertEquals(1, $reply['likes_count']);
+    }
+
+    /** @test */
     public function it_returns_all_messages_of_a_conversation_even_by_users_that_are_ignored()
     {
         $john = $this->signIn();
@@ -279,15 +301,23 @@ class IgnoreTest extends TestCase
             ->withParticipants([$doe->name, $bob->name])
             ->create();
 
-        $conversation->addMessage(['body' => $this->faker()->sentence()], $doe);
+        $messageByDoe = $conversation->addMessage(['body' => $this->faker()->sentence()], $doe);
         $conversation->addMessage(['body' => $this->faker()->sentence()], $bob);
         $doe->markAsIgnored($john);
 
         $response = $this->get(route('conversations.show', $conversation));
 
-        $messages = $response['messages']->items();
-
+        $messages = collect($response['messages']->items());
         $this->assertCount(3, $messages);
+        $ignoredMessage = $messages->firstWhere('id', $messageByDoe->id);
+        $this->assertTrue($ignoredMessage['ignored_by_visitor']);
+
+        $unignoredMessages = $messages->filter(function ($message) use ($ignoredMessage) {
+            return $message->isNot($ignoredMessage);
+        });
+        $unignoredMessages->every(function ($message) {
+            return !$message['ignored_by_visitor'];
+        });
     }
 
     /** @test */

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Events\Activity\UserViewedPage;
-use App\ProfilePost;
+use App\Filters\ExcludeIgnoredFilter;
 use App\User;
+use App\ViewModels\ProfileViewModel;
 
 class ProfileController extends Controller
 {
@@ -13,26 +14,19 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show($username)
+    public function show($username, ExcludeIgnoredFilter $excludeIgnoredFilter)
     {
-        $user = User::withProfileInfo()
-            ->whereName($username)
-            ->firstOrFail()
-            ->append('join_date');
+        $viewModel = new ProfileViewModel($username, auth()->user(), $excludeIgnoredFilter);
+
+        $user = $viewModel->user();
 
         $this->authorize('view_profile', $user);
 
         event(new UserViewedPage(UserViewedPage::PROFILE, $user));
 
-        $profilePosts = $user->profilePosts()
-            ->withLikes()
-            ->latest()
-            ->paginate(ProfilePost::PER_PAGE);
-
-        foreach ($profilePosts->items() as $post) {
-            $post->append('paginatedComments');
-        }
+        $profilePosts = $viewModel->profilePosts($user);
 
         return view('profiles.show', compact('user', 'profilePosts'));
+
     }
 }

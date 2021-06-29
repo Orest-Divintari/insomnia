@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Actions\AppendHasIgnoredContentAttributeAction;
 use App\Search\ModelFilterFactory;
 use App\Search\SearchIndexFactory;
 use Illuminate\Http\Request;
@@ -32,15 +33,23 @@ class Search
     protected $indexFactory;
 
     /**
+     * Append attribute that determines whether there is ignored content in the search results
+     *
+     * @param AppendHasIgnoredContentAttributeAction $appendHasIgnoredContentAttributeAction
+     */
+    protected $appendHasIgnoredContentAttributeAction;
+
+    /**
      * Create a new Search instance
      *
      * @param SearchIndexFactory $searchIndexFactory
      * @param ModelFilterFactory $filtersFactory
      */
-    public function __construct(SearchIndexFactory $searchIndexFactory, ModelFilterFactory $filtersFactory)
+    public function __construct(SearchIndexFactory $searchIndexFactory, ModelFilterFactory $filtersFactory, AppendHasIgnoredContentAttributeAction $appendHasIgnoredContentAttributeAction)
     {
         $this->indexFactory = $searchIndexFactory;
         $this->filtersFactory = $filtersFactory;
+        $this->appendHasIgnoredContentAttributeAction = $appendHasIgnoredContentAttributeAction;
     }
 
     /**
@@ -64,7 +73,7 @@ class Search
         );
 
         $filters = $this->filtersFor($type);
-        
+
         $builder = $index->search($searchQuery);
         $results = $filters->apply($builder);
         return $this->fetch($results);

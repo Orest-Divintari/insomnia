@@ -5,7 +5,6 @@ namespace App;
 use App\Events\Conversation\NewMessageWasAddedToConversation;
 use App\Events\Conversation\NewParticipantsWereAdded;
 use App\Events\Conversation\ParticipantWasRemoved;
-use App\Scopes\ExcludeIgnoredScope;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Lockable;
@@ -62,16 +61,6 @@ class Conversation extends Model
         'has_been_updated' => 'boolean',
         'starred' => 'boolean',
     ];
-
-    /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
-    protected static function booted()
-    {
-        static::addGlobalScope(new ExcludeIgnoredScope);
-    }
 
     /**
      * Get the route key name
@@ -438,6 +427,20 @@ class Conversation extends Model
         return $this->participants()
             ->where('user_id', $user->id)
             ->exists();
+    }
+
+    /**
+     * Filter out conversations that are created by users that are ignored
+     * by the authenticated user
+     *
+     * @param Builder $query
+     * @param User $authUser
+     * @param ExcludeIgnoredFilter $excludeIgnoredFilter
+     * @return Builder
+     */
+    public function scopeExcludeIgnored($query, $authUser, $excludeIgnoredFilter)
+    {
+        return $excludeIgnoredFilter->apply($query, $authUser);
     }
 
 }

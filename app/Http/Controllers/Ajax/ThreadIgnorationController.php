@@ -29,10 +29,8 @@ class ThreadIgnorationController extends Controller
      */
     public function destroy($threadSlug)
     {
-        $thread = Thread::where('slug', $threadSlug)
-            ->includeIgnored()
-            ->first();
-            
+        $thread = Thread::where('slug', $threadSlug)->first();
+
         $thread->markAsUnignored();
 
         return response('The thread has been marked as unignored successfully', 200);

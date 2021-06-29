@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="showContent">
     <div :id="typeId" class="reply-container">
       <div class="reply-left-col">
         <profile-popover
@@ -11,23 +11,33 @@
           :user="item.poster"
           triggerClasses="mt-1 text-blue-mid text-sm font-bold"
         ></profile-popover>
-
         <p
           v-if="isThreadReply && isOriginalPoster"
-          class="bg-green-mid rounded text-white border border-green-900 px-7 text-xs font-hairline mt-1"
+          class="
+            bg-green-mid
+            rounded
+            text-white
+            border border-green-900
+            px-7
+            text-xs
+            font-hairline
+            mt-1
+          "
         >
           Original Poster
         </p>
         <i class="mt-2 fas fa-chevron-down"></i>
       </div>
-      <div class="w-full">
+      <div class="w-full pl-5/2 flex flex-col">
         <div class="flex justify-between items-center">
-          <a
-            :href="'#' + typeId"
-            v-text="item.date_created"
-            class="text-xs text-gray-lightest hover:underline font-hairline pl-5/2"
-            :class="{ 'mt-2': !isThreadReply }"
-          ></a>
+          <div class="flex">
+            <a
+              :href="'#' + typeId"
+              v-text="item.date_created"
+              class="text-xs text-gray-lightest hover:underline font-hairline"
+              :class="{ 'mt-2': !isThreadReply }"
+            ></a>
+          </div>
           <div
             v-if="isThreadReply"
             class="flex items-center text-xs text-gray-lightest"
@@ -39,7 +49,26 @@
             </div>
           </div>
         </div>
-        <div class="p-5/2 h-full" :class="{ 'mt-4': !isThreadReply }">
+        <div class="p-5/2 pl-0 h-full" :class="{ 'mt-4': !isThreadReply }">
+          <div
+            v-if="showIgnoredContent && item.ignored_by_visitor"
+            class="pr-5/2 mb-3"
+          >
+            <p
+              class="
+                border-l-3 border-blue-mid
+                bg-white-catskill
+                mb-5/2
+                p-3
+                pl-0
+                text-smaller text-gray-shuttle
+              "
+              v-if="item.ignored_by_visitor"
+            >
+              <i class="fas fa-microphone-alt-slash ml-3 text-red-700"></i> You
+              are ignoring content by this member.
+            </p>
+          </div>
           <div v-if="editing">
             <form @submit.prevent="update">
               <input type="text" />
@@ -58,7 +87,7 @@
               </div>
             </form>
           </div>
-          <div v-else class="flex flex-col h-full pb-8">
+          <div v-else class="flex flex-col">
             <div class="reply-body">
               <highlight :content="body"></highlight>
             </div>
@@ -68,30 +97,30 @@
                 >{{ this.likesCount }} likes</a
               >
             </div>
-            <div v-if="signedIn" class="flex justify-between">
-              <div class="flex">
-                <button class="btn-reply-control">
-                  <i class="fas fa-exclamation-circle"></i>
-                  Report
-                </button>
-                <button
-                  v-if="can('update', item)"
-                  @click="editing = true"
-                  class="btn-reply-control"
-                >
-                  <span class="fas fa-pen"></span>
-                  Edit
-                </button>
-              </div>
-              <div class="flex">
-                <like-button
-                  :path="likePath"
-                  @liked="updateLikeStatus"
-                  :item="item"
-                ></like-button>
-                <quote-reply :reply="item"></quote-reply>
-              </div>
-            </div>
+          </div>
+        </div>
+        <div v-if="signedIn && !editing" class="flex justify-between pb-2">
+          <div class="flex">
+            <button class="btn-reply-control">
+              <i class="fas fa-exclamation-circle"></i>
+              Report
+            </button>
+            <button
+              v-if="can('update', item)"
+              @click="editing = true"
+              class="btn-reply-control"
+            >
+              <span class="fas fa-pen"></span>
+              Edit
+            </button>
+          </div>
+          <div class="flex">
+            <like-button
+              :path="likePath"
+              @liked="updateLikeStatus"
+              :item="item"
+            ></like-button>
+            <quote-reply :reply="item"></quote-reply>
           </div>
         </div>
       </div>
@@ -113,6 +142,10 @@ export default {
     QuoteReply,
   },
   props: {
+    showIgnoredContent: {
+      type: Boolean,
+      default: false,
+    },
     repliable: {
       type: Object,
       default: {},
@@ -126,6 +159,7 @@ export default {
   mixins: [likeable, authorizable],
   data() {
     return {
+      showContent: !this.item.ignored_by_visitor,
       editing: false,
       body: this.item.body,
     };
@@ -159,6 +193,11 @@ export default {
         var type = "convMessage-";
       }
       return type + this.item.id;
+    },
+  },
+  watch: {
+    showIgnoredContent(newValue, oldValue) {
+      this.showContent = newValue;
     },
   },
   methods: {

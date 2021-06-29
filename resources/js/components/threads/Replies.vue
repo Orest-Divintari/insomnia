@@ -6,12 +6,25 @@
       :dataset="dataset"
     ></paginator>
     <reply
+      :show-ignored-content="showIgnoredContent"
       v-for="(reply, index) in items"
       :key="reply.id"
       :item="reply"
       :repliable="repliable"
     ></reply>
-    <paginator @isPaginated="isPaginated = true" :dataset="dataset"></paginator>
+    <div class="flex justify-between">
+      <paginator
+        @isPaginated="isPaginated = true"
+        :dataset="dataset"
+      ></paginator>
+      <button
+        @click="revealIgnoredContent"
+        v-if="dataset.has_ignored_content && !showIgnoredContent"
+        class="self-end text-gray-shuttle hover:underline text-smaller"
+        >Show ignored content</a
+      >
+      </button>
+    </div>
     <new-reply
       :repliable="repliable"
       @created="add"
@@ -69,11 +82,17 @@ export default {
   mixins: [collection],
   data() {
     return {
+      showIgnoredContent: false,
       isPaginated: false,
       items: this.replies.data,
       dataset: this.replies,
       locked: this.repliable.locked,
     };
+  },
+  methods: {
+    revealIgnoredContent() {
+      this.showIgnoredContent = true;
+    },
   },
   created() {
     EventBus.$on("lock-repliable", (locked) => {

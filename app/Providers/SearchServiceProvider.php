@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Actions\AppendHasIgnoredContentAttributeAction;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\SearchRequestFactory;
 use App\Search;
@@ -24,7 +25,9 @@ class SearchServiceProvider extends ServiceProvider
 
             $filtersFactory = app(ModelFilterFactory::class);
 
-            return new Search($searchIndexFactory, $filtersFactory);
+            $appendHasIgnoredContentAttribute = app(AppendHasIgnoredContentAttributeAction::class);
+
+            return new Search($searchIndexFactory, $filtersFactory, $appendHasIgnoredContentAttribute);
         });
 
         $this->app->bind(SearchRequest::class, function ($app) {

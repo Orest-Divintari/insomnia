@@ -17,7 +17,7 @@ class FollowedByController extends Controller
     public function index(User $user)
     {
         return $user->unignoredFollowers()
-            ->withProfileInfo()
+            ->withProfileInfo(auth()->user())
             ->paginate(Follow::FOLLOWED_BY_PER_PAGE);
     }
 }
