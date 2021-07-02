@@ -35,7 +35,7 @@ class ViewThreadsTest extends TestCase
         $bob = create(User::class);
         $thread = ThreadFactory::by($john)->create();
         $replyByDoe = ReplyFactory::by($doe)->toThread($thread)->create();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
         ReplyFactory::by($bob)->toThread($thread)->create();
 
         $response = $this->get(route('threads.show', $thread));
@@ -61,7 +61,7 @@ class ViewThreadsTest extends TestCase
         $bob = create(User::class);
         $threadByDoe = ThreadFactory::by($doe)->create();
         $threadByBob = ThreadFactory::by($bob)->create();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
         $this->signIn($john);
 
         $response = $this->get(route('threads.index'));
@@ -79,7 +79,7 @@ class ViewThreadsTest extends TestCase
         $john = create(User::class);
         $ignoredThread = create(Thread::class);
         $unignoredThread = create(Thread::class);
-        $ignoredThread->markAsIgnored($john);
+        $john->ignore($ignoredThread);
         $this->signIn($john);
 
         $response = $this->get(route('threads.index'));

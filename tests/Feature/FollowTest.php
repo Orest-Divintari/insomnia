@@ -250,7 +250,7 @@ class FollowTest extends TestCase
         $bob = $this->signIn();
         $bob->follow($john);
         $this->signIn($john);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $response = $this->get(route('ajax.followed-by.index', $john));
 

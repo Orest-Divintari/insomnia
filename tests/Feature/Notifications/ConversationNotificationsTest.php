@@ -171,7 +171,7 @@ class ConversationNotificationsTest extends TestCase
             ->create();
         $message = $conversation->messages()->first();
         $this->signIn($doe);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.messages.store', $conversation), ['body' => $this->faker()->sentence()]);
 

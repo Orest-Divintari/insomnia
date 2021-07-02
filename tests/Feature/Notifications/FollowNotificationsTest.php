@@ -72,7 +72,7 @@ class FollowNotificationsTest extends TestCase
         Notification::fake();
         $john = create(User::class);
         $doe = $this->signIn();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.follow.store', $john));
 

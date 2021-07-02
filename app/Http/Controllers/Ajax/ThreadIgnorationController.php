@@ -18,7 +18,7 @@ class ThreadIgnorationController extends Controller
     {
         $this->authorize('ignore', $thread);
 
-        $thread->markAsIgnored();
+        auth()->user()->ignore($thread);
 
         return response('The thread has been marked as ignored successfully', 200);
     }
@@ -33,7 +33,7 @@ class ThreadIgnorationController extends Controller
     {
         $this->authorize('unignore', $thread);
 
-        $thread->markAsUnignored();
+        auth()->user()->unignore($thread);
 
         return response('The thread has been marked as unignored successfully', 200);
     }

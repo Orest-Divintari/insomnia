@@ -41,7 +41,7 @@ class IgnoreTest extends DuskTestCase
         $john = create(User::class);
         $thread = ThreadFactory::inCategory($category)->by($john)->create();
         $doe = create(User::class);
-        $thread->markAsIgnored($doe);
+        $doe->ignore($thread);
 
         $this->browse(function (Browser $browser) use ($thread, $doe) {
             $browser->loginAs($doe)
@@ -80,7 +80,7 @@ class IgnoreTest extends DuskTestCase
     {
         $john = create(User::class);
         $doe = create(User::class);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->browse(function (Browser $browser) use ($john, $doe) {
             $browser->loginAs($john)

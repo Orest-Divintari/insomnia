@@ -22,7 +22,7 @@ class SearchProfilePostsTest extends DuskTestCase
         $searchTerm = $this->faker()->sentence();
         $ingoredProfilePostBody = $searchTerm . ' ignored';
         $ignoredProfilePost = ProfilePostFactory::withBody($ingoredProfilePostBody)->by($doe)->create();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->browse(function (Browser $browser) use ($ignoredProfilePost, $searchTerm, $john) {
             $response = $browser
@@ -43,7 +43,7 @@ class SearchProfilePostsTest extends DuskTestCase
         $searchTerm = $this->faker()->sentence();
         $ignoredCommentBody = $searchTerm . ' ignored';
         $ignoredComment = CommentFactory::withBody($ignoredCommentBody)->by($doe)->create();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->browse(function (Browser $browser) use ($ignoredComment, $searchTerm, $john) {
             $response = $browser

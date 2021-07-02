@@ -18,34 +18,6 @@ trait Ignorable
     }
 
     /**
-     * Mark as ignored by the given user
-     *
-     * @param User $user
-     * @return Ignoration
-     */
-    public function markAsIgnored($user = null)
-    {
-        $user = $user ?: auth()->user();
-
-        return $this->ignorations()->create(['user_id' => $user->id]);
-    }
-
-    /**
-     * Mark as unigniored by the given user
-     *
-     * @param User $user
-     * @return void
-     */
-    public function markAsUnignored($user = null)
-    {
-        $user = $user ?: auth()->user();
-
-        $this->ignorations()
-            ->where('user_id', $user->id)
-            ->delete();
-    }
-
-    /**
      * Determine whether it is ignored by the given user
      *
      * @param User $user

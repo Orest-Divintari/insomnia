@@ -478,7 +478,7 @@ class ViewConversationsTest extends DuskTestCase
             ->withMessage($message['body'])
             ->create();
         $ignoredMessage = $conversation->addMessage(['body' => $this->faker()->sentence()], $john);
-        $john->markAsIgnored($conversationStarter);
+        $conversationStarter->ignore($john);
 
         $this->browse(function (Browser $browser) use (
             $conversationStarter,
@@ -509,7 +509,7 @@ class ViewConversationsTest extends DuskTestCase
             ->withMessage($message['body'])
             ->create();
         $ignoredMessage = $conversation->addMessage(['body' => $this->faker()->sentence()], $john);
-        $john->markAsIgnored($conversationStarter);
+        $conversationStarter->ignore($john);
 
         $this->browse(function (Browser $browser) use (
             $conversationStarter,
@@ -538,7 +538,7 @@ class ViewConversationsTest extends DuskTestCase
             ->withParticipants([$doe->name])
             ->withMessage('some message')
             ->create();
-        $john->markAsIgnored($doe);
+        $doe->ignore($john);
 
         $this->browse(function (Browser $browser) use ($ignoredConversation, $doe) {
             $response = $browser->loginAs($doe)

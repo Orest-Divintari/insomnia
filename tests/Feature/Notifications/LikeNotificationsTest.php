@@ -36,7 +36,7 @@ class LikeNotificationsTest extends TestCase
         $reply = ReplyFactory::by($john)->create();
         $doe = create(User::class);
         $this->signIn($doe);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.reply-likes.store', $reply));
 
@@ -51,7 +51,7 @@ class LikeNotificationsTest extends TestCase
         $comment = CommentFactory::by($john)->create();
         $doe = create(User::class);
         $this->signIn($doe);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.reply-likes.store', $comment));
 
@@ -69,7 +69,7 @@ class LikeNotificationsTest extends TestCase
             ->create();
         $message = $conversation->messages()->first();
         $this->signIn($doe);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.reply-likes.store', $message));
 
@@ -84,7 +84,7 @@ class LikeNotificationsTest extends TestCase
         $bob = create(User::class);
         $profilePost = ProfilePostFactory::by($john)->toProfile($bob)->create();
         $doe = $this->signIn();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.profile-post-likes.store', $profilePost));
 

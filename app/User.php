@@ -526,4 +526,30 @@ class User extends Authenticatable implements MustVerifyEmail
         )->where('ignorable_type', Thread::class);
     }
 
+    /**
+     * Mark an ignorable model as ignored
+     *
+     * @param mixed $ignorable
+     * @return Ignoration
+     */
+    public function ignore($ignorable)
+    {
+        return $ignorable
+            ->ignorations()
+            ->create(['user_id' => $this->id]);
+    }
+
+    /**
+     * Mark an ignorabel model as unignored
+     *
+     * @param mixed $ignorable
+     * @return void
+     */
+    public function unignore($ignorable)
+    {
+        $ignorable->ignorations()
+            ->where('user_id', $this->id)
+            ->delete();
+    }
+
 }

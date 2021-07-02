@@ -51,7 +51,7 @@ class ViewProfilePostsTest extends TestCase
         $commentByBob = CommentFactory::by($bob)
             ->toProfilePost($profilePost)
             ->create();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
         $this->signIn($john);
 
         $response = $this->get(route('profiles.show', $john));
@@ -75,7 +75,7 @@ class ViewProfilePostsTest extends TestCase
         $profilePostByBob = ProfilePostFactory::by($bob)
             ->toProfile($john)
             ->create();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
         $this->signIn($john);
 
         $response = $this->get(route('profiles.show', $john));

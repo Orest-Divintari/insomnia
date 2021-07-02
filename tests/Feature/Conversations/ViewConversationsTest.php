@@ -384,7 +384,7 @@ class ViewConversationsTest extends TestCase
         $this->signIn($bob);
         $conversationByBob = ConversationFactory::by($bob)->withParticipants([$john->name])->create();
         $this->signIn($john);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $response = $this->get(route('conversations.index'));
 
@@ -406,7 +406,7 @@ class ViewConversationsTest extends TestCase
         $this->signIn($bob);
         $conversationByBob = ConversationFactory::by($bob)->withParticipants([$john->name])->create();
         $this->signIn($john);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $response = $this->get(route('ajax.conversations.index'));
         $conversations = collect($response->json());
@@ -428,7 +428,7 @@ class ViewConversationsTest extends TestCase
 
         $messageByDoe = $conversation->addMessage(['body' => $this->faker()->sentence()], $doe);
         $conversation->addMessage(['body' => $this->faker()->sentence()], $bob);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $response = $this->get(route('conversations.show', $conversation));
 

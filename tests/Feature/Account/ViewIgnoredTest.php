@@ -16,7 +16,7 @@ class ViewIgnoredTest extends TestCase
     {
         $ignoredUser = create(User::class);
         $user = $this->signIn();
-        $ignoredUser->markAsIgnored($user);
+        $user->ignore($ignoredUser);
 
         $response = $this->get(route('account.ignored-users.index'));
 
@@ -28,7 +28,7 @@ class ViewIgnoredTest extends TestCase
     {
         $thread = create(Thread::class);
         $user = $this->signIn();
-        $thread->markAsIgnored($user);
+        $user->ignore($thread);
 
         $response = $this->get(route('account.ignored-threads.index'));
 

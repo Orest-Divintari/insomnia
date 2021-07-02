@@ -21,7 +21,7 @@ class SearchThreadTitlesTest extends DuskTestCase
         $thread = ThreadFactory::withTitle($searchTerm)->create();
         $ignoredThread = ThreadFactory::withTitle($ignoredThreadTitle)->create();
         $john = create(User::class);
-        $ignoredThread->markAsIgnored($john);
+        $john->ignore($ignoredThread);
 
         $this->browse(function (Browser $browser) use ($thread, $ignoredThread, $john, $searchTerm) {
             $response = $browser
@@ -44,7 +44,7 @@ class SearchThreadTitlesTest extends DuskTestCase
         $doe = create(User::class);
         $ignoredThread = ThreadFactory::withTitle($ignoredThreadTitle)->by($doe)->create();
         $john = create(User::class);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->browse(function (Browser $browser) use ($thread, $ignoredThread, $john, $searchTerm) {
             $response = $browser

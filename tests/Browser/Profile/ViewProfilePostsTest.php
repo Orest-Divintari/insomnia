@@ -201,7 +201,7 @@ class ViewProfilePostsTest extends DuskTestCase
     {
         $profileOwner = create(User::class);
         $john = create(User::class);
-        $john->markAsIgnored($profileOwner);
+        $profileOwner->ignore($john);
 
         $ignoredProfilePost = ProfilePostFactory::toProfile($profileOwner)->by($john)->create();
 
@@ -220,7 +220,7 @@ class ViewProfilePostsTest extends DuskTestCase
     {
         $profileOwner = create(User::class);
         $john = create(User::class);
-        $john->markAsIgnored($profileOwner);
+        $profileOwner->ignore($john);
         $profilePost = ProfilePostFactory::toProfile($profileOwner)->by($profileOwner)->create();
         $ignoredComment = CommentFactory::toProfilePost($profilePost)->by($john)->create();
 

@@ -286,7 +286,7 @@ class UserTest extends TestCase
     {
         $user = create(User::class);
         $thread = create(User::class);
-        $thread->markAsIgnored($user);
+        $user->ignore($thread);
 
         $user->delete();
 
@@ -299,7 +299,7 @@ class UserTest extends TestCase
         $thread = create(User::class);
         $john = $this->signIn();
 
-        $thread->markAsIgnored($john);
+        $john->ignore($thread);
 
         $this->assertCount(1, $john->ignorings);
     }
@@ -339,7 +339,7 @@ class UserTest extends TestCase
     {
         $profileOwner = create(User::class);
         $visitor = create(User::class);
-        $profileOwner->markAsIgnored($visitor);
+        $visitor->ignore($profileOwner);
         $this->signIn($visitor);
 
         $user = User::withIgnoredByVisitor()
@@ -606,7 +606,7 @@ class UserTest extends TestCase
         $john = create(User::class);
         $doe = create(User::class);
 
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->assertTrue($doe->isIgnored($john));
     }
@@ -624,12 +624,12 @@ class UserTest extends TestCase
     public function a_user_has_ignored_users()
     {
         $user = create(User::class);
-        $ingoredUser = create(User::class);
+        $ignoredUser = create(User::class);
 
-        $ingoredUser->markAsIgnored($user);
+        $user->ignore($ignoredUser);
 
         $this->assertCount(1, $user->ignoredUsers);
-        $this->assertEquals($ingoredUser->id, $user->ignoredUsers()->first()->id);
+        $this->assertEquals($ignoredUser->id, $user->ignoredUsers()->first()->id);
     }
 
     /** @test */
@@ -638,7 +638,7 @@ class UserTest extends TestCase
         $thread = create(Thread::class);
         $user = create(User::class);
 
-        $thread->markAsIgnored($user);
+        $user->ignore($thread);
 
         $this->assertCount(1, $user->ignoredThreads);
         $this->assertEquals($thread->id, $user->ignoredThreads()->first()->id);
@@ -654,9 +654,55 @@ class UserTest extends TestCase
         $bob->follow($john);
         $this->signIn($john);
 
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->assertCount(1, $john->unignoredFollowers);
+    }
+
+    /** @test */
+    public function it_can_ignore_another_user()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+
+        $john->ignore($doe);
+
+        $this->assertTrue($doe->isIgnored($john));
+    }
+
+    /** @test */
+    public function it_can_unignore_another_user()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+        $john->ignore($doe);
+
+        $john->unignore($doe);
+
+        $this->assertFalse($doe->isIgnored($john));
+    }
+
+    /** @test */
+    public function it_can_ignore_a_thread()
+    {
+        $john = create(User::class);
+        $thread = create(Thread::class);
+
+        $john->ignore($thread);
+
+        $this->assertTrue($thread->isIgnored($john));
+    }
+
+    /** @test */
+    public function it_can_unignore_an_ignored_thread()
+    {
+        $john = create(User::class);
+        $thread = create(Thread::class);
+        $john->ignore($thread);
+
+        $john->unignore($thread);
+
+        $this->assertFalse($thread->isIgnored($john));
     }
 
 }

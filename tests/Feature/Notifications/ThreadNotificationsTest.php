@@ -159,7 +159,7 @@ class ThreadNotificationsTest extends TestCase
         $thread = ThreadFactory::by($john)->create();
         $doe = create(User::class);
         $this->signIn($doe);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.replies.store', $thread), ['body' => $this->faker()->sentence()]);
 

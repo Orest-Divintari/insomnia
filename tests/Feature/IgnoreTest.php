@@ -41,7 +41,7 @@ class IgnoreTest extends TestCase
     {
         $john = $this->signIn();
         $doe = create(User::class);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $response = $this->post(route('ajax.user-ignorations.store', $doe));
 
@@ -54,7 +54,7 @@ class IgnoreTest extends TestCase
     {
         $john = $this->signIn();
         $doe = create(User::class);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->delete(route('ajax.user-ignorations.destroy', $doe));
 
@@ -78,7 +78,7 @@ class IgnoreTest extends TestCase
     {
         $john = $this->signIn();
         $thread = create(Thread::class);
-        $thread->markAsIgnored($john);
+        $john->ignore($thread);
 
         $response = $this->post(route('ajax.thread-ignorations.store', $thread));
 
@@ -103,7 +103,7 @@ class IgnoreTest extends TestCase
     {
         $john = $this->signIn();
         $thread = create(Thread::class);
-        $thread->markAsIgnored($john);
+        $john->ignore($thread);
 
         $this->delete(route('ajax.thread-ignorations.destroy', $thread));
 

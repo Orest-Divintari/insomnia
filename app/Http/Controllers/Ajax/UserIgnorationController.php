@@ -17,7 +17,7 @@ class UserIgnorationController extends Controller
     {
         $this->authorize('ignore', $user);
 
-        $user->markAsIgnored(auth()->user());
+        auth()->user()->ignore($user);
 
         return response('The user has been ignored successfully.', 200);
     }
@@ -30,7 +30,7 @@ class UserIgnorationController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->markAsUnignored();
+        auth()->user()->unignore($user);
 
         return response('The user has been unignored successfully.', 200);
     }

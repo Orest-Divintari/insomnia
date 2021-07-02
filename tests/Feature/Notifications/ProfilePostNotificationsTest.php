@@ -356,7 +356,7 @@ class ProfilePostNotificationsTest extends TestCase
         $john = create(User::class);
         $profilePost = ProfilePostFactory::by($john)->toProfile($john)->create();
         $doe = $this->signIn();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.comments.store', $profilePost), ['body' => $this->faker()->sentence()]);
 
@@ -370,7 +370,7 @@ class ProfilePostNotificationsTest extends TestCase
         $john = create(User::class);
         $doe = $this->signIn();
         $profilePost = ProfilePostFactory::by($doe)->toProfile($john)->create();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.comments.store', $profilePost), ['body' => $this->faker()->sentence()]);
 
@@ -385,7 +385,7 @@ class ProfilePostNotificationsTest extends TestCase
         $bob = create(User::class);
         $doe = $this->signIn();
         $profilePost = ProfilePostFactory::by($john)->toProfile($bob)->create();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.comments.store', $profilePost), ['body' => $this->faker()->sentence()]);
 
@@ -401,7 +401,7 @@ class ProfilePostNotificationsTest extends TestCase
         $profilePost = ProfilePostFactory::by($bob)->toProfile($bob)->create();
         CommentFactory::by($john)->toProfilePost($profilePost);
         $doe = $this->signIn();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.comments.store', $profilePost), ['body' => $this->faker()->sentence()]);
 
@@ -414,7 +414,7 @@ class ProfilePostNotificationsTest extends TestCase
         Notification::fake();
         $john = create(User::class);
         $doe = $this->signIn();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $this->post(route('ajax.profile-posts.store', $john), ['body' => $this->faker()->sentence()]);
 

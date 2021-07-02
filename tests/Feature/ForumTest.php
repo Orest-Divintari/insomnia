@@ -257,7 +257,7 @@ class ForumTest extends TestCase
         $latestPosts = ThreadFactory::inCategory($macos)->by($user)->createMany(10);
         $this->signIn($user);
         $ignoredLatestPost = $latestPosts->first();
-        $ignoredLatestPost->markAsIgnored($user);
+        $user->ignore($ignoredLatestPost);
 
         $response = $this->get(route('forum'));
 
@@ -287,7 +287,7 @@ class ForumTest extends TestCase
         $latestPosts = ThreadFactory::inCategory($macos)->by($john)->createMany(9);
         ThreadFactory::inCategory($macos)->by($doe)->createMany(1);
         $this->signIn($john);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
         $ignoredLatestPost = $doe->threads()->first();
 
         $response = $this->get(route('forum'));

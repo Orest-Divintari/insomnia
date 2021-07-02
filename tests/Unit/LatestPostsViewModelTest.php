@@ -20,7 +20,7 @@ class LatestPostsViewModelTest extends TestCase
     {
         $threads = createMany(Thread::class, 5);
         $john = $this->signIn();
-        $ignoredThread = $threads->first()->markAsIgnored($john);
+        $ignoredThread = $john->ignore($threads->first());
         $excludeIgnored = app(ExcludeIgnoredFilter::class);
 
         $latestPosts = app(LatestPostsViewModel::class)->recentlyActiveThreads($excludeIgnored);
@@ -35,7 +35,7 @@ class LatestPostsViewModelTest extends TestCase
         $doe = create(User::class);
         $threadByDoe = ThreadFactory::by($doe)->create();
         $john = $this->signIn();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
         $excludeIgnored = app(ExcludeIgnoredFilter::class);
 
         $latestPosts = app(LatestPostsViewModel::class)->recentlyActiveThreads($excludeIgnored);
@@ -51,7 +51,7 @@ class LatestPostsViewModelTest extends TestCase
         $doe = create(User::class);
         $replyByDoe = ReplyFactory::toThread($threadToBeIgnored)->by($doe)->create();
         $john = $this->signIn();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
         $excludeIgnored = app(ExcludeIgnoredFilter::class);
 
         $latestPosts = app(LatestPostsViewModel::class)->recentlyActiveThreads($excludeIgnored);

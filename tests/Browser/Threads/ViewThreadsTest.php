@@ -40,7 +40,7 @@ class ViewThreadsTest extends DuskTestCase
         $thread = ThreadFactory::inCategory($category)->create();
         $john = create(User::class);
         $doe = create(User::class);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
         $ignoredReply = ReplyFactory::by($doe)->toThread($thread)->create();
 
         $this->browse(function (Browser $browser) use ($thread, $ignoredReply, $john) {
@@ -58,7 +58,7 @@ class ViewThreadsTest extends DuskTestCase
         $thread = ThreadFactory::inCategory($category)->create();
         $john = create(User::class);
         $doe = create(User::class);
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
         $ignoredReply = ReplyFactory::by($doe)->toThread($thread)->create();
 
         $this->browse(function (Browser $browser) use ($thread, $ignoredReply, $john) {

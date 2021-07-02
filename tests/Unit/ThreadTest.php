@@ -404,7 +404,7 @@ class ThreadTest extends TestCase
     {
         $thread = create(Thread::class);
         $user = $this->signIn();
-        $thread->markAsIgnored($user);
+        $user->ignore($thread);
 
         $thread = Thread::withIgnoredByVisitor($user)
             ->where('id', $thread->id)
@@ -418,7 +418,7 @@ class ThreadTest extends TestCase
     {
         $john = $this->signIn();
 
-        $this->thread->markAsIgnored($john);
+        $john->ignore($this->thread);
 
         $this->assertTrue($this->thread->isIgnored($john));
     }
@@ -427,10 +427,10 @@ class ThreadTest extends TestCase
     public function it_can_be_marked_as_unignored()
     {
         $john = $this->signIn();
-        $this->thread->markAsIgnored($john);
+        $john->ignore($this->thread);
         $thread = Thread::where('id', $this->thread->id)->first();
 
-        $thread->markAsUnignored($john);
+        $john->unignore($thread);
 
         $this->assertFalse($thread->isIgnored($john));
     }
@@ -448,7 +448,7 @@ class ThreadTest extends TestCase
     public function it_includes_threads_that_are_directly_ignored()
     {
         $john = create(User::class);
-        $this->thread->markAsIgnored($john);
+        $john->ignore($this->thread);
         $this->signIn($john);
 
         $threads = Thread::all();
@@ -461,7 +461,7 @@ class ThreadTest extends TestCase
     {
         $john = create(User::class);
         $ignoredUser = $this->thread->poster;
-        $ignoredUser->markAsIgnored($john);
+        $john->ignore($ignoredUser);
         $this->signIn($john);
 
         $threads = Thread::all();
@@ -473,7 +473,7 @@ class ThreadTest extends TestCase
     public function it_determines_whether_it_is_ignored_by_the_authenticated_user_using_a_query_scope()
     {
         $john = $this->signIn();
-        $this->thread->markAsIgnored($john);
+        $john->ignore($this->thread);
 
         $thread = Thread::where('id', $this->thread->id)
             ->withIgnoredByVisitor($john)
@@ -488,7 +488,7 @@ class ThreadTest extends TestCase
         $doe = create(User::class);
         $thread = ThreadFactory::by($doe)->create();
         $john = $this->signIn();
-        $doe->markAsIgnored($john);
+        $john->ignore($doe);
 
         $thread = Thread::where('id', $thread->id)
             ->withCreatorIgnoredByVisitor($john)
