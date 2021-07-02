@@ -18,6 +18,7 @@ class UserObserver
     {
         $user->threads->each->delete();
         $user->activities->each->delete();
+        $user->ignorings->each->delete();
     }
 
     /**

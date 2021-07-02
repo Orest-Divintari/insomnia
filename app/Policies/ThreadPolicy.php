@@ -45,4 +45,28 @@ class ThreadPolicy
     {
         return $user->isAdmin();
     }
+
+    /**
+     * Determine whether the user can ignore the thread
+     *
+     * @param User $user
+     * @param Thread $thread
+     * @return mixed
+     */
+    public function ignore(User $user, Thread $thread)
+    {
+        return $thread->isNotIgnored($user) && $user->isNot($thread->poster);
+    }
+
+    /**
+     * Determine whether the user can uningore the thread
+     *
+     * @param User $user
+     * @param Thread $thread
+     * @return mixed
+     */
+    public function unignore(User $user, Thread $thread)
+    {
+        return $thread->isIgnored($user);
+    }
 }

@@ -195,4 +195,42 @@ class ViewProfilePostsTest extends DuskTestCase
             });
         });
     }
+
+    /** @test */
+    public function the_autenticated_user_should_not_see_the_profile_posts_that_are_created_by_ignored_users()
+    {
+        $profileOwner = create(User::class);
+        $john = create(User::class);
+        $john->markAsIgnored($profileOwner);
+
+        $ignoredProfilePost = ProfilePostFactory::toProfile($profileOwner)->by($john)->create();
+
+        $this->browse(function (Browser $browser) use ($ignoredProfilePost, $profileOwner) {
+
+            $response = $browser
+                ->loginAs($profileOwner)
+                ->visit(route('profiles.show', $profileOwner));
+
+            $response->assertDontSee($ignoredProfilePost->body);
+        });
+    }
+
+    /** @test */
+    public function the_authenticated_user_should_not_see_the_comments_that_are_posted_by_ignored_users()
+    {
+        $profileOwner = create(User::class);
+        $john = create(User::class);
+        $john->markAsIgnored($profileOwner);
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->by($profileOwner)->create();
+        $ignoredComment = CommentFactory::toProfilePost($profilePost)->by($john)->create();
+
+        $this->browse(function (Browser $browser) use ($ignoredComment, $profileOwner) {
+
+            $response = $browser
+                ->loginAs($profileOwner)
+                ->visit(route('profiles.show', $profileOwner));
+
+            $response->assertDontSee($ignoredComment->body);
+        });
+    }
 }

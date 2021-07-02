@@ -13,7 +13,7 @@ class AccountIgnoredUserController extends Controller
     {
         $ignoredUsers = auth()->user()
             ->ignoredUsers()
-            ->withProfileInfo()
+            ->withProfileInfo(auth()->user())
             ->get();
 
         return view('account.ignored.users', compact('ignoredUsers'));

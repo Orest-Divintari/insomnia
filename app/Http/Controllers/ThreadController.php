@@ -8,6 +8,7 @@ use App\Filters\ExcludeIgnoredFilter;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateThreadRequest;
 use App\Thread;
+use App\ViewModels\ThreadsShowViewModel;
 use DeepCopy\Filter\Filter;
 use Illuminate\Http\Request;
 
@@ -83,25 +84,14 @@ class ThreadController extends Controller
      * @param Thread $thread
      * @return Illuminate\View\View
      */
-    public function show($threadSlug)
+    public function show($threadSlug, ThreadsShowViewModel $viewModel)
     {
-        $thread = Thread::query()
-            ->where('slug', $threadSlug)
-            ->withIgnoredByVisitor(auth()->user())
-            ->with(['poster', 'tags'])
-            ->first();
+        $thread = $viewModel->thread($threadSlug, auth()->user());
 
         $filters = $this->filterManager->withReplyFilters();
-        $replies = $thread->replies()
-            ->withIgnoredByVisitor(auth()->user())
-            ->filter($filters)
-            ->withLikes()
-            ->paginate(Thread::REPLIES_PER_PAGE);
 
-        $hasIgnoredContent = collect(['has_ignored_content' => to_bool(collect($replies->items())->contains(function ($reply) {
-            return $reply['ignored_by_visitor'] === true;
-        }))]);
-        $replies = $hasIgnoredContent->merge($replies);
+        $replies = $viewModel->replies($thread, $filters, auth()->user());
+
         $thread->recordVisit();
 
         event(new UserViewedPage(UserViewedPage::THREAD, $thread));

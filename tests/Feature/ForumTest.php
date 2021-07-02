@@ -7,6 +7,7 @@ use App\GroupCategory;
 use App\Thread;
 use App\User;
 use Carbon\Carbon;
+use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -219,6 +220,90 @@ class ForumTest extends TestCase
         $ios->delete();
         $recentIosReplyPoster->delete();
         $oldIosReplyPoster->delete();
+    }
+
+    /** @test */
+    public function it_returns_the_latest_posts()
+    {
+        $software = create(GroupCategory::class);
+        $macos = create(Category::class, ['group_category_id' => $software->id]);
+        $user = create(User::class);
+        Carbon::setTestNow(Carbon::now()->subWeek());
+        ThreadFactory::inCategory($macos)->by($user)->createMany(5);
+        Carbon::setTestNow();
+        $latestPosts = ThreadFactory::inCategory($macos)->by($user)->createMany(10);
+
+        $response = $this->get(route('forum'));
+        $latestPostIds = $response['latestPosts']->pluck('id');
+        $this->assertTrue(
+            $latestPosts->every(function ($latestPost) use ($latestPostIds) {
+                return $latestPostIds->contains($latestPost->id);
+            })
+        );
+
+        $software->delete();
+        $user->delete();
+    }
+
+    /** @test */
+    public function it_does_not_return_a_latest_post_if_it_is_ignored_by_the_authenticated_user()
+    {
+        $software = create(GroupCategory::class);
+        $macos = create(Category::class, ['group_category_id' => $software->id]);
+        $user = create(User::class);
+        Carbon::setTestNow(Carbon::now()->subWeek());
+        ThreadFactory::inCategory($macos)->by($user)->createMany(5);
+        Carbon::setTestNow();
+        $latestPosts = ThreadFactory::inCategory($macos)->by($user)->createMany(10);
+        $this->signIn($user);
+        $ignoredLatestPost = $latestPosts->first();
+        $ignoredLatestPost->markAsIgnored($user);
+
+        $response = $this->get(route('forum'));
+
+        $unignoredLatestPosts = $latestPosts->where('id', '!=', $ignoredLatestPost->id);
+        $latestPostIds = $response['latestPosts']->pluck('id');
+        $this->assertTrue(
+            $unignoredLatestPosts->every(function ($latestPost) use ($latestPostIds) {
+                return $latestPostIds->contains($latestPost->id);
+            })
+        );
+        $this->assertFalse($latestPostIds->contains($ignoredLatestPost->id));
+
+        $software->delete();
+        $user->delete();
+    }
+
+    /** @test */
+    public function it_does_not_return_a_latest_post_if_the_creator_of_the_post_is_ignored_by_the_authenticated_user()
+    {
+        $software = create(GroupCategory::class);
+        $macos = create(Category::class, ['group_category_id' => $software->id]);
+        $john = create(User::class);
+        $doe = create(User::class);
+        Carbon::setTestNow(Carbon::now()->subWeek());
+        ThreadFactory::inCategory($macos)->by($john)->createMany(5);
+        Carbon::setTestNow();
+        $latestPosts = ThreadFactory::inCategory($macos)->by($john)->createMany(9);
+        ThreadFactory::inCategory($macos)->by($doe)->createMany(1);
+        $this->signIn($john);
+        $doe->markAsIgnored($john);
+        $ignoredLatestPost = $doe->threads()->first();
+
+        $response = $this->get(route('forum'));
+
+        $unignoredLatestPosts = $latestPosts->where('id', '!=', $ignoredLatestPost->id);
+        $latestPostIds = $response['latestPosts']->pluck('id');
+        $this->assertTrue(
+            $unignoredLatestPosts->every(function ($latestPost) use ($latestPostIds) {
+                return $latestPostIds->contains($latestPost->id);
+            })
+        );
+        $this->assertFalse($latestPostIds->contains($ignoredLatestPost->id));
+
+        $software->delete();
+        $john->delete();
+        $doe->delete();
     }
 
 }

@@ -18,6 +18,7 @@
         :dataset="dataset"
       ></paginator>
       <button
+        dusk="show-ignored-content-button"
         @click="revealIgnoredContent"
         v-if="dataset.has_ignored_content && !showIgnoredContent"
         class="self-end text-gray-shuttle hover:underline text-smaller"

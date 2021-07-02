@@ -1,19 +1,29 @@
 <template>
-  <div>
-    <a @click="showPost(posting)" class="blue-link">
-      <highlight class="text-md" :content="body"></highlight>
-    </a>
-    <highlight class="italic text-smaller" :content="body"></highlight>
-    <div class="flex items-center text-xs text-gray-lightest">
+  <div v-if="showContent">
+    <div class="flex">
       <profile-popover
-        class="pb-1/2"
         :user="posting.poster"
-        triggerClasses="text-xs text-gray-lightest underline"
-      ></profile-popover>
-      <p class="dot"></p>
-      <p>Profile post</p>
-      <p class="dot"></p>
-      <p>{{ posting.date_created }}</p>
+        trigger="avatar"
+        triggerClasses="avatar-lg"
+      >
+      </profile-popover>
+      <div class="pl-4">
+        <a @click="showPost(posting)" class="blue-link">
+          <highlight class="text-md" :content="body"></highlight>
+        </a>
+        <highlight class="italic text-smaller" :content="body"></highlight>
+        <div class="flex items-center text-xs text-gray-lightest">
+          <profile-popover
+            class="pb-1/2"
+            :user="posting.poster"
+            triggerClasses="text-xs text-gray-lightest underline"
+          ></profile-popover>
+          <p class="dot"></p>
+          <p>Profile post</p>
+          <p class="dot"></p>
+          <p>{{ posting.date_created }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -32,10 +42,24 @@ export default {
       type: String,
       default: "",
     },
+    showIgnoredContent: {
+      type: Boolean,
+      default: false,
+    },
   },
   mixins: [view, postings],
   components: {
     highlight,
+  },
+  data() {
+    return {
+      showContent: !this.posting.creator_ignored_by_visitor,
+    };
+  },
+  watch: {
+    showIgnoredContent(newValue, oldValue) {
+      this.showContent = newValue;
+    },
   },
   computed: {
     body() {

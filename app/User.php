@@ -256,6 +256,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     *  User has ignored items
+     *
+     * @return void
+     */
+    public function ignorings()
+    {
+        return $this->hasMany(Ignoration::class);
+    }
+
+    /**
      * Eager load the users that follows and the number of users
      *
      * @param Builder $query

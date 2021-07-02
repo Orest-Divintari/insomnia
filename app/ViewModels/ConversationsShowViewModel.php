@@ -31,7 +31,7 @@ class ConversationsShowViewModel
     {
         $messages = $this->conversation
             ->messages()
-            ->withIgnoredByVisitor(auth()->user())
+            ->withCreatorIgnoredByVisitor(auth()->user())
             ->withLikes()
             ->paginate(Conversation::REPLIES_PER_PAGE);
 

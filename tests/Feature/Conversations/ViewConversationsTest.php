@@ -373,4 +373,76 @@ class ViewConversationsTest extends TestCase
         $this->assertEquals($this->participant->name, $response['conversationFilters']['receivedBy']);
     }
 
+    /** @test */
+    public function it_returns_conversations_created_only_by_users_that_are_not_ignored()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+        $bob = create(User::class);
+        $this->signIn($doe);
+        $conversationByDoe = ConversationFactory::by($doe)->withParticipants([$john->name])->create();
+        $this->signIn($bob);
+        $conversationByBob = ConversationFactory::by($bob)->withParticipants([$john->name])->create();
+        $this->signIn($john);
+        $doe->markAsIgnored($john);
+
+        $response = $this->get(route('conversations.index'));
+
+        $conversations = collect($response['conversations']->items());
+        $this->assertCount(1, $conversations);
+        $this->assertFalse($conversations->search(function ($conversation) use ($conversationByDoe) {
+            return $conversation->id == $conversationByDoe->id;
+        }));
+    }
+
+    /** @test */
+    public function it_returns_conversations_only_by_users_that_are_not_ignored_with_ajax_request()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+        $bob = create(User::class);
+        $this->signIn($doe);
+        $conversationByDoe = ConversationFactory::by($doe)->withParticipants([$john->name])->create();
+        $this->signIn($bob);
+        $conversationByBob = ConversationFactory::by($bob)->withParticipants([$john->name])->create();
+        $this->signIn($john);
+        $doe->markAsIgnored($john);
+
+        $response = $this->get(route('ajax.conversations.index'));
+        $conversations = collect($response->json());
+        $this->assertCount(1, $conversations);
+        $this->assertFalse($conversations->search(function ($conversation) use ($conversationByDoe) {
+            return $conversation['id'] == $conversationByDoe->id;
+        }));
+    }
+
+    /** @test */
+    public function it_returns_all_messages_of_a_conversation_even_by_users_that_are_ignored()
+    {
+        $john = $this->signIn();
+        $doe = create(User::class);
+        $bob = create(User::class);
+        $conversation = ConversationFactory::by($john)
+            ->withParticipants([$doe->name, $bob->name])
+            ->create();
+
+        $messageByDoe = $conversation->addMessage(['body' => $this->faker()->sentence()], $doe);
+        $conversation->addMessage(['body' => $this->faker()->sentence()], $bob);
+        $doe->markAsIgnored($john);
+
+        $response = $this->get(route('conversations.show', $conversation));
+
+        $messages = collect($response['messages']->items());
+        $this->assertCount(3, $messages);
+        $ignoredMessage = $messages->firstWhere('id', $messageByDoe->id);
+        $this->assertTrue($ignoredMessage['ignored_by_visitor']);
+
+        $unignoredMessages = $messages->filter(function ($message) use ($ignoredMessage) {
+            return $message->isNot($ignoredMessage);
+        });
+        $unignoredMessages->every(function ($message) {
+            return !$message['ignored_by_visitor'];
+        });
+    }
+
 }

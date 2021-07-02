@@ -2,6 +2,8 @@
 
 namespace App\Queries;
 
+use App\User;
+
 class CreatorIgnoredByVisitorColumn
 {
     public function addSelect($query, $authUser)
@@ -12,9 +14,9 @@ class CreatorIgnoredByVisitorColumn
                 SELECT *
                 FROM   ignorations
                 WHERE  ignorations.user_id=?
-                AND    ignorations.ignorable_id=' . $query->model->getTable() . '.user_id' . '
+                AND    ignorations.ignorable_id=' . $query->getModel()->getTable() . '.user_id' . '
                 AND    ignorations.ignorable_type=?
-            ) AS ignored_by_visitor', [$authUser->id, User::class]
+            ) AS creator_ignored_by_visitor', [$authUser->id, User::class]
             );
         });
     }

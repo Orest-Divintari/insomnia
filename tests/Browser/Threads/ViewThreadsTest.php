@@ -4,6 +4,8 @@ namespace Tests\Browser\Threads;
 
 use App\Category;
 use App\Thread;
+use App\User;
+use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
@@ -30,4 +32,72 @@ class ViewThreadsTest extends DuskTestCase
                 ->assertSeeLink('10');
         });
     }
+
+    /** @test */
+    public function the_authenticated_user_should_not_see_the_replies_created_by_ignored_users()
+    {
+        $category = create(Category::class);
+        $thread = ThreadFactory::inCategory($category)->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $doe->markAsIgnored($john);
+        $ignoredReply = ReplyFactory::by($doe)->toThread($thread)->create();
+
+        $this->browse(function (Browser $browser) use ($thread, $ignoredReply, $john) {
+            $browser->loginAs($john)
+                ->visit(route('threads.show', $thread))
+                ->assertDontSee($ignoredReply->body)
+                ->assertVisible('@show-ignored-content-button');
+        });
+    }
+
+    /** @test */
+    public function the_authenticated_user_can_reveal_the_ignored_replies()
+    {
+        $category = create(Category::class);
+        $thread = ThreadFactory::inCategory($category)->create();
+        $john = create(User::class);
+        $doe = create(User::class);
+        $doe->markAsIgnored($john);
+        $ignoredReply = ReplyFactory::by($doe)->toThread($thread)->create();
+
+        $this->browse(function (Browser $browser) use ($thread, $ignoredReply, $john) {
+            $browser->loginAs($john)
+                ->visit(route('threads.show', $thread))
+                ->assertDontSee($ignoredReply->body)
+                ->click('@show-ignored-content-button')
+                ->assertSee($ignoredReply->body)
+                ->assertSee('You are ignoring content by this member.');
+        });
+    }
+
+    /** @test */
+    public function the_authenticated_thread_poster_should_not_see_the_ignore_button()
+    {
+        $category = create(Category::class);
+        $john = create(User::class);
+        $thread = ThreadFactory::inCategory($category)->by($john)->create();
+
+        $this->browse(function (Browser $browser) use ($thread, $john) {
+            $browser->loginAs($john)
+                ->visit(route('threads.show', $thread))
+                ->assertMissing('@ignore-thread-button');
+        });
+    }
+
+    /** @test */
+    public function authorised_users_may_see_the_ignore_button()
+    {
+        $category = create(Category::class);
+        $john = create(User::class);
+        $doe = create(User::class);
+        $thread = ThreadFactory::inCategory($category)->by($doe)->create();
+
+        $this->browse(function (Browser $browser) use ($thread, $john) {
+            $browser->loginAs($john)
+                ->visit(route('threads.show', $thread))
+                ->assertVisible('@ignore-thread-button');
+        });
+    }
+
 }

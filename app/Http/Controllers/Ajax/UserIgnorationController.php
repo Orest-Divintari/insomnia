@@ -15,7 +15,9 @@ class UserIgnorationController extends Controller
      */
     public function store(User $user)
     {
-        $user->markAsIgnored();
+        $this->authorize('ignore', $user);
+
+        $user->markAsIgnored(auth()->user());
 
         return response('The user has been ignored successfully.', 200);
     }

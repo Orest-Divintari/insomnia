@@ -66,4 +66,17 @@ class FollowNotificationsTest extends TestCase
         $user->delete();
     }
 
+    /** @test */
+    public function users_will_not_receive_notifications_when_an_ignored_user_started_following_them()
+    {
+        Notification::fake();
+        $john = create(User::class);
+        $doe = $this->signIn();
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.follow.store', $john));
+
+        Notification::assertNotSentTo($john, YouHaveANewFollower::class);
+    }
+
 }

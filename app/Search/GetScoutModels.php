@@ -14,7 +14,7 @@ class GetScoutModels
      */
     public static function getById($model, $ids)
     {
-        return $model->withSearchInfo()
+        return $model->withSearchInfo(auth()->user())
             ->whereIn(
                 $model->getScoutKeyName(),
                 $ids

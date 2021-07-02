@@ -348,4 +348,77 @@ class ProfilePostNotificationsTest extends TestCase
             PostOnYourProfileHasNewComment::class
         );
     }
+
+    /** @test */
+    public function users_will_not_receive_notifications_when_on_their_own_post_on_their_profile_a_new_comment_is_added_by_an_ingored_user()
+    {
+        Notification::fake();
+        $john = create(User::class);
+        $profilePost = ProfilePostFactory::by($john)->toProfile($john)->create();
+        $doe = $this->signIn();
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.comments.store', $profilePost), ['body' => $this->faker()->sentence()]);
+
+        Notification::assertNotSentTo($john, YourPostOnYourProfileHasNewComment::class);
+    }
+
+    /** @test */
+    public function users_will_not_receive_notifications_when_on_their_profile_on_a_profile_post_by_another_user_a_new_comment_is_added_by_an_ingored_user()
+    {
+        Notification::fake();
+        $john = create(User::class);
+        $doe = $this->signIn();
+        $profilePost = ProfilePostFactory::by($doe)->toProfile($john)->create();
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.comments.store', $profilePost), ['body' => $this->faker()->sentence()]);
+
+        Notification::assertNotSentTo($john, PostOnYourProfileHasNewComment::class);
+    }
+
+    /** @test */
+    public function users_will_not_receive_notifications_when_their_profile_post_on_another_user_profile_a_new_comment_is_added_by_an_ignored_user()
+    {
+        Notification::fake();
+        $john = create(User::class);
+        $bob = create(User::class);
+        $doe = $this->signIn();
+        $profilePost = ProfilePostFactory::by($john)->toProfile($bob)->create();
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.comments.store', $profilePost), ['body' => $this->faker()->sentence()]);
+
+        Notification::assertNotSentTo($john, YourProfilePostHasNewComment::class);
+    }
+
+    /** @test */
+    public function users_will_not_receive_notifications_when_on_a_profile_post_that_the_user_has_commented_a_new_comment_is_added_by_an_ingored_user_adds_a_commentwhen_their_profile_post_on_another_user_profile_a_new_comment_is_added_by_an_ignored_user()
+    {
+        Notification::fake();
+        $john = create(User::class);
+        $bob = create(User::class);
+        $profilePost = ProfilePostFactory::by($bob)->toProfile($bob)->create();
+        CommentFactory::by($john)->toProfilePost($profilePost);
+        $doe = $this->signIn();
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.comments.store', $profilePost), ['body' => $this->faker()->sentence()]);
+
+        Notification::assertNotSentTo($john, ParticipatedProfilePostHasNewComment::class);
+    }
+
+    /** @test */
+    public function users_will_not_receive_notifications_when_on_their_profile_is_created_a_post_by_an_ignored_user()
+    {
+        Notification::fake();
+        $john = create(User::class);
+        $doe = $this->signIn();
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.profile-posts.store', $john), ['body' => $this->faker()->sentence()]);
+
+        Notification::assertNotSentTo($john, ProfileHasNewPost::class);
+    }
+
 }

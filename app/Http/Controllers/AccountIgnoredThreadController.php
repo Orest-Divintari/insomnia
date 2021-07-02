@@ -13,6 +13,7 @@ class AccountIgnoredThreadController extends Controller
     {
         $ignoredThreads = auth()->user()
             ->ignoredThreads()
+            ->withIgnoredByVisitor(auth()->user())
             ->with('poster')
             ->withRecentReply()
             ->get();

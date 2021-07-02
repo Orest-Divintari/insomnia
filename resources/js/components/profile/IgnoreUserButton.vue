@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dusk="ignore-user-button">
     <button @click="toggleIgnore" class="btn-white-blue flex items-center">
       <p v-if="isIgnored">Unignore</p>
       <p v-else>Ignore</p>
@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import authorizable from "../../mixins/authorizable";
 export default {
   props: {
     profileOwner: {
@@ -19,6 +20,7 @@ export default {
       required: true,
     },
   },
+  mixins: [authorizable],
   data() {
     return {
       isIgnored: this.ignored,

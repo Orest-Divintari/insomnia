@@ -48,31 +48,61 @@
             <div class="w-1/2 border-r border-gray-lighter">
               <div class="flex flex-col">
                 <a
-                  class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
+                  class="
+                    p-2
+                    border-white border-t
+                    hover:bg-white-catskill
+                    cursor-pointer
+                    hover:text-blue-mid
+                  "
                   :href="'/search?posted_by=' + user.name"
                   >Your Content
                 </a>
                 <hr class="border-b-1 border-gray-lighter" />
                 <a
-                  class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
+                  class="
+                    p-2
+                    border-white border-t
+                    hover:bg-white-catskill
+                    cursor-pointer
+                    hover:text-blue-mid
+                  "
                   href="/account/likes"
                   >Likes Received</a
                 >
                 <hr class="border-b-1 border-gray-lighter" />
                 <a
-                  class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
+                  class="
+                    p-2
+                    border-white border-t
+                    hover:bg-white-catskill
+                    cursor-pointer
+                    hover:text-blue-mid
+                  "
                   href="/account/details"
                   >Account details
                 </a>
                 <hr class="border-b-1 border-gray-lighter" />
                 <a
-                  class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
+                  class="
+                    p-2
+                    border-white border-t
+                    hover:bg-white-catskill
+                    cursor-pointer
+                    hover:text-blue-mid
+                  "
                   href="/account/password"
                   >Password and security</a
                 >
                 <hr class="border-b-1 border-gray-lighter" />
                 <a
-                  class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
+                  class="
+                    p-2
+                    border-white border-t
+                    hover:bg-white-catskill
+                    cursor-pointer
+                    hover:text-blue-mid
+                  "
                   href="/account/privacy"
                   >Privacy</a
                 >
@@ -81,31 +111,61 @@
             </div>
             <div class="w-1/2 border-t-1 border-white flex flex-col">
               <a
-                class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
+                class="
+                  p-2
+                  border-white border-t
+                  hover:bg-white-catskill
+                  cursor-pointer
+                  hover:text-blue-mid
+                "
                 href="/account/follows"
                 >Following
               </a>
               <hr class="border-b-1 border-gray-lighter" />
               <a
-                class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
-                href="/account/ignored"
+                class="
+                  p-2
+                  border-white border-t
+                  hover:bg-white-catskill
+                  cursor-pointer
+                  hover:text-blue-mid
+                "
+                href="/account/ignored-users"
                 >Ignoring
               </a>
               <hr class="border-b-1 border-gray-lighter" />
               <a
-                class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
+                class="
+                  p-2
+                  border-white border-t
+                  hover:bg-white-catskill
+                  cursor-pointer
+                  hover:text-blue-mid
+                "
                 href="/account/preferences"
                 >Preferences
               </a>
               <hr class="border-b-1 border-gray-lighter" />
               <a
-                class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
+                class="
+                  p-2
+                  border-white border-t
+                  hover:bg-white-catskill
+                  cursor-pointer
+                  hover:text-blue-mid
+                "
                 :href="'/search?posted_by=' + user.name"
                 >Signature</a
               >
               <hr class="border-b-1 border-gray-lighter" />
               <a
-                class="p-2 border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
+                class="
+                  p-2
+                  border-white border-t
+                  hover:bg-white-catskill
+                  cursor-pointer
+                  hover:text-blue-mid
+                "
                 :href="'/search?posted_by=' + user.name"
                 >Connected accounts</a
               >
@@ -114,7 +174,15 @@
           </div>
           <form action="/logout" method="POST" class="flex">
             <button
-              class="flex-1 p-2 text-black-semi text-smaller border-white border-t hover:bg-white-catskill cursor-pointer hover:text-blue-mid"
+              class="
+                flex-1
+                p-2
+                text-black-semi text-smaller
+                border-white border-t
+                hover:bg-white-catskill
+                cursor-pointer
+                hover:text-blue-mid
+              "
               :href="'/search?posted_by=' + user.name"
             >
               Logout

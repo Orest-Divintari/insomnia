@@ -4,6 +4,7 @@ namespace Tests\Feature\ProfilePosts;
 
 use App\ProfilePost;
 use App\User;
+use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -35,6 +36,55 @@ class ViewProfilePostsTest extends TestCase
         $response = $this->get(route('profile-posts.show', $post));
 
         $response->assertRedirect('login');
+    }
+
+    /** @test */
+    public function it_returns_the_profile_post_comments_created_by_users_that_are_not_ignored()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+        $bob = create(User::class);
+        $profilePost = ProfilePostFactory::toProfile($john)->create();
+        $commentByDoe = CommentFactory::by($doe)
+            ->toProfilePost($profilePost)
+            ->create();
+        $commentByBob = CommentFactory::by($bob)
+            ->toProfilePost($profilePost)
+            ->create();
+        $doe->markAsIgnored($john);
+        $this->signIn($john);
+
+        $response = $this->get(route('profiles.show', $john));
+
+        $comments = collect($response['profilePosts']->items()[0]['paginatedComments']->items());
+        $this->assertCount(1, $comments);
+        $this->assertFalse($comments->search(function ($comment) use ($commentByDoe) {
+            return $comment->is($commentByDoe);
+        }));
+    }
+
+    /** @test */
+    public function it_returns_profile_posts_created_by_users_that_are_not_ignored()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+        $bob = create(User::class);
+        $profilePostByDoe = ProfilePostFactory::by($doe)
+            ->toProfile($john)
+            ->create();
+        $profilePostByBob = ProfilePostFactory::by($bob)
+            ->toProfile($john)
+            ->create();
+        $doe->markAsIgnored($john);
+        $this->signIn($john);
+
+        $response = $this->get(route('profiles.show', $john));
+
+        $profilePosts = collect($response['profilePosts']->items());
+        $this->assertCount(1, $profilePosts);
+        $this->assertFalse($profilePosts->search(function ($profilePost) use ($profilePostByDoe) {
+            return $profilePost->id == $profilePostByDoe->id;
+        }));
     }
 
 }

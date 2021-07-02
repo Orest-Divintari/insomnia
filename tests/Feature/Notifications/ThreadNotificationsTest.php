@@ -6,14 +6,16 @@ use App\Notifications\ThreadHasNewReply;
 use App\Reply;
 use App\Thread;
 use App\User;
+use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ThreadNotificationsTest extends TestCase
 {
 
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     protected $thread;
     protected $user;
@@ -147,5 +149,20 @@ class ThreadNotificationsTest extends TestCase
         );
 
         Notification::assertNotSentTo($subscriber, ThreadHasNewReply::class);
+    }
+
+    /** @test */
+    public function users_will_not_receive_a_notification_when_an_ignored_user_replies_to_a_thread()
+    {
+        Notification::fake();
+        $john = $this->signIn();
+        $thread = ThreadFactory::by($john)->create();
+        $doe = create(User::class);
+        $this->signIn($doe);
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.replies.store', $thread), ['body' => $this->faker()->sentence()]);
+
+        Notification::assertNotSentTo($john, ThreadHasNewReply::class);
     }
 }

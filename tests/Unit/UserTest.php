@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Activity;
 use App\Conversation;
+use App\Ignoration;
 use App\Thread;
 use App\User;
 use App\User\Details;
@@ -278,6 +279,29 @@ class UserTest extends TestCase
         $user->delete();
 
         $this->assertEquals(0, Thread::count());
+    }
+
+    /** @test */
+    public function when_a_user_is_deleted_the_associated_ignorings_are_deleted()
+    {
+        $user = create(User::class);
+        $thread = create(User::class);
+        $thread->markAsIgnored($user);
+
+        $user->delete();
+
+        $this->assertEquals(0, Ignoration::count());
+    }
+
+    /** @test */
+    public function it_has_ignorings()
+    {
+        $thread = create(User::class);
+        $john = $this->signIn();
+
+        $thread->markAsIgnored($john);
+
+        $this->assertCount(1, $john->ignorings);
     }
 
     /** @test */
@@ -585,6 +609,15 @@ class UserTest extends TestCase
         $doe->markAsIgnored($john);
 
         $this->assertTrue($doe->isIgnored($john));
+    }
+
+    /** @test */
+    public function it_knows_if_is_not_ignored()
+    {
+        $john = $this->signIn();
+        $doe = create(User::class);
+
+        $this->assertTrue($doe->isNotIgnored($john));
     }
 
     /** @test */

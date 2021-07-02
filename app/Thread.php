@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
+use App\Queries\CreatorIgnoredByVisitorColumn;
 use App\Search\Threads;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
@@ -88,6 +89,7 @@ class Thread extends Model
         'pinned' => 'boolean',
         'has_been_updated' => 'boolean',
         'ignored_by_visitor' => 'boolean',
+        'creator_ignored_by_visitor' => 'boolean',
         'replies_count' => 'int',
     ];
 
@@ -296,9 +298,12 @@ class Thread extends Model
      * @param Builder $query
      * @return Builder
      */
-    public function scopeWithSearchInfo($query)
+    public function scopeWithSearchInfo($query, $authUser)
     {
-        return $query->with(['poster', 'category', 'tags']);
+        return $query
+            ->withCreatorIgnoredByVisitor($authUser)
+            ->withIgnoredByVisitor($authUser)
+            ->with(['poster', 'category', 'tags']);
     }
 
     /**
@@ -490,5 +495,20 @@ class Thread extends Model
     public function scopeExcludeIgnored($query, $authUser, $excludeIgnoredFilter)
     {
         return $excludeIgnoredFilter->apply($query, $authUser);
+    }
+
+    /**
+     * Add column which determines whether the creator of the thread
+     * is ignored by the authenticated user
+     *
+     * @param Builder $query
+     * @param User $authUser
+     * @return Builder
+     */
+    public function scopeWithCreatorIgnoredByVisitor($query, $authUser)
+    {
+        $column = app(CreatorIgnoredByVisitorColumn::class);
+
+        return $column->addSelect($query, $authUser);
     }
 }

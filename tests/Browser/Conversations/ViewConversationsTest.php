@@ -6,13 +6,14 @@ use App\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
 class ViewConversationsTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, WithFaker;
 
     public function setUp(): void
     {
@@ -462,6 +463,88 @@ class ViewConversationsTest extends DuskTestCase
                 ->loginAs($conversationStarter)
                 ->visit(route('conversations.show', $conversation))
                 ->assertVue('isLiked', true, '@like-button-component');
+        });
+    }
+
+    /** @test */
+    public function the_authenticated_user_should_not_see_the_messages_that_are_sent_by_ignored_users()
+    {
+        $conversationStarter = create(User::class);
+        $john = create(User::class);
+        $doe = create(User::class);
+        $message = ['body' => 'some message'];
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$john->name, $doe->name])
+            ->withMessage($message['body'])
+            ->create();
+        $ignoredMessage = $conversation->addMessage(['body' => $this->faker()->sentence()], $john);
+        $john->markAsIgnored($conversationStarter);
+
+        $this->browse(function (Browser $browser) use (
+            $conversationStarter,
+            $john,
+            $ignoredMessage,
+            $conversation
+        ) {
+            $response = $browser
+                ->loginAs($conversationStarter)
+                ->visit(route('conversations.show', $conversation));
+
+            $response
+                ->assertVisible('@show-ignored-content-button')
+                ->assertDontSee($ignoredMessage->body);
+        });
+
+    }
+
+    /** @test */
+    public function the_authenticated_user_can_reveal_the_messages_that_are_sent_by_ignored_users()
+    {
+        $conversationStarter = create(User::class);
+        $john = create(User::class);
+        $doe = create(User::class);
+        $message = ['body' => 'some message'];
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$john->name, $doe->name])
+            ->withMessage($message['body'])
+            ->create();
+        $ignoredMessage = $conversation->addMessage(['body' => $this->faker()->sentence()], $john);
+        $john->markAsIgnored($conversationStarter);
+
+        $this->browse(function (Browser $browser) use (
+            $conversationStarter,
+            $john,
+            $ignoredMessage,
+            $conversation
+        ) {
+            $response = $browser
+                ->loginAs($conversationStarter)
+                ->visit(route('conversations.show', $conversation));
+
+            $response
+                ->assertVisible('@show-ignored-content-button')
+                ->assertDontSee($ignoredMessage->body)
+                ->click('@show-ignored-content-button')
+                ->assertSee($ignoredMessage->body);;
+        });
+    }
+
+    /** @test */
+    public function the_authenticated_user_should_not_see_the_conversations_that_are_started_by_ignored_users()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+        $ignoredConversation = ConversationFactory::by($john)
+            ->withParticipants([$doe->name])
+            ->withMessage('some message')
+            ->create();
+        $john->markAsIgnored($doe);
+
+        $this->browse(function (Browser $browser) use ($ignoredConversation, $doe) {
+            $response = $browser->loginAs($doe)
+                ->visit(route('conversations.index'));
+
+            $response->assertDontSee($ignoredConversation->title);
         });
     }
 }

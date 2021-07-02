@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Helpers\Facades\ResourcePath;
+use App\Queries\CreatorIgnoredByVisitorColumn;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
@@ -61,7 +62,7 @@ class Reply extends Model
     protected $casts = [
         'position' => 'int',
         'is_liked' => 'boolean',
-        'ignored_by_visitor' => 'boolean',
+        'creator_ignored_by_visitor' => 'boolean',
     ];
 
     /**
@@ -213,14 +214,16 @@ class Reply extends Model
      * @param Builer $query
      * @return Builer
      */
-    public function scopeWithSearchInfo($query)
+    public function scopeWithSearchInfo($query, $authUser)
     {
-        return $query->with(['repliable' => function (MorphTo $morphTo) {
-            $morphTo->morphWith([
-                Thread::class => ['poster', 'category'],
-                ProfilePost::class => ['profileOwner'],
-            ]);
-        }]);
+        return $query
+            ->withCreatorIgnoredByVisitor($authUser)
+            ->with(['repliable' => function (MorphTo $morphTo) {
+                $morphTo->morphWith([
+                    Thread::class => ['poster', 'category'],
+                    ProfilePost::class => ['profileOwner'],
+                ]);
+            }]);
     }
 
     /**
@@ -270,19 +273,11 @@ class Reply extends Model
      * @param Bool $authUser
      * @return Builder
      */
-    public function scopeWithIgnoredByVisitor($query, $authUser)
+    public function scopeWithCreatorIgnoredByVisitor($query, $authUser)
     {
-        return $query->when(isset($authUser), function ($query) use ($authUser) {
-            return $query->select()->selectRaw('EXISTS
-            (
-                SELECT *
-                FROM   ignorations
-                WHERE  ignorations.user_id=?
-                AND    ignorations.ignorable_id=' . $this->getTable() . '.user_id' . '
-                AND    ignorations.ignorable_type=?
-            ) AS ignored_by_visitor', [$authUser->id, User::class]
-            );
-        });
+        $column = app(CreatorIgnoredByVisitorColumn::class);
+
+        return $column->addSelect($query, $authUser);
     }
 
     /**

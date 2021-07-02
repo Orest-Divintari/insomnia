@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\Activity\UserViewedPage;
-use App\GroupCategory;
+use App\Filters\ExcludeIgnoredFilter;
+use App\ViewModels\ForumViewModel;
 
 class ForumController extends Controller
 {
@@ -12,12 +13,14 @@ class ForumController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(ForumViewModel $viewModel, ExcludeIgnoredFilter $excludeIgnored)
     {
         event(new UserViewedPage(UserViewedPage::FORUM));
 
-        $groups = GroupCategory::withCategories()->get();
-
-        return view('forum.index', compact('groups'));
+        return view('forum.index')->with([
+            'groups' => $viewModel->groups(),
+            'latestPosts' => $viewModel->latestPosts($excludeIgnored),
+            'statistics' => $viewModel->statistics(),
+        ]);
     }
 }

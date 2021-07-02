@@ -51,13 +51,19 @@
                 </x-breadcrumb.container>
 
                 <div class="mt-7 flex justify-end">
+
+                    @auth
                     <subscribe-button thread-slug="{{ $thread->slug }}"
                         subscription-status="{{ json_encode($thread->subscribedByAuthUser)}}">
                     </subscribe-button>
+                    @endauth
 
-                    <ignore-thread-button :thread="{{ $thread }}"
+                    @if(auth()->user()->can('ignore', $thread) || auth()->user()->can('unignore', $thread))
+                    <ignore-thread-button class="mr-1" :thread="{{ $thread }}"
                         :ignored="{{ json_encode($thread->ignored_by_visitor) }}">
                     </ignore-thread-button>
+                    @endif
+
                     @if(auth()->check() && Gate::allows('lock', $thread))
                     <lock-thread-button :thread="{{ $thread }}"></lock-thread-button>
                     @endif

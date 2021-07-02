@@ -25,7 +25,7 @@ class SearchServiceProvider extends ServiceProvider
 
             $filtersFactory = app(ModelFilterFactory::class);
 
-            $appendHasIgnoredContentAttribute = app(AppendHasIgnoredContentAttributeAction::class);
+            $appendHasIgnoredContentAttribute = new AppendHasIgnoredContentAttributeAction;
 
             return new Search($searchIndexFactory, $filtersFactory, $appendHasIgnoredContentAttribute);
         });

@@ -28,6 +28,70 @@ class LikeNotificationsTest extends TestCase
     }
 
     /** @test */
+    public function users_will_not_receive_a_notification_when_their_thread_replies_are_liked_by_ignored_users()
+    {
+        $this->withoutExceptionHandling();
+        Notification::fake();
+        $john = $this->signIn();
+        $reply = ReplyFactory::by($john)->create();
+        $doe = create(User::class);
+        $this->signIn($doe);
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.reply-likes.store', $reply));
+
+        Notification::assertNotSentTo($john, ReplyHasNewLike::class);
+    }
+
+    /** @test */
+    public function users_will_not_receive_a_notification_when_their_profile_post_comments_are_liked_by_ignored_users()
+    {
+        Notification::fake();
+        $john = $this->signIn();
+        $comment = CommentFactory::by($john)->create();
+        $doe = create(User::class);
+        $this->signIn($doe);
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.reply-likes.store', $comment));
+
+        Notification::assertNotSentTo($john, CommentHasNewLike::class);
+    }
+
+    /** @test */
+    public function users_will_not_receive_a_notification_when_their_conversation_messages_are_liked_by_ignored_users()
+    {
+        Notification::fake();
+        $john = $this->signIn();
+        $doe = create(User::class);
+        $conversation = ConversationFactory::by($john)
+            ->withParticipants([$doe->name])
+            ->create();
+        $message = $conversation->messages()->first();
+        $this->signIn($doe);
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.reply-likes.store', $message));
+
+        Notification::assertNotSentTo($john, MessageHasNewLike::class);
+    }
+
+    /** @test */
+    public function users_will_not_receive_notifications_when_their_profile_post_is_liked_by_an_ignored_user()
+    {
+        Notification::fake();
+        $john = create(User::class);
+        $bob = create(User::class);
+        $profilePost = ProfilePostFactory::by($john)->toProfile($bob)->create();
+        $doe = $this->signIn();
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.profile-post-likes.store', $profilePost));
+
+        Notification::assertNotSentTo($john, ProfilePostHasNewLike::class);
+    }
+
+    /** @test */
     public function users_may_receive_database_notifications_when_another_user_likes_their_thread_replies()
     {
         $user = create(User::class);

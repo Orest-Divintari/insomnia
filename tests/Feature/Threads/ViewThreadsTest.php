@@ -21,9 +21,74 @@ class ViewThreadsTest extends TestCase
     public function a_user_can_view_a_thread()
     {
         $thread = ThreadFactory::create();
+
         $response = $this->get(route('threads.show', $thread));
 
         $response->assertSee($thread->title);
+    }
+
+    /** @test */
+    public function it_returns_all_thread_replies_including_thread_replies_created_by_ignored_users()
+    {
+        $john = $this->signIn();
+        $doe = create(User::class);
+        $bob = create(User::class);
+        $thread = ThreadFactory::by($john)->create();
+        $replyByDoe = ReplyFactory::by($doe)->toThread($thread)->create();
+        $doe->markAsIgnored($john);
+        ReplyFactory::by($bob)->toThread($thread)->create();
+
+        $response = $this->get(route('threads.show', $thread));
+
+        $replies = collect($response['replies']['data']);
+        $ignoredReply = $replies->firstWhere('id', $replyByDoe->id);
+        $this->assertTrue($ignoredReply['creator_ignored_by_visitor']);
+        $unignoredReplies = $replies->filter(function ($reply) use ($ignoredReply) {
+            return $reply['id'] != $ignoredReply['id'];
+        });
+        $this->assertTrue(
+            $unignoredReplies->every(function ($reply) {
+                return !$reply['creator_ignored_by_visitor'];
+            })
+        );
+    }
+
+    /** @test */
+    public function it_returns_threads_that_are_created_by_users_that_are_not_ignored()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+        $bob = create(User::class);
+        $threadByDoe = ThreadFactory::by($doe)->create();
+        $threadByBob = ThreadFactory::by($bob)->create();
+        $doe->markAsIgnored($john);
+        $this->signIn($john);
+
+        $response = $this->get(route('threads.index'));
+
+        $threads = collect($response['normalThreads']->items());
+        $this->assertCount(1, $threads);
+        $this->assertFalse($threads->search(function ($thread) use ($threadByDoe) {
+            return $thread->id == $threadByDoe->id;
+        }));
+    }
+
+    /** @test */
+    public function it_returns_the_threads_that_are_not_marked_as_ignored()
+    {
+        $john = create(User::class);
+        $ignoredThread = create(Thread::class);
+        $unignoredThread = create(Thread::class);
+        $ignoredThread->markAsIgnored($john);
+        $this->signIn($john);
+
+        $response = $this->get(route('threads.index'));
+
+        $threads = collect($response['normalThreads']->items());
+        $this->assertCount(1, $threads);
+        $this->assertFalse($threads->search(function ($thread) use ($ignoredThread) {
+            return $thread->id == $ignoredThread->id;
+        }));
     }
 
     /** @test */

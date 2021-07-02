@@ -5,6 +5,7 @@ namespace Tests\Feature\Notifications;
 use App\Conversation;
 use App\Notifications\ConversationHasNewMessage;
 use App\User;
+use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
@@ -157,6 +158,24 @@ class ConversationNotificationsTest extends TestCase
             $conversationStarter,
             ConversationHasNewMessage::class
         );
+    }
+
+    /** @test */
+    public function users_will_not_receive_email_notifications_when_an_ignored_user_sends_a_message()
+    {
+        Notification::fake();
+        $john = $this->signIn();
+        $doe = create(User::class);
+        $conversation = ConversationFactory::by($john)
+            ->withParticipants([$doe->name])
+            ->create();
+        $message = $conversation->messages()->first();
+        $this->signIn($doe);
+        $doe->markAsIgnored($john);
+
+        $this->post(route('ajax.messages.store', $conversation), ['body' => $this->faker()->sentence()]);
+
+        Notification::assertNotSentTo($john, NewMessageWasAddedToConversation::class);
     }
 
 }

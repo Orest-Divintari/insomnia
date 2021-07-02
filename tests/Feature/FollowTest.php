@@ -241,4 +241,21 @@ class FollowTest extends TestCase
         $this->assertEquals(1, $response[0]['profile_posts_count']);
     }
 
+    /** @test */
+    public function it_returns_the_followers_except_the_ignored_users()
+    {
+        $john = create(User::class);
+        $doe = $this->signIn();
+        $doe->follow($john);
+        $bob = $this->signIn();
+        $bob->follow($john);
+        $this->signIn($john);
+        $doe->markAsIgnored($john);
+
+        $response = $this->get(route('ajax.followed-by.index', $john));
+
+        $followers = $response->json()['data'];
+        $this->assertCount(1, $followers);
+    }
+
 }

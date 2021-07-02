@@ -5,15 +5,15 @@
     <div class="text-sm ">
         <div class="flex justify-between">
             <p class="text-gray-lightest">Threads: </p>
-            <p>{{ $totalThreads }}</p>
+            <p>{{ $statistics['threads_count'] }}</p>
         </div>
         <div class="flex justify-between">
             <p class="text-gray-lightest">Messages: </p>
-            <p>{{ $totalMessages }}</p>
+            <p>{{ $statistics['replies_count'] }}</p>
         </div>
         <div class="flex justify-between">
             <p class="text-gray-lightest">Members: </p>
-            <p>{{ $totalMembers }}</p>
+            <p>{{ $statistics['users_count'] }}</p>
         </div>
     </div>
 </div>

@@ -27,10 +27,6 @@ trait Ignorable
     {
         $user = $user ?: auth()->user();
 
-        if ($this->isIgnored($user)) {
-            return;
-        }
-
         return $this->ignorations()->create(['user_id' => $user->id]);
     }
 
@@ -58,6 +54,17 @@ trait Ignorable
     public function isIgnored(User $user)
     {
         return $this->ignorations()->where('user_id', $user->id)->exists();
+    }
+
+    /**
+     * Determine whether the user is not ignored by the given user
+     *
+     * @param User $user
+     * @return boolean
+     */
+    public function isNotIgnored(User $user)
+    {
+        return !$this->isIgnored($user);
     }
 
     /**

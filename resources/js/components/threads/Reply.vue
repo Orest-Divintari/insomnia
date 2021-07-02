@@ -51,7 +51,7 @@
         </div>
         <div class="p-5/2 pl-0 h-full" :class="{ 'mt-4': !isThreadReply }">
           <div
-            v-if="showIgnoredContent && item.ignored_by_visitor"
+            v-if="showIgnoredContent && item.creator_ignored_by_visitor"
             class="pr-5/2 mb-3"
           >
             <p
@@ -63,7 +63,6 @@
                 pl-0
                 text-smaller text-gray-shuttle
               "
-              v-if="item.ignored_by_visitor"
             >
               <i class="fas fa-microphone-alt-slash ml-3 text-red-700"></i> You
               are ignoring content by this member.
@@ -159,7 +158,7 @@ export default {
   mixins: [likeable, authorizable],
   data() {
     return {
-      showContent: !this.item.ignored_by_visitor,
+      showContent: !this.item.creator_ignored_by_visitor,
       editing: false,
       body: this.item.body,
     };

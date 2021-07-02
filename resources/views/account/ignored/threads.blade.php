@@ -3,7 +3,7 @@
         @forelse($ignoredThreads as $ignoredThread)
         <div class="flex items-center pr-2 {{ $loop->last ? 'border-b-0' : 'border-b' }}">
             <thread-list-item class="flex-1" :thread="{{ $ignoredThread }}"></thread-list-item>
-            <ignore-thread-button :thread="{{ $thread }}"
+            <ignore-thread-button :thread="{{ $ignoredThread }}"
                 :ignored="{{ json_encode($ignoredThread->ignored_by_visitor) }}">
         </div>
 

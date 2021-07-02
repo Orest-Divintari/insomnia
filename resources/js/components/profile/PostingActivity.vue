@@ -7,19 +7,11 @@
         v-for="(posting, index) in postings"
         :key="posting.id"
       >
-        <div class="flex">
-          <profile-popover
-            :user="profileOwner"
-            trigger="avatar"
-            triggerClasses="avatar-lg"
-          ></profile-popover>
-          <component
-            @getPoster="setPoster"
-            :posting="posting.subject"
-            :is="posting.type"
-            class="pl-4"
-          ></component>
-        </div>
+        <component
+          @getPoster="setPoster"
+          :posting="posting.subject"
+          :is="posting.type"
+        ></component>
       </div>
       <fetch-more-button
         v-if="hasMore"
@@ -29,7 +21,13 @@
     </div>
     <p
       v-if="!hasPostings && fetchedData"
-      class="border border-gray-lighter p-4 rounded mb-2 text-black-semi text-sm"
+      class="
+        border border-gray-lighter
+        p-4
+        rounded
+        mb-2
+        text-black-semi text-sm
+      "
     >
       {{ profileOwner.name }} has not posted any content recently.
     </p>

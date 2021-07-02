@@ -45,8 +45,11 @@ class Search
      * @param SearchIndexFactory $searchIndexFactory
      * @param ModelFilterFactory $filtersFactory
      */
-    public function __construct(SearchIndexFactory $searchIndexFactory, ModelFilterFactory $filtersFactory, AppendHasIgnoredContentAttributeAction $appendHasIgnoredContentAttributeAction)
-    {
+    public function __construct(
+        SearchIndexFactory $searchIndexFactory,
+        ModelFilterFactory $filtersFactory,
+        AppendHasIgnoredContentAttributeAction $appendHasIgnoredContentAttributeAction
+    ) {
         $this->indexFactory = $searchIndexFactory;
         $this->filtersFactory = $filtersFactory;
         $this->appendHasIgnoredContentAttributeAction = $appendHasIgnoredContentAttributeAction;
@@ -115,7 +118,9 @@ class Search
     {
         $results = $results->paginate(static::RESULTS_PER_PAGE);
 
-        if (empty($results->items())) {
+        $results = $this->appendHasIgnoredContentAttributeAction->execute($results);
+
+        if (empty($results['data'])) {
             return $this->noResults();
         }
 

@@ -16,6 +16,8 @@ class ThreadIgnorationController extends Controller
      */
     public function store(Thread $thread)
     {
+        $this->authorize('ignore', $thread);
+
         $thread->markAsIgnored();
 
         return response('The thread has been marked as ignored successfully', 200);
@@ -24,12 +26,12 @@ class ThreadIgnorationController extends Controller
     /**
      * Mark the thread as unignored
      *
-     * @param string $threadSlug
+     * @param Thread $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy($threadSlug)
+    public function destroy(Thread $thread)
     {
-        $thread = Thread::where('slug', $threadSlug)->first();
+        $this->authorize('unignore', $thread);
 
         $thread->markAsUnignored();
 

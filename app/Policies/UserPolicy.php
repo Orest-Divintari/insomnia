@@ -59,4 +59,29 @@ class UserPolicy
     {
         return $user->is($authUser) || $user->allows('show_identities');
     }
+
+    /**
+     * Determine whether can ignore the user
+     *
+     * @param User $authUser
+     * @param User $user
+     * @return mixed
+     */
+    public function ignore(User $authUser, User $user)
+    {
+        return $user->isNotIgnored($authUser) && $authUser->isNot($user);
+    }
+
+    /**
+     * Determine whether can unignore the user
+     *
+     * @param User $authUser
+     * @param User $user
+     * @return mixed
+     */
+    public function unignore(User $authUser, User $user)
+    {
+        return $user->isIgnored($authUser);
+    }
+
 }

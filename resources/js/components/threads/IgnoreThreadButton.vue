@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button @click="toggleIgnore" class="btn-white-blue flex items-center">
+    <button
+      dusk="ignore-thread-button"
+      @click="toggleIgnore"
+      class="btn-white-blue flex items-center"
+    >
       <p v-if="isIgnored">Unignore</p>
       <p v-else>Ignore</p>
     </button>

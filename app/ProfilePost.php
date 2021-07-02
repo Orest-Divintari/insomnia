@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Helpers\Facades\ResourcePath;
+use App\Queries\CreatorIgnoredByVisitorColumn;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
@@ -48,6 +49,15 @@ class ProfilePost extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'creator_ignored_by_visitor' => 'boolean',
+    ];
 
     /**
      * Comments of the profile post that are not created by ignored users
@@ -145,9 +155,11 @@ class ProfilePost extends Model
      * @param Builder $query
      * @return Builder
      */
-    public function scopeWithSearchInfo($query)
+    public function scopeWithSearchInfo($query, $authUser)
     {
-        return $query->with(['poster', 'profileOwner']);
+        return $query
+            ->withCreatorIgnoredByVisitor($authUser)
+            ->with(['poster', 'profileOwner']);
     }
 
     /**
@@ -198,5 +210,20 @@ class ProfilePost extends Model
     public function scopeExcludeIgnored($query, $authUser, $excludeIgnoredFilter)
     {
         return $excludeIgnoredFilter->apply($query, $authUser);
+    }
+
+    /**
+     * Add column which determines whether the creator of the profile post
+     * is ignored by the authenticated user
+     *
+     * @param Builder $query
+     * @param User $authUser
+     * @return Builder
+     */
+    public function scopeWithCreatorIgnoredByVisitor($query, $authUser)
+    {
+        $column = app(CreatorIgnoredByVisitorColumn::class);
+
+        return $column->addSelect($query, $authUser);
     }
 }

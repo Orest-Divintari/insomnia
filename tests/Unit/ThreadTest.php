@@ -436,6 +436,15 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
+    public function it_knows_if_it_is_unignored()
+    {
+        $thread = create(Thread::class);
+        $john = $this->signIn();
+
+        $this->assertTrue($thread->isNotIgnored($john));
+    }
+
+    /** @test */
     public function it_includes_threads_that_are_directly_ignored()
     {
         $john = create(User::class);
@@ -471,5 +480,20 @@ class ThreadTest extends TestCase
             ->first();
 
         $this->assertTrue($thread->ignored_by_visitor);
+    }
+
+    /** @test */
+    public function it_determines_whether_the_creator_of_the_thread_is_ignored_by_the_authenticated_user_using_a_query_scope()
+    {
+        $doe = create(User::class);
+        $thread = ThreadFactory::by($doe)->create();
+        $john = $this->signIn();
+        $doe->markAsIgnored($john);
+
+        $thread = Thread::where('id', $thread->id)
+            ->withCreatorIgnoredByVisitor($john)
+            ->first();
+
+        $this->assertTrue($thread->creator_ignored_by_visitor);
     }
 }
