@@ -19,6 +19,8 @@ class ThreadSubscriptionController extends Controller
      */
     public function update(Thread $thread)
     {
+        $this->authorize('subscribe', $thread);
+
         request()->validate([
             'email_notifications' => 'required|boolean',
         ]);
@@ -53,7 +55,7 @@ class ThreadSubscriptionController extends Controller
     {
         if (request()->boolean('email_notifications')) {
             $thread->subscribe($userId);
-
+            return;
         }
         $thread->subscribeWithoutEmailNotifications($userId);
     }

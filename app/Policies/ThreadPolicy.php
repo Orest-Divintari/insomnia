@@ -69,4 +69,16 @@ class ThreadPolicy
     {
         return $user && $thread->isIgnored($user);
     }
+
+    /**
+     * Determine whether the authenticated user can subscribe to the thread
+     *
+     * @param User $user
+     * @param Thread $thread
+     * @return mixed
+     */
+    public function subscribe(User $user, Thread $thread)
+    {
+        return !$thread->hasSubscriber($user);
+    }
 }
