@@ -25,13 +25,14 @@ class ViewLatestActivityTest extends DuskTestCase
     public function it_shows_a_message_when_profile_owner_does_not_have_any_acivities()
     {
         $user = create(User::class);
-
-        $this->browse(function (Browser $browser) use ($user) {
+        $expectedMessage = "The news feed is currently empty.";
+        $this->browse(function (Browser $browser) use ($user, $expectedMessage) {
 
             $response = $browser->loginAs($user)
                 ->visit("/profiles/{$user->name}")
                 ->clickLink('Latest Activity')
-                ->assertSee("The news feed is currently empty.");
+                ->waitForText($expectedMessage)
+                ->assertSee($expectedMessage);
         });
     }
 

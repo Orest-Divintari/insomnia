@@ -25,13 +25,14 @@ class ViewPostingsTest extends DuskTestCase
     public function it_shows_a_message_when_profile_owner_does_not_have_any_posting_acivities()
     {
         $user = create(User::class);
-
-        $this->browse(function (Browser $browser) use ($user) {
+        $expectedMessage = "{$user->name} has not posted any content recently.";
+        $this->browse(function (Browser $browser) use ($user, $expectedMessage) {
 
             $response = $browser->loginAs($user)
                 ->visit("/profiles/{$user->name}")
                 ->clickLink('Postings')
-                ->assertSee("{$user->name} has not posted any content recently.");
+                ->waitForText($expectedMessage)
+                ->assertSee($expectedMessage);
         });
     }
 

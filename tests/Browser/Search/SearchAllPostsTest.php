@@ -54,8 +54,7 @@ class SearchAllPostsTest extends DuskTestCase
                 ->pause(2500)
                 ->visit(route('search.index', ['q' => $searchTerm]));
 
-            $response->assertDontSee($ignoredComment->body)
-                ->assertVisible('@show-ignored-content-button');
+            $response->assertDontSee($ignoredComment->body);
         });
     }
     /** @test */

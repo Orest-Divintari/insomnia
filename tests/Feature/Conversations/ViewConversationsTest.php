@@ -108,7 +108,7 @@ class ViewConversationsTest extends TestCase
 
         $response = $this->get(route('conversations.show', $this->conversation));
 
-        $this->assertEquals($message->id, $response['messages'][0]['id']);
+        $this->assertEquals($message->id, $response['messages']['data']['0']['id']);
     }
 
     /** @test */
@@ -119,7 +119,7 @@ class ViewConversationsTest extends TestCase
 
         $response = $this->get(route('conversations.show', $this->conversation));
 
-        $this->assertEquals(1, $response['messages'][0]['likes_count']);
+        $this->assertEquals(1, $response['messages']['data'][0]['likes_count']);
     }
 
     /** @test */
@@ -130,7 +130,7 @@ class ViewConversationsTest extends TestCase
 
         $response = $this->get(route('conversations.show', $this->conversation));
 
-        $this->assertTrue($response['messages'][0]['is_liked']);
+        $this->assertTrue($response['messages']['data'][0]['is_liked']);
     }
 
     /** @test */
@@ -140,7 +140,7 @@ class ViewConversationsTest extends TestCase
 
         $response = $this->get(route('conversations.show', $this->conversation));
 
-        $this->assertFalse($response['messages'][0]['is_liked']);
+        $this->assertFalse($response['messages']['data'][0]['is_liked']);
     }
 
     /** @test */
@@ -432,16 +432,17 @@ class ViewConversationsTest extends TestCase
 
         $response = $this->get(route('conversations.show', $conversation));
 
-        $messages = collect($response['messages']->items());
+        $messages = collect($response['messages']['data']);
         $this->assertCount(3, $messages);
         $ignoredMessage = $messages->firstWhere('id', $messageByDoe->id);
-        $this->assertTrue($ignoredMessage['ignored_by_visitor']);
+
+        $this->assertTrue($ignoredMessage['creator_ignored_by_visitor']);
 
         $unignoredMessages = $messages->filter(function ($message) use ($ignoredMessage) {
-            return $message->isNot($ignoredMessage);
+            return $message['id'] == $ignoredMessage['id'];
         });
         $unignoredMessages->every(function ($message) {
-            return !$message['ignored_by_visitor'];
+            return !$message['creator_ignored_by_visitor'];
         });
     }
 
