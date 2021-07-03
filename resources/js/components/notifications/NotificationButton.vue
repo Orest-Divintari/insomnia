@@ -32,14 +32,16 @@
         </div>
         <div v-else class="notification-item">...</div>
         <div class="dropdown-footer-item flex items-center shadow-2xl">
-          <a href="/account/notifications" class="blue-link">Show all</a>
-          <p class="dot"></p>
-          <read-all-notifications-button
-            @markedAllRead="onMarkedAllRead"
-            button-classes="blue-link active:text-blue-mid-light focus:outline-none"
-          >
-          </read-all-notifications-button>
-          <p class="dot"></p>
+          <div v-if="notificationsExist">
+            <a href="/account/notifications" class="blue-link">Show all</a>
+            <p class="dot"></p>
+            <read-all-notifications-button
+              @markedAllRead="onMarkedAllRead"
+              button-classes="blue-link active:text-blue-mid-light focus:outline-none"
+            >
+            </read-all-notifications-button>
+            <p class="dot"></p>
+          </div>
           <a href="/account/preferences" class="blue-link">Preferences</a>
         </div>
       </template>
