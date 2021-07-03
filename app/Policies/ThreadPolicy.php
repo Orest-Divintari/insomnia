@@ -65,8 +65,8 @@ class ThreadPolicy
      * @param Thread $thread
      * @return mixed
      */
-    public function unignore(User $user, Thread $thread)
+    public function unignore(?User $user, Thread $thread)
     {
-        return $thread->isIgnored($user);
+        return $user && $thread->isIgnored($user);
     }
 }
