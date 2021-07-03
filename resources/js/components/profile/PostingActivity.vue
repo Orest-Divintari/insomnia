@@ -85,6 +85,7 @@ export default {
     },
     refresh(paginatedCollection) {
       this.dataset = paginatedCollection;
+      this.fetchedData = true;
       this.postings = this.postings.concat(paginatedCollection.data);
     },
   },
