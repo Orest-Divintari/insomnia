@@ -6,6 +6,7 @@
       :disabled="readOnly"
       v-model="content"
       :options="editorOptions"
+      name="mokocomak"
       required
     ></quill-editor>
   </div>

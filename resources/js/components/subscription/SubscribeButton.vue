@@ -1,14 +1,17 @@
 <template>
-  <div>
+  <div dusk="subscribe-thread-button">
     <button @click="toggleModals" class="btn-white-blue mr-1">
-      {{ title }}
+      <span v-if="subscribed">Unwatch</span>
+      <span v-else>Watch</span>
     </button>
 
     <watch-modal
+      @closed="onCloseModal"
       @watch="subscribe"
       :showWatchModal="showWatchModal"
     ></watch-modal>
     <unwatch-modal
+      @closed="onCloseModal"
       @unwatch="unsubscribe"
       :showUnwatchModal="showUnwatchModal"
     ></unwatch-modal>
@@ -25,33 +28,33 @@ export default {
     UnwatchModal,
   },
   props: {
-    subscriptionStatus: {
-      default: false,
-    },
-    threadSlug: {
-      type: String,
-      default: "",
+    thread: {
+      type: Object,
+      required: true,
     },
   },
   data() {
     return {
-      isSubscribed: this.subscriptionStatus == "true" ? true : false,
-      thread: this.threadSlug,
+      subscribed: this.thread.subscribed,
       showWatchModal: false,
       showUnwatchModal: false,
     };
   },
   computed: {
     title() {
-      return this.isSubscribed ? "Unwatch" : "Watch";
+      return this.subscribed ? "Unwatch" : "Watch";
     },
     path() {
-      return "/ajax/threads/" + this.thread + "/subscriptions";
+      return "/ajax/threads/" + this.thread.slug + "/subscriptions";
     },
   },
   methods: {
+    onCloseModal() {
+      this.showWatchModal = false;
+      this.showUnwatchModal = false;
+    },
     toggleModals() {
-      if (this.isSubscribed) {
+      if (this.subscribed) {
         this.showUnwatchModal = true;
         this.showWatchModal = false;
         return;
@@ -63,16 +66,21 @@ export default {
       axios
         .put(this.path, mailNotifications)
         .then((response) => {
-          this.isSubscribed = true;
-          console.log(response);
+          this.onSubscribe();
         })
         .catch((error) => console.log(error));
     },
     unsubscribe() {
       axios
         .delete(this.path)
-        .then((response) => (this.isSubscribed = false))
+        .then((response) => this.onUnsubscribe())
         .catch((error) => console.log(error));
+    },
+    onSubscribe() {
+      this.subscribed = true;
+    },
+    onUnsubscribe() {
+      this.subscribed = false;
     },
   },
 };

@@ -25,9 +25,10 @@
                     </div>
                     <p class="dot"></p>
                     <i class="fas fa-long-arrow-alt-down mr-1 "></i>
-                    <a v-if="sortedByLikes" href="{{ route('threads.show', $thread )}}" class="hover:underline">Sort
+                    <a dusk="sort-by-date-link" v-if="sortedByLikes" href="{{ route('threads.show', $thread )}}"
+                        class="hover:underline">Sort
                         (Post Date) </a>
-                    <a v-else href="{{ route('threads.show', $thread ) . '?sort_by_likes=1'}}"
+                    <a dusk="sort-by-likes-link" v-else href="{{ route('threads.show', $thread ) . '?sort_by_likes=1'}}"
                         class="hover:underline">Sort
                         (Likes) </a>
 
@@ -53,12 +54,12 @@
                 <div class="mt-7 flex justify-end">
 
                     @auth
-                    <subscribe-button thread-slug="{{ $thread->slug }}"
-                        subscription-status="{{ json_encode($thread->subscribedByAuthUser)}}">
+                    <subscribe-button :thread="{{ $thread }}">
                     </subscribe-button>
                     @endauth
 
-                    @if(auth()->user()->can('ignore', $thread) || auth()->user()->can('unignore', $thread))
+                    @if(auth()->check() && (auth()->user()->can('ignore', $thread) || auth()->user()->can('unignore',
+                    $thread)))
                     <ignore-thread-button class="mr-1" :thread="{{ $thread }}"
                         :ignored="{{ json_encode($thread->ignored_by_visitor) }}">
                     </ignore-thread-button>
@@ -69,9 +70,9 @@
                     @endif
 
                     @if(auth()->check() && auth()->user()->isAdmin())
-                    <button @click="togglePin" v-if="pinned" class="btn-white-blue mr-1">Unpin</button>
-                    <button @click="togglePin" v-else class="btn-white-blue mr-1">Pin</button>
+                    <pin-thread-button :thread="{{ $thread }}"></pin-thread-button>
                     @endif
+
                     @if(Gate::allows('manage', $thread))
                     <dropdown>
                         <template v-slot:dropdown-trigger>

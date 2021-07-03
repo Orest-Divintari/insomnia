@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-6">
+  <div class="mt-6" dusk="new-reply-input">
     <div class="reply-container">
       <div class="reply-left-col">
         <profile-popover
@@ -17,7 +17,13 @@
             :quoted-data="quotedData"
             :shouldClear="posted"
           ></wysiwyg>
-          <button type="submit" class="mt-4 form-button">Post Reply</button>
+          <button
+            dusk="post-reply-button"
+            type="submit"
+            class="mt-4 form-button"
+          >
+            Post Reply
+          </button>
         </form>
       </div>
     </div>

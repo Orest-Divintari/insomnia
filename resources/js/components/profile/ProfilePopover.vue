@@ -10,6 +10,7 @@
       delay="0"
     >
       <div
+        dusk="profile-popover-trigger"
         @click.stop="showProfile(profileOwner)"
         class="cursor-pointer"
         @mouseover="show"

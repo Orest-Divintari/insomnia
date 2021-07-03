@@ -51,7 +51,7 @@
       "
     >
       <i class="pl-3 fas fa-lock mr-4 text-red-900"></i>
-      <p class="pt-1">Closed for new replies</p>
+      <p class="pt-1">Closed for new replies.</p>
     </div>
   </div>
 </template>

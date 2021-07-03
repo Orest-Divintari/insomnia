@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dusk="profile-component">
     <div class="relative flex border border-gray-lighter rounded">
       <div class="bg-blue-light absolute h-20 p-4 w-full"></div>
       <avatar class="p-4" :user="user"></avatar>

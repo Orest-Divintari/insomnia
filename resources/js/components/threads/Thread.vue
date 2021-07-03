@@ -1,10 +1,12 @@
 <script>
 import SubscribeButton from "../subscription/SubscribeButton";
 import LockThreadButton from "./LockThreadButton";
+import PinThreadButton from "./PinThreadButton";
 export default {
   components: {
     SubscribeButton,
     LockThreadButton,
+    PinThreadButton,
   },
   props: {
     thread: {
@@ -15,9 +17,7 @@ export default {
   data() {
     return {
       title: this.thread.title,
-      isSubscribed: this.thread.subscribed_by_auth_user,
       editing: false,
-      pinned: this.thread.pinned,
     };
   },
   computed: {
@@ -29,9 +29,6 @@ export default {
     },
     sortedByLikes() {
       return window.location.href.includes("?sort_by_likes=1");
-    },
-    pinPath() {
-      return this.path + "/pin";
     },
   },
   methods: {
@@ -49,25 +46,6 @@ export default {
         .patch(this.path, this.data)
         .then((response) => this.hideEditModal())
         .catch((error) => showErrorModal(error.response.data));
-    },
-    togglePin() {
-      if (this.thread.pinned) {
-        this.unpin();
-      } else {
-        this.pin();
-      }
-    },
-    pin() {
-      axios
-        .patch(this.pinPath)
-        .then(() => (this.pinned = true))
-        .catch((error) => console.log(error));
-    },
-    unpin() {
-      axios
-        .delete(this.pinPath)
-        .then(() => (this.pinned = false))
-        .catch((error) => console.log(error));
     },
   },
 };

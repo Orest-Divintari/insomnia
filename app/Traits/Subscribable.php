@@ -60,7 +60,6 @@ trait Subscribable
      */
     public function scopeWithSubscribed($query, $authUser)
     {
-
         return $query->when(isset($authUser), function ($query) use ($authUser) {
             return $query->selectRaw('EXISTS
                         (

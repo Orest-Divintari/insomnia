@@ -86,6 +86,110 @@ class ViewThreadsTest extends DuskTestCase
     }
 
     /** @test */
+    public function guests_should_not_see_the_input_to_post_new_reply()
+    {
+        $thread = create(Thread::class);
+
+        $this->browse(function (Browser $browser) use ($thread) {
+            $response = $browser->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@new-reply-input');
+        });
+    }
+
+    /** @test */
+    public function guests_should_not_see_the_watch_button()
+    {
+        $thread = create(Thread::class);
+
+        $this->browse(function (Browser $browser) use ($thread) {
+            $response = $browser->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@subscribe-thread-button');
+        });
+    }
+
+    /** @test */
+    public function guests_should_not_see_the_like_button()
+    {
+        $thread = create(Thread::class);
+
+        $this->browse(function (Browser $browser) use ($thread) {
+            $response = $browser->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@like-button');
+        });
+    }
+
+    /** @test */
+    public function members_should_see_the_watch_button()
+    {
+        $thread = create(Thread::class);
+        $user = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($thread, $user) {
+            $response = $browser->loginAs($user)
+                ->visit(route('threads.show', $thread));
+
+            $response->assertVisible('@subscribe-thread-button');
+        });
+    }
+
+    /** @test */
+    public function members_should_not_see_the_pin_thread_button()
+    {
+        $thread = create(Thread::class);
+        $user = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($thread, $user) {
+            $response = $browser->loginAs($user)
+                ->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@pin-thread-button');
+        });
+    }
+
+    /** @test */
+    public function guests_should_not_see_the_pin_thread_button()
+    {
+        $thread = create(Thread::class);
+        $user = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($thread, $user) {
+            $response = $browser->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@pin-thread-button');
+        });
+    }
+
+    /** @test */
+    public function members_should_not_see_the_lock_thread_button()
+    {
+        $thread = create(Thread::class);
+        $user = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($thread, $user) {
+            $response = $browser->loginAs($user)
+                ->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@lock-thread-button');
+        });
+    }
+
+    /** @test */
+    public function guests_should_not_see_the_lock_thread_button()
+    {
+        $thread = create(Thread::class);
+        $user = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($thread, $user) {
+            $response = $browser->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@lock-thread-button');
+        });
+    }
+
+    /** @test */
     public function authorised_users_may_see_the_ignore_button()
     {
         $category = create(Category::class);

@@ -53,9 +53,9 @@ class ThreadPolicy
      * @param Thread $thread
      * @return mixed
      */
-    public function ignore(User $user, Thread $thread)
+    public function ignore(?User $user, Thread $thread)
     {
-        return $thread->isNotIgnored($user) && $user->isNot($thread->poster);
+        return $user && $thread->isNotIgnored($user) && $user->isNot($thread->poster);
     }
 
     /**

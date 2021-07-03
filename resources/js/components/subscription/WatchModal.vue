@@ -1,9 +1,18 @@
 <template>
-  <div>
-    <modal name="watch-thread" height="auto">
+  <div dusk="watch-thread-modal">
+    <modal name="watch-thread" height="auto" @closed="onClose">
       <div class="form-container">
         <div
-          class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3"
+          class="
+            flex
+            justify-between
+            items-center
+            bg-blue-light
+            text-lg text-black-semi
+            border-b border-blue-light
+            py-3
+            px-3
+          "
         >
           <p>Watch thread</p>
           <button @click="hideModal" class="fas fa-times"></button>
@@ -29,6 +38,7 @@
                     ref="enable"
                     name="email_notifications"
                     value="true"
+                    dusk="with-email-notifications-radio-button"
                     checked
                   />
                 </div>
@@ -40,6 +50,7 @@
                     type="radio"
                     id="disable_emails"
                     name="email_notifications"
+                    dusk="without-email-notifications-radio-button"
                     value="false"
                   />
                 </div>
@@ -47,7 +58,12 @@
             </div>
           </div>
           <div class="form-button-container justify-center">
-            <button @click="watch" type="submit" class="form-button">
+            <button
+              dusk="modal-watch-button"
+              @click="watch"
+              type="submit"
+              class="form-button"
+            >
               Watch
             </button>
           </div>
@@ -72,6 +88,9 @@ export default {
     },
   },
   methods: {
+    onClose() {
+      this.$emit("closed");
+    },
     showModal() {
       this.$modal.show("watch-thread");
     },

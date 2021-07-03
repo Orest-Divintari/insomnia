@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dusk="lock-thread-button">
     <button @click="toggle" class="btn-white-blue mr-1">{{ title }}</button>
   </div>
 </template>
