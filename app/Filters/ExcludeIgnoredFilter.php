@@ -41,10 +41,10 @@ class ExcludeIgnoredFilter
      * Apply the scope to a given Eloquent query builder.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param  User  $authUser
+     * @param  User|null  $authUser
      * @return Builder
      */
-    public function apply(Builder $builder, User $authUser)
+    public function apply($builder, $authUser)
     {
         if (!auth()->check()) {
             return $builder;

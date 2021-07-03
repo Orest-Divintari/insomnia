@@ -488,7 +488,7 @@ class Thread extends Model
      * or are created by users that are ignored by the authenticated user
      *
      * @param Builder $query
-     * @param User $authUser
+     * @param User|null $authUser
      * @param ExcludeIgnoredFilter $excludeIgnoredFilter
      * @return Builbder
      */
