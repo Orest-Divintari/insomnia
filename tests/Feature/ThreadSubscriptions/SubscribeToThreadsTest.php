@@ -6,6 +6,7 @@ use App\Category;
 use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
@@ -211,6 +212,7 @@ class SubscribeToThreadsTest extends TestCase
         $user = $this->signIn();
         $this->assertCount(0, $user->subscriptions);
         $this->assertCount(0, $thread->subscriptions);
+
         $prefersEmail = [
             'email_notifications' => true,
         ];
@@ -224,6 +226,18 @@ class SubscribeToThreadsTest extends TestCase
             $this->assertCount(1, $user->subscriptions);
             $this->assertTrue($user->subscriptions->first()->prefers_email);
         });
+    }
+
+    /** @test */
+    public function authenticated_users_can_subscribe_to_a_thread_only_once()
+    {
+        $thread = create(Thread::class);
+        $user = $this->signIn();
+        $thread->subscribe($user->id);
+
+        $response = $this->put(route('ajax.thread-subscriptions.update', $thread));
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */

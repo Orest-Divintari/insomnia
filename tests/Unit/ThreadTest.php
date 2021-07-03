@@ -496,4 +496,16 @@ class ThreadTest extends TestCase
 
         $this->assertTrue($thread->creator_ignored_by_visitor);
     }
+
+    /** @test */
+    public function it_adds_a_column_that_determines_whether_it_is_subscribe_by_a_user()
+    {
+        $thread = create(Thread::class);
+        $user = $this->signIn();
+        $thread->subscribe($user->id);
+
+        $thread = Thread::where('id', $thread->id)->withSubscribed($user)->first();
+
+        $this->assertTrue($thread->subscribed);
+    }
 }

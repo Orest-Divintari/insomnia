@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Thread;
 use App\ThreadSubscription;
 
 trait Subscribable
@@ -16,7 +17,7 @@ trait Subscribable
      */
     public function subscribe($userId = null)
     {
-        return $this->subscriptions()->updateOrcreate([
+        $this->subscriptions()->updateOrCreate([
             'user_id' => $userId ?? auth()->id(),
             'prefers_email' => true,
         ]);
@@ -50,17 +51,16 @@ trait Subscribable
         ])->delete();
     }
 
-    /**
-     * Determine whether the authenicated user has subscribed to current thread
-     *
-     * @return boolean
-     */
-    public function getSubscribedByAuthUserAttribute()
+    public function scopeWithSubscribed($query, $authUser)
     {
-        return $this->subscriptions()->where([
-            'user_id' => auth()->id(),
-        ])->exists();
-
+        return $query->selectRaw('EXISTS
+        (
+            SELECT *
+            FROM   thread_subscriptions
+            WHERE  user_id=?
+            AND    thread_id=threads.id
+        ) AS subscribed', [$authUser->id]
+        );
     }
 
     /**

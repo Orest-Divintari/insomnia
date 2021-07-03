@@ -90,6 +90,7 @@ class Thread extends Model
         'has_been_updated' => 'boolean',
         'ignored_by_visitor' => 'boolean',
         'creator_ignored_by_visitor' => 'boolean',
+        'subscribed' => 'boolean',
         'replies_count' => 'int',
     ];
 
