@@ -51,16 +51,26 @@ trait Subscribable
         ])->delete();
     }
 
+    /**
+     * Add column that determines whether the authenticated user has subscribed to the thread
+     *
+     * @param Builder $query
+     * @param User|null $authUser
+     * @return Builder
+     */
     public function scopeWithSubscribed($query, $authUser)
     {
-        return $query->selectRaw('EXISTS
-        (
-            SELECT *
-            FROM   thread_subscriptions
-            WHERE  user_id=?
-            AND    thread_id=threads.id
-        ) AS subscribed', [$authUser->id]
-        );
+
+        return $query->when(isset($authUser), function ($query) use ($authUser) {
+            return $query->selectRaw('EXISTS
+                        (
+                            SELECT *
+                            FROM   thread_subscriptions
+                            WHERE  user_id=?
+                            AND    thread_id=threads.id
+                        ) AS subscribed', [$authUser->id]
+            );
+        });
     }
 
     /**
