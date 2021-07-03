@@ -30,6 +30,7 @@ class ThreadController extends Controller
     public function index(Category $category, ExcludeIgnoredFilter $excludeIgnoredFilter)
     {
         $threadFilters = $this->filterManager->withThreadFilters();
+
         $threadsQuery = Thread::query()
             ->excludeIgnored(auth()->user(), $excludeIgnoredFilter)
             ->with('poster')
