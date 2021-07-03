@@ -15,7 +15,10 @@ class FollowController extends Controller
      */
     public function store(User $user)
     {
+        $this->authorize('follow', $user);
+
         auth()->user()->follow($user);
+
         return response('Following user', 200);
     }
 

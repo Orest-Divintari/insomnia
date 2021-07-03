@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Follow;
 use App\Follows;
 use App\User;
 use Facades\Tests\Setup\ProfilePostFactory;
@@ -72,16 +73,25 @@ class FollowTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_follow_another_user_only_once()
     {
-        $user = $this->signIn();
-        $this->assertCount(0, $user->follows);
-        $anotherUser = create(User::class);
+        $john = $this->signIn();
+        $doe = create(User::class);
+        $john->follow($doe);
 
-        $this->post(route('ajax.follow.store', $anotherUser));
-        $this->assertCount(1, $user->refresh()->follows);
-        $this->post(route('ajax.follow.store', $anotherUser));
+        $response = $this->post(route('ajax.follow.store', $doe));
 
-        $this->assertCount(1, $user->follows);
-        $this->assertTrue($user->fresh()->following($anotherUser));
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $this->assertCount(1, $john->follows);
+    }
+
+    /** @test */
+    public function users_cannot_follow_themselves()
+    {
+        $john = $this->signIn();
+
+        $response = $this->post(route('ajax.follow.store', $john));
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $this->assertFalse($john->following($john));
     }
 
     /** @test */

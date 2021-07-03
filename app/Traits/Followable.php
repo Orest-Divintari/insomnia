@@ -34,10 +34,9 @@ trait Followable
      */
     public function follow(User $user)
     {
-        if (!$this->following($user)) {
-            $this->follows()->attach($user->id);
-            event(new AUserStartedFollowingYou($this, $user, Carbon::now()));
-        }
+        $this->follows()->attach($user->id);
+
+        event(new AUserStartedFollowingYou($this, $user, Carbon::now()));
     }
 
     /**
@@ -49,6 +48,7 @@ trait Followable
     public function unfollow(User $user)
     {
         $this->follows()->detach($user->id);
+
         event(new AUserUnfollowedYou($this, $user));
     }
 

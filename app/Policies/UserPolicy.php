@@ -84,4 +84,16 @@ class UserPolicy
         return $user->isIgnored($authUser);
     }
 
+    /**
+     * Determine whether the authenticated user can follow the given user
+     *
+     * @param User $authUser
+     * @param User $user
+     * @return mixed
+     */
+    public function follow(User $authUser, User $user)
+    {
+        return !$authUser->following($user) && $authUser->isNot($user);
+    }
+
 }
