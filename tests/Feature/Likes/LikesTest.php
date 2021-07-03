@@ -41,14 +41,13 @@ class LikesTest extends TestCase
             'type' => ModelType::like($reply),
         ]);
 
-        $this->assertCount(1, $reply->fresh()->likes);
+        $this->assertTrue($reply->isLiked($user));
     }
 
     /** @test */
     public function an_authenticated_user_can_like_a_profile_post_comment()
     {
         $user = $this->signIn();
-
         $comment = CommentFactory::create();
 
         $this->post(route('ajax.reply-likes.store', $comment));
@@ -59,16 +58,13 @@ class LikesTest extends TestCase
             'liker_id' => $user->id,
             'type' => ModelType::like($comment),
         ]);
-
-        $this->assertCount(1, $comment->fresh()->likes);
+        $this->assertTrue($comment->isLiked($user));
     }
 
     /** @test */
     public function an_authenticated_user_can_like_a_conversation_message()
     {
         $user = $this->signIn();
-        $participant =
-
         $conversation = ConversationFactory::by($user)->create();
         $message = $conversation->messages()->first();
 
@@ -80,8 +76,7 @@ class LikesTest extends TestCase
             'liker_id' => $user->id,
             'type' => ModelType::like($message),
         ]);
-
-        $this->assertCount(1, $message->fresh()->likes);
+        $this->assertTrue($message->isLiked($user));
     }
 
     /** @test */
@@ -98,7 +93,7 @@ class LikesTest extends TestCase
             'liker_id' => $user->id,
             'type' => ModelType::like($profilePost),
         ]);
-        $this->assertCount(1, $profilePost->fresh()->likes);
+        $this->assertTrue($profilePost->isLiked($user));
     }
 
     /** @test */
@@ -111,7 +106,7 @@ class LikesTest extends TestCase
 
         $this->deleteJson(route('ajax.profile-post-likes.destroy', $profilePost));
 
-        $this->assertCount(0, $profilePost->fresh()->likes);
+        $this->assertFalse($profilePost->isLiked($user));
     }
 
     /** @test */
@@ -160,7 +155,7 @@ class LikesTest extends TestCase
             'likeable_type' => Reply::class,
             'liker_id' => $user->id,
         ]);
-        $this->assertCount(0, $reply->fresh()->likes);
+        $this->assertFalse($reply->isLiked($user));
     }
 
 }

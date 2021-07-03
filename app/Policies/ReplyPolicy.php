@@ -61,4 +61,16 @@ class ReplyPolicy
         return $comment->poster->is($user)
         || $comment->repliable->profileOwner->is($user);
     }
+
+    /**
+     * Determine whether the user can like the reply
+     *
+     * @param User $user
+     * @param Reply $reply
+     * @return mixed
+     */
+    public function like(User $user, Reply $reply)
+    {
+        return !$reply->isLiked($user);
+    }
 }

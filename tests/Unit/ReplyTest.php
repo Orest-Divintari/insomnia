@@ -383,4 +383,15 @@ class ReplyTest extends TestCase
         $this->assertEquals($reply->fresh()->poster->id, $user->id);
     }
 
+    /** @test */
+    public function it_knows_if_it_is_liked()
+    {
+        $reply = ReplyFactory::create();
+        $user = create(User::class);
+
+        $reply->likedBy($user);
+
+        $this->assertTrue($reply->isLiked($user));
+    }
+
 }

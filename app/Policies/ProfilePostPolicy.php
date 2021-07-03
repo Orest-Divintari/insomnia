@@ -56,4 +56,16 @@ class ProfilePostPolicy
         return $post->poster->is($user) || $post->profileOwner->is($user);
     }
 
+    /**
+     * Determine whether the user can like the profile post
+     *
+     * @param User $user
+     * @param ProfilePost $profilePost
+     * @return mixed
+     */
+    public function like(User $user, ProfilePost $profilePost)
+    {
+        return !$profilePost->isLiked($user);
+    }
+
 }

@@ -16,6 +16,7 @@ class ReplyLikeController extends Controller
      */
     public function store(Reply $reply)
     {
+        $this->authorize('like', $reply);
 
         $reply->likedBy(auth()->user());
 

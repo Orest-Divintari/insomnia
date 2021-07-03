@@ -110,4 +110,15 @@ class ProfilePostTest extends TestCase
         );
     }
 
+    /** @test */
+    public function it_knows_if_it_is_liked()
+    {
+        $profilePost = ProfilePostFactory::create();
+        $user = create(User::class);
+
+        $profilePost->likedBy($user);
+
+        $this->assertTrue($profilePost->isLiked($user));
+    }
+
 }

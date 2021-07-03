@@ -31,19 +31,16 @@ trait Likeable
         $liker = $user ?: auth()->user();
         $likerId = $liker->id;
 
-        if (!$this->likes()->where('liker_id', $likerId)->exists()) {
+        $like = $this->likes()->create([
+            'liker_id' => $likerId,
+            'likee_id' => $this->poster->id,
+            'type' => ModelType::like($this),
 
-            $like = $this->likes()->create([
-                'liker_id' => $likerId,
-                'likee_id' => $this->poster->id,
-                'type' => ModelType::like($this),
+        ]);
 
-            ]);
+        event((new LikeEvent($liker, $this, $like))->create());
 
-            event((new LikeEvent($liker, $this, $like))->create());
-
-            return $like;
-        }
+        return $like;
     }
 
     /**
@@ -102,6 +99,19 @@ trait Likeable
             ) AS is_liked',
             [get_class($this), auth()->id()]
         );
+    }
+
+    /**
+     * Determine whether it has been liked by the given user
+     *
+     * @param  $user
+     * @return boolean
+     */
+    public function isLiked($user)
+    {
+        return $this->likes()
+            ->where('liker_id', $user->id)
+            ->exists();
     }
 
 }
