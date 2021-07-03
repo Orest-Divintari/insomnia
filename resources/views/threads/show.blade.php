@@ -56,6 +56,7 @@
                     <subscribe-button thread-slug="{{ $thread->slug }}"
                         subscription-status="{{ json_encode($thread->subscribedByAuthUser)}}">
                     </subscribe-button>
+                    @endauth
 
                     @if(auth()->user()->can('ignore', $thread) || auth()->user()->can('unignore', $thread))
                     <ignore-thread-button class="mr-1" :thread="{{ $thread }}"
@@ -66,7 +67,7 @@
                     @if(auth()->check() && Gate::allows('lock', $thread))
                     <lock-thread-button :thread="{{ $thread }}"></lock-thread-button>
                     @endif
-                    
+
                     @if(auth()->check() && auth()->user()->isAdmin())
                     <button @click="togglePin" v-if="pinned" class="btn-white-blue mr-1">Unpin</button>
                     <button @click="togglePin" v-else class="btn-white-blue mr-1">Pin</button>
