@@ -50,25 +50,6 @@ class FollowTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannot_follow_a_user_that_is_already_following()
-    {
-        $this->assertCount(0, $this->user->follows);
-        $this->signIn($this->user);
-
-        $this->user->follow($this->anotherUser);
-
-        $this->assertCount(1, $this->user->fresh()->follows);
-        $this->assertTrue(
-            $this->user->following($this->anotherUser)
-        );
-
-        $this->user->follow($this->anotherUser);
-        $this->user->follow($this->anotherUser);
-
-        $this->assertCount(1, $this->user->fresh()->follows);
-    }
-
-    /** @test */
     public function a_user_may_toggle_the_follow_to_another_user()
     {
         $this->signIn($this->user);

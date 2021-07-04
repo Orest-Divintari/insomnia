@@ -342,7 +342,7 @@ class UserTest extends TestCase
         $visitor->ignore($profileOwner);
         $this->signIn($visitor);
 
-        $user = User::withIgnoredByVisitor()
+        $user = User::withIgnoredByVisitor($visitor)
             ->whereName($profileOwner->name)
             ->first();
 
