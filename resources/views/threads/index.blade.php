@@ -36,7 +36,7 @@
         </x-breadcrumb.container>
         @endif
         <threads :thread-filters="{{ json_encode($threadFilters) }}" :pinned-threads="{{ $pinnedThreads->toJson() }}"
-            :paginated-threads="{{ $normalThreads->toJson() }}">
+            :paginated-threads="{{ $threads->toJson() }}">
         </threads>
     </main>
 

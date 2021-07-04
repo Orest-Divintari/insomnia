@@ -9,7 +9,7 @@ use App\Filters\FilterManager;
 use App\Http\Requests\CreateThreadRequest;
 use App\Thread;
 use App\ViewModels\ThreadsShowViewModel;
-use DeepCopy\Filter\Filter;
+use App\ViewModels\ThreasdIndexViewModel;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
@@ -31,28 +31,19 @@ class ThreadController extends Controller
     {
         $threadFilters = $this->filterManager->withThreadFilters();
 
-        $threadsQuery = Thread::query()
-            ->excludeIgnored(auth()->user(), $excludeIgnoredFilter)
-            ->with('poster')
-            ->withHasBeenUpdated()
-            ->withRecentReply()
-            ->forCategory($category)
-            ->filter($threadFilters)
-            ->latest('updated_at');
-
-        $normalThreads = $threadsQuery->paginate(Thread::PER_PAGE);
-        $pinnedThreads = $threadsQuery->pinned()->get();
-        $threadFilters = $threadFilters->getRequestedFilters();
-
-        return view(
-            'threads.index',
-            compact(
-                'category',
-                'normalThreads',
-                'pinnedThreads',
-                'threadFilters'
-            )
+        $viewModel = new ThreasdIndexViewModel(
+            $category,
+            $excludeIgnoredFilter,
+            $threadFilters
         );
+
+        return view('threads.index', [
+            'category' => $category,
+            'threads' => $viewModel->threads(),
+            'pinnedThreads' => $viewModel->pinnedThreads(),
+            'threadFilters' => $threadFilters->getRequestedFilters(),
+        ]);
+
     }
 
     /**
@@ -95,10 +86,6 @@ class ThreadController extends Controller
         $thread->recordVisit();
 
         event(new UserViewedPage(UserViewedPage::THREAD, $thread));
-
-        if (request()->wantsJson()) {
-            return $replies;
-        };
 
         return view('threads.show', compact('thread', 'replies'));
     }

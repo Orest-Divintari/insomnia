@@ -66,7 +66,7 @@ class ViewThreadsTest extends TestCase
 
         $response = $this->get(route('threads.index'));
 
-        $threads = collect($response['normalThreads']->items());
+        $threads = collect($response['threads']->items());
         $this->assertCount(1, $threads);
         $this->assertFalse($threads->search(function ($thread) use ($threadByDoe) {
             return $thread->id == $threadByDoe->id;
@@ -84,7 +84,7 @@ class ViewThreadsTest extends TestCase
 
         $response = $this->get(route('threads.index'));
 
-        $threads = collect($response['normalThreads']->items());
+        $threads = collect($response['threads']->items());
         $this->assertCount(1, $threads);
         $this->assertFalse($threads->search(function ($thread) use ($ignoredThread) {
             return $thread->id == $ignoredThread->id;
