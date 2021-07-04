@@ -8,6 +8,7 @@ use App\Events\Activity\UserViewedPage;
 use App\Filters\ExcludeIgnoredFilter;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateConversationRequest;
+use App\ViewModels\ConversationsIndexViewModel;
 use App\ViewModels\ConversationsShowViewModel;
 use Illuminate\Http\Request;
 
@@ -71,29 +72,17 @@ class ConversationController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(FilterManager $filterManager, ExcludeIgnoredFilter $excludeIgnoredFilter)
+    public function index(ConversationsIndexViewModel $viewModel, FilterManager $filterManager, ExcludeIgnoredFilter $excludeIgnoredFilter)
     {
         event(new UserViewedPage(UserViewedPage::CONVERSATION));
 
         $conversationFilters = $filterManager->withConversationFilters();
 
-        $conversations = auth()->user()
-            ->conversations()
-            ->excludeIgnored(auth()->user(), $excludeIgnoredFilter)
-            ->filter($conversationFilters)
-            ->withHasBeenUpdated()
-            ->withIsStarred()
-            ->withRecentMessage()
-            ->with(['starter', 'participants'])
-            ->withCount(['messages', 'participants'])
-            ->latest('conversations.updated_at')
-            ->paginate(Conversation::PER_PAGE);
+        $conversations = $viewModel->conversations($conversationFilters, $excludeIgnoredFilter);
 
         $conversationFilters = $conversationFilters->getRequestedFilters();
 
-        return view(
-            'conversations.index',
-            compact('conversations', 'conversationFilters')
-        );
+        return view('conversations.index')
+            ->with(compact('conversations', 'conversationFilters'));
     }
 }
