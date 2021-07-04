@@ -14,11 +14,12 @@ class ProfilePostController extends Controller
      * Create a new profile post
      *
      * @param User $user
-     * @return ProfilePost
+     * @return \Illuminate\Http\Response
      */
     public function store(User $user, CreateProfilePostRequest $request)
     {
         $newPost = auth()->user()->postToProfile(request('body'), $user);
+
         return $newPost->load('poster');
     }
 
@@ -27,7 +28,7 @@ class ProfilePostController extends Controller
      *
      * @param ProfilePost $post
      * @param UpdateProfilePostRequest $request
-     * @return ProfilePost
+     * @return \Illuminate\Http\Response
      */
     public function update(ProfilePost $post, UpdateProfilePostRequest $request)
     {
@@ -38,12 +39,14 @@ class ProfilePostController extends Controller
      * Delete the given profile post
      *
      * @param ProfilePost $post
-     * @return Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function destroy(ProfilePost $post)
     {
         $this->authorize('delete', $post);
+
         $post->delete();
+
         return response('The post has been deleted', 200);
     }
 }

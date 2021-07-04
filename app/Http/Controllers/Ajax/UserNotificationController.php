@@ -11,7 +11,7 @@ class UserNotificationController extends Controller
     /**
      * Fetch the unread notifications for the user
      *
-     * @return array
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {

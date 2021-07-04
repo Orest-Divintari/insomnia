@@ -12,7 +12,7 @@ class PostingActivityController extends Controller
      * Fetch the postings of the user
      *
      * @param User $user
-     * @return
+     * @return \Illuminate\Http\Response
      */
     public function index(User $user)
     {

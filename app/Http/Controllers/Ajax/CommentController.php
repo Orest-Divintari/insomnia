@@ -62,7 +62,7 @@ class CommentController extends Controller
      * Get the comments associated with the profile post
      *
      * @param ProfilePost $post
-     * @return array
+     * @return \Illuminate\Http\Response
      */
     public function index(ProfilePost $post)
     {

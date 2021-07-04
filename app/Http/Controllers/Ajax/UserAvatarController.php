@@ -10,6 +10,12 @@ use App\User;
 class UserAvatarController extends Controller
 {
 
+    /**
+     * Update the avatar of the user
+     *
+     * @param UpdateUserAvatarRequest $request
+     * @return \Illuminate\Http\Response
+     */
     public function update(UpdateUserAvatarRequest $request)
     {
         $request->persist();
@@ -17,6 +23,11 @@ class UserAvatarController extends Controller
         return auth()->user()->fresh();
     }
 
+    /**
+     * Remove the current avatar of the user
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function destroy()
     {
         $user = auth()->user();

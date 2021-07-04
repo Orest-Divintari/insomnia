@@ -7,6 +7,12 @@ use App\Http\Requests\UpdateUserEmailRequest;
 
 class UserEmailController extends Controller
 {
+    /**
+     * Update the email of the user
+     *
+     * @param UpdateUserEmailRequest $request
+     * @return \Illuminate\Http\Response
+     */
     public function update(UpdateUserEmailRequest $request)
     {
         $request->persist();

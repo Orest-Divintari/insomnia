@@ -8,6 +8,12 @@ use App\User;
 class ProfileController extends Controller
 {
 
+    /**
+     * Get the profile information of the given username
+     *
+     * @param string $username
+     * @return \Illuminate\Http\Response
+     */
     public function show($username)
     {
         return User::findByName($username)

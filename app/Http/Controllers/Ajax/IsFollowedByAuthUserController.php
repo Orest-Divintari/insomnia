@@ -7,6 +7,12 @@ use App\User;
 
 class IsFollowedByAuthUserController extends Controller
 {
+    /**
+     * Determine whether the given user is followed by the authenticated user
+     *
+     * @param User $user
+     * @return \Illuminate\Http\Response
+     */
     public function show(User $user)
     {
         return ['is_followed' => auth()->user()->following($user)];

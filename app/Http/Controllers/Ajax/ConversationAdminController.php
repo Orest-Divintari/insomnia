@@ -11,7 +11,7 @@ class ConversationAdminController extends Controller
      * Set participant as admin
      *
      * @param Conversation $conversation
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function update(Conversation $conversation, $participantId)
     {
@@ -26,7 +26,7 @@ class ConversationAdminController extends Controller
      * Rmove participant from admin
      *
      * @param Conversation $conversation
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Conversation $conversation, $participantId)
     {
