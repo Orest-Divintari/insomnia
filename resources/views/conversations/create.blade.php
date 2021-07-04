@@ -45,13 +45,14 @@
                         <div class="form-right-col">
 
                             <div class="flex items-center">
-                                <input class="form-input mt-1/2 bg-semi-white-mid w-3 h-3" type="checkbox" id="admin"
-                                    name="admin">
-                                <p class="ml-2 form-input-description p-0 text-sm text-black-form-text">Allow anyone
+                                <input class="form-input mt-1/2 bg-semi-white-mid w-3 h-3" type="checkbox"
+                                    id="allow-to-invite-others" name="admin">
+                                <label for="allow-to-invite-others"
+                                    class="ml-2 form-input-description p-0 text-sm text-black-form-text">Allow anyone
                                     in
                                     the conversation to
                                     invite
-                                    others.</p>
+                                    others.</label>
                             </div>
                         </div>
                     </div>
