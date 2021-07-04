@@ -31,7 +31,7 @@
             <div class="text-smaller text-gray-shuttle mt-1">
               <div class="flex leading-relaxed">
                 <p class="flex-1">Messages:</p>
-                <p v-text="user.messages_count"></p>
+                <p v-text="user.profile_posts_count"></p>
               </div>
               <div class="flex leading-relaxed">
                 <p class="flex-1">Likes score:</p>
