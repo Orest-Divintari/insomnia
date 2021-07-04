@@ -36,8 +36,9 @@
                     <div class="flex-1">
                         <div class="mt-7 flex justify-end">
                             @if(Gate::allows('update', $conversation))
-                            <button @click="showEditModal" class="btn-white-blue mr-1">Edit</button>
-                            <modal name="edit-conversation" height='auto' width="50%">
+                            <button dusk="edit-conversation-button" @click="showEditModal"
+                                class="btn-white-blue mr-1">Edit</button>
+                            <modal dusk="edit-conversation-modal" name="edit-conversation" height='auto' width="50%">
                                 <div class="form-container">
                                     <div
                                         class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
@@ -55,8 +56,9 @@
                                             <div class="form-right-col">
                                                 <p class="form-label-phone">Title:</p>
                                                 <div>
-                                                    <input v-model="title" class="form-input" type="text" id="title"
-                                                        name="title" autocomplete="title">
+                                                    <input dusk="conversation-title-input" v-model="title"
+                                                        class="form-input" type="text" id="title" name="title"
+                                                        autocomplete="title">
                                                 </div>
                                             </div>
                                         </div>
@@ -64,11 +66,12 @@
                                             <div class="form-left-col"></div>
                                             <div class="form-right-col">
                                                 <div class="flex flex-row-reverse items-center">
-                                                    <label for="locked" class="form-label flex-1 ml-2">
+                                                    <label for="lock-conversation" class="form-label flex-1 ml-2">
                                                         Lock conversation</label>
 
-                                                    <input :checked="locked" ref="lock" type="checkbox"
-                                                        id="lock_conversation" name="locked" />
+                                                    <input dusk="lock-conversation-checkbox" :checked="locked"
+                                                        ref="lock" type="checkbox" id="lock-conversation"
+                                                        name="locked" />
                                                 </div>
                                                 <p class="text-gray-lightest text-xs">No responses will be
                                                     allowed
@@ -76,19 +79,25 @@
                                             </div>
                                         </div>
                                         <div class="form-button-container justify-center">
-                                            <button @click="update" type="button" class="form-button ">Save</button>
+                                            <button dusk="save-conversation-button" @click="update" type="button"
+                                                class="form-button ">Save</button>
                                         </div>
 
                                     </form>
                                 </div>
                             </modal>
                             @endif
-                            <button v-if="starred" @click="toggleStar" class="btn-white-blue mr-1">Unstar</button>
-                            <button v-else @click="toggleStar" class="btn-white-blue mr-1">Star</button>
-                            <button @click="toggleRead" v-if="isRead" class="btn-white-blue mr-1">Mark unread</button>
-                            <button @click="toggleRead" v-else class="btn-white-blue mr-1">Mark read</button>
-                            <button @click="showLeaveModal" class="btn-white-blue mr-1">Leave</button>
-                            <modal name="leave-conversation" width="48%" height='auto'>
+                            <button dusk="unstar-conversation-button" v-if="starred" @click="toggleStar"
+                                class="btn-white-blue mr-1">Unstar</button>
+                            <button dusk="star-conversation-button" v-else @click="toggleStar"
+                                class="btn-white-blue mr-1">Star</button>
+                            <button dusk="unread-conversation-button" @click="toggleRead" v-if="isRead"
+                                class="btn-white-blue mr-1">Mark unread</button>
+                            <button dusk="read-conversation-button" @click="toggleRead" v-else
+                                class="btn-white-blue mr-1">Mark read</button>
+                            <button dusk="leave-conversation-button" @click="showLeaveModal"
+                                class="btn-white-blue mr-1">Leave</button>
+                            <modal dusk="leave-conversation-modal" name="leave-conversation" width="48%" height='auto'>
                                 <div class="form-container">
                                     <div
                                         class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3">
@@ -111,7 +120,8 @@
                                                 <div class="flex-1 flex flex-col">
                                                     <p class="text-sm text-black-semi flex-1">Allow future messages</p>
                                                 </div>
-                                                <input class="form-input w-3 mr-2 mt-1/2" type="radio" id="leave"
+                                                <input dusk="allow-future-messages-checkbox"
+                                                    class="form-input w-3 mr-2 mt-1/2" type="radio" id="leave"
                                                     name="leave" ref="hide" checked>
                                             </div>
                                             <p class="ml-5 text-xs text-gray-lightest">Should this conversation receive
@@ -122,7 +132,8 @@
                                                 <div class="flex-1 flex flex-col">
                                                     <p class="text-sm text-black-semi flex-1">Ignore future messages</p>
                                                 </div>
-                                                <input class="form-input w-3 mr-2 mt-1/2" type="radio" id="leave"
+                                                <input dusk="ignore-future-messages-checkbox"
+                                                    class="form-input w-3 mr-2 mt-1/2" type="radio" id="leave"
                                                     name="leave" ref="leave">
                                             </div>
                                             <p class="ml-5 text-xs text-gray-lightest">You will not be notified of any
@@ -131,7 +142,8 @@
                                         </div>
                                     </div>
                                     <div class="form-button-container justify-center">
-                                        <button @click="leave" type="button" class="form-button ">Leave</button>
+                                        <button dusk="leave-conversation-submit" @click="leave" type="button"
+                                            class="form-button ">Leave</button>
                                     </div>
 
                                 </div>

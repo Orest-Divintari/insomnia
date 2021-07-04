@@ -17,7 +17,7 @@
         </div>
         <div class="flex justify-between ">
             <p class="text-gray-lightest">Last reply from: </p>
-            <a class="blue-link"
+            <a dusk="last-conversation-message-poster" class="blue-link"
                 @click="showProfile( {{ $conversation->recentMessage->poster }} )">{{ $conversation->recentMessage->poster->name }}</a>
         </div>
     </div>

@@ -3,24 +3,44 @@
     <dropdown :hideOnClick="true">
       <template v-slot:dropdown-trigger>
         <button
-          class="hover:bg-blue-lighter focus:outline-none focus:bg-blue-lighter focus:text-black focus:shadow-md text-gray-lightest hover:text-black rounded-full px-2 pt-1/2 pb-2"
+          dusk="participant-settings-button"
+          class="
+            hover:bg-blue-lighter
+            focus:outline-none
+            focus:bg-blue-lighter
+            focus:text-black
+            focus:shadow-md
+            text-gray-lightest
+            hover:text-black
+            rounded-full
+            px-2
+            pt-1/2
+            pb-2
+          "
         >
           ...
         </button>
       </template>
       <template v-slot:dropdown-items>
-        <ul class="bg-white cursor-pointer">
+        <ul dusk="participant-settings" class="bg-white cursor-pointer">
           <li
+            dusk="remove-participant-as-admin-button"
             @click="removeAsAdmin"
             v-if="isAdmin"
             class="p-2 hover:bg-blue-lighter"
           >
             <i class="fas fa-users-cog pr-2"></i> Remove as admin
           </li>
-          <li @click="setAsAdmin" v-else class="p-2 hover:bg-blue-lighter">
+          <li
+            dusk="set-participant-as-admin-button"
+            @click="setAsAdmin"
+            v-else
+            class="p-2 hover:bg-blue-lighter"
+          >
             <i class="fas fa-users-cog pr-2"></i> Set as admin
           </li>
           <li
+            dusk="remove-participant-button"
             v-if="!authorize('is', participant)"
             @click="removeParticipant"
             class="p-2 hover:bg-blue-lighter"

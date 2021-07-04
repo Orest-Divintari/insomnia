@@ -1,15 +1,25 @@
 <template>
   <div class="sidebar-block p-0 border border-t-0 border-blue-light">
     <p
+      dusk="invite-participants-button"
       class="p-2 text-sm bg-gray-lighter text-right blue-link"
       @click="showModal"
     >
       Invite more
     </p>
     <modal name="invite-participants-modal" height="auto" width="50%">
-      <div class="form-container">
+      <div dusk="invite-participants-modal" class="form-container">
         <div
-          class="flex justify-between items-center bg-blue-light text-lg text-black-semi border-b border-blue-light py-3 px-3"
+          class="
+            flex
+            justify-between
+            items-center
+            bg-blue-light
+            text-lg text-black-semi
+            border-b border-blue-light
+            py-3
+            px-3
+          "
         >
           <p>Invite members to conversation</p>
           <button @click="hideModal" class="fas fa-times"></button>
@@ -28,7 +38,7 @@
               <p class="form-label-phone">Invite members:</p>
               <div>
                 <names-autocomplete
-                  name="invite-members"
+                  name="invite-participants"
                   v-model="participants"
                 ></names-autocomplete>
                 <p class="text-gray-lightest text-xs mt-2">
@@ -40,7 +50,12 @@
             </div>
           </div>
           <div class="form-button-container justify-center">
-            <button @click="invite" type="button" class="form-button">
+            <button
+              dusk="invite-participants-submit"
+              @click="invite"
+              type="button"
+              class="form-button"
+            >
               Invite
             </button>
           </div>

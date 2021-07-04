@@ -415,6 +415,47 @@ class ViewConversationsTest extends DuskTestCase
     }
 
     /** @test */
+    public function participants_should_not_see_the_edit_conversation_button()
+    {
+        $conversationStarter = create(User::class);
+        $participant = create(User::class);
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$participant->name])
+            ->create();
+
+        $this->browse(function (Browser $browser) use (
+            $participant,
+            $conversation
+        ) {
+            $browser
+                ->loginAs($participant)
+                ->visit(route('conversations.show', $conversation))
+                ->assertMissing('@edit-conversation-button');
+        });
+
+    }
+
+    /** @test */
+    public function non_conversation_admin_participants_should_not_see_the_conversation_settings_button()
+    {
+        $conversationStarter = create(User::class);
+        $participant = create(User::class);
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$participant->name])
+            ->create();
+
+        $this->browse(function (Browser $browser) use (
+            $participant,
+            $conversation
+        ) {
+            $browser
+                ->loginAs($participant)
+                ->visit(route('conversations.show', $conversation))
+                ->assertMissing('@participant-settings-button');
+        });
+    }
+
+    /** @test */
     public function it_shows_the_number_of_likes_a_message_has()
     {
         $conversationStarter = create(User::class);

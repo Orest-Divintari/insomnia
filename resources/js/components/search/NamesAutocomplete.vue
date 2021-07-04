@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div dusk="names-autocomplete-component">
     <ais-instant-search :search-client="searchClient" index-name="users">
       <ais-configure :hitsPerPage="resultsLimit" />
       <ais-autocomplete ref="autocomplete">
         <div slot-scope="{ currentRefinement, indices, refine }">
           <input
+            dusk="names-autocomplete-input"
             @blur="typeMore = false"
             @focus="typeMore = true"
             class="bg-white form-input"
