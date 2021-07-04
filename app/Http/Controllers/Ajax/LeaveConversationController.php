@@ -16,7 +16,9 @@ class LeaveConversationController extends Controller
     public function update(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
+
         $conversation->leftBy(auth()->user());
+
         return response('The conversation has been left successfully', 200);
     }
 }

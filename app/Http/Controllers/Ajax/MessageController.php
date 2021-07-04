@@ -33,6 +33,7 @@ class MessageController extends Controller
     public function update(Reply $message, UpdateMessageRequest $request)
     {
         $request->update($message);
+
         return response('Message has been updated', 200);
     }
 }

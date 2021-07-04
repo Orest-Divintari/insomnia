@@ -16,7 +16,9 @@ class PinThreadController extends Controller
     public function update(Thread $thread)
     {
         $this->authorize('pin', $thread);
+
         $thread->pin();
+
         return response('Pinned thread', 200);
     }
 
@@ -29,7 +31,9 @@ class PinThreadController extends Controller
     public function destroy(Thread $thread)
     {
         $this->authorize('pin', $thread);
+
         $thread->unpin();
+
         return response('Unpinned thread', 200);
     }
 }

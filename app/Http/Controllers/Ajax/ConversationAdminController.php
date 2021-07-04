@@ -16,7 +16,9 @@ class ConversationAdminController extends Controller
     public function update(Conversation $conversation, $participantId)
     {
         $this->authorize('manage', $conversation);
+
         $conversation->setAdmin($participantId);
+
         return response('The member has been set as admin', 200);
     }
 
@@ -29,7 +31,9 @@ class ConversationAdminController extends Controller
     public function destroy(Conversation $conversation, $participantId)
     {
         $this->authorize('manage', $conversation);
+
         $conversation->removeAdmin($participantId);
+
         return response('The member has been removed as admin', 200);
     }
 }

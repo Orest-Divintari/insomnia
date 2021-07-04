@@ -39,6 +39,7 @@ class CommentController extends Controller
     public function update(Reply $comment, UpdateCommentRequest $request)
     {
         $request->update($comment);
+
         return response('The comment has been updated', 200);
     }
 
@@ -51,7 +52,9 @@ class CommentController extends Controller
     public function destroy(Reply $comment)
     {
         $this->authorize('delete', $comment);
+
         $comment->delete();
+
         return response('Comment has been deleted', 200);
     }
 

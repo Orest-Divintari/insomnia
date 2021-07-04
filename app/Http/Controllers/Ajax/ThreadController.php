@@ -14,12 +14,11 @@ class ThreadController extends Controller
      * Display the list of threads
      *
      * @param Category $category
-     * @return Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function index(Category $category)
     {
-        $threads = $category->threads()->paginate(Thread::PER_PAGE);
-        return $threads;
+        return $category->threads()->paginate(Thread::PER_PAGE);
     }
 
     /**
@@ -32,6 +31,7 @@ class ThreadController extends Controller
     public function update(Thread $thread, UpdateThreadRequest $request)
     {
         $request->update($thread);
+
         return response('Thread has been updated', 200);
     }
 

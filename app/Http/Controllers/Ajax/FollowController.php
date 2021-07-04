@@ -31,6 +31,7 @@ class FollowController extends Controller
     public function destroy(User $user)
     {
         auth()->user()->unfollow($user);
+
         return response('Unfollowed user', 200);
     }
 

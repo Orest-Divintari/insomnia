@@ -16,7 +16,9 @@ class LockThreadController extends Controller
     public function update(Thread $thread)
     {
         $this->authorize('lock', $thread);
+
         $thread->lock();
+
         return response('The thread has been locked', 200);
     }
 
@@ -29,7 +31,9 @@ class LockThreadController extends Controller
     public function destroy(Thread $thread)
     {
         $this->authorize('lock', $thread);
+
         $thread->unlock();
+
         return response('The thread has been unlocked', 200);
     }
 }

@@ -16,7 +16,9 @@ class HideConversationController extends Controller
     public function update(Conversation $conversation)
     {
         $this->authorize('view', $conversation);
+
         $conversation->hideFrom(auth()->user());
+
         return response('The conversation has been hidden successfully', 200);
     }
 }
