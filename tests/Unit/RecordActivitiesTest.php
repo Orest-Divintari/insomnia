@@ -90,7 +90,7 @@ class RecordActivitiesTest extends TestCase
         $user = $this->signIn();
         $reply = ReplyFactory::create();
 
-        $like = $reply->likedBy($user);
+        $like = $reply->like($user);
 
         $this->assertCount(1, $like->activities);
         $this->assertDatabaseHas('activities', [
@@ -107,7 +107,7 @@ class RecordActivitiesTest extends TestCase
         $user = $this->signIn();
         $comment = CommentFactory::create();
 
-        $like = $comment->likedBy($user);
+        $like = $comment->like($user);
 
         $this->assertCount(1, $comment->activities);
         $this->assertDatabaseHas('activities', [
@@ -167,53 +167,53 @@ class RecordActivitiesTest extends TestCase
     /** @test */
     public function when_a_user_unlikes_a_reply_the_activity_is_deleted()
     {
-        // config(['database.default' => 'mysql']);
-        // config(['database.connections.mysql.database' => config('insomnia.database.name')]);
-        // $user = $this->signIn();
-        // $reply = ReplyFactory::create();
-        // $like = $reply->likedBy($user);
-        // $this->assertCount(1, $like->activities);
-        // $this->assertDatabaseHas('activities', [
-        //     'subject_id' => $like->id,
-        //     'subject_type' => Like::class,
-        //     'type' => 'created-reply-like',
-        //     'user_id' => $user->id,
-        // ]);
+        config(['database.default' => 'mysql']);
+        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $user = $this->signIn();
+        $reply = ReplyFactory::create();
+        $like = $reply->like($user);
+        $this->assertCount(1, $like->activities);
+        $this->assertDatabaseHas('activities', [
+            'subject_id' => $like->id,
+            'subject_type' => Like::class,
+            'type' => 'created-reply-like',
+            'user_id' => $user->id,
+        ]);
 
-        // $reply->unlikedBy($user);
+        $reply->unlike($user);
 
-        // $this->assertDatabaseMissing('activities', [
-        //     'subject_id' => $like->id,
-        //     'subject_type' => Like::class,
-        //     'type' => 'created-reply-like',
-        //     'user_id' => $user->id,
-        // ]);
+        $this->assertDatabaseMissing('activities', [
+            'subject_id' => $like->id,
+            'subject_type' => Like::class,
+            'type' => 'created-reply-like',
+            'user_id' => $user->id,
+        ]);
     }
 
     /** @test */
     public function when_a_user_unlikes_a_comment_the_activity_is_deleted()
     {
-        // config(['database.default' => 'mysql']);
-        // config(['database.connections.mysql.database' => config('insomnia.database.name')]);
-        // $user = $this->signIn();
-        // $comment = CommentFactory::create();
-        // $like = $comment->likedBy($user);
-        // $this->assertCount(1, $like->activities);
-        // $this->assertDatabaseHas('activities', [
-        //     'subject_id' => $like->id,
-        //     'subject_type' => Like::class,
-        //     'type' => 'created-comment-like',
-        //     'user_id' => $user->id,
-        // ]);
+        config(['database.default' => 'mysql']);
+        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $user = $this->signIn();
+        $comment = CommentFactory::create();
+        $like = $comment->like($user);
+        $this->assertCount(1, $like->activities);
+        $this->assertDatabaseHas('activities', [
+            'subject_id' => $like->id,
+            'subject_type' => Like::class,
+            'type' => 'created-comment-like',
+            'user_id' => $user->id,
+        ]);
 
-        // $comment->unlikedBy($user);
+        $comment->unlike($user);
 
-        // $this->assertDatabaseMissing('activities', [
-        //     'subject_id' => $like->id,
-        //     'subject_type' => Like::class,
-        //     'type' => 'created-comment-like',
-        //     'user_id' => $user->id,
-        // ]);
+        $this->assertDatabaseMissing('activities', [
+            'subject_id' => $like->id,
+            'subject_type' => Like::class,
+            'type' => 'created-comment-like',
+            'user_id' => $user->id,
+        ]);
     }
 
     /** @test */
@@ -251,7 +251,7 @@ class RecordActivitiesTest extends TestCase
         $this->post(route('ajax.messages.store', $conversation), ['body' => $messageBody]);
 
         $message = Reply::whereBody($messageBody)->first();
-        
+
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $message->id,
             'subject_type' => Reply::class,
@@ -267,7 +267,7 @@ class RecordActivitiesTest extends TestCase
         $message = $conversation->messages()->first();
         $liker = $this->signIn();
 
-        $like = $message->likedBy($liker);
+        $like = $message->like($liker);
 
         $this->assertDatabaseMissing('activities', [
             'subject_id' => $like->id,
