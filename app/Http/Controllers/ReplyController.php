@@ -17,10 +17,6 @@ class ReplyController extends Controller
      */
     public function show(Reply $reply)
     {
-        return redirect(
-            route('threads.show', $reply->repliable) .
-            "?page=" . $reply->pageNumber .
-            '#post-' . $reply->id
-        );
+        return redirect($reply->path);
     }
 }
