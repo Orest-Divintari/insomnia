@@ -2,6 +2,15 @@
 
     <header class="section-title">History</header>
     <main class="section">
+        @if(empty($threads->items()))
+        <p class="
+        border border-gray-lighter
+        p-4
+        rounded
+        mb-2
+        text-black-semi text-sm
+      ">You have not viewed any threads yet</p>
+        @else
         <p class="text-black-semi text-md">Your most recently viewed threads</p>
         <table class="table-fixed mt-4">
             <thead class="bg-white-catskill">
@@ -40,5 +49,6 @@
                 @endforeach
             </tbody>
         </table>
+        @endif
     </main>
 </x-layouts.forum>
