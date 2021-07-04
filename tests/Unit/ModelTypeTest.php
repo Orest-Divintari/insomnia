@@ -59,7 +59,7 @@ class ModelTypeTest extends TestCase
         $user = create(User::class);
         $this->signIn($user);
 
-        $like = $reply->likedBy($user);
+        $like = $reply->like($user);
 
         $this->assertEquals('reply-like', ModelType::get($like));
     }
@@ -71,7 +71,7 @@ class ModelTypeTest extends TestCase
         $user = create(User::class);
         $this->signIn($user);
 
-        $like = $comment->likedBy($user);
+        $like = $comment->like($user);
 
         $this->assertEquals('comment-like', ModelType::get($like));
     }
@@ -87,7 +87,7 @@ class ModelTypeTest extends TestCase
         $message = $conversation->messages()->first();
         $this->signIn($participant);
 
-        $like = $message->likedBy($participant);
+        $like = $message->like($participant);
 
         $this->assertEquals('message-like', ModelType::get($like));
     }
@@ -97,7 +97,7 @@ class ModelTypeTest extends TestCase
     {
         $profilePost = ProfilePostFactory::create();
         $user = $this->signIn();
-        $like = $profilePost->likedBy($user);
+        $like = $profilePost->like($user);
 
         $this->assertEquals('profile-post-like', ModelType::get($like));
     }

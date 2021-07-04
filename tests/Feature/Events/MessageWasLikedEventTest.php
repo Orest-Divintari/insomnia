@@ -24,7 +24,7 @@ class MessageWasLikedEventTest extends TestCase
         $message = $conversation->messages->first();
         $this->signIn($liker);
 
-        $like = $message->likedBy($liker);
+        $like = $message->like($liker);
 
         $listener->shouldHaveReceived('handle', function ($event) use (
             $like,

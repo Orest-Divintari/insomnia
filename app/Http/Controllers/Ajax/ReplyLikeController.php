@@ -18,7 +18,7 @@ class ReplyLikeController extends Controller
     {
         $this->authorize('like', $reply);
 
-        $reply->likedBy(auth()->user());
+        $reply->like(auth()->user());
 
         return response('The post has been liked', 200);
 
@@ -32,7 +32,7 @@ class ReplyLikeController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        $reply->unlikedBy(auth()->user());
+        $reply->unlike(auth()->user());
 
         return response('The post has been unliked', 200);
     }

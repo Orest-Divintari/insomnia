@@ -22,10 +22,10 @@ class ReplyFiltersTest extends TestCase
         $orestis = create(User::class);
         $john = create(User::class);
         $this->signIn($orestis);
-        $popularReply->likedBy($orestis);
+        $popularReply->like($orestis);
         $this->signIn($john);
-        $popularReply->likedBy($john);
-        $unpopularReply->likedBy($john);
+        $popularReply->like($john);
+        $unpopularReply->like($john);
 
         $response = $this->get(route('threads.show', [$thread, 'sort_by_likes' => true]));
 

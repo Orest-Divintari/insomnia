@@ -199,7 +199,7 @@ class ThreadInteractionTest extends DuskTestCase
     {
         $thread = create(Thread::class);
         $user = create(User::class);
-        $thread->replies()->first()->likedBy($user);
+        $thread->replies()->first()->like($user);
 
         $this->browse(function (Browser $browser) use ($thread, $user) {
             $response = $browser
@@ -288,7 +288,7 @@ class ThreadInteractionTest extends DuskTestCase
         $thread = create(Thread::class);
         $reply = ReplyFactory::toThread($thread)->create();
         $user = create(User::class);
-        $reply->likedBy($user);
+        $reply->like($user);
 
         $this->browse(function (Browser $browser) use ($thread) {
             $response = $browser
@@ -306,7 +306,7 @@ class ThreadInteractionTest extends DuskTestCase
         $thread = create(Thread::class);
         $reply = ReplyFactory::toThread($thread)->create();
         $user = create(User::class);
-        $reply->likedBy($user);
+        $reply->like($user);
 
         $this->browse(function (Browser $browser) use ($thread) {
             $response = $browser

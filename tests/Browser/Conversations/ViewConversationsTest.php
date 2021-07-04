@@ -466,7 +466,7 @@ class ViewConversationsTest extends DuskTestCase
             ->withMessage($message['body'])
             ->create();
         $message = $conversation->messages()->first();
-        $message->likedBy($conversationStarter);
+        $message->like($conversationStarter);
 
         $this->browse(function (Browser $browser) use (
             $conversationStarter,
@@ -492,7 +492,7 @@ class ViewConversationsTest extends DuskTestCase
             ->withMessage($message['body'])
             ->create();
         $message = $conversation->messages()->first();
-        $message->likedBy($conversationStarter);
+        $message->like($conversationStarter);
 
         $this->browse(function (Browser $browser) use (
             $conversationStarter,

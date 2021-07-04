@@ -24,7 +24,7 @@ class LikeTest extends TestCase
         $liker = create(User::class);
         $this->signIn($liker);
 
-        $like = $reply->likedBy($liker);
+        $like = $reply->like($liker);
 
         $this->assertInstanceOf(Reply::class, $like->likeable);
     }
@@ -36,7 +36,7 @@ class LikeTest extends TestCase
         $threadReply = ReplyFactory::create();
         $this->signIn($user);
 
-        $like = $threadReply->likedBy($user);
+        $like = $threadReply->like($user);
 
         $this->assertCount(1, $like->activities);
     }
@@ -47,7 +47,7 @@ class LikeTest extends TestCase
         $this->signIn();
         $threadReply = ReplyFactory::create();
 
-        $like = $threadReply->likedBy();
+        $like = $threadReply->like();
 
         $this->assertTrue($like->shouldBeRecordable());
     }
@@ -58,7 +58,7 @@ class LikeTest extends TestCase
         $this->signIn();
         $comment = CommentFactory::create();
 
-        $like = $comment->likedBy();
+        $like = $comment->like();
 
         $this->assertTrue($like->shouldBeRecordable());
     }
@@ -69,7 +69,7 @@ class LikeTest extends TestCase
         $this->signIn();
         $message = MessageFactory::create();
 
-        $like = $message->likedBy();
+        $like = $message->like();
 
         $this->assertFalse($like->shouldBeRecordable());
     }
@@ -79,7 +79,7 @@ class LikeTest extends TestCase
     {
         $liker = $this->signIn();
         $profilePost = ProfilePostFactory::create();
-        $like = $profilePost->likedBy($liker);
+        $like = $profilePost->like($liker);
 
         $this->assertEquals($liker->id, $like->liker->id);
     }

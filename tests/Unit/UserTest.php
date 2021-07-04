@@ -53,7 +53,7 @@ class UserTest extends TestCase
         $thread = create(Thread::class);
         $reply = ReplyFactory::toThread($thread)->create();
 
-        $reply->likedBy($user);
+        $reply->like($user);
 
         $this->assertCount(1, $user->likes);
     }
@@ -132,7 +132,7 @@ class UserTest extends TestCase
         $poster = create(User::class);
         $post = ProfilePostFactory::by($poster)->create();
         $liker = create(User::class);
-        $post->likedBy($liker);
+        $post->like($liker);
 
         $this->assertCount(1, $poster->receivedLikes);
     }
@@ -144,7 +144,7 @@ class UserTest extends TestCase
         $reply = ReplyFactory::by($user)->create();
         $liker = create(User::class);
 
-        $reply->likedBy($liker);
+        $reply->like($liker);
 
         $this->assertCount(1, $user->receivedLikes);
     }
@@ -156,7 +156,7 @@ class UserTest extends TestCase
         $reply = CommentFactory::by($user)->create();
         $liker = create(User::class);
 
-        $reply->likedBy($liker);
+        $reply->like($liker);
 
         $this->assertCount(1, $user->receivedLikes);
     }
@@ -170,7 +170,7 @@ class UserTest extends TestCase
             ->withParticipants([$liker->name])
             ->create();
         $message = $conversation->messages()->first();
-        $message->likedBy($liker);
+        $message->like($liker);
 
         $this->assertCount(1, $user->receivedLikes);
     }
@@ -183,8 +183,8 @@ class UserTest extends TestCase
         $comment = CommentFactory::by($user)->create();
         $liker = $this->signIn();
 
-        $comment->likedBy($liker);
-        $reply->likedBy($liker);
+        $comment->like($liker);
+        $reply->like($liker);
 
         $this->assertEquals(2, $user->loadCount('receivedLikes')->received_likes_count);
     }

@@ -115,7 +115,7 @@ class ViewConversationsTest extends TestCase
     public function it_returns_the_message_likes_count()
     {
         $message = $this->conversation->messages()->first();
-        $message->likedBy($this->conversationStarter);
+        $message->like($this->conversationStarter);
 
         $response = $this->get(route('conversations.show', $this->conversation));
 
@@ -126,7 +126,7 @@ class ViewConversationsTest extends TestCase
     public function it_shows_whether_a_message_has_been_liked_by_the_visitor()
     {
         $message = $this->conversation->messages()->first();
-        $message->likedBy($this->conversationStarter);
+        $message->like($this->conversationStarter);
 
         $response = $this->get(route('conversations.show', $this->conversation));
 

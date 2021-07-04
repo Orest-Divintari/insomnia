@@ -26,10 +26,10 @@ class UnlikeReplyNotificationsTest extends TestCase
         $poster = $this->signIn();
         $reply = ReplyFactory::by($poster)->create();
         $liker = $this->signIn();
-        $like = $reply->likedBy($liker);
+        $like = $reply->like($liker);
         $this->assertCount(1, $poster->notifications);
 
-        $reply->unlikedBy($liker);
+        $reply->unlike($liker);
 
         $this->assertCount(0, $poster->fresh()->notifications);
 
@@ -48,10 +48,10 @@ class UnlikeReplyNotificationsTest extends TestCase
             ->create();
         $message = $conversation->messages->first();
         $this->signIn($participant);
-        $like = $message->likedBy($participant);
+        $like = $message->like($participant);
         $this->assertCount(1, $conversationStarter->notifications);
 
-        $message->unlikedBy($participant);
+        $message->unlike($participant);
 
         $this->assertCount(0, $conversationStarter->fresh()->notifications);
 
@@ -67,10 +67,10 @@ class UnlikeReplyNotificationsTest extends TestCase
         $poster = create(User::class);
         $comment = CommentFactory::by($poster)->create();
         $liker = $this->signIn();
-        $comment->likedBy($liker);
+        $comment->like($liker);
         $this->assertCount(1, $poster->notifications);
 
-        $comment->unlikedBy($liker);
+        $comment->unlike($liker);
 
         $this->assertCount(0, $poster->fresh()->notifications);
 

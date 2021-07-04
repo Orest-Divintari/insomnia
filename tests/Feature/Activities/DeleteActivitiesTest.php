@@ -60,7 +60,7 @@ class DeleteActivitiesTest extends TestCase
         $comment = CommentFactory::create();
         $liker = $this->signIn();
 
-        $like = $comment->likedBy();
+        $like = $comment->like();
 
         $this->assertCount(1, $like->activities);
 
@@ -80,7 +80,7 @@ class DeleteActivitiesTest extends TestCase
     {
         $profilePost = ProfilePostFactory::create();
         $liker = $this->signIn();
-        $like = $profilePost->likedBy($liker);
+        $like = $profilePost->like($liker);
         $this->assertCount(1, $like->activities);
 
         $this->deleteJson(route('ajax.profile-post-likes.destroy', $profilePost));
@@ -99,7 +99,7 @@ class DeleteActivitiesTest extends TestCase
     {
         $reply = ReplyFactory::create();
         $liker = $this->signIn();
-        $like = $reply->likedBy();
+        $like = $reply->like();
         $this->assertCount(1, $like->activities);
 
         $this->delete(route('ajax.reply-likes.destroy', $reply));

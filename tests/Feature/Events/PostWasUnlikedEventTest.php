@@ -23,7 +23,7 @@ class PostWasUnlikedEventTest extends TestCase
         app()->instance(DeletePostLikeNotification::class, $listener);
         $reply = ReplyFactory::create();
         $user = $this->signIn();
-        $like = $reply->likedBy($user);
+        $like = $reply->like($user);
 
         $this->deleteJson(route('ajax.reply-likes.destroy', $reply));
 
@@ -41,7 +41,7 @@ class PostWasUnlikedEventTest extends TestCase
         app()->instance(DeletePostLikeNotification::class, $listener);
         $comment = CommentFactory::create();
         $user = $this->signIn();
-        $like = $comment->likedBy($user);
+        $like = $comment->like($user);
 
         $this->deleteJson(route('ajax.reply-likes.destroy', $comment));
 
@@ -64,7 +64,7 @@ class PostWasUnlikedEventTest extends TestCase
             ->create();
         $this->signIn($participant);
         $message = $conversation->messages()->first();
-        $like = $message->likedBy($participant);
+        $like = $message->like($participant);
 
         $this->deleteJson(route('ajax.reply-likes.destroy', $message));
 
@@ -82,7 +82,7 @@ class PostWasUnlikedEventTest extends TestCase
         app()->instance(DeletePostLikeNotification::class, $listener);
         $profilePost = ProfilePostFactory::create();
         $user = $this->signIn();
-        $like = $profilePost->likedBy($user);
+        $like = $profilePost->like($user);
 
         $this->deleteJson(route('ajax.profile-post-likes.destroy', $profilePost));
 

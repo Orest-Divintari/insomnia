@@ -15,7 +15,7 @@ class ProfilePostLikeController extends Controller
      */
     public function store(ProfilePost $profilePost)
     {
-        $profilePost->likedBy(auth()->user());
+        $profilePost->like(auth()->user());
 
         return response('The post has been liked', 200);
 
@@ -29,7 +29,7 @@ class ProfilePostLikeController extends Controller
      */
     public function destroy(ProfilePost $profilePost)
     {
-        $profilePost->unlikedBy(auth()->user());
+        $profilePost->unlike(auth()->user());
 
         return response('The post has been unliked', 200);
     }

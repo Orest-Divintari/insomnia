@@ -183,7 +183,7 @@ class FollowTest extends TestCase
         $followingUser = create(User::class);
         $reply = ReplyFactory::by($followingUser)->create();
         $anotherUser = $this->signIn();
-        $reply->likedBy($anotherUser);
+        $reply->like($anotherUser);
         $visitor = $this->signIn();
 
         $profileOwner->follow($followingUser);
@@ -203,7 +203,7 @@ class FollowTest extends TestCase
         $follower = create(User::class);
         $reply = ReplyFactory::by($follower)->create();
         $anotherUser = $this->signIn();
-        $reply->likedBy($anotherUser);
+        $reply->like($anotherUser);
         $visitor = $this->signIn();
 
         $follower->follow($profileOwner);

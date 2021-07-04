@@ -23,7 +23,7 @@ class LikeEventTest extends TestCase
     {
         $reply = ReplyFactory::create();
         $liker = $this->signIn();
-        $like = $reply->likedBy($liker);
+        $like = $reply->like($liker);
 
         $likeEvent = (new LikeEvent($liker, $reply, $like))->create();
 
@@ -35,7 +35,7 @@ class LikeEventTest extends TestCase
     {
         $profilePost = ProfilePostFactory::create();
         $liker = $this->signIn();
-        $like = $profilePost->likedBy($liker);
+        $like = $profilePost->like($liker);
 
         $likeEvent = (new LikeEvent($liker, $profilePost, $like))->create();
 
@@ -47,7 +47,7 @@ class LikeEventTest extends TestCase
     {
         $comment = CommentFactory::create();
         $liker = $this->signIn();
-        $like = $comment->likedBy($liker);
+        $like = $comment->like($liker);
 
         $likeEvent = (new LikeEvent($liker, $comment, $like))->create();
 
@@ -59,7 +59,7 @@ class LikeEventTest extends TestCase
     {
         $message = MessageFactory::create();
         $liker = $this->signIn();
-        $like = $message->likedBy($liker);
+        $like = $message->like($liker);
 
         $likeEvent = (new LikeEvent($liker, $message, $like))->create();
 

@@ -26,7 +26,7 @@ trait Likeable
      * @param User $user
      * @return Like
      */
-    public function likedBy($user = null)
+    public function like($user = null)
     {
         $liker = $user ?: auth()->user();
         $likerId = $liker->id;
@@ -49,7 +49,7 @@ trait Likeable
      * @param integer $userId
      * @return void
      */
-    public function unlikedBy($user = null)
+    public function unlike($user = null)
     {
         $liker = $user->id ?: auth()->id();
 

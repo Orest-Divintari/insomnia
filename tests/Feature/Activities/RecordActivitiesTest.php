@@ -231,7 +231,7 @@ class ActivityTest extends TestCase
     {
         $user = $this->signIn();
         $reply = ReplyFactory::create();
-        $like = $reply->likedBy($user);
+        $like = $reply->like($user);
         $this->assertCount(1, $like->activities);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,
@@ -255,7 +255,7 @@ class ActivityTest extends TestCase
     {
         $user = $this->signIn();
         $comment = CommentFactory::create();
-        $like = $comment->likedBy($user);
+        $like = $comment->like($user);
         $this->assertCount(1, $like->activities);
         $this->assertDatabaseHas('activities', [
             'subject_id' => $like->id,

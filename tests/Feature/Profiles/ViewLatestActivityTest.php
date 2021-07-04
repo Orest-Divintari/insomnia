@@ -29,9 +29,9 @@ class ViewLatestActivityTest extends TestCase
         $comment = CommentFactory::by($profileOwner)
             ->toProfilePost($profilePost)
             ->create();
-        $threadReply->likedBy($profileOwner);
-        $comment->likedBy($profileOwner);
-        $profilePost->likedBy($profileOwner);
+        $threadReply->like($profileOwner);
+        $comment->like($profileOwner);
+        $profilePost->like($profileOwner);
 
         $activities = $this->getJson(
             route('ajax.latest-activity.index', $profileOwner)

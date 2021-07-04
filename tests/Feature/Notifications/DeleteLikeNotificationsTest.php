@@ -28,7 +28,7 @@ class DeleteLikeNotificationsTest extends TestCase
         $poster = create(User::class);
         $reply = ReplyFactory::by($poster)->create();
         $liker = $this->signIn();
-        $reply->likedBy($liker);
+        $reply->like($liker);
         $this->assertCount(1, $poster->notifications);
 
         $this->deleteJson(route('ajax.reply-likes.destroy', $reply));
@@ -50,7 +50,7 @@ class DeleteLikeNotificationsTest extends TestCase
             ->toProfilePost($profilePost)
             ->create();
         $liker = $this->signIn();
-        $comment->likedBy($liker);
+        $comment->like($liker);
         $this->assertCount(1, $poster->notifications);
 
         $this->deleteJson(route('ajax.reply-likes.destroy', $comment));
@@ -72,7 +72,7 @@ class DeleteLikeNotificationsTest extends TestCase
             ->create();
         $message = $conversation->messages()->first();
         $this->signIn($participant);
-        $message->likedBy($participant);
+        $message->like($participant);
         $this->assertCount(1, $conversationStarter->notifications);
 
         $this->deleteJson(route('ajax.reply-likes.destroy', $message));
@@ -93,7 +93,7 @@ class DeleteLikeNotificationsTest extends TestCase
             ->toProfile($poster)
             ->create();
         $liker = $this->signIn();
-        $profilePost->likedBy($liker);
+        $profilePost->like($liker);
         $this->assertCount(1, $poster->notifications);
 
         $this->deleteJson(route('ajax.profile-post-likes.destroy', $profilePost));

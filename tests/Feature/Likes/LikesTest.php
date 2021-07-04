@@ -101,7 +101,7 @@ class LikesTest extends TestCase
     {
         $user = $this->signIn();
         $profilePost = ProfilePostFactory::create();
-        $profilePost->likedBy($user);
+        $profilePost->like($user);
         $this->assertCount(1, $profilePost->likes);
 
         $this->deleteJson(route('ajax.profile-post-likes.destroy', $profilePost));

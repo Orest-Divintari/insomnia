@@ -23,7 +23,7 @@ class ViewCommentsTest extends TestCase
         $newComment = CommentFactory::toProfilePost($profilePost)->create();
         Carbon::setTestNow();
         $user = $this->signIn();
-        $oldComment->likedBy($user);
+        $oldComment->like($user);
 
         $response = $this->get(
             route('ajax.comments.index', $profilePost)

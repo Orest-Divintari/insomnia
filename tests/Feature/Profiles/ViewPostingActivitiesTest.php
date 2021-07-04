@@ -28,8 +28,8 @@ class ViewProfilePostingsTest extends TestCase
         $comment = CommentFactory::toProfilePost($profilePost)
             ->by($profileOwner)
             ->create();
-        $replyLike = $threadReply->likedBy();
-        $commentLike = $comment->likedBy();
+        $replyLike = $threadReply->like();
+        $commentLike = $comment->like();
 
         $postings = $this->getJson(
             route('ajax.posting-activity.index', $profileOwner)

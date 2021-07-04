@@ -74,8 +74,8 @@ class ActivityTest extends TestCase
         $comment = CommentFactory::by($user)
             ->toProfilePost($profilePost)
             ->create();
-        $replyLike = $threadReply->likedBy();
-        $commentLike = $comment->likedBy();
+        $replyLike = $threadReply->like();
+        $commentLike = $comment->like();
     }
 
     /** @test */

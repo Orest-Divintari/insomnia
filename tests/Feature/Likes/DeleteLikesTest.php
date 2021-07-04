@@ -18,7 +18,7 @@ class DeleteLikesTest extends TestCase
     {
         $user = $this->signIn();
         $reply = ReplyFactory::by($user)->create();
-        $reply->likedBy($user);
+        $reply->like($user);
         $this->assertCount(1, $reply->likes);
 
         $this->delete(route('ajax.replies.destroy', $reply));
@@ -31,7 +31,7 @@ class DeleteLikesTest extends TestCase
     {
         $user = $this->signIn();
         $reply = CommentFactory::by($user)->create();
-        $reply->likedBy($user);
+        $reply->like($user);
         $this->assertCount(1, $reply->likes);
 
         $this->delete(route('ajax.comments.destroy', $reply));
@@ -45,7 +45,7 @@ class DeleteLikesTest extends TestCase
         $profilePost = ProfilePostFactory::create();
         $profileOwner = $profilePost->profileOwner;
         $this->signIn($profileOwner);
-        $profilePost->likedBy($profileOwner);
+        $profilePost->like($profileOwner);
         $this->assertCount(1, $profilePost->likes);
 
         $profilePost->delete();

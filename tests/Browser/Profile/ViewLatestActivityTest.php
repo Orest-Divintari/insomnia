@@ -189,7 +189,7 @@ class ViewLatestActivityTest extends DuskTestCase
     {
         $profileOwner = create(User::class);
         $profilePost = ProfilePostFactory::by($profileOwner)->create();
-        $like = $profilePost->likedBy($profileOwner);
+        $like = $profilePost->like($profileOwner);
 
         Activity::create([
             'user_id' => $profileOwner->id,
@@ -218,7 +218,7 @@ class ViewLatestActivityTest extends DuskTestCase
     {
         $profileOwner = create(User::class);
         $comment = CommentFactory::by($profileOwner)->create();
-        $like = $comment->likedBy($profileOwner);
+        $like = $comment->like($profileOwner);
 
         Activity::create([
             'user_id' => $profileOwner->id,
@@ -247,7 +247,7 @@ class ViewLatestActivityTest extends DuskTestCase
     {
         $profileOwner = create(User::class);
         $reply = ReplyFactory::create();
-        $like = $reply->likedBy($profileOwner);
+        $like = $reply->like($profileOwner);
         Activity::create([
             'user_id' => $profileOwner->id,
             'subject_id' => $like->id,

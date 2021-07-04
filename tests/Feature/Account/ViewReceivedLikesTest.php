@@ -24,7 +24,7 @@ class ViewReceivedLikesTest extends TestCase
         $poster = create(User::class);
         $profilePost = ProfilePostFactory::by($poster)->create();
         $liker = $this->signIn();
-        $profilePost->likedBy($liker);
+        $profilePost->like($liker);
         $this->signIn($poster);
 
         $response = $this->get(route('account.likes.index'));
@@ -44,7 +44,7 @@ class ViewReceivedLikesTest extends TestCase
         $poster = create(User::class);
         $reply = ReplyFactory::by($poster)->create();
         $liker = $this->signIn();
-        $reply->likedBy($liker);
+        $reply->like($liker);
         $this->signIn($poster);
 
         $response = $this->get(route('account.likes.index'));
@@ -64,7 +64,7 @@ class ViewReceivedLikesTest extends TestCase
         $poster = create(User::class);
         $comment = CommentFactory::by($poster)->create();
         $liker = $this->signIn();
-        $comment->likedBy($liker);
+        $comment->like($liker);
         $this->signIn($poster);
 
         $response = $this->get(route('account.likes.index'));
@@ -88,7 +88,7 @@ class ViewReceivedLikesTest extends TestCase
             ->create();
         $message = $conversation->messages()->first();
         $this->signIn($participant);
-        $message->likedBy($participant);
+        $message->like($participant);
         $this->signIn($conversationStarter);
 
         $response = $this->get(route('account.likes.index'));
@@ -101,7 +101,7 @@ class ViewReceivedLikesTest extends TestCase
     {
         $poster = create(User::class);
         $profilePost = ProfilePostFactory::by($poster)->create();
-        $profilePost->likedBy($poster);
+        $profilePost->like($poster);
         $this->signIn($poster);
 
         $response = $this->get(route('account.likes.index'));
@@ -114,7 +114,7 @@ class ViewReceivedLikesTest extends TestCase
     {
         $poster = create(User::class);
         $reply = ReplyFactory::by($poster)->create();
-        $reply->likedBy($poster);
+        $reply->like($poster);
         $this->signIn($poster);
 
         $response = $this->get(route('account.likes.index'));
@@ -127,7 +127,7 @@ class ViewReceivedLikesTest extends TestCase
     {
         $poster = $this->signIn();
         $comment = CommentFactory::by($poster)->create();
-        $comment->likedBy($poster);
+        $comment->like($poster);
 
         $response = $this->get(route('account.likes.index'));
 

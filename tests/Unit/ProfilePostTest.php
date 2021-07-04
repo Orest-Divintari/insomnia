@@ -116,7 +116,7 @@ class ProfilePostTest extends TestCase
         $profilePost = ProfilePostFactory::create();
         $user = create(User::class);
 
-        $profilePost->likedBy($user);
+        $profilePost->like($user);
 
         $this->assertTrue($profilePost->isLiked($user));
     }

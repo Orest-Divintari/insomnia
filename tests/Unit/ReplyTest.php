@@ -49,7 +49,7 @@ class ReplyTest extends TestCase
         $reply = ReplyFactory::create();
         $user = create(User::class);
 
-        $reply->likedBy($user);
+        $reply->like($user);
 
         $this->assertCount(1, $reply->likes);
     }
@@ -61,11 +61,11 @@ class ReplyTest extends TestCase
         config(['database.connections.mysql.database' => config('insomnia.database.name')]);
         $reply = ReplyFactory::create();
         $user = create(User::class);
-        $reply->likedBy($user);
+        $reply->like($user);
 
         $this->assertCount(1, $reply->likes);
 
-        $reply->unlikedBy($user);
+        $reply->unlike($user);
 
         $this->assertCount(0, $reply->fresh()->likes);
 
@@ -134,7 +134,7 @@ class ReplyTest extends TestCase
         $user = $this->signIn();
         $threadReply = ReplyFactory::create();
 
-        $threadReply->likedBy($user);
+        $threadReply->like($user);
 
         $threadReply = Reply::whereId($threadReply->id)
             ->withIsLikedByAuthUser()
@@ -287,7 +287,7 @@ class ReplyTest extends TestCase
             ->createMany(Thread::REPLIES_PER_PAGE * 2);
         $reply = $replies->first();
         $user = $this->signIn();
-        $reply->likedBy($user);
+        $reply->like($user);
         $replyFilters = app(ReplyFilters::class);
 
         $paginatedReplies = Reply::withLikes()->filter($replyFilters)->paginate(Thread::REPLIES_PER_PAGE);
@@ -388,7 +388,7 @@ class ReplyTest extends TestCase
         $reply = ReplyFactory::create();
         $user = create(User::class);
 
-        $reply->likedBy($user);
+        $reply->like($user);
 
         $this->assertTrue($reply->isLiked($user));
     }
