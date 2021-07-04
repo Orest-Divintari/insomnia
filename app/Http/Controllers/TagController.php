@@ -10,7 +10,7 @@ class TagController extends Controller
      * Display the tag
      *
      * @param Tag $tag
-     * @return View
+     * @return \Illuminate\View\View
      */
     public function show(Tag $tag)
     {

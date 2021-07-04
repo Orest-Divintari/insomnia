@@ -7,7 +7,7 @@ use App\ViewModels\OnlineUserActivitiesViewModel;
 class OnlineUserActivityController extends Controller
 {
     /**
-     * Get the activities of the current visitors
+     * Display the activities of the current visitors
      *
      * @return \Illuminate\View\View
      */

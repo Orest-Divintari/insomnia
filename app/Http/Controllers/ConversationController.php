@@ -18,7 +18,7 @@ class ConversationController extends Controller
      * Store a new conversation and send message to participant
      *
      * @param CreateConversationRequest $request
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateConversationRequest $conversationRequest)
     {
@@ -28,9 +28,9 @@ class ConversationController extends Controller
     }
 
     /**
-     * Show the form for creating a new conversation
+     * Display the form for creating a new conversation
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {

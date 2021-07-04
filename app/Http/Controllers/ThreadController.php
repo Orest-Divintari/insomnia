@@ -16,6 +16,7 @@ class ThreadController extends Controller
 {
 
     protected $filterManager;
+
     public function __construct(FilterManager $filterManager)
     {
         $this->filterManager = $filterManager;
@@ -47,7 +48,7 @@ class ThreadController extends Controller
     }
 
     /**
-     * Show the form for posting a new thread to the given category
+     * Display the form for posting a new thread to the given category
      *
      * @param Category $category
      * @return Illuminate\View\View
@@ -59,6 +60,7 @@ class ThreadController extends Controller
 
     /**
      * Store a newly created thread in storage
+     *
      * @param CreateThreadRequest $request
      * @return \Illuminate\Http\Response
      */

@@ -7,7 +7,7 @@ use App\Thread;
 class RecentlyViewedThreadsController extends Controller
 {
     /**
-     * Fetch the most recently viewed threads
+     * Display the most recently viewed threads
      *
      * @return \Illuminate\View\View
      */

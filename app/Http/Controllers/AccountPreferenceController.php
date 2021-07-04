@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateUserPreferencesRequest;
 class AccountPreferenceController extends Controller
 {
     /**
-     * Get the form to update the user preferences
+     * Display the form to update the user preferences
      *
      * @return \Illuminate\View\View
      */
