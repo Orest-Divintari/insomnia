@@ -53,7 +53,7 @@ class ThreadInteractionTest extends DuskTestCase
                 ->assertSee('Unlock')
                 ->assertSee('Closed for new replies.')
                 ->click('@lock-thread-button')
-                ->pause(300)
+                ->waitForText('Lock')
                 ->assertSee('Lock')
                 ->assertVisible('@new-reply-input')
                 ->refresh()
