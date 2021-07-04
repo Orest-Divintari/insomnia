@@ -32,9 +32,11 @@
         </div>
         <div v-else class="notification-item">...</div>
         <div class="dropdown-footer-item flex items-center shadow-2xl">
-          <div v-if="notificationsExist">
+          <div v-if="notificationsExist" class="flex items-center">
             <a href="/account/notifications" class="blue-link">Show all</a>
             <p class="dot"></p>
+          </div>
+          <div v-if="notificationsExist" class="flex items-center">
             <read-all-notifications-button
               @markedAllRead="onMarkedAllRead"
               button-classes="blue-link active:text-blue-mid-light focus:outline-none"
