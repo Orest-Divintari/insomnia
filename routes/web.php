@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 Auth::routes(['verify' => true]);
+
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -145,7 +146,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* ************ THREADS ************ */
 
-    Route::get('/threads/create/{categorySlug}', 'ThreadController@create')
+    Route::get('/categories/{category}/threads/create', 'ThreadController@create')
         ->name('threads.create');
 
     Route::post('/threads', 'ThreadController@store')

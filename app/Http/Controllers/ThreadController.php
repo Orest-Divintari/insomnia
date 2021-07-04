@@ -56,14 +56,13 @@ class ThreadController extends Controller
     }
 
     /**
-     * Show the form for posting a new thread
+     * Show the form for posting a new thread to the given category
      *
-     * @param string $category
+     * @param Category $category
      * @return Illuminate\View\View
      */
-    public function create($categorySlug)
+    public function create(Category $category)
     {
-        $category = Category::whereSlug($categorySlug)->firstOrFail();
         return view('threads.create', compact('category'));
     }
 

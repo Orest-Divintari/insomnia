@@ -11,7 +11,7 @@
         @auth
         @if($category->exists)
         <div class="py-4">
-            <a href="{{ route('threads.create', ['categorySlug' => $category->slug])  }}" class="btn-post"><span
+            <a href="{{ route('threads.create', $category ) }}" class="btn-post"><span
                     class="fas fa-pen text-white text-xs mr-1"></span>Post
                 Thread</a>
         </div>

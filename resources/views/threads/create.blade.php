@@ -12,7 +12,7 @@
         <x-form.errors></x-form.errors>
 
         <div class="form-container">
-            <form action="/threads" method="POST">
+            <form action="{{ route('threads.create', $category) }}" method="POST">
                 @csrf
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
                 <div class="p-4">
