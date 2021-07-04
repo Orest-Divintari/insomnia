@@ -137,11 +137,11 @@ Route::group(['middleware' => 'visitor.append'], function () {
 
         /* ************ FOLLOWS ************ */
 
-        Route::get('/users/{user}/follows', 'FollowsController@index')
-            ->name('follows.index');
+        Route::get('/users/{user}/followings', 'FollowingsController@index')
+            ->name('followings.index');
 
-        Route::get('/users/{user}/followed-by', 'FollowedByController@index')
-            ->name('followed-by.index');
+        Route::get('/users/{user}/followers', 'FollowerController@index')
+            ->name('followers.index');
 
         /* ************ PROFILE ABOUT ************ */
 

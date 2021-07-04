@@ -22,7 +22,7 @@ class UserStartedFollowinYouEventTest extends TestCase
 
         $this->post(route('ajax.follow.store', $followingUser));
 
-        $this->assertCount(1, $followerUser->fresh()->follows);
+        $this->assertCount(1, $followerUser->fresh()->followings);
         $this->assertTrue($followerUser->fresh()->following($followingUser));
         $listener->shouldHaveReceived('handle')
             ->with(Mockery::on(function ($event) use ($followingUser, $followerUser) {

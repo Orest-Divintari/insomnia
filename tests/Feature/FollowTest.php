@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Follow;
-use App\Follows;
 use App\User;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
@@ -46,12 +45,12 @@ class FollowTest extends TestCase
     public function an_authenticated_user_may_follow_another_user()
     {
         $user = $this->signIn();
-        $this->assertCount(0, $user->follows);
+        $this->assertCount(0, $user->followings);
         $anotherUser = create(User::class);
 
         $this->post(route('ajax.follow.store', $anotherUser));
 
-        $this->assertCount(1, $user->fresh()->follows);
+        $this->assertCount(1, $user->fresh()->followings);
         $this->assertTrue($user->fresh()->following($anotherUser));
     }
 
@@ -80,7 +79,7 @@ class FollowTest extends TestCase
         $response = $this->post(route('ajax.follow.store', $doe));
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
-        $this->assertCount(1, $john->follows);
+        $this->assertCount(1, $john->followings);
     }
 
     /** @test */
@@ -105,7 +104,7 @@ class FollowTest extends TestCase
         $followerB->follow($profileOwner);
 
         $followers = $this->getJson(
-            route('ajax.followed-by.index', $profileOwner)
+            route('ajax.followers.index', $profileOwner)
         )->json()['data'];
 
         $this->assertCount(2, $followers);
@@ -129,7 +128,7 @@ class FollowTest extends TestCase
         Auth::logout();
 
         $response = $this->getJson(
-            route('ajax.followed-by.index', $profileOwner)
+            route('ajax.followers.index', $profileOwner)
         );
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
@@ -145,16 +144,16 @@ class FollowTest extends TestCase
         $profileOwner->follow($userA);
         $profileOwner->follow($userB);
 
-        $follows = $this->getJson(
-            route('ajax.follows.index', $profileOwner)
+        $followings = $this->getJson(
+            route('ajax.followings.index', $profileOwner)
         )->json()['data'];
 
-        $this->assertCount(2, $follows);
+        $this->assertCount(2, $followings);
         $this->assertEquals(
-            $userA->id, $follows[0]['id']
+            $userA->id, $followings[0]['id']
         );
         $this->assertEquals(
-            $userB->id, $follows[1]['id']
+            $userB->id, $followings[1]['id']
         );
     }
 
@@ -170,7 +169,7 @@ class FollowTest extends TestCase
         Auth::logout();
 
         $response = $this->getJson(
-            route('ajax.follows.index', $profileOwner)
+            route('ajax.followings.index', $profileOwner)
         );
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
@@ -190,7 +189,7 @@ class FollowTest extends TestCase
         $profileOwner->follow($followingUser);
 
         $response = $this->getJson(
-            route('ajax.follows.index', $profileOwner)
+            route('ajax.followings.index', $profileOwner)
         )->json()['data'];
 
         $this->assertEquals(1, $response[0]['received_likes_count']);
@@ -210,7 +209,7 @@ class FollowTest extends TestCase
         $follower->follow($profileOwner);
 
         $response = $this->getJson(
-            route('ajax.followed-by.index', $profileOwner)
+            route('ajax.followers.index', $profileOwner)
         )->json()['data'];
 
         $this->assertEquals(1, $response[0]['received_likes_count']);
@@ -227,7 +226,7 @@ class FollowTest extends TestCase
         $this->signIn($followingUser);
 
         $response = $this->getJson(
-            route('ajax.follows.index', $profileOwner)
+            route('ajax.followings.index', $profileOwner)
         )->json()['data'];
 
         $this->assertEquals(1, $response[0]['profile_posts_count']);
@@ -245,7 +244,7 @@ class FollowTest extends TestCase
         $this->signIn($member);
 
         $response = $this->getJson(
-            route('ajax.followed-by.index', $profileOwner)
+            route('ajax.followers.index', $profileOwner)
         )->json()['data'];
 
         $this->assertEquals(1, $response[0]['profile_posts_count']);
@@ -262,7 +261,7 @@ class FollowTest extends TestCase
         $this->signIn($john);
         $john->ignore($doe);
 
-        $response = $this->get(route('ajax.followed-by.index', $john));
+        $response = $this->get(route('ajax.followers.index', $john));
 
         $followers = $response->json()['data'];
         $this->assertCount(1, $followers);

@@ -17,7 +17,7 @@ class ViewFollowingUsersTest extends TestCase
         $john = create(User::class);
         $orestis->follow($john);
 
-        $response = $this->get(route('account.follows.index'));
+        $response = $this->get(route('account.followings.index'));
 
         $response
             ->assertSee($john->name)

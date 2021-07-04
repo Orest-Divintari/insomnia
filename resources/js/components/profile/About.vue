@@ -9,7 +9,13 @@
     <div>
       <div
         v-if="user.details.about"
-        class="border border-gray-lighter p-4 rounded mb-2 text-black-semi text-sm"
+        class="
+          border border-gray-lighter
+          p-4
+          rounded
+          mb-2
+          text-black-semi text-sm
+        "
       >
         <p v-html="user.details.about"></p>
       </div>
@@ -88,29 +94,29 @@
           <p class="text-black-semi">{{ user.details.twitter }}</p>
         </div>
       </div>
-      <follows
+      <followings
         class="mb-2"
         v-if="hasFollowing"
         :profile-owner="profileOwner"
-        :dataset="followsDataset"
-      ></follows>
-      <followed-by
+        :dataset="followingsDataset"
+      ></followings>
+      <followers
         v-if="hasFollowers"
         :profile-owner="profileOwner"
-        :dataset="followedByDataset"
-      ></followed-by>
+        :dataset="followersDataset"
+      ></followers>
     </div>
   </div>
 </template>
 
 <script>
-import Follows from "./Follows";
-import FollowedBy from "./FollowedBy";
+import Followings from "./Followings";
+import Followers from "./Followers";
 import authorizable from "../../mixins/authorizable";
 export default {
   components: {
-    Follows,
-    FollowedBy,
+    Followings,
+    Followers,
   },
   props: {
     profileOwner: {
@@ -124,8 +130,8 @@ export default {
     return {
       fetchedData: false,
       user: this.profileOwner,
-      followsDataset: {},
-      followedByDataset: {},
+      followingsDataset: {},
+      followersDataset: {},
       hasFollowing: false,
       hasFollowers: false,
     };
@@ -181,11 +187,11 @@ export default {
         .catch((error) => console.log(error));
     },
     refresh(data) {
-      this.followsDataset = data.follows;
-      this.followedByDataset = data.followedBy;
+      this.followingsDataset = data.followings;
+      this.followersDataset = data.followers;
       this.user = data.user;
-      this.hasFollowing = this.followsDataset.total > 0;
-      this.hasFollowers = this.followedByDataset.total > 0;
+      this.hasFollowing = this.followingsDataset.total > 0;
+      this.hasFollowers = this.followersDataset.total > 0;
       this.fetchedData = true;
     },
   },

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Follow;
 
-class AccountFollowsController extends Controller
+class AccountFollowingsController extends Controller
 {
     /**
      * Display a listing of following users
@@ -14,11 +14,11 @@ class AccountFollowsController extends Controller
     public function index()
     {
         $followingUsers = auth()->user()
-            ->follows()
+            ->followings()
             ->withMessagesCount()
             ->withCount('receivedLikes')
-            ->paginate(Follow::FOLLOWS_PER_PAGE);
+            ->paginate(Follow::FOLLOWINGS_PER_PAGE);
 
-        return view('account.follows.index', compact('followingUsers'));
+        return view('account.followings.index', compact('followingUsers'));
     }
 }

@@ -38,12 +38,12 @@ class FollowTest extends TestCase
     /** @test */
     public function a_user_may_follow_another_user()
     {
-        $this->assertCount(0, $this->user->follows);
+        $this->assertCount(0, $this->user->followings);
         $this->signIn($this->user);
 
         $this->user->follow($this->anotherUser);
 
-        $this->assertCount(1, $this->user->fresh()->follows);
+        $this->assertCount(1, $this->user->fresh()->followings);
         $this->assertTrue(
             $this->user->following($this->anotherUser)
         );
@@ -75,7 +75,7 @@ class FollowTest extends TestCase
         $this->signIn($this->anotherUser);
         $this->anotherUser->follow($this->user);
 
-        $this->assertCount(1, $this->user->followedBy);
+        $this->assertCount(1, $this->user->followers);
         $this->user->following($this->anotherUser);
     }
 
@@ -86,7 +86,7 @@ class FollowTest extends TestCase
 
         $this->user->follow($this->anotherUser);
 
-        $this->assertCount(1, $this->user->follows);
+        $this->assertCount(1, $this->user->followings);
     }
 
     /** @test */
@@ -116,7 +116,7 @@ class FollowTest extends TestCase
 
         $this->assertEquals(
             2,
-            $user->loadCount('followedBy')->followed_by_count
+            $user->loadCount('followers')->followers_count
         );
     }
 
@@ -133,7 +133,7 @@ class FollowTest extends TestCase
 
         $this->assertEquals(
             2,
-            $user->loadCount('follows')->follows_count
+            $user->loadCount('followings')->followings_count
         );
     }
 }

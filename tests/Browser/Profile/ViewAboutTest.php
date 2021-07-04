@@ -231,7 +231,7 @@ class ViewAboutTest extends DuskTestCase
     {
         $profileOwner = create(User::class);
         $visitor = create(User::class);
-        $users = createMany(User::class, Follow::FOLLOWED_BY_PER_PAGE * 2 + 1);
+        $users = createMany(User::class, Follow::FOLLOWERS_BY_PER_PAGE * 2 + 1);
         $users->each(function ($user) use ($profileOwner) {
             $user->follow($profileOwner);
         });
@@ -264,7 +264,7 @@ class ViewAboutTest extends DuskTestCase
     {
         $profileOwner = create(User::class);
         $visitor = create(User::class);
-        $users = createMany(User::class, Follow::FOLLOWS_PER_PAGE * 2 + 1);
+        $users = createMany(User::class, Follow::FOLLOWINGS_PER_PAGE * 2 + 1);
         $users->each(function ($user) use ($profileOwner) {
             $profileOwner->follow($user);
         });

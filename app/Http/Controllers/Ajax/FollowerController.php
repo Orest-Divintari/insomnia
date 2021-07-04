@@ -6,18 +6,18 @@ use App\Follow;
 use App\Http\Controllers\Controller;
 use App\User;
 
-class FollowsController extends Controller
+class FollowerController extends Controller
 {
     /**
-     * Get the following users for the user
+     * Get the followers for the user
      *
      * @param User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\http\Response
      */
     public function index(User $user)
     {
-        return $user->follows()
+        return $user->unignoredFollowers()
             ->withProfileInfo(auth()->user())
-            ->paginate(Follow::FOLLOWS_PER_PAGE);
+            ->paginate(Follow::FOLLOWERS_BY_PER_PAGE);
     }
 }

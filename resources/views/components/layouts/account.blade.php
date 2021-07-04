@@ -49,7 +49,7 @@
                         </a>
 
                         <a class="py-2 px-4 {{ $section == 'following' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
-                            href="{{ route('account.follows.index') }}"> Following </a>
+                            href="{{ route('account.followings.index') }}"> Following </a>
                         <a class="py-2 px-4 {{ $section == 'ignoring' ? 'text-blue-mid border-l-2 border-blue-mid font-bold bg-white-smoke' : 'hover:bg-white-smoke hover:text-black-semi' }}"
                             href="{{ route('account.ignored-users.index') }}"> Ignoring </a>
                         <form action="{{ route('logout') }}" method="POST">

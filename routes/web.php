@@ -90,8 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* ************ ACCOUNT FOLLOWS ************ */
 
-    Route::get('/account/follows', 'AccountFollowsController@index')
-        ->name('account.follows.index');
+    Route::get('/account/followings', 'AccountFollowingsController@index')
+        ->name('account.followings.index');
 
     /* ************ ACCOUNT LIKES ************ */
 

@@ -16,18 +16,18 @@ class AboutController extends Controller
      */
     public function show(User $user)
     {
-        $follows = $user->follows()
+        $followings = $user->followings()
             ->withProfileInfo(auth()->user())
-            ->paginate(Follow::FOLLOWS_PER_PAGE)
-            ->withPath(route('ajax.follows.index', $user));
+            ->paginate(Follow::FOLLOWINGS_PER_PAGE)
+            ->withPath(route('ajax.followings.index', $user));
 
-        $followedBy = $user->followedBy()
+        $followers = $user->followers()
             ->withProfileInfo(auth()->user())
-            ->paginate(Follow::FOLLOWED_BY_PER_PAGE)
-            ->withPath(route('ajax.followed-by.index', $user));
+            ->paginate(Follow::FOLLOWERS_BY_PER_PAGE)
+            ->withPath(route('ajax.followers.index', $user));
 
         $user->append('date_of_birth');
 
-        return compact('follows', 'followedBy', 'user');
+        return compact('followings', 'followers', 'user');
     }
 }

@@ -118,7 +118,7 @@
                   cursor-pointer
                   hover:text-blue-mid
                 "
-                href="/account/follows"
+                href="/account/followings"
                 >Following
               </a>
               <hr class="border-b-1 border-gray-lighter" />

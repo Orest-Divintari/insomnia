@@ -77,7 +77,7 @@ class ViewAboutTest extends TestCase
 
         $response = $this->getJson(
             route('ajax.about.show', $profileOwner)
-        )->json()['followedBy'];
+        )->json()['followers'];
 
         $data = $response['data'];
         $this->assertEquals(
@@ -89,7 +89,7 @@ class ViewAboutTest extends TestCase
             $followerB->id
         );
         $this->assertEquals(
-            route('ajax.followed-by.index', $profileOwner),
+            route('ajax.followers.index', $profileOwner),
             $response['path']
         );
     }
@@ -107,7 +107,7 @@ class ViewAboutTest extends TestCase
 
         $response = $this->getJson(
             route('ajax.about.show', $profileOwner)
-        )->json()['follows'];
+        )->json()['followings'];
 
         $data = $response['data'];
         $this->assertEquals(
@@ -119,7 +119,7 @@ class ViewAboutTest extends TestCase
             $followerB->id
         );
         $this->assertEquals(
-            route('ajax.follows.index', $profileOwner),
+            route('ajax.followings.index', $profileOwner),
             $response['path']
         );
     }

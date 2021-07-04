@@ -271,9 +271,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param Builder $query
      * @return Builder
      */
-    public function scopeWithFollows($query)
+    public function scopeWithFollowings($query)
     {
-        return $query->with('follows')->withCount('follows');
+        return $query
+            ->with('followings')
+            ->withCount('followings');
     }
 
     /**

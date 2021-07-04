@@ -16,7 +16,7 @@ trait Followable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function follows()
+    public function followings()
     {
         return $this->belongsToMany(
             User::class,
@@ -34,7 +34,7 @@ trait Followable
      */
     public function follow(User $user)
     {
-        $this->follows()->attach($user->id);
+        $this->followings()->attach($user->id);
 
         event(new AUserStartedFollowingYou($this, $user, Carbon::now()));
     }
@@ -47,7 +47,7 @@ trait Followable
      */
     public function unfollow(User $user)
     {
-        $this->follows()->detach($user->id);
+        $this->followings()->detach($user->id);
 
         event(new AUserUnfollowedYou($this, $user));
     }
@@ -60,7 +60,7 @@ trait Followable
      */
     public function toggleFollow(User $user)
     {
-        $this->follows()->toggle($user);
+        $this->followings()->toggle($user);
     }
 
     /**
@@ -68,7 +68,7 @@ trait Followable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function followedBy()
+    public function followers()
     {
         return $this->belongsToMany(
             User::class,
@@ -101,7 +101,7 @@ trait Followable
      */
     public function following(User $user)
     {
-        return $this->follows()
+        return $this->followings()
             ->where('following_user_id', $user->id)
             ->exists();
     }
