@@ -13,7 +13,7 @@ class ReplyController extends Controller
      * And go directly to that specific reply in the page
      *
      * @param Reply $reply
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function show(Reply $reply)
     {

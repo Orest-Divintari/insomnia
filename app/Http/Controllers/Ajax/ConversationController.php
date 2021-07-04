@@ -27,6 +27,8 @@ class ConversationController extends Controller
     /**
      * Get the conversations for the authenticated user
      *
+     * @param FilterManager $filterManager
+     * @param ExcludeIgnoredFilter $excludeIgnoredFilter
      * @return \Illuminate\Http\Response
      */
     public function index(FilterManager $filterManager, ExcludeIgnoredFilter $excludeIgnoredFilter)
