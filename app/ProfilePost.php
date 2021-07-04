@@ -153,9 +153,10 @@ class ProfilePost extends Model
      * as as search result with algolia
      *
      * @param Builder $query
+     * @param User|null $authUser
      * @return Builder
      */
-    public function scopeWithSearchInfo($query, $authUser)
+    public function scopeWithSearchInfo($query, $authUser = null)
     {
         return $query
             ->withCreatorIgnoredByVisitor($authUser)

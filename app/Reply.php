@@ -212,9 +212,10 @@ class Reply extends Model
      * as a search result with algolia
      *
      * @param Builer $query
+     * @param User|null $authUser
      * @return Builer
      */
-    public function scopeWithSearchInfo($query, $authUser)
+    public function scopeWithSearchInfo($query, $authUser = null)
     {
         return $query
             ->withCreatorIgnoredByVisitor($authUser)

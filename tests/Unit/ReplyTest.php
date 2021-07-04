@@ -234,7 +234,6 @@ class ReplyTest extends TestCase
     public function a_reply_can_eager_load_the_data_required_data_when_it_is_searched()
     {
         ReplyFactory::create();
-
         $reply = Reply::withSearchInfo()->first();
         $replyArray = $reply->toArray();
 
