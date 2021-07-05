@@ -30,7 +30,6 @@ class Reply extends Model
         'date_updated',
         'date_created',
         'type',
-        'permissions',
     ];
 
     /**

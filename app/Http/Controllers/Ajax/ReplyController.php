@@ -23,7 +23,8 @@ class ReplyController extends Controller
     {
         $reply = $thread->addReply($request->validated(), auth()->user())
             ->load('poster')
-            ->loadCount('likes');
+            ->loadCount('likes')
+            ->append('permissions');
 
         return response($reply->fresh(), 201);
     }
@@ -38,6 +39,7 @@ class ReplyController extends Controller
     public function update(Reply $reply, UpdateReplyRequest $request)
     {
         $request->update($reply);
+
         return response('Reply has been updated', 200);
     }
 
@@ -50,7 +52,9 @@ class ReplyController extends Controller
     public function destroy(Reply $reply)
     {
         $this->authorize('delete', $reply);
+
         $reply->delete();
+
         return response('Reply has been deleted', 200);
     }
 }

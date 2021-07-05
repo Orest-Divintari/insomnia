@@ -22,11 +22,12 @@ class CommentController extends Controller
      */
     public function store(ProfilePost $post, PostCommentRequest $request)
     {
-        return $post->addComment(
-            $request->validated(),
-            auth()->user()
-        )->load('poster')
-            ->loadCount('likes');
+        $comment = $post->addComment($request->validated(), auth()->user());
+
+        return $comment
+            ->load('poster')
+            ->loadCount('likes')
+            ->append('permissions');
     }
 
     /**
@@ -66,10 +67,16 @@ class CommentController extends Controller
      */
     public function index(ProfilePost $post)
     {
-        return $post->comments()
+        $comments = $post->comments()
             ->withLikes()
             ->latest()
             ->paginate(ProfilePost::REPLIES_PER_PAGE);
+
+        foreach ($comments as $comment) {
+            $comment->append('permissions');
+        }
+        
+        return $comments
     }
 
 }

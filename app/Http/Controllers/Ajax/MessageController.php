@@ -20,7 +20,8 @@ class MessageController extends Controller
     {
         return $conversation
             ->addMessage($request->validated())
-            ->load('poster');
+            ->load('poster')
+            ->append('permissions');
     }
 
     /**

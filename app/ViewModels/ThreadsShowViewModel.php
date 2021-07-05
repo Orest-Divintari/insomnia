@@ -26,6 +26,10 @@ class ThreadsShowViewModel
             ->withLikes()
             ->paginate(Thread::REPLIES_PER_PAGE);
 
+        foreach ($replies->items() as $reply) {
+            $reply->append('permissions');
+        }
+
         return app(AppendHasIgnoredContentAttributeAction::class)
             ->execute($replies);
     }

@@ -67,7 +67,7 @@ class ProfileViewModel
 
         foreach ($profilePosts->items() as $profilePost) {
 
-            $profilePost->unignoredComments = Reply::query()
+            $comments = Reply::query()
                 ->where('repliable_id', $profilePost->id)
                 ->where('repliable_type', get_class($profilePost))
                 ->excludeIgnored($this->authUser, $this->excludeIgnoredFilter)
@@ -75,6 +75,12 @@ class ProfileViewModel
                 ->latest('id')
                 ->paginate(ProfilePost::REPLIES_PER_PAGE)
                 ->withPath(route('ajax.comments.index', $profilePost));
+
+            foreach ($comments->items() as $comment) {
+                $comment->append('permissions');
+            }
+
+            $profilePost->unignoredCOmments = $comments;
 
             $profilePost->append('paginatedComments');
         }

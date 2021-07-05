@@ -35,6 +35,10 @@ class ConversationsShowViewModel
             ->withLikes()
             ->paginate(Conversation::REPLIES_PER_PAGE);
 
+        foreach ($messages->items() as $message) {
+            $message->append('permissions');
+        }
+
         return $this->appendHasIgnoredContentAttributeAction->execute($messages);
     }
 
