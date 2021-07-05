@@ -4,6 +4,7 @@ namespace App;
 
 use App\Events\Profile\NewPostWasAddedToProfile;
 use App\Facades\Avatar;
+use App\Filters\ExcludeIgnoredFilter;
 use App\Traits\Followable;
 use App\Traits\HandlesPrivacy;
 use App\Traits\Ignorable;
@@ -322,7 +323,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function unreadConversations()
     {
-        return $this->conversations()
+        $unreadConversations = $this->conversations()
             ->whereHas('reads', function ($query) {
                 $query->where('reads.user_id', $this->id)
                     ->where(function ($query) {
@@ -331,6 +332,9 @@ class User extends Authenticatable implements MustVerifyEmail
                             ->orWhereNull('reads.read_at');
                     });
             });
+
+        return app(ExcludeIgnoredFilter::class)
+            ->apply($unreadConversations, $this);
     }
 
     /**
