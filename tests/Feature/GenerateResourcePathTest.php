@@ -26,10 +26,11 @@ class GenerateResourcePathTest extends TestCase
         $replies = ReplyFactory::toThread($thread)
             ->createMany(Thread::REPLIES_PER_PAGE * $numberOfPages);
         $lastReply = $replies->last();
+        $expectedPageNumber = 6;
 
         $this->assertEquals(
             route('threads.show', $thread) .
-            '?page=' . $numberOfPages .
+            '?page=' . $expectedPageNumber .
             '#post-' . $lastReply->id,
             ResourcePath::generate($lastReply)
         );
@@ -40,6 +41,7 @@ class GenerateResourcePathTest extends TestCase
     {
         $conversation = create(Conversation::class);
         $numberOfPages = 5;
+        $expectedPageNumber = 5;
         $messages = MessageFactory::toConversation($conversation)
             ->createMany(Conversation::REPLIES_PER_PAGE * $numberOfPages);
 
@@ -47,7 +49,7 @@ class GenerateResourcePathTest extends TestCase
 
         $this->assertEquals(
             route('conversations.show', $message->repliable) .
-            "?page=" . $numberOfPages .
+            "?page=" . $expectedPageNumber .
             '#convMessage-' . $message->id,
             ResourcePath::generate($message)
         );
@@ -59,6 +61,7 @@ class GenerateResourcePathTest extends TestCase
     {
         $orestis = $this->signIn();
         $numberOfPages = 5;
+        $expectedPageNumber = 5;
         $posts = ProfilePostFactory::toProfile($orestis)
             ->createMany(ProfilePost::PER_PAGE * $numberOfPages);
         $lastPost = $posts->last();
@@ -66,8 +69,8 @@ class GenerateResourcePathTest extends TestCase
 
         $this->assertEquals(
             route('profiles.show', $orestis) .
-            "?page=" . $numberOfPages .
-            '#profile-post-comment-' . $comment->id,
+            "?page=" . $expectedPageNumber .
+            '#profile-post-' . $lastPost->id,
             ResourcePath::generate($comment)
         );
     }
@@ -78,6 +81,7 @@ class GenerateResourcePathTest extends TestCase
         $orestis = create(User::class);
         $john = create(User::class);
         $numberOfPages = 5;
+        $expectedPageNumber = 5;
         $posts = ProfilePostFactory::by($john)
             ->toProfile($orestis)
             ->createMany(ProfilePost::PER_PAGE * $numberOfPages);
@@ -86,7 +90,7 @@ class GenerateResourcePathTest extends TestCase
 
         $this->assertEquals(
             route('profiles.show', $orestis) .
-            '?page=' . $numberOfPages .
+            '?page=' . $expectedPageNumber .
             '#profile-post-' . $lastPost->id,
             ResourcePath::generate($lastPost)
         );
@@ -97,12 +101,13 @@ class GenerateResourcePathTest extends TestCase
     {
         $profilePost = create(ProfilePost::class);
         $numberOfPages = 5;
+        $expectedPageNumber = 5;
         $comments = CommentFactory::toProfilePost($profilePost)
             ->createMany(ProfilePost::REPLIES_PER_PAGE * $numberOfPages);
 
         $comment = $comments->last();
 
-        $this->assertEquals($numberOfPages, ResourcePath::pageNumber($comment));
+        $this->assertEquals($expectedPageNumber, ResourcePath::pageNumber($comment));
     }
 
     /** @test */
@@ -110,10 +115,11 @@ class GenerateResourcePathTest extends TestCase
     {
         $thread = create(Thread::class);
         $numberOfPages = 5;
+        $expectedPageNumber = 6;
         $threadReplies = ReplyFactory::toThread($thread)->createMany(Thread::REPLIES_PER_PAGE * $numberOfPages);
         $reply = $threadReplies->last();
 
-        $this->assertEquals($numberOfPages, ResourcePath::pageNumber($reply));
+        $this->assertEquals($expectedPageNumber, ResourcePath::pageNumber($reply));
     }
 
     /** @test */
@@ -122,13 +128,14 @@ class GenerateResourcePathTest extends TestCase
         $orestis = create(User::class);
         $john = create(User::class);
         $numberOfPages = 5;
+        $expectedPageNumber = 5;
         $posts = ProfilePostFactory::by($john)
             ->toProfile($orestis)
             ->createMany(ProfilePost::PER_PAGE * $numberOfPages);
 
         $lastPost = $posts->last();
 
-        $this->assertEquals($numberOfPages, ResourcePath::pageNumber($lastPost));
+        $this->assertEquals($expectedPageNumber, ResourcePath::pageNumber($lastPost));
     }
 
     /** @test */
@@ -136,11 +143,12 @@ class GenerateResourcePathTest extends TestCase
     {
         $conversation = create(Conversation::class);
         $numberOfPages = 5;
+        $expectedPageNumber = 5;
         $messages = MessageFactory::toConversation($conversation)
             ->createMany(Conversation::REPLIES_PER_PAGE * $numberOfPages);
 
         $message = $messages->last();
 
-        $this->assertEquals($numberOfPages, ResourcePath::pageNumber($message));
+        $this->assertEquals($expectedPageNumber, ResourcePath::pageNumber($message));
     }
 }
