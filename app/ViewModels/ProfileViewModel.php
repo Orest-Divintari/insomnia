@@ -78,9 +78,10 @@ class ProfileViewModel
 
             foreach ($comments->items() as $comment) {
                 $comment->append('permissions');
+
             }
 
-            $profilePost->unignoredCOmments = $comments;
+            $profilePost->unignoredComments = $comments;
 
             $profilePost->append('paginatedComments');
         }
