@@ -13,6 +13,7 @@ class ThreadsShowViewModel
             ->where('slug', $slug)
             ->withIgnoredByVisitor($authUser)
             ->withSubscribed($authUser)
+            ->withRecentReply()
             ->with(['poster', 'tags'])
             ->firstOrFail();
     }

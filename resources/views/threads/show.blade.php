@@ -53,10 +53,16 @@
 
                 <div class="mt-7 flex justify-end">
 
+                    <a dusk="jump-to-new-button" class="btn-white-blue mr-1"
+                        href="{{ $thread->recentReply->path }}">Jump to new
+                    </a>
+
                     @auth
                     <subscribe-button :thread="{{ $thread }}">
                     </subscribe-button>
                     @endauth
+
+
 
                     @if(auth()->check() && (auth()->user()->can('ignore', $thread) || auth()->user()->can('unignore',
                     $thread)))

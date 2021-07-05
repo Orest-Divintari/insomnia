@@ -320,4 +320,26 @@ class ThreadInteractionTest extends DuskTestCase
         });
     }
 
+    /** @test */
+    public function users_may_jump_to_the_newest_reply()
+    {
+        $thread = create(Thread::class);
+        $numberOfPages = 2;
+        $expectedPageNumber = 3;
+        $replies = ReplyFactory::toThread($thread)->createMany(Thread::REPLIES_PER_PAGE * $numberOfPages);
+        $lastReply = $replies->last();
+        $user = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($thread, $lastReply, $expectedPageNumber) {
+            $response = $browser
+                ->visit(route('threads.show', $thread))
+                ->click('@jump-to-new-button');
+
+            $response
+                ->assertQueryStringHas('page', $expectedPageNumber)
+                ->assertFragmentIs('post-' . $lastReply->id)
+                ->assertSee($lastReply->body);
+        });
+    }
+
 }
