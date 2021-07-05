@@ -53,7 +53,6 @@ class CommentController extends Controller
     public function destroy(Reply $comment)
     {
         $this->authorize('delete', $comment);
-
         $comment->delete();
 
         return response('Comment has been deleted', 200);
@@ -75,8 +74,8 @@ class CommentController extends Controller
         foreach ($comments as $comment) {
             $comment->append('permissions');
         }
-        
-        return $comments
+
+        return $comments;
     }
 
 }
