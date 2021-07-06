@@ -4,6 +4,7 @@ namespace Tests\Feature\ProfilePosts;
 
 use App\ProfilePost;
 use App\User;
+use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -85,6 +86,51 @@ class ViewProfilePostsTest extends TestCase
         $this->assertFalse($profilePosts->search(function ($profilePost) use ($profilePostByDoe) {
             return $profilePost->id == $profilePostByDoe->id;
         }));
+    }
+
+    /** @test */
+    public function guests_should_not_see_the_new_profile_posts()
+    {
+        $response = $this->get(route('profile-posts.index'), ['new' => 1]);
+
+        $response->assertRedirect('login');
+    }
+
+    /** @test */
+    public function it_returns_the_new_profile_posts()
+    {
+        $this->signIn();
+        Carbon::setTestNow(Carbon::now()->subWeek());
+        $oldProfilePost = ProfilePostFactory::create();
+        Carbon::setTestNow();
+        $newProfilePost = ProfilePostFactory::create();
+
+        $response = $this->get(route('profile-posts.index', ['new_posts' => 1]));
+
+        $profilePosts = $response['profilePosts']->items();
+
+        $this->assertEquals($newProfilePost->id, $profilePosts[0]['id']);
+        $this->assertEquals($oldProfilePost->id, $profilePosts[1]['id']);
+    }
+
+    /** @test */
+    public function it_returns_the_profile_posts_of_users_you_follow()
+    {
+        $john = create(User::class);
+        $doe = create(User::class);
+        $bob = $this->signIn();
+        $bob->follow($john);
+        $profilePostByBob = ProfilePostFactory::by($bob)->create();
+        $profilePostByJohn = ProfilePostFactory::by($john)->create();
+        $profilePostByDoe = ProfilePostFactory::by($doe)->create();
+
+        $response = $this->get(route('profile-posts.index', ['by_following' => 1]));
+
+        $profilePosts = collect($response['profilePosts']->items());
+
+        $this->assertCount(2, $profilePosts);
+        $this->assertTrue($profilePosts->pluck('id')->contains($profilePostByJohn->id));
+        $this->assertTrue($profilePosts->pluck('id')->contains($profilePostByBob->id));
     }
 
 }

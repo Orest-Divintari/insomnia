@@ -72,6 +72,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile-posts/{post}', 'ProfilePostController@show')
         ->name('profile-posts.show');
 
+    Route::get('/profile-posts', 'ProfilePostController@index')
+        ->name('profile-posts.index');
+
 /* ************ PROFILE POST COMMENTS ************ */
 
     Route::get('/profile-posts/comments/{comment}', 'CommentController@show')

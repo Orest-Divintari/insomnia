@@ -3,10 +3,9 @@
     <div class="flex flex-row-reverse items-center justify-end">
       <label class="ml-3 form-label" for="unanswered">Unanswered</label>
       <input
-        @click="$emit('checked', $event.target.checked , 'unanswered')"
+        @click="$emit('checked', $event.target.checked, 'unanswered')"
         :checked="isChecked"
         ref="unasnwered"
-        class="from-input"
         type="checkbox"
         id="unanswered"
       />
@@ -18,9 +17,9 @@
 export default {
   props: {
     isChecked: {
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 };
 </script>
 

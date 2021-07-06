@@ -5,6 +5,7 @@ namespace App;
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Helpers\Facades\ResourcePath;
 use App\Queries\CreatorIgnoredByVisitorColumn;
+use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
@@ -13,7 +14,7 @@ use Laravel\Scout\Searchable;
 
 class ProfilePost extends Model
 {
-    use FormatsDate, RecordsActivity, Searchable, Likeable;
+    use FormatsDate, RecordsActivity, Searchable, Likeable, Filterable;
 
     /**
      * Number of visible posts per page

@@ -72,6 +72,8 @@
                     <template v-slot:dropdown-items>
                         <a href="{{ route('online-user-activities.index') }}"
                             class=" dropdown-item hover:bg-white-catskill">Current visitors</a>
+                        <a href="{{ route('profile-posts.index') . '?new_posts=true' }}"
+                            class=" dropdown-item hover:bg-white-catskill">New profile posts</a>
                     </template>
                 </dropdown>
                 @endauth

@@ -171,6 +171,19 @@ Vue.component(
     require("./components/threads/ThreadListItem.vue").default
 );
 
+Vue.component(
+    "ProfilePost",
+    require("./components/profile/ProfilePost.vue").default
+);
+
+Vue.component(
+    "ProfilePosts",
+    require("./components/profilePosts/ProfilePosts.vue").default
+);
+
+
+
+
 
 
 

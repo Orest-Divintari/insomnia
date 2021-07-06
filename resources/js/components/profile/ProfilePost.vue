@@ -10,10 +10,21 @@
       </div>
       <div class="post-right-col">
         <div class="post-header">
-          <profile-popover
-            :user="item.poster"
-            triggerClasses="post-username"
-          ></profile-popover>
+          <div class="flex items-center">
+            <profile-popover
+              :user="item.poster"
+              triggerClasses="post-username"
+            ></profile-popover>
+            <i
+              v-if="showReceiverName"
+              class="fas fa-angle-right text-blue-mid mx-4"
+            ></i>
+            <profile-popover
+              v-if="showReceiverName"
+              :user="profileOwner"
+              triggerClasses="post-username"
+            ></profile-popover>
+          </div>
           <p class="dot"></p>
           <p class="text-sm text-gray-lightest" v-text="item.date_created"></p>
         </div>
@@ -86,6 +97,10 @@ export default {
     LikeButton,
   },
   props: {
+    showReceiver: {
+      type: Boolean,
+      default: false,
+    },
     item: {
       type: Object,
       default: {},
@@ -103,6 +118,9 @@ export default {
     };
   },
   computed: {
+    showReceiverName() {
+      return this.profileOwner.id != this.item.poster.id && this.showReceiver;
+    },
     likePath() {
       return "/ajax/profile-posts/" + this.item.id + "/likes";
     },

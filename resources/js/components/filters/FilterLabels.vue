@@ -9,7 +9,18 @@
         <div class="flex">
           <div class="mr-1/2">
             <div
-              class="flex items-center ml-2 bg-gray-geyser rounded py-1/2 px-3 hover:bg-gray-loblolly hover:text-blue-ship-cove text-gray-700 text-xs"
+              class="
+                flex
+                items-center
+                ml-2
+                bg-gray-geyser
+                rounded
+                py-1/2
+                px-3
+                hover:bg-gray-loblolly
+                hover:text-blue-ship-cove
+                text-gray-700 text-xs
+              "
             >
               <button>
                 {{ getFilterKey(key, value) }}:
