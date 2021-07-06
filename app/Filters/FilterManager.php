@@ -114,8 +114,8 @@ class FilterManager
         if (isset($modelFilter)) {
             $this->requestedFilters = $this->getFiltersFor($modelFilter);
         } else {
-            foreach ($this->supportedFilters as $modelFilter) {
-                $this->requestedFilters[] = $this->getFiltersFor($modelFilter);
+            foreach ($this->chain->getFilters() as $modelFilterClass) {
+                $this->requestedFilters = $this->getFiltersFor(new $modelFilterClass());
             }
         }
 
