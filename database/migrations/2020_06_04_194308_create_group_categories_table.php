@@ -17,6 +17,7 @@ class CreateGroupCategoriesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('excerpt');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

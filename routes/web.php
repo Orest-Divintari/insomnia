@@ -57,6 +57,52 @@ Route::get('/replies/{reply}', 'ReplyController@show')
 
 Route::group(['middleware' => 'auth'], function () {
 
+    /* ************ ADMIN ************ */
+    Route::group([
+        'namespace' => 'Admin',
+        'prefix' => 'admin',
+        'middleware' => 'role:admin',
+    ], function () {
+
+        /* ************ DASHBOARD ************ */
+        Route::get('/dashboard', 'DashboardController@index')
+            ->name('admin.dashboard.index');
+
+        /* ************ GROUP CATEGORIES ************ */
+
+        Route::get('/group-categories/create', 'GroupCategoryController@create')
+            ->name('admin.group-categories.create');
+
+        Route::get('/group-categories', 'GroupCategoryController@index')
+            ->name('admin.group-categories.index');
+
+        Route::post('/group-categories', 'GroupCategoryController@store')
+            ->name('admin.group-categories.store');
+
+        Route::patch('/group-categories/{groupCategory}', 'GroupCategoryController@update')
+            ->name('admin.group-categories.update');
+
+        Route::get('/group-categories/{groupCategory}/edit', 'GroupCategoryController@edit')
+            ->name('admin.group-categories.edit');
+
+        /* ************ CATEGORIES ************ */
+
+        Route::get('/categories/create', 'CategoryController@create')
+            ->name('admin.categories.create');
+
+        Route::get('/categories', 'CategoryController@index')
+            ->name('admin.categories.index');
+
+        Route::post('/categories', 'CategoryController@store')
+            ->name('admin.categories.store');
+
+        Route::patch('/categories/{category}', 'CategoryController@update')
+            ->name('admin.categories.update');
+
+        Route::get('/categories/{category}/edit', 'CategoryController@edit')
+            ->name('admin.categories.edit');
+    });
+
     /* ************ ONLINE ************ */
 
     Route::get('/online/user-activities', 'OnlineUserActivityController@index')

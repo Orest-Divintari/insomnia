@@ -5,6 +5,7 @@ namespace Tests;
 use App\Http\Middleware\AppendVisitor;
 use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Spatie\Permission\Models\Role;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -43,9 +44,9 @@ abstract class TestCase extends BaseTestCase
      */
     protected function signInAdmin($user = null)
     {
-        $user = $user ?: factory(User::class)->create([
-            'email' => config('insomnia.administrators')[0],
-        ]);
+        Role::create(['name' => 'admin']);
+        $user = $user ?: factory(User::class)->create();
+        $user->assignRole('admin');
 
         $this->actingAs($user);
         return $user;

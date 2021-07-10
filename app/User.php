@@ -19,11 +19,12 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
 
-    use Ignorable, Notifiable, Followable, Searchable, HandlesPrivacy;
+    use Ignorable, Notifiable, Followable, Searchable, HandlesPrivacy, HasRoles;
 
     /**
      * Set the maximum length for a username
@@ -354,6 +355,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isAdmin()
     {
+        return $this->hasRole('admin');
         return in_array($this->email, config('insomnia.administrators'));
     }
 

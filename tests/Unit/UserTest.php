@@ -20,6 +20,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -250,8 +251,10 @@ class UserTest extends TestCase
     public function a_user_knows_if_is_admin()
     {
         $notAdminUser = create(User::class);
+        Role::create(['name' => 'admin']);
+        $adminUser = create(User::class);
 
-        $adminUser = create(User::class, ['email' => 'uric@example.com']);
+        $adminUser->assignRole('admin');
 
         $this->assertFalse($notAdminUser->isAdmin());
         $this->assertTrue($adminUser->isAdmin());

@@ -329,6 +329,5 @@ class CreateThreadsTest extends TestCase
         $this->post(route('threads.store'), $thread);
 
         $this->assertEquals(Thread::latest('id')->first()->slug, $slug);
-
     }
 }

@@ -12,7 +12,7 @@
         <x-form.errors></x-form.errors>
 
         <div class="form-container">
-            <form action="{{ route('threads.create', $category) }}" method="POST">
+            <form action="{{ route('threads.store', $category) }}" method="POST">
                 @csrf
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
                 <div class="p-4">
@@ -63,7 +63,6 @@
                     </div>
                 </div>
                 <x-form.button class="text-xs" name="Post Thread"></x-form.button>
-
             </form>
         </div>
     </main>

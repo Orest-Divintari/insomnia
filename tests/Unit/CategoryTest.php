@@ -97,10 +97,10 @@ class CategoryTest extends TestCase
     /** @test */
     public function a_category_can_determine_the_path_to_its_avatar()
     {
-        $avatar = '/avatars/categories/apple_logo.png';
-        $category = create(Category::class, ['avatar_path' => $avatar]);
+        $image = '/avatars/categories/apple_logo.png';
+        $category = create(Category::class, ['image_path' => $image]);
 
-        $this->assertEquals(asset($avatar), $category->avatar_path);
+        $this->assertEquals(asset($image), $category->image_path);
     }
 
     /** @test */
@@ -326,5 +326,22 @@ class CategoryTest extends TestCase
 
         $this->assertEquals(0, Category::count());
         $this->assertEquals(0, Thread::count());
+    }
+
+    /** @test */
+    public function it_knows_the_number_of_descendant_categories()
+    {
+        config(['database.default' => 'mysql']);
+        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $grandParentCategory = create(Category::class);
+        $parentCategory = create(Category::class, ['parent_id' => $grandParentCategory->id]);
+        $category = create(Category::class, ['parent_id' => $parentCategory->id]);
+
+        $grandParentCategory = Category::query()
+            ->where('id', $grandParentCategory->id)
+            ->withDescendantCategoriesCount()
+            ->first();
+
+        $this->assertEquals($grandParentCategory->descendant_categories_count, 2);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\GroupCategory;
+use illuminate\Support\Str;
 
 class GroupCategoryObserver
 {
@@ -15,5 +16,16 @@ class GroupCategoryObserver
     public function deleting(GroupCategory $groupCategory)
     {
         $groupCategory->categories->each->delete();
+    }
+
+    /**
+     * Handle the group category "force deleted" event.
+     *
+     * @param  \App\GroupCategory  $groupCategory
+     * @return void
+     */
+    public function creating(GroupCategory $groupCategory)
+    {
+        $groupCategory->slug = Str::slug($groupCategory->title);
     }
 }

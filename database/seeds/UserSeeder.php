@@ -3,6 +3,7 @@
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -14,9 +15,10 @@ class UserSeeder extends Seeder
     public function run()
     {
         $users = ['uric', 'orestis', 'urielakos'];
+        Role::create(['name' => 'admin']);
 
         foreach ($users as $user) {
-            User::create([
+            $user = User::create([
                 'name' => $user,
                 'email' => $user . '@example.com',
                 'created_at' => Carbon::now(),
@@ -24,6 +26,8 @@ class UserSeeder extends Seeder
                 'email_verified_at' => Carbon::now(),
                 'password' => 'example123',
             ]);
+
+            $user->assignRole('admin');
         }
     }
 }

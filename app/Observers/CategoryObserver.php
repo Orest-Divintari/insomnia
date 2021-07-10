@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Category;
+use Illuminate\Support\Str;
 
 class CategoryObserver
 {
@@ -17,5 +18,14 @@ class CategoryObserver
     {
         $category->threads->each->delete();
         $category->subCategories->each->delete();
+    }
+
+    public function creating(Category $category)
+    {
+        if (!$category->isRoot()) {
+            $category->group_category_id = $category->category->group_category_id;
+        }
+
+        $category->slug = Str::slug($category->title);
     }
 }

@@ -9,7 +9,10 @@
 
             @auth
             <div class="flex items-center">
-
+                @role('admin')
+                <div class="head-tab-item"> <a href="{{ route('admin.dashboard.index') }}"> <i class="fas fa-cog"> </i>
+                    </a> </div>
+                @endrole
                 <profile-button :profile-owner="{{ auth()->user() }}"></profile-button>
                 @verified
                 <notification-button></notification-button>
