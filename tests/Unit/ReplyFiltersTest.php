@@ -20,7 +20,7 @@ class ReplyFiltersTest extends TestCase
         $this->assertNotEquals($likedReply->id, Reply::first()->id);
 
         $user = $this->signIn();
-        $likedReply->likedBy($user);
+        $likedReply->like($user);
 
         $replyFilters = new ReplyFilters();
         $replyFilters->setBuilder(Reply::withLikes());

@@ -88,7 +88,7 @@ class ReplyTest extends TestCase
         $this->assertEquals(
             route('profiles.show', $orestis) .
             "?page=" . $numberOfPages .
-            '#profile-post-comment-' . $comment->id,
+            '#profile-post-' . $lastPost->id,
             $comment->path
         );
     }
@@ -116,13 +116,14 @@ class ReplyTest extends TestCase
     {
         $thread = create(Thread::class);
         $numberOfPages = 5;
+        $expectedPageNumber = 6;
         $replies = ReplyFactory::toThread($thread)
             ->createMany(Thread::REPLIES_PER_PAGE * $numberOfPages);
         $lastReply = $replies->last();
 
         $this->assertEquals(
             route('threads.show', $thread) .
-            '?page=' . $numberOfPages .
+            '?page=' . $expectedPageNumber .
             '#post-' . $lastReply->id,
             $lastReply->path
         );
