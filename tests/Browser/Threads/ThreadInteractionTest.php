@@ -18,7 +18,7 @@ class ThreadInteractionTest extends DuskTestCase
     public function admins_may_lock_a_thread()
     {
         $thread = create(Thread::class);
-        $admin = create(User::class, ['email' => 'uric@example.com']);
+        $admin = createAdminUser();
 
         $this->browse(function (Browser $browser) use ($thread, $admin) {
             $response = $browser->loginAs($admin)
@@ -42,7 +42,7 @@ class ThreadInteractionTest extends DuskTestCase
     public function admins_may_unlock_a_thread()
     {
         $thread = create(Thread::class);
-        $admin = create(User::class, ['email' => 'uric@example.com']);
+        $admin = createAdminUser();
         $thread->lock();
 
         $this->browse(function (Browser $browser) use ($thread, $admin) {
@@ -66,7 +66,7 @@ class ThreadInteractionTest extends DuskTestCase
     public function admins_may_pin_a_thread()
     {
         $thread = create(Thread::class);
-        $admin = create(User::class, ['email' => 'uric@example.com']);
+        $admin = createAdminUser();
 
         $this->browse(function (Browser $browser) use ($thread, $admin) {
             $response = $browser->loginAs($admin)
@@ -87,7 +87,7 @@ class ThreadInteractionTest extends DuskTestCase
     public function admins_may_unpin_a_thread()
     {
         $thread = create(Thread::class);
-        $admin = create(User::class, ['email' => 'uric@example.com']);
+        $admin = createAdminUser();
         $thread->pin();
 
         $this->browse(function (Browser $browser) use ($thread, $admin) {

@@ -305,5 +305,4 @@ class ForumTest extends TestCase
         $john->delete();
         $doe->delete();
     }
-
 }

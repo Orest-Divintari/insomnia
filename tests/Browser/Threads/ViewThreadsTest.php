@@ -16,6 +16,45 @@ class ViewThreadsTest extends DuskTestCase
     use DatabaseMigrations;
 
     /** @test */
+    public function guests_should_not_see_the_input_to_post_new_reply()
+    {
+        $thread = create(Thread::class);
+
+        $this->browse(function (Browser $browser) use ($thread) {
+            $response = $browser
+                ->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@new-reply-input');
+        });
+    }
+
+    /** @test */
+    public function guests_should_not_see_the_watch_button()
+    {
+        $thread = create(Thread::class);
+
+        $this->browse(function (Browser $browser) use ($thread) {
+            $response = $browser
+                ->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@subscribe-thread-button');
+        });
+    }
+
+    /** @test */
+    public function guests_should_not_see_the_like_button()
+    {
+        $thread = create(Thread::class);
+
+        $this->browse(function (Browser $browser) use ($thread) {
+            $response = $browser
+                ->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@like-button');
+        });
+    }
+
+    /** @test */
     public function a_user_can_view_the_pagination_buttons_of_the_last_three_pages_of_replies_of_a_thread_of_a_given_category()
     {
         $category = create(Category::class);
@@ -82,42 +121,6 @@ class ViewThreadsTest extends DuskTestCase
             $browser->loginAs($john)
                 ->visit(route('threads.show', $thread))
                 ->assertMissing('@ignore-thread-button');
-        });
-    }
-
-    /** @test */
-    public function guests_should_not_see_the_input_to_post_new_reply()
-    {
-        $thread = create(Thread::class);
-
-        $this->browse(function (Browser $browser) use ($thread) {
-            $response = $browser->visit(route('threads.show', $thread));
-
-            $response->assertMissing('@new-reply-input');
-        });
-    }
-
-    /** @test */
-    public function guests_should_not_see_the_watch_button()
-    {
-        $thread = create(Thread::class);
-
-        $this->browse(function (Browser $browser) use ($thread) {
-            $response = $browser->visit(route('threads.show', $thread));
-
-            $response->assertMissing('@subscribe-thread-button');
-        });
-    }
-
-    /** @test */
-    public function guests_should_not_see_the_like_button()
-    {
-        $thread = create(Thread::class);
-
-        $this->browse(function (Browser $browser) use ($thread) {
-            $response = $browser->visit(route('threads.show', $thread));
-
-            $response->assertMissing('@like-button');
         });
     }
 

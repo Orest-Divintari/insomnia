@@ -1,5 +1,8 @@
 <?php
 
+use App\User;
+use Spatie\Permission\Models\Role;
+
 function create($class, $attributes = [])
 {
     return factory($class)->create($attributes);
@@ -28,4 +31,15 @@ function makeMany($class, $count, $attributes = [])
 function rawMany($class, $count, $attributes = [])
 {
     return factory($class, $count)->raw($attributes);
+}
+
+function createAdminUser()
+{
+    $user = create(User::class);
+
+    if (!Role::where('name', 'admin')->exists()) {
+        Role::create(['name' => 'admin']);
+    }
+    $user->assignRole('admin');
+    return $user;
 }
