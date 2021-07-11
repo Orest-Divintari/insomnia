@@ -560,4 +560,14 @@ class User extends Authenticatable implements MustVerifyEmail
             ->delete();
     }
 
+    /**
+     * Fetch notifications since last week
+     *
+     * @return Builder
+     */
+    public function notificationsSinceLastWeek()
+    {
+        return $this->notifications()->where('created_at', '>=', now()->subWeek());
+    }
+
 }
