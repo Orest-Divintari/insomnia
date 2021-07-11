@@ -13,9 +13,9 @@ class ReadAllNotificationsController extends Controller
      */
     public function destroy()
     {
-        auth()->user()
+        $unreadNotificationIds = auth()->user()
             ->unreadNotifications()
-            ->markAllAsRead();
+            ->update(['read_at' => now()]);
 
         return response('All unread notifications have been marked as read', 200);
     }
