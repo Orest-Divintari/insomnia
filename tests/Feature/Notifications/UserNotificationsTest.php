@@ -32,7 +32,7 @@ class UserNotificationsTest extends TestCase
         $notification = $this->get(route('ajax.user-notifications.index'))->json()[0];
 
         $this->assertEquals($notification['id'], $orestis->notifications()->first()->id);
-        $this->assertFalse($notification['is_read']);
+        $this->assertNull($notification['read_at']);
     }
 
     /** @test */
@@ -51,6 +51,6 @@ class UserNotificationsTest extends TestCase
         $notification = $this->get(route('ajax.user-notifications.index'))->json()[0];
 
         $this->assertEquals($notification['id'], $orestis->notifications()->first()->id);
-        $this->assertTrue($notification['is_read']);
+        $this->assertNotNull($notification['read_at']);
     }
 }

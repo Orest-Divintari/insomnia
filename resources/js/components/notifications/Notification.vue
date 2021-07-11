@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       hovering: false,
-      read: this.notification.is_read,
+      read: this.notification.read_at !== null,
     };
   },
   computed: {
