@@ -9,7 +9,7 @@ class UserNotificationController extends Controller
 {
 
     /**
-     * Fetch the unread notifications for the user
+     * Fetch the user notifications since last week
      *
      * @return \Illuminate\Http\Response
      */
@@ -19,8 +19,7 @@ class UserNotificationController extends Controller
 
         return auth()->user()
             ->fresh()
-            ->notifications()
-            ->sinceLastWeek()
+            ->notificationsSinceLastWeek()
             ->get();
     }
 }
