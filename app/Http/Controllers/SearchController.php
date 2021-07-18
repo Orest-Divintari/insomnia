@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
 use App\Search;
+use App\Search\SearchData;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -43,7 +44,7 @@ class SearchController extends Controller
                 ->withErrors($validator);
         }
 
-        $results = $search->handle($this->request);
+        $results = $search->handle(SearchData::fromRequest($this->request));
 
         if (request()->expectsJson()) {
             return $results;

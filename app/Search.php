@@ -4,6 +4,7 @@ namespace App;
 
 use App\Actions\AppendHasIgnoredContentAttributeAction;
 use App\Search\ModelFilterFactory;
+use App\Search\SearchData;
 use App\Search\SearchIndexFactory;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -63,22 +64,20 @@ class Search
      * @param Request $request
      * @return Collection|string
      */
-    public function handle(Request $request)
+    public function handle(SearchData $searchData)
     {
-        $type = $request->input('type') ?: '';
-        $onlyTitle = $request->boolean('only_title') ?: false;
-        $searchQuery = $request->input('q') ?: '';
-
         $index = $this->indexFor(
-            $searchQuery,
-            $type,
-            $onlyTitle
+            $searchData->query,
+            $searchData->type,
+            $searchData->onlyTitle
         );
 
-        $filters = $this->filtersFor($type);
+        $filters = $this->filtersFor($searchData->type);
 
-        $builder = $index->search($searchQuery);
+        $builder = $index->search($searchData->query);
+
         $results = $filters->apply($builder);
+
         return $this->fetch($results);
     }
 
