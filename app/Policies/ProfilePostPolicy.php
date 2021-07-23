@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\ProfilePost;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProfilePostPolicy

@@ -1,6 +1,7 @@
 <?php
+namespace Database\Seeders;
 
-use App\Tag;
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 
 class TagSeeder extends Seeder
@@ -35,7 +36,7 @@ class TagSeeder extends Seeder
         ];
 
         foreach ($tags as $tag) {
-            factory(Tag::class)->create(['name' => $tag]);
+            Tag::factory()->create(['name' => $tag]);
         }
     }
 }

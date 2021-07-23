@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Follow;
+use App\Models\Follow;
 
 class AccountFollowingsController extends Controller
 {

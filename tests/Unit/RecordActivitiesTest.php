@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\Like;
-use App\ProfilePost;
-use App\Reply;
-use App\Thread;
+use App\Models\Like;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\Thread;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ReplyFactory;

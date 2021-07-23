@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Ajax;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProfilePostRequest;
 use App\Http\Requests\UpdateProfilePostRequest;
-use App\ProfilePost;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\User;
 
 class ProfilePostController extends Controller
 {

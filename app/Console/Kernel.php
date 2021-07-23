@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Activity;
+use App\Models\Activity;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;

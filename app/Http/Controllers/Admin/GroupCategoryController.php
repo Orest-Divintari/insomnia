@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\GroupCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateGroupCategoryRequest;
 use App\Http\Requests\UpdateGroupCategoryRequest;
+use App\Models\GroupCategory;
 
 class GroupCategoryController extends Controller
 {

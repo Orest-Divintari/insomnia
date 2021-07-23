@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Reply;
+use App\Models\Reply;
 
 class ReplyController extends Controller
 {

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Thread;
+use App\Models\Thread;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

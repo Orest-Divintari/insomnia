@@ -3,8 +3,8 @@
 namespace App\Listeners\Activity;
 
 use App\Actions\ActivityLogger;
-use App\Activity;
 use App\Events\Activity\UserViewedPage;
+use App\Models\Activity;
 
 class LogUserActivity
 {

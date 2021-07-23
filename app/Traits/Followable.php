@@ -4,8 +4,8 @@ namespace App\Traits;
 
 use App\Events\Follow\AUserStartedFollowingYou;
 use App\Events\Follow\AUserUnfollowedYou;
-use App\Follow;
-use App\User;
+use App\Models\Follow;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Event;
 

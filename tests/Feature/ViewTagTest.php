@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Tag;
-use App\Thread;
+use App\Models\Tag;
+use App\Models\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

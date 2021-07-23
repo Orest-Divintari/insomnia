@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\ProfilePost;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

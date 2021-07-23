@@ -1,13 +1,29 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\GroupCategory;
-use Faker\Generator as Faker;
+use App\Models\GroupCategory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(GroupCategory::class, function (Faker $faker) {
-    return [
-        'title' => $faker->sentence(),
-        'excerpt' => $faker->sentence(),
-    ];
-});
+class GroupCategoryFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = GroupCategory::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->sentence(),
+            'excerpt' => $this->faker->sentence(),
+        ];
+    }
+}

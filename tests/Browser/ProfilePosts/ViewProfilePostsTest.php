@@ -2,7 +2,7 @@
 
 namespace Tests\Browser\ProfilePosts;
 
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

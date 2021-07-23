@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Category;
+use App\Models\Category;
 use App\Rules\SameWithParentCategory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Storage;

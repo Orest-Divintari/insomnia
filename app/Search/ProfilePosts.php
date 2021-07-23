@@ -12,8 +12,8 @@ class ProfilePosts extends Aggregator
      * @var string[]
      */
     protected $models = [
-        'App\ProfilePost',
-        'App\Reply',
+        'App\Models\ProfilePost',
+        'App\Models\Reply',
     ];
 
     /**
@@ -24,7 +24,7 @@ class ProfilePosts extends Aggregator
     public function shouldBeSearchable()
     {
         return class_basename($this->model) == 'ProfilePost'
-        || $this->model->repliable_type == 'App\ProfilePost';
+        || $this->model->repliable_type == 'App\Models\ProfilePost';
     }
 
 }

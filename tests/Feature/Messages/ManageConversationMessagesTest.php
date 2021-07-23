@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Messages;
 
-use App\Reply;
+use App\Models\Reply;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Notifications;
 
-use App\Conversation;
+use App\Models\Conversation;
+use App\Models\User;
 use App\Notifications\ConversationHasNewMessage;
-use App\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

@@ -2,8 +2,8 @@
 
 namespace App\Notifications;
 
-use App\Conversation;
-use App\Reply;
+use App\Models\Conversation;
+use App\Models\Reply;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;

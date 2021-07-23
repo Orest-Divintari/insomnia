@@ -2,7 +2,7 @@
 
 namespace Tests\Browser\Search;
 
-use App\User;
+use App\Models\User;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;

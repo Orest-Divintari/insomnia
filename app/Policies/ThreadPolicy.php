@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Thread;
-use App\User;
+use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ThreadPolicy

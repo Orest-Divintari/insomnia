@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
-use App\Thread;
-use App\User;
+use App\Models\Thread;
+use App\Models\User;
 
 class ThreadSubscriptionController extends Controller
 {

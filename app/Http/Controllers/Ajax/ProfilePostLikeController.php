@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
-use App\ProfilePost;
+use App\Models\ProfilePost;
 
 class ProfilePostLikeController extends Controller
 {

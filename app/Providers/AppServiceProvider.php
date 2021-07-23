@@ -3,11 +3,11 @@
 namespace App\Providers;
 
 use App\helpers\Visitor;
+use App\Models\User;
 use App\Notifications\ThreadHasNewReply;
 use App\Search\AllPosts;
 use App\Search\ProfilePosts;
 use App\Search\Threads;
-use App\User;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;

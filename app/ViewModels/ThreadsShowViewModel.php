@@ -3,7 +3,7 @@
 namespace App\ViewModels;
 
 use App\Actions\AppendHasIgnoredContentAttributeAction;
-use App\Thread;
+use App\Models\Thread;
 
 class ThreadsShowViewModel
 {

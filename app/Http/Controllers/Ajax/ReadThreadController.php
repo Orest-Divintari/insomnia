@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
-use App\Thread;
+use App\Models\Thread;
 
 class ReadThreadController extends Controller
 {

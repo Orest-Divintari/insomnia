@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Conversations;
 
-use App\Conversation;
+use App\Models\Conversation;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;

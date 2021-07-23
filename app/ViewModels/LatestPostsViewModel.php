@@ -2,8 +2,8 @@
 
 namespace App\ViewModels;
 
-use App\Thread;
-use App\User;
+use App\Models\Thread;
+use App\Models\User;
 
 class LatestPostsViewModel
 {

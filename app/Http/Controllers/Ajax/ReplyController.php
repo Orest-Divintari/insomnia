@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Ajax;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostReplyRequest;
 use App\Http\Requests\UpdateReplyRequest;
-use App\Reply;
-use App\Thread;
+use App\Models\Reply;
+use App\Models\Thread;
 use Illuminate\Support\Facades\Http;
 
 class ReplyController extends Controller

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Profiles;
 
-use App\User;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;

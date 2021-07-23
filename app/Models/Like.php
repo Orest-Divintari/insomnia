@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Traits\FormatsDate;
 use App\Traits\RecordsActivity;
@@ -70,7 +70,7 @@ class Like extends Model
      */
     public function shouldBeRecordable()
     {
-        if ($this->likeable->repliable_type == 'App\Conversation') {
+        if ($this->likeable->repliable_type == 'App\Models\Conversation') {
             return false;
         }
         return true;

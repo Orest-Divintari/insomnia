@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Actions\StringToArrayForRequestAction;
-use App\Conversation;
+use App\Models\Conversation;
 use App\Rules\IsNotAlreadyAParticipant;
 use Illuminate\Foundation\Http\FormRequest;
 

@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-use App\Activity;
 use App\Helpers\ModelType;
+use App\Models\Activity;
 
 trait RecordsActivity
 {

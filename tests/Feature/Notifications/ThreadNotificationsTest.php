@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Notifications;
 
+use App\Models\Reply;
+use App\Models\Thread;
+use App\Models\User;
 use App\Notifications\ThreadHasNewReply;
-use App\Reply;
-use App\Thread;
-use App\User;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

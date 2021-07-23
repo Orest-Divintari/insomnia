@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Follow;
-use App\User;
+use App\Models\Follow;
+use App\Models\User;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;

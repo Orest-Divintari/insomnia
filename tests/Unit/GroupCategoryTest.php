@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Category;
-use App\GroupCategory;
-use App\Thread;
+use App\Models\Category;
+use App\Models\GroupCategory;
+use App\Models\Thread;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

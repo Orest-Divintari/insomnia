@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\Helpers\ModelType;
-use App\ProfilePost;
-use App\Reply;
+use App\Models\ProfilePost;
+use App\Models\Reply;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;

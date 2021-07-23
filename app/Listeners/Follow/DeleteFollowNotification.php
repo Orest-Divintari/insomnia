@@ -3,8 +3,8 @@
 namespace App\Listeners\Follow;
 
 use App\Events\Follow\AUserUnfollowedYou;
+use App\Models\User;
 use App\Notifications\YouHaveANewFollower;
-use App\User;
 
 class DeleteFollowNotification
 {

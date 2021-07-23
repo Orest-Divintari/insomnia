@@ -3,7 +3,7 @@
 namespace App\Filters;
 
 use App\Actions\StringToArrayAction;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 
 class PostFilters

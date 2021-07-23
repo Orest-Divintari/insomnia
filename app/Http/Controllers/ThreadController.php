@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Events\Activity\UserViewedPage;
 use App\Filters\ExcludeIgnoredFilter;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateThreadRequest;
-use App\Thread;
+use App\Models\Category;
+use App\Models\Thread;
 use App\ViewModels\ThreadsShowViewModel;
 use App\ViewModels\ThreasdIndexViewModel;
 use Illuminate\Http\Request;

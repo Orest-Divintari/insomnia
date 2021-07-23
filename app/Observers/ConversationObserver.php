@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Conversation;
+use App\Models\Conversation;
 
 class ConversationObserver
 {

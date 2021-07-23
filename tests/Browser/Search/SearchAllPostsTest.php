@@ -2,8 +2,8 @@
 
 namespace Tests\Browser\Search;
 
-use App\Thread;
-use App\User;
+use App\Models\Thread;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;

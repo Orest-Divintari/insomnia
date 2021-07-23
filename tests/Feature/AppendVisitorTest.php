@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\Http\Middleware\AppendVisitor;
-use App\Thread;
-use App\User;
+use App\Models\Thread;
+use App\Models\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

@@ -2,7 +2,7 @@
 
 namespace App\ViewModels;
 
-use App\Thread;
+use App\Models\Thread;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class AccountLikesViewModel

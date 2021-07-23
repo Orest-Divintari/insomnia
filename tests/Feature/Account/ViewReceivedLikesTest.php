@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Accoubt;
 
-use App\ProfilePost;
-use App\Reply;
-use App\Thread;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\Thread;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;

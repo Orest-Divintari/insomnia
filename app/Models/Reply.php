@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Helpers\Facades\ResourcePath;
 use App\Queries\CreatorIgnoredByVisitorColumn;
@@ -8,6 +8,7 @@ use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Laravel\Scout\Searchable;
@@ -19,7 +20,8 @@ class Reply extends Model
     Likeable,
     FormatsDate,
     RecordsActivity,
-        Searchable;
+    Searchable,
+        HasFactory;
 
     /**
      * The accessors to append to the model's array form.
@@ -137,11 +139,11 @@ class Reply extends Model
      */
     public function getTypeAttribute()
     {
-        if ($this->repliable_type == 'App\Thread') {
+        if ($this->repliable_type == 'App\Models\Thread') {
             return 'thread-reply';
-        } elseif ($this->repliable_type == 'App\ProfilePost') {
+        } elseif ($this->repliable_type == 'App\Models\ProfilePost') {
             return 'profile-post-comment';
-        } elseif ($this->repliable_type == 'App\Conversation') {
+        } elseif ($this->repliable_type == 'App\Models\Conversation') {
             return 'conversation-message';
         }
     }

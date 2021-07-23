@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\ThreadReplies;
 
-use App\Thread;
+use App\Models\Thread;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;

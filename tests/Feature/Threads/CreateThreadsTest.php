@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Threads;
 
-use App\Category;
 use App\Http\Middleware\ThrottlePosts;
-use App\Tag;
-use App\Thread;
-use App\User;
+use App\Models\Category;
+use App\Models\Tag;
+use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;

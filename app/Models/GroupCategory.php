@@ -1,15 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class GroupCategory extends Model
 {
 
-    use Sluggable;
+    use Sluggable, HasFactory;
 
     /**
      * Number of group categories to display per page

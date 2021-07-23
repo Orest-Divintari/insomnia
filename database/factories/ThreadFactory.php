@@ -1,24 +1,46 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Category;
-use App\Thread;
-use App\User;
-use Faker\Generator as Faker;
+use App\Models\Category;
+use App\Models\Thread;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-$factory->define(Thread::class, function (Faker $faker) {
-    $title = $faker->sentence();
-    return [
-        'title' => $title,
-        'slug' => Str::slug($title),
-        'body' => $faker->paragraph(),
-        'user_id' => auth()->id() ?: factory(User::class),
-        'category_id' => factory(Category::class),
-        'pinned' => false,
-        'locked' => false,
-        'replies_count' => 0,
-        'views' => 0,
-    ];
-});
+class ThreadFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Thread::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $title = $this->faker->sentence();
+
+        return [
+            'title' => $title,
+            'slug' => Str::slug($title),
+            'body' => $this->faker->paragraph(),
+            'user_id' => function () {
+                return auth()->id() ?: User::factory()->create()->id;
+            },
+            'category_id' => function () {
+                return Category::factory()->create()->id;
+            },
+            'pinned' => false,
+            'locked' => false,
+            'replies_count' => 0,
+            'views' => 0,
+        ];
+
+    }
+}

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Conversation;
-use App\Reply;
+use App\Models\Conversation;
+use App\Models\Reply;
 
 class MessageController extends Controller
 {

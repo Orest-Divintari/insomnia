@@ -3,7 +3,7 @@ namespace App\Filters;
 
 use App\Filters\FilterInterface;
 use App\Filters\Filters;
-use App\User;
+use App\Models\User;
 
 class ProfilePostFilters extends PostFilters implements FilterInterface
 {

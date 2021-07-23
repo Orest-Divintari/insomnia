@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Reply;
-use App\Thread;
-use App\User;
+use App\Models\Reply;
+use App\Models\Thread;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\MessageFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
@@ -83,5 +83,4 @@ class LikeTest extends TestCase
 
         $this->assertEquals($liker->id, $like->liker->id);
     }
-
 }

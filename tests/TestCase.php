@@ -3,7 +3,7 @@
 namespace Tests;
 
 use App\Http\Middleware\AppendVisitor;
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Spatie\Permission\Models\Role;
 
@@ -28,7 +28,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function signIn($user = null)
     {
-        $user = $user ?: factory(User::class)->create();
+        $user = $user ?: User::factory()->create();
         $this->actingAs($user);
         return $user;
     }
@@ -45,9 +45,8 @@ abstract class TestCase extends BaseTestCase
     protected function signInAdmin($user = null)
     {
         Role::create(['name' => 'admin']);
-        $user = $user ?: factory(User::class)->create();
+        $user = $user ?: User::factory()->create();
         $user->assignRole('admin');
-
         $this->actingAs($user);
         return $user;
     }

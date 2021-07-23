@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Filters\ExcludeIgnoredFilter;
 use App\Filters\FilterManager;
-use App\ProfilePost;
+use App\Models\ProfilePost;
 use App\ViewModels\ProfilePostsViewModel;
 
 class ProfilePostController extends Controller

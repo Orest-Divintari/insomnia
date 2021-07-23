@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Notifications;
 
+use App\Models\User;
 use App\Notifications\YouHaveANewFollower;
-use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;

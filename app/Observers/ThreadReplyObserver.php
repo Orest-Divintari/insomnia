@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Reply;
+use App\Models\Reply;
 
 class ThreadReplyObserver
 {

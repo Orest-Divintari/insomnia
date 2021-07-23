@@ -2,7 +2,7 @@
 
 namespace App\User;
 
-use App\User;
+use App\Models\User;
 use App\User\Settings;
 
 class Details extends Settings

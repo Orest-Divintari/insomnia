@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
+use App\Models\User;
 use App\Queries\CreatorIgnoredByVisitorColumn;
 use App\Search\Threads;
 use App\Traits\Filterable;
@@ -13,9 +14,9 @@ use App\Traits\Readable;
 use App\Traits\RecordsActivity;
 use App\Traits\Sluggable;
 use App\Traits\Subscribable;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
@@ -31,7 +32,8 @@ class Thread extends Model
     Sluggable,
     Lockable,
     Readable,
-        Ignorable;
+    Ignorable,
+        HasFactory;
     /**
      * Number of visible threads per page
      *
@@ -172,7 +174,7 @@ class Thread extends Model
         return $query->addSelect([
             'recent_reply_id' => Reply::select('id')
                 ->whereColumn('repliable_id', 'threads.id')
-                ->where('repliable_type', 'App\Thread')
+                ->where('repliable_type', 'App\Models\Thread')
                 ->orderBy('created_at', 'DESC')
                 ->orderBy('id', 'DESC')
                 ->take(1),
@@ -258,7 +260,7 @@ class Thread extends Model
         $reply->created_at = $this->created_at;
         $reply->repliable_id = $this->id;
         $reply->position = 1;
-        $reply->repliable_type = 'App\Thread';
+        $reply->repliable_type = 'App\Models\Thread';
         $reply->save();
     }
 

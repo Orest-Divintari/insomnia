@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Conversation;
 use App\Filters\ConversationFilters;
-use App\User;
+use App\Models\Conversation;
+use App\Models\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;

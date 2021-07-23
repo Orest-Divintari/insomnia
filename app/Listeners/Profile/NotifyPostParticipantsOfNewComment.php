@@ -3,8 +3,8 @@
 namespace App\Listeners\Profile;
 
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
+use App\Models\ProfilePost;
 use App\Notifications\ParticipatedProfilePostHasNewComment;
-use App\ProfilePost;
 use App\Traits\HandlesNotifications;
 
 class NotifyPostParticipantsOfNewComment

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\Activity\UserViewedPage;
 use App\Filters\ExcludeIgnoredFilter;
-use App\User;
+use App\Models\User;
 use App\ViewModels\ProfileViewModel;
 
 class ProfileController extends Controller

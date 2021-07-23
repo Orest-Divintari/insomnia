@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use App\Conversation;
-use App\User;
+use App\Models\Conversation;
+use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
 
 class IsNotAlreadyAParticipant implements Rule

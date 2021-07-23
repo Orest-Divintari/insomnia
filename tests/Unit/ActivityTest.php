@@ -3,9 +3,9 @@
 namespace Tests\Unit;
 
 use App\Actions\ActivityLogger;
-use App\Activity;
-use App\Thread;
-use App\User;
+use App\Models\Activity;
+use App\Models\Thread;
+use App\Models\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
-use App\GroupCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Category;
+use App\Models\GroupCategory;
 
 class CategoryController extends Controller
 {

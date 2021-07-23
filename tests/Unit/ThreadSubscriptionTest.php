@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Thread;
-use App\ThreadSubscription;
-use App\User;
+use App\Models\Thread;
+use App\Models\ThreadSubscription;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

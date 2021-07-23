@@ -2,9 +2,9 @@
 
 namespace Tests\Setup;
 
-use App\Conversation;
 use App\Message;
-use App\User;
+use App\Models\Conversation;
+use App\Models\User;
 use Faker\Generator as Faker;
 use Tests\Setup\FactoryInterface;
 
@@ -109,7 +109,7 @@ class ConversationFactory extends Factory implements FactoryInterface
      */
     protected function createConversation($attributes, $count = 1)
     {
-        $conversations = factory(Conversation::class, $count)->create(
+        $conversations = Conversation::factory()->count($count)->create(
             array_merge(
                 [
                     'user_id' => $this->userId(),

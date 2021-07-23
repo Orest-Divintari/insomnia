@@ -3,9 +3,9 @@
 namespace App\Filters;
 
 use App\Actions\StringToArrayAction;
-use App\Conversation;
 use App\Filters\FilterInterface;
-use App\User;
+use App\Models\Conversation;
+use App\Models\User;
 use Carbon\Carbon;
 
 class ConversationFilters implements FilterInterface
@@ -79,7 +79,7 @@ class ConversationFilters implements FilterInterface
     public function startedBy($usernames)
     {
         $namesArray = (new StringToArrayAction($usernames))->execute();
-        
+
         $userIds = User::whereIn('name', $namesArray)->pluck('id');
 
         return $this->builder->whereIn('conversations.user_id', $userIds);

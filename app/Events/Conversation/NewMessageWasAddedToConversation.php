@@ -2,8 +2,8 @@
 
 namespace App\Events\Conversation;
 
-use App\Conversation;
-use App\Reply;
+use App\Models\Conversation;
+use App\Models\Reply;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;

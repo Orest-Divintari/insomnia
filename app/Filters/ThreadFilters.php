@@ -4,9 +4,9 @@ namespace App\Filters;
 
 use App\Filters\FilterInterface;
 use App\Filters\Filters;
-use App\Reply;
-use App\Thread;
-use App\User;
+use App\Models\Reply;
+use App\Models\Thread;
+use App\Models\User;
 use Carbon\Carbon;
 
 class ThreadFilters extends PostFilters implements FilterInterface
@@ -49,7 +49,7 @@ class ThreadFilters extends PostFilters implements FilterInterface
         $this->builder->addSelect([
             'recent_reply_created_date' => Reply::select('created_at')
                 ->whereColumn('repliable_id', 'threads.id')
-                ->where('repliable_type', 'App\Thread')
+                ->where('repliable_type', 'App\Models\Thread')
                 ->latest('created_at')
                 ->take(1),
         ])->orderBy('recent_reply_created_date', 'DESC');

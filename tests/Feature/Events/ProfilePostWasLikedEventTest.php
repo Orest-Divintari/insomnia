@@ -3,7 +3,7 @@
 namespace Tests\Feature\Events;
 
 use App\Listeners\Subscription\NotifyProfilePostPosterOfNewLike;
-use App\User;
+use App\Models\User;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;

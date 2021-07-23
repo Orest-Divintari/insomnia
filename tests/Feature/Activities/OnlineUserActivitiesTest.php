@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Activities;
 
-use App\Activity;
-use App\Category;
 use App\Events\Activity\UserViewedPage;
-use App\Thread;
+use App\Models\Activity;
+use App\Models\Category;
+use App\Models\Thread;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

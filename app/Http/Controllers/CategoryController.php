@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Events\Activity\UserViewedPage;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {

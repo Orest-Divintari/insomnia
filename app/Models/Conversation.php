@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Events\Conversation\NewMessageWasAddedToConversation;
 use App\Events\Conversation\NewParticipantsWereAdded;
@@ -11,6 +11,7 @@ use App\Traits\Lockable;
 use App\Traits\Readable;
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
@@ -19,7 +20,8 @@ class Conversation extends Model
     FormatsDate,
     Filterable,
     Lockable,
-        Readable;
+    Readable,
+        HasFactory;
 
     /**
      * Number of conversations per page
@@ -286,7 +288,7 @@ class Conversation extends Model
     {
         return $query->addSelect(['read_at' => Read::select('reads.read_at')
                 ->whereColumn('reads.readable_id', 'conversations.id')
-                ->where('reads.readable_type', '=', 'App\Conversation')
+                ->where('reads.readable_type', '=', 'App\Models\Conversation')
                 ->where('reads.user_id', '=', auth()->id()),
         ]);
     }

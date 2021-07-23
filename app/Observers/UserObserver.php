@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\User;
+use App\Models\User;
 use App\User\Details;
 use App\User\Privacy;
 

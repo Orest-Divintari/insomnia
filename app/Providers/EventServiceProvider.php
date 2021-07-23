@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
-use App\Category;
-use App\Conversation;
-use App\GroupCategory;
+use App\Models\Category;
+use App\Models\Conversation;
+use App\Models\GroupCategory;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\Thread;
+use App\Models\User;
 use App\Observers\CategoryObserver;
 use App\Observers\ConversationObserver;
 use App\Observers\GroupCategoryObserver;
@@ -14,10 +18,6 @@ use App\Observers\ReplyObserver;
 use App\Observers\SubscribeToThreadObserver;
 use App\Observers\ThreadReplyObserver;
 use App\Observers\UserObserver;
-use App\ProfilePost;
-use App\Reply;
-use App\Thread;
-use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

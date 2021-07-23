@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Admin\Categories;
 
-use App\Category;
-use App\GroupCategory;
+use App\Models\Category;
+use App\Models\GroupCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;

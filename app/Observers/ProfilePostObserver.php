@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\ProfilePost;
+use App\Models\ProfilePost;
 
 class ProfilePostObserver
 {

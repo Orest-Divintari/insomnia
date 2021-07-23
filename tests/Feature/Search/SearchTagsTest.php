@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Search;
 
-use App\Tag;
-use App\Thread;
+use App\Models\Tag;
+use App\Models\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SearchTagsTest extends SearchTest

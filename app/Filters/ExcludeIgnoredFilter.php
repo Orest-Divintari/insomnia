@@ -2,11 +2,11 @@
 
 namespace App\Filters;
 
-use App\Conversation;
-use App\ProfilePost;
-use App\Reply;
-use App\Thread;
-use App\User;
+use App\Models\Conversation;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 class ExcludeIgnoredFilter

@@ -5,7 +5,7 @@ namespace App\Traits;
 use App\Events\LikeEvent;
 use App\Events\Like\PostWasUnliked;
 use App\Helpers\ModelType;
-use App\Like;
+use App\Models\Like;
 use Illuminate\Database\Eloquent\Builder;
 
 trait Likeable

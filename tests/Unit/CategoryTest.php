@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Category;
-use App\GroupCategory;
-use App\Thread;
+use App\Models\Category;
+use App\Models\GroupCategory;
+use App\Models\Thread;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -320,8 +320,7 @@ class CategoryTest extends TestCase
     public function when_a_category_is_deleted_then_delete_its_associated_threads()
     {
         $computer = create(Category::class);
-        createMany(Thread::class, 5, ['category_id' => $computer->id]);
-
+        ThreadFactory::inCategory($computer)->createMany(5);
         $computer->delete();
 
         $this->assertEquals(0, Category::count());

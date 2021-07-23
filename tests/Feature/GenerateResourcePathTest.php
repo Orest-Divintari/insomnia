@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Conversation;
 use App\Helpers\Facades\ResourcePath;
-use App\ProfilePost;
-use App\Thread;
-use App\User;
+use App\Models\Conversation;
+use App\Models\ProfilePost;
+use App\Models\Thread;
+use App\Models\User;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

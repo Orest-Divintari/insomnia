@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Admin\GroupCategories;
 
-use App\GroupCategory;
+use App\Models\GroupCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
@@ -145,5 +145,11 @@ class CreateGroupCategoriesTest extends TestCase
         $this->post(route('admin.group-categories.store'), $groupCategory);
 
         $this->assertEquals(GroupCategory::latest('id')->first()->slug, $slug);
+    }
+
+    /** @test */
+    public function check()
+    {
+
     }
 }

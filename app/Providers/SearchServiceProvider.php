@@ -5,8 +5,8 @@ namespace App\Providers;
 use App\Actions\AppendHasIgnoredContentAttributeAction;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\SearchRequestFactory;
-use App\Search;
 use App\Search\ModelFilterFactory;
+use App\Search\Search;
 use App\Search\SearchIndexFactory;
 use Illuminate\Support\ServiceProvider;
 

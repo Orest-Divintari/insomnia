@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Thread;
+use App\Models\Thread;
 
 class SubscribeToThreadObserver
 {

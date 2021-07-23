@@ -2,7 +2,7 @@
 
 namespace Tests\Browser\Search;
 
-use App\User;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

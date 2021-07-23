@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Actions\StringToArrayForRequestAction;
-use App\Thread;
+use App\Models\Thread;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 

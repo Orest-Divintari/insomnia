@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Actions\StringToArrayForRequestAction;
-use App\Conversation;
+use App\Models\Conversation;
+use App\Models\User;
 use App\Rules\AllowsConversations;
 use App\Rules\DifferentFromStarter;
-use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;

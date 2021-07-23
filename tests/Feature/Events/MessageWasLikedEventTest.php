@@ -3,7 +3,7 @@
 namespace Tests\Feature\Events;
 
 use App\Listeners\Conversation\NotifyMessagePoster;
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;

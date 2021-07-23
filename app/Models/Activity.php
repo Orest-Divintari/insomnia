@@ -1,15 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use App\Models\Thread;
 use App\Traits\FormatsDate;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Activity extends Model
 {
-    use FormatsDate;
+    use FormatsDate, HasFactory;
 
     /**
      * Number of activities per page
@@ -87,9 +89,9 @@ class Activity extends Model
         return $query->typeCreated()
             ->where('user_id', $user->id)
             ->whereIn('subject_type', [
-                'App\Thread',
-                'App\Reply',
-                'App\ProfilePost',
+                Thread::class,
+                'App\Models\Reply',
+                'App\Models\ProfilePost',
             ])->latest()
             ->with(['subject' => function ($morphTo) {
                 $morphTo->morphWith([

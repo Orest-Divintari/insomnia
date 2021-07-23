@@ -2,8 +2,8 @@
 
 namespace Tests\Setup;
 
-use App\ProfilePost;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\User;
 use Tests\Setup\PostFactory;
 
 class ProfilePostFactory extends PostFactory
@@ -15,7 +15,7 @@ class ProfilePostFactory extends PostFactory
     public function create($attributes = [])
     {
         $this->attributes = $attributes;
-        $profilePost = factory(ProfilePost::class)->create(
+        $profilePost = ProfilePost::factory()->create(
             array_merge(
                 [
                     'user_id' => $this->userId(),
@@ -34,7 +34,7 @@ class ProfilePostFactory extends PostFactory
     public function createMany($count = 1, $attributes = [])
     {
         $this->attributes = $attributes;
-        $profilePosts = factory(ProfilePost::class, $count)->create(
+        $profilePosts = ProfilePost::factory()->count($count)->create(
             array_merge(
                 [
                     'user_id' => $this->userId(),
@@ -54,7 +54,7 @@ class ProfilePostFactory extends PostFactory
         if (array_key_exists('profile_owner_id', $this->attributes)) {
             return;
         }
-        return $this->profileOwner->id ?? factory(User::class)->create()->id;
+        return $this->profileOwner->id ?? User::factory()->create()->id;
     }
 
     public function toProfile($user)

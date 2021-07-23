@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Thread;
+use App\Models\Thread;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateThreadRequest extends FormRequest

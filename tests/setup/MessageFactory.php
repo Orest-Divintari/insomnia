@@ -2,8 +2,8 @@
 
 namespace Tests\Setup;
 
-use App\Conversation;
-use App\Reply;
+use App\Models\Conversation;
+use App\Models\Reply;
 
 class MessageFactory extends PostFactory
 {
@@ -12,7 +12,7 @@ class MessageFactory extends PostFactory
     public function create($attributes = [])
     {
         $this->attributes = $attributes;
-        $message = factory(Reply::class)->create(
+        $message = Reply::factory()->create(
             array_merge(
                 [
                     'user_id' => $this->userId(),
@@ -29,7 +29,7 @@ class MessageFactory extends PostFactory
     public function createMany($count = 1, $attributes = [])
     {
         $this->attributes = $attributes;
-        $messages = factory(Reply::class, $count)->create(
+        $messages = Reply::factory()->count($count)->create(
             array_merge(
                 [
                     'user_id' => $this->userId(),
@@ -48,7 +48,7 @@ class MessageFactory extends PostFactory
         if ($this->repliableIdInAttributes()) {
             return;
         }
-        return $this->conversation->id ?? factory(Conversation::class)->create()->id;
+        return $this->conversation->id ?? Conversation::factory()->create()->id;
     }
 
     public function toConversation($conversation)

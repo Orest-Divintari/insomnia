@@ -2,11 +2,11 @@
 
 namespace App\Helpers;
 
-use App\Conversation;
-use App\Like;
-use App\ProfilePost;
-use App\Reply;
-use App\Thread;
+use App\Models\Conversation;
+use App\Models\Like;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\Thread;
 
 class ModelType
 {

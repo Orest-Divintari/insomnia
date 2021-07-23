@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Notifications;
 
-use App\Category;
-use App\User;
+use App\Models\Category;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;

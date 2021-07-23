@@ -2,7 +2,7 @@
 
 namespace App\Listeners\Activity;
 
-use App\Activity;
+use App\Models\Activity;
 use Illuminate\Auth\Events\Logout;
 
 class DeleteUserViewedActivity

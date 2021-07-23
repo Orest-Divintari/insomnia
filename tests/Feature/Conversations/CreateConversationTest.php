@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Conversations;
 
-use App\Conversation;
-use App\ConversationParticipant;
-use App\User;
+use App\Models\Conversation;
+use App\Models\ConversationParticipant;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;

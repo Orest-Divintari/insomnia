@@ -3,7 +3,7 @@
 namespace App\Search;
 
 use Algolia\ScoutExtended\Searchable\Aggregator;
-use App\Reply;
+use App\Models\Reply;
 
 class AllPosts extends Aggregator
 {
@@ -13,9 +13,9 @@ class AllPosts extends Aggregator
      * @var string[]
      */
     protected $models = [
-        'App\Thread',
-        'App\Reply',
-        'App\ProfilePost',
+        'App\Models\Thread',
+        'App\Models\Reply',
+        'App\Models\ProfilePost',
     ];
 
     public function shouldBeSearchable()

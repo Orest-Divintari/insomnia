@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
 use App\Helpers\Facades\ResourcePath;
@@ -9,12 +9,13 @@ use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
 class ProfilePost extends Model
 {
-    use FormatsDate, RecordsActivity, Searchable, Likeable, Filterable;
+    use FormatsDate, RecordsActivity, Searchable, Likeable, Filterable, HasFactory;
 
     /**
      * Number of visible posts per page

@@ -3,8 +3,8 @@
 namespace Tests\Feature\ProfilePosts;
 
 use App\Listeners\Profile\NotifyProfileOwnerOfNewPost;
-use App\ProfilePost;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;

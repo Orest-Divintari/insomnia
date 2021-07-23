@@ -2,7 +2,7 @@
 
 namespace Tests\Browser\Profile;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Notification;
 use Laravel\Dusk\Browser;

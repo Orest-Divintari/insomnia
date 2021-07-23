@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\GroupCategory;
+use App\Models\GroupCategory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateGroupCategoryRequest extends FormRequest

@@ -2,9 +2,9 @@
 
 namespace App\ViewModels;
 
-use App\ProfilePost;
-use App\Reply;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\User;
 
 class ProfilePostsViewModel
 {

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Conversation;
 use App\Filters\ExcludeIgnoredFilter;
 use App\Filters\FilterManager;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateConversationRequest;
+use App\Models\Conversation;
 
 class ConversationController extends Controller
 {

@@ -2,7 +2,7 @@
 
 namespace App\Events\Follow;
 
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Conversation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InviteConversationParticipantRequest;
+use App\Models\Conversation;
 
 class ConversationParticipantController extends Controller
 {

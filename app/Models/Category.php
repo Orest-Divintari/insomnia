@@ -1,10 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Thread;
+use App\Models\Thread;
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,7 @@ class Category extends Model
      */
     const PER_PAGE = 10;
 
-    use Sluggable;
+    use Sluggable, HasFactory;
 
     /**
      * Don't auto-apply mass assignment protection.

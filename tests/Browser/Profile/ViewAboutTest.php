@@ -2,8 +2,8 @@
 
 namespace Tests\Browser\Profile;
 
-use App\Follow;
-use App\User;
+use App\Models\Follow;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Search;
 
-use App\Thread;
-use App\User;
+use App\Models\Thread;
+use App\Models\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ThreadFactory;
 use Tests\Feature\Search\SearchThreadsTest;

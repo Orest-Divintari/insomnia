@@ -2,8 +2,8 @@
 
 namespace Tests\Setup;
 
-use App\Category;
-use App\Thread;
+use App\Models\Category;
+use App\Models\Thread;
 use Faker\Generator as Faker;
 use Tests\Setup\PostFactory;
 
@@ -15,7 +15,7 @@ class ThreadFactory extends PostFactory
     public function create($attributes = [])
     {
         $this->attributes = $attributes;
-        $thread = factory(Thread::class)->create(
+        $thread = Thread::factory()->create(
             array_merge(
                 [
                     'user_id' => $this->userId(),
@@ -34,7 +34,7 @@ class ThreadFactory extends PostFactory
     public function createMany($count = 1, $attributes = [])
     {
         $this->attributes = $attributes;
-        $threads = factory(Thread::class, $count)->create(
+        $threads = Thread::factory()->count($count)->create(
             array_merge(
                 [
                     'user_id' => $this->userId(),
@@ -59,7 +59,8 @@ class ThreadFactory extends PostFactory
         if (array_key_exists('category_id', $this->attributes)) {
             return;
         }
-        return $this->category->id ?? factory(Category::class)->create()->id;
+
+        return $this->category->id ?? Category::factory()->create()->id;
     }
 
     public function withTitle($title)

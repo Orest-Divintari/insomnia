@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateThreadRequest;
-use App\Thread;
+use App\Models\Category;
+use App\Models\Thread;
 
 class ThreadController extends Controller
 {

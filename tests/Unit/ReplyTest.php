@@ -2,14 +2,14 @@
 
 namespace Tests\Unit;
 
-use App\Activity;
-use App\Category;
-use App\Conversation;
 use App\Filters\ReplyFilters;
-use App\ProfilePost;
-use App\Reply;
-use App\Thread;
-use App\User;
+use App\Models\Activity;
+use App\Models\Category;
+use App\Models\Conversation;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\Thread;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\MessageFactory;
@@ -25,7 +25,7 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_belongs_to_a_thread()
     {
-        $thread = create('App\Thread');
+        $thread = create('App\Models\Thread');
         $reply = ReplyFactory::toThread($thread)->create();
 
         $this->assertInstanceOf(Thread::class, $reply->repliable);

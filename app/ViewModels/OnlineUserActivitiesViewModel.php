@@ -2,7 +2,7 @@
 
 namespace App\ViewModels;
 
-use App\Activity;
+use App\Models\Activity;
 use Illuminate\Support\Facades\DB;
 use Spatie\ViewModels\ViewModel;
 

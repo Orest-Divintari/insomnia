@@ -3,7 +3,7 @@
 namespace App\User;
 
 use App\Exceptions\SettingDoesNotExistException;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Arr;

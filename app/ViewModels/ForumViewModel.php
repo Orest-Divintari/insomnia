@@ -3,10 +3,10 @@
 namespace App\ViewModels;
 
 use App\Filters\ExcludeIgnoredFilter;
-use App\GroupCategory;
-use App\Reply;
-use App\Thread;
-use App\User;
+use App\Models\GroupCategory;
+use App\Models\Reply;
+use App\Models\Thread;
+use App\Models\User;
 
 class ForumViewModel
 {

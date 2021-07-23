@@ -2,13 +2,13 @@
 
 namespace Tests\Browser\Profile;
 
-use App\Activity;
 use App\Helpers\ModelType;
-use App\Like;
-use App\ProfilePost;
-use App\Reply;
-use App\Thread;
-use App\User;
+use App\Models\Activity;
+use App\Models\Like;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\Thread;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;

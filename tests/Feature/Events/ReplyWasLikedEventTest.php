@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Events;
 
-use App\Like;
 use App\Listeners\Subscription\NotifyReplyPoster;
+use App\Models\Like;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;

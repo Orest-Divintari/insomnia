@@ -2,15 +2,15 @@
 
 namespace Tests\Feature\Activities;
 
-use App\Category;
-use App\Conversation;
 use App\Events\Activity\UserViewedPage;
 use App\Http\Middleware\ThrottlePosts;
-use App\Like;
-use App\ProfilePost;
-use App\Reply;
-use App\Thread;
-use App\User;
+use App\Models\Category;
+use App\Models\Conversation;
+use App\Models\Like;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\Thread;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;

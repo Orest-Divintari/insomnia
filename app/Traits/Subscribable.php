@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-use App\Thread;
-use App\ThreadSubscription;
+use App\Models\Thread;
+use App\Models\ThreadSubscription;
 
 trait Subscribable
 {

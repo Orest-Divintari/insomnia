@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Actions\ActivityLogger;
-use App\Thread;
-use App\User;
+use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

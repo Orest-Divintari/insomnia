@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\ThreadSubcriptions;
 
-use App\Category;
-use App\Thread;
+use App\Models\Category;
+use App\Models\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;

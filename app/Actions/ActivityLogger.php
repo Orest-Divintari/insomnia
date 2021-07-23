@@ -2,7 +2,7 @@
 
 namespace App\Actions;
 
-use App\Activity;
+use App\Models\Activity;
 
 class ActivityLogger
 {

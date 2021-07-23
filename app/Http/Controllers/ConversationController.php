@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Actions\AppendHasIgnoredContentAttributeAction;
-use App\Conversation;
 use App\Events\Activity\UserViewedPage;
 use App\Filters\ExcludeIgnoredFilter;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateConversationRequest;
+use App\Models\Conversation;
 use App\ViewModels\ConversationsIndexViewModel;
 use App\ViewModels\ConversationsShowViewModel;
 use Illuminate\Http\Request;

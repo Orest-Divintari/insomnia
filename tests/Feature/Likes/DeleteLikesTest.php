@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Likes;
 
-use App\Like;
+use App\Models\Like;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;

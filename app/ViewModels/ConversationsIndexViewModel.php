@@ -2,7 +2,7 @@
 
 namespace App\ViewModels;
 
-use App\Conversation;
+use App\Models\Conversation;
 
 class ConversationsIndexViewModel
 {

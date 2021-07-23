@@ -2,9 +2,9 @@
 
 namespace App\ViewModels;
 
-use App\Category;
 use App\Filters\ExcludeIgnoredFilter;
-use App\Thread;
+use App\Models\Category;
+use App\Models\Thread;
 
 class ThreasdIndexViewModel
 {

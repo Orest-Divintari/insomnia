@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Search;
 
 use App\Actions\AppendHasIgnoredContentAttributeAction;
 use App\Search\ModelFilterFactory;

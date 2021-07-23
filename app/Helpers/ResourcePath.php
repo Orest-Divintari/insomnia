@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
-use App\ProfilePost;
-use App\Reply;
+use App\Models\ProfilePost;
+use App\Models\Reply;
 
 class ResourcePath
 {

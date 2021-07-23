@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Category;
+use App\Models\Category;
 use Illuminate\Support\Str;
 
 class CategoryObserver

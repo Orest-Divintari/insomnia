@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\ProfilePosts;
 
-use App\ProfilePost;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;

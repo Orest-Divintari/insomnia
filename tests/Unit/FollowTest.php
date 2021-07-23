@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Follow;
-use App\User;
+use App\Models\Follow;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

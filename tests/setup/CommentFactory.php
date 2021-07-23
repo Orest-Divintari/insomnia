@@ -2,8 +2,8 @@
 
 namespace Tests\Setup;
 
-use App\ProfilePost;
-use App\Reply;
+use App\Models\ProfilePost;
+use App\Models\Reply;
 use Tests\Setup\PostFactory;
 
 class CommentFactory extends PostFactory
@@ -14,7 +14,7 @@ class CommentFactory extends PostFactory
     public function create($attributes = [])
     {
         $this->attributes = $attributes;
-        $comment = factory(Reply::class)->create(
+        $comment = Reply::factory()->create(
             array_merge(
                 [
                     'user_id' => $this->userId(),
@@ -31,7 +31,7 @@ class CommentFactory extends PostFactory
     public function createMany($count = 1, $attributes = [])
     {
         $this->attributes = $attributes;
-        $comments = factory(Reply::class, $count)->create(
+        $comments = Reply::factory()->count($count)->create(
             array_merge(
                 [
                     'user_id' => $this->userId(),
@@ -50,7 +50,7 @@ class CommentFactory extends PostFactory
         if ($this->repliableIdInAttributes()) {
             return;
         }
-        return $this->profilePost->id ?? factory(ProfilePost::class)->create()->id;
+        return $this->profilePost->id ?? ProfilePost::factory()->create()->id;
     }
 
     public function toProfilePost($profilePost)

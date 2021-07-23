@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Filters\ProfilePostFilters;
-use App\ProfilePost;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Thread;
+use App\Models\Thread;
 
 class RecentlyViewedThreadsController extends Controller
 {

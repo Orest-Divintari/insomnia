@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Ajax;
 use App\Facades\Avatar;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserAvatarRequest;
-use App\User;
+use App\Models\User;
 
 class UserAvatarController extends Controller
 {

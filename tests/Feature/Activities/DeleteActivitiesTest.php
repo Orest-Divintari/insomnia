@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Activities;
 
-use App\Activity;
-use App\Like;
-use App\ProfilePost;
-use App\Reply;
+use App\Models\Activity;
+use App\Models\Like;
+use App\Models\ProfilePost;
+use App\Models\Reply;
 use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;

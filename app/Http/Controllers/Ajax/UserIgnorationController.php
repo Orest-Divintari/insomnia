@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 
 class UserIgnorationController extends Controller
 {

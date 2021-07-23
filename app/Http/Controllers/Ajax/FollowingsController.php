@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Follow;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\Follow;
+use App\Models\User;
 
 class FollowingsController extends Controller
 {

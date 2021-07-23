@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Comments;
 
-use App\ProfilePost;
+use App\Models\ProfilePost;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;

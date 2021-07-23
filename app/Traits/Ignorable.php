@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-use App\Ignoration;
-use App\User;
+use App\Models\Ignoration;
+use App\Models\User;
 
 trait Ignorable
 {

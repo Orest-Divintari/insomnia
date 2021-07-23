@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Http\Middleware\ThrottlePosts;
-use App\Thread;
+use App\Models\Thread;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;

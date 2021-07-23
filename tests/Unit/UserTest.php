@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use App\Activity;
-use App\Conversation;
-use App\Ignoration;
-use App\Thread;
-use App\User;
+use App\Models\Activity;
+use App\Models\Conversation;
+use App\Models\Ignoration;
+use App\Models\Thread;
+use App\Models\User;
 use App\User\Details;
 use App\User\Preferences;
 use App\User\Privacy;

@@ -2,14 +2,14 @@
 
 namespace App\Events;
 
-use App\Conversation;
 use App\Events\Conversation\MessageWasLiked;
 use App\Events\Profile\CommentWasLiked;
 use App\Events\Subscription\ProfilePostWasLiked;
 use App\Events\Subscription\ReplyWasLiked;
-use App\ProfilePost;
-use App\Reply;
-use App\Thread;
+use App\Models\Conversation;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\Thread;
 
 class LikeEvent
 {

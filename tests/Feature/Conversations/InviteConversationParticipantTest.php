@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Conversations;
 
-use App\User;
+use App\Models\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

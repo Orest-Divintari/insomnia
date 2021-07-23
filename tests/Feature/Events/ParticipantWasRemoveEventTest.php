@@ -3,7 +3,7 @@
 namespace Tests\Feature\Events;
 
 use App\Listeners\Conversation\DeleteConversationReadRecord;
-use App\User;
+use App\Models\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;

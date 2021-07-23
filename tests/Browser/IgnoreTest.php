@@ -2,8 +2,8 @@
 
 namespace Tests\Browser;
 
-use App\Category;
-use App\User;
+use App\Models\Category;
+use App\Models\User;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;

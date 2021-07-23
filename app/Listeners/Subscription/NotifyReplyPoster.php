@@ -4,10 +4,10 @@ namespace App\Listeners\Subscription;
 
 use App\Events\Subscription\ReplyWasLiked;
 use App\Listeners\Notify;
+use App\Models\Reply;
+use App\Models\User;
 use App\Notifications\ReplyHasNewLike;
-use App\Reply;
 use App\Traits\HandlesNotifications;
-use App\User;
 
 class NotifyReplyPoster
 {

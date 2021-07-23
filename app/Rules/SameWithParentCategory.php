@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use App\Category;
+use App\Models\Category;
 use Illuminate\Contracts\Validation\Rule;
 
 class SameWithParentCategory implements Rule

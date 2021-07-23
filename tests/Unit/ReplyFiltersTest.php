@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Filters\ReplyFilters;
-use App\Reply;
+use App\Models\Reply;
 use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

@@ -3,8 +3,8 @@
 namespace Tests\Feature\Events;
 
 use App\Listeners\Conversation\NotifyConversationParticipants;
-use App\Reply;
-use App\User;
+use App\Models\Reply;
+use App\Models\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;

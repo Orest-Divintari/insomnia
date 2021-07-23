@@ -2,8 +2,8 @@
 
 namespace Tests\Browser\Profile;
 
-use App\ProfilePost;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

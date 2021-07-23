@@ -12,11 +12,7 @@ abstract class Factory
     protected function resetAttributes()
     {
         foreach (get_object_vars($this) as $attribute => $value) {
-            if (is_array($attribute)) {
-                $attribute = [];
-            } else {
-                $$attribute = null;
-            }
+            unset($this->$attribute);
         }
     }
 }

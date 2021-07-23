@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Reply;
+use App\Models\Reply;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateReplyRequest extends FormRequest

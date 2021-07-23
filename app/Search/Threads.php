@@ -3,6 +3,7 @@
 namespace App\Search;
 
 use Algolia\ScoutExtended\Searchable\Aggregator;
+use App\Models\Thread;
 
 class Threads extends Aggregator
 {
@@ -12,8 +13,8 @@ class Threads extends Aggregator
      * @var string[]
      */
     protected $models = [
-        'App\Thread',
-        'App\Reply',
+        Thread::class,
+        'App\Models\Reply',
     ];
 
     /**
@@ -23,7 +24,7 @@ class Threads extends Aggregator
      */
     public function shouldBeSearchable()
     {
-        return class_basename($this->model) == 'Thread' || ($this->model->repliable_type == 'App\Thread' && $this->model->position > 1);
+        return class_basename($this->model) == 'Thread' || ($this->model->repliable_type == 'App\Models\Thread' && $this->model->position > 1);
     }
 
 }

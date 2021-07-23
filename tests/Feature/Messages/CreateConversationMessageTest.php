@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Messages;
 
-use App\Conversation;
-use App\User;
+use App\Models\Conversation;
+use App\Models\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
@@ -89,7 +89,7 @@ class CreateConversationMessageTest extends TestCase
         );
 
         $this->assertDatabaseHas('replies', [
-            'repliable_type' => 'App\Conversation',
+            'repliable_type' => 'App\Models\Conversation',
             'repliable_id' => $conversation->id,
             'user_id' => $conversationStarter->id,
             'body' => $message['body'],
@@ -112,7 +112,7 @@ class CreateConversationMessageTest extends TestCase
         );
 
         $this->assertDatabaseHas('replies', [
-            'repliable_type' => 'App\Conversation',
+            'repliable_type' => 'App\Models\Conversation',
             'repliable_id' => $conversation->id,
             'user_id' => $participant->id,
             'body' => $message['body'],

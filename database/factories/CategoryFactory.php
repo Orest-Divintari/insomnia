@@ -1,20 +1,39 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Category;
-use App\GroupCategory;
-use Faker\Generator as Faker;
+use App\Models\Category;
+use App\Models\GroupCategory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-$factory->define(Category::class, function (Faker $faker) {
-    $title = $faker->sentence();
-    return [
-        'title' => $title,
-        'slug' => Str::slug($title),
-        'excerpt' => $faker->sentence(),
-        'parent_id' => null,
-        'group_category_id' => factory(GroupCategory::class),
-        'image_path' => null,
-    ];
-});
+class CategoryFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Category::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $title = $this->faker->sentence();
+
+        return [
+            'title' => $title,
+            'slug' => Str::slug($title),
+            'excerpt' => $this->faker->sentence(),
+            'parent_id' => null,
+            'group_category_id' => function () {
+                return GroupCategory::factory()->create()->id;
+            },
+            'image_path' => null,
+        ];
+    }
+}

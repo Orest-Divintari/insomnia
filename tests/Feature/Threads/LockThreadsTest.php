@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Threads;
 
-use App\Thread;
+use App\Models\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;

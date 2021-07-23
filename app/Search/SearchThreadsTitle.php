@@ -2,8 +2,8 @@
 
 namespace App\Search;
 
+use App\Models\Thread;
 use App\Search\SearchIndexInterface;
-use App\Thread;
 
 class SearchThreadsTitle implements SearchIndexInterface
 {

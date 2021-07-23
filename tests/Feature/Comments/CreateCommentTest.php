@@ -4,9 +4,9 @@ namespace Tests\Feature\Comments;
 
 use App\Exceptions\PostThrottlingException;
 use App\Http\Middleware\ThrottlePosts;
-use App\ProfilePost;
-use App\Reply;
-use App\User;
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\User;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

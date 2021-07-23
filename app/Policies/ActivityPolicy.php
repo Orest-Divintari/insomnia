@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Activity;
-use App\User;
+use App\Models\Activity;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ActivityPolicy

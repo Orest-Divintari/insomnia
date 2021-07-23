@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Filters\ExcludeIgnoredFilter;
-use App\Thread;
-use App\User;
+use App\Models\Thread;
+use App\Models\User;
 use App\ViewModels\LatestPostsViewModel;
 use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;

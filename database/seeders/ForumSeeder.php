@@ -1,5 +1,10 @@
 <?php
+namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\GroupCategory;
+use App\Models\Reply;
+use App\Models\Thread;
 use Illuminate\Database\Seeder;
 
 class ForumSeeder extends Seeder
@@ -49,13 +54,13 @@ class ForumSeeder extends Seeder
 
         foreach ($groups as $group => $categories) {
 
-            $groupCategory = factory('App\GroupCategory')->create([
+            $groupCategory = GroupCategory::factory()->create([
                 'title' => $group,
             ]);
 
             foreach ($categories as $category => $subCategories) {
 
-                $parentCategory = factory('App\Category')->create([
+                $parentCategory = Category::factory()->create([
                     'title' => $category,
                     'group_category_id' => $groupCategory->id,
                 ]);
@@ -65,7 +70,7 @@ class ForumSeeder extends Seeder
                 } else {
                     foreach ($subCategories as $subCategory) {
 
-                        $childrenCategory = factory('App\Category')->create([
+                        $childrenCategory = Category::factory()->create([
                             'parent_id' => $parentCategory->id,
                             'group_category_id' => $groupCategory->id,
                             'title' => $subCategory,
@@ -81,15 +86,15 @@ class ForumSeeder extends Seeder
     public function createThreadWithReplies($category)
     {
         for ($threadCounter = 0; $threadCounter < static::NUM_OF_THREADS; $threadCounter++) {
-            $thread = factory('App\Thread')->create([
+            $thread = Thread::factory()->create([
                 'category_id' => $category->id,
                 'replies_count' => 0,
             ]);
 
             for ($replyCounter = 0; $replyCounter < static::NUM_OF_REPLIES; $replyCounter++) {
-                factory('App\Reply')->create([
+                Reply::factory()->create([
                     'repliable_id' => $thread->id,
-                    'repliable_type' => 'App\Thread',
+                    'repliable_type' => 'App\Models\Thread',
                 ]);
             }
 

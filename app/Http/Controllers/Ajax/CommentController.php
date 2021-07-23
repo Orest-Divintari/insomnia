@@ -6,8 +6,8 @@ use App\Comment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
-use App\ProfilePost;
-use App\Reply;
+use App\Models\ProfilePost;
+use App\Models\Reply;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller

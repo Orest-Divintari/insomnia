@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Facades\Avatar;
+use App\Models\User;
 use App\Rules\GravatarExists;
-use App\User;
 use Creativeorange\Gravatar\Facades\Gravatar;
 use Illuminate\Foundation\Http\FormRequest;
 

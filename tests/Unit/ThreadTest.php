@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use App\Category;
-use App\Read;
-use App\Tag;
-use App\Thread;
-use App\User;
+use App\Models\Category;
+use App\Models\Read;
+use App\Models\Tag;
+use App\Models\Thread;
+use App\Models\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
@@ -23,7 +23,7 @@ class ThreadTest extends TestCase
     {
         parent::setUp();
 
-        $this->thread = create('App\Thread');
+        $this->thread = create('App\Models\Thread');
     }
 
     /** @test */
@@ -40,7 +40,7 @@ class ThreadTest extends TestCase
     {
         $this->assertCount(1, $this->thread->replies);
 
-        create('App\Reply', [
+        create('App\Models\Reply', [
             'repliable_id' => $this->thread->id,
             'repliable_type' => Thread::class,
         ]);

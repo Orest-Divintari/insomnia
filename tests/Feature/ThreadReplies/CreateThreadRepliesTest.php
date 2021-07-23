@@ -4,8 +4,8 @@ namespace Tests\Feature\ThreadReplies;
 
 use App\Exceptions\PostThrottlingException;
 use App\Http\Middleware\ThrottlePosts;
-use App\Reply;
-use App\Thread;
+use App\Models\Reply;
+use App\Models\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

@@ -2,8 +2,8 @@
 
 namespace Tests\Setup;
 
-use App\Reply;
-use App\Thread;
+use App\Models\Reply;
+use App\Models\Thread;
 use Tests\Setup\PostFactory;
 
 class ReplyFactory extends PostFactory
@@ -14,7 +14,7 @@ class ReplyFactory extends PostFactory
     public function create($attributes = [])
     {
         $this->attributes = $attributes;
-        $reply = factory(Reply::class)->create(
+        $reply = Reply::factory()->create(
             array_merge(
                 [
                     'user_id' => $this->userId(),
@@ -36,7 +36,7 @@ class ReplyFactory extends PostFactory
         $replies = [];
         for ($repliesCounter = 1; $repliesCounter <= $count; $repliesCounter++) {
 
-            $reply = factory(Reply::class)->create(
+            $reply = Reply::factory()->create(
                 array_merge(
                     [
                         'user_id' => $this->userId(),
@@ -58,7 +58,7 @@ class ReplyFactory extends PostFactory
         } elseif ($this->repliableIdInAttributes()) {
             return $this->getRepliableId();
         }
-        return factory(Thread::class)->create()->id;
+        return Thread::factory()->create()->id;
     }
 
     public function toThread($thread)

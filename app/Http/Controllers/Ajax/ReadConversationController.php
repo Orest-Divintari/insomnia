@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Conversation;
 use App\Http\Controllers\Controller;
+use App\Models\Conversation;
 
 class ReadConversationController extends Controller
 {

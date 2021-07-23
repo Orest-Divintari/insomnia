@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Admin\GroupCategories;
 
-use App\GroupCategory;
+use App\Models\GroupCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
-use App\Like;
-use App\Reply;
+use App\Models\Like;
+use App\Models\Reply;
 
 class ReplyLikeController extends Controller
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Events\Profile\NewPostWasAddedToProfile;
 use App\Facades\Avatar;
@@ -12,6 +12,7 @@ use App\User\Details;
 use App\User\Preferences;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +25,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail
 {
 
-    use Ignorable, Notifiable, Followable, Searchable, HandlesPrivacy, HasRoles;
+    use Ignorable, Notifiable, Followable, Searchable, HandlesPrivacy, HasRoles, HasFactory;
 
     /**
      * Set the maximum length for a username
@@ -378,9 +379,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Activity::where('user_id', $this->id)
             ->whereIn('subject_type', [
-                'App\Thread',
-                'App\Reply',
-                'App\ProfilePost',
+                'App\Models\Thread',
+                'App\Models\Reply',
+                'App\Models\ProfilePost',
             ])->latest('created_at')
             ->first();
     }

@@ -2,7 +2,7 @@
 
 namespace App\Queries;
 
-use App\User;
+use App\Models\User;
 
 class CreatorIgnoredByVisitorColumn
 {

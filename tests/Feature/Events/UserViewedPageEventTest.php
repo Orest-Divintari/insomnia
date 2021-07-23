@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Events;
 
-use App\Category;
 use App\Events\Activity\UserViewedPage;
 use App\Listeners\Activity\LogUserActivity;
-use App\Thread;
-use App\User;
+use App\Models\Category;
+use App\Models\Thread;
+use App\Models\User;
 use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;

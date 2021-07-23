@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Notifications;
 
+use App\Models\ProfilePost;
+use App\Models\Reply;
+use App\Models\User;
 use App\Notifications\CommentHasNewLike;
 use App\Notifications\MessageHasNewLike;
 use App\Notifications\ProfilePostHasNewLike;
 use App\Notifications\ReplyHasNewLike;
-use App\ProfilePost;
-use App\Reply;
-use App\User;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;

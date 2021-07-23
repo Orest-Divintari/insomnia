@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Conversation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
-use App\Reply;
+use App\Models\Conversation;
+use App\Models\Reply;
 
 class MessageController extends Controller
 {

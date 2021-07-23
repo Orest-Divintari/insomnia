@@ -2,9 +2,9 @@
 
 namespace App\Search;
 
+use App\Models\Tag;
+use App\Models\Thread;
 use App\Search\SearchIndexInterface;
-use App\Tag;
-use App\Thread;
 
 class SearchTags implements SearchIndexInterface
 {

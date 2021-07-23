@@ -2,7 +2,7 @@
 
 namespace Tests\Setup;
 
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Faker\Generator as Faker;
 
@@ -58,7 +58,7 @@ class PostFactory extends Factory
         if ($this->userIdInAttributes()) {
             return;
         }
-        return $this->user->id ?? factory(User::class)->create()->id;
+        return $this->user->id ?? User::factory()->create()->id;
     }
 
     /**

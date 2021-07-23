@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\GroupCategory;
+use App\Models\GroupCategory;
 use illuminate\Support\Str;
 
 class GroupCategoryObserver

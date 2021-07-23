@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Activity;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\Activity;
+use App\Models\User;
 
 class LatestActivityController extends Controller
 {

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Thread;
-use App\User;
+use App\Models\Thread;
+use App\Models\User;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
