@@ -51,7 +51,7 @@ class ThreadFactory extends PostFactory
 
     private function getTitle()
     {
-        return $this->title ?? app(Faker::class)->sentence();
+        return $this->title ?? $this->faker->sentence();
     }
 
     private function categoryId()

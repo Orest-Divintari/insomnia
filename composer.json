@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2.5",
+        "php": "^8.0",
         "algolia/algoliasearch-client-php": "^2.2",
         "algolia/scout-extended": "^1.9",
         "creativeorange/gravatar": "^1.0",

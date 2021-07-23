@@ -13,6 +13,12 @@ class PostFactory extends Factory
     protected $updatedAt;
     protected $body;
     protected $attributes;
+    protected $faker;
+
+    public function __construct(Faker $faker)
+    {
+        $this->faker = $faker;
+    }
 
     public function by($user)
     {
@@ -40,7 +46,7 @@ class PostFactory extends Factory
 
     protected function getBody()
     {
-        return $this->body ?? app(Faker::class)->sentence();
+        return $this->body ?? $this->faker->sentence();
     }
 
     protected function getCreatedAt()

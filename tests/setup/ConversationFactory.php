@@ -177,7 +177,7 @@ class ConversationFactory extends Factory implements FactoryInterface
      */
     public function withMessage($message = null)
     {
-        $this->message = $message ?: app(Faker::class)->sentence();
+        $this->message = $message ?: $this->faker->sentence();
         return $this;
     }
 
