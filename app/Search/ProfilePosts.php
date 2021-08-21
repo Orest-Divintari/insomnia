@@ -2,9 +2,7 @@
 
 namespace App\Search;
 
-use Algolia\ScoutExtended\Searchable\Aggregator;
-
-class ProfilePosts extends Aggregator
+class ProfilePosts
 {
     /**
      * The names of the models that should be aggregated.

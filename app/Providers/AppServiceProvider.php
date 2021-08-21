@@ -5,9 +5,6 @@ namespace App\Providers;
 use App\helpers\Visitor;
 use App\Models\User;
 use App\Notifications\ThreadHasNewReply;
-use App\Search\AllPosts;
-use App\Search\ProfilePosts;
-use App\Search\Threads;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -38,9 +35,9 @@ class AppServiceProvider extends ServiceProvider
             $view->with(compact('visitor'));
         });
 
-        Threads::bootSearchable();
-        ProfilePosts::bootSearchable();
-        AllPosts::bootSearchable();
+        // Threads::bootSearchable();
+        // ProfilePosts::bootSearchable();
+        // AllPosts::bootSearchable();
 
         Blade::if('verified', function () {
             if (auth()->check()) {

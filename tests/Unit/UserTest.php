@@ -708,4 +708,14 @@ class UserTest extends TestCase
         $this->assertFalse($thread->isIgnored($john));
     }
 
+    /** @test */
+    public function check()
+    {
+        $thread = create(Thread::class);
+
+        dd(Carbon::now()->subYear()->getTimestamp() > Carbon::now()->subWeek()->getTimestamp());
+        dd(Carbon::now()->subYear()->getTimestamp() < Carbon::now()->subWeek());
+        dd($thread->toArray()['created_at'] > Carbon::now());
+    }
+
 }

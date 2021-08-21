@@ -2,10 +2,9 @@
 
 namespace App\Search;
 
-use Algolia\ScoutExtended\Searchable\Aggregator;
 use App\Models\Thread;
 
-class Threads extends Aggregator
+class Threads
 {
     /**
      * The names of the models that should be aggregated.

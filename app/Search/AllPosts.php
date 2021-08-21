@@ -2,10 +2,9 @@
 
 namespace App\Search;
 
-use Algolia\ScoutExtended\Searchable\Aggregator;
 use App\Models\Reply;
 
-class AllPosts extends Aggregator
+class AllPosts
 {
     /**
      * The names of the models that should be aggregated.
