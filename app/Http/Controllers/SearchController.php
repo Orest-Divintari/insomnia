@@ -45,7 +45,7 @@ class SearchController extends Controller
         }
 
         $results = $search->handle(SearchData::fromRequest($this->request));
-
+        
         if (request()->expectsJson()) {
             return $results;
         }

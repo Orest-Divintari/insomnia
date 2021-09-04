@@ -15,6 +15,7 @@ use App\Traits\RecordsActivity;
 use App\Traits\Sluggable;
 use App\Traits\Subscribable;
 use Carbon\Carbon;
+use ElasticScoutDriverPlus\QueryDsl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,7 @@ class Thread extends Model
     Subscribable,
     RecordsActivity,
     Searchable,
+    QueryDsl,
     Sluggable,
     Lockable,
     Readable,

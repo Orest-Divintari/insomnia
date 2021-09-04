@@ -11,7 +11,7 @@ class SearchThreads implements SearchIndexInterface
      * Search threads and replies for the given search query
      *
      * @param mixed $searchQuery
-     * @return Algolia\ScoutExtended\Builder
+     * @return Laravel\Scout\Builder
      */
     public function search($searchQuery)
     {

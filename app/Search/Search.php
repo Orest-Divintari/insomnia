@@ -7,9 +7,8 @@ use App\Search\ModelFilterFactory;
 use App\Search\SearchData;
 use App\Search\SearchIndexFactory;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
-class Search
+abstract class Search
 {
     /**
      * Number of results per page
@@ -47,7 +46,7 @@ class Search
      * @param ModelFilterFactory $filtersFactory
      */
     public function __construct(
-        SearchIndexFactory $searchIndexFactory,
+        SearchIndexFactoryInterface $searchIndexFactory,
         ModelFilterFactory $filtersFactory,
         AppendHasIgnoredContentAttributeAction $appendHasIgnoredContentAttributeAction
     ) {
@@ -76,9 +75,8 @@ class Search
 
         $builder = $index->search($searchData->query);
 
-        $results = $filters->apply($builder);
+        // $results = $filters->apply($builder);
 
-        return $this->fetch($results);
     }
 
     /**
@@ -107,26 +105,6 @@ class Search
     }
 
     /**
-     * Get the results from the database if there are any
-     * otherwise return no results message
-     *
-     * @param Collection $results
-     * @return Illuminate\Pagination\LengthAwarePaginator
-     */
-    public function fetch($results)
-    {
-        $results = $results->paginate(static::RESULTS_PER_PAGE);
-
-        $results = $this->appendHasIgnoredContentAttributeAction->execute($results);
-
-        if (empty($results['data'])) {
-            return $this->noResults();
-        }
-
-        return $results;
-    }
-
-    /**
      * Return message when no results are found
      *
      * @return string
@@ -135,4 +113,13 @@ class Search
     {
         return 'No results found.';
     }
+
+    /**
+     * Get the results from the database if there are any
+     * otherwise return no results message
+     *
+     * @param Collection $results
+     * @return Illuminate\Pagination\LengthAwarePaginator
+     */
+    abstract public function fetch($results);
 }

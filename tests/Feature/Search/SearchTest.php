@@ -26,7 +26,7 @@ class SearchTest extends TestCase
         $this->numberOfItemsToDelete = $this->numberOfUndesiredItems + $this->numberOfDesiredItems;
         $this->searchTerm = 'iphone';
         $this->noResultsMessage = 'No results found.';
-        config(['scout.driver' => 'algolia']);
+        config(['scout.driver' => 'elastic']);
     }
 
     /** @test */
