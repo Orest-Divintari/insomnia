@@ -3,7 +3,7 @@
 namespace App\Search;
 
 use App\Actions\AppendHasIgnoredContentAttributeAction;
-use App\Search\ModelFilterFactory;
+use App\Filters\SearchFilterFactory;
 use App\Search\SearchData;
 use App\Search\SearchIndexFactory;
 use Illuminate\Http\Request;
@@ -43,11 +43,11 @@ abstract class Search
      * Create a new Search instance
      *
      * @param SearchIndexFactory $searchIndexFactory
-     * @param ModelFilterFactory $filtersFactory
+     * @param SearchFilterFactory $filtersFactory
      */
     public function __construct(
         SearchIndexFactoryInterface $searchIndexFactory,
-        ModelFilterFactory $filtersFactory,
+        SearchFilterFactory $filtersFactory,
         AppendHasIgnoredContentAttributeAction $appendHasIgnoredContentAttributeAction
     ) {
         $this->indexFactory = $searchIndexFactory;
@@ -73,10 +73,9 @@ abstract class Search
 
         $filters = $this->filtersFor($searchData->type);
 
-        $builder = $index->search($searchData->query);
+        $searchRequest = $filters->apply($index->search($searchData->query));
 
-        // $results = $filters->apply($builder);
-
+        return $this->fetch($searchRequest);
     }
 
     /**

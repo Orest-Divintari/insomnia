@@ -19,16 +19,15 @@ class ElasticSearchIndexFactory implements SearchIndexFactoryInterface
     {
         if ($type == 'thread' && !$onlyTitle) {
             return new ElasticSearchThreads();
+        } elseif ($type == 'profile_post' && !$onlyTitle) {
+            return new ElasticSearchProfilePosts();
+        } elseif (empty($type) && !$onlyTitle) {
+            return new ElasticSearchAllPosts();
+        } elseif (!empty($searchQuery) && $onlyTitle) {
+            return new ElasticSearchThreadTitles();
+        } elseif ($type == 'tag') {
+            return new ElasticSearchTags();
         }
-        // } elseif ($type == 'profile_post' && !$onlyTitle) {
-        //     return new ElasticSearchProfilePosts();
-        // } elseif (empty($type) && !$onlyTitle) {
-        //     return new ElasticSearchAllPosts();
-        // } elseif (!empty($searchQuery) && $onlyTitle) {
-        //     return new ElasticSearchThreadTitles();
-        // } elseif ($type == 'tag') {
-        //     return new ElasticSearchTags();
-        // }
     }
 
 }

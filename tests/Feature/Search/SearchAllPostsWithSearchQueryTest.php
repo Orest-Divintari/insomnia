@@ -210,10 +210,17 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
             ->create();
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $anotherUndesiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)->create();
-        $undesiredComment = CommentFactory::toProfilePost($anotherUndesiredProfilePost)->create();
-        $anotherUndesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
-        $anotherUndesiredReply = ReplyFactory::withBody($this->searchTerm)
+        $anotherUndesiredProfilePost = ProfilePostFactory::by($user)
+            ->withBody($this->searchTerm)
+            ->create();
+        $undesiredComment = CommentFactory::by($user)
+            ->toProfilePost($anotherUndesiredProfilePost)
+            ->create();
+        $anotherUndesiredThread = ThreadFactory::by($user)
+            ->withBody($this->searchTerm)
+            ->create();
+        $anotherUndesiredReply = ReplyFactory::by($user)
+            ->withBody($this->searchTerm)
             ->toThread($anotherUndesiredThread)
             ->create();
 

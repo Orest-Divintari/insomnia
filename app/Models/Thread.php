@@ -283,7 +283,7 @@ class Thread extends Model
      */
     public function searchableAs()
     {
-        return 'thread_title';
+        return 'threads';
     }
 
     /**

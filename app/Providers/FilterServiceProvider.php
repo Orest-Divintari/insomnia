@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
+use App\Filters\ElasticSearchFilterFactory;
+use App\Filters\FilterChain;
 use App\Filters\FilterManager;
-use App\Filters\ModelFilterChain;
 use App\Filters\ReplyFilters;
-use App\Search\ModelFilterFactory;
+use App\Filters\SearchFilterFactory;
 use Illuminate\Support\ServiceProvider;
 
 class FilterServiceProvider extends ServiceProvider
@@ -41,13 +42,13 @@ class FilterServiceProvider extends ServiceProvider
         // });
 
         $this->app->bind(FilterManager::class, function ($app) {
-            $modelFilterChain = new ModelFilterChain();
-            return new FilterManager($modelFilterChain);
+            $filterChain = new FilterChain();
+            return new FilterManager($filterChain);
         });
 
-        $this->app->bind(ModelFilterFactory::class, function ($app) {
+        $this->app->bind(SearchFilterFactory::class, function ($app) {
             $filterManager = app(FilterManager::class);
-            return new ModelFilterFactory($filterManager);
+            return new ElasticSearchFilterFactory($filterManager);
         });
 
         $this->app->bind(ReplyFilters::class, function ($app) {

@@ -23,7 +23,6 @@ class SearchAllPostsTest extends SearchTest
     public function setUp(): void
     {
         parent::setUp();
-        config(['scout.driver' => 'algolia']);
         $this->numberOfDesiredProfilePosts = 1;
         $this->numberOfUndesiredProfilePosts = 1;
         $this->numberOfDesiredComments = 1;

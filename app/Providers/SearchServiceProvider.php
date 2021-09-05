@@ -3,11 +3,11 @@
 namespace App\Providers;
 
 use App\Actions\AppendHasIgnoredContentAttributeAction;
+use App\Filters\SearchFilterFactory;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\SearchRequestFactory;
 use App\Search\ElasticSearch;
 use App\Search\ElasticSearchIndexFactory;
-use App\Search\ModelFilterFactory;
 use App\Search\Search;
 use App\Search\SearchIndexFactoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -27,7 +27,7 @@ class SearchServiceProvider extends ServiceProvider
 
             $searchIndexFactory = app(SearchIndexFactoryInterface::class);
 
-            $filtersFactory = app(ModelFilterFactory::class);
+            $filtersFactory = app(SearchFilterFactory::class);
 
             $appendHasIgnoredContentAttribute = new AppendHasIgnoredContentAttributeAction;
 

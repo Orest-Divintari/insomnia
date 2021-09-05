@@ -3,13 +3,13 @@ namespace App\Search;
 
 use App\Models\ProfilePost;
 use App\Models\Reply;
+use App\Models\Thread;
 use App\Search\SearchIndexInterface;
 
-class ElasticSearchProfilePosts implements SearchIndexInterface
+class ElasticSearchAllPosts implements SearchIndexInterface
 {
-
     /**
-     * Search profile posts and comments for the given search query
+     * Search all posts (thread, profile posts, replies)
      *
      * @param mixed $searchQuery
      * @return Laravel\Scout\Builder
@@ -18,10 +18,10 @@ class ElasticSearchProfilePosts implements SearchIndexInterface
     {
         $query = '*' . $searchQuery . '*';
 
-        return ProfilePost::boolSearch()
+        return Thread::boolSearch()
+            ->join(ProfilePost::class)
             ->join(Reply::class)
             ->should('wildcard', ['title' => $query])
             ->should('wildcard', ['body' => $query]);
-
     }
 }

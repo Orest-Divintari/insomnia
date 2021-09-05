@@ -7,6 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ElasticSearch extends Search
 {
+
     /**
      * Get the results from the database if there are any
      * otherwise return no results message
@@ -14,11 +15,29 @@ class ElasticSearch extends Search
      * @param Collection $results
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function fetch($results)
+    public function fetch($searchRequest)
     {
-        $results = $results->paginate(self::RESULTS_PER_PAGE);
+        $searchResults = $searchRequest->paginate(self::RESULTS_PER_PAGE);
 
-        $paginatedResults = $this->paginate($results);
+        $mappedIds = [];
+
+        foreach ($searchResults->matches() as $match) {
+            $mappedIds[$match->indexName()][] = $match->document()->getContent()['id'];
+        }
+
+        $eloquentModels = collect();
+
+        foreach ($mappedIds as $modelIndexName => $modelKeys) {
+            $modelCollection = app(ModelsResolver::class)
+                ->fromIndexName($modelIndexName)
+                ->withSearchInfo()
+                ->whereIn('id', $modelKeys)
+                ->get();
+
+            $eloquentModels = $eloquentModels->merge($modelCollection);
+        }
+
+        $paginatedResults = $this->paginate($searchResults, $eloquentModels);
 
         $results = $this->appendHasIgnoredContentAttributeAction->execute($paginatedResults);
 
@@ -35,24 +54,14 @@ class ElasticSearch extends Search
      * @param collection $results
      * @return LengthAwarePaginator
      */
-    private function paginate($results)
+    private function paginate($searchResults, $eloquentModels)
     {
         return new LengthAwarePaginator(
-            $results->models(),
-            $results->total(),
-            $results->perPage(),
-            $results->currentPage(),
-            ['path' => $results->path()]
+            $eloquentModels,
+            $searchResults->total(),
+            $searchResults->perPage(),
+            $searchResults->currentPage(),
+            ['path' => $searchResults->path()]
         );
-    }
-
-    /**
-     * Return message when no results are found
-     *
-     * @return string
-     */
-    public function noResults()
-    {
-        return 'No results found.';
     }
 }

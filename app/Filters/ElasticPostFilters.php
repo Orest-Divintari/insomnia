@@ -5,8 +5,9 @@ namespace App\Filters;
 use App\Actions\StringToArrayAction;
 use App\Models\User;
 use Carbon\Carbon;
+use ElasticScoutDriverPlus\Builders\RangeQueryBuilder;
 
-class PostFilters
+class ElasticPostFilters implements FilterInterface
 {
 
     /**
@@ -19,7 +20,7 @@ class PostFilters
     /**
      * Builder on which the filters are applied
      *
-     * @var Illuminate\Database\Eloquent\Builder
+     * @var Laravel\Scout\Builder
      */
     protected $builder;
 
@@ -35,11 +36,27 @@ class PostFilters
             $usernames = (new StringToArrayAction($usernames))->execute();
         }
         $userIds = User::whereIn('name', $usernames)->pluck('id')->toArray();
-        $this->builder->whereIn('user_id', $userIds);
+        $this->builder->filter('terms', ['user_id' => $userIds]);
     }
 
     /**
-     * Get the threads that were created the last given number of days
+     * Get the threads that are updated after the given date
+     *
+     * @param int $daysAgo
+     * @return void
+     */
+    public function lastUpdated($daysAgo)
+    {
+        $daysAgo = Carbon::now()->subDays($daysAgo)->startOfDay();
+        $this->builder->filter(
+            (new RangeQueryBuilder())
+                ->field('updated_at')
+                ->gte($daysAgo)
+        );
+    }
+
+    /**
+     * Get the threads that are created after the given date
      *
      * @param int $daysAgo
      * @return void
@@ -47,13 +64,11 @@ class PostFilters
     public function lastCreated($daysAgo)
     {
         $daysAgo = Carbon::now()->subDays($daysAgo)->startOfDay();
-        if (is_subclass_of($this->builder, 'Laravel\Scout\Builder')) {
-            $this->builder
-                ->where('created_at', '>=', $daysAgo->timestamp);
-        } else {
-            $this->builder
-                ->where('created_at', ">=", $daysAgo);
-        }
+        $this->builder->filter(
+            (new RangeQueryBuilder())
+                ->field('created_at')
+                ->gte($daysAgo)
+        );
     }
 
     /**

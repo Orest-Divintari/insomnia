@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-class ModelFilterChain
+class FilterChain
 {
 
     /**
@@ -82,4 +82,36 @@ class ModelFilterChain
         $this->addFilter(ThreadFilters::class);
         $this->addFilter(ProfilePostFilters::class);
     }
+
+    /**
+     * Add ElasticThreadFilters to the chain
+     *
+     * @return void
+     */
+    public function withElasticThreadFilters()
+    {
+        $this->addFilter(ElasticThreadFilters::class);
+    }
+
+    /**
+     * Add ElasticThreadFilters to the chain
+     *
+     * @return void
+     */
+    public function withElasticProfilePostFilters()
+    {
+        $this->addFilter(ElasticProfilePostFilters::class);
+    }
+
+    /**
+     * Add ElasticThreadFilters to the chain
+     *
+     * @return void
+     */
+    public function withElasticAllPostsFilters()
+    {
+        $this->addFilter(ElasticProfilePostFilters::class);
+        $this->addFilter(ElasticThreadFilters::class);
+    }
+
 }

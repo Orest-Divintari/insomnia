@@ -18,6 +18,7 @@ class SearchTest extends TestCase
     protected $numberOfDesiredItems;
     protected $searchTerm;
     protected $noResultsMessage;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -36,7 +37,7 @@ class SearchTest extends TestCase
 
         $this->get(route('search.index', [
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $this->faker()->sentence(),
         ]))->assertSee($this->noResultsMessage);
 
         $thread->delete();
@@ -45,14 +46,15 @@ class SearchTest extends TestCase
     /** @test */
     public function display_no_results_message_when_no_threads_are_found_for_the_given_search_query_the_last_given_number_of_days()
     {
+        $term = $this->faker()->sentence();
         $oldThread = create(Thread::class, [
-            'body' => $this->searchTerm,
+            'body' => $term,
             'created_at' => Carbon::now()->subDays(10),
         ]);
 
         $response = $this->get(route('search.index', [
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $term,
             'last_created' => 1,
         ]));
 
@@ -64,15 +66,16 @@ class SearchTest extends TestCase
     /** @test */
     public function display_no_results_message_when_no_threads_are_found_given_a_search_query_for_the_given_username()
     {
+        $term = $this->faker()->sentence();
         $thread = create(Thread::class, [
-            'body' => $this->searchTerm,
+            'body' => $term,
         ]);
         $name = 'benz';
         create(User::class, ['name' => $name]);
 
         $response = $this->get(route('search.index', [
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $term,
             'posted_by' => $name,
         ]));
 

@@ -17,6 +17,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     /** @test */
     public function get_the_profile_posts_that_are_created_by_a_given_username()
     {
+
         $user = create(User::class);
         $desiredProfilePost = ProfilePostFactory::by($user)->create();
         $undesiredProfilePost = create(ProfilePost::class);
@@ -198,6 +199,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
     /** @test */
     public function get_the_profile_posts_and_comments_that_are_posted_on_a_user_profile_given_a_search_query()
     {
+        $this->withoutExceptionHandling();
         $undesiredProfilePost = create(ProfilePost::class);
         $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
         $profileOwner = create(User::class);

@@ -11,16 +11,16 @@ class FilterManager
     protected $builder;
     protected $appliedFilters = [];
     protected $supportedFilters = [];
-    protected $modelFilters = [];
+    protected $filters = [];
     protected $requestedFilters = [];
     protected $chain;
 
     /**
      * Create a new FilterManager instance
      *
-     * @param ModelFilterChain $chain
+     * @param FilterChain $chain
      */
-    public function __construct(ModelFilterChain $chain)
+    public function __construct(FilterChain $chain)
     {
         $this->chain = $chain;
     }
@@ -29,65 +29,66 @@ class FilterManager
      * Apply filters on the given builder
      *
      * @param Builder
-     * @return Laravel\ScoutExtended\Builder|Illuminate\Database\Eloquent\Builder
+     * @return Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
      */
     public function apply($builder)
     {
-        foreach ($this->chain->getFilters() as $modelFilterClass) {
-            $modelFilter = new $modelFilterClass();
-            $modelFilter->setBuilder($builder);
+        foreach ($this->chain->getFilters() as $filterClass) {
+            $filter = new $filterClass();
+            $filter->setBuilder($builder);
 
-            foreach ($this->getRequestedFilters($modelFilter) as $filter => $value) {
+            foreach ($this->getRequestedFilters($filter) as $filterKey => $filterValue) {
 
-                if (method_exists($modelFilter, $filter)
-                    && $this->canBeApplied($modelFilterClass, $filter)
+                if (method_exists($filter, $filterKey)
+                    && $this->canBeApplied($filterClass, $filterKey)
                 ) {
-                    $modelFilter->$filter($value);
-                    $this->appliedFilters[$modelFilterClass][] = $filter;
+                    $filter->$filterKey($filterValue);
+                    $this->appliedFilters[$filterClass][] = $filterKey;
                 }
             }
-            $builder = $modelFilter->builder();
+            $builder = $filter->builder();
         }
         return $builder;
     }
 
     /**
-     * Prevents the case where different modelFilters want to apply the same filter
+     * Prevents the case where different filters want to apply the same filter
      *
-     * @param mixed $filter
+     * @param string $filterClass
+     * @param string $filterKey
      * @return boolean
      */
-    private function canBeApplied($modelFilterClass, $filter)
+    private function canBeApplied($filterClass, $filterKey)
     {
-        if ($this->filterIsApplied($filter)) {
-            return $this->filterClassIsApplied($modelFilterClass)
-            && $this->filterIsAppliedByFilterClass($modelFilterClass, $filter);
+        if ($this->filterIsApplied($filterKey)) {
+            return $this->filterClassIsApplied($filterClass)
+            && $this->filterIsAppliedByFilterClass($filterClass, $filterKey);
         }
         return true;
     }
 
     /**
-     * Determine whether the given filter has been applied by the given model filter
+     * Determine whether the given filterKey has been applied by the given filter
      *
-     * @param mixed $modelFilterClass
-     * @param string $filter
+     * @param string $filterClass
+     * @param string $filterKey
      * @return bool
      */
-    private function filterIsAppliedByFilterClass($modelFilterClass, $filter)
+    private function filterIsAppliedByFilterClass($filterClass, $filterKey)
     {
-        return collect($this->appliedFilters[$modelFilterClass])
-            ->contains($filter);
+        return collect($this->appliedFilters[$filterClass])
+            ->contains($filterKey);
     }
 
     /**
      * Determine whether the given filter class has applied any filters
      *
-     * @param mixed $modelFilterClass
+     * @param string $filterClass
      * @return bool
      */
-    private function filterClassIsApplied($modelFilterClass)
+    private function filterClassIsApplied($filterClass)
     {
-        return array_key_exists($modelFilterClass, $this->appliedFilters);
+        return array_key_exists($filterClass, $this->appliedFilters);
     }
 
     /**
@@ -96,26 +97,26 @@ class FilterManager
      * @param string $filter
      * @return bool
      */
-    private function filterIsApplied($filter)
+    private function filterIsApplied($filterKey)
     {
         return collect($this->appliedFilters)
             ->flatten()
-            ->contains($filter);
+            ->contains($filterKey);
     }
 
     /**
      * Find and get the filters passed in the request
      *
-     * @param mixed $modelFilter
+     * @param FilterInterface $filter
      * @return array
      */
-    public function getRequestedFilters($modelFilter = null)
+    public function getRequestedFilters($filter = null)
     {
-        if (isset($modelFilter)) {
-            $this->requestedFilters = $this->getFiltersFor($modelFilter);
+        if (isset($filter)) {
+            $this->requestedFilters = $this->getFiltersFor($filter);
         } else {
-            foreach ($this->chain->getFilters() as $modelFilterClass) {
-                $this->requestedFilters = $this->getFiltersFor(new $modelFilterClass());
+            foreach ($this->chain->getFilters() as $filterClass) {
+                $this->requestedFilters = $this->getFiltersFor(new $filterClass());
             }
         }
 
@@ -149,12 +150,12 @@ class FilterManager
     /**
      * Get the filters that are supported by the given model filter
      *
-     * @param $modelFilter
+     * @param FilterInterface $filter
      * @return array
      */
-    private function getFiltersFor($modelFilter)
+    private function getFiltersFor($filter)
     {
-        $filters = $this->toSnakeCase($modelFilter->filters);
+        $filters = $this->toSnakeCase($filter->filters);
 
         return $this->toCamelCase(request()->only($filters));
     }
@@ -279,6 +280,39 @@ class FilterManager
     public function withAllPostsFilters()
     {
         $this->chain->withAllPostsFilters();
+        return $this;
+    }
+
+    /**
+     * Add Elastic thread filters to the chain
+     *
+     * @return FilterManager
+     */
+    public function withElasticThreadFilters()
+    {
+        $this->chain->withElasticThreadFilters();
+        return $this;
+    }
+
+    /**
+     * Add Elastic thread filters to the chain
+     *
+     * @return FilterManager
+     */
+    public function withElasticProfilePostFilters()
+    {
+        $this->chain->withElasticProfilePostFilters();
+        return $this;
+    }
+
+    /**
+     * Add Elastic all posts filters to the chain
+     *
+     * @return FilterManager
+     */
+    public function withElasticAllPostsFilters()
+    {
+        $this->chain->withElasticAllPostsFilters();
         return $this;
     }
 
