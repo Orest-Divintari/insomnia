@@ -11,8 +11,8 @@ class ElasticSearchThreads implements SearchIndexInterface
     /**
      * Search threads and replies for the given search query
      *
-     * @param mixed $searchQuery
-     * @return Laravel\Scout\Builder
+     * @param string $searchQuery
+     * @return \ElasticScoutDriverPlus\Builders\SearchRequestBuilder
      */
     public function search($searchQuery)
     {

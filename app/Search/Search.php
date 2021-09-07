@@ -20,7 +20,7 @@ abstract class Search
      * The model factory that is used
      * to get the requested model filter
      *
-     * @var mixed
+     * @var SearchFilterFactory
      */
     protected $filtersFactory;
 
@@ -28,7 +28,7 @@ abstract class Search
      * The search index factory that is used
      * to get requested the search index
      *
-     * @var SearchIndexFactory
+     * @var SearchIndexFactoryInterface
      */
     protected $indexFactory;
 
@@ -42,7 +42,7 @@ abstract class Search
     /**
      * Create a new Search instance
      *
-     * @param SearchIndexFactory $searchIndexFactory
+     * @param SearchIndexFactoryInterface $searchIndexFactory
      * @param SearchFilterFactory $filtersFactory
      */
     public function __construct(
@@ -117,8 +117,8 @@ abstract class Search
      * Get the results from the database if there are any
      * otherwise return no results message
      *
-     * @param Collection $results
+     * @param mixed $searchRequest
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    abstract public function fetch($results);
+    abstract public function fetch($searchRequest);
 }

@@ -287,6 +287,18 @@ class Thread extends Model
     }
 
     /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+        $array['tagNames'] = $this->tags()->pluck('name')->toArray();
+        return $array;
+    }
+
+    /**
      * Get the type of the model
      *
      * @return string
@@ -372,7 +384,8 @@ class Thread extends Model
     public function addTags(array $tags)
     {
         $tagIds = Tag::whereIn('name', $tags)->pluck('id');
-        $this->tags()->attach($tagIds);
+        $this->tags()->syncWithoutDetaching($tagIds);
+        $this->searchable();
     }
 
     /**

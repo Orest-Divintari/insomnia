@@ -7,7 +7,6 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class SearchData extends DataTransferObject
 {
-
     /**
      * The type of model to be searched
      *
@@ -25,7 +24,7 @@ class SearchData extends DataTransferObject
     /**
      * The seach query
      *
-     * @var string
+     * @var string|string[]
      */
     public $query;
 

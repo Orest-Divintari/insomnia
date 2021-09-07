@@ -11,8 +11,8 @@ class ElasticSearchProfilePosts implements SearchIndexInterface
     /**
      * Search profile posts and comments for the given search query
      *
-     * @param mixed $searchQuery
-     * @return Laravel\Scout\Builder
+     * @param string $searchQuery
+     * @return \ElasticScoutDriverPlus\Builders\SearchRequestBuilder
      */
     public function search($searchQuery)
     {

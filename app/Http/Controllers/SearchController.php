@@ -23,21 +23,17 @@ class SearchController extends Controller
     }
 
     /**
-     * Number of results per page
-     * @var int
-     */
-    const RESULTS_PER_PAGE = 2;
-
-    /**
      * Display the search results
      *
+     * @param Search $search
+     * @param SearchRequest $searchRequest
      * @return Illuminate\View\View;
      */
     public function index(Search $search, SearchRequest $searchRequest)
     {
         $validator = $searchRequest->handle();
 
-        $query = $searchRequest->getSearchQuery();
+        $query = $searchRequest->query();
 
         if ($validator->fails()) {
             return view('search.index', compact('query'))

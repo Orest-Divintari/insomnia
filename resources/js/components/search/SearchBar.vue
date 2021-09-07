@@ -39,7 +39,7 @@
                   styleClasses="text-smaller rounded p-1 w-full focus:outline-none"
                   ref="postedBy"
                   value=""
-                  name="posted_by"
+                  input-name="posted_by"
                 ></names-autocomplete>
               </div>
             </div>

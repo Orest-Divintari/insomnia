@@ -38,7 +38,7 @@
               <p class="form-label-phone">Invite members:</p>
               <div>
                 <names-autocomplete
-                  name="invite-participants"
+                  input-name="participants"
                   v-model="participants"
                 ></names-autocomplete>
                 <p class="text-gray-lightest text-xs mt-2">

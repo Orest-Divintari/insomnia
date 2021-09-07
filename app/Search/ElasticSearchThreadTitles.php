@@ -6,12 +6,11 @@ use App\Search\SearchIndexInterface;
 
 class ElasticSearchThreadTitles implements SearchIndexInterface
 {
-
     /**
      * Search threads titles
      *
-     * @param mixed $searchQuery
-     * @return Laravel\Scout\Builder
+     * @param string $searchQuery
+     * @return \ElasticScoutDriverPlus\Builders\SearchRequestBuilder
      */
     public function search($searchQuery)
     {

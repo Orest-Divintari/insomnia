@@ -11,8 +11,8 @@ class ElasticSearchAllPosts implements SearchIndexInterface
     /**
      * Search all posts (thread, profile posts, replies)
      *
-     * @param mixed $searchQuery
-     * @return Laravel\Scout\Builder
+     * @param string $searchQuery
+     * @return \ElasticScoutDriverPlus\Builders\SearchRequestBuilder
      */
     public function search($searchQuery)
     {

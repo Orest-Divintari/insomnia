@@ -11,6 +11,7 @@ use App\Traits\Ignorable;
 use App\User\Details;
 use App\User\Preferences;
 use Carbon\Carbon;
+use ElasticScoutDriverPlus\QueryDsl;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,7 +26,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail
 {
 
-    use Ignorable, Notifiable, Followable, Searchable, HandlesPrivacy, HasRoles, HasFactory;
+    use Ignorable, Notifiable, Followable, Searchable, QueryDsl, HandlesPrivacy, HasRoles, HasFactory;
 
     /**
      * Set the maximum length for a username
