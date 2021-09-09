@@ -15,6 +15,7 @@ use App\Traits\RecordsActivity;
 use App\Traits\Sluggable;
 use App\Traits\Subscribable;
 use Carbon\Carbon;
+use ElasticScoutDriverPlus\QueryDsl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,7 @@ class Thread extends Model
     Subscribable,
     RecordsActivity,
     Searchable,
+    QueryDsl,
     Sluggable,
     Lockable,
     Readable,
@@ -281,7 +283,19 @@ class Thread extends Model
      */
     public function searchableAs()
     {
-        return 'thread_title';
+        return 'threads';
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+        $array['tagNames'] = $this->tags()->pluck('name')->toArray();
+        return $array;
     }
 
     /**
@@ -370,7 +384,8 @@ class Thread extends Model
     public function addTags(array $tags)
     {
         $tagIds = Tag::whereIn('name', $tags)->pluck('id');
-        $this->tags()->attach($tagIds);
+        $this->tags()->syncWithoutDetaching($tagIds);
+        $this->searchable();
     }
 
     /**

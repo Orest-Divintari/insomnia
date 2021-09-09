@@ -13,6 +13,7 @@ class SearchTagsTest extends SearchTest
     /** @test */
     public function when_a_user_searches_a_single_tag_all_threads_related_to_the_tag_are_displayed()
     {
+        $this->withoutExceptionHandling();
         $tagApple = create(Tag::class, ['name' => 'apple']);
         $numberOfDesiredThreads = 2;
         $threads = createMany(Thread::class, $numberOfDesiredThreads);
@@ -21,8 +22,37 @@ class SearchTagsTest extends SearchTest
         }
         $this->assertCount(2, $tagApple->threads);
 
-        $results = $this->search(
+        $results = $this->searchJson(
             ['type' => 'tag', 'q' => $tagApple->name],
+            $numberOfDesiredThreads
+        );
+
+        $this->assertCount($numberOfDesiredThreads, $results);
+    }
+
+    /** @test */
+    public function when_a_user_searches_multiple_tags_all_threads_related_to_all_given_tags_are_displayed()
+    {
+        $this->withoutExceptionHandling();
+        $tagApple = create(Tag::class, ['name' => 'applelicious']);
+        $tagMicrosoft = create(Tag::class, ['name' => 'microsoftbil']);
+        $appleThreads = 2;
+        $microsoftThreads = 4;
+        $numberOfDesiredThreads = 1;
+        $threads = createMany(Thread::class, $appleThreads);
+        foreach ($threads as $thread) {
+            $thread->addTags([$tagApple->name]);
+        }
+        $threads->first()->addTags([$tagMicrosoft->name]);
+
+        $threads = createMany(Thread::class, $microsoftThreads);
+        foreach ($threads as $thread) {
+            $thread->addTags([$tagMicrosoft->name]);
+        }
+
+        $tags = "{$tagApple->name},{$tagMicrosoft->name}";
+        $results = $this->searchJson(
+            ['type' => 'tag', 'q' => $tags],
             $numberOfDesiredThreads
         );
 

@@ -83,7 +83,7 @@ class CreateCategoriesTest extends TestCase
     public function the_title_must_be_max_100_characters()
     {
         $attributes = raw(Category::class);
-        $attributes['title'] = $this->faker()->text(500);
+        $attributes['title'] = random_string(101);
         $this->signInAdmin();
 
         $response = $this->post(route('admin.categories.store'), $attributes);
@@ -130,8 +130,9 @@ class CreateCategoriesTest extends TestCase
     /** @test */
     public function the_excerpt_must_be_max_100_characters()
     {
+        $a = random_string(100);
         $attributes = raw(Category::class);
-        $attributes['excerpt'] = $this->faker()->text(500);
+        $attributes['excerpt'] = random_string(101);
         $this->signInAdmin();
 
         $response = $this->post(route('admin.categories.store'), $attributes);

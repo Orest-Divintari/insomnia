@@ -101,7 +101,7 @@ class UpdateGroupCategoriesTest extends TestCase
     {
         $groupCategory = create(GroupCategory::class);
         $admin = $this->signInAdmin();
-        $title = $this->faker()->text(150);
+        $title = random_string(101);
         $excerpt = $this->faker()->sentence();
 
         $response = $this->patch(route('admin.group-categories.update', $groupCategory), compact('title', 'excerpt'));
@@ -127,7 +127,7 @@ class UpdateGroupCategoriesTest extends TestCase
     {
         $groupCategory = create(GroupCategory::class);
         $admin = $this->signInAdmin();
-        $excerpt = $this->faker()->text(150);
+        $excerpt = random_string(101);
         $title = $this->faker()->sentence();
 
         $response = $this->patch(route('admin.group-categories.update', $groupCategory), compact('title', 'excerpt'));

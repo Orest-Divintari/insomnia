@@ -19,7 +19,6 @@ class SearchThreadsTest extends SearchTest
     public function setUp(): void
     {
         parent::setUp();
-        config(['scout.driver' => 'algolia']);
         $this->numberOfDesiredThreads = 1;
         $this->numberOfUndesiredThreads = 1;
         $this->numberOfDesiredReplies = 1;

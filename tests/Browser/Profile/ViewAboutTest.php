@@ -231,7 +231,9 @@ class ViewAboutTest extends DuskTestCase
     {
         $profileOwner = create(User::class);
         $visitor = create(User::class);
-        $users = createMany(User::class, Follow::FOLLOWERS_BY_PER_PAGE * 2 + 1);
+        // add one in order create 3 pages and to avoid multiplying by 3
+        $numberOfFollowers = Follow::FOLLOWERS_BY_PER_PAGE * 2 + 1;
+        $users = createMany(User::class, $numberOfFollowers);
         $users->each(function ($user) use ($profileOwner) {
             $user->follow($profileOwner);
         });
@@ -264,7 +266,9 @@ class ViewAboutTest extends DuskTestCase
     {
         $profileOwner = create(User::class);
         $visitor = create(User::class);
-        $users = createMany(User::class, Follow::FOLLOWINGS_PER_PAGE * 2 + 1);
+        // add one in order create 3 pages and to avoid multiplying by 3
+        $numberOfFollowings = Follow::FOLLOWINGS_PER_PAGE * 2 + 1;
+        $users = createMany(User::class, $numberOfFollowings);
         $users->each(function ($user) use ($profileOwner) {
             $profileOwner->follow($user);
         });
@@ -279,8 +283,9 @@ class ViewAboutTest extends DuskTestCase
                 ->click('@follow-list-button')
                 ->waitFor('@fetch-more-button')
                 ->click('@fetch-more-button')
-                ->pause(50)
-                ->click('@fetch-more-button');
+                ->waitFor('@fetch-more-button')
+                ->click('@fetch-more-button')
+                ->waitUntilMissing('@fetch-more-button');
 
             $users->each(function ($user) use ($response) {
                 $response

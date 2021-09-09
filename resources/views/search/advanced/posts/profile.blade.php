@@ -30,7 +30,7 @@
                     <div class="form-right-col">
                         <p class="form-label-phone">Posted by:</p>
                         <div>
-                            <names-autocomplete name="posted_by">
+                            <names-autocomplete input-name="posted_by">
                             </names-autocomplete>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                     <div class="form-right-col">
                         <p class="form-label-phone">Posted on the profile of member: </p>
                         <div>
-                            <names-autocomplete name="profile_owner">
+                            <names-autocomplete input-name="profile_owner">
                             </names-autocomplete>
                         </div>
                     </div>

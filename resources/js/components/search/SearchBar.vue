@@ -3,7 +3,13 @@
     <dropdown :styleClasses="'w-80'">
       <template v-slot:dropdown-trigger>
         <a
-          class="fas fa-search text-blue-dark cursor-pointer hover:text-blue-mid"
+          class="
+            fas
+            fa-search
+            text-blue-dark
+            cursor-pointer
+            hover:text-blue-mid
+          "
         ></a>
       </template>
       <template v-slot:dropdown-items>
@@ -13,7 +19,13 @@
             <div class="px-2">
               <input
                 v-focus
-                class="w-full text-smaller text-black-semi p-1 rounded focus:outline-none"
+                class="
+                  w-full
+                  text-smaller text-black-semi
+                  p-1
+                  rounded
+                  focus:outline-none
+                "
                 type="text"
                 ref="q"
                 name="q"
@@ -39,7 +51,7 @@
                   styleClasses="text-smaller rounded p-1 w-full focus:outline-none"
                   ref="postedBy"
                   value=""
-                  name="posted_by"
+                  input-name="posted_by"
                 ></names-autocomplete>
               </div>
             </div>

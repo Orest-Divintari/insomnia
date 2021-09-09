@@ -8,6 +8,7 @@ use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
+use ElasticScoutDriverPlus\QueryDsl;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -21,6 +22,7 @@ class Reply extends Model
     FormatsDate,
     RecordsActivity,
     Searchable,
+    QueryDsl,
         HasFactory;
 
     /**

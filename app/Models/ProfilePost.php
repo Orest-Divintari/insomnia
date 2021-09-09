@@ -9,13 +9,20 @@ use App\Traits\Filterable;
 use App\Traits\FormatsDate;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
+use ElasticScoutDriverPlus\QueryDsl;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
 class ProfilePost extends Model
 {
-    use FormatsDate, RecordsActivity, Searchable, Likeable, Filterable, HasFactory;
+    use FormatsDate,
+    RecordsActivity,
+    Searchable,
+    QueryDsl,
+    Likeable,
+    Filterable,
+        HasFactory;
 
     /**
      * Number of visible posts per page

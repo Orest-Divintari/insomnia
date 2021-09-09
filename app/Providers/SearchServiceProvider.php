@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Actions\AppendHasIgnoredContentAttributeAction;
+use App\Filters\SearchFilterFactory;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\SearchRequestFactory;
-use App\Search\ModelFilterFactory;
+use App\Search\ElasticSearch;
+use App\Search\ElasticSearchIndexFactory;
 use App\Search\Search;
-use App\Search\SearchIndexFactory;
+use App\Search\SearchIndexFactoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class SearchServiceProvider extends ServiceProvider
@@ -19,15 +21,17 @@ class SearchServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(SearchIndexFactoryInterface::class, ElasticSearchIndexFactory::class);
+
         $this->app->bind(Search::class, function ($app) {
 
-            $searchIndexFactory = app(SearchIndexFactory::class);
+            $searchIndexFactory = app(SearchIndexFactoryInterface::class);
 
-            $filtersFactory = app(ModelFilterFactory::class);
+            $filtersFactory = app(SearchFilterFactory::class);
 
             $appendHasIgnoredContentAttribute = new AppendHasIgnoredContentAttributeAction;
 
-            return new Search($searchIndexFactory, $filtersFactory, $appendHasIgnoredContentAttribute);
+            return new ElasticSearch($searchIndexFactory, $filtersFactory, $appendHasIgnoredContentAttribute);
         });
 
         $this->app->bind(SearchRequest::class, function ($app) {

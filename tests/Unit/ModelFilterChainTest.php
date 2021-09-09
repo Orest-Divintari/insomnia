@@ -3,7 +3,9 @@
 namespace Tests\Unit;
 
 use App\Filters\ConversationFilters;
-use App\Filters\ModelFilterChain;
+use App\Filters\ElasticProfilePostFilters;
+use App\Filters\ElasticThreadFilters;
+use App\Filters\FilterChain;
 use App\Filters\ProfilePostFilters;
 use App\Filters\ReplyFilters;
 use App\Filters\ThreadFilters;
@@ -18,7 +20,7 @@ class ModelFilterChainTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->chain = new ModelFilterChain();
+        $this->chain = new FilterChain();
     }
 
     /** @test */
@@ -63,6 +65,31 @@ class ModelFilterChainTest extends TestCase
     }
 
     /** @test */
+    public function a_chain_may_have_elastic_thread_filters()
+    {
+        $this->chain->withElasticThreadFilters();
+
+        $this->assertContains(ElasticThreadFilters::class, $this->chain->getFilters());
+    }
+
+    /** @test */
+    public function a_chain_may_have_elastic_profile_post_filters()
+    {
+        $this->chain->withElasticProfilePostFilters();
+
+        $this->assertContains(ElasticProfilePostFilters::class, $this->chain->getFilters());
+    }
+
+    /** @test */
+    public function a_chain_may_have_elastic_all_posts_filters()
+    {
+        $this->chain->withElasticAllPostsFilters();
+
+        $this->assertContains(ElasticThreadFilters::class, $this->chain->getFilters());
+        $this->assertContains(ElasticProfilePostFilters::class, $this->chain->getFilters());
+    }
+
+    /** @test */
     public function a_chain_can_add_a_new_filter()
     {
         $this->chain->addFilter(ThreadFilters::class);
@@ -77,4 +104,5 @@ class ModelFilterChainTest extends TestCase
 
         $this->assertCount(1, $this->chain->getFilters());
     }
+
 }

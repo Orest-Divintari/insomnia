@@ -21,9 +21,6 @@
          <testsuite name="Threads">
             <directory suffix="Test.php">./tests/Feature/Threads</directory>
         </testsuite>
-        <testsuite name="Follows">
-            <directory suffix="Test.php">./tests/Feature/Follows</directory>
-        </testsuite>
          <testsuite name="Categories">
             <directory suffix="Test.php">./tests/Feature/Categories</directory>
         </testsuite>

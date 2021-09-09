@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use ElasticScoutDriverPlus\QueryDsl;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Tag extends Model
 {
 
-    use HasFactory;
+    use HasFactory, Searchable, QueryDsl;
 
     protected $guarded = [];
 

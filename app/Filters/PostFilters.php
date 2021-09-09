@@ -19,7 +19,7 @@ class PostFilters
     /**
      * Builder on which the filters are applied
      *
-     * @var Laravel\Scout\Builder|Illuminate\Database\Eloquent\Builder
+     * @var Illuminate\Database\Eloquent\Builder
      */
     protected $builder;
 

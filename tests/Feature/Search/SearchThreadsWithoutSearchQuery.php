@@ -21,7 +21,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $desiredThread = ThreadFactory::by($user)->create();
         $undesiredThread = create(Thread::class);
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'thread',
             'posted_by' => $user->name,
         ],
@@ -49,7 +49,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $undesiredThread = create(Thread::class);
         $usernames = "{$john->name}, {$doe->name}";
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'thread',
             'posted_by' => $usernames,
         ],
@@ -84,7 +84,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $usernames = "{$john->name}, {$doe->name}";
         $numberOfDesiredReplies = 2;
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'thread',
             'posted_by' => $usernames,
         ],
@@ -119,7 +119,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $usernames = "{$john->name},{$doe->name}";
         $numberOfDesiredItems = 4;
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'thread',
             'posted_by' => $usernames,
         ],
@@ -161,7 +161,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
             ->create();
         Carbon::setTestNow();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'thread',
             'last_created' => $daysAgo,
             'posted_by' => $user->name,

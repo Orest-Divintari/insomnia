@@ -69,7 +69,7 @@ abstract class SearchRequest
      *
      * @return string
      */
-    public function getSearchQuery()
+    public function query()
     {
         if (is_null(request('q'))) {
             return "";

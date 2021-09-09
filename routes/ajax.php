@@ -213,6 +213,11 @@ Route::group(['middleware' => 'visitor.append'], function () {
 
     });
 
+/* ************ SEARCH NAMES ************ */
+
+    Route::get('/search/names/{name}', 'SearchNamesController@index')
+        ->name('search.names.index');
+
 /* ************ PROFILE ************ */
 
     Route::get('/profiles/{user}', 'ProfileController@show')

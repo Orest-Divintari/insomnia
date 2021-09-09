@@ -4,6 +4,7 @@ namespace Tests\Feature\Search;
 
 use App\Models\Thread;
 use App\Models\User;
+use App\Search\Search;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,15 +19,16 @@ class SearchTest extends TestCase
     protected $numberOfDesiredItems;
     protected $searchTerm;
     protected $noResultsMessage;
+
     public function setUp(): void
     {
         parent::setUp();
+        config(['scout.driver' => 'elastic']);
         $this->numberOfUndesiredItems = 2;
         $this->numberOfDesiredItems = 2;
         $this->numberOfItemsToDelete = $this->numberOfUndesiredItems + $this->numberOfDesiredItems;
-        $this->searchTerm = 'iphone';
+        $this->searchTerm = $this->faker()->sentence(3);
         $this->noResultsMessage = 'No results found.';
-        config(['scout.driver' => 'algolia']);
     }
 
     /** @test */
@@ -34,10 +36,14 @@ class SearchTest extends TestCase
     {
         $thread = create(Thread::class);
 
-        $this->get(route('search.index', [
+        $response = $this->searchNoResults([
             'type' => 'thread',
-            'q' => $this->searchTerm,
-        ]))->assertSee($this->noResultsMessage);
+            'q' => $this->faker()->sentence(),
+        ],
+            $this->noResultsMessage
+        );
+
+        $response->assertSee($this->noResultsMessage);
 
         $thread->delete();
     }
@@ -45,16 +51,19 @@ class SearchTest extends TestCase
     /** @test */
     public function display_no_results_message_when_no_threads_are_found_for_the_given_search_query_the_last_given_number_of_days()
     {
+        $term = $this->faker()->sentence();
         $oldThread = create(Thread::class, [
-            'body' => $this->searchTerm,
+            'body' => $term,
             'created_at' => Carbon::now()->subDays(10),
         ]);
 
-        $response = $this->get(route('search.index', [
+        $response = $this->searchNoResults([
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $term,
             'last_created' => 1,
-        ]));
+        ],
+            $this->noResultsMessage
+        );
 
         $response->assertSee($this->noResultsMessage);
 
@@ -64,17 +73,20 @@ class SearchTest extends TestCase
     /** @test */
     public function display_no_results_message_when_no_threads_are_found_given_a_search_query_for_the_given_username()
     {
+        $term = $this->faker()->sentence();
         $thread = create(Thread::class, [
-            'body' => $this->searchTerm,
+            'body' => $term,
         ]);
         $name = 'benz';
         create(User::class, ['name' => $name]);
 
-        $response = $this->get(route('search.index', [
+        $response = $this->searchNoResults([
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $term,
             'posted_by' => $name,
-        ]));
+        ],
+            $this->noResultsMessage
+        );
 
         $response->assertSee($this->noResultsMessage);
 
@@ -171,7 +183,7 @@ class SearchTest extends TestCase
     {
         if (!is_object(json_decode($results->getContent()))) {
             return true;
-        } elseif (count($results->json()['data']) != $numberOfItems) {
+        } elseif (is_array($results->json()['data']) && count($results->json()['data']) != $numberOfItems) {
             return true;
         }
     }
@@ -182,10 +194,10 @@ class SearchTest extends TestCase
      * @param array $parameters
      * @return array
      */
-    public function search($parameters, $numberOfItems = null)
+    public function searchJson($parameters, $numberOfItems)
     {
-        $numberOfItems = $numberOfItems ?: $this->numberOfDesiredItems;
         $counter = 0;
+
         do {
             sleep(0.2);
             $results = $this->getJson(
@@ -196,6 +208,20 @@ class SearchTest extends TestCase
         } while ($this->validate($results, $numberOfItems) && $counter <= 500);
 
         return $results->json()['data'];
+    }
+
+    public function searchNoResults($parameters, $expectedResult)
+    {
+        $counter = 0;
+
+        do {
+            sleep(0.2);
+            $response = $this->getJson(
+                route('search.index', $parameters)
+            );
+        } while ($response->getContent() !== $expectedResult);
+
+        return $response;
     }
 
     /** @test */
@@ -312,5 +338,4 @@ class SearchTest extends TestCase
                 && $result['repliable']['profile_owner_id'] == $comment->repliable->profileOwner->id;
             }));
     }
-
 }
