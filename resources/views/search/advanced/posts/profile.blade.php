@@ -69,7 +69,4 @@
             </form>
         </div>
     </main>
-    <<<<<<< HEAD:resources/views/search/advanced/profile-posts.blade.php </x-layouts.advanced-search>
-        =======
 </x-layouts.advanced-search>
->>>>>>> tmp:resources/views/search/advanced/posts/profile.blade.php
