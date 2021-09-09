@@ -188,7 +188,9 @@ class InteractWithConversationTest extends DuskTestCase
                 ->visit(route('conversations.show', $conversation))
                 ->click('@edit-conversation-button')
                 ->assertVisible('@edit-conversation-modal')
+                ->waitFor('@lock-conversation-checkbox')
                 ->check('@lock-conversation-checkbox')
+                ->assertChecked('@lock-conversation-checkbox')
                 ->click('@save-conversation-button')
                 ->assertNotPresent('@edit-conversatione-modal')
                 ->waitForText('Closed for new replies.')
@@ -243,6 +245,7 @@ class InteractWithConversationTest extends DuskTestCase
                 ->visit(route('conversations.show', $conversation))
                 ->click('@leave-conversation-button')
                 ->assertVisible('@leave-conversation-modal')
+                ->waitFor('@allow-future-messages-checkbox')
                 ->assertChecked('@allow-future-messages-checkbox')
                 ->click('@leave-conversation-submit')
                 ->waitForText('There are no conversations to display.')
@@ -268,6 +271,7 @@ class InteractWithConversationTest extends DuskTestCase
                 ->visit(route('conversations.show', $conversation))
                 ->click('@leave-conversation-button')
                 ->assertVisible('@leave-conversation-modal')
+                ->waitFor('@ignore-future-messages-checkbox')
                 ->check('@ignore-future-messages-checkbox')
                 ->assertChecked('@ignore-future-messages-checkbox')
                 ->click('@leave-conversation-submit')
@@ -292,14 +296,17 @@ class InteractWithConversationTest extends DuskTestCase
             $browser
                 ->loginAs($conversationStarter)
                 ->visit(route('conversations.show', $conversation))
+                ->waitFor('@participant-settings-button')
                 ->click('@participant-settings-button')
                 ->assertVisible('@participant-settings')
                 ->click('@set-participant-as-admin-button')
                 ->assertMissing('@participant-settings')
                 ->click('@participant-settings-button')
+                ->waitFor('@remove-participant-as-admin-button')
                 ->assertVisible('@remove-participant-as-admin-button')
                 ->refresh()
                 ->click('@participant-settings-button')
+                ->waitFor('@remove-participant-as-admin-button')
                 ->assertVisible('@remove-participant-as-admin-button');
         });
     }
@@ -326,6 +333,7 @@ class InteractWithConversationTest extends DuskTestCase
                 ->click('@remove-participant-as-admin-button')
                 ->assertMissing('@participant-settings')
                 ->click('@participant-settings-button')
+                ->waitFor('@set-participant-as-admin-button')
                 ->assertVisible('@set-participant-as-admin-button')
                 ->refresh()
                 ->click('@participant-settings-button')
@@ -376,13 +384,16 @@ class InteractWithConversationTest extends DuskTestCase
             $george,
             $participantNames
         ) {
+
             $browser
                 ->loginAs($conversationStarter)
                 ->visit(route('conversations.show', $conversation))
                 ->click('@invite-participants-button')
                 ->waitFor('@invite-participants-modal')
                 ->assertVisible('@invite-participants-modal')
-                ->type('input[name=invite-participants]', $participantNames)
+                ->assertVisible('#participants')
+                ->type('#participants', $participantNames)
+                ->waitFor('@invite-participants-submit')
                 ->click('@invite-participants-submit')
                 ->waitForReload()
                 ->assertSee($doe->name)

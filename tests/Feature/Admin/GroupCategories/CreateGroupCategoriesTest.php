@@ -92,7 +92,7 @@ class CreateGroupCategoriesTest extends TestCase
     public function a_title_must_be_max_100_characters()
     {
         $admin = $this->signInAdmin();
-        $title = $this->faker()->text(500);
+        $title = random_string(101);
         $excerpt = $this->faker()->sentence();
 
         $response = $this->post(route('admin.group-categories.store', compact('title', 'excerpt')));
@@ -117,7 +117,7 @@ class CreateGroupCategoriesTest extends TestCase
     {
         $admin = $this->signInAdmin();
         $title = $this->faker()->sentence();
-        $excerpt = $this->faker()->text(500);
+        $excerpt = random_string(101);
 
         $response = $this->post(route('admin.group-categories.store', compact('title', 'excerpt')));
 

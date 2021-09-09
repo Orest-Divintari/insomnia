@@ -34,6 +34,7 @@ class SearchAllPostsTest extends DuskTestCase
                 ->visit(route('search.index', ['q' => $searchTerm]));
 
             $response->assertDontSee($ignoredProfilePost->body)
+                ->waitFor('@show-ignored-content-button')
                 ->assertVisible('@show-ignored-content-button');
         });
     }

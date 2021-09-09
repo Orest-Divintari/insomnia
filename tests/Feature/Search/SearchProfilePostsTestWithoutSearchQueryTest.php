@@ -22,7 +22,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $desiredProfilePost = ProfilePostFactory::by($user)->create();
         $undesiredProfilePost = create(ProfilePost::class);
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
         ],
@@ -49,7 +49,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             ->toProfilePost($desiredProfilePost)
             ->create();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
         ],
@@ -76,7 +76,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $profilePostByDoe = ProfilePostFactory::by($doe)->create();
         $usernames = "{$john->name}, {$doe->name}";
         $numberOfDesiredItems = 2;
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $usernames,
         ],
@@ -111,7 +111,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $usernames = "{$john->name}, {$doe->name}";
         $numberOfDesiredItems = 2;
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $usernames,
         ],
@@ -146,7 +146,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $usernames = "{$john->name}, {$doe->name}";
         $numberOfDesiredItems = 4;
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $usernames,
         ],
@@ -178,7 +178,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             ->toProfilePost($desiredProfilePost)
             ->create();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
         ],
@@ -210,7 +210,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             ->toProfilePost($desiredProfilePost)
             ->create();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'q' => $this->searchTerm,
             'profile_owner' => $profileOwner->name,
@@ -242,7 +242,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             ->toProfilePost($desiredProfilePost)
             ->create();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
             'profile_owner' => $profileOwner->name,
@@ -275,7 +275,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
         Carbon::setTestNow();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
             'last_created' => $daysAgo,
@@ -313,7 +313,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             ->create();
         Carbon::setTestNow();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'last_created' => $daysAgo,
             'posted_by' => $user->name,
@@ -353,7 +353,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $anotherUndesiredComment = CommentFactory::toProfilePost($anotherUndesiredProfilePost)->create();
         Carbon::setTestNow();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
             'last_created' => $daysAgo,
@@ -398,7 +398,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             ->create();
         Carbon::setTestNow();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'last_created' => $daysAgo,
             'posted_by' => $user->name,

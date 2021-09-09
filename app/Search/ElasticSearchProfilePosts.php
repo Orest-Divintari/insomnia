@@ -11,17 +11,15 @@ class ElasticSearchProfilePosts implements SearchIndexInterface
     /**
      * Search profile posts and comments for the given search query
      *
-     * @param string $searchQuery
+     * @param string $query
      * @return \ElasticScoutDriverPlus\Builders\SearchRequestBuilder
      */
-    public function search($searchQuery)
+    public function search($query)
     {
-        $query = '*' . $searchQuery . '*';
-
         return ProfilePost::boolSearch()
             ->join(Reply::class)
-            ->should('wildcard', ['title' => $query])
-            ->should('wildcard', ['body' => $query]);
+            ->should('match_phrase', ['title' => $query])
+            ->should('match_phrase', ['body' => $query]);
 
     }
 }

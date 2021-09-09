@@ -25,3 +25,14 @@ function snake_to_camel($string, $capitalizeFirstCharacter = false)
 
     return $str;
 }
+
+function random_string($numberOfCharacters)
+{
+    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    $string = '';
+    do {
+        $string = $string . substr(str_shuffle($characters), 0, $numberOfCharacters);
+    } while (strlen($string) < $numberOfCharacters);
+
+    return substr($string, 0, $numberOfCharacters);
+}

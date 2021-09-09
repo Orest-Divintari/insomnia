@@ -98,7 +98,7 @@ class UpdateCategoriesTest extends TestCase
     {
         $category = create(Category::class);
         $attributes = raw(Category::class);
-        $attributes['title'] = $this->faker()->text(500);
+        $attributes['title'] = random_string(101);
         $this->signInAdmin();
 
         $response = $this->patch(route('admin.categories.update', $category), $attributes);
@@ -150,7 +150,7 @@ class UpdateCategoriesTest extends TestCase
     {
         $category = create(Category::class);
         $attribX4utes = raw(Category::class);
-        $attributes['excerpt'] = $this->faker()->text(500);
+        $attributes['excerpt'] = random_string(101);
         $this->signInAdmin();
 
         $response = $this->patch(route('admin.categories.update', $category), $attributes);

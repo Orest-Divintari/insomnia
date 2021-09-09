@@ -11,17 +11,15 @@ class ElasticSearchAllPosts implements SearchIndexInterface
     /**
      * Search all posts (thread, profile posts, replies)
      *
-     * @param string $searchQuery
+     * @param string $query
      * @return \ElasticScoutDriverPlus\Builders\SearchRequestBuilder
      */
-    public function search($searchQuery)
+    public function search($query)
     {
-        $query = '*' . $searchQuery . '*';
-
         return Thread::boolSearch()
             ->join(ProfilePost::class)
             ->join(Reply::class)
-            ->should('wildcard', ['title' => $query])
-            ->should('wildcard', ['body' => $query]);
+            ->should('match_phrase', ['title' => $query])
+            ->should('match_phrase', ['body' => $query]);
     }
 }

@@ -6,8 +6,9 @@
       ref="searchInput"
       class="bg-white form-input"
       :class="styleClasses"
+      :id="inputName"
       v-model="query"
-      @input="search"
+      @input="handleOnInput"
       :name="inputName"
       :placeholder="inputPlaceholder"
       autocomplete="off"
@@ -77,6 +78,10 @@ export default {
     showTypeMore() {
       this.typeMore = true;
     },
+    handleOnInput() {
+      this.broadcastInput();
+      this.search();
+    },
     search() {
       var currentSearchTerm = this.getLastName(this.query);
       if (this.queryIsShort(currentSearchTerm)) {
@@ -93,7 +98,7 @@ export default {
       axios
         .get(this.path + currentSearchTerm)
         .then(({ data }) => (this.suggestions = data))
-        .catch((error) => this.console.log(error.response.data));
+        .catch((error) => console.log(error.response.data));
     },
     getLastName(allNames) {
       if (!allNames.includes(",")) {
@@ -130,6 +135,9 @@ export default {
     highlight(suggestion) {
       var lastName = this.getLastName(this.query);
       return "<b>" + lastName + "</b>" + suggestion.slice(lastName.length);
+    },
+    broadcastInput() {
+      this.$emit("input", this.query);
     },
   },
 };

@@ -21,7 +21,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
             ->withTitle($this->searchTerm)
             ->create();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'only_title' => true,
             'q' => $this->searchTerm,
         ],
@@ -53,7 +53,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $usernames = "{$john->name},{$doe->name}";
         $numberOfDesiredItems = 2;
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'q' => $this->searchTerm,
             'only_title' => true,
             'posted_by' => $usernames,
@@ -85,7 +85,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $anotherUndesiredThread = ThreadFactory::withTitle($this->searchTerm)->create();
         Carbon::setTestNow();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'q' => $this->searchTerm,
             'only_title' => true,
             'last_created' => $daysAgo,
@@ -119,7 +119,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
             ->create();
         Carbon::setTestNow();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'q' => $this->searchTerm,
             'only_title' => true,
             'last_created' => $daysAgo,

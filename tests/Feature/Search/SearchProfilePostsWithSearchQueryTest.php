@@ -24,7 +24,7 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
             ->toProfilePost($desiredProfilePost)
             ->create();
 
-        $results = $this->search(
+        $results = $this->searchJson(
             [
                 'type' => 'profile_post',
                 'q' => $this->searchTerm,
@@ -61,7 +61,7 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
             ->create();
 
         Carbon::setTestNow();
-        $results = $this->search(
+        $results = $this->searchJson(
             [
                 'type' => 'profile_post',
                 'q' => $this->searchTerm,
@@ -112,7 +112,7 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
             ->create();
         Carbon::setTestNow();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'q' => $this->searchTerm,
             'last_created' => $daysAgo,
@@ -150,7 +150,7 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
             ->toProfilePost($undesiredProfilePost)
             ->create();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'q' => $this->searchTerm,
             'profile_owner' => $profileOwner->name,
@@ -201,7 +201,7 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
             ->create();
         Carbon::setTestNow();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'type' => 'profile_post',
             'q' => $this->searchTerm,
             'last_created' => $daysAgo,

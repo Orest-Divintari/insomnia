@@ -9,14 +9,12 @@ class ElasticSearchThreadTitles implements SearchIndexInterface
     /**
      * Search threads titles
      *
-     * @param string $searchQuery
+     * @param string $query
      * @return \ElasticScoutDriverPlus\Builders\SearchRequestBuilder
      */
-    public function search($searchQuery)
+    public function search($query)
     {
-        $query = '*' . $searchQuery . '*';
-
         return Thread::boolSearch()
-            ->should('wildcard', ['title' => $query]);
+            ->should('match_phrase', ['title' => $query]);
     }
 }

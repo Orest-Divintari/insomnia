@@ -49,13 +49,10 @@ class ElasticSearch extends Search
         $modelsCollection = collect();
 
         foreach ($mappedIds as $modelIndexName => $modelKeys) {
-
-            $modelCollection = app(ModelsResolver::class)
-                ->fromIndexName($modelIndexName)
-                ->withSearchInfo()
-                ->whereIn('id', $modelKeys)
-                ->get();
-
+            $modelQuery = app(ModelsResolver::class)
+                ->fromIndexName($modelIndexName);
+            $modelCollection = app(GetScoutModels::class)
+                ->getById($modelQuery, $modelKeys);
             $modelsCollection = $modelsCollection->merge($modelCollection);
         }
 

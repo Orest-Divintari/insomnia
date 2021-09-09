@@ -9,13 +9,13 @@ class SearchNames
     /**
      * Search all posts (thread, profile posts, replies)
      *
-     * @param string|string[] $searchQuery
+     * @param string|string[] $query
      * @return \ElasticScoutDriverPlus\Builders\SearchRequestBuilder
      */
-    public function handle($searchQuery)
+    public function handle($query)
     {
         $users = User::boolSearch()
-            ->should('match_phrase_prefix', ['name' => $searchQuery])
+            ->should('match_phrase_prefix', ['name' => $query])
             ->size(10)
             ->execute()
             ->documents();

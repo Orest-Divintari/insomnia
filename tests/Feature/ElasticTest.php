@@ -2,10 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Models\ProfilePost;
 use App\Models\Reply;
 use App\Models\Thread;
+use App\Models\User;
 use Carbon\Carbon;
 use ElasticScoutDriverPlus\Builders\RangeQueryBuilder;
+use Facades\Tests\Setup\CommentFactory;
+use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -19,11 +23,28 @@ class ElasticTest extends TestCase
     {
         config(['scout.driver' => 'elastic']);
 
-        create(Thread::class, ['title' => 'hello']);
-        create(Thread::class, ['title' => 'HELLO']);
-        create(Thread::class, ['title' => 'hElL0']);
-        create(Thread::class, ['title' => 'elafilehellofilemou']);
+        $user = create(User::class);
 
+        create(Thread::class, ['user_id' => $user->id, 'title' => 'hello']);
+        ReplyFactory::by($user)->create();
+        ProfilePostFactory::by($user)->create();
+        CommentFactory::by($user)->create();
+
+        $res = Reply::boolSearch()
+            ->join(Thread::class)
+            ->join(ProfilePost::class)
+            ->should('term', ['user_id' => '1'])
+            ->execute()
+            ->models();
+
+        $a = Thread::boolSearch()
+            ->join(Reply::class)
+            ->join(ProfilePost::class)
+            ->execute()
+            ->models()
+            ->count();
+
+        dd($a);
         $threads = Thread::boolSearch()
             ->filter('wildcard', ['title' => '*hel*'])
             ->execute();

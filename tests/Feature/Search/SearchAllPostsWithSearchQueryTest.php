@@ -30,7 +30,7 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
             ->toProfilePost($desiredProfilePost)
             ->create();
 
-        $results = $this->search(
+        $results = $this->searchJson(
             [
                 'q' => $this->searchTerm,
             ],
@@ -52,6 +52,7 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
     /** @test */
     public function search_all_posts_that_were_created_by_a_given_username_given_a_search_term()
     {
+        $this->searchTerm = 'hello';
         $user = create(User::class);
         $desiredThread = ThreadFactory::by($user)
             ->withBody($this->searchTerm)
@@ -83,7 +84,7 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
         $undesiredReply = ReplyFactory::toThread($undesiredThread)
             ->create();
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'q' => $this->searchTerm,
             'posted_by' => $user->name,
         ],
@@ -149,7 +150,7 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
         // the number of desired posts
         $numberOfDesiredItems = 8;
 
-        $results = $this->search([
+        $results = $this->searchJson([
             'q' => $this->searchTerm,
             'posted_by' => $usernames,
         ],
@@ -225,7 +226,7 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
             ->create();
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
-        $results = $this->search([
+        $results = $this->searchJson([
             'q' => $this->searchTerm,
             'last_created' => $daysAgo,
             'posted_by' => $user->name,

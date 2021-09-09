@@ -22,7 +22,7 @@ class SearchTagsTest extends SearchTest
         }
         $this->assertCount(2, $tagApple->threads);
 
-        $results = $this->search(
+        $results = $this->searchJson(
             ['type' => 'tag', 'q' => $tagApple->name],
             $numberOfDesiredThreads
         );
@@ -51,7 +51,7 @@ class SearchTagsTest extends SearchTest
         }
 
         $tags = "{$tagApple->name},{$tagMicrosoft->name}";
-        $results = $this->search(
+        $results = $this->searchJson(
             ['type' => 'tag', 'q' => $tags],
             $numberOfDesiredThreads
         );
