@@ -316,4 +316,14 @@ class FilterManager
         return $this;
     }
 
+    /**
+     * Get all managed filters
+     *
+     * @return array
+     */
+    public function getFilters()
+    {
+        return $this->chain->getFilters();
+    }
+
 }

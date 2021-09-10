@@ -28,6 +28,7 @@ class ElasticSearchIndexFactory implements SearchIndexFactoryInterface
         } elseif ($type == 'tag') {
             return new ElasticSearchTags();
         }
+
     }
 
 }
