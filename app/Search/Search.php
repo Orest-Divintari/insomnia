@@ -4,6 +4,7 @@ namespace App\Search;
 
 use App\Actions\AppendHasIgnoredContentAttributeAction;
 use App\Filters\SearchFilterFactory;
+use App\Models\User;
 use App\Search\SearchData;
 use App\Search\SearchIndexFactory;
 use Illuminate\Http\Request;
@@ -40,16 +41,26 @@ abstract class Search
     protected $appendHasIgnoredContentAttributeAction;
 
     /**
+     * The authenticated user
+     *
+     * @var User|null
+     */
+    protected $authUser;
+
+    /**
      * Create a new Search instance
      *
      * @param SearchIndexFactoryInterface $searchIndexFactory
      * @param SearchFilterFactory $filtersFactory
      */
     public function __construct(
+        User $authUser,
         SearchIndexFactoryInterface $searchIndexFactory,
         SearchFilterFactory $filtersFactory,
         AppendHasIgnoredContentAttributeAction $appendHasIgnoredContentAttributeAction
+
     ) {
+        $this->authUser = $authUser;
         $this->indexFactory = $searchIndexFactory;
         $this->filtersFactory = $filtersFactory;
         $this->appendHasIgnoredContentAttributeAction = $appendHasIgnoredContentAttributeAction;
@@ -60,6 +71,8 @@ abstract class Search
      * apply model filters on search results
      * and return paginated data or no results
      *
+     *
+     * @param User $user
      * @param Request $request
      * @return Collection|string
      */

@@ -31,7 +31,12 @@ class SearchServiceProvider extends ServiceProvider
 
             $appendHasIgnoredContentAttribute = new AppendHasIgnoredContentAttributeAction;
 
-            return new ElasticSearch($searchIndexFactory, $filtersFactory, $appendHasIgnoredContentAttribute);
+            return new ElasticSearch(
+                auth()->user(),
+                $searchIndexFactory,
+                $filtersFactory,
+                $appendHasIgnoredContentAttribute
+            );
         });
 
         $this->app->bind(SearchRequest::class, function ($app) {

@@ -52,7 +52,7 @@ class ElasticSearch extends Search
             $modelQuery = app(ModelsResolver::class)
                 ->fromIndexName($modelIndexName);
             $modelCollection = app(GetScoutModels::class)
-                ->getById($modelQuery, $modelKeys);
+                ->getById($modelQuery, $modelKeys, $this->authUser);
             $modelsCollection = $modelsCollection->merge($modelCollection);
         }
 

@@ -10,14 +10,13 @@ class GetScoutModels
      *
      * @param mixed $model
      * @param int[] $ids
+     * @param User $authUser
      * @return Collection
      */
-    public static function getById($model, $ids)
+    public static function getById($model, $ids, $authUser)
     {
-        return $model->withSearchInfo(auth()->user())
-            ->whereIn(
-                $model->getScoutKeyName(),
-                $ids
-            )->get();
+        return $model->withSearchInfo($authUser)
+            ->whereIn($model->getScoutKeyName(), $ids)
+            ->get();
     }
 }
