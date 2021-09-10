@@ -26,7 +26,7 @@ class ReplyController extends Controller
             ->loadCount('likes')
             ->append('permissions');
 
-        return response($reply->fresh(), 201);
+        return response($reply, 201);
     }
 
     /**
