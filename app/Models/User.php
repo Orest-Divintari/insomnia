@@ -383,7 +383,8 @@ class User extends Authenticatable implements MustVerifyEmail
                 'App\Models\Thread',
                 'App\Models\Reply',
                 'App\Models\ProfilePost',
-            ])->latest('created_at')
+            ])->where('type', 'like', 'created%')
+            ->latest('created_at')
             ->first();
     }
 

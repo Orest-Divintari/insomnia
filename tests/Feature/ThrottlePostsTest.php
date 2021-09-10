@@ -20,6 +20,7 @@ class ThrottlePostsTest extends TestCase
         $attributes = [
             'body' => $this->faker()->sentence(),
         ];
+        $this->get(route('profiles.show', $user));
 
         $response = $this->postJson(route('ajax.profile-posts.store', $user), $attributes);
 

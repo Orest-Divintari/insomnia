@@ -25,7 +25,6 @@ class ThrottlePosts
      */
     public function handle($request, Closure $next)
     {
-        // return $next($request);
         $lastPostActivity = auth()->user()->lastPostActivity();
 
         if ($lastPostActivity && $this->tooSoonToPost($lastPostActivity)) {
