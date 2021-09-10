@@ -10,7 +10,7 @@ class ElasticSearchFilterFactory implements SearchFilterFactoryInterface
 
     protected $filterManager;
 
-    /**
+    /**r
      * Create a new instance
      *
      * @param FilterManager $filterManager
@@ -28,12 +28,11 @@ class ElasticSearchFilterFactory implements SearchFilterFactoryInterface
      */
     public function create(string $type)
     {
-        if ($type == 'thread' || $type == 'tag') {
-            return $this->filterManager->withElasticThreadFilters();
-        } elseif ($type == 'profile_post') {
-            return $this->filterManager->withElasticProfilePostFilters();
-        } elseif (empty($type)) {
-            return $this->filterManager->withElasticAllPostsFilters();
-        }
+        return match($type) {
+            'thread' => $this->filterManager->withElasticThreadFilters(),
+            'tag' => $this->filterManager->withElasticThreadFilters(),
+            'profile_post' => $this->filterManager->withElasticProfilePostFilters(),
+        default=> $this->filterManager->withElasticAllPostsFilters()
+        };
     }
 }
