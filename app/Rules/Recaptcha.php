@@ -3,7 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Zttp\Zttp;
+use Illuminate\Support\Facades\Http;
 
 class Recaptcha implements Rule
 {
@@ -33,7 +33,7 @@ class Recaptcha implements Rule
 
     public function verify_recaptcha($recaptcha_response)
     {
-        return Zttp::asFormParams()->post('https://www.google.com/recaptcha/api/siteverify', [
+        return Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
             'secret' => config('insomnia.recaptcha.secret'),
             'response' => $recaptcha_response,
             'remoteip' => request()->ip(),
