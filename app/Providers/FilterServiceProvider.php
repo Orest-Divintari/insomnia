@@ -6,7 +6,7 @@ use App\Filters\ElasticSearchFilterFactory;
 use App\Filters\FilterChain;
 use App\Filters\FilterManager;
 use App\Filters\ReplyFilters;
-use App\Filters\SearchFilterFactory;
+use App\Filters\SearchFilterFactoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class FilterServiceProvider extends ServiceProvider
@@ -46,7 +46,7 @@ class FilterServiceProvider extends ServiceProvider
             return new FilterManager($filterChain);
         });
 
-        $this->app->bind(SearchFilterFactory::class, function ($app) {
+        $this->app->bind(SearchFilterFactoryInterface::class, function ($app) {
             $filterManager = app(FilterManager::class);
             return new ElasticSearchFilterFactory($filterManager);
         });

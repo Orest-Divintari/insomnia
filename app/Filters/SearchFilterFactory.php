@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-interface SearchFilterFactory
+interface SearchFilterFactoryInterface
 {
     public function __construct(FilterManager $filterManager);
     public function create(string $type);

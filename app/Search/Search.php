@@ -3,7 +3,7 @@
 namespace App\Search;
 
 use App\Actions\AppendHasIgnoredContentAttributeAction;
-use App\Filters\SearchFilterFactory;
+use App\Filters\SearchFilterFactoryInterface;
 use App\Models\User;
 use App\Search\SearchData;
 use App\Search\SearchIndexFactory;
@@ -21,7 +21,7 @@ abstract class Search
      * The model factory that is used
      * to get the requested model filter
      *
-     * @var SearchFilterFactory
+     * @var SearchFilterFactoryInterface
      */
     protected $filtersFactory;
 
@@ -51,12 +51,12 @@ abstract class Search
      * Create a new Search instance
      *
      * @param SearchIndexFactoryInterface $searchIndexFactory
-     * @param SearchFilterFactory $filtersFactory
+     * @param SearchFilterFactoryInterface $filtersFactory
      */
     public function __construct(
         User $authUser,
         SearchIndexFactoryInterface $searchIndexFactory,
-        SearchFilterFactory $filtersFactory,
+        SearchFilterFactoryInterface $filtersFactory,
         AppendHasIgnoredContentAttributeAction $appendHasIgnoredContentAttributeAction
 
     ) {

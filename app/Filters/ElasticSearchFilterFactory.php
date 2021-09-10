@@ -3,8 +3,9 @@
 namespace App\Filters;
 
 use App\Filters\FilterManager;
+use App\Filters\SearchFilterFactoryInterface;
 
-class ElasticSearchFilterFactory implements SearchFilterFactory
+class ElasticSearchFilterFactory implements SearchFilterFactoryInterface
 {
 
     protected $filterManager;
