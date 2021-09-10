@@ -54,7 +54,7 @@ abstract class Search
      * @param SearchFilterFactoryInterface $filtersFactory
      */
     public function __construct(
-        User $authUser,
+        User | null $authUser,
         SearchIndexFactoryInterface $searchIndexFactory,
         SearchFilterFactoryInterface $filtersFactory,
         AppendHasIgnoredContentAttributeAction $appendHasIgnoredContentAttributeAction
