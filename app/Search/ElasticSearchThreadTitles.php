@@ -15,6 +15,9 @@ class ElasticSearchThreadTitles implements SearchIndexInterface
     public function search($query)
     {
         return Thread::boolSearch()
-            ->should('match_phrase', ['title' => $query]);
+            ->should('query_string', [
+                'default_field' => 'title',
+                'query' => $query,
+            ]);
     }
 }

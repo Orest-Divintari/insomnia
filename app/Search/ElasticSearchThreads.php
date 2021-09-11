@@ -16,10 +16,12 @@ class ElasticSearchThreads implements SearchIndexInterface
      */
     public function search($query)
     {
+
         return Thread::boolSearch()
             ->join(Reply::class)
-            ->should('match_phrase', ['title' => $query])
-            ->should('match_phrase', ['body' => $query]);
-
+            ->should('query_string', [
+                'fields' => ['title', 'body'],
+                'query' => $query,
+            ]);
     }
 }

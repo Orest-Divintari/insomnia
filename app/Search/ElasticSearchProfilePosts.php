@@ -18,8 +18,9 @@ class ElasticSearchProfilePosts implements SearchIndexInterface
     {
         return ProfilePost::boolSearch()
             ->join(Reply::class)
-            ->should('match_phrase', ['title' => $query])
-            ->should('match_phrase', ['body' => $query]);
-
+            ->should('query_string', [
+                'default_field' => 'body',
+                'query' => $query,
+            ]);
     }
 }
