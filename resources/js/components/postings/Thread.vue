@@ -9,10 +9,10 @@
       </profile-popover>
       <div class="pl-4">
         <a @click="showThread(posting)" class="blue-link"
-          ><highlight :content="title"></highlight
+          ><highlight :content="highlight(title)"></highlight
         ></a>
         <p class="italic text-smaller">
-          <highlight :content="body"></highlight>
+          <highlight :content="highlight(body)"></highlight>
         </p>
         <div class="flex items-center text-xs text-gray-lightest">
           <profile-popover
@@ -84,6 +84,8 @@ export default {
   mixins: [view, postings],
   data() {
     return {
+      title: this.posting.title,
+      body: this.posting.body,
       showContent: false,
     };
   },
@@ -98,21 +100,6 @@ export default {
         this.posting.creator_ignored_by_visitor ||
         this.posting.ignored_by_visitor
       );
-    },
-  },
-  computed: {
-    title() {
-      if (this.query != "") {
-        return this.highlightQueryWords(this.posting.title);
-      }
-      return this.posting.title;
-    },
-    body() {
-      let cleanBody = this.clean(this.posting.body);
-      if (this.query != "") {
-        return this.highlightQueryWords(cleanBody);
-      }
-      return cleanBody;
     },
   },
   created() {

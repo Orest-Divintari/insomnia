@@ -8,8 +8,13 @@
       >
       </profile-popover>
       <div class="pl-4">
-        <a @click="showReply(posting)" class="blue-link">{{ threadTitle }}</a>
-        <highlight class="italic text-smaller" :content="body"></highlight>
+        <a @click="showReply(posting)" class="blue-link">
+          {{ highlight(title) }}</a
+        >
+        <highlight
+          class="italic text-smaller"
+          :content="highlight(body)"
+        ></highlight>
         <div class="flex items-center text-xs text-gray-lightest">
           <profile-popover
             class="pb-1/2"
@@ -60,28 +65,14 @@ export default {
   },
   data() {
     return {
+      title: this.posting.repliable.title,
+      body: this.posting.body,
       showContent: !this.posting.creator_ignored_by_visitor,
     };
   },
   watch: {
     showIgnoredContent(newValue, oldValue) {
       this.showContent = newValue;
-    },
-  },
-  computed: {
-    threadTitle() {
-      let title = this.posting.repliable.title;
-      if (this.query != "") {
-        return this.highlightQueryWords(title);
-      }
-      return title;
-    },
-    body() {
-      let cleanBody = this.clean(this.posting.body);
-      if (this.query != "") {
-        return this.highlightQueryWords(cleanBody);
-      }
-      return cleanBody;
     },
   },
   created() {

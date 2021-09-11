@@ -11,7 +11,14 @@ export default {
         },
         clean(content){
           return content.replace(/<\/?[^>]+(>|$)/g, "");
-        }
+        },
+        highlight(text) {
+          let cleanText = this.clean(text);
+          if (this.query != "") {
+            return this.highlightQueryWords(cleanText);
+          }
+          return cleanText;
+        },
     }
 
 }

@@ -9,9 +9,12 @@
       </profile-popover>
       <div class="pl-4">
         <a @click="showPost(posting)" class="blue-link">
-          <highlight class="text-md" :content="body"></highlight>
+          <highlight class="text-md" :content="highlight(body)"></highlight>
         </a>
-        <highlight class="italic text-smaller" :content="body"></highlight>
+        <highlight
+          class="italic text-smaller"
+          :content="highlight(body)"
+        ></highlight>
         <div class="flex items-center text-xs text-gray-lightest">
           <profile-popover
             class="pb-1/2"
@@ -53,21 +56,13 @@ export default {
   },
   data() {
     return {
+      body: this.posting.body,
       showContent: !this.posting.creator_ignored_by_visitor,
     };
   },
   watch: {
     showIgnoredContent(newValue, oldValue) {
       this.showContent = newValue;
-    },
-  },
-  computed: {
-    body() {
-      let cleanBody = this.clean(this.posting.body);
-      if (this.query != "") {
-        return this.highlightQueryWords(cleanBody);
-      }
-      return cleanBody;
     },
   },
 };
