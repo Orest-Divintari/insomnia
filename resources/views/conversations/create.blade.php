@@ -20,10 +20,10 @@
                 @csrf
                 <div class="p-4">
                     <label for="participants" class="text-black-semi text-smaller">Participants:</label>
-                    <names-autocomplete
+                    <names-autocomplete-input
                         styleClasses="w-full bg-semi-white-mid border border-light p-1 text-md rounded focus:outline-none mt-1"
                         first-name="{{ $participant }}" input-name="participants">
-                    </names-autocomplete>
+                    </names-autocomplete-input>
 
                     <p class="text-xs text-gray-lightest mt-2">You may enter multiple names separated by comma.</p>
                 </div>

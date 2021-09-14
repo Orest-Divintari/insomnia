@@ -35,12 +35,12 @@
 </template>
 
 <script>
-import highlight from "../Highlight";
+import Highlight from "../base/Highlight";
 import view from "../../mixins/view";
 import authorizable from "../../mixins/authorizable";
 export default {
   components: {
-    highlight,
+    Highlight,
   },
   mixins: [view, authorizable],
   props: {

@@ -39,9 +39,26 @@
 
 <script>
 import ReadNotificationButton from "./ReadNotificationButton";
+import ThreadReplyNotification from "./ThreadReplyNotification";
+import ReplyLikeNotification from "./ReplyLikeNotification";
+import PostCommentNotification from "./PostCommentNotification";
+import ProfilePostNotification from "./ProfilePostNotification";
+import CommentLikeNotification from "./CommentLikeNotification";
+import ProfilePostLikeNotification from "./ProfilePostLikeNotification";
+import MessageLikeNotification from "./MessageLikeNotification";
+import FollowNotification from "./FollowNotification";
+
 export default {
   components: {
+    ReplyLikeNotification,
+    ThreadReplyNotification,
     ReadNotificationButton,
+    PostCommentNotification,
+    ProfilePostNotification,
+    CommentLikeNotification,
+    ProfilePostLikeNotification,
+    MessageLikeNotification,
+    FollowNotification,
   },
   props: {
     readAll: {

@@ -5,7 +5,13 @@
     ></conversation-filters>
     <p
       v-if="!conversationsExist"
-      class="border border-white-catskill bg-white text-sm text-black-semi p-4 rounded-b"
+      class="
+        border border-white-catskill
+        bg-white
+        text-sm text-black-semi
+        p-4
+        rounded-b
+      "
     >
       There are no conversations to display.
     </p>
@@ -114,6 +120,7 @@
 import views from "../../mixins/view";
 import ConversationFilters from "./ConversationFilters";
 export default {
+  name: "Conversations",
   components: {
     ConversationFilters,
   },

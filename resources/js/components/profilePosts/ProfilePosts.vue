@@ -32,12 +32,11 @@
 </template>
 
 <script>
-import ProfilePost from "../profile/ProfilePost";
-import Paginator from "../Paginator";
+import ProfilePost from "./ProfilePost";
 import ProfilePostFilters from "./ProfilePostFilters.vue";
 export default {
+  name: "ProfilePosts",
   components: {
-    Paginator,
     ProfilePost,
     ProfilePostFilters,
   },

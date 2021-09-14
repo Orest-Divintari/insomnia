@@ -61,11 +61,11 @@
 
 <script>
 import view from "../../mixins/view";
-import highlight from "../Highlight";
+import Highlight from "../base/Highlight";
 import postings from "../../mixins/postings";
 export default {
   components: {
-    highlight,
+    Highlight,
   },
   props: {
     posting: {

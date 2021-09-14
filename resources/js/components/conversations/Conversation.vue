@@ -3,8 +3,11 @@ import InviteParticipantsModal from "./InviteParticipantsModal";
 import ParticipantSettings from "../conversations/ParticipantSettings";
 import view from "../../mixins/view";
 import EventBus from "../../eventBus";
+import Replies from "../replies/Replies";
 export default {
+  name: "Conversation",
   components: {
+    Replies,
     InviteParticipantsModal,
     ParticipantSettings,
   },

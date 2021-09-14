@@ -12,7 +12,7 @@
                 <!-- RIGHT -->
                 <div class="form-right-col py-4">
                     <p class="form-label-phone">Your existing password:</p>
-                    <input-password name="current_password"></input-password>
+                    <password-input name="current_password"></password-input>
                     <p class="text-gray-shuttle text-smaller mt-2 leading-4">For security reasons, you must
                         verify your
                         existing
@@ -28,7 +28,7 @@
                 <!-- RIGHT -->
                 <div class="form-right-col py-4">
                     <p class="form-label-phone">New password:</p>
-                    <input-password name="password"></input-password>
+                    <password-input name="password"></password-input>
                 </div>
             </div>
 
@@ -40,7 +40,7 @@
                 <!-- RIGHT -->
                 <div class="form-right-col py-4">
                     <p class="form-label-phone">Confirm new password:</p>
-                    <input-password name="password_confirmation"></input-password>
+                    <password-input name="password_confirmation"></password-input>
                 </div>
             </div>
             <x-form.button name="Save"></x-form.button>

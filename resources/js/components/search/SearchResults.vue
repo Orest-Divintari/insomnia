@@ -39,6 +39,7 @@ import ThreadReply from "../postings/ThreadReply";
 import Thread from "../postings/Thread";
 import fetch from "../../mixins/fetch";
 export default {
+  name: "SearchResults",
   components: {
     ProfilePost,
     ProfilePostComment,

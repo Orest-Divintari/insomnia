@@ -34,6 +34,7 @@
 
 <script>
 export default {
+  name: "BirthDateCheckbox",
   props: {
     birthDate: {
       type: Boolean,

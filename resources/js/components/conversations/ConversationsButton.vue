@@ -74,6 +74,7 @@
 import view from "../../mixins/view";
 import store from "../../store";
 export default {
+  name: "ConversationsButton",
   data() {
     return {
       state: store.state,

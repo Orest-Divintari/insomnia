@@ -9,8 +9,8 @@
       </profile-popover>
       <div class="pl-4">
         <a @click="showReply(posting)" class="blue-link">
-          {{ highlight(title) }}</a
-        >
+          <span v-html="highlight(title)"></span
+        ></a>
         <highlight
           class="italic text-smaller"
           :content="highlight(body)"
@@ -42,9 +42,12 @@
 
 <script>
 import view from "../../mixins/view";
-import highlight from "../Highlight";
+import Highlight from "../base/Highlight";
 import postings from "../../mixins/postings";
 export default {
+  components: {
+    Highlight,
+  },
   props: {
     posting: {
       type: Object,
@@ -60,9 +63,6 @@ export default {
     },
   },
   mixins: [view, postings],
-  components: {
-    highlight,
-  },
   data() {
     return {
       title: this.posting.repliable.title,

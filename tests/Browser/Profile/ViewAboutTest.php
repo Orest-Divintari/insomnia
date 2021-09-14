@@ -248,7 +248,7 @@ class ViewAboutTest extends DuskTestCase
                 ->click('@follow-list-button')
                 ->waitFor('@fetch-more-button')
                 ->click('@fetch-more-button')
-                ->pause(50)
+                ->waitFor('@fetch-more-button')
                 ->click('@fetch-more-button');
 
             $users->each(function ($user) use ($response) {
@@ -285,7 +285,7 @@ class ViewAboutTest extends DuskTestCase
                 ->click('@fetch-more-button')
                 ->waitFor('@fetch-more-button')
                 ->click('@fetch-more-button')
-                ->waitUntilMissing('@fetch-more-button');
+                ->pause(50);
 
             $users->each(function ($user) use ($response) {
                 $response

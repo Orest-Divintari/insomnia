@@ -96,6 +96,7 @@
 <script>
 import view from "../../mixins/view";
 export default {
+  name: "ThreadListItem",
   props: {
     thread: {
       type: Object,

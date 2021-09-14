@@ -196,15 +196,10 @@
 
 <script>
 import store from "../../store";
-import Dropdown from "../Dropdown.vue";
 import authorizable from "../../mixins/authorizable";
-import Avatar from "../profile/Avatar";
 import view from "../../mixins/view";
 export default {
-  components: {
-    Avatar,
-    Dropdown,
-  },
+  name: "ProfileButton",
   props: {
     profileOwner: {
       type: Object,

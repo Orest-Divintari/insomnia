@@ -3,7 +3,14 @@
     <thread-filters :threadFilters="threadFilters"></thread-filters>
     <div
       v-if="pinnedThreadsExist"
-      class="text-gray-700 justify-between bg-white-catskill rounded-t p-2 font-thin"
+      class="
+        text-gray-700
+        justify-between
+        bg-white-catskill
+        rounded-t
+        p-2
+        font-thin
+      "
     >
       Sticky Threads
     </div>
@@ -15,13 +22,26 @@
     ></thread-list>
     <div
       v-if="pinnedThreadsExist"
-      class="text-gray-700 justify-between bg-white-catskill rounded-t p-2 font-thin"
+      class="
+        text-gray-700
+        justify-between
+        bg-white-catskill
+        rounded-t
+        p-2
+        font-thin
+      "
     >
       Normal Threads
     </div>
     <p
       v-if="!threadsExist"
-      class="border border-white-catskill bg-white text-sm text-black-semi p-4 rounded-b"
+      class="
+        border border-white-catskill
+        bg-white
+        text-sm text-black-semi
+        p-4
+        rounded-b
+      "
     >
       There are no threads to display.
     </p>
@@ -35,6 +55,7 @@ import ThreadList from "./ThreadList";
 import ThreadFilters from "./ThreadFilters";
 import view from "../../mixins/view";
 export default {
+  name: "Threads",
   components: {
     ThreadFilters,
     ThreadList,

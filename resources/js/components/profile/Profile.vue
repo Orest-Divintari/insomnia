@@ -98,49 +98,44 @@
     </div>
     <tabs class="mt-5">
       <tab name="Profile Posts" :selected="true">
-        <profile-posts
+        <profile-posts-tab
           :paginated-posts="posts"
           :profile-owner="user"
-        ></profile-posts>
+        ></profile-posts-tab>
       </tab>
       <tab name="Latest Activity">
-        <latest-activity :profile-owner="user"></latest-activity>
+        <latest-activity-tab :profile-owner="user"></latest-activity-tab>
       </tab>
       <tab name="Postings">
-        <posting-activity :profile-owner="user"></posting-activity>
+        <posting-activity-tab :profile-owner="user"></posting-activity-tab>
       </tab>
       <tab name="About">
-        <about :profile-owner="user"></about>
+        <about-tab :profile-owner="user"></about-tab>
       </tab>
     </tabs>
   </div>
 </template>
 
 <script>
-import ProfilePosts from "./ProfilePosts";
-import LatestActivity from "./LatestActivity";
-import PostingActivity from "./PostingActivity";
-import FollowButton from "./FollowButton";
-import IgnoreUserButton from "./IgnoreUserButton";
+import ProfilePostsTab from "./ProfilePostsTab";
+import LatestActivityTab from "./LatestActivityTab";
+import PostingActivityTab from "./PostingActivityTab";
 import StartConversationButton from "../conversations/StartConversationButton";
-import About from "./About";
-import Tabs from "../Tabs";
-import Tab from "../Tab";
+import AboutTab from "./AboutTab";
+import Tabs from "../base/Tabs";
+import Tab from "../base/Tab";
 import authorizable from "../../mixins/authorizable";
-import Avatar from "./Avatar";
 
 export default {
+  name: "Profile",
   components: {
+    ProfilePostsTab,
     StartConversationButton,
-    Avatar,
-    ProfilePosts,
     Tabs,
     Tab,
-    LatestActivity,
-    PostingActivity,
-    About,
-    FollowButton,
-    IgnoreUserButton,
+    LatestActivityTab,
+    PostingActivityTab,
+    AboutTab,
   },
   props: {
     profileOwner: {

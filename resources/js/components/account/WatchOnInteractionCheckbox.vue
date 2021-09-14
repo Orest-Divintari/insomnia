@@ -31,6 +31,7 @@
 
 <script>
 export default {
+  name: "WatchOnInteractionCheckbox",
   props: {
     user: {
       type: Object,
@@ -40,9 +41,8 @@ export default {
   data() {
     return {
       subscribeWithoutEmail: this.user.preferences["subscribe_on_interaction"],
-      subscribeWithEmail: this.user.preferences[
-        "subscribe_on_interaction_with_email"
-      ],
+      subscribeWithEmail:
+        this.user.preferences["subscribe_on_interaction_with_email"],
     };
   },
 };

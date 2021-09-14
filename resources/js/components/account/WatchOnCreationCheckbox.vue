@@ -31,6 +31,7 @@
 
 <script>
 export default {
+  name: "WatchOnCreationCheckbox",
   props: {
     user: {
       type: Object,
@@ -40,9 +41,8 @@ export default {
   data() {
     return {
       subscribeWithoutEmail: this.user.preferences["subscribe_on_creation"],
-      subscribeWithEmail: this.user.preferences[
-        "subscribe_on_creation_with_email"
-      ],
+      subscribeWithEmail:
+        this.user.preferences["subscribe_on_creation_with_email"],
     };
   },
 };

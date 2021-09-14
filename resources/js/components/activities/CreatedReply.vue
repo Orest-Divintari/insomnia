@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import highlight from "../Highlight";
+import Highlight from "../base/Highlight";
 import view from "../../mixins/view";
 import postings from "../../mixins/postings";
 
 export default {
   components: {
-    highlight,
+    Highlight,
   },
   mixins: [view, postings],
   props: {

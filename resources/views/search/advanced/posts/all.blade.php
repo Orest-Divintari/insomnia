@@ -43,8 +43,8 @@
                     <div class="form-right-col">
                         <p class="form-label-phone">Posted by:</p>
                         <div>
-                            <names-autocomplete input-name="posted_by">
-                            </names-autocomplete>
+                            <names-autocomplete-input input-name="posted_by">
+                            </names-autocomplete-input>
                         </div>
                     </div>
                 </div>

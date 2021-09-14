@@ -32,10 +32,13 @@
 </template>
 
 <script>
-import highlight from "../Highlight";
+import Highlight from "../base/Highlight";
 import view from "../../mixins/view";
 import postings from "../../mixins/postings";
 export default {
+  components: {
+    Highlight,
+  },
   props: {
     posting: {
       type: Object,
@@ -51,9 +54,6 @@ export default {
     },
   },
   mixins: [view, postings],
-  components: {
-    highlight,
-  },
   data() {
     return {
       body: this.posting.body,

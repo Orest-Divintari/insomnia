@@ -2,8 +2,11 @@
 import SubscribeButton from "../subscription/SubscribeButton";
 import LockThreadButton from "./LockThreadButton";
 import PinThreadButton from "./PinThreadButton";
+import Replies from "../replies/Replies";
 export default {
+  name: "Thread",
   components: {
+    Replies,
     SubscribeButton,
     LockThreadButton,
     PinThreadButton,

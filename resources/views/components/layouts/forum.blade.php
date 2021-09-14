@@ -15,7 +15,7 @@
                 @endrole
                 <profile-button :profile-owner="{{ auth()->user() }}"></profile-button>
                 @verified
-                <notification-button></notification-button>
+                <notifications-button></notifications-button>
                 <conversations-button></conversations-button>
                 @endverified
 
@@ -83,7 +83,7 @@
 
             </div>
             <div class=" px-5">
-                <search-bar></search-bar>
+                <forum-search></forum-search>
             </div>
         </div>
     </x-slot>
