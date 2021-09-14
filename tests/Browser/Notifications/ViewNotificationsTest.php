@@ -5,6 +5,7 @@ namespace Tests\Browser\Notifications;
 use App\Events\Profile\NewPostWasAddedToProfile;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Notifications\ChannelManager;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use \Facades\Tests\Setup\ProfilePostFactory;
@@ -12,6 +13,13 @@ use \Facades\Tests\Setup\ProfilePostFactory;
 class ViewNotificationsTest extends DuskTestCase
 {
     use DatabaseMigrations;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        unset(app()[ChannelManager::class]);
+
+    }
 
     /** @test */
     public function users_can_view_the_notifications()
