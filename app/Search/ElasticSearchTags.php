@@ -20,6 +20,6 @@ class ElasticSearchTags implements SearchIndexInterface
             $threadsBoolSearch->filter('term', ['tagNames' => $tag]);
         }
 
-        return $threadsBoolSearch;
+        return $threadsBoolSearch->minimumShouldMatch(1);
     }
 }

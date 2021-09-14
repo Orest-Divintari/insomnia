@@ -8,6 +8,7 @@ use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
@@ -86,21 +87,27 @@ class SearchThreadsTest extends DuskTestCase
     /** @test */
     public function the_authenticated_user_should_not_see_the_thread_replies_that_are_created_by_ignored_users()
     {
-        $searchTerm = $this->faker()->sentence();
-        $ignoredReplyBody = $searchTerm . ' ignored';
+        $body = $this->faker()->paragraph();
+        $searchTerm = Str::words($body, 3, '');
         $thread = create(Thread::class);
         $john = create(User::class);
         $doe = create(User::class);
-        $ignoredReply = ReplyFactory::toThread($thread)->by($doe)->create();
+        $ignoredReply = ReplyFactory::toThread($thread)
+            ->withBody($body)
+            ->by($doe)
+            ->create();
         $john->ignore($doe);
 
         $this->browse(function (Browser $browser) use ($ignoredReply, $john, $searchTerm) {
             $response = $browser
                 ->loginAs($john)
-                ->pause(7000)
-                ->visit(route('search.index', ['type' => 'thread', 'q' => $ignoredReply->body]));
+                ->pause(500)
+                ->visit(route('search.index', ['type' => 'thread', 'q' => $searchTerm]));
 
-            $response->assertDontSee($ignoredReply->repliable->title)
+            $response
+                ->refresh()
+                ->assertDontSee($ignoredReply->poster->name)
+                ->assertDontSee($ignoredReply->body)
                 ->assertVisible('@show-ignored-content-button');
         });
     }

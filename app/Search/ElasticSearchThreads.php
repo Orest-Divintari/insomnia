@@ -16,12 +16,11 @@ class ElasticSearchThreads implements SearchIndexInterface
      */
     public function search($query)
     {
-
         return Thread::boolSearch()
             ->join(Reply::class)
             ->should('query_string', [
                 'fields' => ['title', 'body'],
                 'query' => $query,
-            ]);
+            ])->minimumShouldMatch(1);
     }
 }

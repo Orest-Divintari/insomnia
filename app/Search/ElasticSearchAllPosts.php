@@ -22,7 +22,7 @@ class ElasticSearchAllPosts implements SearchIndexInterface
             ->should('query_string', [
                 'fields' => ['title', 'body'],
                 'query' => $query,
-            ]);
+            ])->minimumShouldMatch(1);
 
     }
 }

@@ -21,6 +21,6 @@ class ElasticSearchProfilePosts implements SearchIndexInterface
             ->should('query_string', [
                 'default_field' => 'body',
                 'query' => $query,
-            ]);
+            ])->minimumShouldMatch(1);
     }
 }

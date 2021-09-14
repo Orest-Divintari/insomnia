@@ -18,6 +18,6 @@ class ElasticSearchThreadTitles implements SearchIndexInterface
             ->should('query_string', [
                 'default_field' => 'title',
                 'query' => $query,
-            ]);
+            ])->minimumShouldMatch(1);
     }
 }
