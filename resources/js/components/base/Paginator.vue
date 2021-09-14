@@ -13,7 +13,7 @@
           </button>
 
           <template v-for="(page, key) in pages">
-            <div v-if="page == '...'">
+            <div :key="key" v-if="page == '...'">
               <v-popover
                 offset="10"
                 popoverArrowClass="''"

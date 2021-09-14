@@ -22,7 +22,8 @@
     <ul class="absolute shadow-xl w-48" v-show="currentlySearching">
       <ul class="bg-opacity-1 bg-white rounded scrolling-auto">
         <li
-          v-for="suggestion in suggestions"
+          v-for="(suggestion, index) in suggestions"
+          :key="index"
           @click="appendToInput(suggestion)"
           class="hover:bg-blue-lighter p-2 pr-4 text-sm cursor-pointer"
         >

@@ -19,7 +19,10 @@
             class="overflow-y-scroll overflow-x-hidden"
             v-if="notificationsExist"
           >
-            <div v-for="(notification, index) in notifications">
+            <div
+              v-for="(notification, index) in notifications"
+              :key="notification.id"
+            >
               <notification
                 :read-all="readAll"
                 :notification="notification"

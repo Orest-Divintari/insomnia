@@ -32,7 +32,7 @@
             <div class="flex items-center">
               <p
                 v-for="(tag, index) in posting.tags"
-                :key="index"
+                :key="tag.id"
                 class="tag ml-0"
               >
                 {{ tag.name }}

@@ -15,6 +15,7 @@
       <div class="flex flex-col overflow-y-scroll h-112">
         <div
           v-for="(member, index) in members"
+          :key="member.id"
           class="flex items-start"
           :class="classes(index)"
         >

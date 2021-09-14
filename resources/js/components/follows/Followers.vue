@@ -9,7 +9,7 @@
           v-for="(user, index) in followers"
           trigger="avatar"
           triggerClasses="avatar-lg"
-          :key="index"
+          :key="user.id"
         ></profile-popover>
       </div>
       <follow-list-modal

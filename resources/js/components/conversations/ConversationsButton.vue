@@ -14,7 +14,10 @@
 
         <div v-if="fetchedData" class="overflow-scroll max-h-96">
           <div v-if="conversationsExist">
-            <div v-for="(conversation, index) in conversations">
+            <div
+              v-for="(conversation, index) in conversations"
+              :key="conversation.id"
+            >
               <div
                 @click="showConversation(conversation)"
                 class="

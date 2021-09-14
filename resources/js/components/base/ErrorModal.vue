@@ -11,8 +11,8 @@
           v-text="errors"
         ></p>
       </div>
-      <div v-else v-for="(error, indexError) in errors">
-        <div v-for="(message, indexMessage) in error">
+      <div v-else v-for="(error, indexError) in errors" :key="indexError">
+        <div v-for="(message, indexMessage) in error" :key="indexMessage">
           <li
             class="block p-3 text-black-semi text-sm list-disc"
             v-text="message"

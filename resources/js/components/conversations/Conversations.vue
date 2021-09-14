@@ -47,6 +47,7 @@
               v-for="(
                 participant, participantsIndex
               ) in conversation.participants"
+              :key="participant.id"
             >
               <profile-popover
                 triggerClasses="mr-1 leading-none text-xs text-gray-lightest"

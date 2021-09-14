@@ -4,7 +4,7 @@
       class="p-4"
       :class="classes(index)"
       v-for="(posting, index) in postings"
-      :key="index"
+      :key="posting.id"
     >
         <component
           :show-ignored-content="showIgnoredContent"
