@@ -4,32 +4,15 @@ namespace Tests\Feature\Search;
 
 use App\Models\Thread;
 use App\Models\User;
-use App\Search\Search;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Tests\Traits\SearchableTest;
 
 class SearchTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
-
-    protected $threadsToDelete;
-    protected $numberOfUndesiredItems;
-    protected $numberOfDesiredItems;
-    protected $searchTerm;
-    protected $noResultsMessage;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        config(['scout.driver' => 'elastic']);
-        $this->numberOfUndesiredItems = 2;
-        $this->numberOfDesiredItems = 2;
-        $this->numberOfItemsToDelete = $this->numberOfUndesiredItems + $this->numberOfDesiredItems;
-        $this->searchTerm = $this->faker()->sentence(3);
-        $this->noResultsMessage = 'No results found.';
-    }
+    use RefreshDatabase, WithFaker, SearchableTest;
 
     /** @test */
     public function display_no_results_message_when_no_threads_are_found_for_the_given_search_query()
@@ -38,14 +21,13 @@ class SearchTest extends TestCase
 
         $response = $this->searchNoResults([
             'type' => 'thread',
-            'q' => $this->faker()->sentence(),
+            'q' => $this->searchTerm(),
         ],
-            $this->noResultsMessage
+            $this->noResultsMessage()
         );
 
-        $response->assertSee($this->noResultsMessage);
+        $response->assertSee($this->noResultsMessage());
 
-        $thread->delete();
     }
 
     /** @test */
@@ -62,35 +44,32 @@ class SearchTest extends TestCase
             'q' => $term,
             'last_created' => 1,
         ],
-            $this->noResultsMessage
+            $this->noResultsMessage()
         );
 
-        $response->assertSee($this->noResultsMessage);
+        $response->assertSee($this->noResultsMessage());
 
-        $oldThread->delete();
     }
 
     /** @test */
     public function display_no_results_message_when_no_threads_are_found_given_a_search_query_for_the_given_username()
     {
-        $term = $this->faker()->sentence();
         $thread = create(Thread::class, [
-            'body' => $term,
+            'body' => $this->sentence(),
         ]);
         $name = 'benz';
         create(User::class, ['name' => $name]);
 
         $response = $this->searchNoResults([
             'type' => 'thread',
-            'q' => $term,
+            'q' => $this->searchTerm(),
             'posted_by' => $name,
         ],
-            $this->noResultsMessage
+            $this->noResultsMessage()
         );
 
-        $response->assertSee($this->noResultsMessage);
+        $response->assertSee($this->noResultsMessage());
 
-        $thread->delete();
     }
 
     /** @test */
@@ -173,57 +152,6 @@ class SearchTest extends TestCase
         $response->assertSee('tag');
     }
 
-    /**
-     * Validate the results of the request
-     *
-     * @param mixed $results
-     * @return boolean
-     */
-    public function validate($results, $numberOfItems)
-    {
-        if (!is_object(json_decode($results->getContent()))) {
-            return true;
-        } elseif (is_array($results->json()['data']) && count($results->json()['data']) != $numberOfItems) {
-            return true;
-        }
-    }
-
-    /**
-     * Make a search request with the given parameters
-     *
-     * @param array $parameters
-     * @return array
-     */
-    public function searchJson($parameters, $numberOfItems)
-    {
-        $counter = 0;
-
-        do {
-            sleep(0.2);
-            $results = $this->getJson(
-                route('search.index', $parameters)
-            );
-            $counter++;
-
-        } while ($this->validate($results, $numberOfItems) && $counter <= 500);
-
-        return $results->json()['data'];
-    }
-
-    public function searchNoResults($parameters, $expectedResult)
-    {
-        $counter = 0;
-
-        do {
-            sleep(0.2);
-            $response = $this->getJson(
-                route('search.index', $parameters)
-            );
-        } while ($response->getContent() !== $expectedResult);
-
-        return $response;
-    }
-
     /** @test */
     public function when_searching_a_query_or_a_username_must_be_specified()
     {
@@ -240,6 +168,8 @@ class SearchTest extends TestCase
         $this->get(route('search.index', [
             'posted_by' => $nonExistingUsername,
         ]))->assertSee('The following member could not be found: ' . $nonExistingUsername);
+
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -253,89 +183,4 @@ class SearchTest extends TestCase
         );
     }
 
-    /**
-     * Determine whether the results contain the given thread
-     *
-     * @param array $results
-     * @param Thread $thread
-     * @return boolean
-     */
-    public function assertContainsThread($results, $thread)
-    {
-        $results = collect($results);
-
-        $this->assertTrue(
-            $results->contains(function ($result) use ($thread) {
-                $categoryKeyExists = array_key_exists('category', $result) ? true : false;
-
-                return $result['id'] == $thread->id
-                && $result['poster']['id'] == $thread->poster->id
-                && $categoryKeyExists
-                && $result['category']['id'] == $thread->category->id;
-            }));
-    }
-
-    /**
-     * Determine whether the results contain the given threadReply
-     *
-     * @param array $results
-     * @param Reply $threadReply
-     * @return boolean
-     */
-    public function assertContainsThreadReply($results, $threadReply)
-    {
-        $results = collect($results);
-        $this->assertTrue(
-            $results->contains(function ($result) use ($threadReply) {
-                return $result['id'] == $threadReply->id
-                && $result['poster']['id'] == $threadReply->poster->id
-                && $result['repliable']['id'] == $threadReply->repliable->id
-                && $result['repliable']['poster']['id'] == $threadReply->repliable->poster->id
-                && $result['repliable']['category']['id'] == $threadReply->repliable->category->id;
-            }));
-    }
-
-    /**
-     * Determine whether the results contain the given profilePost
-     *
-     * @param array $results
-     * @param ProfilePost $profilePost
-     * @return bool
-     */
-    public function assertContainsProfilePost($results, $profilePost)
-    {
-        $results = collect($results);
-        $this->assertTrue(
-            $results->contains(function ($result) use ($profilePost) {
-                $profileOwnerKeyExists = array_key_exists('profile_owner_id', $result) ? true : false;
-
-                return $result['id'] == $profilePost->id
-                && $profileOwnerKeyExists
-                && $result['profile_owner_id'] == $profilePost->profileOwner->id
-                && $result['poster']['id'] == $profilePost->poster->id;
-            }));
-    }
-
-    /**
-     * Determine whether the results contain the given comment
-     *
-     * @param array $results
-     * @param Reply $comment
-     * @return bool
-     */
-    public function assertContainsComment($results, $comment)
-    {
-        $results = collect($results);
-        $this->assertTrue(
-            $results->contains(function ($result) use ($comment) {
-                $repliableKeyExists = array_key_exists('repliable', $result) ? true : false;
-
-                return $result['id'] == $comment->id
-                && $result['poster']['id'] == $comment->poster->id
-                && $repliableKeyExists
-                && $result['repliable']['id'] == $comment->repliable->id
-                && $result['repliable']['poster']['id'] == $comment->repliable->poster->id
-                && $result['repliable']['profile_owner_id'] == $comment->repliable->profileOwner->id;
-            }));
-    }
 }

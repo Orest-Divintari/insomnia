@@ -4,12 +4,12 @@ namespace Tests\Feature\Search;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Tests\Traits\SearchableTest;
 
 class SearchNamesTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase, SearchableTest;
 
     /** @test */
     public function it_searches_usernames()
@@ -21,15 +21,19 @@ class SearchNamesTest extends TestCase
         create(User::class, ['name' => 'bingoalex']);
         create(User::class, ['name' => 'orestis']);
 
+        $counter = 0;
         do {
             sleep(0.2);
+            $counter++;
             $results = $this->getJson(route('ajax.search.names.index', ['name' => 'alex']))->json();
-        } while (count($results) !== 3);
+        } while (count($results) !== 3 || $counter < 40);
 
         $this->assertCount(3, $results);
         foreach ($results as $result) {
             $this->assertTrue(str_starts_with($result, 'alex'));
         }
+
+        $this->emptyIndices();
     }
 
 }

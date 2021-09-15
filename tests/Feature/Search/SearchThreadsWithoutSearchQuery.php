@@ -8,11 +8,12 @@ use Carbon\Carbon;
 use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Feature\Search\SearchThreadsTest;
+use Tests\TestCase;
+use Tests\Traits\SearchableTest;
 
-class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
+class SearchThreadsWithoutSearchQuery extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, SearchableTest;
 
     /** @test */
     public function get_the_threads_that_are_created_by_a_given_username()
@@ -20,22 +21,22 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $user = create(User::class);
         $desiredThread = ThreadFactory::by($user)->create();
         $undesiredThread = create(Thread::class);
+        $numberOfDesiredThreads = 1;
 
         $results = $this->searchJson([
             'type' => 'thread',
             'posted_by' => $user->name,
         ],
-            $this->numberOfDesiredThreads
+            $numberOfDesiredThreads
         );
 
         $this->assertCount(
-            $this->numberOfDesiredThreads,
+            $numberOfDesiredThreads,
             $results
         );
         $this->assertContainsThread($results, $desiredThread);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -60,11 +61,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $this->assertContainsThread($results, $threadByDoe);
         $this->assertContainsThread($results, $threadByJohn);
 
-        $threadByDoe->delete();
-        $threadByJohn->delete();
-        $undesiredThread->delete();
-        $john->delete();
-        $doe->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -95,10 +92,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $this->assertContainsThreadReply($results, $threadReplyByDoe);
         $this->assertContainsThreadReply($results, $threadReplyByJohn);
 
-        $thread->delete();
-        $undesiredThread->delete();
-        $john->delete();
-        $doe->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -134,11 +128,7 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
         $this->assertContainsThread($results, $threadByDoe);
         $this->assertContainsThreadReply($results, $threadReplyByDoe);
 
-        $undesiredThread->delete();
-        $threadByDoe->delete();
-        $threadByJohn->delete();
-        $john->delete();
-        $doe->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -160,24 +150,23 @@ class SearchThreadsWithoutSearchQuery extends SearchThreadsTest
             ->toThread($anotherUndesiredThread)
             ->create();
         Carbon::setTestNow();
+        $numberOfDesiredItems = 2;
 
         $results = $this->searchJson([
             'type' => 'thread',
             'last_created' => $daysAgo,
             'posted_by' => $user->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $numberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems, $results
+            $numberOfDesiredItems, $results
         );
         $this->assertContainsThread($results, $desiredThread);
         $this->assertContainsThreadReply($results, $desiredReply);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
-        $anotherUndesiredThread->delete();
+        $this->emptyIndices();
     }
 
 }

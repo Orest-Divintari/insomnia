@@ -10,10 +10,14 @@ use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
-use Tests\Feature\Search\SearchAllPostsTest;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use Tests\Traits\SearchableTest;
 
-class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
+class SearchAllPostsWithSearchQueryTest extends TestCase
 {
+    use RefreshDatabase, SearchableTest;
+
     /** @test */
     public function search_all_posts_given_a_search_term()
     {
@@ -21,129 +25,124 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
         $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
         $undesiredThread = create(Thread::class);
         $undesiredReply = ReplyFactory::toThread($undesiredThread)->create();
-        $desiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $desiredThread = ThreadFactory::withBody($this->sentence())->create();
         $desiredReply = ReplyFactory::toThread($desiredThread)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
-        $desiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)->create();
-        $desiredComment = CommentFactory::withBody($this->searchTerm)
+        $desiredProfilePost = ProfilePostFactory::withBody($this->sentence())->create();
+        $desiredComment = CommentFactory::withBody($this->sentence())
             ->toProfilePost($desiredProfilePost)
             ->create();
+        $totalNumberOfDesiredItems = 4;
 
         $results = $this->searchJson(
             [
-                'q' => $this->searchTerm,
+                'q' => $this->searchTerm(),
             ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
-        $this->assertCount($this->totalNumberOfDesiredItems, $results);
+        $this->assertCount($totalNumberOfDesiredItems, $results);
         $this->assertContainsThreadReply($results, $desiredReply);
         $this->assertContainsThread($results, $desiredThread);
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $undesiredThread->delete();
-        $undesiredProfilePost->delete();
-        $desiredThread->delete();
-        $desiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
     public function search_all_posts_that_were_created_by_a_given_username_given_a_search_term()
     {
-        $this->searchTerm = 'hello';
         $user = create(User::class);
         $desiredThread = ThreadFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $desiredReply = ReplyFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($desiredThread)
             ->create();
 
         $desiredProfilePost = ProfilePostFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
 
         $desiredComment = CommentFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toProfilePost($desiredProfilePost)
             ->create();
-        $undesiredComment = CommentFactory::withBody($this->searchTerm)->create();
+        $undesiredComment = CommentFactory::withBody($this->sentence())->create();
         $anotherUser = create(User::class);
         $undesiredProfilePost = ProfilePostFactory::by($anotherUser)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
-        $undesiredComment = CommentFactory::withBody($this->searchTerm)
+        $undesiredComment = CommentFactory::withBody($this->sentence())
             ->toProfilePost($undesiredProfilePost)
             ->create();
         $undesiredThread = ThreadFactory::by($anotherUser)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $undesiredReply = ReplyFactory::toThread($undesiredThread)
             ->create();
+        $totalNumberOfDesiredItems = 4;
 
         $results = $this->searchJson([
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'posted_by' => $user->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
-        $this->assertCount($this->totalNumberOfDesiredItems, $results);
+        $this->assertCount($totalNumberOfDesiredItems, $results);
         $this->assertContainsThreadReply($results, $desiredReply);
         $this->assertContainsThread($results, $desiredThread);
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
     public function search_all_posts_that_were_created_by_multiple_users_given_a_search_term()
     {
-        $undesiredComment = CommentFactory::withBody($this->searchTerm)->create();
-        $undesiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)
+        $undesiredComment = CommentFactory::withBody($this->sentence())->create();
+        $undesiredProfilePost = ProfilePostFactory::withBody($this->sentence())
             ->create();
-        $undesiredComment = CommentFactory::withBody($this->searchTerm)
+        $undesiredComment = CommentFactory::withBody($this->sentence())
             ->toProfilePost($undesiredProfilePost)
             ->create();
-        $undesiredThread = ThreadFactory::withBody($this->searchTerm)
+        $undesiredThread = ThreadFactory::withBody($this->sentence())
             ->create();
         $undesiredReply = ReplyFactory::toThread($undesiredThread)
             ->create();
         $john = create(User::class);
         $doe = create(User::class);
         $threadByJohn = ThreadFactory::by($john)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $threadReplyByJohn = ReplyFactory::by($john)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($threadByJohn)
             ->create();
         $threadByDoe = ThreadFactory::by($doe)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $threadReplyByDoe = ReplyFactory::by($doe)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($threadByDoe)
             ->create();
         $profilePostByDoe = ProfilePostFactory::by($doe)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $commentByDoe = CommentFactory::by($doe)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toProfilePost($profilePostByDoe)
             ->create();
         $profilePostByJohn = ProfilePostFactory::by($john)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $commentByJohn = CommentFactory::by($john)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toProfilePost($profilePostByJohn)
             ->create();
         $usernames = $john->name . ',' . $doe->name;
@@ -151,7 +150,7 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
         $numberOfDesiredItems = 8;
 
         $results = $this->searchJson([
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'posted_by' => $usernames,
         ],
             $numberOfDesiredItems
@@ -166,12 +165,7 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
         $this->assertContainsThreadReply($results, $threadReplyByDoe);
         $this->assertContainsThreadReply($results, $threadReplyByJohn);
 
-        $undesiredThread->delete();
-        $undesiredProfilePost->delete();
-        $threadByJohn->delete();
-        $threadByDoe->delete();
-        $profilePostByDoe->delete();
-        $profilePostByJohn->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -181,70 +175,66 @@ class SearchAllPostsWithSearchQueryTest extends SearchAllPostsTest
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
         $desiredThread = ThreadFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $desiredReply = ReplyFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($desiredThread)
             ->create();
         $desiredProfilePost = ProfilePostFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $desiredComment = CommentFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toProfilePost($desiredProfilePost)
             ->create();
         $anotherUser = $this->signIn();
         $undesiredProfilePost = ProfilePostFactory::by($anotherUser)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $undesiredComment = CommentFactory::by($anotherUser)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toProfilePost($undesiredProfilePost)
             ->create();
         $undesiredThread = ThreadFactory::by($anotherUser)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $undesiredReply = ReplyFactory::by($anotherUser)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($undesiredThread)
             ->create();
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo));
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $anotherUndesiredProfilePost = ProfilePostFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $undesiredComment = CommentFactory::by($user)
             ->toProfilePost($anotherUndesiredProfilePost)
             ->create();
         $anotherUndesiredThread = ThreadFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $anotherUndesiredReply = ReplyFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($anotherUndesiredThread)
             ->create();
+        $totalNumberOfDesiredItems = 4;
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
         $results = $this->searchJson([
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'last_created' => $daysAgo,
             'posted_by' => $user->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
-        $this->assertCount($this->totalNumberOfDesiredItems, $results);
+        $this->assertCount($totalNumberOfDesiredItems, $results);
         $this->assertContainsThreadReply($results, $desiredReply);
         $this->assertContainsThread($results, $desiredThread);
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
-        $anotherUndesiredProfilePost->delete();
-        $anotherUndesiredThread->delete();
+        $this->emptyIndices();
     }
 }

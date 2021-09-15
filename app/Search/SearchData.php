@@ -39,7 +39,7 @@ class SearchData extends DataTransferObject
         return new self([
             'type' => $request->input('type') ?: '',
             'onlyTitle' => $request->boolean('only_title') ?: false,
-            'query' => $request->input('q') ?: '',
+            'query' => $request->input('q') ?: '*',
         ]);
     }
 }

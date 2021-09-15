@@ -8,39 +8,41 @@ use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Feature\Search\SearchProfilePostsTest;
+use Tests\TestCase;
+use Tests\Traits\SearchableTest;
 
-class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
+class SearchProfilePostsWithSearchQueryTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, SearchableTest;
 
     /** @test */
     public function search_profile_posts_and_comments_given_a_search_term()
     {
         $undesiredProfilePost = create(ProfilePost::class);
         $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
-        $desiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)->create();
-        $desiredComment = CommentFactory::withBody($this->searchTerm)
+        $desiredProfilePost = ProfilePostFactory::withBody($this->sentence())->create();
+        $desiredComment = CommentFactory::withBody($this->sentence())
             ->toProfilePost($desiredProfilePost)
             ->create();
+        $totalNumberOfDesiredItems = 2;
 
         $results = $this->searchJson(
             [
                 'type' => 'profile_post',
-                'q' => $this->searchTerm,
+                'q' => $this->searchTerm(),
             ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems,
+            $totalNumberOfDesiredItems,
             $results
         );
+
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -48,37 +50,37 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
     {
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-        $desiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)->create();
-        $desiredComment = CommentFactory::withBody($this->searchTerm)
+        $desiredProfilePost = ProfilePostFactory::withBody($this->sentence())->create();
+        $desiredComment = CommentFactory::withBody($this->sentence())
             ->toProfilePost($desiredProfilePost)
             ->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $undesiredProfilePost = create(ProfilePost::class);
-        $anotherUndesiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)->create();
+        $anotherUndesiredProfilePost = ProfilePostFactory::withBody($this->sentence())->create();
         $undesiredComment = CommentFactory::toProfilePost($anotherUndesiredProfilePost)->create();
-        $anotherUndesiredComment = CommentFactory::withBody($this->searchTerm)
+        $anotherUndesiredComment = CommentFactory::withBody($this->sentence())
             ->toProfilePost($anotherUndesiredProfilePost)
             ->create();
+        $totalNumberOfDesiredItems = 2;
 
         Carbon::setTestNow();
         $results = $this->searchJson(
             [
                 'type' => 'profile_post',
-                'q' => $this->searchTerm,
+                'q' => $this->searchTerm(),
                 'last_created' => $daysAgo,
             ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems,
+            $totalNumberOfDesiredItems,
             $results
         );
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -88,85 +90,112 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
         $desiredProfilePost = ProfilePostFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $desiredComment = CommentFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toProfilePost($desiredProfilePost)
             ->create();
         $anotherUser = create(User::class);
         $undesiredProfilePost = ProfilePostFactory::by($anotherUser)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $undesiredComment = CommentFactory::by($anotherUser)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toProfilePost($undesiredProfilePost)
             ->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $anotherUndesiredProfilePost = ProfilePostFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $anotherUndesiredComment = CommentFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toProfilePost($anotherUndesiredProfilePost)
             ->create();
         Carbon::setTestNow();
+        $totalNumberOfDesiredItems = 2;
 
         $results = $this->searchJson([
             'type' => 'profile_post',
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'last_created' => $daysAgo,
             'posted_by' => $user->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems,
+            $totalNumberOfDesiredItems,
             $results
         );
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
-        $anotherUndesiredProfilePost->delete();
-
+        $this->emptyIndices();
     }
 
     /** @test */
     public function search_the_profile_posts_and_comments_that_were_posted_on_a_given_user_profile_given_a_search_term()
     {
         $profileOwner = create(User::class);
-        $desiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)
+        $desiredProfilePost = ProfilePostFactory::withBody($this->sentence())
             ->toProfile($profileOwner)
             ->create();
-        $desiredComment = CommentFactory::withBody($this->searchTerm)
+        $desiredComment = CommentFactory::withBody($this->sentence())
             ->toProfilePost($desiredProfilePost)
             ->create();
-        $undesiredProfilePost = ProfilePostFactory::withBody($this->searchTerm)
+        $undesiredProfilePost = ProfilePostFactory::withBody($this->sentence())
             ->create();
-        $undesiredComment = CommentFactory::withBody($this->searchTerm)
+        $undesiredComment = CommentFactory::withBody($this->sentence())
             ->toProfilePost($undesiredProfilePost)
             ->create();
+        $totalNumberOfDesiredItems = 2;
 
         $results = $this->searchJson([
             'type' => 'profile_post',
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'profile_owner' => $profileOwner->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems,
+            $totalNumberOfDesiredItems,
             $results
         );
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
+        $this->emptyIndices();
+    }
+    /** @test */
+    public function get_the_profile_posts_and_comments_that_are_posted_on_a_user_profile_given_a_search_query()
+    {
+        $undesiredProfilePost = create(ProfilePost::class);
+        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
+        $profileOwner = create(User::class);
+        $desiredProfilePost = ProfilePostFactory::toProfile($profileOwner)
+            ->withBody($this->sentence())
+            ->create();
+        $desiredComment = CommentFactory::withBody($this->sentence())
+            ->toProfilePost($desiredProfilePost)
+            ->create();
+        $numberOfDesiredItems = 2;
+        $results = $this->searchJson([
+            'type' => 'profile_post',
+            'q' => $this->searchTerm(),
+            'profile_owner' => $profileOwner->name,
+        ],
+            $numberOfDesiredItems
+        );
+
+        $this->assertCount(
+            $numberOfDesiredItems, $results
+        );
+        $this->assertContainsComment($results, $desiredComment);
+        $this->assertContainsProfilePost($results, $desiredProfilePost);
+
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -178,48 +207,47 @@ class SearchProfilePostsWithSearchQueryTest extends SearchProfilePostsTest
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
         $desiredProfilePost = ProfilePostFactory::by($user)
             ->toProfile($profileOwner)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $desiredComment = CommentFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toProfilePost($desiredProfilePost)
             ->create();
         $undesiredProfilePost = ProfilePostFactory::toProfile($profileOwner)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
-        $undesiredComment = CommentFactory::withBody($this->searchTerm)
+        $undesiredComment = CommentFactory::withBody($this->sentence())
             ->toProfilePost($undesiredProfilePost)
             ->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $anotherUndesiredProfilePost = ProfilePostFactory::by($user)
             ->toProfile($profileOwner)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $anotherUndesiredComment = CommentFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toProfilePost($anotherUndesiredProfilePost)
             ->create();
         Carbon::setTestNow();
+        $totalNumberOfDesiredItems = 2;
 
         $results = $this->searchJson([
             'type' => 'profile_post',
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'last_created' => $daysAgo,
             'posted_by' => $user->name,
             'profile_owner' => $profileOwner->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems,
+            $totalNumberOfDesiredItems,
             $results
         );
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
-        $anotherUndesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 }

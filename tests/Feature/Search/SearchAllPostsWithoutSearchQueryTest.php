@@ -10,13 +10,17 @@ use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
-use Tests\Feature\Search\SearchAllPostsTest;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use Tests\Traits\SearchableTest;
 
-class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
+class SearchAllPostsWithoutSearchQueryTest extends TestCase
 {
 
+    use RefreshDatabase, SearchableTest;
+
     /** @test */
-    public function get_all_posts_that_are_created_by_a_given_username()
+    public function get_all_posts_tshat_are_created_by_a_given_username()
     {
         $undesiredThread = create(Thread::class);
         $undesiredReply = ReplyFactory::toThread($undesiredThread)->create();
@@ -31,23 +35,21 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
         $desiredComment = CommentFactory::by($user)
             ->toProfilePost($desiredProfilePost)
             ->create();
+        $totalNumberOfDesiredItems = 4;
 
         $results = $this->searchJson([
             'posted_by' => $user->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
-        $this->assertCount($this->totalNumberOfDesiredItems, $results);
+        $this->assertCount($totalNumberOfDesiredItems, $results);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
         $this->assertContainsThread($results, $desiredThread);
         $this->assertContainsThreadReply($results, $desiredReply);
         $this->assertContainsComment($results, $desiredComment);
 
-        $undesiredThread->delete();
-        $undesiredProfilePost->delete();
-        $desiredThread->delete();
-        $desiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -94,12 +96,7 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
         $this->assertContainsThreadReply($results, $threadReplyByDoe);
         $this->assertContainsThreadReply($results, $threadReplyByJohn);
 
-        $undesiredThread->delete();
-        $undesiredProfilePost->delete();
-        $threadByJohn->delete();
-        $threadByDoe->delete();
-        $profilePostByDoe->delete();
-        $profilePostByJohn->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -133,26 +130,22 @@ class SearchAllPostsWithoutSearchQueryTest extends SearchAllPostsTest
         $anotherUndesiredReply = ReplyFactory::by($user)
             ->toThread($anotherUndesiredThread)
             ->create();
+        $totalNumberOfDesiredItems = 4;
 
         Carbon::setTestNow(Carbon::now()->addDays($daysAgo * 2));
         $results = $this->searchJson([
             'last_created' => $daysAgo,
             'posted_by' => $user->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
-        $this->assertCount($this->totalNumberOfDesiredItems, $results);
+        $this->assertCount($totalNumberOfDesiredItems, $results);
         $this->assertContainsThreadReply($results, $desiredReply);
         $this->assertContainsThread($results, $desiredThread);
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $undesiredThread->delete();
-        $undesiredProfilePost->delete();
-        $desiredThread->delete();
-        $desiredProfilePost->delete();
-        $anotherUndesiredThread->delete();
-        $anotherUndesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 }

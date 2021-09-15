@@ -8,34 +8,34 @@ use Carbon\Carbon;
 use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Feature\Search\SearchProfilePostsTest;
+use Tests\TestCase;
+use Tests\Traits\SearchableTest;
 
-class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTest
+class SearchProfilePostsTestWithoutSearchQueryTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, SearchableTest;
 
     /** @test */
     public function get_the_profile_posts_that_are_created_by_a_given_username()
     {
-
         $user = create(User::class);
         $desiredProfilePost = ProfilePostFactory::by($user)->create();
         $undesiredProfilePost = create(ProfilePost::class);
+        $numberOfDesiredProfilePosts = 1;
 
         $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
         ],
-            $this->numberOfDesiredProfilePosts
+            $numberOfDesiredProfilePosts
         );
 
         $this->assertCount(
-            $this->numberOfDesiredProfilePosts, $results
+            $numberOfDesiredProfilePosts, $results
         );
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -48,22 +48,22 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $desiredComment = CommentFactory::by($user)
             ->toProfilePost($desiredProfilePost)
             ->create();
+        $numberOfDesiredComments = 1;
 
         $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
         ],
-            $this->numberOfDesiredComments
+            $numberOfDesiredComments
         );
 
         $this->assertCount(
-            $this->numberOfDesiredComments,
+            $numberOfDesiredComments,
             $results
         );
         $this->assertContainsComment($results, $desiredComment);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -90,9 +90,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $this->assertContainsProfilePost($results, $profilePostByJohn);
         $this->assertContainsProfilePost($results, $profilePostByDoe);
 
-        $undesiredProfilePost->delete();
-        $profilePostByJohn->delete();
-        $profilePostByDoe->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -125,7 +123,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $this->assertContainsComment($results, $commentByJohn);
         $this->assertContainsComment($results, $commentByDoe);
 
-        $profilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -162,9 +160,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $this->assertContainsComment($results, $commentByJohn);
         $this->assertContainsComment($results, $commentByDoe);
 
-        $undesiredProfilePost->delete();
-        $profilePostByDoe->delete();
-        $profilePostByJohn->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -177,55 +173,22 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $desiredComment = CommentFactory::by($user)
             ->toProfilePost($desiredProfilePost)
             ->create();
-
+        $numberOfDesiredItems = 2;
         $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $numberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems,
+            $numberOfDesiredItems,
             $results
         );
         $this->assertContainsProfilePost($results, $desiredProfilePost);
         // $this->assertContainsComment($results, $desiredComment);
 
-        $undesiredProfilePost->delete();
-        $desiredProfilePost->delete();
-    }
-
-    /** @test */
-    public function get_the_profile_posts_and_comments_that_are_posted_on_a_user_profile_given_a_search_query()
-    {
-        $this->withoutExceptionHandling();
-        $undesiredProfilePost = create(ProfilePost::class);
-        $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
-        $profileOwner = create(User::class);
-        $desiredProfilePost = ProfilePostFactory::toProfile($profileOwner)
-            ->withBody($this->searchTerm)
-            ->create();
-        $desiredComment = CommentFactory::withBody($this->searchTerm)
-            ->toProfilePost($desiredProfilePost)
-            ->create();
-
-        $results = $this->searchJson([
-            'type' => 'profile_post',
-            'q' => $this->searchTerm,
-            'profile_owner' => $profileOwner->name,
-        ],
-            $this->totalNumberOfDesiredItems
-        );
-
-        $this->assertCount(
-            $this->totalNumberOfDesiredItems, $results
-        );
-        $this->assertContainsComment($results, $desiredComment);
-        $this->assertContainsProfilePost($results, $desiredProfilePost);
-
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -241,23 +204,23 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $desiredComment = CommentFactory::by($user)
             ->toProfilePost($desiredProfilePost)
             ->create();
+        $numberOfDesiredItems = 2;
 
         $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
             'profile_owner' => $profileOwner->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $numberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems, $results
+            $numberOfDesiredItems, $results
         );
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -274,24 +237,24 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $undesiredProfilePost = create(ProfilePost::class);
         $undesiredComment = CommentFactory::toProfilePost($undesiredProfilePost)->create();
         Carbon::setTestNow();
+        $numberOfDesiredItems = 2;
 
         $results = $this->searchJson([
             'type' => 'profile_post',
             'posted_by' => $user->name,
             'last_created' => $daysAgo,
         ],
-            $this->numberOfDesiredItems
+            $numberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->numberOfDesiredItems,
+            $numberOfDesiredItems,
             $results
         );
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -312,25 +275,24 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             ->toProfilePost($anotherUndesiredProfilePost)
             ->create();
         Carbon::setTestNow();
+        $numberOfDesiredItems = 2;
 
         $results = $this->searchJson([
             'type' => 'profile_post',
             'last_created' => $daysAgo,
             'posted_by' => $user->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $numberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems,
+            $numberOfDesiredItems,
             $results
         );
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
-        $anotherUndesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -352,6 +314,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
         $anotherUndesiredProfilePost = ProfilePostFactory::toProfile($profileOwner)->create();
         $anotherUndesiredComment = CommentFactory::toProfilePost($anotherUndesiredProfilePost)->create();
         Carbon::setTestNow();
+        $numberOfDesiredItems = 2;
 
         $results = $this->searchJson([
             'type' => 'profile_post',
@@ -359,18 +322,16 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             'last_created' => $daysAgo,
             'profile_owner' => $profileOwner->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $numberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems, $results
+            $numberOfDesiredItems, $results
         );
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
-        $anotherUndesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -397,6 +358,7 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             ->toProfilePost($anotherUndesiredProfilePost)
             ->create();
         Carbon::setTestNow();
+        $numberOfDesiredItems = 2;
 
         $results = $this->searchJson([
             'type' => 'profile_post',
@@ -404,19 +366,17 @@ class SearchProfilePostsTestWithoutSearchQueryTest extends SearchProfilePostsTes
             'posted_by' => $user->name,
             'profile_owner' => $profileOwner->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $numberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems,
+            $numberOfDesiredItems,
             $results
         );
         $this->assertContainsComment($results, $desiredComment);
         $this->assertContainsProfilePost($results, $desiredProfilePost);
 
-        $desiredProfilePost->delete();
-        $undesiredProfilePost->delete();
-        $anotherUndesiredProfilePost->delete();
+        $this->emptyIndices();
     }
 
 }

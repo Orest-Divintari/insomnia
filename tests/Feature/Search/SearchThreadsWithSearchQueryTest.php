@@ -9,11 +9,12 @@ use Carbon\Carbon;
 use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Feature\Search\SearchThreadsTest;
+use Tests\TestCase;
+use Tests\Traits\SearchableTest;
 
-class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
+class SearchThreadsWithSearchQueryTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, SearchableTest;
 
     /** @test */
     public function search_threads_given_a_search_term()
@@ -21,24 +22,24 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $user = create(User::class);
         $undesiredThread = create(Thread::class);
         $desiredThread = ThreadFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
+        $numberOfDesiredThreads = 1;
 
         $results = $this->searchJson([
             'type' => 'thread',
             'posted_by' => $user->name,
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
         ],
-            $this->numberOfDesiredThreads
+            $numberOfDesiredThreads
         );
 
         $this->assertCount(
-            $this->numberOfDesiredThreads, $results
+            $numberOfDesiredThreads, $results
         );
         $this->assertContainsThread($results, $desiredThread);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -49,22 +50,22 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $desiredThread = create(Thread::class);
         $user = create(User::class);
         $desiredReply = ReplyFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($desiredThread)
             ->create();
+        $numberOfDesiredReplies = 1;
 
         $results = $this->searchJson([
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
         ],
-            $this->numberOfDesiredReplies
+            $numberOfDesiredReplies
         );
 
-        $this->assertCount($this->numberOfDesiredReplies, $results);
+        $this->assertCount($numberOfDesiredReplies, $results);
         $this->assertContainsThreadReply($results, $desiredReply);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -72,26 +73,25 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
     {
         $undesiredThread = create(Thread::class);
         $undesiredReply = ReplyFactory::toThread($undesiredThread)->create();
-        $desiredThread = ThreadFactory::withBody($this->searchTerm)->create();
-        $desiredReply = ReplyFactory::withBody($this->searchTerm)
+        $desiredThread = ThreadFactory::withBody($this->sentence())->create();
+        $desiredReply = ReplyFactory::withBody($this->sentence())
             ->toThread($desiredThread)
             ->create();
-
+        $totalNumberOfDesiredItems = 2;
         $results = $this->searchJson([
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
         ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems, $results
+            $totalNumberOfDesiredItems, $results
         );
         $this->assertContainsThreadReply($results, $desiredReply);
         $this->assertContainsThread($results, $desiredThread);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -99,50 +99,49 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
     {
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
-        $desiredThread = ThreadFactory::withBody($this->searchTerm)->create();
-        $desiredReply = ReplyFactory::withBody($this->searchTerm)
+        $desiredThread = ThreadFactory::withBody($this->sentence())->create();
+        $desiredReply = ReplyFactory::withBody($this->sentence())
             ->toThread($desiredThread)
             ->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $undesiredThread = create(Thread::class);
-        $anotherUndesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $anotherUndesiredThread = ThreadFactory::withBody($this->sentence())->create();
         $undesiredReply = ReplyFactory::toThread($undesiredThread)->create();
-        $anotherUndesiredReply = ReplyFactory::withBody($this->searchTerm)
+        $anotherUndesiredReply = ReplyFactory::withBody($this->sentence())
             ->toThread($anotherUndesiredThread)
             ->create();
         Carbon::setTestNow();
+        $totalNumberOfDesiredItems = 2;
 
         $results = $this->searchJson([
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'last_created' => $daysAgo,
         ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems, $results
+            $totalNumberOfDesiredItems, $results
         );
         $this->assertContainsThreadReply($results, $desiredReply);
         $this->assertContainsThread($results, $desiredThread);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
     public function search_threads_given_multiple_usernames_and_a_search_term()
     {
-        sleep(1);
-        $undesiredThread = ThreadFactory::withBody($this->searchTerm)
+        $undesiredThread = ThreadFactory::withBody($this->sentence())
             ->create();
         $john = create(User::class);
         $doe = create(User::class);
         $threadByJohn = ThreadFactory::by($john)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $threadByDoe = ThreadFactory::by($doe)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $numberOfDesiredItems = 2;
         $usernames = "{$john->name}, {$doe->name}";
@@ -157,7 +156,7 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
 
         $results = $this->searchJson([
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'posted_by' => $usernames,
         ],
             $numberOfDesiredItems
@@ -169,29 +168,25 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $this->assertContainsThread($results, $threadByJohn);
         $this->assertContainsThread($results, $threadByDoe);
 
-        $undesiredThread->delete();
-        $threadByDoe->delete();
-        $threadByJohn->delete();
-        $john->delete();
-        $doe->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
     public function search_thread_replies_given_multiple_usernames_and_a_search_term()
     {
         $thread = create(Thread::class);
-        $undesiredThreadReply = ReplyFactory::withBody($this->searchTerm)
+        $undesiredThreadReply = ReplyFactory::withBody($this->sentence())
             ->toThread($thread)
             ->create();
         $john = create(User::class);
         $doe = create(User::class);
         $thread = create(Thread::class);
         $threadReplyByJohn = ReplyFactory::by($john)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($thread)
             ->create();
         $threadReplyByDoe = ReplyFactory::by($doe)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($thread)
             ->create();
         $numberOfDesiredItems = 2;
@@ -199,7 +194,7 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
 
         $results = $this->searchJson([
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'posted_by' => $usernames,
         ],
             $numberOfDesiredItems
@@ -211,30 +206,28 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $this->assertContainsThreadReply($results, $threadReplyByJohn);
         $this->assertContainsThreadReply($results, $threadReplyByDoe);
 
-        $thread->delete();
-        $john->delete();
-        $doe->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
     public function search_threads_and_replies_given_multiple_usernames_and_search_term()
     {
-        $undesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
-        $undesiredThreadReply = ReplyFactory::withBody($this->searchTerm)->create();
+        $undesiredThread = ThreadFactory::withBody($this->sentence())->create();
+        $undesiredThreadReply = ReplyFactory::withBody($this->sentence())->create();
         $john = create(User::class);
         $doe = create(User::class);
         $threadByJohn = ThreadFactory::by($john)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $threadReplyByJohn = ReplyFactory::by($john)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($threadByJohn)
             ->create();
         $threadByDoe = ThreadFactory::by($doe)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $threadReplyByDoe = ReplyFactory::by($doe)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($threadByDoe)
             ->create();
         $numberOfDesiredItems = 4;
@@ -242,7 +235,7 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
 
         $results = $this->searchJson([
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'posted_by' => $usernames,
         ],
             $numberOfDesiredItems
@@ -256,11 +249,7 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $this->assertContainsThread($results, $threadByDoe);
         $this->assertContainsThreadReply($results, $threadReplyByDoe);
 
-        $undesiredThread->delete();
-        $threadByDoe->delete();
-        $threadByJohn->delete();
-        $john->delete();
-        $doe->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -270,47 +259,44 @@ class SearchThreadsWithSearchQueryTest extends SearchThreadsTest
         $daysAgo = 5;
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo));
         $desiredThread = ThreadFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $desiredReply = ReplyFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($desiredThread)
             ->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
         $undesiredThread = create(Thread::class);
-        $anotherUndesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $anotherUndesiredThread = ThreadFactory::withBody($this->sentence())->create();
         $thirdUndesiredThread = ThreadFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->create();
         $undesiredReply = ReplyFactory::toThread($undesiredThread)->create();
-        $anotherUndesiredReply = ReplyFactory::withBody($this->searchTerm)
+        $anotherUndesiredReply = ReplyFactory::withBody($this->sentence())
             ->toThread($anotherUndesiredThread)
             ->create();
         $thirdUndesiredReply = ReplyFactory::by($user)
-            ->withBody($this->searchTerm)
+            ->withBody($this->sentence())
             ->toThread($anotherUndesiredThread)
             ->create();
         Carbon::setTestNow();
-
+        $totalNumberOfDesiredItems = 2;
         $results = $this->searchJson([
             'type' => 'thread',
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'last_created' => $daysAgo,
             'posted_by' => $user->name,
         ],
-            $this->totalNumberOfDesiredItems
+            $totalNumberOfDesiredItems
         );
 
         $this->assertCount(
-            $this->totalNumberOfDesiredItems, $results
+            $totalNumberOfDesiredItems, $results
         );
         $this->assertContainsThreadReply($results, $desiredReply);
         $this->assertContainsThread($results, $desiredThread);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
-        $anotherUndesiredThread->delete();
-        $thirdUndesiredThread->delete();
+        $this->emptyIndices();
     }
 
 }

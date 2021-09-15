@@ -5,21 +5,24 @@ namespace Tests\Feature\Search;
 use App\Models\Tag;
 use App\Models\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use Tests\Traits\SearchableTest;
 
-class SearchTagsTest extends SearchTest
+class SearchTagsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, SearchableTest;
 
     /** @test */
     public function when_a_user_searches_a_single_tag_all_threads_related_to_the_tag_are_displayed()
     {
-        $this->withoutExceptionHandling();
         $tagApple = create(Tag::class, ['name' => 'apple']);
         $numberOfDesiredThreads = 2;
         $threads = createMany(Thread::class, $numberOfDesiredThreads);
+
         foreach ($threads as $thread) {
             $thread->addTags([$tagApple->name]);
         }
+
         $this->assertCount(2, $tagApple->threads);
 
         $results = $this->searchJson(
@@ -28,12 +31,13 @@ class SearchTagsTest extends SearchTest
         );
 
         $this->assertCount($numberOfDesiredThreads, $results);
+
+        $this->emptyIndices();
     }
 
     /** @test */
     public function when_a_user_searches_multiple_tags_all_threads_related_to_all_given_tags_are_displayed()
     {
-        $this->withoutExceptionHandling();
         $tagApple = create(Tag::class, ['name' => 'applelicious']);
         $tagMicrosoft = create(Tag::class, ['name' => 'microsoftbil']);
         $appleThreads = 2;
@@ -57,6 +61,8 @@ class SearchTagsTest extends SearchTest
         );
 
         $this->assertCount($numberOfDesiredThreads, $results);
+
+        $this->emptyIndices();
     }
 
     /** @test */

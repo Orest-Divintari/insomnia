@@ -6,55 +6,57 @@ use App\Models\Thread;
 use App\Models\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ThreadFactory;
-use Tests\Feature\Search\SearchThreadsTest;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+use Tests\Traits\SearchableTest;
 
-class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
+class SearchThreadTitlesWithSearchQueryTest extends TestCase
 {
+    use RefreshDatabase, SearchableTest;
 
     /** @test */
     public function search_threads_title_given_a_search_term()
     {
         $undesiredThread = create(Thread::class);
-        $anotherUndesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
+        $anotherUndesiredThread = ThreadFactory::withBody($this->sentence())->create();
         $user = create(User::class);
         $desiredThread = ThreadFactory::by($user)
-            ->withTitle($this->searchTerm)
+            ->withTitle($this->sentence())
             ->create();
+        $numberOfDesiredThreads = 1;
 
         $results = $this->searchJson([
             'only_title' => true,
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
         ],
-            $this->numberOfDesiredThreads
+            $numberOfDesiredThreads
         );
 
         $this->assertCount(
-            $this->numberOfDesiredThreads, $results
+            $numberOfDesiredThreads, $results
         );
         $this->assertContainsThread($results, $desiredThread);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
-        $anotherUndesiredThread->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
     public function search_thread_titles_given_multiple_usernames_and_a_search_term()
     {
-        $undesiredThread = ThreadFactory::withTitle($this->searchTerm)->create();
+        $undesiredThread = ThreadFactory::withTitle($this->sentence())->create();
         $john = create(User::class);
         $doe = create(User::class);
         $threadByJohn = ThreadFactory::by($john)
-            ->withTitle($this->searchTerm)
+            ->withTitle($this->sentence())
             ->create();
         $threadByDoe = ThreadFactory::by($doe)
-            ->withTitle($this->searchTerm)
+            ->withTitle($this->sentence())
             ->create();
         $usernames = "{$john->name},{$doe->name}";
         $numberOfDesiredItems = 2;
 
         $results = $this->searchJson([
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'only_title' => true,
             'posted_by' => $usernames,
         ],
@@ -67,9 +69,7 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $this->assertContainsThread($results, $threadByDoe);
         $this->assertContainsThread($results, $threadByJohn);
 
-        $undesiredThread->delete();
-        $threadByDoe->delete();
-        $threadByJohn->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -78,29 +78,27 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $user = create(User::class);
         $daysAgo = 5;
         $desiredThread = ThreadFactory::by($user)
-            ->withTitle($this->searchTerm)
+            ->withTitle($this->sentence())
             ->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $undesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
-        $anotherUndesiredThread = ThreadFactory::withTitle($this->searchTerm)->create();
+        $undesiredThread = ThreadFactory::withBody($this->sentence())->create();
+        $anotherUndesiredThread = ThreadFactory::withTitle($this->sentence())->create();
         Carbon::setTestNow();
-
+        $numberOfDesiredThreads = 1;
         $results = $this->searchJson([
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'only_title' => true,
             'last_created' => $daysAgo,
         ],
-            $this->numberOfDesiredThreads
+            $numberOfDesiredThreads
         );
 
         $this->assertCount(
-            $this->numberOfDesiredThreads, $results
+            $numberOfDesiredThreads, $results
         );
         $this->assertContainsThread($results, $desiredThread);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
-        $anotherUndesiredThread->delete();
+        $this->emptyIndices();
     }
 
     /** @test */
@@ -109,33 +107,32 @@ class SearchThreadTitlesWithSearchQueryTest extends SearchThreadsTest
         $user = create(User::class);
         $daysAgo = 5;
         $desiredThread = ThreadFactory::by($user)
-            ->withTitle($this->searchTerm)
+            ->withTitle($this->sentence())
             ->create();
         Carbon::setTestNow(Carbon::now()->subDays($daysAgo * 2));
-        $undesiredThread = ThreadFactory::withBody($this->searchTerm)->create();
-        $anotherUndesiredThread = ThreadFactory::withTitle($this->searchTerm)->create();
+        $undesiredThread = ThreadFactory::withBody($this->sentence())->create();
+        $anotherUndesiredThread = ThreadFactory::withTitle($this->sentence())->create();
         $thirdUndesiredThread = ThreadFactory::by($user)
-            ->withTitle($this->searchTerm)
+            ->withTitle($this->sentence())
             ->create();
         Carbon::setTestNow();
+        $numberOfDesiredThreads = 1;
 
         $results = $this->searchJson([
-            'q' => $this->searchTerm,
+            'q' => $this->searchTerm(),
             'only_title' => true,
             'last_created' => $daysAgo,
             'posted_by' => $user->name,
         ],
-            $this->numberOfDesiredThreads
+            $numberOfDesiredThreads
         );
 
         $this->assertCount(
-            $this->numberOfDesiredThreads, $results
+            $numberOfDesiredThreads, $results
         );
         $this->assertContainsThread($results, $desiredThread);
 
-        $desiredThread->delete();
-        $undesiredThread->delete();
-        $anotherUndesiredThread->delete();
+        $this->emptyIndices();
     }
 
 }
