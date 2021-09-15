@@ -15,6 +15,18 @@ class Tag extends Model
     protected $guarded = [];
 
     /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($tag) {
+            $tag->threads()->detach();
+        });
+    }
+
+    /**
      * Get the route key for the model.
      *
      * @return string
