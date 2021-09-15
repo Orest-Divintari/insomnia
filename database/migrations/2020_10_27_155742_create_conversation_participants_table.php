@@ -19,7 +19,7 @@ class CreateConversationParticipantsTable extends Migration
             $table->foreignId('user_id');
             $table->boolean('admin')->default(false);
             $table->boolean('left')->default(false);
-            $table->boolean('hid')->default(false);
+            $table->boolean('hidden')->default(false);
             $table->boolean('starred')->default(false);
             $table->timestamps();
         });

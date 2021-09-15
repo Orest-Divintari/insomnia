@@ -246,7 +246,7 @@ class Conversation extends Model
     {
         ConversationParticipant::where('conversation_id', $this->id)
             ->where('user_id', $user->id)
-            ->update(['hid' => true]);
+            ->update(['hidden' => true]);
     }
 
     /**
@@ -270,12 +270,12 @@ class Conversation extends Model
     public function unhide()
     {
         $userIds = ConversationParticipant::where('conversation_id', $this->id)
-            ->where(['hid' => true])
+            ->where(['hidden' => true])
             ->pluck('user_id');
 
         ConversationParticipant::where('conversation_id', $this->id)
             ->whereIn('user_id', $userIds)
-            ->update(['hid' => false]);
+            ->update(['hidden' => false]);
     }
 
     /**
