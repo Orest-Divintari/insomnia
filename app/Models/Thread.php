@@ -110,6 +110,7 @@ class Thread extends Model
         });
 
         static::deleting(function ($thread) {
+            $thread->tags()->detach();
             $thread->replies->each->delete();
             $thread->subscriptions->each->delete();
         });
