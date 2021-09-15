@@ -17,7 +17,7 @@
                     <div class="form-right-col">
                         <p class="form-label-phone">Your name or email address:</p>
                         <div>
-                            <input class="form-input" type="email" id="username-or-password" name="email" required
+                            <input class="form-input" id="username-or-password" name="email" required
                                 autocomplete="email">
                         </div>
                     </div>
