@@ -81,14 +81,14 @@ class LoginController extends Controller
         $identityKeyToBeRemoved = '';
 
         if ($identityKey == 'name') {
-            $$identityKeyToBeRemoved = 'email';
+            $identityKeyToBeRemoved = 'email';
         } else {
-            $$identityKeyToBeRemoved = 'name';
+            $identityKeyToBeRemoved = 'name';
         }
 
         request()->merge([
             $identityKey => $identityValue,
-            $$identityKeyToBeRemoved => null,
+            $identityKeyToBeRemoved => null,
         ]);
     }
 }
