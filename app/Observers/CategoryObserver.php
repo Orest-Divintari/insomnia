@@ -16,8 +16,8 @@ class CategoryObserver
      */
     public function deleting(Category $category)
     {
-        $category->threads->each->delete();
         $category->subCategories->each->delete();
+        $category->threads->each->delete();
     }
 
     public function creating(Category $category)
