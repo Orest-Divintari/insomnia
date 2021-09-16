@@ -154,4 +154,20 @@ class RegistrationTest extends TestCase
 
         $response->assertSessionHasErrors('password');
     }
+
+    /** @test */
+    public function the_confirmation_of_the_new_password_must_match_the_new_password()
+    {
+        $password = 'HELLO@friend2';
+
+        $response = $this->post(route('register'), [
+            'name' => 'orest',
+            'email' => 'qq@example.com',
+            'password' => $password,
+            'password_confirmation' => 'random',
+            'g-recaptcha-response' => 'some token',
+        ]);
+
+        $response->assertSessionHasErrors('password');
+    }
 }
