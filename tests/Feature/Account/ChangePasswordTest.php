@@ -77,24 +77,6 @@ class ChangePasswordTest extends TestCase
     }
 
     /** @test */
-    public function the_current_password_must_be_at_least_8_characters()
-    {
-        $user = create(User::class, ['password' => $this->currentPassword]);
-        $this->signIn($user);
-
-        $response = $this->patch(
-            route('account.password.update'),
-            [
-                'current_password' => 'car',
-                'password' => $this->newPassword,
-                'password_confirmation' => $this->newPassword,
-            ]
-        );
-
-        $response->assertSessionHasErrors('current_password');
-    }
-
-    /** @test */
     public function the_new_password_is_required()
     {
         $user = create(User::class, ['password' => $this->currentPassword]);
@@ -117,13 +99,33 @@ class ChangePasswordTest extends TestCase
     {
         $user = create(User::class, ['password' => $this->currentPassword]);
         $this->signIn($user);
+        $newPassword = 'H3Ll0@';
 
         $response = $this->patch(
             route('account.password.update'),
             [
                 'current_password' => $this->currentPassword,
-                'password' => 'car',
-                'password_confirmation' => $this->newPassword,
+                'password' => $newPassword,
+                'password_confirmation' => $newPassword,
+            ]
+        );
+        $response->assertSessionHasErrors('password');
+    }
+
+    /** @test */
+    public function the_password_must_have_at_least_one_uppercase_letter()
+    {
+
+        $user = create(User::class, ['password' => $this->currentPassword]);
+        $this->signIn($user);
+        $newPassword = 'h3ll0@friend';
+
+        $response = $this->patch(
+            route('account.password.update'),
+            [
+                'current_password' => $this->currentPassword,
+                'password' => $newPassword,
+                'password_confirmation' => $newPassword,
             ]
         );
 
@@ -131,39 +133,79 @@ class ChangePasswordTest extends TestCase
     }
 
     /** @test */
-    public function the_confirmation_of_the_new_password_is_required()
+    public function the_password_must_have_at_least_one_lowercase_letter()
     {
         $user = create(User::class, ['password' => $this->currentPassword]);
         $this->signIn($user);
+        $newPassword = 'H3LL0@FRIEND';
 
         $response = $this->patch(
             route('account.password.update'),
             [
                 'current_password' => $this->currentPassword,
-                'password' => $this->newPassword,
-                'password_confirmation' => '',
-            ]
-        );
-
-        $response->assertSessionHasErrors('password_confirmation');
-    }
-
-    /** @test */
-    public function the_new_password_confirmation_must_match_the_new_password()
-    {
-
-        $user = create(User::class, ['password' => $this->currentPassword]);
-        $this->signIn($user);
-
-        $response = $this->patch(
-            route('account.password.update'),
-            [
-                'current_password' => $this->currentPassword,
-                'password' => $this->newPassword,
-                'password_confirmation' => $this->currentPassword,
+                'password' => $newPassword,
+                'password_confirmation' => $newPassword,
             ]
         );
 
         $response->assertSessionHasErrors('password');
     }
+
+    /** @test */
+    public function the_password_must_have_at_least_one_number()
+    {
+        $user = create(User::class, ['password' => $this->currentPassword]);
+        $this->signIn($user);
+        $newPassword = 'HELLO@friend';
+
+        $response = $this->patch(
+            route('account.password.update'),
+            [
+                'current_password' => $this->currentPassword,
+                'password' => $newPassword,
+                'password_confirmation' => $newPassword,
+            ]
+        );
+
+        $response->assertSessionHasErrors('password');
+    }
+
+    /** @test */
+    public function the_password_must_have_at_least_one_symbol()
+    {
+        $user = create(User::class, ['password' => $this->currentPassword]);
+        $this->signIn($user);
+        $newPassword = 'HELLOfriend2';
+
+        $response = $this->patch(
+            route('account.password.update'),
+            [
+                'current_password' => $this->currentPassword,
+                'password' => $newPassword,
+                'password_confirmation' => $newPassword,
+            ]
+        );
+
+        $response->assertSessionHasErrors('password');
+    }
+
+    /** @test */
+    public function the_confirmation_of_the_new_password_must_match_the_new_password()
+    {
+        $user = create(User::class, ['password' => $this->currentPassword]);
+        $this->signIn($user);
+        $newPassword = 'h3lL0@friend';
+
+        $response = $this->patch(
+            route('account.password.update'),
+            [
+                'current_password' => $this->currentPassword,
+                'password' => $newPassword,
+                'password_confirmation' => 'random',
+            ]
+        );
+
+        $response->assertSessionHasErrors('password');
+    }
+
 }
