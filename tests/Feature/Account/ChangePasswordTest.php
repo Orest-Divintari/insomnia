@@ -19,7 +19,7 @@ class ChangePasswordTest extends TestCase
     {
         parent::setUp();
         $this->currentPassword = 'example123';
-        $this->newPassword = 'newpassword';
+        $this->newPassword = 'H3Ll0@Friend';
     }
 
     /** @test */
