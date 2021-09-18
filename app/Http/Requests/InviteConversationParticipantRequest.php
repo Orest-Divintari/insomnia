@@ -46,7 +46,7 @@ class InviteConversationParticipantRequest extends FormRequest
     public function rules()
     {
         return [
-            'participants' => ['required', "array", 'min:1'],
+            'participants' => ['required', 'array', 'min:1'],
             'participants.*' => ['required', 'string', 'exists:users,name', new IsNotAlreadyAParticipant, 'bail'],
         ];
     }
