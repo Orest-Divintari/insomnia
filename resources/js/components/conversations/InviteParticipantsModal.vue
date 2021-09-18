@@ -39,6 +39,7 @@
               <div>
                 <names-autocomplete-input
                   input-name="participants"
+                  input-id="invite-participants"
                   v-model="participants"
                 ></names-autocomplete-input>
                 <p class="text-gray-lightest text-xs mt-2">

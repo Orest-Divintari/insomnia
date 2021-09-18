@@ -4,6 +4,8 @@
     <names-autocomplete-input
       dusk="received-by-filter"
       input-placeholder="member's name"
+      input-name="received_by"
+      input-id="received-by-conversation-filter"
       v-model="names"
       @input="broadcastInput"
     ></names-autocomplete-input>

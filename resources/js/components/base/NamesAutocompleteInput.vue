@@ -4,7 +4,7 @@
       ref="searchInput"
       class="bg-white form-input"
       :class="styleClasses"
-      :id="inputName"
+      :id="inputId"
       v-model="query"
       @input="handleOnInput"
       :name="inputName"
@@ -59,6 +59,10 @@ export default {
       default: "",
     },
     inputName: {
+      type: String,
+      default: "",
+    },
+    inputId: {
       type: String,
       default: "",
     },
