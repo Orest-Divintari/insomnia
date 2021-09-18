@@ -1,7 +1,16 @@
 <template>
   <div>
     <div
-      class="flex justify-between bg-white-catskill rounded-t py-2 pl-1 pr-3 border-b-6 border-purple-muted"
+      class="
+        flex
+        justify-between
+        bg-white-catskill
+        rounded-t
+        py-2
+        pl-1
+        pr-3
+        border-b-6 border-purple-muted
+      "
     >
       <div class="flex">
         <filter-labels
@@ -12,7 +21,14 @@
       <dropdown :styleClasses="'w-80'">
         <template v-slot:dropdown-trigger>
           <div
-            class="cursor-pointer p-3/2 text-blue-mid text-xs hover:text-blue-ship-cove hover:bg-gray-loblolly rounded"
+            class="
+              cursor-pointer
+              p-3/2
+              text-blue-mid text-xs
+              hover:text-blue-ship-cove
+              hover:bg-gray-loblolly
+              rounded
+            "
           >
             Filters
             <span class="pb-1 fas fa-sort-down"></span>
