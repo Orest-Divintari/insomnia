@@ -26,7 +26,7 @@ class PostFilters
     /**
      * Fetch the threads for the given username
      *
-     * @param String $username
+     * @param string|string[] $usernames
      * @return void
      */
     public function postedBy($usernames)
