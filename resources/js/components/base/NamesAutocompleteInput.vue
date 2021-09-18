@@ -1,8 +1,6 @@
 <template>
   <div dusk="names-autocomplete-component">
     <input
-      @blur="hideTypeMore"
-      @focus="showTypeMore"
       ref="searchInput"
       class="bg-white form-input"
       :class="styleClasses"
@@ -14,23 +12,25 @@
       autocomplete="off"
     />
     <div
-      v-show="typeMore"
+      v-show="typeMore && inputIsEmpty"
       class="absolute text-black-semi text-xs bg-white p-2 shadow-xl rounded"
     >
       Please enter {{ charactersLeft }} or more characters.
     </div>
-    <ul class="absolute shadow-xl w-48" v-show="currentlySearching">
-      <ul class="bg-opacity-1 bg-white rounded scrolling-auto">
-        <li
-          v-for="(suggestion, index) in suggestions"
-          :key="index"
-          @click="appendToInput(suggestion)"
-          class="hover:bg-blue-lighter p-2 pr-4 text-sm cursor-pointer"
-        >
-          <span v-html="highlight(suggestion)"> </span>
-        </li>
+    <div v-if="hasNotExceededLimit">
+      <ul class="absolute shadow-xl w-48" v-show="currentlySearching">
+        <ul class="bg-opacity-1 bg-white rounded scrolling-auto">
+          <li
+            v-for="(suggestion, index) in suggestions"
+            :key="index"
+            @click="appendToInput(suggestion)"
+            class="hover:bg-blue-lighter p-2 pr-4 text-sm cursor-pointer"
+          >
+            <span v-html="highlight(suggestion)"> </span>
+          </li>
+        </ul>
       </ul>
-    </ul>
+    </div>
   </div>
 </template>
 p
@@ -38,6 +38,11 @@ p
 export default {
   name: "NamesAutocompleteInput",
   props: {
+    suggestionsNumber: {
+      type: Number,
+      default: 99,
+      required: false,
+    },
     firstName: {
       type: String,
       default: "",
@@ -59,12 +64,28 @@ export default {
     },
   },
   computed: {
+    inputIsEmpty() {
+      return this.query.length == 0;
+    },
+    namesArray() {
+      return this.query.split(",");
+    },
+    namesCount() {
+      return this.query.split(",").length;
+    },
+    hasNotExceededLimit() {
+      return this.suggestionsNumber >= this.namesCount;
+    },
+    canEnterMoreNames() {
+      return this.suggestionsNumber > this.namesCount;
+    },
     path() {
       return "/ajax/search/names/";
     },
   },
   data() {
     return {
+      suggestionLimit: false,
       charactersLeft: 2,
       minimumCharacters: 2,
       typeMore: false,
@@ -112,13 +133,22 @@ export default {
       }
     },
     appendToInput(name) {
-      var allNames = this.query.split(",");
+      var allNames = this.namesArray;
       allNames[allNames.length - 1] = name;
-      this.query = allNames.join(", ") + ", ";
+      this.formatInput(allNames);
       this.focusInput();
       this.notSearching();
       this.broadcastInput();
       this.charactersLeft = this.minimumCharacters;
+    },
+    formatInput(allNames) {
+      this.query = allNames.join(", ");
+      if (this.canEnterMoreNames) {
+        this.query = this.query + ", ";
+      }
+    },
+    exceededSuggestionLimit() {
+      return this.namesCount >= this.suggestionsNumber;
     },
     broadcastInput() {
       this.$emit("input", this.query);
