@@ -58,6 +58,7 @@ class ThreadFilters extends PostFilters implements FilterInterface
     /**
      * Fetch the threads that the given user has participated
      *
+     * @param string $username
      * @return void
      */
     public function contributed($username)
