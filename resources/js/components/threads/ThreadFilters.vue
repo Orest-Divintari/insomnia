@@ -30,7 +30,7 @@
             @checked="toggle"
           ></watched-filter>
           <posted-by-filter v-model="form.postedBy"></posted-by-filter>
-          <updated-by-filter v-model="form.updatedBy"></updated-by-filter>
+          <updated-by-filter v-model="form.contributed"></updated-by-filter>
           <last-updated-filter v-model="form.lastUpdated"></last-updated-filter>
           <last-created-filter v-model="form.lastCreated"></last-created-filter>
           <div class="text-right dropdown-item">
@@ -72,7 +72,7 @@ export default {
       filters: this.threadFilters,
       form: {
         postedBy: "",
-        updatedBy: "",
+        contributed: "",
         lastUpdated: "",
         lastCreated: "",
         unanswered: false,
