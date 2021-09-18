@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown-item" v-if="showFilter">
-    <label class="form-label block pb-2" for="started-by">Updated By:</label>
+    <label class="form-label block pb-2" for="started-by">Contributed:</label>
     <names-autocomplete-input
       v-model="user"
       @input="broadcastInput"

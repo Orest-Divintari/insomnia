@@ -46,7 +46,7 @@
             @checked="toggle"
           ></watched-filter>
           <posted-by-filter v-model="form.postedBy"></posted-by-filter>
-          <updated-by-filter v-model="form.contributed"></updated-by-filter>
+          <contributed-filter v-model="form.contributed"></contributed-filter>
           <last-updated-filter v-model="form.lastUpdated"></last-updated-filter>
           <last-created-filter v-model="form.lastCreated"></last-created-filter>
           <div class="text-right dropdown-item">
@@ -62,7 +62,7 @@
 import filters from "../../mixins/filters";
 import FilterLabels from "../filters/FilterLabels";
 import PostedByFilter from "./PostedByFilter";
-import UpdatedByFilter from "./UpdatedByFilter";
+import ContributedFilter from "./ContributedFilter";
 import LastUpdatedFilter from "./LastUpdatedFilter";
 import LastCreatedFilter from "./LastCreatedFilter";
 import UnansweredFilter from "./UnansweredFilter";
@@ -71,7 +71,7 @@ export default {
   components: {
     FilterLabels,
     PostedByFilter,
-    UpdatedByFilter,
+    ContributedFilter,
     LastUpdatedFilter,
     LastCreatedFilter,
     UnansweredFilter,
