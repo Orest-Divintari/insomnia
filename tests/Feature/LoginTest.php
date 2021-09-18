@@ -36,4 +36,20 @@ class LoginTest extends TestCase
 
         $response->assertRedirect(route('forum'));
     }
+
+    /** @test */
+    public function a_user_may_choose_to_remember_the_credentials_when_logs_in()
+    {
+        $name = 'azem';
+        $user = create(User::class, ['name' => $name, 'password' => 'sesameOpen']);
+        $this->assertNull($user->remember_token);
+
+        $response = $this->post(route('login'), [
+            'email' => $name,
+            'password' => 'sesameOpen',
+            'remember' => true,
+        ]);
+
+        $this->assertIsString($user->fresh()->remember_token);
+    }
 }

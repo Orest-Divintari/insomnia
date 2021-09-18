@@ -44,7 +44,8 @@
                     <div class="form-right-col">
                         <div class="flex flex-row-reverse items-center">
                             <label class="form-label flex-1 ml-2" for="stay-logged-in">Stay logged in</label>
-                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <input value="true" id="stay-logged-in" type="checkbox" name="remember"
+                                {{ old('remember') ? 'checked' : '' }}>
                         </div>
                     </div>
                 </div>

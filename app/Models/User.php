@@ -85,6 +85,24 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $attributes = $this->toArray();
+        // ensure the consistency of the date format
+        // for the cases where $timestamps is set to false
+        // when $timestamps is set to false, prior to updating the created_at and updated_at
+        // the format of the dates changes,
+        // and as a result it conflcits with the format that is in the index
+        $attributes['created_at'] = Carbon::parse($attributes['created_at'])->toJson();
+        $attributes['updated_at'] = Carbon::parse($attributes['updated_at'])->toJson();
+        return $attributes;
+    }
+
+    /**
      * Hash the password before persisting
      *
      * @param String $value
@@ -572,5 +590,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->notifications()->where('created_at', '>=', now()->subWeek());
     }
-
 }
