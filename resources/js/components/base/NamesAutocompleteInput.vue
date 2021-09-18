@@ -117,7 +117,11 @@ export default {
       this.query = allNames.join(", ") + ", ";
       this.focusInput();
       this.notSearching();
+      this.broadcastInput();
       this.charactersLeft = this.minimumCharacters;
+    },
+    broadcastInput() {
+      this.$emit("input", this.query);
     },
     focusInput() {
       this.$refs["searchInput"].focus();
