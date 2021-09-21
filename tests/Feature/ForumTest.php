@@ -128,7 +128,7 @@ class ForumTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_the_the_poster_of_the_most_recent_reply_of_a_root_category()
+    public function a_user_can_view_the_poster_of_the_most_recent_reply_of_a_root_category()
     {
         $macOsReplyPoster = create(User::class);
         $iosReplyPoster = create(User::class);
