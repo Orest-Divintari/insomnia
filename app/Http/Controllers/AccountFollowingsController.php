@@ -19,6 +19,6 @@ class AccountFollowingsController extends Controller
             ->withCount('receivedLikes')
             ->paginate(Follow::FOLLOWINGS_PER_PAGE);
 
-        return view('account.followings.index', compact('followingUsers'));
+        return view('account.follows.index', compact('followingUsers'));
     }
 }
