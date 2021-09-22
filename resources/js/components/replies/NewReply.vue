@@ -1,5 +1,9 @@
 <template>
-  <div class="mt-6" dusk="new-reply-input">
+  <div
+    class="mt-6"
+    dusk="new-reply-input"
+    v-if="can('add_reply', repliableData)"
+  >
     <div class="reply-container">
       <div class="reply-left-col">
         <profile-popover
@@ -32,6 +36,7 @@
 
 <script>
 import EventBus from "../../eventBus";
+import authorizable from "../../mixins/authorizable";
 export default {
   components: {},
   props: {
@@ -40,8 +45,10 @@ export default {
       default: {},
     },
   },
+  mixins: [authorizable],
   data() {
     return {
+      repliableData: this.repliable,
       body: "",
       quotedData: "",
       posted: false,
@@ -72,6 +79,11 @@ export default {
       this.posted = !this.posted;
       this.$emit("created", data);
       this.body = "";
+    },
+  },
+  watch: {
+    repliable(newValue, oldValue) {
+      this.repliableData = newValue;
     },
   },
   mounted() {

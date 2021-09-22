@@ -1,5 +1,5 @@
 <template>
-  <div dusk="profile-popover">
+  <div :dusk="user.name + '-profile-popover'">
     <v-popover
       :class="popoverClasses"
       popoverClass="focus:outline-none"
@@ -76,10 +76,7 @@
             </div>
           </div>
           <hr class="text-gray-lighter" />
-          <div
-            v-if="signedIn && !isAuthUser(this.profileOwner)"
-            class="flex bg-white p-2"
-          >
+          <div v-if="viewProfilePopoverActions" class="flex bg-white p-2">
             <follow-button
               class="mr-2"
               v-if="signedIn"
@@ -144,6 +141,13 @@ export default {
   },
   mixins: [view, authorizable],
   computed: {
+    viewProfilePopoverActions() {
+      return (
+        this.signedIn &&
+        !this.isAuthUser(this.profileOwner) &&
+        this.authUser.verified
+      );
+    },
     username() {
       return this.triggerText !== ""
         ? this.triggerText

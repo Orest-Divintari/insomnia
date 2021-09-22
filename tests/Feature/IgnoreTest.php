@@ -26,6 +26,30 @@ class IgnoreTest extends TestCase
     }
 
     /** @test */
+    public function unferified_users_cannot_ignore_other_users()
+    {
+        $john = $this->signInUnverified();
+        $doe = create(User::class);
+
+        $response = $this->postJson(route('ajax.user-ignorations.store', $doe));
+
+        $response->assertForbidden();
+        $this->assertFalse($doe->isIgnored($john));
+    }
+
+    /** @test */
+    public function users_cannot_ignore_unverified_users()
+    {
+        $john = $this->signIn();
+        $doe = User::factory()->unverified()->create();
+
+        $response = $this->postJson(route('ajax.user-ignorations.store', $doe));
+
+        $response->assertForbidden();
+        $this->assertFalse($doe->isIgnored($john));
+    }
+
+    /** @test */
     public function users_cannot_ignore_themselves()
     {
         $john = $this->signIn();

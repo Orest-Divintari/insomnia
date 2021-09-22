@@ -165,8 +165,9 @@ class UserTest extends TestCase
     /** @test */
     public function the_conversation_message_of_a_user_may_be_liked()
     {
-        $user = create(User::class);
+        $user = $this->signIn();
         $liker = create(User::class);
+
         $conversation = ConversationFactory::by($user)
             ->withParticipants([$liker->name])
             ->create();

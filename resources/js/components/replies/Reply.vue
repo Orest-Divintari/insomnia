@@ -100,7 +100,10 @@
         </div>
         <div v-if="signedIn && !editing" class="flex justify-between pb-2">
           <div class="flex">
-            <button class="btn-reply-control">
+            <button
+              class="btn-reply-control"
+              v-if="signedIn && authUser.verified"
+            >
               <i class="fas fa-exclamation-circle"></i>
               Report
             </button>

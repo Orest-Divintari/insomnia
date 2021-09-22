@@ -211,6 +211,9 @@ Route::group(['middleware' => 'visitor.append'], function () {
         Route::delete('/threads/{thread}/ignoration', 'ThreadIgnorationController@destroy')
             ->name('thread-ignorations.destroy');
 
+        /* ************ CONFIRMATION EMAIL ************ */
+        Route::post('/verification-email', 'VerificationEmailController@store')
+            ->name('verification-email.store');
     });
 
 /* ************ SEARCH NAMES ************ */

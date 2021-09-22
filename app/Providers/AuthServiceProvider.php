@@ -20,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Conversation' => 'App\Policies\ConversationPolicy',
         User::class => 'App\Policies\UserPolicy',
         'App\Models\Activity' => 'App\Policies\ActivityPolicy',
+        'App\Models\Like' => 'App\Policies\LikePolicy',
     ];
 
     /**

@@ -1,5 +1,5 @@
 <template>
-  <div @click="quoteReply">
+  <div @click="quoteReply" v-if="signedIn && authUser.verified">
     <button class="btn-reply-control">
       <span class="fas fa-reply"></span>
       Reply

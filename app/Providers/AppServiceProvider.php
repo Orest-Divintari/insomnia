@@ -41,7 +41,12 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::if('verified', function () {
             if (auth()->check()) {
-                return auth()->user()->email_verified_at;
+                return auth()->user()->hasVerifiedEmail();
+            }
+        });
+        Blade::if('unverified', function () {
+            if (auth()->check()) {
+                return auth()->user()->hasNotVerifiedEmail();
             }
         });
     }

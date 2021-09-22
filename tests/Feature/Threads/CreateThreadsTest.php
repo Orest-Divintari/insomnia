@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Threads;
 
+use App\Http\Middleware\MustBeVerified;
 use App\Http\Middleware\ThrottlePosts;
 use App\Models\Category;
 use App\Models\Tag;
@@ -51,20 +52,42 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_has_to_verify_the_email_before_posting_a_new_thread()
+    public function unverified_users_should_not_see_the_thread_form()
     {
-        $user = create(User::class, [
-            'email_verified_at' => null,
-        ]);
+        $user = $this->signInUnverified();
+        $category = create(Category::class);
+
+        $response = $this->get(route('threads.create', $category));
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
+    public function verified_users_may_see_the_thread_form()
+    {
+        $user = $this->signIn();
+        $category = create(Category::class);
+
+        $response = $this->get(route('threads.create', $category));
+
+        $response->assertOk()
+            ->assertSee('Post Thread');
+    }
+
+    /** @test */
+    public function unverified_users_should_not_create_a_thread()
+    {
+        $user = User::factory()->unverified()->create();
         $this->signIn($user);
 
         $response = $this->post(route('threads.store'), []);
 
-        $response->assertRedirect(route('verification.notice'));
+        $response->assertForbidden()
+            ->assertSee(MustBeVerified::EXCEPTION_MESSAGE);
     }
 
     /** @test */
-    public function authenticated_users_that_have_confirmed_their_email_may_postThreads()
+    public function verified_users_may_create_a_thread()
     {
         $this->signIn();
         $thread = raw(Thread::class);

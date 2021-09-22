@@ -19,7 +19,7 @@ class LockThreadController extends Controller
 
         $thread->lock();
 
-        return response('The thread has been locked', 200);
+        return $thread->append('permissions');
     }
 
     /**
@@ -34,6 +34,6 @@ class LockThreadController extends Controller
 
         $thread->unlock();
 
-        return response('The thread has been unlocked', 200);
+        return $thread->append('permissions');
     }
 }

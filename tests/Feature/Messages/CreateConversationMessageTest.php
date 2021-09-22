@@ -44,6 +44,43 @@ class CreateConversationMessageTest extends TestCase
     }
 
     /** @test */
+    public function unverified_users_cannot_add_a_message_to_the_conversation()
+    {
+        $conversationStarter = $this->signIn();
+        $participant = create(User::class);
+        $conversation = ConversationFactory::withParticipants([$participant->name])
+            ->by($conversationStarter)->create();
+        $message = ['body' => 'some message'];
+        $this->signInUnverified($participant);
+
+        $response = $this->post(
+            route('ajax.messages.store', $conversation),
+            $message
+        );
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
+    public function participants_cannot_add_messages_to_a_locked_conversation()
+    {
+        $conversationStarter = $this->signIn();
+        $participant = create(User::class);
+        $conversation = ConversationFactory::withParticipants([$participant->name])
+            ->by($conversationStarter)->create();
+        $message = ['body' => 'some message'];
+        $this->signIn($participant);
+        $conversation->lock();
+
+        $response = $this->post(
+            route('ajax.messages.store', $conversation),
+            $message
+        );
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
     public function a_message_requires_a_body()
     {
         $this->signIn();

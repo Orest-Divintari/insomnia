@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Http\Middleware\MustBeVerified;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -58,6 +59,11 @@ class ThreadPolicy
         return $user && $thread->isNotIgnored($user) && $user->isNot($thread->poster);
     }
 
+    public function view_ignore_button(?User $user, Thread $thread)
+    {
+        return $user && $thread->poster->isNot($user);
+    }
+
     /**
      * Determine whether the user can uningore the thread
      *
@@ -81,4 +87,28 @@ class ThreadPolicy
     {
         return !$thread->hasSubscriber($user);
     }
+
+    /**
+     * Determine whether the authenticated user can create a thread
+     *
+     * @param User $user
+     * @return mixed
+     */
+    public function create(User $user)
+    {
+        return $user->hasVerifiedEmail() ?: $this->deny(MustBeVerified::EXCEPTION_MESSAGE);
+    }
+
+    /**
+     * Determine whether the user can add a reply to the thread
+     *
+     * @param User $user
+     * @param Thread $thread
+     * @return mixed
+     */
+    public function add_reply(User $user, Thread $thread)
+    {
+        return $user->hasVerifiedEmail() && !$thread->isLocked();
+    }
+
 }

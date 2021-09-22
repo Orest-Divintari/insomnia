@@ -152,6 +152,25 @@ class ViewConversationsTest extends TestCase
     }
 
     /** @test */
+    public function unverified_users_should_not_see_the_start_conversation_button()
+    {
+        $user = $this->signInUnverified();
+        $response = $this->get(route('conversations.index'));
+
+        $response->assertDontSee('Start Conversation');
+    }
+
+    /** @test */
+    public function verified_users_should_not_see_the_start_conversation_button()
+    {
+        $this->signIn();
+
+        $response = $this->get(route('conversations.index'));
+
+        $response->assertSee('Start Conversation');
+    }
+
+    /** @test */
     public function when_a_conversation_is_visited_is_marked_as_read()
     {
         $response = $this->get(route('conversations.index'));

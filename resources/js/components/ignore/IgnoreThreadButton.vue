@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="can('ignore', thread)">
     <button
       dusk="ignore-thread-button"
       @click="toggleIgnore"
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import authorizable from "../../mixins/authorizable";
 export default {
   name: "IgnoreThreadButton",
   props: {
@@ -24,6 +25,7 @@ export default {
       required: true,
     },
   },
+  mixins: [authorizable],
   data() {
     return {
       isIgnored: this.ignored,

@@ -96,7 +96,7 @@ export default {
       this.markAsRead(thread);
       axios
         .patch(this.readPath(thread.slug))
-        .catch((error) => console.log(error.response));
+        .catch((error) => console.log(error));
     },
   },
 

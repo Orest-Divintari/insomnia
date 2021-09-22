@@ -26,6 +26,17 @@ class LikesTest extends TestCase
     }
 
     /** @test */
+    public function unverified_users_should_not_like_a_reply()
+    {
+        $reply = ReplyFactory::create();
+        $this->signInUnverified();
+
+        $response = $this->post(route('ajax.reply-likes.store', $reply));
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
     public function an_authenticated_user_can_like_a_thread_reply()
     {
         $user = $this->signIn();

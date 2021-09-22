@@ -60,7 +60,7 @@ class ConversationController extends Controller
         return view(
             'conversations.show',
             [
-                'conversation' => $viewModel->conversation(),
+                'conversation' => $viewModel->conversation()->append('permissions'),
                 'messages' => $viewModel->messages(),
                 'participants' => $viewModel->participants(),
             ]

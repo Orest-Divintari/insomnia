@@ -50,4 +50,21 @@ abstract class TestCase extends BaseTestCase
         $this->actingAs($user);
         return $user;
     }
+
+    /**
+     * Sign in as unverified user
+     *
+     * @param User|null $user
+     * @return User
+     */
+    protected function signInUnverified($user = null)
+    {
+        if ($user instanceof User) {
+            $user->update(['email_verified_at' => null]);
+        } else {
+            $user = User::factory()->unverified()->create();
+        }
+        $this->actingAs($user);
+        return $user;
+    }
 }

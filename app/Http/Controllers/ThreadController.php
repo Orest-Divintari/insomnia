@@ -81,6 +81,8 @@ class ThreadController extends Controller
     {
         $thread = $viewModel->thread($threadSlug, auth()->user());
 
+        $thread->append('permissions');
+
         $filters = $this->filterManager->withReplyFilters();
 
         $replies = $viewModel->replies($thread, $filters, auth()->user());

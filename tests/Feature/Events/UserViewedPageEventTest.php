@@ -3,7 +3,7 @@
 namespace Tests\Feature\Events;
 
 use App\Events\Activity\UserViewedPage;
-use App\Listeners\Activity\LogUserActivity;
+use App\Listeners\Activity\LogOnlineUserActivity;
 use App\Models\Category;
 use App\Models\Thread;
 use App\Models\User;
@@ -19,8 +19,8 @@ class UserViewedPageEventTest extends TestCase
     /** @test */
     public function when_a_user_visits_a_thread_an_event_is_fired()
     {
-        $listener = Mockery::spy(LogUserActivity::class);
-        app()->instance(LogUserActivity::class, $listener);
+        $listener = Mockery::spy(LogOnlineUserActivity::class);
+        app()->instance(LogOnlineUserActivity::class, $listener);
         $thread = create(Thread::class);
 
         $this->get(route('threads.show', $thread));
@@ -34,8 +34,8 @@ class UserViewedPageEventTest extends TestCase
     /** @test */
     public function when_a_user_visits_a_category_an_event_is_fired()
     {
-        $listener = Mockery::spy(LogUserActivity::class);
-        app()->instance(LogUserActivity::class, $listener);
+        $listener = Mockery::spy(LogOnlineUserActivity::class);
+        app()->instance(LogOnlineUserActivity::class, $listener);
         $category = create(Category::class);
 
         $this->get(route('categories.show', $category));
@@ -51,8 +51,8 @@ class UserViewedPageEventTest extends TestCase
     /** @test */
     public function when_a_user_visits_the_forum_an_event_is_fired()
     {
-        $listener = Mockery::spy(LogUserActivity::class);
-        app()->instance(LogUserActivity::class, $listener);
+        $listener = Mockery::spy(LogOnlineUserActivity::class);
+        app()->instance(LogOnlineUserActivity::class, $listener);
 
         $this->get(route('forum'));
 
@@ -65,8 +65,8 @@ class UserViewedPageEventTest extends TestCase
     /** @test */
     public function when_an_authenticated_user_opens_a_conversation_an_event_is_fired()
     {
-        $listener = Mockery::spy(LogUserActivity::class);
-        app()->instance(LogUserActivity::class, $listener);
+        $listener = Mockery::spy(LogOnlineUserActivity::class);
+        app()->instance(LogOnlineUserActivity::class, $listener);
         $john = $this->signIn();
         $peter = create(User::class);
         $conversation = ConversationFactory::by($john)
@@ -84,8 +84,8 @@ class UserViewedPageEventTest extends TestCase
     /** @test */
     public function when_an_authenticated_user_views_the_list_of_conversations_an_event_is_fired()
     {
-        $listener = Mockery::spy(LogUserActivity::class);
-        app()->instance(LogUserActivity::class, $listener);
+        $listener = Mockery::spy(LogOnlineUserActivity::class);
+        app()->instance(LogOnlineUserActivity::class, $listener);
         $user = $this->signIn();
 
         $this->get(route('conversations.index'));

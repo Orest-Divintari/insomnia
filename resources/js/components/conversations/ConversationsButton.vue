@@ -63,10 +63,15 @@
         </div>
         <div class="dropdown-footer-item flex items-center shadow-2xl">
           <a href="/conversations" class="blue-link">Show all</a>
-          <p class="dot"></p>
-          <a href="/conversations/create" class="blue-link"
-            >Start a new conversation</a
+          <div
+            v-if="can('start_conversation', authUser)"
+            class="flex items-center"
           >
+            <p class="dot"></p>
+            <a href="/conversations/create" class="blue-link"
+              >Start a new conversation</a
+            >
+          </div>
         </div>
       </template>
     </dropdown>
@@ -74,6 +79,7 @@
 </template>
 
 <script>
+import authorizable from "../../mixins/authorizable";
 import view from "../../mixins/view";
 import store from "../../store";
 export default {
@@ -85,7 +91,7 @@ export default {
       fetchedData: false,
     };
   },
-  mixins: [view],
+  mixins: [view, authorizable],
   computed: {
     unreadCount() {
       return this.state.visitor.unread_conversations_count;
@@ -123,7 +129,7 @@ export default {
       axios
         .get(this.path)
         .then(({ data }) => this.refresh(data))
-        .catch((error) => console.log(error.response.data));
+        .catch((error) => console.log(error));
     },
   },
 };

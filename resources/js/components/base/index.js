@@ -8,7 +8,7 @@ import ProfilePopover from "./ProfilePopover";
 import Paginator from "./Paginator";
 import Avatar from "./Avatar";
 import HtmlToText from "./HtmlToText";
-
+import ResendVerificationEmailButton from "./ResendVerificationEmailButton";
 
 [
     Hamburger,
@@ -20,6 +20,7 @@ import HtmlToText from "./HtmlToText";
     Paginator,
     Avatar,
     HtmlToText,
+    ResendVerificationEmailButton
 ].forEach(Component => {
     Vue.component(Component.name, Component);
 })

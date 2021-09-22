@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Profiles;
 
+use App\Http\Middleware\MustBeVerified;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
@@ -17,6 +18,41 @@ class ProfileTest extends TestCase
     {
         parent::setUp();
         $this->exception = 'This member limits who may view their full profile.';
+    }
+
+    /** @test */
+    public function unverified_users_may_visit_their_own_profile()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = User::factory()->unverified()->create();
+        $this->signIn($user);
+
+        $response = $this->get(route('profiles.show', $user));
+
+        $response->assertOk();
+    }
+
+    /** @test */
+    public function unverified_users_may_not_visit_the_profile_of_other_verified_users()
+    {
+        $john = $this->signInUnverified();
+        $doe = create(User::class);
+
+        $response = $this->get(route('profiles.show', $doe));
+
+        $response->assertSee(MustBeVerified::EXCEPTION_MESSAGE);
+    }
+
+    /** @test */
+    public function verified_users_may_not_visit_the_profile_of_unverified_users()
+    {
+        $doe = User::factory()->unverified()->create();
+        $john = $this->signIn();
+
+        $response = $this->get(route('profiles.show', $doe));
+
+        $response->assertSee("This user's profile is not available.");
     }
 
     /** @test */

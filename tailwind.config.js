@@ -30,6 +30,7 @@ module.exports = {
                 "blue-light": "#DDE6F1",
                 "blue-mid": "#426693",
                 "blue-mid-light": "#6786B1",
+                "blue-mid-medium": "#4E6C98",
                 "blue-mid-dark": "#4F6C98",
                 "blue-reply-border": "#A2BBDF",
                 "blue-link-menu": "#2C435F",

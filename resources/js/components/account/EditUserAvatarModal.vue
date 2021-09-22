@@ -211,7 +211,7 @@ export default {
       axios
         .delete(this.path)
         .then(({ data }) => this.onDestroyed(data))
-        .catch((error) => console.log(error.response.data));
+        .catch((error) => console.log(error));
     },
     onLoad(avatar) {
       this.avatarIsPersisted = false;

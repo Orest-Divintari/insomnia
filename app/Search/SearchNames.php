@@ -15,7 +15,8 @@ class SearchNames
     public function handle($query)
     {
         $users = User::boolSearch()
-            ->should('match_phrase_prefix', ['name' => $query])
+            ->must('match_phrase_prefix', ['name' => $query])
+            ->must('exists', ['field' => 'email_verified_at'])
             ->size(10)
             ->execute()
             ->documents();

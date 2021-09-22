@@ -54,13 +54,11 @@
               <div class="flex">
                 <follow-button
                   class="mr-1"
-                  v-if="!authorize('is', user) && signedIn"
                   :profile-owner="user"
                   :followed="user.followed_by_visitor"
                 ></follow-button>
                 <ignore-user-button
                   class="mr-1"
-                  v-if="!authorize('is', user) && signedIn"
                   :profile-owner="user"
                   :ignored="user.ignored_by_visitor"
                 ></ignore-user-button>

@@ -531,4 +531,19 @@ class Thread extends Model
 
         return $column->addSelect($query, $authUser);
     }
+
+    /**
+     * Append the permissions for the thread
+     *
+     * @return void
+     */
+    public function getPermissionsAttribute()
+    {
+        $user = optional(auth()->user());
+
+        return [
+            'ignore' => $user->can('view_ignore_button', $this),
+            'add_reply' => $user->can('add_reply', $this),
+        ];
+    }
 }

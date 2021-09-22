@@ -11,9 +11,11 @@
         @auth
         @if($category->exists)
         <div class="py-4">
+            @verified
             <a href="{{ route('threads.create', $category ) }}" class="btn-post"><span
-                    class="fas fa-pen text-white text-xs mr-1"></span>Post
-                Thread</a>
+                    class="fas fa-pen text-white text-xs mr-1"></span>
+                Post Thread</a>
+            @endverified
         </div>
         @endif
         @endauth

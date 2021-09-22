@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\ProfilePosts;
 
+use App\Http\Middleware\MustBeVerified;
 use App\Models\ProfilePost;
 use App\Models\User;
 use Carbon\Carbon;
@@ -13,6 +14,18 @@ use Tests\TestCase;
 class ViewProfilePostsTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @test */
+    public function unverified_users_should_not_see_the_profile_posts()
+    {
+        $user = create(User::class);
+        $this->signInUnverified($user);
+
+        $response = $this->get(route('profile-posts.index'));
+
+        $response->assertForbidden()
+            ->assertSee(MustBeVerified::EXCEPTION_MESSAGE);
+    }
 
     /** @test */
     public function only_authenticated_users_can_jump_to_a_specific_profile_post()

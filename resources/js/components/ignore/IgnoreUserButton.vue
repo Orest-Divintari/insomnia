@@ -1,5 +1,5 @@
 <template>
-  <div dusk="ignore-user-button">
+  <div dusk="ignore-user-button" v-if="can('ignore', profileOwner)">
     <button @click="toggleIgnore" class="btn-white-blue flex items-center">
       <p v-if="isIgnored">Unignore</p>
       <p v-else>Ignore</p>

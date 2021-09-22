@@ -1,5 +1,5 @@
-e<template>
-  <div>
+<template>
+  <div dusk="follow-button" v-if="can('follow', profileOwner)">
     <button @click="toggleFollow" class="btn-white-blue flex items-center">
       <p v-if="isFollowed">Unfollow</p>
       <p v-else>Follow</p>
@@ -8,6 +8,7 @@ e<template>
 </template>
 
 <script>
+import authorizable from "../../mixins/authorizable";
 export default {
   name: "FollowButton",
   props: {
@@ -19,6 +20,7 @@ export default {
       default: {},
     },
   },
+  mixins: [authorizable],
   data() {
     return {
       isFollowed: this.followed,

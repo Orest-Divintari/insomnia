@@ -37,6 +37,37 @@ class CreateThreadRepliesTest extends TestCase
     }
 
     /** @test */
+    public function unverified_users_should_not_post_replies_to_a_thread()
+    {
+        $thread = create(Thread::class);
+        $reply = raw(Reply::class);
+        $this->signInUnverified();
+
+        $response = $this->post(
+            route('ajax.replies.store', $thread),
+            $reply
+        );
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
+    public function users_should_not_post_replies_to_a_locked_thread()
+    {
+        $thread = create(Thread::class);
+        $thread->lock();
+        $reply = raw(Reply::class);
+        $this->signIn();
+
+        $response = $this->post(
+            route('ajax.replies.store', $thread),
+            $reply
+        );
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
     public function authorized_users_may_post_replies_to_a_thread()
     {
         $user = $this->signIn();

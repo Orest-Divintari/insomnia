@@ -26,4 +26,14 @@ trait Lockable
         $this->locked = false;
         $this->save();
     }
+
+    /**
+     * Determine whether it is locked
+     *
+     * @return boolean
+     */
+    public function isLocked()
+    {
+        return $this->locked;
+    }
 }

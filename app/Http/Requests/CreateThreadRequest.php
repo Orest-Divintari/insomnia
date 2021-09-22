@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Actions\StringToArrayForRequestAction;
+use App\Http\Middleware\MustBeVerified;
 use App\Models\Thread;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
@@ -37,7 +39,19 @@ class CreateThreadRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return auth()->user()->can('create', Thread::class);
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function failedAuthorization()
+    {
+        throw new AuthorizationException(MustBeVerified::EXCEPTION_MESSAGE);
     }
 
     /**

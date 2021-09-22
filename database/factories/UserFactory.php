@@ -31,4 +31,17 @@ class UserFactory extends Factory
             'avatar_path' => null,
         ];
     }
+
+    /**
+     * Indicate that the user is unverified
+     *
+     * @return  \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function unverified()
+    {
+        return $this->state([
+            'email_verified_at' => null,
+        ]);
+    }
+
 }

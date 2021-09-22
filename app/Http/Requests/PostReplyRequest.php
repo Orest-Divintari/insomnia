@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Middleware\MustBeVerified;
+use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PostReplyRequest extends FormRequest
 {
@@ -13,7 +17,19 @@ class PostReplyRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return auth()->user()->can('add_reply', $this->route('thread'));
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function failedAuthorization()
+    {
+        throw new AuthorizationException(MustBeVerified::EXCEPTION_MESSAGE);
     }
 
     /**

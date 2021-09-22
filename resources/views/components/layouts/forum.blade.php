@@ -14,10 +14,10 @@
                     </a> </div>
                 @endrole
                 <profile-button :profile-owner="{{ auth()->user() }}"></profile-button>
-                @verified
+
                 <notifications-button></notifications-button>
                 <conversations-button></conversations-button>
-                @endverified
+
 
                 <form action="{{ route('logout') }}" method="POST">
                     <button class="head-tab-item">Logout</button>
@@ -88,6 +88,10 @@
         </div>
     </x-slot>
     <x-slot name="main">
+        @unverified
+        <x-auth.verification-email-reminder></x-auth.verification-email-reminder>
+        @endunverified
+
         {{$slot}}
     </x-slot>
 </x-layouts.master>

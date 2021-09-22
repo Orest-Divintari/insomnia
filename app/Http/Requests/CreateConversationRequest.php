@@ -7,6 +7,7 @@ use App\Models\Conversation;
 use App\Models\User;
 use App\Rules\AllowsConversations;
 use App\Rules\DifferentFromStarter;
+use App\Rules\Verified;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -20,7 +21,7 @@ class CreateConversationRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return auth()->user()->can('create', Conversation::class);
     }
 
     /**
@@ -34,7 +35,15 @@ class CreateConversationRequest extends FormRequest
             'title' => ['required', 'string'],
             'message' => ['required', 'string'],
             'participants' => ['required', "array", 'min:1'],
-            'participants.*' => ['required', 'string', 'exists:users,name', new DifferentFromStarter, new AllowsConversations, 'bail'],
+            'participants.*' => [
+                'required',
+                'string',
+                'exists:users,name',
+                new DifferentFromStarter,
+                new AllowsConversations,
+                new Verified,
+                'bail',
+            ],
             'admin' => ['sometimes'],
         ];
     }
@@ -97,6 +106,7 @@ class CreateConversationRequest extends FormRequest
             'participants.required' => 'Please enter at least one username.',
             'participants.min' => 'Please enter at least one username.',
         ];
+
         $messages = $this->addParticipantExistsMessage($messages);
 
         return $messages;
@@ -121,4 +131,5 @@ class CreateConversationRequest extends FormRequest
         }
         return $messages;
     }
+
 }

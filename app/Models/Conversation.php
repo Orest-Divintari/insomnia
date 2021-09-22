@@ -44,6 +44,7 @@ class Conversation extends Model
         'date_created',
         'date_updated',
         'type',
+        'permissions',
     ];
 
     /**
@@ -443,6 +444,18 @@ class Conversation extends Model
     public function scopeExcludeIgnored($query, $authUser, $excludeIgnoredFilter)
     {
         return $excludeIgnoredFilter->apply($query, $authUser);
+    }
+
+    /**
+     * Append the permissions of the user
+     *
+     * @return array
+     */
+    public function getPermissionsAttribute()
+    {
+        return [
+            'add_reply' => auth()->user()->can('add_reply', $this),
+        ];
     }
 
 }

@@ -1,5 +1,9 @@
 <template>
-  <div @click="toggle" v-if="signedIn" dusk="like-button-component">
+  <div
+    @click="toggle"
+    v-if="can('like', authUser)"
+    dusk="like-button-component"
+  >
     <button
       dusk="like-button"
       class="btn-reply-control mr-2"
@@ -11,6 +15,7 @@
 </template>
 
 <script>
+import authorizable from "../../mixins/authorizable";
 export default {
   props: {
     path: {
@@ -27,6 +32,7 @@ export default {
       default: "",
     },
   },
+  mixins: [authorizable],
   data() {
     return {
       isLiked: this.item.is_liked,

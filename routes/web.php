@@ -106,6 +106,7 @@ Route::group(['middleware' => 'auth'], function () {
     /* ************ ONLINE ************ */
 
     Route::get('/online/user-activities', 'OnlineUserActivityController@index')
+        ->middleware('must-be-verified')
         ->name('online-user-activities.index');
 
     /* ************ PROFILE ************ */
@@ -113,15 +114,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profiles/{user}', 'ProfileController@show')
         ->name('profiles.show');
 
-/* ************ PROFILE POSTS ************ */
+    /* ************ PROFILE POSTS ************ */
 
     Route::get('/profile-posts/{post}', 'ProfilePostController@show')
         ->name('profile-posts.show');
 
     Route::get('/profile-posts', 'ProfilePostController@index')
+        ->middleware('must-be-verified')
         ->name('profile-posts.index');
 
-/* ************ PROFILE POST COMMENTS ************ */
+    /* ************ PROFILE POST COMMENTS ************ */
 
     Route::get('/profile-posts/comments/{comment}', 'CommentController@show')
         ->name('comments.show');
@@ -196,20 +198,20 @@ Route::group(['middleware' => 'auth'], function () {
     /* ************ THREADS ************ */
 
     Route::get('/categories/{category}/threads/create', 'ThreadController@create')
+        ->middleware('must-be-verified')
         ->name('threads.create');
 
     Route::post('/threads', 'ThreadController@store')
-        ->middleware('verified', 'throttle.posts')
+        ->middleware('throttle.posts')
         ->name('threads.store');
 
     /* ************ CONVERSATIONS ************ */
 
     Route::post('/conversations', 'ConversationController@store')
-        ->middleware('verified')
         ->name('conversations.store');
 
     Route::get('/conversations/create', 'ConversationController@create')
-        ->middleware('verified')
+        ->middleware('must-be-verified')
         ->name('conversations.create');
 
     Route::get('/conversations', 'ConversationController@index')

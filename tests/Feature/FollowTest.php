@@ -29,6 +29,28 @@ class FollowTest extends TestCase
     }
 
     /** @test */
+    public function unverified_users_cannot_follow_other_users()
+    {
+        $john = $this->signInUnverified();
+        $doe = create(User::class);
+
+        $response = $this->postJson(route('ajax.follow.store', $doe));
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
+    public function users_cannot_follow_unverified_users()
+    {
+        $john = $this->signIn();
+        $doe = User::factory()->unverified()->create();
+
+        $response = $this->postJson(route('ajax.follow.store', $doe));
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
     public function guest_users_cannot_unfollow_other_users()
     {
         $user = create(User::class);

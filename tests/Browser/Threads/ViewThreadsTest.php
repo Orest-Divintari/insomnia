@@ -24,7 +24,23 @@ class ViewThreadsTest extends DuskTestCase
             $response = $browser
                 ->visit(route('threads.show', $thread));
 
-            $response->assertMissing('@new-reply-input');
+            $response->assertMissing('@new-reply-input')
+                ->assertSee($thread->title);
+        });
+    }
+
+    /** @test */
+    public function unverified_users_should_not_see_the_input_to_post_new_reply()
+    {
+        $thread = create(Thread::class);
+        $unverifiedUser = User::factory()->unverified()->create();
+        $this->browse(function (Browser $browser) use ($thread, $unverifiedUser) {
+            $response = $browser
+                ->loginAs($unverifiedUser)
+                ->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@new-reply-input')
+                ->assertSee('You have insufficient privileges to reply here.');
         });
     }
 
@@ -48,6 +64,21 @@ class ViewThreadsTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($thread) {
             $response = $browser
+                ->visit(route('threads.show', $thread));
+
+            $response->assertMissing('@like-button');
+        });
+    }
+
+    /** @test */
+    public function unverified_users_should_not_see_the_like_button()
+    {
+        $thread = create(Thread::class);
+        $unverifiedUser = User::factory()->unverified()->create();
+
+        $this->browse(function (Browser $browser) use ($thread, $unverifiedUser) {
+            $response = $browser
+                ->loginAs($unverifiedUser)
                 ->visit(route('threads.show', $thread));
 
             $response->assertMissing('@like-button');
@@ -207,4 +238,17 @@ class ViewThreadsTest extends DuskTestCase
         });
     }
 
+    /** @test */
+    public function guests_should_not_see_the_ignore_button()
+    {
+        $category = create(Category::class);
+        $doe = create(User::class);
+        $thread = ThreadFactory::inCategory($category)->by($doe)->create();
+
+        $this->browse(function (Browser $browser) use ($thread) {
+            $browser
+                ->visit(route('threads.show', $thread))
+                ->assertMissing('@ignore-thread-button');
+        });
+    }
 }

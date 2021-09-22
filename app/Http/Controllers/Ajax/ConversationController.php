@@ -21,7 +21,7 @@ class ConversationController extends Controller
     {
         $request->update($conversation);
 
-        return response('The conversation has been updated', 200);
+        return $conversation->append('permissions');
     }
 
     /**

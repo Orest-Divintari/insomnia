@@ -3,6 +3,7 @@
 namespace Tests\Feature\Activities;
 
 use App\Events\Activity\UserViewedPage;
+use App\Http\Middleware\MustBeVerified;
 use App\Models\Activity;
 use App\Models\Category;
 use App\Models\Thread;
@@ -20,6 +21,35 @@ class OnlineUserActivitiesTest extends TestCase
         $response = $this->get(route('online-user-activities.index'));
 
         $response->assertRedirect('login');
+    }
+
+    /** @test */
+    public function the_activities_of_unverified_users_should_not_be_recorded()
+    {
+        $unverifiedUser = $this->signInUnverified();
+
+        $response = $this->get(route('forum'));
+
+        $this->assertDatabaseMissing('activities', [
+            'description' => UserViewedPage::FORUM,
+        ]);
+
+        $this->signIn();
+
+        $response = $this->get(route('online-user-activities.index'));
+
+        $response->assertDontSee(UserViewedPage::FORUM);
+    }
+
+    /** @test */
+    public function unverified_users_should_not_see_the_current_activities_of_online_users()
+    {
+        $unverifiedUser = $this->signInUnverified();
+
+        $response = $this->get(route('online-user-activities.index'));
+
+        $response->assertForbidden()
+            ->assertSee(MustBeVerified::EXCEPTION_MESSAGE);
     }
 
     /** @test */

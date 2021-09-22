@@ -195,14 +195,15 @@ class ViewAboutTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($visitor, $profileOwner) {
 
-            $response = $browser->loginAs($visitor)
-                ->visit("/profiles/{$profileOwner->name}")
+            $response = $browser
+                ->loginAs($visitor)
+                ->visit(route('profiles.show', $profileOwner))
                 ->clickLink('About')
                 ->waitForText('Following');
 
             $response
                 ->assertSee('Following')
-                ->assertVue('profileOwner.name', $visitor->name, '@profile-popover');
+                ->assertVue('profileOwner.name', $visitor->name, "@{$visitor->name}-profile-popover");
         });
     }
 
@@ -222,7 +223,7 @@ class ViewAboutTest extends DuskTestCase
 
             $response
                 ->assertSee('Followers')
-                ->assertVue('profileOwner.name', $visitor->name, '@profile-popover');
+                ->assertVue('profileOwner.name', $visitor->name, "@{$visitor->name}-profile-popover");
         });
     }
 

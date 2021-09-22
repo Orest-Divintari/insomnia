@@ -79,7 +79,7 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Like\DeletePostLikeNotification',
         ],
         'App\Events\Activity\UserViewedPage' => [
-            'App\Listeners\Activity\LogUserActivity',
+            'App\Listeners\Activity\LogOnlineUserActivity',
         ],
         'Illuminate\Auth\Events\Logout' => [
             'App\Listeners\Activity\DeleteUserViewedActivity',

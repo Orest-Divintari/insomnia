@@ -19,7 +19,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ActivityTest extends TestCase
+class RecordActivitiesTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -50,6 +50,7 @@ class ActivityTest extends TestCase
     /** @test */
     public function when_an_authenticated_user_posts_a_thread_reply_the_activity_is_recorded()
     {
+        $this->withoutExceptionHandling();
         $thread = create(Thread::class);
         $user = $this->signIn();
         $threadReplyAttributes = raw(

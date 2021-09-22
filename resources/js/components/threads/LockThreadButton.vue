@@ -34,18 +34,18 @@ export default {
     lock() {
       axios
         .patch(this.path)
-        .then((response) => this.onSuccess(true))
+        .then((response) => this.onSuccess(response.data))
         .catch((error) => console.log(error));
     },
     unlock() {
       axios
         .delete(this.path)
-        .then((response) => this.onSuccess(false))
+        .then((response) => this.onSuccess(response.data))
         .catch((error) => console.log(error));
     },
-    onSuccess(locked) {
-      this.locked = locked;
-      EventBus.$emit("lock-repliable", locked);
+    onSuccess(thread) {
+      this.locked = thread.locked;
+      EventBus.$emit("lock-repliable", thread);
     },
     toggle() {
       if (this.locked) {

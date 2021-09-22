@@ -27,9 +27,8 @@
       </button>
     </div>
     <new-reply
-      :repliable="repliable"
+      :repliable="repliableData"
       @created="add"
-      v-if="signedIn && !locked"
     ></new-reply>
     <p v-if="!signedIn" class="text-xs mt-4 text-center">
       You must
@@ -37,8 +36,12 @@
       <a href="/register" class="text-blue-mid underline">register</a> to reply
       here.
     </p>
+    <p v-if="signedIn && !authUser.verified" class="text-gray-800 bg-gray-50 rounded p-2">
+      You have insufficient privileges to reply here.
+    </p>
+
     <div
-      v-if="locked"
+      v-if="repliableData.locked"
       class="
         flex
         items-center
@@ -83,11 +86,11 @@ export default {
   mixins: [collection],
   data() {
     return {
+      repliableData: this.repliable,
       showIgnoredContent: false,
       isPaginated: false,
       items: this.replies.data,
       dataset: this.replies,
-      locked: this.repliable.locked,
     };
   },
   methods: {
@@ -96,8 +99,8 @@ export default {
     },
   },
   created() {
-    EventBus.$on("lock-repliable", (locked) => {
-      this.locked = locked;
+    EventBus.$on("lock-repliable", (repliable) => {
+      this.repliableData = repliable;
     });
   },
 };

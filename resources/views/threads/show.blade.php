@@ -64,12 +64,10 @@
 
 
 
-                    @if(auth()->check() && (auth()->user()->can('ignore', $thread) || auth()->user()->can('unignore',
-                    $thread)))
+
                     <ignore-thread-button class="mr-1" :thread="{{ $thread }}"
                         :ignored="{{ json_encode($thread->ignored_by_visitor) }}">
                     </ignore-thread-button>
-                    @endif
 
                     @if(auth()->check() && Gate::allows('lock', $thread))
                     <lock-thread-button :thread="{{ $thread }}"></lock-thread-button>

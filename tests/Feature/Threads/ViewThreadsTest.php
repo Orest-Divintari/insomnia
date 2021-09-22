@@ -103,6 +103,44 @@ class ViewThreadsTest extends TestCase
     }
 
     /** @test */
+    public function unverified_users_should_not_see_the_post_thread_button()
+    {
+        $category = create(Category::class);
+        $thread = ThreadFactory::inCategory($category)->create();
+        $user = $this->signInUnverified();
+
+        $response = $this->get(route('category-threads.index', $category));
+
+        $response->assertSee($thread->title)
+            ->assertDontSee('Post Thread');
+    }
+
+    /** @test */
+    public function verified_users_should_see_the_post_thread_button()
+    {
+        $category = create(Category::class);
+        $thread = ThreadFactory::inCategory($category)->create();
+        $this->signIn();
+
+        $response = $this->get(route('category-threads.index', $category));
+
+        $response->assertSee($thread->title)
+            ->assertSee('Post Thread');
+    }
+
+    /** @test */
+    public function guests_should_not_see_the_post_thread_button()
+    {
+        $category = create(Category::class);
+        $thread = ThreadFactory::inCategory($category)->create();
+
+        $response = $this->get(route('category-threads.index', $category));
+
+        $response->assertSee($thread->title)
+            ->assertDontSee('Post Thread');
+    }
+
+    /** @test */
     public function a_user_can_view_the_paginated_threads_associated_with_a_category()
     {
         $category = create(Category::class);

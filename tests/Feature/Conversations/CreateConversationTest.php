@@ -60,14 +60,14 @@ class CreateConversationTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_that_hasnt_verified_the_email_cannot_see_the_conversation_form()
+    public function unverified_users_should_not_see_the_conversation_form()
     {
-        $user = create(User::class, ['email_verified_at' => null]);
+        $user = User::factory()->unverified()->create();
         $this->signIn($user);
 
-        $response = $this->postConversation($title = "", $message = "", $participant = "");
+        $response = $this->get(route('conversations.create'));
 
-        $response->assertRedirect(route('verification.notice'));
+        $response->assertForbidden();
     }
 
     /** @test */
@@ -108,14 +108,34 @@ class CreateConversationTest extends TestCase
     }
 
     /** @test */
-    public function a_new_user_that_hasnt_verified_the_email_cannot_start_a_covnersation()
+    public function unverified_users_cannot_start_a_conversation_with_other_users()
     {
-        $user = create(User::class, ['email_verified_at' => null]);
-        $this->signIn($user);
+        $john = $this->signInUnverified();
+        $doe = create(User::class);
 
-        $response = $this->postConversation();
+        $response = $this->postConversation($participants = $doe->name);
 
-        $response->assertRedirect(route('verification.notice'));
+        $response->assertForbidden();
+    }
+
+    /** @test */
+    public function users_cannot_start_a_conversation_with_unverified_users()
+    {
+        $john = $this->signIn();
+        $doe = User::factory()->unverified()->create();
+        $title = 'hi';
+        $message = 'my name is john';
+        $participants = $doe->name;
+
+        $response = $this->postConversation(
+            $title,
+            $message,
+            $participants
+        );
+
+        $response->assertSessionHasErrors(
+            ['participants.*' => ["The following member has not been verified: {$doe->name}"]]
+        );
     }
 
     /** @test */

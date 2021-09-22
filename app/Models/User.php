@@ -38,7 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $appends = ['short_name', 'permissions'];
+    protected $appends = ['short_name', 'permissions', 'verified'];
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -505,9 +505,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return [
             'post_on_profile' => $user->can('post_on_profile', $this),
-            'start_conversation' => $user->can('create', [Conversation::class, $this]),
+            'start_conversation' => $user->can('view_start_conversation_button', [Conversation::class, $this]),
             'view_identities' => $user->can('view_identities', $this),
             'view_current_activity' => $user->can('view_current', [Activity::class, $this]),
+            'ignore' => $user->can('view_ignore_button', $this),
+            'follow' => $user->can('view_follow_button', $this),
+            'like' => $user->can('view_button', Like::class),
         ];
     }
 
@@ -590,4 +593,25 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->notifications()->where('created_at', '>=', now()->subWeek());
     }
+
+    /**
+     * Determine whether the user has not verified the email
+     *
+     * @return boolean
+     */
+    public function hasNotVerifiedEmail()
+    {
+        return !$this->hasVerifiedEmail();
+    }
+
+    /**
+     * Get the attribute that determines whether the user has verified the account
+     *
+     * @return void
+     */
+    public function getVerifiedAttribute()
+    {
+        return $this->hasVerifiedEmail();
+    }
+
 }

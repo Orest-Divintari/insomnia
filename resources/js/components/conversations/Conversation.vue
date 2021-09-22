@@ -121,13 +121,13 @@ export default {
     update() {
       axios
         .patch(this.updatePath, this.form)
-        .then(() => this.onSuccess())
+        .then((response) => this.onSuccess(response.data))
         .catch((error) => showErrorModal(error.response.data));
     },
-    onSuccess() {
+    onSuccess(conversation) {
       this.locked = !this.locked;
       this.hideEditModal();
-      EventBus.$emit("lock-repliable", this.$refs.lock.checked);
+      EventBus.$emit("lock-repliable", conversation);
     },
   },
 };

@@ -2,8 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\AppendVisitor;
-use App\Http\Middleware\ThrottlePosts;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,6 +65,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'throttle.posts' => \App\Http\Middleware\ThrottlePosts::class,
         'visitor.append' => \App\Http\Middleware\AppendVisitor::class,
+        'must-be-verified' => \App\Http\Middleware\MustBeVerified::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
     ];
 }

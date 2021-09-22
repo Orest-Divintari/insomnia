@@ -25,6 +25,19 @@ class InviteConversationParticipantTest extends TestCase
     }
 
     /** @test */
+    public function unverified_users_cannot_be_invited_in_a_conversation()
+    {
+        $john = $this->signIn();
+        $george = create(User::class);
+        $orestis = User::factory()->unverified()->create();
+        $conversation = ConversationFactory::by($john)->withParticipants([$george->name])->create();
+
+        $response = $this->postJson(route('ajax.conversation-participants.store', $conversation), ['participants' => $orestis->name]);
+
+        $this->assertFalse($conversation->hasParticipant($orestis));
+    }
+
+    /** @test */
     public function a_conversation_admin_may_invite_another_participant_in_the_conversation()
     {
         $john = $this->signIn();

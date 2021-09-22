@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Http\Middleware\MustBeVerified;
 use App\Models\Reply;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -20,6 +21,17 @@ class ReplyPolicy
     public function update(User $user, Reply $reply)
     {
         return $reply->poster->is($user);
+    }
+
+    /**
+     * Determine whether a user can create a reply
+     *
+     * @param User $user
+     * @return mixed
+     */
+    public function create(User $user)
+    {
+        return $user && $user->hasVerifiedEmail();
     }
 
     /**
@@ -71,6 +83,7 @@ class ReplyPolicy
      */
     public function like(User $user, Reply $reply)
     {
-        return !$reply->isLiked($user);
+        return !$reply->isLiked($user) && $user->hasVerifiedEmail() ?:
+        $this->deny(MustBeVerified::EXCEPTION_MESSAGE);
     }
 }
