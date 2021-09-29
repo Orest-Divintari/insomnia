@@ -10,13 +10,13 @@
           ></profile-popover>
         </div>
         <div class="w-full p-3">
-          <profile-post-input
+          <input-comment
             @posted="post"
             :posted="posted"
             v-model="body"
             placeholder="Write a comment..."
             button-name="Post comment"
-          ></profile-post-input>
+          ></input-comment>
         </div>
       </div>
     </div>
@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import ProfilePostInput from "./ProfilePostInput";
+import InputComment from "./InputComment";
 import authorizable from "../../mixins/authorizable";
 export default {
   components: {
-    ProfilePostInput,
+    InputComment,
   },
   props: {
     profilePost: {

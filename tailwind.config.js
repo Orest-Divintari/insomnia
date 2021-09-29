@@ -10,6 +10,12 @@ module.exports = {
             xl: "1280px"
         },
         extend: {
+            left: {
+                '10':'10rem'
+            },
+            inset: {
+                '10': '10rem'
+            },
             minHeight: {
                 "64": "16rem",
                 "32": "8rem"

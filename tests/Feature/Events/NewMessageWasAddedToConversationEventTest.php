@@ -16,12 +16,13 @@ class NewMessageWasAddedToConversationEventTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function when_a_new_message_is_added_to_a_conversation_then_an_event_is_fired()
+    public function when_a_new_message_is_added_to_a_conversation_then_participants_are_notified()
     {
         $listener = Mockery::spy(NotifyConversationParticipants::class);
         app()->instance(NotifyConversationParticipants::class, $listener);
         $conversationStarter = $this->signIn();
         $participant = create(User::class);
+
         $conversation = ConversationFactory::by($conversationStarter)
             ->withParticipants([$participant->name])
             ->create();
@@ -30,14 +31,14 @@ class NewMessageWasAddedToConversationEventTest extends TestCase
             route('ajax.messages.store', $conversation),
             ['body' => 'some message']
         );
-        $message = Reply::whereBody('some message')->first();
 
+        $message = Reply::whereBody('some message')->first();
         $listener->shouldHaveReceived('handle', function ($event) use (
             $conversation,
             $message
         ) {
-            return $event->conversation->id == $conversation->id
-            && $event->message->id == $message->id;
+            return $event->conversation->is($conversation)
+            && $event->message->is($message);
         });
     }
 }

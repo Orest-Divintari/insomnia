@@ -38,9 +38,9 @@ class UpdateProfilePostRequest extends FormRequest
      */
     public function update($post)
     {
-        return $post->update([
-            'body' => request('body'),
-        ]);
+        $post->update(['body' => request('body')]);
+
+        return $post;
     }
 
     /**

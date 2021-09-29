@@ -4,6 +4,7 @@ namespace App\Listeners\Subscription;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
 use App\Listeners\Notify;
+use App\Models\User;
 use App\Notifications\ThreadHasNewReply;
 use App\Traits\HandlesNotifications;
 

@@ -51,6 +51,14 @@ class UpdateUserPreferencesRequest extends FormRequest
             'subscribe_on_creation_with_email' => ['sometimes', 'required', 'accepted'],
             'subscribe_on_interaction' => ['sometimes', 'required', 'accepted'],
             'subscribe_on_interaction_with_email' => ['sometimes', 'required', 'accepted'],
+            'mentioned_in_thread_reply' => ['sometimes', 'required', 'array'],
+            'mentioned_in_thread_reply.*' => ['string', Rule::in('database')],
+            'mentioned_in_thread' => ['sometimes', 'required', 'array'],
+            'mentioned_in_thread.*' => ['string', Rule::in('database')],
+            'mentioned_in_profile_post' => ['sometimes', 'required', 'array'],
+            'mentioned_in_profile_post.*' => ['string', Rule::in('database')],
+            'mentioned_in_comment' => ['sometimes', 'required', 'array'],
+            'mentioned_in_comment.*' => ['string', Rule::in('database')],
         ];
     }
 

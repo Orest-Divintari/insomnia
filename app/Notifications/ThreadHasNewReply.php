@@ -33,7 +33,16 @@ class ThreadHasNewReply extends Notification
      */
     public function via($notifiable)
     {
-        $channels = $notifiable->preferences()->thread_reply_created;
+        // find the channels that the user prefers to get notification when is mentioned in a thread reply
+        // then remove those channels from the notifications when a new reply is created in a watched thread
+        if ($this->reply->hasMentionedUser($notifiable)) {
+            $channels = array_diff(
+                $notifiable->preferences()->thread_reply_created,
+                $notifiable->preferences()->mentioned_in_thread_reply
+            );
+        } else {
+            $channels = $notifiable->preferences()->thread_reply_created;
+        }
 
         $prefersEmail = $notifiable
             ->subscription($this->thread->id)

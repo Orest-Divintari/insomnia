@@ -708,5 +708,4 @@ class UserTest extends TestCase
 
         $this->assertFalse($thread->isIgnored($john));
     }
-
 }

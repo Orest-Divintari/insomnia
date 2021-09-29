@@ -226,6 +226,74 @@
                 </div>
             </div>
 
+            <div class="form-row">
+                <!-- LEFT -->
+                <div class="form-left-col pt-5/2">
+                    <p class="form-label" for="mentioned-in-thread">Mentions you in a thread:</p>
+                </div>
+                <!-- RIGHT -->
+                <div class="form-right-col pt-5/2">
+                    <p class="form-label-phone">Mentions you in a thread:</p>
+                    <div class="flex flex-row-reverse items-center justify-end">
+                        <label for="mentioned-in-thread" class="text-black-semi text-sm">Alert</label>
+                        <input class="mt-1/2 mr-2" type="checkbox" id="mentioned-in-thread" name="mentioned_in_thread[]"
+                            value="database"
+                            {{ in_array('database', $user->preferences()->mentioned_in_thread ) ? 'checked' : '' }}>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- LEFT -->
+                <div class="form-left-col pt-5/2">
+                    <p class="form-label" for="mentioned-in-thread-reply">Mentions you in a thread reply:</p>
+                </div>
+                <!-- RIGHT -->
+                <div class="form-right-col pt-5/2">
+                    <p class="form-label-phone">Mentions you in a thread reply:</p>
+                    <div class="flex flex-row-reverse items-center justify-end">
+                        <label for="mentioned-in-thread-reply" class="text-black-semi text-sm">Alert</label>
+                        <input class="mt-1/2 mr-2" type="checkbox" id="mentioned-in-thread-reply"
+                            name="mentioned_in_thread_reply[]" value="database"
+                            {{ in_array('database', $user->preferences()->mentioned_in_thread_reply ) ? 'checked' : '' }}>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- LEFT -->
+                <div class="form-left-col pt-5/2">
+                    <p class="form-label" for="mentioned-in-profile-post">Mentions you in a profile post:</p>
+                </div>
+                <!-- RIGHT -->
+                <div class="form-right-col pt-5/2">
+                    <p class="form-label-phone">Mentions you in a profile post:</p>
+                    <div class="flex flex-row-reverse items-center justify-end">
+                        <label for="mentioned-in-profile-post" class="text-black-semi text-sm">Alert</label>
+                        <input class="mt-1/2 mr-2" type="checkbox" id="mentioned-in-profile-post"
+                            name="mentioned_in_profile_post[]" value="database"
+                            {{ in_array('database', $user->preferences()->mentioned_in_profile_post ) ? 'checked' : '' }}>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- LEFT -->
+                <div class="form-left-col pt-5/2">
+                    <p class="form-label" for="mentioned-in-comment">Mentions you in a comment:</p>
+                </div>
+                <!-- RIGHT -->
+                <div class="form-right-col pt-5/2">
+                    <p class="form-label-phone">Mentions you in a comment:</p>
+                    <div class="flex flex-row-reverse items-center justify-end">
+                        <label for="mentioned-in-comment" class="text-black-semi text-sm">Alert</label>
+                        <input class="mt-1/2 mr-2" type="checkbox" id="mentioned-in-comment"
+                            name="mentioned_in_comment[]" value="database"
+                            {{ in_array('database', $user->preferences()->mentioned_in_comment ) ? 'checked' : '' }}>
+                    </div>
+                </div>
+            </div>
+
             <x-form.button class="text-xs" name="Save"></x-form.button>
         </form>
     </x-slot>

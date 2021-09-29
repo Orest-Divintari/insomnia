@@ -16,6 +16,14 @@ class HelperFunctionsTest extends TestCase
     }
 
     /** @test */
+    public function it_transforms_kebab_case_strings_to_camel_case()
+    {
+        $string = "this-is-a-string";
+
+        $this->assertEquals('thisIsAString', kebab_to_camel($string));
+    }
+
+    /** @test */
     public function it_transorms_snake_case_to_camel_case_and_capitalizes_the_first_letter()
     {
         $name = 'orestis_divintari';

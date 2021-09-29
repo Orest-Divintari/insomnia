@@ -3,7 +3,7 @@
 namespace App\Listeners\Profile;
 
 use App\Events\Profile\NewCommentWasAddedToProfilePost;
-use App\Notifications\PostOnYourProfileHasNewComment;
+use App\Notifications\APostOnYourProfileHasNewComment;
 use App\Traits\HandlesNotifications;
 
 class NotifyProfileOwnerOfNewCommentOnAPost
@@ -43,11 +43,11 @@ class NotifyProfileOwnerOfNewCommentOnAPost
      * Get the notification instance
      *
      * @param NewCommentWasAddedToProfilePost $event
-     * @return PostOnYourProfileHasNewComment
+     * @return APostOnYourProfileHasNewComment
      */
     protected function notification($event)
     {
-        return new PostOnYourProfileHasNewComment(
+        return new APostOnYourProfileHasNewComment(
             $event->profilePost,
             $event->comment,
             $event->commentPoster,

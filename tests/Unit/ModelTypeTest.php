@@ -53,6 +53,14 @@ class ModelTypeTest extends TestCase
     }
 
     /** @test */
+    public function it_returns_the_type_of_a_profile_post_in_camel_case()
+    {
+        $profilePost = ProfilePostFactory::create();
+
+        $this->assertEquals('profilePost', ModelType::toCamelCase($profilePost));
+    }
+
+    /** @test */
     public function it_knows_the_type_of_a_liked_thread_reply()
     {
         $reply = ReplyFactory::create();

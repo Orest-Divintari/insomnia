@@ -5,6 +5,7 @@ namespace Tests\Feature\Events;
 use App\Http\Middleware\ThrottlePosts;
 use App\Listeners\Subscription\NotifyThreadSubscribers;
 use App\Listeners\Subscription\SubscribeToThread;
+use App\Listeners\Thread\NotifyMentionedUsersInThreadReply;
 use App\Models\Reply;
 use App\Models\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -39,6 +40,27 @@ class NewReplyWasPostedToThreadEventTest extends TestCase
         $listener->shouldHaveReceived('handle', function ($event) use ($thread, $reply) {
             return $event->thread->id == $thread->id
             && $event->reply->id == $reply->id;
+        });
+    }
+
+    /** @test */
+    public function when_a_user_posts_a_reply_to_a_thread_then_the_mentioned_users_are_notified()
+    {
+        $poster = $this->signIn();
+        $listener = Mockery::spy(NotifyMentionedUsersInThreadReply::class);
+        app()->instance(NotifyMentionedUsersInThreadReply::class, $listener);
+        $thread = create(Thread::class);
+        $reply = ['body' => 'some message'];
+
+        $this->post(
+            route('ajax.replies.store', $thread),
+            ['body' => $reply['body']]
+        );
+
+        $reply = Reply::where('body', $reply['body'])->first();
+        $listener->shouldHaveReceived('handle', function ($event) use ($thread, $reply) {
+            return $event->thread->is($thread)
+            && $event->reply->is($reply);
         });
     }
 

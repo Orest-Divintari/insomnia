@@ -34,6 +34,7 @@
         "momentjs": "^2.0.0",
         "quill-delta-to-html": "^0.12.0",
         "tailwindcss": "^1.4.6",
+        "tributejs": "^5.1.3",
         "trix": "^1.2.3",
         "v-tooltip": "^2.0.3",
         "vue-autosuggest": "^2.2.0",

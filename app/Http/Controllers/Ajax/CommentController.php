@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Comment;
+use App\Events\Profile\CommentWasUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
@@ -41,6 +42,8 @@ class CommentController extends Controller
     {
         $request->update($comment);
 
+        event(new CommentWasUpdated($comment, auth()->user()));
+
         return response('The comment has been updated', 200);
     }
 
@@ -53,6 +56,7 @@ class CommentController extends Controller
     public function destroy(Reply $comment)
     {
         $this->authorize('delete', $comment);
+
         $comment->delete();
 
         return response('Comment has been deleted', 200);

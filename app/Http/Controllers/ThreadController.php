@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\Activity\UserViewedPage;
+use App\Events\Thread\ThreadWasCreated;
 use App\Filters\ExcludeIgnoredFilter;
 use App\Filters\FilterManager;
 use App\Http\Requests\CreateThreadRequest;
@@ -67,6 +68,8 @@ class ThreadController extends Controller
     public function store(CreateThreadRequest $request)
     {
         $thread = $request->persist();
+
+        event(new ThreadWasCreated($thread, auth()->user()));
 
         return redirect(route('threads.show', $thread));
     }

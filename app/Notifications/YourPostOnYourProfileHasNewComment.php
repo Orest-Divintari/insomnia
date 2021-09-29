@@ -31,9 +31,14 @@ class YourPostOnYourProfileHasNewComment extends Notification
      */
     public function via($notifiable)
     {
-        return $notifiable
-            ->preferences()
-            ->comment_on_your_post_on_your_profile_created;
+        return CommentNotification::channels(
+            $notifiable,
+            $this->comment,
+            $notifiable
+                ->preferences()
+                ->comment_on_your_post_on_your_profile_created
+        );
+
     }
 
     /**

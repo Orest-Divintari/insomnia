@@ -8,6 +8,7 @@ use App\Queries\CreatorIgnoredByVisitorColumn;
 use App\Search\Threads;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
+use App\Traits\HasMentionedUsers;
 use App\Traits\Ignorable;
 use App\Traits\Lockable;
 use App\Traits\Readable;
@@ -35,7 +36,8 @@ class Thread extends Model
     Lockable,
     Readable,
     Ignorable,
-        HasFactory;
+    HasFactory,
+        HasMentionedUsers;
     /**
      * Number of visible threads per page
      *

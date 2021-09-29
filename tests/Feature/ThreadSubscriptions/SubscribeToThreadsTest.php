@@ -44,7 +44,7 @@ class SubscribeToThreadsTest extends TestCase
             'body' => $this->faker()->text(),
             'category_id' => $category->id,
         ];
-
+        
         $this->post(route('threads.store'), $attributes);
 
         $thread = $category->threads()->first();

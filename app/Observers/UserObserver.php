@@ -17,6 +17,7 @@ class UserObserver
     public function deleting(User $user)
     {
         $user->threads->each->delete();
+        $user->notifications->each->delete();
         $user->profilePosts->each->delete();
         $user->activities->each->delete();
         $user->ignorings->each->delete();

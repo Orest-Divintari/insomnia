@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
+use App\Events\Thread\ThreadReplyWasUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostReplyRequest;
 use App\Http\Requests\UpdateReplyRequest;
@@ -39,6 +40,8 @@ class ReplyController extends Controller
     public function update(Reply $reply, UpdateReplyRequest $request)
     {
         $request->update($reply);
+
+        event(new ThreadReplyWasUpdated($reply->repliable, $reply));
 
         return response('Reply has been updated', 200);
     }

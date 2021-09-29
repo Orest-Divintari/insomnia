@@ -13,7 +13,7 @@ return [
     |
     | Documentation: http://htmlpurifier.org/live/configdoc/plain.html
     |
-    */
+     */
 
     'settings' => [
 
@@ -26,7 +26,7 @@ return [
         |
         | http://htmlpurifier.org/live/configdoc/plain.html#Core.Encoding
         |
-        */
+         */
 
         'Core.Encoding' => 'utf-8',
 
@@ -39,7 +39,7 @@ return [
         |
         | http://htmlpurifier.org/live/configdoc/plain.html#Cache.SerializerPath
         |
-        */
+         */
 
         'Cache.SerializerPath' => storage_path('purify'),
 
@@ -52,7 +52,7 @@ return [
         |
         | http://htmlpurifier.org/live/configdoc/plain.html#HTML.Doctype
         |
-        */
+         */
 
         'HTML.Doctype' => 'XHTML 1.0 Strict',
 
@@ -65,7 +65,7 @@ return [
         |
         | http://htmlpurifier.org/live/configdoc/plain.html#HTML.Allowed
         |
-        */
+         */
 
         'HTML.Allowed' => 'h1,h2,h3,h4,h5,h6,b,strong,i,em,a[href|title],ul,ol,li,p[style],br,span,img[width|height|alt|src]',
 
@@ -83,7 +83,7 @@ return [
         |
         | http://htmlpurifier.org/live/configdoc/plain.html#HTML.ForbiddenElements
         |
-        */
+         */
 
         'HTML.ForbiddenElements' => '',
 
@@ -96,7 +96,7 @@ return [
         |
         | http://htmlpurifier.org/live/configdoc/plain.html#CSS.AllowedProperties
         |
-        */
+         */
 
         'CSS.AllowedProperties' => 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
 
@@ -112,7 +112,7 @@ return [
         |
         | http://htmlpurifier.org/live/configdoc/plain.html#AutoFormat.AutoParagraph
         |
-        */
+         */
 
         'AutoFormat.AutoParagraph' => false,
 
@@ -126,7 +126,7 @@ return [
         |
         | http://htmlpurifier.org/live/configdoc/plain.html#AutoFormat.RemoveEmpty
         |
-        */
+         */
 
         'AutoFormat.RemoveEmpty' => false,
 

@@ -41,5 +41,4 @@ class CommentTest extends TestCase
 
         $this->assertCount(1, $comment->activities);
     }
-
 }

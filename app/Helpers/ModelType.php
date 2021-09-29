@@ -31,7 +31,17 @@ class ModelType
         if (method_exists(static::class, $type)) {
             return static::$type($model);
         }
+    }
 
+    /**
+     * Get the type of the model in camel case
+     *
+     * @param mixed $model
+     * @return string
+     */
+    public static function toCamelCase($model)
+    {
+        return to_camel(static::get($model));
     }
 
     /**

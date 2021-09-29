@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
+use App\Events\Profile\ProfilePostWasUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProfilePostRequest;
 use App\Http\Requests\UpdateProfilePostRequest;
@@ -32,7 +33,12 @@ class ProfilePostController extends Controller
      */
     public function update(ProfilePost $post, UpdateProfilePostRequest $request)
     {
-        return $request->update($post);
+        
+        $post = $request->update($post);
+
+        event(new ProfilePostWasUpdated($post, auth()->user()));
+
+        return response($post, 200);
     }
 
     /**

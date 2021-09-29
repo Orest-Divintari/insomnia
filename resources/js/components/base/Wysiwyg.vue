@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-white relative" dusk="wysiwyg-component">
     <input :value="content" :name="name" type="hidden" />
     <quill-editor
       ref="myTextEditor"
@@ -8,12 +8,13 @@
       :options="editorOptions"
       required
     ></quill-editor>
+    <mention-names v-if="mentionNames"> </mention-names>
   </div>
 </template>
 
 <script>
 import Parchment from "parchment";
-
+import MentionNames from "../base/MentionNames";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
@@ -23,7 +24,15 @@ import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 export default {
   name: "Wysiwyg",
+  components: {
+    MentionNames,
+    quillEditor,
+  },
   props: {
+    mentionNames: {
+      type: Boolean,
+      default: true,
+    },
     name: {
       type: String,
       default: "",
@@ -52,9 +61,7 @@ export default {
       default: "",
     },
   },
-  components: {
-    quillEditor,
-  },
+
   data() {
     return {
       content: this.value,
@@ -65,6 +72,9 @@ export default {
     };
   },
   methods: {
+    appendSuggestion(suggestion) {
+      this.content = suggestion;
+    },
     clearInput() {
       this.content = "";
     },
@@ -77,13 +87,14 @@ export default {
       if (this.styleAttributes) {
         this.editor.classList.add(this.styleAttributes);
       }
+
+      console.log(this.editor);
     },
     initializeSettings() {
       this.styleEditor();
       this.focus();
     },
   },
-
   watch: {
     content(newValue, oldValue) {
       this.$emit("input", newValue);
@@ -98,6 +109,8 @@ export default {
   },
   mounted() {
     this.editor = this.$refs.myTextEditor.$el.querySelector(".ql-editor");
+    this.editor.setAttribute("id", "input-reply-wysiwyg");
+    this.editor.setAttribute("dusk", "input-reply-wysiwyg");
     this.$emit("input", this.content);
     EventBus.$on("newReply", this.clearInput);
     this.initializeSettings();
@@ -111,4 +124,7 @@ export default {
 </script>
 
 <style lang="scss" >
+.ql-editor a {
+  color: red;
+}
 </style>

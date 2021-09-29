@@ -394,4 +394,27 @@ class ReplyTest extends TestCase
         $this->assertTrue($reply->isLiked($user));
     }
 
+    /** @test */
+    public function it_wraps_mentioned_names_with_anchor_tags()
+    {
+        $reply = new Reply([
+            'body' => 'Hello @Jane-Doe.',
+        ]);
+
+        $this->assertEquals(
+            'Hello <a href="/profiles/Jane-Doe">@Jane-Doe</a>.',
+            $reply->body
+        );
+    }
+
+    /** @test */
+    public function it_can_detect_all_mentioned_users_in_the_body()
+    {
+        $reply = new Reply([
+            'body' => '@JaneDoe wants to talk to @JohnDoe',
+        ]);
+
+        $this->assertEquals(['JaneDoe', 'JohnDoe'], $reply->mentionedUsers());
+    }
+
 }

@@ -17,7 +17,8 @@ trait HandlesNotifications
      */
     public function notify($user, $notification)
     {
-        if (auth()->check() && auth()->user()->isIgnored($user)) {
+        if (auth()->check() && (auth()->user()->isIgnored($user) || $user->hasNotVerifiedEmail())
+        ) {
             return;
         }
 

@@ -21,9 +21,9 @@ class ViewNotificationsTest extends TestCase
         $thread->subscribe($orestis->id);
         $john = create(User::class);
         Carbon::setTestNow(Carbon::now()->subMonth());
-        $oldReply = $thread->addReply(['body' => $this->faker->sentence], $john);
+        $oldReply = $thread->addReply(['body' => $this->faker->sentence()], $john);
         Carbon::setTestNow();
-        $recentReply = $thread->addReply(['body' => $this->faker->sentence], $john);
+        $recentReply = $thread->addReply(['body' => $this->faker->sentence()], $john);
 
         $response = $this->get(route('account.notifications.index'));
 

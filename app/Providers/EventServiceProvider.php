@@ -34,18 +34,33 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'App\Events\Thread\ThreadWasCreated' => [
+            'App\Listeners\Thread\NotifyMentionedUsersInThread',
+        ],
+        'App\Events\Thread\ThreadReplyWasUpdated' => [
+            'App\Listeners\Thread\NotifyMentionedUsersInThreadReply',
+        ],
+        'App\Events\Profile\CommentWasUpdated' => [
+            'App\Listeners\Profile\NotifyMentionedUsersInComment',
+        ],
+        'App\Events\Profile\ProfilePostWasUpdated' => [
+            'App\Listeners\Profile\NotifyMentionedUsersInProfilePost',
+        ],
         'App\Events\Subscription\NewReplyWasPostedToThread' => [
             'App\Listeners\Subscription\SubscribeToThread',
             'App\Listeners\Subscription\NotifyThreadSubscribers',
+            'App\Listeners\Thread\NotifyMentionedUsersInThreadReply',
         ],
         'App\Events\Profile\NewCommentWasAddedToProfilePost' => [
             'App\Listeners\Profile\NotifyPostParticipantsOfNewComment',
             'App\Listeners\Profile\NotifyProfileOwnerOfNewCommentOnAPost',
             'App\Listeners\Profile\NotifyProfileOwnerOfNewCommentOnTheirPost',
             'App\Listeners\Profile\NotifyProfilePostOwnerOfNewComment',
+            'App\Listeners\Profile\NotifyMentionedUsersInComment',
         ],
         'App\Events\Profile\NewPostWasAddedToProfile' => [
             'App\Listeners\Profile\NotifyProfileOwnerOfNewPost',
+            'App\Listeners\Profile\NotifyMentionedUsersInProfilePost',
         ],
 
         'App\Events\Subscription\ProfilePostWasLiked' => [

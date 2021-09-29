@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\ProfilePosts;
 
+use App\Listeners\Profile\NotifyMentionedUsersInProfilePost;
 use App\Listeners\Profile\NotifyProfileOwnerOfNewPost;
 use App\Models\ProfilePost;
 use App\Models\User;
@@ -14,7 +15,7 @@ class NewPostWasAddedToProfileEventTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function when_a_user_adds_a_post_to_a_profile_then_an_event_is_fired()
+    public function when_a_user_adds_a_post_to_a_profile_then_the_profile_owner_is_notified()
     {
         $profileOwner = create(User::class);
         $poster = $this->signIn();
@@ -33,9 +34,35 @@ class NewPostWasAddedToProfileEventTest extends TestCase
             $poster,
             $profilePost
         ) {
-            return $event->profilePost->id == $profilePost->id
-            && $event->profileOwner->id == $profileOwner->id
-            && $event->postPoster->id == $poster->id;
+            return $event->profilePost->is($profilePost)
+            && $event->profileOwner->is($profileOwner)
+            && $event->postPoster->is($poster);
+        });
+    }
+
+    /** @test */
+    public function when_a_user_adds_a_post_to_a_profile_then_mentioned_users_are_notified()
+    {
+        $profileOwner = create(User::class);
+        $poster = $this->signIn();
+        $profilePost = ['body' => 'some body'];
+        $listener = Mockery::spy(NotifyMentionedUsersInProfilePost::class);
+        app()->instance(NotifyMentionedUsersInProfilePost::class, $listener);
+
+        $this->post(
+            route('ajax.profile-posts.store', $profileOwner),
+            ['body' => $profilePost['body']]
+        );
+
+        $profilePost = ProfilePost::whereBody($profilePost['body'])->first();
+        $listener->shouldHaveReceived('handle', function ($event) use (
+            $profileOwner,
+            $poster,
+            $profilePost
+        ) {
+            return $event->profilePost->is($profilePost)
+            && $event->profileOwner->is($profileOwner)
+            && $event->postPoster->is($poster);
         });
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Notifications\ProfilePostNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -37,7 +38,11 @@ class ProfileHasNewPost extends Notification
      */
     public function via($notifiable)
     {
-        return $notifiable->preferences()->profile_post_created;
+        return ProfilePostNotification::channels(
+            $notifiable,
+            $this->profilePost,
+            $notifiable->preferences()->profile_post_created
+        );
     }
 
     /**

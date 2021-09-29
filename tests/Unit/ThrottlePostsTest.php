@@ -21,7 +21,7 @@ class ThrottlePostsTest extends TestCase
         $recentPost = create(Thread::class);
 
         $this->assertTrue($throttlePosts->tooSoonToPost($recentPost));
-
+        
         $oldPost = ThreadFactory::createdAt(Carbon::now()->subDay())->create();
 
         $this->assertFalse($throttlePosts->tooSoonToPost($oldPost));

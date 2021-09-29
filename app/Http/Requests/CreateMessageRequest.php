@@ -14,6 +14,7 @@ class CreateMessageRequest extends FormRequest
     public function authorize()
     {
         $conversation = $this->route('conversation');
+
         return $conversation && $this->user()->can('add_reply', $conversation);
     }
 

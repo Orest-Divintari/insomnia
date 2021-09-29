@@ -23,7 +23,7 @@
       ></component>
       <div class="flex justify-between">
         <p class="text-xs text-gray-lightest">
-          {{ notification.date_created }}
+          {{ notificationDate }}
         </p>
         <read-notification-button
           @toggleRead="toggleRead"
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import ReadNotificationButton from "./ReadNotificationButton";
 import ThreadReplyNotification from "./ThreadReplyNotification";
 import ReplyLikeNotification from "./ReplyLikeNotification";
@@ -47,9 +48,17 @@ import CommentLikeNotification from "./CommentLikeNotification";
 import ProfilePostLikeNotification from "./ProfilePostLikeNotification";
 import MessageLikeNotification from "./MessageLikeNotification";
 import FollowNotification from "./FollowNotification";
+import ProfilePostMentionNotification from "./mention/ProfilePostMentionNotification";
+import CommentMentionNotification from "./mention/CommentMentionNotification";
+import ThreadMentionNotification from "./mention/ThreadMentionNotification";
+import ThreadReplyMentionNotification from "./mention/ThreadReplyMentionNotification";
 
 export default {
   components: {
+    ProfilePostMentionNotification,
+    CommentMentionNotification,
+    ThreadMentionNotification,
+    ThreadReplyMentionNotification,
     ReplyLikeNotification,
     ThreadReplyNotification,
     ReadNotificationButton,
@@ -91,6 +100,9 @@ export default {
   computed: {
     path() {
       return "/ajax/notifications/" + this.notification.id + "/read";
+    },
+    notificationDate() {
+      return moment(this.notification.created_at).calendar();
     },
   },
   watch: {

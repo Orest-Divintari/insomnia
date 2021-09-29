@@ -7,6 +7,7 @@ use App\Helpers\Facades\ResourcePath;
 use App\Queries\CreatorIgnoredByVisitorColumn;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
+use App\Traits\HasMentionedUsers;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
 use ElasticScoutDriverPlus\QueryDsl;
@@ -22,7 +23,8 @@ class ProfilePost extends Model
     QueryDsl,
     Likeable,
     Filterable,
-        HasFactory;
+    HasFactory,
+        HasMentionedUsers;
 
     /**
      * Number of visible posts per page

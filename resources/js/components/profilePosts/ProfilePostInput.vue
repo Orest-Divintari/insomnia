@@ -1,7 +1,8 @@
 <template>
   <div class>
     <input
-      @click="isTyping=true"
+      dusk="input-profile-post"
+      @click="isTyping = true"
       v-if="isTyping != true"
       class="input-profile-post"
       :placeholder="placeholder"
@@ -15,7 +16,7 @@
     ></wysiwyg>
     <button @click="post" v-if="isTyping" class="form-button px-4 mt-3">
       <span class="fas fa-reply"></span>
-      {{buttonName}}
+      {{ buttonName }}
     </button>
   </div>
 </template>

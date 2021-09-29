@@ -48,6 +48,10 @@ return [
             'subscribe_on_creation_with_email' => true,
             'subscribe_on_interaction' => true,
             'subscribe_on_interaction_with_email' => true,
+            'mentioned_in_profile_post' => ['database'],
+            'mentioned_in_comment' => ['database'],
+            'mentioned_in_thread_reply' => ['database'],
+            'mentioned_in_thread' => ['database'],
         ],
     ],
 ];

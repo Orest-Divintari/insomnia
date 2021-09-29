@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PostOnYourProfileHasNewComment extends Notification
+class YouHaveBeenMentionedInAProfilePost extends Notification
 {
     use Queueable;
 
@@ -15,12 +15,8 @@ class PostOnYourProfileHasNewComment extends Notification
      *
      * @return void
      */
-    public function __construct($profilePost, $comment, $commentPoster, $profileOwner)
+    public function __construct(public $profilePost, public $profilePostPoster, public $profileOwner)
     {
-        $this->profilePost = $profilePost;
-        $this->comment = $comment;
-        $this->commentPoster = $commentPoster;
-        $this->profileOwner = $profileOwner;
     }
 
     /**
@@ -31,9 +27,14 @@ class PostOnYourProfileHasNewComment extends Notification
      */
     public function via($notifiable)
     {
-        return $notifiable
-            ->preferences()
-            ->comment_on_a_post_on_your_profile_created;
+        if ($notifiable->isNot($this->profileOwner)) {
+            return $notifiable->preferences()->mentioned_in_profile_post;
+        }
+
+        return array_diff(
+            $notifiable->preferences()->mentioned_in_profile_post,
+            $notifiable->preferences()->profile_post_created
+        );
     }
 
     /**
@@ -59,14 +60,12 @@ class PostOnYourProfileHasNewComment extends Notification
     public function toArray($notifiable)
     {
         return [
-            'commentPoster' => $this->commentPoster,
-            'profilePost' => $this->profilePost,
-            'postPoster' => $this->profilePost->poster,
-            'comment' => $this->comment,
+            'postPoster' => $this->profilePostPoster,
+            'triggerer' => $this->profilePostPoster,
             'profileOwner' => $this->profileOwner,
-            'type' => 'post-comment-notification',
-            'triggerer' => $this->commentPoster,
-            'redirectTo' => route('comments.show', $this->comment),
+            'profilePost' => $this->profilePost,
+            'redirectTo' => route('profile-posts.show', $this->profilePost),
+            'type' => 'profile-post-mention-notification',
         ];
     }
 }

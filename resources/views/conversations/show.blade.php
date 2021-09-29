@@ -69,9 +69,8 @@
                                                     <label for="lock-conversation" class="form-label flex-1 ml-2">
                                                         Lock conversation</label>
 
-                                                    <input dusk="lock-conversation-checkbox" :checked="locked"
-                                                        ref="lock" type="checkbox" id="lock-conversation"
-                                                        name="locked" />
+                                                    <input dusk="lock-conversation-checkbox" ref=" lock" type="checkbox"
+                                                        id="lock-conversation" v-model="locked" name="locked" />
                                                 </div>
                                                 <p class="text-gray-lightest text-xs">No responses will be
                                                     allowed

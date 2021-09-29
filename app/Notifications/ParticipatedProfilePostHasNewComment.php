@@ -31,9 +31,12 @@ class ParticipatedProfilePostHasNewComment extends Notification
      */
     public function via($notifiable)
     {
-        return $notifiable
-            ->preferences()
-            ->comment_on_participated_profile_post_created;
+        return CommentNotification::channels(
+            $notifiable,
+            $this->comment,
+            $notifiable->preferences()
+                ->comment_on_participated_profile_post_created
+        );
     }
 
     /**

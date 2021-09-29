@@ -6,6 +6,7 @@ use App\Helpers\Facades\ResourcePath;
 use App\Queries\CreatorIgnoredByVisitorColumn;
 use App\Traits\Filterable;
 use App\Traits\FormatsDate;
+use App\Traits\HasMentionedUsers;
 use App\Traits\Likeable;
 use App\Traits\RecordsActivity;
 use ElasticScoutDriverPlus\QueryDsl;
@@ -23,7 +24,8 @@ class Reply extends Model
     RecordsActivity,
     Searchable,
     QueryDsl,
-        HasFactory;
+    HasFactory,
+        HasMentionedUsers;
 
     /**
      * The accessors to append to the model's array form.

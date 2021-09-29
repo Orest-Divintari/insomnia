@@ -43,7 +43,7 @@ class NotifyProfileOwnerOfNewCommentOnTheirPost
      * Get the notification instance
      *
      * @param NewCommentWasAddedToProfilePost $event
-     * @return PostOnYourProfileHasNewComment
+     * @return YourPostOnYourProfileHasNewComment
      */
     protected function notification($event)
     {

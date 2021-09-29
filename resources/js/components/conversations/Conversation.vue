@@ -40,7 +40,7 @@ export default {
       return this.path + "/star";
     },
     form() {
-      return { title: this.title, locked: this.$refs.lock.checked };
+      return { title: this.title, locked: this.locked };
     },
     hidePath() {
       return this.path + "/hide";
@@ -125,7 +125,6 @@ export default {
         .catch((error) => showErrorModal(error.response.data));
     },
     onSuccess(conversation) {
-      this.locked = !this.locked;
       this.hideEditModal();
       EventBus.$emit("lock-repliable", conversation);
     },

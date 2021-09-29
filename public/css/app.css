@@ -25109,6 +25109,13 @@ html {
   left: 0;
 }
 
+.inset-10{
+  top: 10rem;
+  right: 10rem;
+  bottom: 10rem;
+  left: 10rem;
+}
+
 .inset-auto{
   top: auto;
   right: auto;
@@ -25124,6 +25131,16 @@ html {
 .inset-x-0{
   right: 0;
   left: 0;
+}
+
+.inset-y-10{
+  top: 10rem;
+  bottom: 10rem;
+}
+
+.inset-x-10{
+  right: 10rem;
+  left: 10rem;
 }
 
 .inset-y-auto{
@@ -25150,6 +25167,22 @@ html {
 
 .left-0{
   left: 0;
+}
+
+.top-10{
+  top: 10rem;
+}
+
+.right-10{
+  right: 10rem;
+}
+
+.bottom-10{
+  bottom: 10rem;
+}
+
+.left-10{
+  left: 10rem;
 }
 
 .top-auto{
@@ -48967,6 +49000,13 @@ html {
     left: 0;
   }
 
+  .xs\:inset-10{
+    top: 10rem;
+    right: 10rem;
+    bottom: 10rem;
+    left: 10rem;
+  }
+
   .xs\:inset-auto{
     top: auto;
     right: auto;
@@ -48982,6 +49022,16 @@ html {
   .xs\:inset-x-0{
     right: 0;
     left: 0;
+  }
+
+  .xs\:inset-y-10{
+    top: 10rem;
+    bottom: 10rem;
+  }
+
+  .xs\:inset-x-10{
+    right: 10rem;
+    left: 10rem;
   }
 
   .xs\:inset-y-auto{
@@ -49008,6 +49058,22 @@ html {
 
   .xs\:left-0{
     left: 0;
+  }
+
+  .xs\:top-10{
+    top: 10rem;
+  }
+
+  .xs\:right-10{
+    right: 10rem;
+  }
+
+  .xs\:bottom-10{
+    bottom: 10rem;
+  }
+
+  .xs\:left-10{
+    left: 10rem;
   }
 
   .xs\:top-auto{
@@ -72790,6 +72856,13 @@ html {
     left: 0;
   }
 
+  .smaller\:inset-10{
+    top: 10rem;
+    right: 10rem;
+    bottom: 10rem;
+    left: 10rem;
+  }
+
   .smaller\:inset-auto{
     top: auto;
     right: auto;
@@ -72805,6 +72878,16 @@ html {
   .smaller\:inset-x-0{
     right: 0;
     left: 0;
+  }
+
+  .smaller\:inset-y-10{
+    top: 10rem;
+    bottom: 10rem;
+  }
+
+  .smaller\:inset-x-10{
+    right: 10rem;
+    left: 10rem;
   }
 
   .smaller\:inset-y-auto{
@@ -72831,6 +72914,22 @@ html {
 
   .smaller\:left-0{
     left: 0;
+  }
+
+  .smaller\:top-10{
+    top: 10rem;
+  }
+
+  .smaller\:right-10{
+    right: 10rem;
+  }
+
+  .smaller\:bottom-10{
+    bottom: 10rem;
+  }
+
+  .smaller\:left-10{
+    left: 10rem;
   }
 
   .smaller\:top-auto{
@@ -96613,6 +96712,13 @@ html {
     left: 0;
   }
 
+  .sm\:inset-10{
+    top: 10rem;
+    right: 10rem;
+    bottom: 10rem;
+    left: 10rem;
+  }
+
   .sm\:inset-auto{
     top: auto;
     right: auto;
@@ -96628,6 +96734,16 @@ html {
   .sm\:inset-x-0{
     right: 0;
     left: 0;
+  }
+
+  .sm\:inset-y-10{
+    top: 10rem;
+    bottom: 10rem;
+  }
+
+  .sm\:inset-x-10{
+    right: 10rem;
+    left: 10rem;
   }
 
   .sm\:inset-y-auto{
@@ -96654,6 +96770,22 @@ html {
 
   .sm\:left-0{
     left: 0;
+  }
+
+  .sm\:top-10{
+    top: 10rem;
+  }
+
+  .sm\:right-10{
+    right: 10rem;
+  }
+
+  .sm\:bottom-10{
+    bottom: 10rem;
+  }
+
+  .sm\:left-10{
+    left: 10rem;
   }
 
   .sm\:top-auto{
@@ -120436,6 +120568,13 @@ html {
     left: 0;
   }
 
+  .md\:inset-10{
+    top: 10rem;
+    right: 10rem;
+    bottom: 10rem;
+    left: 10rem;
+  }
+
   .md\:inset-auto{
     top: auto;
     right: auto;
@@ -120451,6 +120590,16 @@ html {
   .md\:inset-x-0{
     right: 0;
     left: 0;
+  }
+
+  .md\:inset-y-10{
+    top: 10rem;
+    bottom: 10rem;
+  }
+
+  .md\:inset-x-10{
+    right: 10rem;
+    left: 10rem;
   }
 
   .md\:inset-y-auto{
@@ -120477,6 +120626,22 @@ html {
 
   .md\:left-0{
     left: 0;
+  }
+
+  .md\:top-10{
+    top: 10rem;
+  }
+
+  .md\:right-10{
+    right: 10rem;
+  }
+
+  .md\:bottom-10{
+    bottom: 10rem;
+  }
+
+  .md\:left-10{
+    left: 10rem;
   }
 
   .md\:top-auto{
@@ -144259,6 +144424,13 @@ html {
     left: 0;
   }
 
+  .lg\:inset-10{
+    top: 10rem;
+    right: 10rem;
+    bottom: 10rem;
+    left: 10rem;
+  }
+
   .lg\:inset-auto{
     top: auto;
     right: auto;
@@ -144274,6 +144446,16 @@ html {
   .lg\:inset-x-0{
     right: 0;
     left: 0;
+  }
+
+  .lg\:inset-y-10{
+    top: 10rem;
+    bottom: 10rem;
+  }
+
+  .lg\:inset-x-10{
+    right: 10rem;
+    left: 10rem;
   }
 
   .lg\:inset-y-auto{
@@ -144300,6 +144482,22 @@ html {
 
   .lg\:left-0{
     left: 0;
+  }
+
+  .lg\:top-10{
+    top: 10rem;
+  }
+
+  .lg\:right-10{
+    right: 10rem;
+  }
+
+  .lg\:bottom-10{
+    bottom: 10rem;
+  }
+
+  .lg\:left-10{
+    left: 10rem;
   }
 
   .lg\:top-auto{
@@ -168082,6 +168280,13 @@ html {
     left: 0;
   }
 
+  .xl\:inset-10{
+    top: 10rem;
+    right: 10rem;
+    bottom: 10rem;
+    left: 10rem;
+  }
+
   .xl\:inset-auto{
     top: auto;
     right: auto;
@@ -168097,6 +168302,16 @@ html {
   .xl\:inset-x-0{
     right: 0;
     left: 0;
+  }
+
+  .xl\:inset-y-10{
+    top: 10rem;
+    bottom: 10rem;
+  }
+
+  .xl\:inset-x-10{
+    right: 10rem;
+    left: 10rem;
   }
 
   .xl\:inset-y-auto{
@@ -168123,6 +168338,22 @@ html {
 
   .xl\:left-0{
     left: 0;
+  }
+
+  .xl\:top-10{
+    top: 10rem;
+  }
+
+  .xl\:right-10{
+    right: 10rem;
+  }
+
+  .xl\:bottom-10{
+    bottom: 10rem;
+  }
+
+  .xl\:left-10{
+    left: 10rem;
   }
 
   .xl\:top-auto{

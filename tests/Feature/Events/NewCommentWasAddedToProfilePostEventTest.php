@@ -3,6 +3,7 @@
 namespace Tests\Feature\Events;
 
 use App\Http\Middleware\ThrottlePosts;
+use App\Listeners\Profile\NotifyMentionedUsersInComment;
 use App\Listeners\Profile\NotifyPostParticipantsOfNewComment;
 use App\Listeners\Profile\NotifyProfileOwnerOfNewCommentOnAPost;
 use App\Listeners\Profile\NotifyProfileOwnerOfNewCommentOnTheirPost;
@@ -49,10 +50,40 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
                 $profilePost,
                 $comment
             ) {
-                return $event->profilePost->id == $profilePost->id
-                && $event->comment->id == $comment->id
-                && $event->commentPoster->id == $poster->id
-                && $event->profileOwner->id == $profileOwner->id;
+                return $event->profilePost->is($profilePost)
+                && $event->comment->is($comment)
+                && $event->commentPoster->is($poster)
+                && $event->profileOwner->is($profileOwner);
+            });
+    }
+
+    /** @test */
+    public function when_a_user_posts_a_comment_to_profile_post_the_mentioned_users_are_notified()
+    {
+        $profileOwner = create(User::class);
+        $poster = $this->signIn();
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
+        $comment = ['body' => $this->faker->sentence];
+        $listener = Mockery::spy(NotifyMentionedUsersInComment::class);
+        app()->instance(NotifyMentionedUsersInComment::class, $listener);
+
+        $this->post(
+            route('ajax.comments.store', $profilePost),
+            $comment
+        );
+
+        $comment = Reply::whereBody($comment['body'])->first();
+        $listener->shouldHaveReceived('handle', function ($event)
+             use (
+                $profileOwner,
+                $poster,
+                $profilePost,
+                $comment
+            ) {
+                return $event->profilePost->is($profilePost)
+                && $event->comment->is($comment)
+                && $event->commentPoster->is($poster)
+                && $event->profileOwner->is($profileOwner);
             });
     }
 
@@ -79,10 +110,10 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
                 $profilePost,
                 $comment
             ) {
-                return $event->profilePost->id == $profilePost->id
-                && $event->comment->id == $comment->id
-                && $event->commentPoster->id == $poster->id
-                && $event->profileOwner->id == $profileOwner->id;
+                return $event->profilePost->is($profilePost)
+                && $event->comment->is($comment)
+                && $event->commentPoster->is($poster)
+                && $event->profileOwner->is($profileOwner);
             });
     }
 
@@ -109,10 +140,10 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
                 $profilePost,
                 $comment
             ) {
-                return $event->profilePost->id == $profilePost->id
-                && $event->comment->id == $comment->id
-                && $event->commentPoster->id == $poster->id
-                && $event->profileOwner->id == $profileOwner->id;
+                return $event->profilePost->is($profilePost)
+                && $event->comment->is($comment)
+                && $event->commentPoster->is($poster)
+                && $event->profileOwner->is($profileOwner);
             });
     }
 
@@ -139,10 +170,10 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
                 $profilePost,
                 $comment
             ) {
-                return $event->profilePost->id == $profilePost->id
-                && $event->comment->id == $comment->id
-                && $event->commentPoster->id == $poster->id
-                && $event->profileOwner->id == $profileOwner->id;
+                return $event->profilePost->is($profilePost)
+                && $event->comment->is($comment)
+                && $event->commentPoster->is($poster)
+                && $event->profileOwner->is($profileOwner);
             });
     }
 }

@@ -66,6 +66,40 @@ class ThreadNotificationsTest extends TestCase
     }
 
     /** @test */
+    public function a_thread_subscriber_should_not_receive_database_notifications_if_prefers_to_get_notifications_when_mentioned_in_a_thread_reply()
+    {
+        $thread = create(Thread::class);
+        $subscriber = create(User::class, ['name' => 'orestis']);
+        $subscriber->preferences()->merge(['mentioned_in_thread_reply' => ['database']]);
+        $thread->subscribe($subscriber->id);
+        $replyPoster = $this->signIn();
+        $newReply = 'new reply';
+        $desiredChannels = ['mail'];
+
+        $this->post(
+            route('ajax.replies.store', $thread),
+            ['body' => "hello @{$subscriber->name}"]
+        );
+
+        $reply = $thread->replies()->latest('id')->first();
+
+        Notification::assertSentTo(
+            $subscriber,
+            ThreadHasNewReply::class,
+            function ($notification, $channels)
+             use (
+                $reply,
+                $thread,
+                $desiredChannels
+            ) {
+                return
+                $channels == $desiredChannels
+                && $notification->reply->is($reply)
+                && $notification->thread->is($thread);
+            });
+    }
+
+    /** @test */
     public function a_thread_subscriber_may_disable_the_database_notifications_for_new_replies_in_the_thread()
     {
         $thread = create(Thread::class);

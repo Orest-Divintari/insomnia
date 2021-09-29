@@ -13,7 +13,7 @@
         ></profile-popover>
       </div>
       <div class="w-full p-3">
-        <form @submit.prevent="post">
+        <form @submit.prevent="post" class="relative">
           <wysiwyg
             v-model="body"
             :style-attributes="'reply-form'"
@@ -38,7 +38,6 @@
 import EventBus from "../../eventBus";
 import authorizable from "../../mixins/authorizable";
 export default {
-  components: {},
   props: {
     repliable: {
       type: Object,
