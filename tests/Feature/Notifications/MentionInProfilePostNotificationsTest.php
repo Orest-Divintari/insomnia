@@ -45,7 +45,6 @@ class MentionInProfilePostNotificationsTest extends TestCase
     /** @test */
     public function it_sends_notifications_only_to_the_newly_mentioned_users_when_a_comment_is_updated()
     {
-        $this->withoutExceptionHandling();
         unset(app()[ChannelManager::class]);
         $this->withoutMiddleware([ThrottlePosts::class]);
         config(['database.default' => 'mysql']);
