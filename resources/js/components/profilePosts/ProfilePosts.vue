@@ -26,7 +26,7 @@
     >
       There are not profile posts to display.
     </p>
-    <paginator v-if="hasMore" :with-query-string="false" :dataset="dataset">
+    <paginator v-if="hasMore" :with-query-string="true" :dataset="dataset">
     </paginator>
   </div>
 </template>
