@@ -417,4 +417,41 @@ class ReplyTest extends TestCase
         $this->assertEquals(['JaneDoe', 'JohnDoe'], $reply->mentionedUsers());
     }
 
+    /** @test */
+    public function it_can_find_only_the_comments()
+    {
+        $threadReply = Replyfactory::create();
+        $comment = CommentFactory::create();
+
+        $comments = Reply::comment()->get();
+
+        $this->assertCount(1, $comments);
+        $this->assertTrue($comments->first()->isComment());
+    }
+
+    /** @test */
+    public function it_can_find_only_the_messages()
+    {
+        $message = MessageFactory::create();
+        $comment = CommentFactory::create();
+
+        $messages = Reply::message()->get();
+
+        $this->assertCount(1, $messages);
+        $this->assertTrue($messages->first()->isMessage());
+    }
+
+    /** @test */
+    public function it_can_find_only_thread_replies()
+    {
+        ReplyFactory::create();
+        $comment = CommentFactory::create();
+
+        $threadReplies = Reply::thread()->get();
+
+        // the first reply is the thread body
+        $this->assertCount(2, $threadReplies);
+        $this->assertTrue($threadReplies->first()->isThreadReply());
+    }
+
 }

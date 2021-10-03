@@ -298,4 +298,37 @@ class Reply extends Model
     {
         return $excludeIgnoredFilter->apply($builder, $authUser);
     }
+
+    /**
+     * Fetch comments
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeComment($query)
+    {
+        $query->where('repliable_type', ProfilePost::class);
+    }
+
+    /**
+     * Fetch thread replies
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeThread($query)
+    {
+        $query->where('repliable_type', Thread::class);
+    }
+
+    /**
+     * Fetch messages
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeMessage($query)
+    {
+        $query->where('repliable_type', Conversation::class);
+    }
 }
