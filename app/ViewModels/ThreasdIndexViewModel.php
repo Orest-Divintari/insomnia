@@ -19,7 +19,7 @@ class ThreasdIndexViewModel
         $this->excludeIgnoredFilter = $excludeIgnoredFilter;
     }
 
-    public function threads()
+    public function threadQuery()
     {
         return Thread::query()
             ->excludeIgnored(auth()->user(), $this->excludeIgnoredFilter)
@@ -27,21 +27,18 @@ class ThreasdIndexViewModel
             ->withHasBeenUpdated()
             ->withRecentReply()
             ->forCategory($this->category)
-            ->filter($this->threadFilters)
-            ->latest('updated_at')
+            ->filter($this->threadFilters);
+    }
+
+    public function threads()
+    {
+        return $this->threadQuery()
             ->paginate(Thread::PER_PAGE);
     }
 
     public function pinnedThreads()
     {
-        return Thread::query()
-            ->excludeIgnored(auth()->user(), $this->excludeIgnoredFilter)
-            ->with('poster')
-            ->withHasBeenUpdated()
-            ->withRecentReply()
-            ->forCategory($this->category)
-            ->filter($this->threadFilters)
-            ->latest('updated_at')
+        return $this->threadQuery()
             ->pinned()
             ->get();
     }
