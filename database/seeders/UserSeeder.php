@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
     {
         $users = ['uric', 'orestis', 'urielakos'];
         Role::create(['name' => 'admin']);
-
         foreach ($users as $user) {
             $user = User::create([
                 'name' => $user,

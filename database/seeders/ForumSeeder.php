@@ -9,8 +9,9 @@ use Illuminate\Database\Seeder;
 
 class ForumSeeder extends Seeder
 {
-    const NUM_OF_REPLIES = 5;
-    const NUM_OF_THREADS = 2;
+    const NUM_OF_REPLIES = 100;
+    const NUM_OF_THREADS = 300;
+
     /**
      * Run the database seeds.
      *
@@ -18,8 +19,6 @@ class ForumSeeder extends Seeder
      */
     public function run()
     {
-        config(['scout.driver' => null]);
-
         $groups = [
             'Macs' => [
                 'macOS' => ['macOS catalina'],
@@ -86,12 +85,14 @@ class ForumSeeder extends Seeder
     public function createThreadWithReplies($category)
     {
         for ($threadCounter = 0; $threadCounter < static::NUM_OF_THREADS; $threadCounter++) {
+            $this->signIn();
             $thread = Thread::factory()->create([
                 'category_id' => $category->id,
                 'replies_count' => 0,
             ]);
 
             for ($replyCounter = 0; $replyCounter < static::NUM_OF_REPLIES; $replyCounter++) {
+                $this->signIn();
                 Reply::factory()->create([
                     'repliable_id' => $thread->id,
                     'repliable_type' => 'App\Models\Thread',
