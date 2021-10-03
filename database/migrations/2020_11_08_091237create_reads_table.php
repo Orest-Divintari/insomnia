@@ -15,9 +15,8 @@ class ReadsTable extends Migration
     {
         Schema::create('reads', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('readable_id');
-            $table->string('readable_type');
-            $table->foreignId('user_id');
+            $table->morphs('readable');
+            $table->foreignId('user_id')->constrained();
             $table->timestamp('read_at')->nullable();
             $table->unique(['readable_id', 'readable_type', 'user_id']);
             $table->timestamps();

@@ -22,6 +22,8 @@ class CreateCategoriesTable extends Migration
             $table->foreignId('group_category_id')->nullable();
             $table->string('image_path')->nullable();
             $table->timestamps();
+            $table->index('parent_id');
+            $table->index('group_category_id');
         });
     }
 

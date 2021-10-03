@@ -15,11 +15,14 @@ class CreateConversationsTable extends Migration
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained();
             $table->string('title');
             $table->string('slug');
             $table->boolean('locked')->default(false);
             $table->timestamps();
+            $table->index('slug');
+            $table->index('created_at');
+            $table->index('updated_at');
         });
     }
 

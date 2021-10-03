@@ -21,6 +21,7 @@ class CreateRepliesTable extends Migration
             $table->unsignedBigInteger('position')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
+            $table->index(['repliable_id', 'repliable_type', 'created_at']);
         });
     }
 

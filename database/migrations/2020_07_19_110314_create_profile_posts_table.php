@@ -17,12 +17,13 @@ class CreateProfilePostsTable extends Migration
             $table->id();
             $table->text('body');
             $table->foreignId('profile_owner_id')
-                ->references('id')
-                ->on('users');
+                ->constrained('users');
             $table->foreignId('user_id')
-                ->references('id')
-                ->on('users');;
+                ->constrained();
             $table->timestamps();
+            $table->index('created_at');
+            $table->index('updated_at');
+
         });
     }
 

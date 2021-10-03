@@ -17,7 +17,7 @@ class CreateThreadTagsTable extends Migration
             $table->id();
             $table->foreignId('tag_id')->constrained();
             $table->foreignId('thread_id')->constrained();
-            $table->unique(['tag_id', 'thread_id']);
+            $table->unique(['thread_id', 'tag_id']);
             $table->timestamps();
         });
     }

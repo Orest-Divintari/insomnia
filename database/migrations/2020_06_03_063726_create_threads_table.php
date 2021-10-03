@@ -25,6 +25,9 @@ class CreateThreadsTable extends Migration
             $table->boolean('pinned')->default(false);
             $table->boolean('locked')->default(false);
             $table->timestamps();
+            $table->index(['category_id', 'replies_count']);
+            $table->index('created_at');
+            $table->index('updated_at');
         });
     }
 

@@ -14,9 +14,10 @@ class CreateConversationParticipantsTable extends Migration
     public function up()
     {
         Schema::create('conversation_participants', function (Blueprint $table) {
-            $table->primary(['conversation_id', 'user_id']);
-            $table->foreignId('conversation_id');
-            $table->foreignId('user_id');
+            $table->id();
+            $table->foreignId('conversation_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->unique(['conversation_id', 'user_id']);
             $table->boolean('admin')->default(false);
             $table->boolean('left')->default(false);
             $table->boolean('hidden')->default(false);

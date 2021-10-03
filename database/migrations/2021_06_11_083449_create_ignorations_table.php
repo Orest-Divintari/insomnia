@@ -16,8 +16,7 @@ class CreateIgnorationsTable extends Migration
         Schema::create('ignorations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->string('ignorable_type');
-            $table->unsignedBigInteger('ignorable_id');
+            $table->morphs('ignorable');
             $table->unique(['user_id', 'ignorable_type', 'ignorable_id']);
             $table->timestamps();
         });
