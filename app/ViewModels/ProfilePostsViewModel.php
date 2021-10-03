@@ -65,7 +65,7 @@ class ProfilePostsViewModel
                 ->where('repliable_type', get_class($profilePost))
                 ->excludeIgnored($this->authUser, $this->excludeIgnoredFilter)
                 ->withLikes()
-                ->latest('id')
+                ->latest('created_at')
                 ->paginate(ProfilePost::REPLIES_PER_PAGE)
                 ->withPath(route('ajax.comments.index', $profilePost));
 
