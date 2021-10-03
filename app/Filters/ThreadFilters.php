@@ -47,12 +47,12 @@ class ThreadFilters extends PostFilters implements FilterInterface
     public function newPosts()
     {
         $this->builder->addSelect([
-            'recent_reply_created_date' => Reply::select('created_at')
+            'recent_reply_created_at' => Reply::select('created_at')
                 ->whereColumn('repliable_id', 'threads.id')
                 ->where('repliable_type', 'App\Models\Thread')
                 ->latest('created_at')
                 ->take(1),
-        ])->orderBy('recent_reply_created_date', 'DESC');
+        ])->orderBy('recent_reply_created_at', 'DESC');
     }
 
     /**
