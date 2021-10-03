@@ -181,7 +181,6 @@ class Thread extends Model
                 ->whereColumn('repliable_id', 'threads.id')
                 ->where('repliable_type', 'App\Models\Thread')
                 ->orderBy('created_at', 'DESC')
-                ->orderBy('id', 'DESC')
                 ->take(1),
         ])->with('recentReply.poster');
 
