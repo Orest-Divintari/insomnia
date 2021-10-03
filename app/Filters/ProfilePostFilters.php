@@ -52,7 +52,7 @@ class ProfilePostFilters extends PostFilters implements FilterInterface
      */
     public function byFollowing()
     {
-        $followingUserIds = auth()->user()->followings()->pluck('id');
+        $followingUserIds = auth()->user()->followings()->pluck('users.id');
 
         $followingUserIds->push(auth()->id());
 
