@@ -52,7 +52,7 @@ class ThreadFilters extends PostFilters implements FilterInterface
                 ->where('repliable_type', 'App\Models\Thread')
                 ->latest('created_at')
                 ->take(1),
-        ])->orderBy('recent_reply_created_at', 'DESC');
+        ])->latest('recent_reply_created_at');
     }
 
     /**
