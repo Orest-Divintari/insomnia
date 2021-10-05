@@ -8,12 +8,12 @@ use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class DeleteLikeNotificationsTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     public function setUp(): void
     {
@@ -78,7 +78,6 @@ class DeleteLikeNotificationsTest extends TestCase
 
         $this->assertCount(0, $conversationStarter->fresh()->notifications);
 
-        $message->delete();
         $conversation->delete();
         $conversationStarter->delete();
         $participant->delete();
