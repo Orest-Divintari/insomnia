@@ -37,6 +37,24 @@ class GenerateResourcePathTest extends TestCase
     }
 
     /** @test */
+    public function it_generates_the_path_for_a_thread_reply_in_descending_order()
+    {
+        $thread = create(Thread::class);
+        $numberOfPages = 5;
+        $replies = ReplyFactory::toThread($thread)
+            ->createMany(Thread::REPLIES_PER_PAGE * $numberOfPages);
+        $firstReply = $replies->first();
+        $expectedPageNumber = 5;
+
+        $this->assertEquals(
+            route('threads.show', $thread) .
+            '?page=' . $expectedPageNumber .
+            '#post-' . $firstReply->id,
+            ResourcePath::reverse()->generate($firstReply)
+        );
+    }
+
+    /** @test */
     public function it_generates_the_path_for_a_conversation_message()
     {
         $conversation = create(Conversation::class);
@@ -53,7 +71,25 @@ class GenerateResourcePathTest extends TestCase
             '#convMessage-' . $message->id,
             ResourcePath::generate($message)
         );
+    }
 
+    /** @test */
+    public function it_generates_the_path_for_a_conversation_message_in_descending_order()
+    {
+        $conversation = create(Conversation::class);
+        $numberOfPages = 5;
+        $expectedPageNumber = 5;
+        $messages = MessageFactory::toConversation($conversation)
+            ->createMany(Conversation::REPLIES_PER_PAGE * $numberOfPages);
+
+        $message = $messages->first();
+
+        $this->assertEquals(
+            route('conversations.show', $message->repliable) .
+            "?page=" . $expectedPageNumber .
+            '#convMessage-' . $message->id,
+            ResourcePath::reverse()->generate($message)
+        );
     }
 
     /** @test */
@@ -76,6 +112,25 @@ class GenerateResourcePathTest extends TestCase
     }
 
     /** @test */
+    public function it_generates_the_path_for_a_profile_post_comment_in_decsending_order()
+    {
+        $orestis = $this->signIn();
+        $numberOfPages = 5;
+        $expectedPageNumber = 5;
+        $posts = ProfilePostFactory::toProfile($orestis)
+            ->createMany(ProfilePost::PER_PAGE * $numberOfPages);
+        $lastPost = $posts->first();
+        $comment = CommentFactory::toProfilePost($lastPost)->create();
+
+        $this->assertEquals(
+            route('profiles.show', $orestis) .
+            "?page=" . $expectedPageNumber .
+            '#profile-post-' . $lastPost->id,
+            ResourcePath::reverse()->generate($comment)
+        );
+    }
+
+    /** @test */
     public function it_generates_the_path_for_a_profile_post()
     {
         $orestis = create(User::class);
@@ -93,6 +148,27 @@ class GenerateResourcePathTest extends TestCase
             '?page=' . $expectedPageNumber .
             '#profile-post-' . $lastPost->id,
             ResourcePath::generate($lastPost)
+        );
+    }
+
+    /** @test */
+    public function it_generates_the_path_for_a_profile_post_in_descending_order()
+    {
+        $orestis = create(User::class);
+        $john = create(User::class);
+        $numberOfPages = 5;
+        $expectedPageNumber = 5;
+        $posts = ProfilePostFactory::by($john)
+            ->toProfile($orestis)
+            ->createMany(ProfilePost::PER_PAGE * $numberOfPages);
+
+        $lastPost = $posts->first();
+
+        $this->assertEquals(
+            route('profiles.show', $orestis) .
+            '?page=' . $expectedPageNumber .
+            '#profile-post-' . $lastPost->id,
+            ResourcePath::reverse()->generate($lastPost)
         );
     }
 

@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\ProfilePost;
 use App\Models\Reply;
+use App\Models\Thread;
 
 class ResourcePath
 {
@@ -12,12 +13,32 @@ class ResourcePath
         ProfilePost::class => 'profilePost',
     ];
 
+    /**
+     * Determines whether we need to find the page of the model
+     * when the model is displayed in DESC order
+     *
+     * @var boolean
+     */
+    protected $reverse = false;
+
     protected $pageNumber = [
         'profile-post' => 'profilePostPageNumber',
         'comment' => 'commentPageNumber',
         'reply' => 'threadReplyPageNumber',
         'message' => 'messagePageNumber',
     ];
+
+    /**
+     *
+     * Find the page of the model when is ordered in descending order
+     *
+     * @return ResourcePath
+     */
+    public function reverse()
+    {
+        $this->reverse = true;
+        return $this;
+    }
 
     /**
      * Generate the path for the given resource
@@ -142,10 +163,15 @@ class ResourcePath
      */
     private function messagePageNumber($message)
     {
-        $numberOfRepliesBefore = Reply::where(
-            'repliable_type', get_class($message->repliable)
-        )->where('repliable_id', $message->repliable->id)
-            ->where('id', '<', $message->id)
+        $numberOfRepliesBefore = Reply::query()
+            ->where('repliable_type', $message->repliable_type)
+            ->where('repliable_id', $message->repliable_id)
+            ->when(!$this->reverse, function ($query) use ($message) {
+                return $query->where('id', '<', $message->id);
+            })
+            ->when($this->reverse, function ($query) use ($message) {
+                return $query->where('id', '>=', $message->id);
+            })
             ->count();
 
         return (int) ceil($numberOfRepliesBefore / $message->repliable::REPLIES_PER_PAGE);
@@ -159,10 +185,15 @@ class ResourcePath
      */
     private function commentPageNumber($comment)
     {
-        $numberOfRepliesBefore = Reply::where(
-            'repliable_type', get_class($comment->repliable)
-        )->where('repliable_id', $comment->repliable->id)
-            ->where('id', '<', $comment->id)
+        $numberOfRepliesBefore = Reply::query()
+            ->where('repliable_type', $comment->repliable_type)
+            ->where('repliable_id', $comment->repliable_id)
+            ->when(!$this->reverse, function ($query) use ($comment) {
+                return $query->where('id', '<', $comment->id);
+            })
+            ->when($this->reverse, function ($query) use ($comment) {
+                return $query->where('id', '>=', $comment->id);
+            })
             ->count();
 
         return (int) ceil($numberOfRepliesBefore / $comment->repliable::REPLIES_PER_PAGE);
@@ -176,11 +207,15 @@ class ResourcePath
      */
     private function threadReplyPageNumber($reply)
     {
-        $numberOfReplies = Reply::where(
-            'repliable_type', get_class($reply->repliable)
-        )->where('repliable_id', $reply->repliable->id)
-            ->where('id', '<=', $reply->id)
-            ->count();
+        $numberOfReplies = Reply::query()
+            ->where('repliable_type', $reply->repliable_type)
+            ->where('repliable_id', $reply->repliable_id)
+            ->when(!$this->reverse, function ($query) use ($reply) {
+                return $query->where('id', '<=', $reply->id);
+            })
+            ->when($this->reverse, function ($query) use ($reply) {
+                return $query->where('id', '>=', $reply->id);
+            })->count();
 
         return (int) ceil($numberOfReplies / $reply->repliable::REPLIES_PER_PAGE);
     }
@@ -193,7 +228,13 @@ class ResourcePath
      */
     private function profilePostPageNumber($profilePost)
     {
-        $numberOfPreviousPosts = ProfilePost::where('id', '<', $profilePost->id)->count();
+        $numberOfPreviousPosts = ProfilePost::query()
+            ->when(!$this->reverse, function ($query) use ($profilePost) {
+                return $query->where('id', '<', $profilePost->id);
+            })
+            ->when($this->reverse, function ($query) use ($profilePost) {
+                return $query->where('id', '>=', $profilePost->id);
+            })->count();
 
         return (int) ceil($numberOfPreviousPosts / ProfilePost::PER_PAGE);
     }
