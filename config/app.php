@@ -180,6 +180,7 @@ return [
         App\Providers\SearchServiceProvider::class,
         App\Providers\FilterServiceProvider::class,
         App\Providers\AvatarServiceProvider::class,
+        App\Providers\StatisticsServiceProvider::class,
         Creativeorange\Gravatar\GravatarServiceProvider::class,
         App\Providers\ResourcePathProvider::class,
     ],
@@ -235,6 +236,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
         'ResourcePath' => App\Helpers\Facades\ResourcePath::class,
+        'statistics' => App\Facades\Statistics::class,
     ],
 
 ];

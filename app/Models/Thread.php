@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
+use App\Facades\Statistics;
 use App\Models\User;
 use App\Queries\CreatorIgnoredByVisitorColumn;
 use App\Search\Threads;
@@ -109,12 +110,17 @@ class Thread extends Model
 
         static::created(function ($thread) {
             $thread->createReplyForThreadBody();
+            Statistics::threads()->increment();
         });
 
         static::deleting(function ($thread) {
             $thread->tags()->detach();
             $thread->replies->each->delete();
             $thread->subscriptions->each->delete();
+        });
+
+        static::deleted(function ($thread) {
+            Statistics::threads()->decrement();
         });
     }
 

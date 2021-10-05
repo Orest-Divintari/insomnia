@@ -2,9 +2,9 @@
 
 namespace App\ViewModels;
 
+use App\Facades\Statistics;
 use App\Filters\ExcludeIgnoredFilter;
 use App\Models\GroupCategory;
-use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
 
@@ -50,9 +50,9 @@ class ForumViewModel
     public function statistics()
     {
         return [
-            'threads_count' => Thread::count(),
-            'replies_count' => Reply::count(),
-            'users_count' => User::count(),
+            'threads_count' => Statistics::threads()->count(),
+            'thread_replies_count' => Statistics::threadReplies()->count(),
+            'users_count' => Statistics::users()->count(),
         ];
     }
 }

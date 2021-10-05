@@ -6,23 +6,45 @@ use App\Models\Category;
 use App\Models\GroupCategory;
 use App\Models\Thread;
 use App\Models\User;
+use App\Statistics\ThreadReplyStatistics;
+use App\Statistics\ThreadStatistics;
+use App\Statistics\UserStatistics;
 use Carbon\Carbon;
+use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ForumTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
         parent::setUp();
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
     }
 
     /** @test  */
+    public function a_user_can_view_the_forum_statistics()
+    {
+        $threadStatistics = app(ThreadStatistics::class);
+        $threadReplyStatistics = app(ThreadReplyStatistics::class);
+        $userStatistics = app(UserStatistics::class);
+        $thread = create(Thread::class);
+        $user = create(User::class);
+        $reply = ReplyFactory::create();
+
+        $response = $this->get(route('forum'));
+
+        $this->assertEquals($response['statistics']['threads_count'], $threadStatistics->count());
+        $this->assertEquals($response['statistics']['users_count'], $userStatistics->count());
+        $this->assertEquals($response['statistics']['thread_replies_count'], $threadReplyStatistics->count());
+
+        $thread->category->delete();
+        $reply->repliable->category->delete();
+        $user->delete();
     }
 
     /** @test */

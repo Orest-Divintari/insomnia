@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Facades\Statistics;
 use App\Models\User;
 use App\User\Details;
 use App\User\Privacy;
@@ -34,6 +35,28 @@ class UserObserver
         $user->details = config('settings.details.attributes');
         $user->privacy = config('settings.privacy.attributes');
         $user->preferences = config('settings.preferences.attributes');
+    }
+
+    /**
+     * Handle the user "created" event.
+     *
+     * @param User $user
+     * @return void
+     */
+    public function created(User $user)
+    {
+        Statistics::users()->increment();
+    }
+
+    /**
+     * Handle the user "deleted" event.
+     *
+     * @param User $user
+     * @return void
+     */
+    public function deleted(User $user)
+    {
+        Statistics::users()->decrement();
     }
 
 }

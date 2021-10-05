@@ -9,7 +9,7 @@
         </div>
         <div class="flex justify-between">
             <p class="text-gray-lightest">Messages: </p>
-            <p>{{ $statistics['replies_count'] }}</p>
+            <p>{{ $statistics['thread_replies_count'] }}</p>
         </div>
         <div class="flex justify-between">
             <p class="text-gray-lightest">Members: </p>
