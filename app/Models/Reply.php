@@ -307,7 +307,7 @@ class Reply extends Model
      */
     public function scopeComment($query)
     {
-        $query->where('repliable_type', ProfilePost::class);
+        return $query->where('repliable_type', ProfilePost::class);
     }
 
     /**
@@ -318,7 +318,7 @@ class Reply extends Model
      */
     public function scopeThread($query)
     {
-        $query->where('repliable_type', Thread::class);
+        return $query->where('repliable_type', Thread::class);
     }
 
     /**
@@ -329,6 +329,6 @@ class Reply extends Model
      */
     public function scopeMessage($query)
     {
-        $query->where('repliable_type', Conversation::class);
+        return $query->where('repliable_type', Conversation::class);
     }
 }
