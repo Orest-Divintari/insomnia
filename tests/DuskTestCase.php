@@ -7,15 +7,17 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Illuminate\Support\Facades\Notification;
 use Laravel\Dusk\TestCase as BaseTestCase;
+use Tests\Traits\RefreshRedis;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, RefreshRedis;
 
     public function setUp(): void
     {
         parent::setUp();
         Notification::fake();
+        $this->refreshRedis();
     }
 
     /**

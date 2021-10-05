@@ -4,29 +4,20 @@ namespace Tests;
 
 use App\Http\Middleware\AppendVisitor;
 use App\Models\User;
-use App\Statistics\ThreadReplyStatistics;
-use App\Statistics\ThreadStatistics;
-use App\Statistics\UserStatistics;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Role;
-use Tests\Unit\Statistics\FakeThreadReplyStatistics;
-use Tests\Unit\Statistics\FakeUserStatistics;
+use Tests\Traits\RefreshRedis;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, RefreshRedis;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(AppendVisitor::class);
-        app()->instance(ThreadStatistics::class, new FakeUserStatistics);
-        app()->instance(ThreadReplyStatistics::class, new FakeThreadReplyStatistics);
-        app()->instance(UserStatistics::class, new FakeUserStatistics);
-        app(UserStatistics::class)->resetCount();
-        app(ThreadStatistics::class)->resetCount();
-        app(ThreadReplyStatistics::class)->resetCount();
+        $this->refreshRedis();
     }
 
     /**
