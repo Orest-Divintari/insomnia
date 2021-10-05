@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 
-class ViewProfilePostingsTest extends TestCase
+class ViewPostingActivitiesTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
