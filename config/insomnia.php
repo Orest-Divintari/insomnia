@@ -9,6 +9,8 @@ return [
         'uric@example.com',
     ],
     'database' => [
+        'test_name' => 'insomnia_test_mysql',
         'name' => 'insomnia',
     ],
+
 ];
