@@ -331,4 +331,19 @@ class Reply extends Model
     {
         return $query->where('repliable_type', Conversation::class);
     }
+
+    /**
+     * Filter the reply by repliable
+     *
+     * @param Builder $query
+     * @param mixed $repliable
+     * @return Builder
+     */
+    public function scopeWhereRepliable($query, $repliable)
+    {
+        return $query->where('repliable_id', $repliable->id)
+            ->where('repliable_type', get_class($repliable));
+    }
+
+
 }

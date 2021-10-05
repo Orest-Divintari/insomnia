@@ -453,4 +453,20 @@ class ReplyTest extends TestCase
         $this->assertTrue($threadReplies->first()->isThreadReply());
     }
 
+    /** @test */
+    public function it_filters_the_replies_by_repliable()
+    {
+        $threadReply = ReplyFactory::create();
+        $thread = $threadReply->repliable;
+        $comment = CommentFactory::create();
+        $anotherComment = CommentFactory::create();
+        $profilePost = $comment->repliable;
+
+        $foundReplies = Reply::whereRepliable($profilePost)->get();
+
+        $this->assertCount(1, $foundReplies);
+        $this->assertTrue($foundReplies->first()->isComment());
+        $this->assertEquals($foundReplies->first()->repliable_id, $profilePost->id);
+    }
+
 }
