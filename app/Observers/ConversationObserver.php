@@ -35,6 +35,10 @@ class ConversationObserver
     public function deleting(Conversation $conversation)
     {
         $conversation->reads->each->delete();
+        $conversation->participants->each(function ($participant) use ($conversation) {
+            $conversation->participants()->detach($participant->id);
+        });
+        $conversation->messages->each->delete();
     }
 
 }
