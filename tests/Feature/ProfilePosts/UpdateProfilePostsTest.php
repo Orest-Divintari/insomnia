@@ -8,11 +8,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 
-class UpdatesProfilePostsTest extends TestCase
+class UpdateProfilePostsTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $errorMessage = 'Please enter a valid message.';
+
     /** @test */
     public function unauthorized_users_cannot_update_a_profile_post()
     {
