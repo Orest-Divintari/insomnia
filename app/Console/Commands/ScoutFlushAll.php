@@ -12,7 +12,7 @@ class ScoutFlushAll extends Command
      *
      * @var string
      */
-    protected $signature = 'scout:flush_all';
+    protected $signature = 'scout:flushall';
 
     /**
      * The console command description.
