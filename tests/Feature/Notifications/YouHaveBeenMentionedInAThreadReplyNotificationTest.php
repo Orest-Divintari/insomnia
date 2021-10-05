@@ -47,8 +47,7 @@ class YouHaveBeenMentionedInAThreadReplyNotificationTest extends TestCase
         $this->withoutExceptionHandling();
         unset(app()[ChannelManager::class]);
         $this->withoutMiddleware([ThrottlePosts::class]);
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $poster = create(User::class, ['name' => 'papandreou']);
         $this->signIn($poster);
         $thread = create(Thread::class);

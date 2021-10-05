@@ -57,8 +57,7 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_can_be_unliked_by_a_user()
     {
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $reply = ReplyFactory::create();
         $user = create(User::class);
         $reply->like($user);

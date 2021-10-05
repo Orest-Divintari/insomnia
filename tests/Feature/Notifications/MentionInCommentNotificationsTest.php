@@ -47,8 +47,7 @@ class MentionInCommentNotificationsTest extends TestCase
         $this->withoutExceptionHandling();
         unset(app()[ChannelManager::class]);
         $this->withoutMiddleware([ThrottlePosts::class]);
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $poster = $this->signIn();
         $post = create(ProfilePost::class);
         $mentionedUser = create(User::class);

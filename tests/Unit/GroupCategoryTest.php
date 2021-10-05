@@ -32,8 +32,7 @@ class GroupCategoryTest extends TestCase
     /** @test */
     public function eager_load_the_categories_and_sub_categories_for_a_group_and_threads_count_and_replies_count_and_recently_active_thread_for_a_category()
     {
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $user = $this->signIn();
         $software = create(GroupCategory::class, ['title' => 'software']);
         $ios = create(

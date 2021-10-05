@@ -18,8 +18,7 @@ class DeleteLikeNotificationsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
     }
 
     /** @test */

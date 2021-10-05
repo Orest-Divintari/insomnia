@@ -22,6 +22,9 @@ class ForumTest extends TestCase
         config(['database.connections.mysql.database' => config('insomnia.database.name')]);
     }
 
+    /** @test  */
+    }
+
     /** @test */
     public function a_user_can_view_all_root_categories_with_their_subcategories_and_their_groups()
     {

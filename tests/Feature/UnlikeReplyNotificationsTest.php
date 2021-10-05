@@ -17,8 +17,7 @@ class UnlikeReplyNotificationsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
     }
     /** @test */
     public function when_a_user_unlikes_a_thread_reply_then_the_thread_reply_like_notification_is_deleted()

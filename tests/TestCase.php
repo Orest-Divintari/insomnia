@@ -67,4 +67,16 @@ abstract class TestCase extends BaseTestCase
         $this->actingAs($user);
         return $user;
     }
+
+    /**
+     * Set MySQL database for testing
+     *
+     * @return void
+     */
+    public function useMysql()
+    {
+        $test = 'mysql_test';
+        config(['database.default' => $test]);
+        Artisan::call('migrate:refresh --database=' . $test);
+    }
 }

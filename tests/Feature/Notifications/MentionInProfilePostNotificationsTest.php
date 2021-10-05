@@ -47,8 +47,7 @@ class MentionInProfilePostNotificationsTest extends TestCase
     {
         unset(app()[ChannelManager::class]);
         $this->withoutMiddleware([ThrottlePosts::class]);
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $poster = $this->signIn();
         $profileOwner = create(User::class);
         $mentionedUser = create(User::class);

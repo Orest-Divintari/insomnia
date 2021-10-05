@@ -167,8 +167,7 @@ class RecordActivitiesTest extends TestCase
     /** @test */
     public function when_a_user_unlikes_a_reply_the_activity_is_deleted()
     {
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $user = $this->signIn();
         $reply = ReplyFactory::create();
         $like = $reply->like($user);
@@ -193,8 +192,7 @@ class RecordActivitiesTest extends TestCase
     /** @test */
     public function when_a_user_unlikes_a_comment_the_activity_is_deleted()
     {
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $user = $this->signIn();
         $comment = CommentFactory::create();
         $like = $comment->like($user);

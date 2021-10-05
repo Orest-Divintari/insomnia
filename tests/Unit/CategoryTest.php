@@ -107,8 +107,8 @@ class CategoryTest extends TestCase
     public function get_the_recently_active_thread_for_a_non_parent_category()
     {
         $this->withoutExceptionHandling();
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
+        config(['database.default' => 'mysql_test']);
         $user = $this->signIn();
         $category = create(Category::class);
         $recentThread = ThreadFactory::inCategory($category)->create();
@@ -131,8 +131,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function get_the_recently_active_thread_for_a_parent_category()
     {
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $user = $this->signIn();
         $category = create(Category::class);
         $subCategory = create(
@@ -163,8 +162,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function count_the_threads_that_are_associated_with_a_non_parent_category()
     {
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $user = $this->signIn();
         $category = create(Category::class);
         $threadsCount = 2;
@@ -184,8 +182,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function count_the_threads_that_are_associated_with_a_parent_category_through_its_subcategories()
     {
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $user = $this->signIn();
         $category = create(Category::class);
         $subCategory = create(Category::class, ['parent_id' => $category]);
@@ -206,8 +203,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function count_the_replies_that_are_associated_with_a_non_parent_category()
     {
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $user = $this->signIn();
         $category = create(Category::class);
         $repliesCount = 2;
@@ -229,8 +225,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function count_the_replies_that_are_associated_with_a_parent_category_through_its_subcategories()
     {
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $user = $this->signIn();
         $category = create(Category::class);
         $subCategory = create(Category::class, ['parent_id' => $category]);
@@ -330,8 +325,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function it_knows_the_number_of_descendant_categories()
     {
-        config(['database.default' => 'mysql']);
-        config(['database.connections.mysql.database' => config('insomnia.database.name')]);
+        $this->useMysql();
         $grandParentCategory = create(Category::class);
         $parentCategory = create(Category::class, ['parent_id' => $grandParentCategory->id]);
         $category = create(Category::class, ['parent_id' => $parentCategory->id]);
