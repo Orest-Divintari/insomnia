@@ -11,7 +11,7 @@ class ProfilePostController extends Controller
 {
     public function show(ProfilePost $post)
     {
-        return redirect($post->path);
+        return redirect($post->reversePath);
     }
 
     /**

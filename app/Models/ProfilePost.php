@@ -199,6 +199,11 @@ class ProfilePost extends Model
         return ResourcePath::generate($this);
     }
 
+    public function getReversePathAttribute()
+    {
+        return ResourcePath::reverse()->generate($this);
+    }
+
     public function getPermissionsAttribute()
     {
         if (!auth()->check()) {
