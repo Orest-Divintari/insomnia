@@ -9,8 +9,10 @@ use Illuminate\Database\Seeder;
 
 class ForumSeeder extends Seeder
 {
-    const NUM_OF_REPLIES = 100;
-    const NUM_OF_THREADS = 300;
+    use AuthenticatesUsers;
+
+    const NUM_OF_REPLIES = 1;
+    const NUM_OF_THREADS = 1;
 
     /**
      * Run the database seeds.
@@ -67,6 +69,7 @@ class ForumSeeder extends Seeder
                 if (empty($subCategories)) {
                     $this->createThreadWithReplies($parentCategory);
                 } else {
+
                     foreach ($subCategories as $subCategory) {
 
                         $childrenCategory = Category::factory()->create([
@@ -74,6 +77,7 @@ class ForumSeeder extends Seeder
                             'group_category_id' => $groupCategory->id,
                             'title' => $subCategory,
                         ]);
+
                         $this->createThreadWithReplies($childrenCategory);
                     }
                 }
@@ -86,6 +90,7 @@ class ForumSeeder extends Seeder
     {
         for ($threadCounter = 0; $threadCounter < static::NUM_OF_THREADS; $threadCounter++) {
             $this->signIn();
+
             $thread = Thread::factory()->create([
                 'category_id' => $category->id,
                 'replies_count' => 0,

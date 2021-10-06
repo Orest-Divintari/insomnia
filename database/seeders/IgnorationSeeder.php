@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 
 class IgnorationSeeder extends Seeder
 {
+    use RandomModels;
     /**
      * Run the database seeds.
      *

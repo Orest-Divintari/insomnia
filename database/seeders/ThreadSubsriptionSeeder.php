@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 
 class ThreadSubsriptionSeeder extends Seeder
 {
+    use RandomModels;
+
     /**
      * Run the database seeds.
      *

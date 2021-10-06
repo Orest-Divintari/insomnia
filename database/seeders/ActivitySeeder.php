@@ -8,6 +8,9 @@ use Illuminate\Database\Seeder;
 
 class ActivitySeeder extends Seeder
 {
+
+    use AuthenticatesUsers, RandomModels;
+
     /**
      * Run the database seeds.
      *

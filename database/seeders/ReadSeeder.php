@@ -8,6 +8,8 @@ use Illuminate\Database\Seeder;
 
 class ReadSeeder extends Seeder
 {
+    use RandomModels;
+
     /**
      * Run the database seeds.
      *

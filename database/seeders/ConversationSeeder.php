@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 
 class ConversationSeeder extends Seeder
 {
+    use RandomModels, AuthenticatesUsers;
 
     const NUMBER_OF_PARTICIPANTS = 2;
 

@@ -5,7 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 class LikeSeeder extends Seeder
-{
+
+    use RandomModels;
 
     const NUMBER_OF_THREAD_REPLIES = 2;
     const NUMBER_OF_COMMENTS = 2;

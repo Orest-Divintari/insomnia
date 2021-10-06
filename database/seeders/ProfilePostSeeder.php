@@ -9,6 +9,7 @@ use Illuminate\Database\Seeder;
 
 class ProfilePostSeeder extends Seeder
 {
+    use RandomModels, AuthenticatesUsers;
 
     const NUMBER_OF_PROFILE_POSTS = 2;
     const NUMBER_OF_COMMENTS = 2;

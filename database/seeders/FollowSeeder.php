@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 
 class FollowSeeder extends Seeder
 {
+    use RandomModels, AuthenticatesUsers;
 
     const FOLLOWINGS = 5;
     const FOLLOWERS = 5;

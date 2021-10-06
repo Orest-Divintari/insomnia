@@ -19,15 +19,15 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ForumSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(TagSeeder::class);
-        $this->call(ProfilePostSeeder::class);
-        $this->call(FollowSeeder::class);
-        $this->call(ActivitySeeder::class);
-        $this->call(ConversationSeeder::class);
-        $this->call(LikeSeeder::class);
-        $this->call(ReadSeeder::class);
-        $this->call(IgnorationSeeder::class);
-        $this->call(ThreadSubsriptionSeeder::class);
+        // $this->call(TagSeeder::class);
+        // $this->call(ProfilePostSeeder::class);
+        // $this->call(FollowSeeder::class);
+        // $this->call(ActivitySeeder::class);
+        // $this->call(ConversationSeeder::class);
+        // $this->call(LikeSeeder::class);
+        // $this->call(ReadSeeder::class);
+        // $this->call(IgnorationSeeder::class);
+        // $this->call(ThreadSubsriptionSeeder::class);
 
         Auth::logout();
     }
