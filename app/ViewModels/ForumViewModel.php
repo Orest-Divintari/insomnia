@@ -7,12 +7,15 @@ use App\Filters\ExcludeIgnoredFilter;
 use App\Models\GroupCategory;
 use App\Models\Thread;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 class ForumViewModel
 {
     public function groups()
     {
-        return GroupCategory::withCategories()->get();
+        return Cache::remember('forum.home', 60, function () {
+            return GroupCategory::withCategories()->get();
+        });
     }
 
     public function latestPosts(ExcludeIgnoredFilter $excludeIgnoredFilter)
@@ -40,11 +43,13 @@ class ForumViewModel
                 );
         }
 
-        return $query->with('category')
-            ->withRecentReply()
-            ->latest('updated_at')
-            ->take(10)
-            ->get();
+        return Cache::store('redis')->remember('forum.latest-posts', 60, function () use ($query) {
+            return $query->with('category')
+                ->withRecentReply()
+                ->latest('updated_at')
+                ->take(10)
+                ->get();
+        });
     }
 
     public function statistics()
