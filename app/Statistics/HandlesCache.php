@@ -2,7 +2,7 @@
 
 namespace App\Statistics;
 
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 
 trait HandlesCache
 {
@@ -13,22 +13,22 @@ trait HandlesCache
 
     public function count()
     {
-        return Redis::get($this->cacheCountKey()) ?? 0;
+        return Cache::get($this->cacheCountKey()) ?? 0;
     }
 
     public function increment()
     {
-        return Redis::incr($this->cacheCountKey());
+        return Cache::increment($this->cacheCountKey());
     }
 
     public function decrement()
     {
-        return Redis::decr($this->cacheCountKey());
+        return Cache::decrement($this->cacheCountKey());
     }
 
     public function resetCount()
     {
-        return Redis::del($this->cacheCountKey());
+        return Cache::forget($this->cacheCountKey());
     }
 
 }
