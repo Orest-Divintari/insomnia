@@ -41,7 +41,7 @@ class ProfilePostFilters extends PostFilters implements FilterInterface
      */
     public function newPosts()
     {
-        $this->builder->latest('updated_at');
+        $this->builder->reorder()->latest('updated_at');
     }
 
     /**

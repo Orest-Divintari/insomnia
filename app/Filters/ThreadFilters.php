@@ -36,7 +36,7 @@ class ThreadFilters extends PostFilters implements FilterInterface
      */
     public function newThreads()
     {
-        $this->builder->orderBy('created_at', 'DESC');
+        $this->builder->reorder()->orderBy('created_at', 'DESC');
     }
 
     /**
@@ -52,9 +52,8 @@ class ThreadFilters extends PostFilters implements FilterInterface
                 ->where('repliable_type', 'App\Models\Thread')
                 ->latest('created_at')
                 ->take(1),
-        ])->latest('recent_reply_created_at');
+        ])->reorder()->latest('recent_reply_created_at');
     }
-
     /**
      * Fetch the threads that the given user has participated
      *
@@ -82,7 +81,9 @@ class ThreadFilters extends PostFilters implements FilterInterface
      */
     public function trending()
     {
-        $this->builder->where('replies_count', '>', 0)
+        $this->builder
+            ->where('replies_count', '>', 0)
+            ->reorder()
             ->orderBy('replies_count', 'DESC')
             ->orderBy('views', 'DESC');
     }
