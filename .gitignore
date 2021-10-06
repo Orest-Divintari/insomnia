@@ -14,3 +14,4 @@ yarn-error.log
 /public/js
 data/redis/appendonly.aof
 data/redis/dump.rdb
+data/.DS_Store
