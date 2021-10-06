@@ -29,7 +29,8 @@ class ViewProfilePostsTest extends DuskTestCase
         $posts = ProfilePostFactory::by($john)
             ->toProfile($orestis)
             ->createMany(ProfilePost::PER_PAGE * 5);
-        $lastPost = $posts->first();
+
+        $lastPost = $posts->last();
 
         $this->browse(function (Browser $browser) use ($orestis, $lastPost, $john) {
 
@@ -46,34 +47,31 @@ class ViewProfilePostsTest extends DuskTestCase
     }
 
     /** @test */
-    public function members_may_jump_to_a_specific_comment_in_profile_posts()
+    public function members_may_jump_to_a_the_post_of_a_specific_comment_in_profile_posts()
     {
         $orestis = create(User::class);
         $john = create(User::class);
         $posts = ProfilePostFactory::by($john)
             ->toProfile($orestis)
             ->createMany(ProfilePost::PER_PAGE * 5);
-        $lastPost = $posts->first();
-        $comment = CommentFactory::by($john)->toProfilePost($lastPost)->create();
+        $firstPost = $posts->first();
+        $comment = CommentFactory::by($john)->toProfilePost($firstPost)->create();
 
-        $this->browse(function (Browser $browser) use ($orestis, $john, $comment, $lastPost) {
+        $this->browse(function (Browser $browser) use ($orestis, $john, $comment, $firstPost) {
 
             $response = $browser
                 ->loginAs($orestis)
                 ->visit(route('comments.show', $comment));
 
             $response
-                ->assertSee($lastPost->body)
-                ->assertSee($lastPost->date_created)
-                ->assertSee($comment->body)
-                ->assertSee($comment->date_created)
-                ->assertSee($john->name)
-                ->assertAttribute('@profile-post-comment', 'id', 'profile-post-comment-' . $comment->id);
+                ->assertSee($firstPost->body)
+                ->assertSee($firstPost->date_created)
+                ->assertSee($john->name);
         });
     }
 
     /** @test */
-    public function members__will_not_see_the_input_to_post_on_a_profile_if_the_profile_owner_does_not_allow_it()
+    public function members_will_not_see_the_input_to_post_on_a_profile_if_the_profile_owner_does_not_allow_it()
     {
         $profileOwner = create(User::class);
         ProfilePostFactory::by($profileOwner)->toProfile($profileOwner)->create();
