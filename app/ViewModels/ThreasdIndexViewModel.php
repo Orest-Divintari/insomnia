@@ -27,6 +27,7 @@ class ThreasdIndexViewModel
             ->withHasBeenUpdated()
             ->withRecentReply()
             ->forCategory($this->category)
+            ->latest('updated_at')
             ->filter($this->threadFilters);
     }
 
