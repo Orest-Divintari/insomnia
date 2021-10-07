@@ -84,4 +84,10 @@ class ForumViewModel
             'users_count' => Statistics::users()->count(),
         ];
     }
+
+    public function resetCache()
+    {
+        Cache::forget('forum.feed');
+        Cache::forget('forum.latest-posts');
+    }
 }
