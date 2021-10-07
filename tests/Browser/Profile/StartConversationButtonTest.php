@@ -3,6 +3,7 @@
 namespace Tests\Browser\Profile;
 
 use App\Models\User;
+use App\ViewModels\ForumViewModel;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -11,6 +12,12 @@ use \Facades\Tests\Setup\ThreadFactory;
 class StartConversationButtonTest extends DuskTestCase
 {
     use DatabaseMigrations;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        app(ForumViewModel::class)->resetCache();
+    }
 
     /** @test */
     public function unverified_users_may_not_see_the_start_conversation_button()

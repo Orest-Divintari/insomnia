@@ -3,6 +3,7 @@
 namespace Tests\Browser\Profile;
 
 use App\Models\User;
+use App\ViewModels\ForumViewModel;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
@@ -13,8 +14,16 @@ class FollowButtonTest extends DuskTestCase
     use DatabaseMigrations;
 
     /** @test */
+    public function setUp(): void
+    {
+        parent::setUp();
+        app(ForumViewModel::class)->resetCache();
+    }
+
+    /** @test */
     public function guests_should_not_see_the_follow_button()
     {
+
         $john = create(User::class);
         $threadByJohn = ThreadFactory::by($john)->create();
 
