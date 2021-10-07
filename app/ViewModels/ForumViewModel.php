@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Cache;
 
 class ForumViewModel
 {
+
+    /**
+     * Create a new instance
+     *
+     * @param ExcludeIgnoredFilter $excludeIgnoredFilter
+     */
+    public function __construct(protected ExcludeIgnoredFilter $excludeIgnoredFilter)
+    {
+
+    }
     public function groups()
     {
         return Cache::remember('forum.home', 60, function () {
@@ -18,7 +28,7 @@ class ForumViewModel
         });
     }
 
-    public function latestPosts(ExcludeIgnoredFilter $excludeIgnoredFilter)
+    public function latestPosts()
     {
         $query = Thread::query();
 
@@ -26,7 +36,7 @@ class ForumViewModel
 
             $authUser = auth()->user();
 
-            $query->excludeIgnored($authUser, $excludeIgnoredFilter)
+            $query->excludeIgnored($authUser, $this->excludeIgnoredFilter)
                 ->whereRaw('threads.id NOT IN
                         (
                                 SELECT repliable_id
