@@ -21,9 +21,20 @@ class ForumViewModel
     {
 
     }
+
+    /**
+     * The time period for which the feed will be stored in cache
+     */
+    const FEED_CACHE_TIMEFRAME = 60;
+
+    /**
+     * The time period for which the latest posts will be soted in cache
+     */
+    const LATEST_POSTS_CACHE_TIMEFRAME = 60;
+
     public function groups()
     {
-        return Cache::remember('forum.home', 60, function () {
+        return Cache::remember('forum.feed', static::FEED_CACHE_TIMEFRAME, function () {
             return GroupCategory::withCategories()->get();
         });
     }
@@ -53,13 +64,16 @@ class ForumViewModel
                 );
         }
 
-        return Cache::store('redis')->remember('forum.latest-posts', 60, function () use ($query) {
-            return $query->with('category')
-                ->withRecentReply()
-                ->latest('updated_at')
-                ->take(10)
-                ->get();
-        });
+        return Cache::remember(
+            'forum.latest-posts',
+            static::LATEST_POSTS_CACHE_TIMEFRAME,
+            function () use ($query) {
+                return $query->with('category')
+                    ->withRecentReply()
+                    ->latest('updated_at')
+                    ->take(10)
+                    ->get();
+            });
     }
 
     public function statistics()
