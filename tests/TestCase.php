@@ -7,17 +7,17 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Role;
-use Tests\Traits\RefreshRedis;
+use Tests\Traits\FakeModelStatistics;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, RefreshRedis;
+    use CreatesApplication, FakeModelStatistics;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(AppendVisitor::class);
-        $this->refreshRedis();
+        $this->fakeStatistics();
     }
 
     /**
