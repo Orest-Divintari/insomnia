@@ -9,11 +9,14 @@ use App\Models\User;
 use App\Statistics\ThreadReplyStatistics;
 use App\Statistics\ThreadStatistics;
 use App\Statistics\UserStatistics;
+use App\ViewModels\ForumViewModel;
 use Carbon\Carbon;
+use Closure;
 use Facades\Tests\Setup\ReplyFactory;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 class ForumTest extends TestCase
@@ -24,6 +27,26 @@ class ForumTest extends TestCase
     {
         parent::setUp();
         $this->useMysql();
+    }
+
+    /** @test */
+    public function it_stores_the_forum_feed_and_latest_posts_in_cache()
+    {
+        $group = create(GroupCategory::class);
+        $category = create(Category::class);
+        ThreadFactory::inCategory($category)->create();
+        $feed = GroupCategory::withCategories()->get();
+        $latestPosts = app(ForumViewModel::class)->latestPosts();
+
+        Cache::shouldReceive('remember')
+            ->with('forum.feed', ForumViewModel::FEED_CACHE_TIMEFRAME, Closure::class)
+            ->andReturn($feed);
+
+        Cache::shouldReceive('remember')
+            ->with('forum.latest-posts', ForumViewModel::LATEST_POSTS_CACHE_TIMEFRAME, Closure::class)
+            ->andReturn($latestPosts);
+
+        $this->get(route('forum'));
     }
 
     /** @test  */
@@ -259,6 +282,7 @@ class ForumTest extends TestCase
         $latestPosts = ThreadFactory::inCategory($macos)->by($user)->createMany(10);
 
         $response = $this->get(route('forum'));
+
         $latestPostIds = $response['latestPosts']->pluck('id');
         $this->assertTrue(
             $latestPosts->every(function ($latestPost) use ($latestPostIds) {
