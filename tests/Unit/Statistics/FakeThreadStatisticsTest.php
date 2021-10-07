@@ -7,7 +7,7 @@ use App\Statistics\ThreadStatistics;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ThreadStatisticsTest extends TestCase
+class FakeThreadStatisticsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -16,15 +16,12 @@ class ThreadStatisticsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        unset(app()[ThreadStatistics::class]);
-        app()->instance(ThreadStatistics::class, new RealThreadStatistics);
+        app()->instance(ThreadStatistics::class, new FakeThreadStatistics);
         $this->threadStatistics = app(ThreadStatistics::class);
-        config(['cache.default' => 'redis']);
-        $this->threadStatistics->resetCount();
     }
 
     /** @test */
-    public function it_returns_the_threads_count_from_cache()
+    public function it_returns_the_threads_count()
     {
         $this->assertEquals(0, $this->threadStatistics->count());
 
@@ -36,7 +33,7 @@ class ThreadStatisticsTest extends TestCase
     }
 
     /** @test */
-    public function it_increments_the_threads_count_in_cache_when_a_new_thread_is_created()
+    public function it_increments_the_threads_count_when_a_new_thread_is_created()
     {
         $this->assertEmpty(Thread::all());
         create(Thread::class);
@@ -47,7 +44,7 @@ class ThreadStatisticsTest extends TestCase
     }
 
     /** @test */
-    public function it_decrements_the_threads_count_in_cache_when_a_thread_is_deleted()
+    public function it_decrements_the_threads_count_when_a_thread_is_deleted()
     {
         $this->assertEmpty(Thread::all());
         $thread = create(Thread::class);
@@ -59,7 +56,7 @@ class ThreadStatisticsTest extends TestCase
     }
 
     /** @test */
-    public function it_resets_the_threads_count_in_cache()
+    public function it_resets_the_threads_count()
     {
         $this->assertEmpty(Thread::all());
         $thread = create(Thread::class);

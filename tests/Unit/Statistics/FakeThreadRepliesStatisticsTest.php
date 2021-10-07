@@ -8,7 +8,7 @@ use Facades\Tests\Setup\ReplyFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ThreadRepliesStatisticsTest extends TestCase
+class FakeThreadRepliesStatisticsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -17,15 +17,12 @@ class ThreadRepliesStatisticsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        unset(app()[ThreadReplyStatistics::class]);
-        app()->instance(ThreadReplyStatistics::class, new RealThreadReplyStatistics);
+        app()->instance(ThreadReplyStatistics::class, new FakeThreadReplyStatistics);
         $this->threadReplyStatistics = app(ThreadReplyStatistics::class);
-        config(['cache.default' => 'redis']);
-        $this->threadReplyStatistics->resetCount();
     }
 
     /** @test */
-    public function it_returns_the_thread_replies_count_from_cache()
+    public function it_returns_the_thread_replies_count()
     {
         $this->assertEquals(0, $this->threadReplyStatistics->count());
 
@@ -37,7 +34,7 @@ class ThreadRepliesStatisticsTest extends TestCase
     }
 
     /** @test */
-    public function it_increments_the_thread_replies_count_in_cache_when_a_new_thread_reply_is_created()
+    public function it_increments_the_thread_replies_count_when_a_new_thread_reply_is_created()
     {
         $this->assertEmpty(Reply::all());
         ReplyFactory::create();
@@ -48,7 +45,7 @@ class ThreadRepliesStatisticsTest extends TestCase
     }
 
     /** @test */
-    public function it_decrements_the_thread_replies_count_in_cache_when_a_thread_reply_is_deleted()
+    public function it_decrements_the_thread_replies_count_when_a_thread_reply_is_deleted()
     {
         $this->assertEmpty(Reply::all());
         $reply = ReplyFactory::create();
@@ -60,7 +57,7 @@ class ThreadRepliesStatisticsTest extends TestCase
     }
 
     /** @test */
-    public function it_resets_the_thread_replies_count_in_cache()
+    public function it_resets_the_thread_replies_count()
     {
         $this->assertEmpty(Reply::all());
         $reply = ReplyFactory::create();
