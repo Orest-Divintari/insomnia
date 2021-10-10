@@ -613,4 +613,27 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasVerifiedEmail();
     }
+
+    /**
+     * It filters out the given user
+     *
+     * @param Builder $query
+     * @param User $user
+     * @return Builder
+     */
+    public function scopeExcept($query, $user)
+    {
+        return $query->where('users.id', '!=', $user->id);
+    }
+
+    /**
+     * It filters out the unverified users
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeVerified($query)
+    {
+        return $query->whereNotNull('email_verified_at');
+    }
 }

@@ -46,11 +46,8 @@ class ThreadHasNewReply extends Notification implements ShouldQueue
             $channels = $notifiable->preferences()->thread_reply_created;
         }
 
-        $prefersEmail = $notifiable
-            ->subscription($this->thread->id)
-            ->prefers_email;
-
-        if ($prefersEmail) {
+        // the first subscription is the subscription for the event thread
+        if ($notifiable->subscriptions->first()->prefers_email) {
             $channels[] = 'mail';
         }
 

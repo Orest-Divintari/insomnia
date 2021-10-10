@@ -6,13 +6,9 @@ use App\Events\Subscription\NewReplyWasPostedToThread;
 use App\Listeners\Notify;
 use App\Models\User;
 use App\Notifications\ThreadHasNewReply;
-use App\Traits\HandlesNotifications;
 
 class NotifyThreadSubscribers
 {
-
-    use HandlesNotifications;
-
     /**
      * Create the event listener.
      *
@@ -30,11 +26,18 @@ class NotifyThreadSubscribers
      */
     public function handle(NewReplyWasPostedToThread $event)
     {
-        $event->thread->subscriptions()
-            ->where('user_id', '!=', $event->reply->poster->id)
+        $thread = $event->thread;
+
+        $thread->subscribers()
+            ->verified()
+            ->except(auth()->user())
+            ->notIgnoring(auth()->user())
+            ->with(['subscriptions' => function ($query) use ($thread) {
+                return $query->where('thread_id', $thread->id);
+            }])
             ->get()
-            ->each(function ($subscription) use ($event) {
-                $this->notify($subscription->user, $this->notification($event));
+            ->each(function ($subscriber) use ($event) {
+                $subscriber->notify($this->notification($event));
             });
     }
 

@@ -708,4 +708,44 @@ class UserTest extends TestCase
 
         $this->assertFalse($thread->isIgnored($john));
     }
+
+    /** @test */
+    public function it_returns_the_users_that_are_not_ignoring_the_given_user()
+    {
+        $john = create(User::class);
+        $george = create(User::class);
+        $mike = create(User::class);
+        $user = $this->signIn();
+        $mike->ignore($user);
+
+        $users = User::notIgnoring($user)->get();
+
+        $this->assertCount(2, $users);
+        $this->assertEquals($john->id, $users->where('id', $john->id)->first()->id);
+        $this->assertEquals($george->id, $users->where('id', $george->id)->first()->id);
+    }
+
+    /** @test */
+    public function it_filters_out_a_given_user()
+    {
+        $john = create(User::class);
+        $george = create(User::class);
+
+        $users = User::except($john)->get();
+
+        $this->assertCount(1, $users);
+        $this->assertEquals($users->first()->id, $george->id);
+    }
+
+    /** @test */
+    public function it_filters_out_the_unverfied_users()
+    {
+        $verified = create(User::class);
+        $unverified = User::factory()->unverified()->create();
+
+        $users = User::verified()->get();
+
+        $this->assertCount(1, $users);
+        $this->assertTrue($users->first()->is($verified));
+    }
 }

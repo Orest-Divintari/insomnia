@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Thread;
 use App\Models\ThreadSubscription;
+use App\Models\User;
 
 trait Subscribable
 {
@@ -93,5 +94,15 @@ trait Subscribable
         return $this->subscriptions()
             ->where('user_id', $user->id)
             ->exists();
+    }
+
+    /**
+     * Get users that have subscribe to the thread
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function subscribers()
+    {
+        return $this->belongsToMany(User::class, 'thread_subscriptions');
     }
 }

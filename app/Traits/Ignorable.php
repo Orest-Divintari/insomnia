@@ -63,4 +63,22 @@ trait Ignorable
             );
         });
     }
+
+    /**
+     * Filter out the users that are ignoring the given user
+     *
+     * @param Builder $query
+     * @param User $user
+     * @return Builder
+     */
+    public function scopeNotIgnoring($query, $user)
+    {
+        $query->whereNotIn(
+            'users.id',
+            Ignoration::select('user_id')
+                ->where('ignorable_type', User::class)
+                ->whereColumn('user_id', 'users.id')
+                ->where('ignorable_id', $user->id)
+        )->where('users.id', '!=', $user->id);
+    }
 }
