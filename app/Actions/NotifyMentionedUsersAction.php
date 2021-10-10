@@ -4,12 +4,9 @@ namespace App\Actions;
 
 use App\Helpers\ModelType;
 use App\Models\User;
-use App\Traits\HandlesNotifications;
 
 class NotifyMentionedUsersAction
 {
-    use HandlesNotifications;
-
     /**
      * The name of the model as it is stored in the notification data column
      *
@@ -35,7 +32,9 @@ class NotifyMentionedUsersAction
     {
         $mentionedUsersQuery = User::query()
             ->findByName($this->model->mentionedUsers())
-            ->where('users.id', '!=', auth()->id());
+            ->verified()
+            ->except(auth()->user())
+            ->notIgnoring(auth()->user());
 
         if ($this->isUpdatedEvent()) {
             $mentionedUsersQuery = $this->excludeAlreadyMentionedUsers($mentionedUsersQuery);
@@ -43,7 +42,7 @@ class NotifyMentionedUsersAction
 
         $mentionedUsersQuery->get()
             ->each(function ($mentionedUser) {
-                $this->notify($mentionedUser, $this->notification);
+                $mentionedUser->notify($this->notification);
             });
     }
 
