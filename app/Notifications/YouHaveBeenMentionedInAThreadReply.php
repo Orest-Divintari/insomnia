@@ -2,12 +2,14 @@
 
 namespace App\Notifications;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class YouHaveBeenMentionedInAThreadReply extends Notification
+class YouHaveBeenMentionedInAThreadReply extends Notification implements ShouldQueue
 {
-    // use Queueable;
+    use Queueable;
 
     /**
      * Create a new notification instance.
@@ -16,6 +18,7 @@ class YouHaveBeenMentionedInAThreadReply extends Notification
      */
     public function __construct(public $thread, public $reply)
     {
+        $this->onQueue('notifications');
     }
 
     /**

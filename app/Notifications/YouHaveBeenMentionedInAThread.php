@@ -3,10 +3,11 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class YouHaveBeenMentionedInAThread extends Notification
+class YouHaveBeenMentionedInAThread extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -17,7 +18,7 @@ class YouHaveBeenMentionedInAThread extends Notification
      */
     public function __construct(public $thread, public $threadPoster)
     {
-        //
+        $this->onQueue('notifications');
     }
 
     /**

@@ -9,11 +9,13 @@ use App\Notifications\YouHaveBeenMentionedInAProfilePost;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+use Tests\Traits\TestsQueue;
 
 class MentionInProfilePostNotificationsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, TestsQueue;
 
     public function setUp(): void
     {
@@ -23,6 +25,19 @@ class MentionInProfilePostNotificationsTest extends TestCase
         $this->desiredChannels = ['database'];
         $this->postPoster = $this->signIn();
         $this->mentionedUser = create(User::class);
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $profilePost = ['body' => "hello @{$this->mentionedUser->name}"];
+        $queue = 'notifications';
+
+        $profilePost = $this->post(route('ajax.profile-posts.store', $this->postPoster), $profilePost);
+
+        $this->assertNotificationPushedOnQueue($queue, YouHaveBeenMentionedInAProfilePost::class);
     }
 
     /** @test */

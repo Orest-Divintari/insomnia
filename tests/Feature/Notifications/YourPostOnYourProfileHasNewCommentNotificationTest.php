@@ -9,11 +9,13 @@ use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+use Tests\Traits\TestsQueue;
 
 class YourPostOnYourProfileHasNewCommentNotificationTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase, WithFaker, TestsQueue;
 
     public function setUp(): void
     {
@@ -24,6 +26,20 @@ class YourPostOnYourProfileHasNewCommentNotificationTest extends TestCase
         $this->profilePost = ProfilePostFactory::by($this->profileOwner)
             ->toProfile($this->profileOwner)
             ->create();
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $commentPoster = $this->signIn();
+        $attributes = ['body' => $this->faker()->sentence()];
+        $queue = 'notifications';
+
+        $this->postJson(route('ajax.comments.store', $this->profilePost), $attributes)->json();
+
+        $this->assertNotificationPushedOnQueue($queue, YourPostOnYourProfileHasNewComment::class);
     }
 
     /** @test */

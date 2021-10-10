@@ -9,16 +9,37 @@ use Facades\Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+use Tests\Traits\TestsQueue;
 
 class ConversationNotificationsTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase, WithFaker, TestsQueue;
 
     public function setUp(): void
     {
         parent::setUp();
         Notification::fake();
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $queue = 'notifications';
+        $conversationStarter = $this->signIn();
+        $participant = create(User::class);
+        $attributes = [
+            'title' => $this->faker()->sentence(),
+            'message' => $this->faker()->text(),
+            'participants' => $participant->name,
+        ];
+
+        $this->post(route('conversations.store'), $attributes);
+
+        $this->assertNotificationPushedOnQueue($queue, ConversationHasNewMessage::class);
     }
 
     /** @test */
@@ -163,7 +184,6 @@ class ConversationNotificationsTest extends TestCase
     /** @test */
     public function users_will_not_receive_email_notifications_when_an_ignored_user_sends_a_message()
     {
-        Notification::fake();
         $john = $this->signIn();
         $doe = create(User::class);
         $conversation = ConversationFactory::by($john)
@@ -175,7 +195,7 @@ class ConversationNotificationsTest extends TestCase
 
         $this->post(route('ajax.messages.store', $conversation), ['body' => $this->faker()->sentence()]);
 
-        Notification::assertNotSentTo($john, NewMessageWasAddedToConversation::class);
+        Notification::assertNotSentTo($john, ConversationHasNewMessage::class);
     }
 
 }

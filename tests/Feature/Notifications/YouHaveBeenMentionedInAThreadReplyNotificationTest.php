@@ -10,11 +10,13 @@ use App\Notifications\YouHaveBeenMentionedInAThreadReply;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+use Tests\Traits\TestsQueue;
 
 class YouHaveBeenMentionedInAThreadReplyNotificationTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, TestsQueue;
 
     public function setUp(): void
     {
@@ -25,6 +27,19 @@ class YouHaveBeenMentionedInAThreadReplyNotificationTest extends TestCase
         $this->thread = create(Thread::class);
         $this->mentionedUser = create(User::class);
         $this->replyPoster = $this->signIn();
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $reply = ['body' => "hello @{$this->mentionedUser->name}"];
+        $queue = 'notifications';
+
+        $this->postJson(route('ajax.replies.store', $this->thread), $reply);
+
+        $this->assertNotificationPushedOnQueue($queue, YouHaveBeenMentionedInAThreadReply::class);
     }
 
     /** @test */
@@ -44,10 +59,10 @@ class YouHaveBeenMentionedInAThreadReplyNotificationTest extends TestCase
     /** @test */
     public function it_sends_notifications_only_to_the_newly_mentioned_users_when_a_reply_is_updated()
     {
-        $this->withoutExceptionHandling();
         unset(app()[ChannelManager::class]);
         $this->withoutMiddleware([ThrottlePosts::class]);
         $this->useMysql();
+
         $poster = create(User::class, ['name' => 'papandreou']);
         $this->signIn($poster);
         $thread = create(Thread::class);

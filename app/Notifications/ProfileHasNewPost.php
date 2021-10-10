@@ -4,10 +4,11 @@ namespace App\Notifications;
 
 use App\Notifications\ProfilePostNotification;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProfileHasNewPost extends Notification
+class ProfileHasNewPost extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -28,6 +29,7 @@ class ProfileHasNewPost extends Notification
         $this->postPoster = $postPoster;
         $this->profilePost = $profilePost;
         $this->profileOwner = $profileOwner;
+        $this->onQueue('notifications');
     }
 
     /**

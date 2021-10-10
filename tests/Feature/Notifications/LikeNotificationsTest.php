@@ -13,18 +13,90 @@ use Facades\Tests\Setup\CommentFactory;
 use Facades\Tests\Setup\ConversationFactory;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Facades\Tests\Setup\ReplyFactory;
+use GuzzleHttp\Psr7\Message;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+use Tests\Traits\TestsQueue;
 
 class LikeNotificationsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, TestsQueue;
 
     public function setUp(): void
     {
         parent::setUp();
         Notification::fake();
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue_when_a_thraed_reply_has_new_like()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $queue = 'notifications';
+        $user = create(User::class);
+        $reply = ReplyFactory::by($user)->create();
+        $liker = $this->signIn();
+
+        $this->postJson(route('ajax.reply-likes.store', $reply));
+
+        $this->assertNotificationPushedOnQueue($queue, ReplyHasNewLike::class);
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue_when_a_comment_has_new_like()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $queue = 'notifications';
+        $profileOwner = create(User::class);
+        $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();
+        $commentPoster = create(User::class);
+        $comment = CommentFactory::by($commentPoster)
+            ->toProfilePost($profilePost)
+            ->create();
+        $liker = $this->signIn();
+
+        $this->post(route('ajax.reply-likes.store', $comment));
+
+        $this->assertNotificationPushedOnQueue($queue, CommentHasNewLike::class);
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue_when_a_message_has_new_like()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $queue = 'notifications';
+        $conversationStarter = $this->signIn();
+        $participant = create(User::class);
+        $conversation = ConversationFactory::by($conversationStarter)
+            ->withParticipants([$participant->name])
+            ->create();
+        $message = $conversation->messages()->first();
+        $this->signIn($participant);
+
+        $this->postJson(route('ajax.reply-likes.store', $message));
+
+        $this->assertNotificationPushedOnQueue($queue, MessageHasNewLike::class);
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue_when_a_profile_post_has_new_like()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $queue = 'notifications';
+        $poster = create(User::class);
+        $profilePost = ProfilePostFactory::by($poster)->create();
+        $profileOwner = $profilePost->profileOwner;
+        $liker = $this->signIn();
+
+        $this->post(route('ajax.profile-post-likes.store', $profilePost));
+
+        $this->assertNotificationPushedOnQueue($queue, ProfilePostHasNewLike::class);
     }
 
     /** @test */

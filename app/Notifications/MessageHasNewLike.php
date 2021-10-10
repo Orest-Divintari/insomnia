@@ -2,10 +2,13 @@
 
 namespace App\Notifications;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class MessageHasNewLike extends Notification
+class MessageHasNewLike extends Notification implements ShouldQueue
 {
+    use Queueable;
 
     public $like;
     public $liker;
@@ -26,6 +29,7 @@ class MessageHasNewLike extends Notification
         $this->liker = $liker;
         $this->conversation = $conversation;
         $this->message = $message;
+        $this->onQueue('notifications');
     }
 
     /**

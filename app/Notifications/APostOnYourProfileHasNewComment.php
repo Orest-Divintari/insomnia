@@ -4,10 +4,11 @@ namespace App\Notifications;
 
 use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class APostOnYourProfileHasNewComment extends Notification
+class APostOnYourProfileHasNewComment extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -16,12 +17,13 @@ class APostOnYourProfileHasNewComment extends Notification
      *
      * @return void
      */
-    public function __construct($profilePost, $comment, $commentPoster, $profileOwner)
-    {
-        $this->profilePost = $profilePost;
-        $this->comment = $comment;
-        $this->commentPoster = $commentPoster;
-        $this->profileOwner = $profileOwner;
+    public function __construct(
+        public $profilePost,
+        public $comment,
+        public $commentPoster,
+        public $profileOwner
+    ) {
+        $this->onQueue('notifications');
     }
 
     /**

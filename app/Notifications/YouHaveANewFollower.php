@@ -3,9 +3,10 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class YouHaveANewFollower extends Notification
+class YouHaveANewFollower extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -40,6 +41,7 @@ class YouHaveANewFollower extends Notification
         $this->follower = $follower;
         $this->following = $following;
         $this->followDate = $followDate;
+        $this->onQueue('notifications');
     }
 
     /**

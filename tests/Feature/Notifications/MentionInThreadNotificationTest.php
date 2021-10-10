@@ -9,11 +9,13 @@ use App\Notifications\YouHaveBeenMentionedInAThread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+use Tests\Traits\TestsQueue;
 
 class MentionInThreadNotificationTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase, WithFaker, TestsQueue;
 
     public function setUp(): void
     {
@@ -30,6 +32,18 @@ class MentionInThreadNotificationTest extends TestCase
             'title' => $this->faker->sentence(),
         ];
 
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $queue = 'notifications';
+
+        $this->post(route('threads.store'), $this->attributes);
+
+        $this->assertNotificationPushedOnQueue($queue, YouHaveBeenMentionedInAThread::class);
     }
 
     /** @test */

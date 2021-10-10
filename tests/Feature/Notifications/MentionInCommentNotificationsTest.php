@@ -8,13 +8,14 @@ use App\Models\Reply;
 use App\Models\User;
 use App\Notifications\YouHaveBeenMentionedInAComment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+use Tests\Traits\TestsQueue;
 
 class MentionInCommentNotificationsTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, TestsQueue;
 
     public function setUp(): void
     {
@@ -25,6 +26,19 @@ class MentionInCommentNotificationsTest extends TestCase
         $this->profilePost = create(ProfilePost::class);
         $this->mentionedUser = create(User::class);
         $this->commentPoster = $this->signIn();
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $queue = 'notifications';
+        $comment = ['body' => "hello @{$this->mentionedUser->name}"];
+
+        $this->postJson(route('ajax.comments.store', $this->profilePost), $comment);
+
+        $this->assertNotificationPushedOnQueue($queue, YouHaveBeenMentionedInAComment::class);
     }
 
     /** @test */
@@ -44,17 +58,20 @@ class MentionInCommentNotificationsTest extends TestCase
     /** @test */
     public function it_sends_notifications_only_to_the_newly_mentioned_users_when_a_comment_is_updated()
     {
-        $this->withoutExceptionHandling();
-        unset(app()[ChannelManager::class]);
-        $this->withoutMiddleware([ThrottlePosts::class]);
+        $this->unsetFakeNotifications();
+        $this->withoutMiddleware(ThrottlePosts::class);
         $this->useMysql();
+
         $poster = $this->signIn();
         $post = create(ProfilePost::class);
         $mentionedUser = create(User::class);
         $comment = ['body' => "hello @{$mentionedUser->name}"];
         $newMentionedUser = create(User::class);
 
-        $comment = $this->postJson(route('ajax.comments.store', $post), $comment)->json();
+        $comment = $this->postJson(
+            route('ajax.comments.store', $post),
+            $comment
+        )->json();
 
         $this->assertCount(1, $mentionedUser->notifications);
         $this->assertEquals($comment['id'], $mentionedUser->notifications()->first()['data']['comment']['id']);
@@ -65,10 +82,9 @@ class MentionInCommentNotificationsTest extends TestCase
 
         $this->patchJson(route('ajax.comments.update', $comment), $updatedComment);
 
-        $this->assertCount(1, $mentionedUser->fresh()->notifications);
-        $this->assertEquals($comment->id, $mentionedUser->notifications()->first()['data']['comment']['id']);
+        $this->assertCount(1, $mentionedUser->notifications);
         $this->assertCount(1, $newMentionedUser->fresh()->notifications);
-        $this->assertEquals($comment->id, $newMentionedUser->notifications()->first()['data']['comment']['id']);
+        $this->assertEquals($comment->id, $mentionedUser->notifications()->first()['data']['comment']['id']);
 
         $post->delete();
         $mentionedUser->delete();

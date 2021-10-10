@@ -3,10 +3,11 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class YouHaveBeenMentionedInAProfilePost extends Notification
+class YouHaveBeenMentionedInAProfilePost extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -15,8 +16,12 @@ class YouHaveBeenMentionedInAProfilePost extends Notification
      *
      * @return void
      */
-    public function __construct(public $profilePost, public $profilePostPoster, public $profileOwner)
-    {
+    public function __construct(
+        public $profilePost,
+        public $profilePostPoster,
+        public $profileOwner
+    ) {
+        $this->onQueue('notifications');
     }
 
     /**

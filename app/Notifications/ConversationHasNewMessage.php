@@ -5,10 +5,11 @@ namespace App\Notifications;
 use App\Models\Conversation;
 use App\Models\Reply;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ConversationHasNewMessage extends Notification
+class ConversationHasNewMessage extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -26,6 +27,7 @@ class ConversationHasNewMessage extends Notification
     {
         $this->conversation = $conversation;
         $this->message = $message;
+        $this->onQueue('notifications');
     }
 
     /**

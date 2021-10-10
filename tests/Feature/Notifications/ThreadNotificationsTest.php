@@ -9,13 +9,16 @@ use App\Notifications\ThreadHasNewReply;
 use Facades\Tests\Setup\ThreadFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Notifications\SendQueuedNotifications;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+use Tests\Traits\TestsQueue;
 
 class ThreadNotificationsTest extends TestCase
 {
 
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase, WithFaker, TestsQueue;
 
     protected $thread;
     protected $user;
@@ -29,6 +32,24 @@ class ThreadNotificationsTest extends TestCase
         $this->thread = create(Thread::class);
 
         $this->user = $this->signIn();
+    }
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue_when_a_new_reply_is_posted_to_thread()
+    {
+        $this->unsetFakeNotifications();
+        Queue::fake();
+        $thread = create(Thread::class);
+        $replyPoster = $this->signIn();
+        $newReply = 'new reply';
+        $queue = 'notifications';
+
+        $this->post(
+            route('ajax.replies.store', $thread),
+            ['body' => $newReply]
+        );
+
+        $this->assertNotificationPushedOnQueue($queue, ThreadHasNewReply::class);
     }
 
     /** @test */

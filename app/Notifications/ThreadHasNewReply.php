@@ -3,10 +3,11 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ThreadHasNewReply extends Notification
+class ThreadHasNewReply extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -23,6 +24,7 @@ class ThreadHasNewReply extends Notification
     {
         $this->thread = $thread;
         $this->reply = $reply;
+        $this->onQueue('notifications');
     }
 
     /**

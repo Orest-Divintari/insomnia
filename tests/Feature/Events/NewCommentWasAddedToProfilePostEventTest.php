@@ -14,6 +14,7 @@ use App\Models\User;
 use Facades\Tests\Setup\ProfilePostFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Notification;
 use Mockery;
 use Tests\TestCase;
 
@@ -24,6 +25,7 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        Notification::fake();
         $this->withoutMiddleware([ThrottlePosts::class]);
     }
 
@@ -60,6 +62,7 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
     /** @test */
     public function when_a_user_posts_a_comment_to_profile_post_the_mentioned_users_are_notified()
     {
+
         $profileOwner = create(User::class);
         $poster = $this->signIn();
         $profilePost = ProfilePostFactory::toProfile($profileOwner)->create();

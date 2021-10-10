@@ -3,9 +3,10 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class ReplyHasNewLike extends Notification
+class ReplyHasNewLike extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -29,6 +30,7 @@ class ReplyHasNewLike extends Notification
         $this->like = $like;
         $this->reply = $reply;
         $this->thread = $thread;
+        $this->onQueue('notifications');
     }
 
     /**

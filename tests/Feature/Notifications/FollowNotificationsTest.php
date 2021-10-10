@@ -6,12 +6,28 @@ use App\Models\User;
 use App\Notifications\YouHaveANewFollower;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+use Tests\Traits\TestsQueue;
 
 class FollowNotificationsTest extends TestCase
 {
 
-    use RefreshDatabase;
+    use RefreshDatabase, TestsQueue;
+
+    /** @test */
+    public function it_pushes_the_notification_into_the_queue()
+    {
+        Queue::fake();
+        $queue = 'notifications';
+        $user = create(User::class);
+        $follower = $this->signIn();
+        $desiredChannels = ['database'];
+
+        $this->postJson(route('ajax.follow.store', $user));
+
+        $this->assertNotificationPushedOnQueue($queue, YouHaveANewFollower::class);
+    }
 
     /** @test */
     public function users_may_receive_database_notification_when_another_user_follows_them()

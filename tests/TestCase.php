@@ -5,6 +5,7 @@ namespace Tests;
 use App\Http\Middleware\AppendVisitor;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Role;
 use Tests\Traits\FakeModelStatistics;
@@ -81,5 +82,15 @@ abstract class TestCase extends BaseTestCase
         $test = 'mysql_test';
         config(['database.default' => $test]);
         Artisan::call('migrate:refresh --database=' . $test);
+    }
+
+    /**
+     * It unsets the fake notification
+     *
+     * @return void
+     */
+    public function unsetFakeNotifications()
+    {
+        unset(app()[ChannelManager::class]);
     }
 }

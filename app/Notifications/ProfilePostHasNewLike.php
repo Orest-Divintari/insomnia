@@ -3,10 +3,11 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProfilePostHasNewLike extends Notification
+class ProfilePostHasNewLike extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -28,6 +29,7 @@ class ProfilePostHasNewLike extends Notification
         $this->poster = $poster;
         $this->liker = $liker;
         $this->like = $like;
+        $this->onQueue('notifications');
     }
 
     /**
