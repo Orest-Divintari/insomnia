@@ -20,6 +20,19 @@ class StartConversationButtonTest extends DuskTestCase
     }
 
     /** @test */
+    public function users_should_not_see_the_start_conversation_button_on_their_profile()
+    {
+        $john = create(User::class);
+
+        $this->browse(function (Browser $browser) use ($john) {
+            $browser->loginAs($john)
+                ->visit(route('profiles.show', $john))
+                ->assertSee($john->name)
+                ->assertMissing('@start-conversation-button');
+        });
+
+    }
+    /** @test */
     public function unverified_users_may_not_see_the_start_conversation_button()
     {
         $john = create(User::class);
