@@ -9,7 +9,7 @@ class ThreadWasCreated
      *
      * @return void
      */
-    public function __construct(public $thread, public $threadPoster)
+    public function __construct(public $thread, public $poster)
     {
     }
 }

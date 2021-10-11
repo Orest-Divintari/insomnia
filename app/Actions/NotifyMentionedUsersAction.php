@@ -33,8 +33,8 @@ class NotifyMentionedUsersAction
         $mentionedUsersQuery = User::query()
             ->findByName($this->model->mentionedUsers())
             ->verified()
-            ->except(auth()->user())
-            ->notIgnoring(auth()->user());
+            ->except($this->event->poster)
+            ->notIgnoring($this->event->poster);
 
         if ($this->isUpdatedEvent()) {
             $mentionedUsersQuery = $this->excludeAlreadyMentionedUsers($mentionedUsersQuery);

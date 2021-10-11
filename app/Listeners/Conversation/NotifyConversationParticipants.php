@@ -31,7 +31,7 @@ class NotifyConversationParticipants
     {
         $event->conversation
             ->activeParticipants()
-            ->where('user_id', '!=', $event->message->poster->id)
+            ->except($event->poster)
             ->get()
             ->each(function ($participant) use ($event) {
                 $this->notify($participant, $this->notification($event));

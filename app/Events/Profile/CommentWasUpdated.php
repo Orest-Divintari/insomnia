@@ -9,10 +9,10 @@ class CommentWasUpdated
      *
      * @return void
      */
-    public function __construct($comment, $commentPoster)
+    public function __construct($comment, $poster)
     {
         $this->comment = $comment;
-        $this->commentPoster = $commentPoster;
+        $this->poster = $poster;
         $this->profilePost = $comment->repliable;
         $this->profileOwner = $comment->repliable->profileOwner;
     }

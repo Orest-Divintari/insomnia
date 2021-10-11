@@ -9,7 +9,7 @@ class ThreadReplyWasUpdated
      *
      * @return void
      */
-    public function __construct(public $thread, public $reply)
+    public function __construct(public $thread, public $reply, public $poster)
     {
     }
 }

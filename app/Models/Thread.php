@@ -236,7 +236,7 @@ class Thread extends Model
             (new Reply($attributes))->setPoster($poster)
         );
 
-        event(new NewReplyWasPostedToThread($this, $reply));
+        event(new NewReplyWasPostedToThread($this, $reply, auth()->user()));
 
         return $reply;
     }

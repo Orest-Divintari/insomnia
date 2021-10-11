@@ -28,7 +28,7 @@ class NotifyProfileOwnerOfNewPost
      */
     public function handle(NewPostWasAddedToProfile $event)
     {
-        if ($event->profileOwner->isNot($event->postPoster)) {
+        if ($event->profileOwner->isNot($event->poster)) {
             $this->notify($event->profileOwner, $this->notification($event));
         }
 
@@ -44,7 +44,7 @@ class NotifyProfileOwnerOfNewPost
     {
         return new ProfileHasNewPost(
             $event->profilePost,
-            $event->postPoster,
+            $event->poster,
             $event->profileOwner
         );
     }

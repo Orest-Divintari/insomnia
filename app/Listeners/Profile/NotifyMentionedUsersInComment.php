@@ -50,7 +50,7 @@ class NotifyMentionedUsersInComment
         return new YouHaveBeenMentionedInAComment(
             $event->profilePost,
             $event->comment,
-            $event->commentPoster,
+            $event->poster,
             $event->profileOwner
         );
     }

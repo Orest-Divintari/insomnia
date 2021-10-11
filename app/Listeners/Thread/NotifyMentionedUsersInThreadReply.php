@@ -43,6 +43,6 @@ class NotifyMentionedUsersInThreadReply
      */
     protected function notification($event)
     {
-        return new YouHaveBeenMentionedInAThreadReply($event->thread, $event->reply);
+        return new YouHaveBeenMentionedInAThreadReply($event->thread, $event->reply, $event->poster);
     }
 }

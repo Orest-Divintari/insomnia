@@ -31,7 +31,7 @@ class NotifyProfilePostOwnerOfNewComment
         $profilePostPoster = $event->profilePost->poster;
 
         if ($profilePostPoster->isNot($event->profileOwner)
-            && $profilePostPoster->isNot($event->commentPoster)
+            && $profilePostPoster->isNot($event->poster)
         ) {
             $this->notify($profilePostPoster, $this->notification($event));
         }
@@ -49,7 +49,7 @@ class NotifyProfilePostOwnerOfNewComment
         return new YourProfilePostHasNewComment(
             $event->profilePost,
             $event->comment,
-            $event->commentPoster,
+            $event->poster,
             $event->profileOwner
         );
     }

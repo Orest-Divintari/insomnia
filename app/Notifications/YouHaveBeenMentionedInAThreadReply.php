@@ -16,7 +16,7 @@ class YouHaveBeenMentionedInAThreadReply extends Notification implements ShouldQ
      *
      * @return void
      */
-    public function __construct(public $thread, public $reply)
+    public function __construct(public $thread, public $reply, public $poster)
     {
         $this->onQueue('notifications');
     }
@@ -55,7 +55,7 @@ class YouHaveBeenMentionedInAThreadReply extends Notification implements ShouldQ
     public function toArray($notifiable)
     {
         return [
-            'triggerer' => $this->reply->poster,
+            'triggerer' => $this->poster,
             'thread' => $this->thread,
             'reply' => $this->reply,
             'type' => 'thread-reply-mention-notification',

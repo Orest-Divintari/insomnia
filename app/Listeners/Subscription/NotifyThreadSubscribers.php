@@ -4,7 +4,6 @@ namespace App\Listeners\Subscription;
 
 use App\Events\Subscription\NewReplyWasPostedToThread;
 use App\Listeners\Notify;
-use App\Models\User;
 use App\Notifications\ThreadHasNewReply;
 
 class NotifyThreadSubscribers
@@ -30,8 +29,8 @@ class NotifyThreadSubscribers
 
         $thread->subscribers()
             ->verified()
-            ->except(auth()->user())
-            ->notIgnoring(auth()->user())
+            ->except($event->poster)
+            ->notIgnoring($event->poster)
             ->with(['subscriptions' => function ($query) use ($thread) {
                 return $query->where('thread_id', $thread->id);
             }])

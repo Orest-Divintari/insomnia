@@ -20,7 +20,7 @@ class NewReplyWasPostedToThread
      * @param $reply
      * @return void
      */
-    public function __construct($thread, $reply)
+    public function __construct($thread, $reply, public $poster)
     {
         $this->thread = $thread;
         $this->reply = $reply;

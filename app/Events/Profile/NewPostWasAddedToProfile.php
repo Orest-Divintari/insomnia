@@ -17,15 +17,15 @@ class NewPostWasAddedToProfile
      * Create a new event instance.
      *
      * @param ProfilePost $profilePost
-     * @param User $postPoster
+     * @param User $poster
      * @param User $profileOwner
      *
      * @return void
      */
-    public function __construct($profilePost, $postPoster, $profileOwner)
+    public function __construct($profilePost, $poster, $profileOwner)
     {
         $this->profilePost = $profilePost;
-        $this->postPoster = $postPoster;
+        $this->poster = $poster;
         $this->profileOwner = $profileOwner;
     }
 }

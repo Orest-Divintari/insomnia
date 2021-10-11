@@ -45,6 +45,6 @@ class NotifyMentionedUsersInThread
      */
     protected function notification($event)
     {
-        return new YouHaveBeenMentionedInAThread($event->thread, $event->threadPoster);
+        return new YouHaveBeenMentionedInAThread($event->thread, $event->poster);
     }
 }

@@ -30,7 +30,7 @@ class NotifyProfileOwnerOfNewCommentOnAPost
     {
         $profileOwner = $event->profileOwner;
         $profilePostPoster = $event->profilePost->poster;
-        $commentPoster = $event->commentPoster;
+        $commentPoster = $event->poster;
 
         if ($profileOwner->isNot($profilePostPoster)
             && $profileOwner->isNot($commentPoster)
@@ -50,7 +50,7 @@ class NotifyProfileOwnerOfNewCommentOnAPost
         return new APostOnYourProfileHasNewComment(
             $event->profilePost,
             $event->comment,
-            $event->commentPoster,
+            $event->poster,
             $event->profileOwner
         );
     }

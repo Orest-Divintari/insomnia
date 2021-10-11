@@ -24,11 +24,11 @@ class NewCommentWasAddedToProfilePost
      * @param User $profileOwner
      * @return void
      */
-    public function __construct($profilePost, $comment, $commentPoster, $profileOwner)
+    public function __construct($profilePost, $comment, $poster, $profileOwner)
     {
         $this->profilePost = $profilePost;
         $this->comment = $comment;
-        $this->commentPoster = $commentPoster;
+        $this->poster = $poster;
         $this->profileOwner = $profileOwner;
     }
 

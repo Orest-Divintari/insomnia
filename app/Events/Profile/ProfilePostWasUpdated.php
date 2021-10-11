@@ -15,10 +15,10 @@ class ProfilePostWasUpdated
      *
      * @return void
      */
-    public function __construct($profilePost, $postPoster)
+    public function __construct($profilePost, $poster)
     {
         $this->profilePost = $profilePost;
-        $this->postPoster = $postPoster;
+        $this->poster = $poster;
         $this->profileOwner = $profilePost->profileOwner;
     }
 

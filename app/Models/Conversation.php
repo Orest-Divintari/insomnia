@@ -175,7 +175,7 @@ class Conversation extends Model
             (new Reply($attributes))->setPoster($user)
         );
 
-        event(new NewMessageWasAddedToConversation($this, $message));
+        event(new NewMessageWasAddedToConversation($this, $message, auth()->user()));
 
         return $message;
     }

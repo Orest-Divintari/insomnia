@@ -58,7 +58,7 @@ class NotifyPostParticipantsOfNewComment
     {
         return $event->profilePost->comments()
             ->whereNotIn('user_id', [
-                $event->commentPoster->id,
+                $event->poster->id,
                 $event->profilePost->poster->id,
                 $event->profileOwner->id]
             )->get();
@@ -75,7 +75,7 @@ class NotifyPostParticipantsOfNewComment
         return new ParticipatedProfilePostHasNewComment(
             $event->profilePost,
             $event->comment,
-            $event->commentPoster,
+            $event->poster,
             $event->profileOwner
         );
     }

@@ -41,7 +41,7 @@ class ReplyController extends Controller
     {
         $request->update($reply);
 
-        event(new ThreadReplyWasUpdated($reply->repliable, $reply));
+        event(new ThreadReplyWasUpdated($reply->repliable, $reply, auth()->user()));
 
         return response('Reply has been updated', 200);
     }

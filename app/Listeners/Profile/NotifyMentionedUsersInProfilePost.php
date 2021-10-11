@@ -48,7 +48,7 @@ class NotifyMentionedUsersInProfilePost
     {
         return new YouHaveBeenMentionedInAProfilePost(
             $event->profilePost,
-            $event->postPoster,
+            $event->poster,
             $event->profileOwner
         );
     }
