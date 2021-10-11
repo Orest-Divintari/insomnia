@@ -2,9 +2,7 @@
 
 namespace Tests\Feature\Notifications;
 
-use App\Models\Thread;
-use App\Models\User;
-use Carbon\Carbon;
+use Facades\Tests\Setup\NotificationFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -21,13 +19,10 @@ class UserNotificationsTest extends TestCase
     public function it_returns_unread_notifications_up_to_one_week_old()
     {
         $orestis = $this->signIn();
-        $thread = create(Thread::class);
-        $thread->subscribe($orestis->id);
-        $john = create(User::class);
-        Carbon::setTestNow(Carbon::now()->subMonth());
-        $thread->addReply(['body' => $this->faker->sentence], $john);
-        Carbon::setTestNow();
-        $thread->addReply(['body' => $this->faker->sentence], $john);
+        NotificationFactory::forUser($orestis)->create();
+        NotificationFactory::forUser($orestis)
+            ->withDate(now()->subMonth())
+            ->create();
 
         $notification = $this->get(route('ajax.user-notifications.index'))->json()[0];
 
@@ -39,13 +34,10 @@ class UserNotificationsTest extends TestCase
     public function it_returns_read_notifications_up_to_one_week_old()
     {
         $orestis = $this->signIn();
-        $thread = create(Thread::class);
-        $thread->subscribe($orestis->id);
-        $john = create(User::class);
-        Carbon::setTestNow(Carbon::now()->subMonth());
-        $thread->addReply(['body' => $this->faker->sentence], $john);
-        Carbon::setTestNow();
-        $thread->addReply(['body' => $this->faker->sentence], $john);
+        NotificationFactory::forUser($orestis)->create();
+        NotificationFactory::forUser($orestis)
+            ->withDate(now()->subMonth())
+            ->create();
         $orestis->notifications()->first()->markAsRead();
 
         $notification = $this->get(route('ajax.user-notifications.index'))->json()[0];
