@@ -643,7 +643,7 @@ class UserTest extends TestCase
 
         $user->ignore($thread);
 
-        $this->assertCount(1, $user->ignoredThreads);
+        $this->assertCount(1, $user->ignoredThreads()->get());
         $this->assertEquals($thread->id, $user->ignoredThreads()->first()->id);
     }
 
