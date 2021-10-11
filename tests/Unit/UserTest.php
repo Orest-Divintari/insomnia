@@ -383,7 +383,7 @@ class UserTest extends TestCase
         $orestis = $this->signIn();
         $thread = create(Thread::class);
         $thread->subscribe($orestis->id);
-        $john = create(User::class);
+        $john = $this->signIn();
         $thread->addReply(['body' => $this->faker->sentence], $john);
         Carbon::setTestNow(Carbon::now()->addDay());
 
@@ -393,11 +393,10 @@ class UserTest extends TestCase
     /** @test */
     public function can_mark_notifications_as_viewed()
     {
-        $this->withoutExceptionHandling();
         $orestis = $this->signIn();
         $thread = create(Thread::class);
         $thread->subscribe($orestis->id);
-        $john = create(User::class);
+        $john = $this->signIn();
         $thread->addReply(['body' => $this->faker->sentence], $john);
         Carbon::setTestNow(Carbon::now()->addDay());
         $this->assertFalse($orestis->notificationsViewed());
@@ -414,7 +413,7 @@ class UserTest extends TestCase
         $orestis = $this->signIn();
         $thread = create(Thread::class);
         $thread->subscribe($orestis->id);
-        $john = create(User::class);
+        $john = $this->signIn();
 
         $thread->addReply(['body' => $this->faker->sentence], $john);
         Carbon::setTestNow(Carbon::now()->addDay());

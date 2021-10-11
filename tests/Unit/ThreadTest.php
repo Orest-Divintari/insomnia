@@ -105,7 +105,7 @@ class ThreadTest extends TestCase
     public function a_thread_can_add_a_reply()
     {
         $thread = create(Thread::class);
-        $user = create(User::class);
+        $user = $this->signIn();
 
         $thread->addReply(['body' => $this->faker->sentence], $user);
 

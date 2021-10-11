@@ -3,7 +3,6 @@
 namespace Tests\Feature\Account;
 
 use App\Models\Thread;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -19,12 +18,12 @@ class ViewNotificationsTest extends TestCase
         $orestis = $this->signIn();
         $thread = create(Thread::class);
         $thread->subscribe($orestis->id);
-        $john = create(User::class);
+        $john = $this->signIn();
         Carbon::setTestNow(Carbon::now()->subMonth());
         $oldReply = $thread->addReply(['body' => $this->faker->sentence()], $john);
         Carbon::setTestNow();
         $recentReply = $thread->addReply(['body' => $this->faker->sentence()], $john);
-
+        $this->signIn($orestis);
         $response = $this->get(route('account.notifications.index'));
 
         $response->assertSee($recentReply->body)
@@ -37,12 +36,13 @@ class ViewNotificationsTest extends TestCase
         $orestis = $this->signIn();
         $thread = create(Thread::class);
         $thread->subscribe($orestis->id);
-        $john = create(User::class);
+        $john = $this->signIn();
         Carbon::setTestNow(Carbon::now()->subMonth());
         $oldReply = $thread->addReply(['body' => $this->faker->sentence], $john);
         Carbon::setTestNow();
         $recentReply = $thread->addReply(['body' => $this->faker->sentence], $john);
         $orestis->notifications()->first()->markAsRead();
+        $this->signIn($orestis);
 
         $response = $this->get(route('account.notifications.index'));
 

@@ -81,7 +81,7 @@ abstract class TestCase extends BaseTestCase
     {
         $test = 'mysql_test';
         config(['database.default' => $test]);
-        Artisan::call('migrate:refresh --database=' . $test);
+        Artisan::call('migrate:fresh --database=' . $test);
     }
 
     /**
