@@ -86,7 +86,7 @@ html {
 }
 
 .head-tab-item {
-    @apply .px-5 .py-4 .text-md;
+    @apply .h-full .px-5 .py-4 .text-md;
     &:hover {
         @apply .bg-blue-mid;
     }
@@ -99,7 +99,7 @@ html {
 .sub-head-tab-container {
     @apply .py-2 .text-blue-link-menu .leading-6 .text-smaller;
     &:hover {
-        @apply .bg-blue-mid-light;
+        @apply .bg-gray-lighter;
     }
 }
 

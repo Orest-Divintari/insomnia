@@ -19,8 +19,8 @@
                 <conversations-button></conversations-button>
 
 
-                <form action="{{ route('logout') }}" method="POST">
-                    <button class="head-tab-item">Logout</button>
+                <form class="head-tab-item" action="{{ route('logout') }}" method="POST">
+                    <button>Logout</button>
                 </form>
             </div>
 

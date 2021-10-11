@@ -1,5 +1,5 @@
 <template>
-  <div @click="fetchData">
+  <div @click="fetchData" class="hover:bg-blue-mid">
     <dropdown styleClasses="w-80 border-r-0 border-l-0">
       <template v-slot:dropdown-trigger>
         <div class="relative h-14 text-center pt-4 px-2">

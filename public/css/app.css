@@ -8321,6 +8321,7 @@ html {
 }
 
 .head-tab-item {
+  height: 100%;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 1rem;
@@ -8360,8 +8361,8 @@ html {
 
 .sub-head-tab-container:hover {
   --bg-opacity: 1;
-  background-color: #6786B1;
-  background-color: rgba(103, 134, 177, var(--bg-opacity));
+  background-color: #D7E2EF;
+  background-color: rgba(215, 226, 239, var(--bg-opacity));
 }
 
 .sub-head-tab-item {
