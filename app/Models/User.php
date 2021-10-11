@@ -623,7 +623,9 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function scopeExcept($query, $user)
     {
-        return $query->where('users.id', '!=', $user->id);
+        return $query->when(isset($user), function ($query) use ($user) {
+            $query->where('users.id', '!=', $user->id);
+        });
     }
 
     /**
