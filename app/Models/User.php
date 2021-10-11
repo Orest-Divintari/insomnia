@@ -544,18 +544,16 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Fetch the threads that are ignored by the user
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @return Builder
      */
     public function ignoredThreads()
     {
-        return $this->hasManyThrough(
-            Thread::class,
-            Ignoration::class,
-            'user_id',
+        return Thread::whereIn(
             'id',
-            'id',
-            'ignorable_id'
-        )->where('ignorable_type', Thread::class);
+            Ignoration::select('ignorable_id')
+                ->where('user_id', $this->id)
+                ->where('ignorable_type', Thread::class)
+        );
     }
 
     /**

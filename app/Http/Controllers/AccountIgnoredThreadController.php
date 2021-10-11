@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Thread;
+
 class AccountIgnoredThreadController extends Controller
 {
     /**
@@ -16,7 +18,9 @@ class AccountIgnoredThreadController extends Controller
             ->withIgnoredByVisitor(auth()->user())
             ->with('poster')
             ->withRecentReply()
-            ->get();
+            ->get()
+            ->each
+            ->append('permissions');
 
         return view('account.ignored.threads', compact('ignoredThreads'));
     }
