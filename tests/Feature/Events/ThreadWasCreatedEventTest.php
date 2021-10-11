@@ -34,7 +34,7 @@ class ThreadWasCreatedEventTest extends TestCase
 
         $listener->shouldHaveReceived('handle', function ($event) use ($thread) {
             return $event->thread->is($thread)
-            && $event->threadPoster->is($thread->poster);
+            && $event->poster->is($thread->poster);
         });
     }
 }

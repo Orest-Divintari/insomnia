@@ -54,7 +54,7 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
             ) {
                 return $event->profilePost->is($profilePost)
                 && $event->comment->is($comment)
-                && $event->commentPoster->is($poster)
+                && $event->poster->is($poster)
                 && $event->profileOwner->is($profileOwner);
             });
     }
@@ -85,7 +85,7 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
             ) {
                 return $event->profilePost->is($profilePost)
                 && $event->comment->is($comment)
-                && $event->commentPoster->is($poster)
+                && $event->poster->is($poster)
                 && $event->profileOwner->is($profileOwner);
             });
     }
@@ -115,7 +115,7 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
             ) {
                 return $event->profilePost->is($profilePost)
                 && $event->comment->is($comment)
-                && $event->commentPoster->is($poster)
+                && $event->poster->is($poster)
                 && $event->profileOwner->is($profileOwner);
             });
     }
@@ -145,7 +145,7 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
             ) {
                 return $event->profilePost->is($profilePost)
                 && $event->comment->is($comment)
-                && $event->commentPoster->is($poster)
+                && $event->poster->is($poster)
                 && $event->profileOwner->is($profileOwner);
             });
     }
@@ -175,7 +175,7 @@ class NewCommentWasAddedToProfilePostEventTest extends TestCase
             ) {
                 return $event->profilePost->is($profilePost)
                 && $event->comment->is($comment)
-                && $event->commentPoster->is($poster)
+                && $event->poster->is($poster)
                 && $event->profileOwner->is($profileOwner);
             });
     }

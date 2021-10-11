@@ -28,7 +28,7 @@ class ProfilePostWasUpdatedEventTest extends TestCase
         $listener->shouldHaveReceived('handle', function ($event) use ($profilePost) {
             return $event->profilePost->is($profilePost)
             && $event->profileOwner->is($profilePost->profileOwner)
-            && $event->postPoster->is($profilePost->poster);
+            && $event->poster->is($profilePost->poster);
         });
     }
 }

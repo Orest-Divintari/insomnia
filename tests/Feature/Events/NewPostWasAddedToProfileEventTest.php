@@ -36,7 +36,7 @@ class NewPostWasAddedToProfileEventTest extends TestCase
         ) {
             return $event->profilePost->is($profilePost)
             && $event->profileOwner->is($profileOwner)
-            && $event->postPoster->is($poster);
+            && $event->poster->is($poster);
         });
     }
 
@@ -62,7 +62,7 @@ class NewPostWasAddedToProfileEventTest extends TestCase
         ) {
             return $event->profilePost->is($profilePost)
             && $event->profileOwner->is($profileOwner)
-            && $event->postPoster->is($poster);
+            && $event->poster->is($poster);
         });
     }
 }

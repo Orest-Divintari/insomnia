@@ -38,7 +38,7 @@ class NotifyCommentPoster
             return;
         }
 
-        $this->notify($event->commentPoster, $this->notification());
+        $this->notify($event->poster, $this->notification());
     }
 
     /**
@@ -47,7 +47,7 @@ class NotifyCommentPoster
      */
     public function isOwnerOfComment()
     {
-        return auth()->id() == $this->event->commentPoster->id;
+        return auth()->id() == $this->event->poster->id;
     }
 
     /**
@@ -61,7 +61,7 @@ class NotifyCommentPoster
             $this->event->liker,
             $this->event->like,
             $this->event->comment,
-            $this->event->commentPoster,
+            $this->event->poster,
             $this->event->profilePost,
             $this->event->profileOwner,
         );

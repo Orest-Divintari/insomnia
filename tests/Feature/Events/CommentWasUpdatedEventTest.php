@@ -37,7 +37,7 @@ class CommentWasUpdatedEventTest extends TestCase
                 return $event->profilePost->is($profilePost)
                 && $event->comment->is($comment)
                 && $event->profileOwner->is($profileOwner)
-                && $event->commentPoster->is($commentPoster);
+                && $event->poster->is($commentPoster);
             });
     }
 }

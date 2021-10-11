@@ -41,7 +41,7 @@ class CommentWasLikedEventTest extends TestCase
             $liker
         ) {
             return $event->comment->id == $comment->id
-            && $event->commentPoster->id == $commentPoster->id
+            && $event->poster->id == $commentPoster->id
             && $event->liker->id == $liker->id
             && $event->like->id == $like->id
             && $event->profilePost->id == $profilePost->id
