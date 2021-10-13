@@ -12,7 +12,5 @@ npm-debug.log
 yarn-error.log
 /public/css
 /public/js
-data/redis/appendonly.aof
-data/redis/dump.rdb
-data/.DS_Store
+docker/data
 .DS_Store
