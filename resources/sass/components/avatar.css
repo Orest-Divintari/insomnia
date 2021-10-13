@@ -1,0 +1,18 @@
+.avatar {
+    @apply .rounded-full .object-cover;
+}
+.avatar-sm {
+    @apply .avatar .w-6 .h-6;
+}
+.avatar-md {
+    @apply .avatar .w-9 .h-9;
+}
+.avatar-lg {
+    @apply .avatar .w-12 .h-12;
+}
+.avatar-xl {
+    @apply .avatar .w-24 .h-24;
+}
+.avatar-2xl {
+    @apply .avatar .w-48 .h-48;
+}
