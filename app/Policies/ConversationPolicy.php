@@ -75,7 +75,6 @@ class ConversationPolicy
         return isset($authUser)
         && $authUser->hasVerifiedEmail()
         && $user->hasVerifiedEmail()
-        && $authUser->isNot($user)
         && $user->allows('start_conversation');
     }
 
