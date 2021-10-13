@@ -8,9 +8,9 @@ class FollowSeeder extends Seeder
 {
     use RandomModels, AuthenticatesUsers;
 
-    const FOLLOWINGS = 5;
-    const FOLLOWERS = 5;
-
+    const FOLLOWINGS = 1;
+    const FOLLOWERS = 1;
+    const NUMBER_OF_USERS = 1;
     /**
      * Run the database seeds.
      *
@@ -18,8 +18,8 @@ class FollowSeeder extends Seeder
      */
     public function run()
     {
-        $this->randomUsers(2000)->each(function ($user) {
-            $randomUsers = $this->randomUsersExcept(1000, $user);
+        $this->randomUsers(static::NUMBER_OF_USERS)->each(function ($user) {
+            $randomUsers = $this->randomUsersExcept(static::NUMBER_OF_USERS, $user);
             $randomUsers->each(function ($randomUser) use ($user) {
                 $user->follow($randomUser);
             });

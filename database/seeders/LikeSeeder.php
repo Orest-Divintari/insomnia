@@ -5,12 +5,13 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 class LikeSeeder extends Seeder
-
+{
     use RandomModels;
 
-    const NUMBER_OF_THREAD_REPLIES = 2;
-    const NUMBER_OF_COMMENTS = 2;
-    const NUMBER_OF_PROFILEPOSTS = 2;
+    const NUMBER_OF_THREAD_REPLIES = 1;
+    const NUMBER_OF_COMMENTS = 1;
+    const NUMBER_OF_PROFILEPOSTS = 1;
+    const NUMBER_OF_USERS = 1;
 
     /**
      * Run the database seeds.
@@ -19,7 +20,7 @@ class LikeSeeder extends Seeder
      */
     public function run()
     {
-        $this->randomUsers(1000)->each(function ($user) {
+        $this->randomUsers(static::NUMBER_OF_USERS)->each(function ($user) {
             $this->likeProfilePosts($user);
             $this->likeComments($user);
             $this->likeThreadReplies($user);

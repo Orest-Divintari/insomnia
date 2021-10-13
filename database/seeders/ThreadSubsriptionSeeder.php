@@ -8,6 +8,8 @@ class ThreadSubsriptionSeeder extends Seeder
 {
     use RandomModels;
 
+    const NUMBER_OF_USERS = 1;
+
     /**
      * Run the database seeds.
      *
@@ -15,9 +17,9 @@ class ThreadSubsriptionSeeder extends Seeder
      */
     public function run()
     {
-        $users = $this->randomUsers(2000);
+        $users = $this->randomUsers(static::NUMBER_OF_USERS);
 
-        $threads = $this->randomThreads(2000);
+        $threads = $this->randomThreads(static::NUMBER_OF_USERS);
 
         $threads->each(function ($thread) use ($users) {
             $users->each(function ($user) use ($thread) {

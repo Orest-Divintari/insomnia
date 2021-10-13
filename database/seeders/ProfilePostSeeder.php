@@ -11,9 +11,9 @@ class ProfilePostSeeder extends Seeder
 {
     use RandomModels, AuthenticatesUsers;
 
-    const NUMBER_OF_PROFILE_POSTS = 2;
-    const NUMBER_OF_COMMENTS = 2;
-
+    const NUMBER_OF_PROFILE_POSTS = 1;
+    const NUMBER_OF_COMMENTS = 1;
+    const NUMBER_OF_USERS = 1;
     /**
      * Run the database seeds.
      *
@@ -21,7 +21,7 @@ class ProfilePostSeeder extends Seeder
      */
     public function run()
     {
-        $posters = $this->randomUsers(2000);
+        $posters = $this->randomUsers(static::NUMBER_OF_USERS);
 
         $posters->each(function ($poster) {
 

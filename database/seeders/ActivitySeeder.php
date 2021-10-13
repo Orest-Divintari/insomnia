@@ -11,6 +11,7 @@ class ActivitySeeder extends Seeder
 
     use AuthenticatesUsers, RandomModels;
 
+    const NUMBER_OF_USERS = 1;
     /**
      * Run the database seeds.
      *
@@ -18,7 +19,7 @@ class ActivitySeeder extends Seeder
      */
     public function run()
     {
-        $users = $this->randomUsers(2000);
+        $users = $this->randomUsers(static::NUMBER_OF_USERS);
 
         $users->each(function ($user) {
             $this->signIn($user);

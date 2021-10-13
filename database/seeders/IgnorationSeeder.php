@@ -7,6 +7,10 @@ use Illuminate\Database\Seeder;
 class IgnorationSeeder extends Seeder
 {
     use RandomModels;
+
+    const NUMBER_OF_USERS = 1;
+    const NUMBER_OF_THREADS = 1;
+
     /**
      * Run the database seeds.
      *
@@ -14,10 +18,10 @@ class IgnorationSeeder extends Seeder
      */
     public function run()
     {
-        $users = $this->randomUsers(1000);
+        $users = $this->randomUsers(static::NUMBER_OF_USERS);
 
-        $ignoredUsers = $this->randomUsersExcept(1000, $users);
-        $ignoredThreads = $this->randomThreads(1000);
+        $ignoredUsers = $this->randomUsersExcept(static::NUMBER_OF_USERS, $users);
+        $ignoredThreads = $this->randomThreads(static::NUMBER_OF_THREADS);
 
         $this->ignoreUsers($users, $ignoredUsers);
         $this->ignoreThreads($users, $ignoredThreads);
