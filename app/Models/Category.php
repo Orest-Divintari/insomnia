@@ -301,9 +301,9 @@ class Category extends Model
      */
     public function getImagePathAttribute($image)
     {
-        $default = 'storage/images/categories/apple_logo.png';
+        $default = "https://www.pngarts.com/files/8/Apple-Logo-Transparent-Image.png";
 
-        return asset($image ? 'storage/' . $image : $default);
+        return $image ? asset("storage/{$image}") : $default;
     }
 
     /**
