@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
+
 function user_avatar($user = null)
 {
     return $user ? $user->avatar_path : auth()->user()->avatar_path;
@@ -7,7 +9,7 @@ function user_avatar($user = null)
 
 function guest_avatar()
 {
-    return asset('/images/avatars/users/guest/guest_logo.png');
+    return asset('storage/images/avatars/users/guest/guest_logo.png');
 }
 
 function to_bool($value)

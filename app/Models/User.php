@@ -122,7 +122,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvatarPathAttribute($avatar)
     {
         return $avatar ?
-        asset($avatar) :
+        asset('storage/' . $avatar) :
         Avatar::generate($this->name);
     }
 
