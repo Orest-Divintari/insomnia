@@ -18,6 +18,7 @@ services:
       - redis
       - mysql
       - mailhog
+      - elasticsearch
     networks:
       - laravel
 
