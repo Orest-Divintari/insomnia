@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'iNsomnia') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>r
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,7 +21,7 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.core.css" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
     @stack('scripts')
     @stack('styles')
     <script>
@@ -71,7 +71,7 @@
 
         <main class="p-5 h-full bg-semi-white">{{$main}}</main>
         <div class="mt-10">
-            sadas
+            
         </div>
         <error-modal></error-modal>
     </div>
