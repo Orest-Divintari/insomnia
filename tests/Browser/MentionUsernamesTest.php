@@ -78,6 +78,7 @@ class MentionUsernamesTest extends DuskTestCase
         $user = create(User::class);
         $mentionedUser = create(User::class, ['name' => $this->name]);
         ProfilePostFactory::toProfile($user)->create();
+
         $this->browse(function (Browser $browser) use ($user) {
             $browser
                 ->loginAs($user)

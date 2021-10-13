@@ -311,7 +311,7 @@ class CreateCategoriesTest extends TestCase
             ->assertExists("/images/categories/{$category->id}/image/{$this->image->hashName()}");
 
         $this->assertEquals(
-            asset("/images/categories/{$category->id}/image/{$this->image->hashName()}"),
-            $category->fresh()->image_path);
+            asset("storage/images/categories/{$category->id}/image/{$this->image->hashName()}"),
+            asset($category->fresh()->image_path));
     }
 }

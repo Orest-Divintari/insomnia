@@ -97,10 +97,10 @@ class CategoryTest extends TestCase
     /** @test */
     public function a_category_can_determine_the_path_to_its_avatar()
     {
-        $image = '/avatars/categories/apple_logo.png';
+        $image = '/images/categories/apple_logo.png';
         $category = create(Category::class, ['image_path' => $image]);
 
-        $this->assertEquals(asset($image), $category->image_path);
+        $this->assertEquals(asset('storage/' . $image), $category->image_path);
     }
 
     /** @test */

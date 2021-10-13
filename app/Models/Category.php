@@ -150,6 +150,7 @@ class Category extends Model
         DB::unprepared('
         DROP FUNCTION IF EXISTS count_threads;
               CREATE FUNCTION `count_threads`(category_id INT) RETURNS int
+              DETERMINISTIC
         BEGIN
         DECLARE threadsCount INT;
         SELECT count(id)
@@ -187,6 +188,7 @@ class Category extends Model
         DB::unprepared('
         DROP FUNCTION IF EXISTS recently_active_thread;
         CREATE FUNCTION `recently_active_thread`(category_id INT) RETURNS int
+        DETERMINISTIC
         BEGIN
           DECLARE recentlyActiveThreadId INT;
           SELECT id
@@ -229,6 +231,7 @@ class Category extends Model
         DB::unprepared('
         DROP FUNCTION IF EXISTS count_replies;
                 CREATE FUNCTION `count_replies`(category_id INT) RETURNS int
+                DETERMINISTIC
         BEGIN
                           DECLARE repliesCount INT;
                           SELECT sum(replies_count)
@@ -262,6 +265,7 @@ class Category extends Model
         DB::unprepared('
         DROP FUNCTION IF EXISTS count_descendant_categories;
             CREATE FUNCTION `count_descendant_categories`(category_id INT) RETURNS int
+            DETERMINISTIC
         BEGIN
         DECLARE descendantCategoriesCount INT;
         SELECT count(id)

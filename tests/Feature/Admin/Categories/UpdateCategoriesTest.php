@@ -288,6 +288,7 @@ class UpdateCategoriesTest extends TestCase
         unset($attributes['image_path']);
         $this->assertDatabaseHas('categories', $attributes);
         $category = Category::where('title', $attributes['title'])->first();
+
         $this->assertImageExists($category, $image);
         $this->assertPreviousImageDoesNotExist($category);
     }
@@ -327,7 +328,7 @@ class UpdateCategoriesTest extends TestCase
             ->assertExists("/images/categories/{$category->id}/image/{$image->hashName()}");
 
         $this->assertEquals(
-            asset("/images/categories/{$category->id}/image/{$image->hashName()}"),
+            asset("storage/images/categories/{$category->id}/image/{$image->hashName()}"),
             $category->fresh()->image_path);
     }
 

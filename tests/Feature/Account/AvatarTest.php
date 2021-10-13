@@ -37,7 +37,7 @@ class AvatarTest extends TestCase
             ->assertExists("images/avatars/users/{$user->name}/{$image->hashName()}");
 
         $this->assertEquals(
-            asset("/images/avatars/users/{$user->name}/{$image->hashName()}"),
+            asset("storage/images/avatars/users/{$user->name}/{$image->hashName()}"),
             $user->fresh()->avatar_path);
         $this->assertFalse($user->default_avatar);
     }
@@ -147,7 +147,7 @@ class AvatarTest extends TestCase
         Storage::disk('public')
             ->assertExists("images/avatars/users/{$user->name}/{$image->hashName()}");
         $this->assertEquals(
-            asset("/images/avatars/users/{$user->name}/{$image->hashName()}"),
+            asset("storage/images/avatars/users/{$user->name}/{$image->hashName()}"),
             $user->fresh()->avatar_path);
         $this->assertFalse($user->default_avatar);
 
@@ -175,7 +175,7 @@ class AvatarTest extends TestCase
         Storage::disk('public')
             ->assertExists("images/avatars/users/{$user->name}/{$firstImage->hashName()}");
         $this->assertEquals(
-            asset("/images/avatars/users/{$user->name}/{$firstImage->hashName()}"),
+            asset("storage/images/avatars/users/{$user->name}/{$firstImage->hashName()}"),
             $user->fresh()->avatar_path);
         $this->assertFalse($user->default_avatar);
 

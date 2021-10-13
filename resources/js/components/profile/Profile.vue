@@ -66,6 +66,7 @@
                 <start-conversation-button
                   class="mr-1"
                   :user="profileOwner"
+                  v-if="!isAuthUser(profileOwner)"
                 ></start-conversation-button>
                 <dropdown :styleClasses="'w-56'">
                   <template v-slot:dropdown-trigger>
