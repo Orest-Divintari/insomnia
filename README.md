@@ -17,7 +17,8 @@ Insomnia is a forum where people can start new threads or participate in existin
 7. Run `docker-compose up -d` to build and start the docker containers.
 8. Run `docker-compose run --rm artisan storage:link --relative` to create a link for the public files.
 9. Run `docker-compose run --rm artisan migrate:fresh --seed` to run the migrations and seed the database.
-10. Visit the app in your browser by visiting **[127.0.0.1:82](http://127.0.0.1:82)**.
+10. Run `docker-compose run --rm artisan queue:work --queue=notifications` to handle the notifications.
+11. Visit the app in your browser by visiting **[127.0.0.1:82](http://127.0.0.1:82)**.
 
 If you seeded the database, you can login with the following credentials:
 
