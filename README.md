@@ -4,61 +4,56 @@ Insomnia is a forum where people can start new threads or participate in existin
 
 ## Requirements
 
--   Docker
+-   \*\*Docker
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clone this repository `git clone https://github.com/Orest-Divintari/insomnia.git`
+2. Run `cd insomnia` to go to the app directory.
+3. Run `mv .env.example .env` to rename the `.env.example` file to `.env`.
+4. Run `cp .env ./docker` to Copy the `.env` file in the docker folder.
+5. Run `cd docker` to go to the docker folder.
+6. Run `docker-compose run --rm composer install` to install the dependencies.
+7. Run `docker-compose up -d` to build and start the docker containers.
+8. Run `docker-compose run --rm artisan storage:link --relative` to create a link for the public files.
+9. Run `docker-compose run --rm artisan migrate:fresh --seed` to run the migrations and seed the database.
+10. Visit the app in your browser by visiting **[127.0.0.1:82](http://127.0.0.1:82)**.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+If you seeded the database, you can login with the following credentials:
 
-## Laravel Sponsors
+-   _username_ : john
+-   _password_ : example123
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Commands
 
--   **[Vehikl](https://vehikl.com/)**
--   **[Tighten Co.](https://tighten.co)**
--   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
--   **[64 Robots](https://64robots.com)**
--   **[Cubet Techno Labs](https://cubettech.com)**
--   **[Cyber-Duck](https://cyber-duck.co.uk)**
--   **[Many](https://www.many.co.uk)**
--   **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
--   **[DevSquad](https://devsquad.com)**
--   [UserInsights](https://userinsights.com)
--   [Fragrantica](https://www.fragrantica.com)
--   [SOFTonSOFA](https://softonsofa.com/)
--   [User10](https://user10.com)
--   [Soumettre.fr](https://soumettre.fr/)
--   [CodeBrisk](https://codebrisk.com)
--   [1Forge](https://1forge.com)
--   [TECPRESSO](https://tecpresso.co.jp/)
--   [Runtime Converter](http://runtimeconverter.com/)
--   [WebL'Agence](https://weblagence.com/)
--   [Invoice Ninja](https://www.invoiceninja.com)
--   [iMi digital](https://www.imi-digital.de/)
--   [Earthlink](https://www.earthlink.ro/)
--   [Steadfast Collective](https://steadfastcollective.com/)
--   [We Are The Robots Inc.](https://watr.mx/)
--   [Understand.io](https://www.understand.io/)
--   [Abdel Elrafa](https://abdelelrafa.com)
--   [Hyper Host](https://hyper.host)
--   [Appoly](https://www.appoly.co.uk)
--   [OP.GG](https://op.gg)
--   [云软科技](http://www.yunruan.ltd/)
+> You don't have to install anything to run Composer, Artisan and NPM commands.These commands are executed using docker containers and are destroyed after the execution.
 
-## Contributing
+| Command                                          | Description                           |
+| ------------------------------------------------ | ------------------------------------- |
+| `docker-compose run --rm composer [command]`     | Run composer commands                 |
+| `docker-compose run --rm npm [command]`          | Run npm commands                      |
+| `docker-compose run --rm artisan [command]`      | Run artisan commands                  |
+| `docker-compose run --rm artisan redis:flushall` | Clear redis cache                     |
+| `docker-compose run --rm artisan scout:flushall` | Remove all records from Elasticsearch |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Ports
 
-## Code of Conduct
+| Container         | Exposed port |
+| ----------------- | ------------ |
+| **nginx**         | `:82`        |
+| **mysql**         | `:3306`      |
+| **redis**         | `:6379`      |
+| **elasticsearch** | `:9200`      |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Data persistence
 
-## Security Vulnerabilities
+By default the MySQL and Redis data will not be deleted after you remove the docker containers. In order to delete the data after the containers are removed, you have to do the following:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Go to the `docker-compose.yml` file and:
+
+1. In order to delete the MySQL data, remove following line `- ./data/mysql:/var/lib/mysql`.
+2. In order to delete the Redis data, remove the following line `- ./data/redis:/data`.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The MIT License. Please see [the license file](LICENSE.md) for more information.
