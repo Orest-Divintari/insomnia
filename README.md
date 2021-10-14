@@ -25,6 +25,9 @@ If you seeded the database, you can login with the following credentials:
 -   _username_ : john
 -   _password_ : example123
 
+-   _username_ : doe
+-   _password_ : example123
+
 ## Commands
 
 > You don't have to install anything to run Composer, Artisan and NPM commands.These commands are executed using docker containers and are destroyed after the execution.
