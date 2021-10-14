@@ -4,7 +4,7 @@ Insomnia is a forum where people can start new threads or participate in existin
 
 ## Requirements
 
--   \*\*Docker
+-   **Docker**
 
 ## Installation
 
