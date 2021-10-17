@@ -44,7 +44,7 @@ If you seeded the database, you can login with the following credentials:
 
 ## Commands
 
-> You don't have to install anything to run Composer, Artisan and NPM commands.These commands are executed using docker containers and are destroyed after the execution.
+> You don't have to install anything to run Composer, Artisan and NPM commands. These commands are executed using docker containers and are destroyed after the execution.
 
 | Command                                          | Description                           |
 | ------------------------------------------------ | ------------------------------------- |
