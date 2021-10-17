@@ -18,29 +18,6 @@ class FilterServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
-        // $this->app->bind(ThreadFilters::class, function ($app) {
-        //     $filterManager = new FilterManager();
-        //     return $filterManager->addFilter(ThreadFilters::class);
-        // });
-
-        // $this->app->bind(ReplyFilters::class, function ($app) {
-        //     $filterManager = new FilterManager();
-        //     return $filterManager->addFilter(ReplyFilters::class);
-        // });
-
-        // $this->app->bind(ProfilePostFilters::class, function ($app) {
-        //     $filterManager = new FilterManager();
-        //     return $filterManager->addFilter(ProfilePostFilters::class);
-        // });
-
-        // $this->app->bind(AllPostsFilter::class, function ($app) {
-        //     $filterManager = new FilterManager();
-        //     return $filterManager->addFilter(ProfilePostFilters::class)
-        //         ->addFilter(ThreadFilters::class);
-
-        // });
-
         $this->app->bind(FilterManager::class, function ($app) {
             $filterChain = new FilterChain();
             return new FilterManager($filterChain);
