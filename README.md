@@ -11,6 +11,11 @@ Insomnia is a forum where people can start new threads or participate in existin
 -   Privacy settings, where members can select how and who can interact with them.
 -   Search the forum.
 
+**Technologies Used**
+
+`PHP` `Laravel` `Javascript` `Vue.JS`
+`MySQL` `Redis` `Elasticsearch` `Tailwind CSS`
+
 ## Requirements
 
 -   **Docker**
