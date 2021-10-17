@@ -16,3 +16,4 @@ docker/data
 .DS_Store
 .idea
 .vscode
+.editorconfig
