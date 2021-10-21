@@ -5,11 +5,12 @@ Insomnia is a forum where people can start new threads or participate in existin
 **Other features**
 
 -   Start conversation with other members. The admins of a conversation can invite, remove or set another participant as admin.
+-   Mention users in threads, profile posts, comments and messages.
 -   Follow and unfollow members.
 -   Ignore and unignore members.
 -   Notification settings, where members can select how and when they will be notified when various events occur.
 -   Privacy settings, where members can select how and who can interact with them.
--   Search the forum.
+-   Search threads, profile posts and tags. It is also possible to search the content of a specific user.
 
 **Technologies Used**
 
