@@ -14,11 +14,16 @@ services:
     volumes:
       - ../:/var/www/html:delegated
     depends_on:
-      - php
-      - redis
-      - mysql
-      - mailhog
-      - elasticsearch
+      php:
+        condition: service_started
+      redis:
+        condition: service_started
+      mailhog:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
     networks:
       - laravel
 
@@ -38,6 +43,10 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
     networks:
       - laravel
 
@@ -126,6 +135,11 @@ services:
       - data01:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
     networks:
       - laravel
 
