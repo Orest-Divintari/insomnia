@@ -494,4 +494,5 @@ class ViewThreadsTest extends TestCase
 
         $response->assertSee($pinnedThread->title);
     }
+
 }

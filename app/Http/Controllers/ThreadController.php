@@ -9,8 +9,8 @@ use App\Filters\FilterManager;
 use App\Http\Requests\CreateThreadRequest;
 use App\Models\Category;
 use App\Models\Thread;
+use App\ViewModels\ThreadsIndexViewModel;
 use App\ViewModels\ThreadsShowViewModel;
-use App\ViewModels\ThreasdIndexViewModel;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
@@ -33,7 +33,7 @@ class ThreadController extends Controller
     {
         $threadFilters = $this->filterManager->withThreadFilters();
 
-        $viewModel = new ThreasdIndexViewModel(
+        $viewModel = new ThreadsIndexViewModel(
             $category,
             $excludeIgnoredFilter,
             $threadFilters

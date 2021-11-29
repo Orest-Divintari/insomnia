@@ -6,7 +6,7 @@ use App\Filters\ExcludeIgnoredFilter;
 use App\Models\Category;
 use App\Models\Thread;
 
-class ThreasdIndexViewModel
+class ThreadsIndexViewModel
 {
 
     protected $excludeIgnoredFilter;
