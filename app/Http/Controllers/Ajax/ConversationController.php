@@ -36,9 +36,9 @@ class ConversationController extends Controller
         $conversationFilters = $filterManager->withConversationFilters();
 
         return auth()->user()->conversations()
+            ->withHasBeenUpdated()
             ->excludeIgnored(auth()->user(), $excludeIgnoredFilter)
             ->filter($conversationFilters)
-            ->withHasBeenUpdated()
             ->with('starter')
             ->with('participants')
             ->orderByUnread()

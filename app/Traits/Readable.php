@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use App\Models\Read;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 trait Readable
 {
@@ -12,10 +14,13 @@ trait Readable
      * @param Builder $query
      * @return Builder
      */
-    public function scopeWithHasBeenUpdated($query)
+    public function scopeWithHasBeenUpdated($query, $authUser = null)
     {
+        $authId = $authUser ? $authUser->id : auth()->id();
+
         $readable = get_class($this);
         $readableTable = $this->getTable();
+
         $read = '(
             SELECT reads.read_at
             FROM   `reads`
@@ -25,8 +30,9 @@ trait Readable
         )';
 
         if (is_null($query->getQuery()->columns)) {
-            $query->addSelect('*');
+            $query->addSelect($readableTable . '.*');
         }
+
         return $query->selectRaw(
             'CASE
                 WHEN ' . $read . ' >= ' . $readableTable . '.updated_at THEN 0
@@ -35,11 +41,12 @@ trait Readable
             END as has_been_updated',
             [
                 $readable,
-                auth()->id(),
+                $authId,
                 $readable,
-                auth()->id(),
+                $authId,
             ]
         );
+
     }
 
     /**

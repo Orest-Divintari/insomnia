@@ -1,5 +1,5 @@
 <template>
-  <div @click="fetchData">
+  <div @click="fetchData" dusk="conversations-button">
     <dropdown styleClasses="w-80">
       <template v-slot:dropdown-trigger>
         <div class="relative hover:bg-blue-mid h-14 text-center pt-4 px-2">
@@ -12,13 +12,18 @@
       <template v-slot:dropdown-items>
         <div class="dropdown-title pl-2">Conversations</div>
 
-        <div v-if="fetchedData" class="overflow-scroll max-h-96">
+        <div
+          dusk="dropdown-conversations"
+          v-if="fetchedData"
+          class="overflow-scroll max-h-96"
+        >
           <div v-if="conversationsExist">
             <div
               v-for="(conversation, index) in conversations"
               :key="conversation.id"
             >
               <div
+                :dusk="`dropdown-conversation-${conversation.id}`"
                 @click="showConversation(conversation)"
                 class="
                   p-2

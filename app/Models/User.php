@@ -310,8 +310,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(
             Conversation::class,
             'conversation_participants',
-            'user_id',
-            'conversation_id'
         )->wherePivot('hidden', false)
             ->wherePivot('left', false);
     }

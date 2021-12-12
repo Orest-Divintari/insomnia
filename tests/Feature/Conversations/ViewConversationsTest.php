@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Conversations;
 
+use App\Models\Conversation;
 use App\Models\User;
 use Carbon\Carbon;
 use Facades\Tests\Setup\ConversationFactory;
@@ -411,27 +412,6 @@ class ViewConversationsTest extends TestCase
         $this->assertCount(1, $conversations);
         $this->assertFalse($conversations->search(function ($conversation) use ($conversationByDoe) {
             return $conversation->id == $conversationByDoe->id;
-        }));
-    }
-
-    /** @test */
-    public function it_returns_conversations_only_by_users_that_are_not_ignored_with_ajax_request()
-    {
-        $john = create(User::class);
-        $doe = create(User::class);
-        $bob = create(User::class);
-        $this->signIn($doe);
-        $conversationByDoe = ConversationFactory::by($doe)->withParticipants([$john->name])->create();
-        $this->signIn($bob);
-        $conversationByBob = ConversationFactory::by($bob)->withParticipants([$john->name])->create();
-        $this->signIn($john);
-        $john->ignore($doe);
-
-        $response = $this->get(route('ajax.conversations.index'));
-        $conversations = collect($response->json());
-        $this->assertCount(1, $conversations);
-        $this->assertFalse($conversations->search(function ($conversation) use ($conversationByDoe) {
-            return $conversation['id'] == $conversationByDoe->id;
         }));
     }
 
